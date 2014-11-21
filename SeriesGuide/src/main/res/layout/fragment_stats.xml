@@ -26,6 +26,7 @@
             android:layout_below="@+id/textViewStatsShows"
             android:layout_centerHorizontal="true"
             android:text="@string/statistics_shows"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textAllCaps="true" />
 
         <ProgressBar
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelStatsShows"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/large_padding" />
+            android:layout_marginTop="@dimen/default_padding" />
 
         <TextView
             android:id="@+id/textViewStatsShowsWithNext"
@@ -44,6 +45,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsShowsWithNext"
             tools:text="29 WITH NEXT EPISODES"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
         <ProgressBar
@@ -61,6 +63,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsShowsContinuing"
             tools:text="10 CONTINUING"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
         <TextView
@@ -83,6 +86,7 @@
             android:layout_below="@+id/textViewStatsEpisodes"
             android:layout_centerHorizontal="true"
             android:text="@string/statistics_episodes"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textAllCaps="true" />
 
         <ProgressBar
@@ -92,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelStatsEpisodes"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/large_padding" />
+            android:layout_marginTop="@dimen/default_padding" />
 
         <TextView
             android:id="@+id/textViewStatsEpisodesWatched"
@@ -101,6 +105,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsEpisodesWatched"
             tools:text="1803 WATCHED"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
         <TextView
@@ -115,6 +120,7 @@
             tools:text="61 days 13 hours 29 minutes"
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.Headline"
+            android:textColor="?attr/textColorSecondarySg"
             android:textIsSelectable="true" />
 
         <ProgressBar
@@ -132,6 +138,7 @@
             android:layout_below="@+id/textViewStatsEpisodesRuntime"
             android:layout_centerHorizontal="true"
             android:text="@string/runtime_all_episodes"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textAllCaps="true" />
 
         <TextView
@@ -154,6 +161,7 @@
             android:layout_below="@+id/textViewStatsMovies"
             android:layout_centerHorizontal="true"
             android:text="@string/statistics_movies"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textAllCaps="true" />
 
         <ProgressBar
@@ -163,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelMovies"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/large_padding" />
+            android:layout_marginTop="@dimen/default_padding" />
 
         <TextView
             android:id="@+id/textViewStatsMoviesWatchlist"
@@ -172,6 +180,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsMoviesWatchlist"
             tools:text="1803 WATCHLIST"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textIsSelectable="true" />
 
         <TextView
@@ -186,6 +195,7 @@
             tools:text="61 days 13 hours 29 minutes"
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.Headline"
+            android:textColor="?attr/textColorSecondarySg"
             android:textIsSelectable="true" />
 
         <TextView
@@ -195,6 +205,7 @@
             android:layout_below="@+id/textViewStatsMoviesWatchlistRuntime"
             android:layout_centerHorizontal="true"
             android:text="@string/runtime_movies_watchlist"
+            android:textAppearance="@style/TextAppearance.Caption"
             android:textAllCaps="true" />
     </RelativeLayout>
 
