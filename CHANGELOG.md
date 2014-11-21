@@ -10,6 +10,14 @@ Version 20 *(in development)*
 
 #### 20-beta1 *(2014-11-17)*
 
+* TWEAK Add "Only favorite shows" setting to list widget. Setting is now independent from Upcoming/Recent filter settings.
+* TWEAK Move season watched/collected all/none options to inline icons.
+* TWEAK Display collected indicator in Upcoming/Recent. (You can still touch and hold to add/remove from collection.)
+* TWEAK Update app and notification icon.
+* FIX Light theme transparent tab text color is now black again.
+
+#### 20-beta1 *(2014-11-17)*
+
 * FEATURE Integrate with Google Now, say "Search for Newsroom on SeriesGuide".
 * TWEAK Combine tabs with action bar, add shadow on Android Lollipop.
 * TWEAK Text edit bar overlays action bar instead of pushing it down.
