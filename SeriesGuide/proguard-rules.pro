@@ -7,26 +7,15 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Only obfuscate to avoid potential clashes with globally exported libraries we use as well
+# Only obfuscate
 -dontshrink
 
-# SeriesGuide, keep everything
--keep class com.battlelancer.seriesguide.** { *; }
-
-# getglue-java
--keep class com.uwetrottmann.getglue.** { *; }
-# tmdb-java
--keep class com.uwetrottmann.tmdb.** { *; }
-# trakt-java
--keep class com.jakewharton.trakt.** { *; }
-
-# App Engine libs use annotations not available on Android.
--dontwarn sun.misc.Unsafe
-# Needed to keep generic types and @Key annotations accessed via reflection
--keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
--keepclassmembers class * {
-  @com.google.api.client.util.Key <fields>;
-}
+# Keep everything, but obfuscate the v7 support library
+# to work around wrongly exported libraries on some 4.2.2 ROMs
+# see https://code.google.com/p/android/issues/detail?id=78377
+-keep class !android.support.v7.** { *; }
+-repackageclasses 'com.uwetrottmann.obfuscated'
+-allowaccessmodification
 
 # Google Play Services is stripped of unused parts. Don't warn about them missing.
 -dontwarn com.google.ads.**
@@ -35,13 +24,18 @@
 # ButterKnife uses some annotations not available on Android.
 -dontwarn butterknife.internal.**
 # Prevent ButterKnife annotations from getting renamed.
--keep class **$$ViewInjector { *; }
 -keepnames class * { @butterknife.InjectView *;}
 
 # Eventbus methods can not be renamed.
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
+
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+# Gson specific classes
+-dontwarn sun.misc.Unsafe
 
 # joda-time has some annotations we don't care about.
 -dontwarn org.joda.convert.**
@@ -62,4 +56,3 @@
 # Retrofit has some optional dependencies we don't use.
 -dontwarn rx.**
 -dontwarn retrofit.appengine.**
--keep class retrofit.** { *; }
