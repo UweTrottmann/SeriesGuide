@@ -5,13 +5,12 @@
 
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
         android:id="@+id/gridViewUpcoming"
+        style="@style/Widget.SeriesGuide.GridSelectorTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:horizontalSpacing="@dimen/grid_horizontal_spacing"
-        android:drawSelectorOnTop="true"
-        android:listSelector="?attr/selectableItemBackground"
         android:numColumns="auto_fit"
         android:paddingTop="@dimen/default_padding"
         android:paddingRight="0dp"
