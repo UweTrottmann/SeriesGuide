@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:descendantFocusability="beforeDescendants">
-    <!-- Add  -->
+    <!-- Focus parent to avoid auto-focus on search bar -->
 
     <AutoCompleteTextView
         android:id="@+id/editTextMoviesSearch"
