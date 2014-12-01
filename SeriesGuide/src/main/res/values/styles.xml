@@ -246,6 +246,12 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
+    <!-- Grid view selector -->
+    <style name="Widget.SeriesGuide.GridSelectorTop">
+        <item name="android:listSelector">?attr/selectableItemBackground</item>
+        <item name="android:drawSelectorOnTop">true</item>
+    </style>
+
     <!-- Easy layouting -->
     <style name="DefaultPadding"/>
 

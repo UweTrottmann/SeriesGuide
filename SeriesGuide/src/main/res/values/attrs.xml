@@ -2,7 +2,7 @@
 <resources>
 
     <attr name="sgSelectableItemBackground" format="reference" />
-    <attr name="sgDrawerItemBackground" format="reference" />
+    <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
 
     <!-- Text colors -->
     <attr name="textColorPrimarySg" format="reference|color" />

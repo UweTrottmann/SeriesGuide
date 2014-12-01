@@ -38,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:listSelector="@color/transparent"
             android:divider="@color/transparent"
             android:dividerHeight="0dp"
             android:clipToPadding="@bool/gridClipToPadding"

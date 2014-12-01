@@ -22,26 +22,17 @@
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
-        <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
-
     </style>
 
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
-        <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/list_selector_dark_material</item>
-
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
-
-        <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg_material</item>
 
     </style>
 
