@@ -59,7 +59,7 @@
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Reparto</string>
   <string name="movie_crew">Equipo técnico</string>
-  <string name="action_movies_sort">Corto</string>
+  <string name="action_movies_sort">Ordenar películas</string>
   <string name="action_movies_sort_title">Título</string>
   <string name="action_movies_sort_release">Fecha de estreno</string>
   <string name="statistics_shows">Series</string>
@@ -168,7 +168,7 @@
   <string name="context_unfavorite">No favorito</string>
   <string name="favorited">Agregado a Favoritos</string>
   <string name="unfavorited">Borrado de los favoritos</string>
-  <string name="context_hide">Oculto</string>
+  <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Mostrar</string>
   <string name="hidden">Serie oculta</string>
   <string name="unhidden">Mostrar serie</string>
@@ -223,7 +223,7 @@
   <string name="watchlist">Lista de visualización</string>
   <string name="first_list">Primera lista</string>
   <string name="list_add">Añadir lista</string>
-  <string name="list_title_hint">Nombre de la lista</string>
+  <string name="list_title_hint">Nombrar tu lista</string>
   <string name="list_remove">Eliminar lista</string>
   <string name="list_manage">Gestionar lista</string>
   <string name="list_item_manage">Gestionar listas</string>
@@ -247,7 +247,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="connect_trakt">Conectar a trakt</string>
   <string name="connect_trakt_done">¡Conectado a trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va a sincronizar las series y películas de este dispositivo con trakt. Esto puede demorar un poco.</string>
-  <string name="add_trakt_shows">Añadir series de su biblioteca:</string>
+  <string name="add_trakt_shows">Añadir series de su biblioteca en trakt:</string>
   <string name="show_library">Muestra su biblioteca</string>
   <string name="about_trakt">trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo. <a href="http://trakt.tv">Saber más</a></string>
   <string name="integration_trakt_items">- añade episodios de tu libreria o lista de visualización\n\n- vea sus recomendaciones y actividad de amigos\n\n- sincronización automática de capítulos vistos o marcados\n\n- las nuevas series que ves se añaden automáticamente</string>
@@ -256,7 +256,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="prefs_category_advanced">Avanzado</string>
   <string name="prefs_category_about">Acerca de</string>
   <string name="pref_onlyfuture">No hay episodios emitidos</string>
-  <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya emitidos</string>
+  <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>
   <string name="pref_onlyseasoneps">Ocultar episodios especiales</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
@@ -346,7 +346,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="check_into">Acceder a</string>
   <string name="no_selection">elige uno debajo</string>
   <string name="looking_for_something_else">¿Buscando algo más?</string>
-  <string name="traktcheckin_cancel">Reemplace</string>
+  <string name="traktcheckin_cancel">Reemplazar</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
   <string name="addtocalendar">Añadir al calendario</string>
@@ -373,7 +373,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_notifications">Notificaciones</string>
   <string name="pref_notificationssummary">Notificar sobre nuevos episodios</string>
   <string name="pref_notifyfavonly">Solo favoritos</string>
-  <string name="pref_notifyfavonlysummary">Solo recibir notificaciones de los favoritos</string>
+  <string name="pref_notifyfavonlysummary">Solo recibir notificaciones de las series favoritas</string>
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">También vibrar al mostrar una notificación</string>
@@ -395,14 +395,14 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="widget_background_opaque">Opaco</string>
   <string name="dashclock_extension_label">Próximo episodio</string>
   <string name="dashclock_extension_description">Muestra el próximo episodio de sus series de SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episodios</string>
+  <string name="dashclock_pref_upcoming_threshold">Mostrar episodio dentro de…</string>
   <string name="onlyx">Solo para seguidores</string>
-  <string name="action_upgrade">Desbloquea todas las características</string>
+  <string name="action_upgrade">Desbloquea todas las funciones</string>
   <string name="billing_action_subscribe">Suscríbete</string>
   <string name="billing_action_pass">Obtener X Pass</string>
   <string name="billing_price_subscribe">%s/año, 30 días de prueba</string>
   <string name="billing_price_pass">Compra por única vez</string>
-  <string name="upgrade_description">Desbloquea todas las características, notificaciones, temas y mas opciones de widgets. Ayudame para futuras actualizaciones.</string>
+  <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
   <string name="billing_learn_more">¿Por qué deberías pagar? Lee más.</string>
   <string name="subscription_activated">Ahora estás suscrito a las características X.</string>
@@ -420,9 +420,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="action_extensions_limit">Obtén X para agregar más extensiones</string>
   <string name="action_extensions_search">Obtén más extensiones</string>
   <string name="action_extension_remove">Eliminar</string>
-  <string name="extension_amazon">Búsqueda de Amazon</string>
-  <string name="description_extension_amazon">Busca en tu web local de Amazon</string>
-  <string name="pref_amazon_domain">Web de Amazon</string>
+  <string name="extension_amazon">Búsqueda en Amazon</string>
+  <string name="description_extension_amazon">Buscar en la pagina local de Amazon</string>
+  <string name="pref_amazon_domain">Página de Amazon</string>
   <string name="extension_google_play">Búsqueda en Google Play</string>
   <string name="description_extension_google_play">Buscar en Google Play Store</string>
   <string name="extension_youtube">Búsqueda en YouTube</string>
