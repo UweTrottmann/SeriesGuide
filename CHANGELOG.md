@@ -13,6 +13,7 @@ Version 20 *(in development)*
 * TWEAK Do not focus on movie search bar by default.
 * FIX Extension configure button text cut off.
 * FIX Duplicate list selector in search results. Improved other selectors as well.
+* NOTICE Latest translations from crowdin.
 
 #### 20-beta2 *(2014-11-21)*
 
