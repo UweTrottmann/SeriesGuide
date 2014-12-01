@@ -106,7 +106,7 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.0.1@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.1.0@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
