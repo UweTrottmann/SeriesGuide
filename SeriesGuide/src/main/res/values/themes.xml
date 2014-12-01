@@ -9,7 +9,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -35,6 +34,9 @@
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/accent_primary</item>
+
+        <!-- Special attributes -->
+        <item name="sgDrawerItemBackground">@drawable/activated_background_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
@@ -100,7 +102,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_dark</item>
 
         <!-- System widgets -->
         <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
@@ -115,6 +116,9 @@
     <style name="Theme.SeriesGuide.DarkBlue" parent="Theme.BaseSeriesGuide.DarkBlue">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+        <!-- Special attributes -->
+        <item name="sgDrawerItemBackground">@drawable/activated_background_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
@@ -174,7 +178,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -200,6 +203,9 @@
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/accent_primary</item>
+
+        <!-- Special attributes -->
+        <item name="sgDrawerItemBackground">@drawable/activated_background_sg_light</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>

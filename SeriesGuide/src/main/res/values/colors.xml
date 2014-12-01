@@ -41,6 +41,8 @@
     <color name="background_dim">#80111111</color>
     <color name="background_dim_inverse">#80ffffff</color>
     <color name="background_black">#ff000000</color>
+    <color name="activated_dark">#40ffffff</color>
+    <color name="activated_light">#40000000</color>
     <color name="disabled">#80333333</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
