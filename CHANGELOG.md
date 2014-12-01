@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 20 *(in development)*
 -----------------------------
 
+#### 20-beta3 *(2014-12-01)*
+
+* TWEAK Do not focus on movie search bar by default.
+* FIX Extension configure button text cut off.
+* FIX Duplicate list selector in search results. Improved other selectors as well.
+
 #### 20-beta2 *(2014-11-21)*
 
 * TWEAK Add "Only favorite shows" setting to list widget. Setting is now independent from Upcoming/Recent filter settings.
