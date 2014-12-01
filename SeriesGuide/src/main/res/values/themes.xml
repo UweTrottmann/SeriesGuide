@@ -36,7 +36,7 @@
         <item name="colorAccent">@color/accent_primary</item>
 
         <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/activated_background_sg</item>
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
@@ -118,7 +118,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
         <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/activated_background_sg</item>
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
@@ -205,7 +205,7 @@
         <item name="colorAccent">@color/accent_primary</item>
 
         <!-- Special attributes -->
-        <item name="sgDrawerItemBackground">@drawable/activated_background_sg_light</item>
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg_light</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
