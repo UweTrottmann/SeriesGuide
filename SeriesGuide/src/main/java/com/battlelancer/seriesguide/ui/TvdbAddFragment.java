@@ -124,7 +124,7 @@ public class TvdbAddFragment extends AddFragment {
         // create an empty adapter to avoid displaying a progress indicator
         if (adapter == null) {
             adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
-                    new ArrayList<SearchResult>(), mDetailsButtonListener);
+                    new ArrayList<SearchResult>());
         }
 
         if (!AndroidUtils.isNetworkConnected(getActivity())) {

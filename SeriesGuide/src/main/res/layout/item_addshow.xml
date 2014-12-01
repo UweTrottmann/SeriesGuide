@@ -7,13 +7,9 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/details"
         android:layout_width="0dp"
         android:layout_height="88dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/poster"
@@ -56,8 +52,6 @@
         android:layout_width="48dp"
         android:layout_height="88dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
         android:contentDescription="@string/action_shows_add"
         android:scaleType="centerInside"
         android:src="?attr/drawableAddIcon" />
