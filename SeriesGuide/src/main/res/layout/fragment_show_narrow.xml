@@ -26,6 +26,7 @@
                 android:id="@+id/containerShowPoster"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
+                android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
