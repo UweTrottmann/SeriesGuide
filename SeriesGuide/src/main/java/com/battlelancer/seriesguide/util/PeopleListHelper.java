@@ -138,6 +138,9 @@ public class PeopleListHelper {
             ViewGroup peopleContainer, String name, String description, String profilePath) {
         View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
 
+        personView.setBackgroundResource(Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.selectableItemBackground));
+
         ServiceUtils.getPicasso(context)
                 .load(TmdbTools.buildProfileImageUrl(context, profilePath,
                         TmdbTools.ProfileImageSize.W185))
