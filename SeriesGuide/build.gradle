@@ -141,7 +141,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Amazon flavor specific
-    amazonCompile files('libs/amazon/in-app-purchasing-2.0.0.jar')
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.1.jar')
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'
