@@ -5,8 +5,17 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 20 *(in development)*
+Version 20 *(2014-12-02)*
 -----------------------------
+
+* Further design updates towards material design.
+* Favorite shows filter for list widget.
+* Collection indicator in Upcoming/Recent.
+
+#### 20 *(2014-12-02)*
+
+* TWEAK Show connected SeriesGuide Cloud or trakt account in nav drawer.
+* TWEAK Show ripples when touching list widget items.
 
 #### 20-beta3 *(2014-12-01)*
 
