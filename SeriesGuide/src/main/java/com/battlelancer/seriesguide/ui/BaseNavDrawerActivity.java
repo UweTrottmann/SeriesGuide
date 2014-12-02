@@ -34,6 +34,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -139,7 +142,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         mDrawerAdapter.getItem(position);
         switch (position) {
             case MENU_ITEM_ACCOUNT: {
-                launchIntent = new Intent(this, ConnectTraktActivity.class);
+                // SG Cloud connection overrides trakt
+                if (HexagonTools.isSignedIn(this)) {
+                    launchIntent = new Intent(this, CloudSetupActivity.class);
+                } else {
+                    launchIntent = new Intent(this, ConnectTraktActivity.class);
+                }
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
                 break;
             }
@@ -328,10 +336,24 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             if (type == VIEW_TYPE_ACCOUNT) {
                 convertView = LayoutInflater.from(getContext()).inflate(
                         R.layout.drawer_item_account, parent, false);
-                ((TextView) convertView.findViewById(R.id.textViewDrawerItemAccount)).setText(
-                        R.string.trakt);
-                ((TextView) convertView.findViewById(R.id.textViewDrawerItemUsername)).setText(
-                        TraktCredentials.get(getContext()).getUsername());
+                TextView account = (TextView) convertView.findViewById(
+                        R.id.textViewDrawerItemAccount);
+                TextView user = (TextView) convertView.findViewById(
+                        R.id.textViewDrawerItemUsername);
+
+                if (HexagonTools.isSignedIn(getContext())) {
+                    // connected to SG Cloud
+                    account.setText(R.string.hexagon);
+                    user.setText(HexagonSettings.getAccountName(getContext()));
+                } else if (TraktCredentials.get(getContext()).hasCredentials()) {
+                    // connected to trakt
+                    account.setText(R.string.trakt);
+                    user.setText(TraktCredentials.get(getContext()).getUsername());
+                } else {
+                    // connected to nothing
+                    account.setText(R.string.trakt);
+                    user.setText(R.string.connect_trakt);
+                }
                 return convertView;
             }
 
