@@ -8,7 +8,7 @@
         android:paddingRight="@dimen/large_padding"
         android:paddingBottom="@dimen/large_padding"
         android:measureWithLargestChild="true"
-        android:gravity="right"
+        android:gravity="end"
         android:orientation="horizontal">
 
         <Button

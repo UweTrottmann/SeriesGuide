@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_regular_height"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/sgActivatedItemBackgroundNeutral">
 
     <ImageView
         android:id="@+id/imageViewPerson"

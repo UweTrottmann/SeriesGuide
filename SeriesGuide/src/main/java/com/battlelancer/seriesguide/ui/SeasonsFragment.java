@@ -134,12 +134,10 @@ public class SeasonsFragment extends ListFragment implements
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                if (mWatchedAllEpisodes) {
-                    popupMenu.getMenu()
-                            .add(0, CONTEXT_WATCHED_SHOW_NONE_ID, 0, R.string.unmark_all);
-                } else {
+                if (!mWatchedAllEpisodes) {
                     popupMenu.getMenu().add(0, CONTEXT_WATCHED_SHOW_ALL_ID, 0, R.string.mark_all);
                 }
+                popupMenu.getMenu().add(0, CONTEXT_WATCHED_SHOW_NONE_ID, 0, R.string.unmark_all);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -161,8 +159,6 @@ public class SeasonsFragment extends ListFragment implements
                 popupMenu.show();
             }
         });
-        CheatSheet.setup(mButtonWatchedAll, mWatchedAllEpisodes ? R.string.unmark_all
-                : R.string.mark_all);
     }
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
@@ -175,13 +171,12 @@ public class SeasonsFragment extends ListFragment implements
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                if (mCollectedAllEpisodes) {
-                    popupMenu.getMenu()
-                            .add(0, CONTEXT_COLLECTED_SHOW_NONE_ID, 0, R.string.uncollect_all);
-                } else {
+                if (!mCollectedAllEpisodes) {
                     popupMenu.getMenu()
                             .add(0, CONTEXT_COLLECTED_SHOW_ALL_ID, 0, R.string.collect_all);
                 }
+                popupMenu.getMenu()
+                        .add(0, CONTEXT_COLLECTED_SHOW_NONE_ID, 0, R.string.uncollect_all);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -203,8 +198,6 @@ public class SeasonsFragment extends ListFragment implements
                 popupMenu.show();
             }
         });
-        CheatSheet.setup(mButtonCollectedAll, mCollectedAllEpisodes ? R.string.uncollect_all
-                : R.string.collect_all);
     }
 
     @Override
@@ -262,23 +255,7 @@ public class SeasonsFragment extends ListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_watched_all) {
-            fireTrackerEvent("Flag all watched");
-            onFlagShowWatched(true);
-            return true;
-        } else if (itemId == R.id.menu_unwatched_all) {
-            fireTrackerEvent("Flag all unwatched");
-            onFlagShowWatched(false);
-            return true;
-        } else if (itemId == R.id.menu_collect_all) {
-            fireTrackerEvent("Flag all collected");
-            onFlagShowCollected(true);
-            return true;
-        } else if (itemId == R.id.menu_uncollect_all) {
-            fireTrackerEvent("Flag all uncollected");
-            onFlagShowCollected(false);
-            return true;
-        } else if (itemId == R.id.menu_sesortby) {
+        if (itemId == R.id.menu_sesortby) {
             fireTrackerEvent("Sort");
             showSortDialog();
             return true;

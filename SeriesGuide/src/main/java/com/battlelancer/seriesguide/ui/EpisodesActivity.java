@@ -200,15 +200,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
             // setup tabs
             mTabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodes);
-            mTabs.setCustomTabView(R.layout.tabstrip_item, R.id.textViewTabStripItem);
+            mTabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
             mTabs.setSelectedIndicatorColors(getResources().getColor(
                     Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
-            mTabs.setBottomBorderColor(Utils.setColorAlpha(getResources().getColor(
-                            Utils.resolveAttributeToResourceId(getTheme(),
-                                    R.attr.sgColorTabStripUnderline)
-                    ),
-                    0x26
-            ));
             mTabs.setViewPager(mPager);
 
             // set page listener afterwards to avoid null pointer for

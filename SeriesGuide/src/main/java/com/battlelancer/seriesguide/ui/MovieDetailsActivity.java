@@ -72,7 +72,10 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             mSystemBarTintManager = new SystemBarTintManager(this);
             int insetTop = mSystemBarTintManager.getConfig().getPixelInsetTop(false);
             ViewGroup actionBarToolbar = (ViewGroup) findViewById(R.id.sgToolbar);
-            actionBarToolbar.setPadding(0, insetTop, 0, 0);
+            ViewGroup.MarginLayoutParams layoutParams
+                    = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();
+            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + insetTop,
+                    layoutParams.rightMargin, layoutParams.bottomMargin);
         }
     }
 

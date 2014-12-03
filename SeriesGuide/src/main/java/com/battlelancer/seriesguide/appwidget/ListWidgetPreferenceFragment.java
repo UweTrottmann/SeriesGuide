@@ -69,6 +69,13 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         typePref.setNegativeButtonText(null);
         preferenceScreen.addPreference(typePref);
 
+        // only favorite shows setting
+        CheckBoxPreference onlyFavoritesPref = new CheckBoxPreference(getActivity());
+        onlyFavoritesPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId);
+        onlyFavoritesPref.setTitle(R.string.only_favorites);
+        onlyFavoritesPref.setDefaultValue(false);
+        preferenceScreen.addPreference(onlyFavoritesPref);
+
         // hide watched setting
         CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
         hideWatchedPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);

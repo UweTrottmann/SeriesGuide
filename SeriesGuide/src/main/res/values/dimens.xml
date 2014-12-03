@@ -10,13 +10,9 @@
 
     <dimen name="max_width_text_size_body">400dp</dimen>
 
-    <dimen name="text_size_xsmall">12sp</dimen>
-    <dimen name="text_size_small">14sp</dimen>
-    <dimen name="text_size_xmedium">16sp</dimen>
-    <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_large">22sp</dimen>
-    <dimen name="text_size_ultralarge">32sp</dimen>
-    <dimen name="text_size_hyperlarge">72sp</dimen>
+    <!-- Material text sizes -->
+    <dimen name="text_size_default_sg">14sp</dimen>
+    <dimen name="text_size_caption_sg">12sp</dimen>
 
     <dimen name="addpager_width">450dp</dimen>
 
@@ -42,7 +38,6 @@
     <dimen name="imagecontainer_height">180dp</dimen>
 
     <dimen name="drawer_width">260dp</dimen>
-    <dimen name="drawer_top_view_height">128dp</dimen>
 
     <dimen name="movie_item_width">100dp</dimen>
     <dimen name="movie_item_height">214dp</dimen>

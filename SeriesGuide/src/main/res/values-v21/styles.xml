@@ -18,22 +18,24 @@
 
 <resources>
 
-    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Material.Button" />
 
-        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
-
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">
+        <item name="android:maxLines">2</item>
     </style>
 
-    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform" />
 
-        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
-
+    <!-- Action bar -->
+    <style name="Widget.SeriesGuide.ActionBar">
+        <item name="android:elevation">4dp</item>
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
-
-        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
-
+    <!-- Tabs -->
+    <style name="Widget.SeriesGuide.TabLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
 </resources>

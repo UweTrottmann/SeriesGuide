@@ -28,19 +28,14 @@
         android:background="?attr/sgColorBackgroundDrawer"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/drawer_top_view_height" />
-
         <ListView
             android:id="@+id/drawer_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:listSelector="@color/transparent"
             android:divider="@color/transparent"
             android:dividerHeight="0dp"
-            android:clipToPadding="@bool/gridClipToPadding"
+            android:clipToPadding="false"
             android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding" />
 

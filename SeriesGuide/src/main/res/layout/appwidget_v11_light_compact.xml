@@ -60,7 +60,7 @@
                 android:id="@+id/widget_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/list_selector_dark"
+                android:background="@drawable/list_selector_light"
                 android:focusable="true">
 
                 <ImageView
@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/list_selector_dark"
+                android:background="@drawable/list_selector_light"
                 android:focusable="true">
 
                 <ImageView

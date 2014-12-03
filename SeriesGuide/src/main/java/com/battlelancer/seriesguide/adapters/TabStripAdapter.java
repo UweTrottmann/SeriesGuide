@@ -24,7 +24,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -72,12 +71,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
         // setup tabs
         mTabLayout = tabs;
         mTabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        mTabLayout.setSelectedIndicatorColors(context.getResources().getColor(
-                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.colorAccent)));
-        mTabLayout.setBottomBorderColor(context.getResources().getColor(
-                Utils.resolveAttributeToResourceId(context.getTheme(),
-                        R.attr.sgColorTabStripUnderline)
-        ));
+        mTabLayout.setSelectedIndicatorColors(context.getResources().getColor(R.color.white));
         mTabLayout.setViewPager(mViewPager);
     }
 

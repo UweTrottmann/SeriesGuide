@@ -391,7 +391,7 @@
   <string name="widget_background_25">25%</string>
   <string name="widget_background_50">50%</string>
   <string name="widget_background_75">75%</string>
-  <string name="widget_background_opaque">Opaque</string>
+  <string name="widget_background_opaque">Opaco</string>
   <string name="dashclock_extension_label">Episódio futuro</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios</string>

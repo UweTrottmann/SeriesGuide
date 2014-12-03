@@ -29,7 +29,8 @@
     <color name="text_blue">#FF0099CC</color>
     <color name="text_red">#FFFF4444</color>
     <color name="accent_primary">#ff6545a0</color>
-    <color name="accent_primary_dark">#ff323264</color>
+    <color name="accent_primary_26">#426545a0</color>
+    <color name="accent_primary_dark">#ff523991</color>
     <color name="accent_primary_light">#bb7555B0</color>
     <color name="teal_dark">#ff009688</color>
     <color name="dim">#ff313531</color>
@@ -40,6 +41,8 @@
     <color name="background_dim">#80111111</color>
     <color name="background_dim_inverse">#80ffffff</color>
     <color name="background_black">#ff000000</color>
+    <color name="activated_dark">#40ffffff</color>
+    <color name="activated_light">#40000000</color>
     <color name="disabled">#80333333</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
@@ -50,8 +53,10 @@
     <color name="divider">#26ffffff</color>
     <color name="divider_inverse">#1A000000</color>
     <color name="white">#ffffffff</color>
+    <color name="white_70">#b3ffffff</color>
 
-    <color name="black_87">#ff202020</color>
+    <color name="black_87">#de000000</color>
+    <color name="black_54">#8a000000</color>
     <color name="black_11">#ffe3e3e3</color>
     <color name="protection_dark">#66000000</color>
 

@@ -4,7 +4,6 @@
     android:layout_width="@dimen/movie_item_width"
     android:layout_height="@dimen/movie_item_height"
     android:background="?attr/drawableCardBackground"
-    android:foreground="?attr/selectableItemBackground"
     android:minHeight="@dimen/movie_item_height"
     android:minWidth="@dimen/movie_item_width">
 

@@ -22,11 +22,11 @@
   <string name="description_poster">Rādīt plakātu</string>
   <string name="description_image">Epizodes attēls</string>
   <string name="clear">Iztīrīt</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Dzēst meklēšanas vēsturi</string>
   <string name="discard">Atmest</string>
   <string name="save_selection">Saglabāt izvēli</string>
   <string name="search_hint">Meklēt epizodēs</string>
-  <string name="action_display_all">Show all</string>
+  <string name="action_display_all">Uzrādīt visu</string>
   <string name="updated">Atjaunināts uz jaunāko versiju.</string>
   <string name="norating">n/a</string>
   <string name="unknown">nezināms</string>
@@ -34,8 +34,8 @@
   <string name="offline_no_wifi">Pievienojies kādam WiFi tīklam vai atļauj visādu veidu savienojumus, un tad mēģini vēlreiz.</string>
   <string name="app_not_available">Nav aplikācijas, lai to izdarītu.</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
-  <string name="share">Share</string>
+  <string name="people_empty">Neviena te nav?! Pieskaries lai mēģinātu vēlreiz.</string>
+  <string name="share">Dalīties</string>
   <string name="share_show">Kopīgot seriālu</string>
   <string name="share_episode">Kopīgot epizodi</string>
   <string name="share_movie">Dalīties ar filmu</string>
@@ -69,7 +69,7 @@
   <string name="shows_continuing">%s kuras turpinājas</string>
   <string name="episodes_watched">%s noskatītas</string>
   <string name="runtime_all_episodes">Visu noskatīto epizožu kopējais garums</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="movies_on_watchlist">%s vočlistā</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d diena</item>

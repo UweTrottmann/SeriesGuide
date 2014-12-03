@@ -72,7 +72,10 @@ public class TraktCredentials {
      */
     public void removePassword() {
         // clear all in-memory credentials from Trakt service manager in any case
-        ServiceUtils.getTraktWithAuth(mContext).setAuthentication(null, null);
+        Trakt trakt = ServiceUtils.getTraktWithAuth(mContext);
+        if (trakt != null) {
+            trakt.setAuthentication(null, null);
+        }
 
         mHasCredentials = false;
 

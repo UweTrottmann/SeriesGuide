@@ -30,6 +30,7 @@
 
         <com.battlelancer.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsSearch"
+            style="@style/Widget.SeriesGuide.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -25,7 +25,7 @@
 
     <Button
         android:id="@+id/buttonShowFavorite"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -38,7 +38,7 @@
 
     <Button
         android:id="@+id/buttonShowShare"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/buttonShowShortcut"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Dim"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

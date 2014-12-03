@@ -41,7 +41,8 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
 
     @Override
     protected void onUpdateData(int arg0) {
-        final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(true, getApplicationContext());
+        final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(getApplicationContext(), false,
+                true);
         final long customCurrentTime = TimeTools.getCurrentTime(getApplicationContext());
         int hourThreshold = DashClockSettings.getUpcomingTreshold(getApplicationContext());
         long latestTimeToInclude = customCurrentTime + hourThreshold * DateUtils.HOUR_IN_MILLIS;

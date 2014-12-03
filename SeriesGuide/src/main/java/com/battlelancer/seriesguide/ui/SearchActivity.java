@@ -33,11 +33,12 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.google.android.gms.actions.SearchIntents;
 import de.greenrobot.event.EventBus;
 
 /**
- * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or
- * redirects directly to an {@link EpisodeDetailsActivity}.
+ * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or redirects
+ * directly to an {@link EpisodeDetailsActivity}.
  */
 public class SearchActivity extends BaseNavDrawerActivity {
 
@@ -135,7 +136,9 @@ public class SearchActivity extends BaseNavDrawerActivity {
         if (intent == null) {
             return;
         }
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        String action = intent.getAction();
+        // global or Google Now voice search
+        if (Intent.ACTION_SEARCH.equals(action) || SearchIntents.ACTION_SEARCH.equals(action)) {
             Bundle extras = getIntent().getExtras();
 
             // searching episodes within a show?
@@ -151,7 +154,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
             // setting the query automatically triggers a search
             String query = extras.getString(SearchManager.QUERY);
             searchBar.setText(query);
-        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+        } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             displayEpisode(id);
@@ -208,5 +211,4 @@ public class SearchActivity extends BaseNavDrawerActivity {
     protected void fireTrackerEvent(String label) {
         Utils.trackAction(this, TAG, label);
     }
-
 }

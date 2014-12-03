@@ -34,8 +34,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -47,14 +51,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
 
-    public static final int MENU_ITEM_SHOWS_POSITION = 0;
-    public static final int MENU_ITEM_LISTS_POSITION = 1;
-    public static final int MENU_ITEM_MOVIES_POSITION = 2;
-    public static final int MENU_ITEM_STATS_POSITION = 3;
-    // DIVIDER IN BETWEEN HERE
-    public static final int MENU_ITEM_SETTINGS_POSITION = 5;
-    public static final int MENU_ITEM_HELP_POSITION = 6;
-    public static final int MENU_ITEM_SUBSCRIBE_POSITION = 7; // not always shown
+    public static final int MENU_ITEM_ACCOUNT = 0;
+    // DIVIDER IN BETWEEN HERE                  1
+    public static final int MENU_ITEM_SHOWS_POSITION = 2;
+    public static final int MENU_ITEM_LISTS_POSITION = 3;
+    public static final int MENU_ITEM_MOVIES_POSITION = 4;
+    public static final int MENU_ITEM_STATS_POSITION = 5;
+    // DIVIDER IN BETWEEN HERE                         6
+    public static final int MENU_ITEM_SETTINGS_POSITION = 7;
+    public static final int MENU_ITEM_HELP_POSITION = 8;
+    public static final int MENU_ITEM_SUBSCRIBE_POSITION = 9; // not always shown
 
     private Handler mHandler;
     private Toolbar mActionBarToolbar;
@@ -94,6 +100,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         // setup menu adapter
         mDrawerAdapter = new DrawerAdapter(this);
+        mDrawerAdapter.add(new DrawerItemAccount());
+
+        mDrawerAdapter.add(new DrawerItemDivider());
+
         mDrawerAdapter.add(new DrawerItem(getString(R.string.shows),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableTv)));
         mDrawerAdapter.add(new DrawerItem(getString(R.string.lists),
@@ -102,7 +112,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
         mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
+
         mDrawerAdapter.add(new DrawerItemDivider());
+
         mDrawerAdapter.add(new DrawerItem(getString(R.string.preferences),
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
         mDrawerAdapter.add(new DrawerItem(getString(R.string.help),
@@ -127,7 +139,18 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent launchIntent = null;
 
+        mDrawerAdapter.getItem(position);
         switch (position) {
+            case MENU_ITEM_ACCOUNT: {
+                // SG Cloud connection overrides trakt
+                if (HexagonTools.isSignedIn(this)) {
+                    launchIntent = new Intent(this, CloudSetupActivity.class);
+                } else {
+                    launchIntent = new Intent(this, ConnectTraktActivity.class);
+                }
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
+                break;
+            }
             case MENU_ITEM_SHOWS_POSITION:
                 if (this instanceof ShowsActivity) {
                     break;
@@ -238,7 +261,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         return false;
     }
 
-    public class DrawerItem {
+    public static class DrawerItem {
 
         String mTitle;
         int mIconRes;
@@ -249,17 +272,23 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         }
     }
 
-    private class DrawerItemDivider extends DrawerItem {
-
+    public static class DrawerItemDivider extends DrawerItem {
         public DrawerItemDivider() {
             super(null, 0);
         }
     }
 
-    public static class DrawerAdapter extends ArrayAdapter<Object> {
+    private static class DrawerItemAccount extends DrawerItem {
+        public DrawerItemAccount() {
+            super(null, 0);
+        }
+    }
+
+    public static class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
         private static final int VIEW_TYPE_ITEM = 0;
         private static final int VIEW_TYPE_DIVIDER = 1;
+        private static final int VIEW_TYPE_ACCOUNT = 2;
 
         private boolean isSubscribeVisible;
 
@@ -279,20 +308,63 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         @Override
         public int getItemViewType(int position) {
-            return getItem(position) instanceof DrawerItemDivider ? 1 : 0;
+            DrawerItem item = getItem(position);
+            if (item instanceof DrawerItemDivider) {
+                return VIEW_TYPE_DIVIDER;
+            }
+            if (item instanceof DrawerItemAccount) {
+                return VIEW_TYPE_ACCOUNT;
+            }
+            return VIEW_TYPE_ITEM;
         }
 
         @Override
         public int getViewTypeCount() {
-            return 2;
+            return 3;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            DrawerItem item = getItem(position);
+            return !(item instanceof DrawerItemDivider);
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            Object item = getItem(position);
+            DrawerItem item = getItem(position);
 
-            if (getItemViewType(position) == VIEW_TYPE_DIVIDER) {
+            int type = getItemViewType(position);
+            // divider and account only appear once, so don't use a view holder
+            if (type == VIEW_TYPE_DIVIDER) {
                 convertView = LayoutInflater.from(getContext()).inflate(
                         R.layout.drawer_item_divider, parent, false);
+                return convertView;
+            }
+            if (type == VIEW_TYPE_ACCOUNT) {
+                convertView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.drawer_item_account, parent, false);
+                TextView account = (TextView) convertView.findViewById(
+                        R.id.textViewDrawerItemAccount);
+                TextView user = (TextView) convertView.findViewById(
+                        R.id.textViewDrawerItemUsername);
+
+                if (HexagonTools.isSignedIn(getContext())) {
+                    // connected to SG Cloud
+                    account.setText(R.string.hexagon);
+                    user.setText(HexagonSettings.getAccountName(getContext()));
+                } else if (TraktCredentials.get(getContext()).hasCredentials()) {
+                    // connected to trakt
+                    account.setText(R.string.trakt);
+                    user.setText(TraktCredentials.get(getContext()).getUsername());
+                } else {
+                    // connected to nothing
+                    account.setText(R.string.trakt);
+                    user.setText(R.string.connect_trakt);
+                }
                 return convertView;
             }
 
@@ -307,9 +379,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            DrawerItem menuItem = (DrawerItem) item;
-            holder.icon.setImageResource(menuItem.mIconRes);
-            holder.title.setText(menuItem.mTitle);
+            holder.icon.setImageResource(item.mIconRes);
+            holder.title.setText(item.mTitle);
 
             return convertView;
         }

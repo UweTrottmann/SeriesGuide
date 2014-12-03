@@ -43,8 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for
- * image
+ * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for image
  * loading for smoother scrolling.
  */
 public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
@@ -128,6 +127,11 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
         viewHolder.meta.setText(metaText);
 
+        // collected indicator
+        boolean isCollected = EpisodeTools.isCollected(
+                cursor.getInt(ActivityFragment.ActivityQuery.COLLECTED));
+        viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
+
         // set poster
         Utils.loadPosterThumbnail(context, viewHolder.poster,
                 cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER));
@@ -137,13 +141,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = mLayoutInflater.inflate(LAYOUT, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.episode = (TextView) v.findViewById(R.id.textViewUpcomingEpisode);
-        viewHolder.show = (TextView) v.findViewById(R.id.textViewUpcomingShow);
-        viewHolder.watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxUpcoming);
-        viewHolder.meta = (TextView) v.findViewById(R.id.textViewUpcomingMeta);
-        viewHolder.poster = (ImageView) v.findViewById(R.id.poster);
-
+        ViewHolder viewHolder = new ViewHolder(v);
         v.setTag(viewHolder);
 
         return v;
@@ -267,11 +265,22 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         public TextView episode;
 
+        public View collected;
+
         public WatchedBox watchedBox;
 
         public TextView meta;
 
         public ImageView poster;
+
+        public ViewHolder(View v) {
+            show = (TextView) v.findViewById(R.id.textViewActivityShow);
+            episode = (TextView) v.findViewById(R.id.textViewActivityEpisode);
+            collected = v.findViewById(R.id.imageViewActivityCollected);
+            watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxActivity);
+            meta = (TextView) v.findViewById(R.id.textViewActivityMeta);
+            poster = (ImageView) v.findViewById(R.id.imageViewActivityPoster);
+        }
     }
 
     static class HeaderViewHolder {

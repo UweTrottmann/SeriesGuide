@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_item_height"
-    android:background="?attr/sgDrawerItemBackground">
+    android:background="?attr/sgActivatedItemBackgroundNeutral">
 
     <ImageView
         android:id="@+id/menu_icon"
