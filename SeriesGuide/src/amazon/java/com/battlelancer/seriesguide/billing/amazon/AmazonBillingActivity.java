@@ -25,12 +25,10 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.amazon.device.iap.PurchasingService;
-import com.amazon.device.iap.model.Price;
 import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import java.util.Locale;
 import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
@@ -160,10 +158,8 @@ public class AmazonBillingActivity extends BaseActivity {
     public void onEventMainThread(AmazonIapManager.AmazonIapPriceEvent event) {
         if (textViewSubPrice != null) {
             // display price like "1.23 C"
-            Price price = event.product.getPrice();
-            String priceString = price.getValue()
-                    + " " + price.getCurrency().getSymbol(Locale.getDefault());
-            textViewSubPrice.setText(getString(R.string.billing_price_subscribe, priceString));
+            textViewSubPrice.setText(
+                    getString(R.string.billing_price_subscribe, event.product.getPrice()));
         }
     }
 }
