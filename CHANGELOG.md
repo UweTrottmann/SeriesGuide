@@ -12,6 +12,10 @@ Version 20 *(2014-12-02)*
 * Favorite shows filter for list widget.
 * Collection indicator in Upcoming/Recent.
 
+#### 20.0.1 *(2014-12-03)*
+
+* FIX Dividers in nav drawer are clickable.
+
 #### 20 *(2014-12-02)*
 
 * TWEAK Show connected SeriesGuide Cloud or trakt account in nav drawer.
