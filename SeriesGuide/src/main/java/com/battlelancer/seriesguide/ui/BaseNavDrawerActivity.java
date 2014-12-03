@@ -323,6 +323,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             return 3;
         }
 
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            DrawerItem item = getItem(position);
+            return !(item instanceof DrawerItemDivider);
+        }
+
         public View getView(int position, View convertView, ViewGroup parent) {
             DrawerItem item = getItem(position);
 
