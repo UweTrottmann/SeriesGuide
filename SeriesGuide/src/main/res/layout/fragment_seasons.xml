@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/default_padding">
 
     <ImageView
         android:id="@+id/imageViewSeasonsWatchedToggle"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
+        android:focusable="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
         android:src="?attr/drawableWatchAll" />
@@ -18,8 +19,8 @@
         android:id="@+id/imageViewSeasonsCollectedToggle"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="@dimen/default_padding"
         android:layout_toRightOf="@+id/imageViewSeasonsWatchedToggle"
+        android:focusable="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
         android:src="?attr/drawableCollectAll" />
@@ -28,7 +29,6 @@
         android:id="@+id/textViewSeasonsRemaining"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="@dimen/default_padding"
         android:layout_toRightOf="@+id/imageViewSeasonsCollectedToggle"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -39,24 +39,13 @@
         android:textAppearance="@style/TextAppearance.Subhead.Narrow"
         tools:text="199 remaining" />
 
-    <FrameLayout
+    <ListView
+        android:id="@+android:id/list"
+        style="@style/DefaultPadding.List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imageViewSeasonsWatchedToggle">
-
-        <ListView
-            android:id="@+android:id/list"
-            style="@style/DefaultPadding.List"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="0dp"
-            android:fastScrollEnabled="true" />
-
-        <TextView
-            android:id="@+android:id/empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
+        android:layout_below="@+id/imageViewSeasonsWatchedToggle"
+        android:paddingTop="0dp"
+        android:fastScrollEnabled="true" />
 
 </RelativeLayout>

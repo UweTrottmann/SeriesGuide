@@ -4,45 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
-
-        <!-- The main content view -->
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <include layout="@layout/toolbar" />
+
+            <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                android:id="@+id/tabsShows"
+                style="@style/Widget.SeriesGuide.TabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content" />
 
-                <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-                    android:id="@+id/tabsShows"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pagerShows"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-                android:id="@+id/progressBarShows"
-                style="@style/Widget.SeriesGuide.SmoothProgressBar"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pagerShows"
                 android:layout_width="match_parent"
-                android:layout_height="4dp" />
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-    </LinearLayout>
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/progressBarShows"
+            style="@style/Widget.SeriesGuide.SmoothProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+    </FrameLayout>
 
     <include layout="@layout/drawer_left" />
 

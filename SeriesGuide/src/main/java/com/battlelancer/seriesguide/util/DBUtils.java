@@ -238,33 +238,32 @@ public class DBUtils {
     }
 
     /**
-     * Calls {@code getUpcomingEpisodes(false, context)}.
-     */
-    public static Cursor getUpcomingEpisodes(Context context) {
-        return getUpcomingEpisodes(false, context);
-    }
-
-    /**
-     * Returns all episodes that air today or later. Using Pacific Time to determine today. Excludes
-     * shows that are hidden.
+     * Returns all episodes that air today or later. Excludes shows that are hidden.
+     *
+     * <p> Filters by watched episodes or favorite shows if enabled.
      *
      * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
      */
-    public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched, -1);
+    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyFavorites,
+            boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyFavorites,
+                isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
-     * Return all episodes that aired the day before and earlier. Using Pacific Time to determine
-     * today. Excludes shows that are hidden.
+     * Return all episodes that aired the day before and earlier. Excludes shows that are hidden.
+     *
+     * <p> Filters by watched episodes or favorite shows if enabled.
      *
      * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
      */
-    public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched, -1);
+    public static Cursor getRecentEpisodes(Context context, boolean isOnlyFavorites,
+            boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyFavorites,
+                isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -280,13 +279,15 @@ public class DBUtils {
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
+        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
 
-        return buildActivityQuery(context, type, isNoWatched, numberOfDaysToInclude);
+        return buildActivityQuery(context, type, isOnlyFavorites, isNoWatched,
+                numberOfDaysToInclude);
     }
 
     private static String[][] buildActivityQuery(Context context, String type,
-            boolean isOnlyUnwatched, int numberOfDaysToInclude) {
+            boolean isOnlyFavorites, boolean isOnlyUnwatched, int numberOfDaysToInclude) {
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
 
@@ -323,7 +324,6 @@ public class DBUtils {
         };
 
         // append only favorites selection if necessary
-        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         if (isOnlyFavorites) {
             query.append(" AND ").append(Shows.SELECTION_FAVORITES);
         }

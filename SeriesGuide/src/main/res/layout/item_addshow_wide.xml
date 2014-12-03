@@ -21,16 +21,12 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/details"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/default_padding"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:orientation="vertical">
 
             <TextView

@@ -109,7 +109,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * be used.
      *
      * If you only require simple custmisation then you can use
-     * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
+     * {@link #setSelectedIndicatorColors(int...)} to achieve
      * similar effects.
      */
     public void setCustomTabColorizer(TabColorizer tabColorizer) {
@@ -123,13 +123,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     public void setSelectedIndicatorColors(int... colors) {
         mTabStrip.setSelectedIndicatorColors(colors);
-    }
-
-    /**
-     * Sets the color to be used for the tab bottom border.
-     */
-    public void setBottomBorderColor(int color) {
-        mTabStrip.setBottomBorderColor(color);
     }
 
     /**

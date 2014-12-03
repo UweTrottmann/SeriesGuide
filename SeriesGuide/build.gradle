@@ -26,7 +26,6 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 21
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
@@ -106,37 +105,31 @@ dependencies {
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
-    compile 'com.android.support:appcompat-v7:21.0.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
+    compile 'com.android.support:appcompat-v7:21.0.2'
+    compile('com.crashlytics.sdk.android:crashlytics:2.1.0@aar') {
         transitive = true
     }
-    compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
+    compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile 'com.jakewharton:butterknife:5.1.2'
-    compile 'com.jakewharton.timber:timber:2.4.1'
+    compile 'com.jakewharton:butterknife:6.0.0'
+    compile 'com.jakewharton.timber:timber:2.5.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    compile 'com.squareup.okio:okio:1.0.1'
-    compile ('com.squareup.okhttp:okhttp-urlconnection:2.0.0') {
-        exclude group: 'com.squareup.okhttp'
-    }
-    compile ('com.squareup.picasso:picasso:2.3.4') {
-        exclude group: 'com.squareup.okhttp'
-    }
-    compile ('com.squareup.retrofit:retrofit:1.6.1') {
-        exclude group: 'com.squareup.okhttp'
-    }
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup:tape:1.2.3'
     compile ('com.uwetrottmann:getglue-java:1.4.0') {
-        exclude group: 'com.squareup.okhttp'
+        exclude group: 'org.json', module: 'json'
     }
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
-    compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
     compile 'joda-time:joda-time:2.5'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:6.1.11'
+    compile 'com.google.android.gms:play-services:6.1.71'
 
     // App Engine
     compile ('com.google.api-client:google-api-client-android:1.19.0') {
@@ -148,21 +141,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Amazon flavor specific
-    amazonCompile files('libs/amazon/in-app-purchasing-2.0.0.jar')
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.1.jar')
 
     // android unit tests
     androidTestCompile 'com.squareup:fest-android:1.0.8'
-
-    // android instrumentation tests
-    androidTestCompile ('com.jakewharton.espresso:espresso:1.1-r3') {
-        // TODO workaround for http://b.android.com/65445
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    }
-    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
-        // TODO workaround for http://b.android.com/65445
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
 }
 
 // Google Play Services stripping to avoid dex method limit

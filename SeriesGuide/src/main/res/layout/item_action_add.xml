@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.SeriesGuide.Button.Borderless.Purple"
     android:id="@+id/textViewItemActionTitle"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:gravity="center"
-    tools:text="Episode Action" />
+    tools:text="@string/action_extensions_configure" />

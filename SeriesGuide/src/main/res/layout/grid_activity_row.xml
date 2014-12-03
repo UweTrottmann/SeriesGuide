@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/drawableCardBackground"
-    android:orientation="horizontal">
+    android:background="?attr/drawableCardBackground">
 
     <RelativeLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingRight="@dimen/default_padding"
-        android:background="?attr/selectableItemBackground">
+        tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/poster"
+            android:id="@+id/imageViewActivityPoster"
             android:layout_width="68dp"
             android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerInside" />
 
+        <com.battlelancer.seriesguide.widgets.WatchedBox
+            android:id="@+id/watchedBoxActivity"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="26dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/imageViewActivityCollected"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_below="@+id/watchedBoxActivity"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_collected" />
+
         <TextView
-            android:id="@+id/textViewUpcomingShow"
+            android:id="@+id/textViewActivityShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/inline_padding"
-            android:layout_toRightOf="@+id/poster"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="2x08 | Defiance"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
-            android:id="@+id/textViewUpcomingEpisode"
+            android:id="@+id/textViewActivityEpisode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewUpcomingShow"
-            android:layout_toRightOf="@+id/poster"
+            android:layout_below="@id/textViewActivityShow"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:layout_marginTop="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="1"
@@ -47,24 +63,19 @@
             android:textAppearance="@style/TextAppearance.Subhead" />
 
         <TextView
-            android:id="@+id/textViewUpcomingMeta"
+            android:id="@+id/textViewActivityMeta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewUpcomingEpisode"
+            android:layout_below="@+id/textViewActivityEpisode"
             android:layout_marginTop="2dp"
-            android:layout_toRightOf="@+id/poster"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/norating"
             tools:text="8:00 PM | Aug 17\nShowtime"
             android:textAppearance="@style/TextAppearance.Body.Dim" />
+
     </RelativeLayout>
 
-    <com.battlelancer.seriesguide.widgets.WatchedBox
-        android:id="@+id/watchedBoxUpcoming"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:scaleType="centerInside" />
-
-</LinearLayout>
+</FrameLayout>

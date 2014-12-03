@@ -4,10 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Set focus to work around textIsSelectable auto-scroll -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/large_padding"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -22,6 +26,7 @@
                 android:id="@+id/containerShowPoster"
                 android:layout_width="140dp"
                 android:layout_height="205dp"
+                android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView

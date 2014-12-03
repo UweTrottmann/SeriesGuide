@@ -138,6 +138,12 @@ public class PeopleListHelper {
             ViewGroup peopleContainer, String name, String description, String profilePath) {
         View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
 
+        // use clickable instead of activatable background
+        personView.setBackgroundResource(Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.selectableItemBackground));
+        // support keyboard nav
+        personView.setFocusable(true);
+
         ServiceUtils.getPicasso(context)
                 .load(TmdbTools.buildProfileImageUrl(context, profilePath,
                         TmdbTools.ProfileImageSize.W185))

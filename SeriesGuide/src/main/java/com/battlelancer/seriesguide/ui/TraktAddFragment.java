@@ -102,7 +102,7 @@ public class TraktAddFragment extends AddFragment {
         // (e.g. after config/page changed)
         if (adapter == null) {
             adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
-                    new ArrayList<SearchResult>(), mDetailsButtonListener);
+                    new ArrayList<SearchResult>());
 
             setProgressVisible(true, false);
             AndroidUtils.executeOnPool(new GetTraktShowsTask(getActivity()), type);

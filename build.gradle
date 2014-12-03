@@ -7,8 +7,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5'
+        classpath 'com.android.tools.build:gradle:0.14.4'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.6'
     }
 }
 
@@ -21,15 +21,15 @@ allprojects {
 
 ext {
     compileSdkVersion = 21
-    buildToolsVersion = '21.0.2'
+    buildToolsVersion = '21.1.1'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15055
-    versionName = '19.0.2'
+    versionCode = 15063
+    versionName = '20'
 }
 
 ext.libraries = [
 
-        supportv4: 'com.android.support:support-v4:21.0.0',
+        supportv4: 'com.android.support:support-v4:21.0.2',
 
 ]

@@ -26,10 +26,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
@@ -74,6 +76,7 @@ public abstract class AddFragment extends Fragment {
 
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
+        resultsGridView.setOnItemClickListener(mItemClickListener);
 
         // restore an existing adapter
         if (adapter != null) {
@@ -122,11 +125,11 @@ public abstract class AddFragment extends Fragment {
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    protected OnClickListener mDetailsButtonListener = new OnClickListener() {
+    protected AdapterView.OnItemClickListener mItemClickListener
+            = new AdapterView.OnItemClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // display more details in a dialog
-            int position = resultsGridView.getPositionForView(v);
             SearchResult show = adapter.getItem(position);
             AddShowDialogFragment.showAddDialog(show, getFragmentManager());
         }
@@ -138,15 +141,11 @@ public abstract class AddFragment extends Fragment {
 
         private int mLayout;
 
-        private OnClickListener mDetailsButtonListener;
-
-        public AddAdapter(Context context, int layout, List<SearchResult> objects,
-                OnClickListener detailsButtonListener) {
+        public AddAdapter(Context context, int layout, List<SearchResult> objects) {
             super(context, layout, objects);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mLayout = layout;
-            mDetailsButtonListener = detailsButtonListener;
         }
 
         @Override
@@ -158,13 +157,9 @@ public abstract class AddFragment extends Fragment {
 
                 viewHolder = new ViewHolder();
                 viewHolder.addbutton = convertView.findViewById(R.id.addbutton);
-                viewHolder.details = convertView.findViewById(R.id.details);
                 viewHolder.title = (TextView) convertView.findViewById(R.id.title);
                 viewHolder.description = (TextView) convertView.findViewById(R.id.description);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
-
-                // add button listeners
-                viewHolder.details.setOnClickListener(mDetailsButtonListener);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -207,8 +202,6 @@ public abstract class AddFragment extends Fragment {
             public ImageView poster;
 
             public View addbutton;
-
-            public View details;
         }
     }
 }

@@ -9,7 +9,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -36,9 +35,13 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/accent_primary</item>
 
+        <!-- Special attributes -->
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
+
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -47,16 +50,14 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_11</item>
-        <item name="textColorSgPrimary">@color/text_primary_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorPrimarySg">@color/white</item>
+        <item name="textColorSecondarySg">@color/white_70</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorTabStripText">@color/text_default</item>
-        <item name="sgColorTabStripUnderline">@color/background_dim</item>
+        <item name="sgColorTabStripText">@color/white_70</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
@@ -101,7 +102,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_dark</item>
 
         <!-- System widgets -->
         <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
@@ -117,21 +117,23 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!-- Special attributes -->
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
+
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_11</item>
-        <item name="textColorSgPrimary">@color/text_primary_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorPrimarySg">@color/white</item>
+        <item name="textColorSecondarySg">@color/white_70</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorTabStripText">@color/text_default</item>
-        <item name="sgColorTabStripUnderline">@color/background_dim</item>
+        <item name="sgColorTabStripText">@color/white_70</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
@@ -176,7 +178,6 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgDrawerItemBackground">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -203,9 +204,13 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/accent_primary</item>
 
+        <!-- Special attributes -->
+        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg_light</item>
+
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
@@ -218,16 +223,14 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorSgDefault">@color/black_87</item>
-        <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary</item>
+        <item name="textColorPrimarySg">@color/black_87</item>
+        <item name="textColorSecondarySg">@color/black_54</item>
         <item name="textColorSgGreen">@color/teal_dark</item>
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
-        <item name="sgColorTabStripText">@color/text_default_inverse</item>
-        <item name="sgColorTabStripUnderline">@color/divider_inverse</item>
+        <item name="sgColorTabStripText">@color/black_87</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
 
         <!-- Color Arrays -->

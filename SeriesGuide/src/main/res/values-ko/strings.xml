@@ -22,7 +22,7 @@
   <string name="description_poster">포스터 보이기</string>
   <string name="description_image">에피소드 이미지</string>
   <string name="clear">지우기</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">검색기록 지우기</string>
   <string name="discard">취소</string>
   <string name="save_selection">선택한 것 저장</string>
   <string name="search_hint">에피소드 검색</string>

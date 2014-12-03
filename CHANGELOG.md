@@ -5,6 +5,43 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 20 *(2014-12-02)*
+-----------------------------
+
+* Further design updates towards material design.
+* Favorite shows filter for list widget.
+* Collection indicator in Upcoming/Recent.
+
+#### 20 *(2014-12-02)*
+
+* TWEAK Show connected SeriesGuide Cloud or trakt account in nav drawer.
+* TWEAK Show ripples when touching list widget items.
+
+#### 20-beta3 *(2014-12-01)*
+
+* TWEAK Do not focus on movie search bar by default.
+* FIX Extension configure button text cut off.
+* FIX Duplicate list selector in search results. Improved other selectors as well.
+* NOTICE Latest translations from crowdin.
+
+#### 20-beta2 *(2014-11-21)*
+
+* TWEAK Add "Only favorite shows" setting to list widget. Setting is now independent from Upcoming/Recent filter settings.
+* TWEAK Move season watched/collected all/none options to inline icons.
+* TWEAK Display collected indicator in Upcoming/Recent. (You can still touch and hold to add/remove from collection.)
+* TWEAK Update app and notification icon.
+* FIX Light theme transparent tab text color is now black again.
+
+#### 20-beta1 *(2014-11-17)*
+
+* FEATURE Integrate with Google Now, say "Search for Newsroom on SeriesGuide".
+* TWEAK Combine tabs with action bar, add shadow on Android Lollipop.
+* TWEAK Text edit bar overlays action bar instead of pushing it down.
+* FIX Can touch tabs through open nav drawer.
+* FIX Better action bar height on phones in landscape.
+* NOTICE Latest translations from crowdin.
+
+
 Version 19 *(2014-10-30)*
 -----------------------------
 

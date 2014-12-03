@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="153dp"
-    android:background="?attr/drawableCardBackground"
-    android:foreground="?attr/selectableItemBackground">
+    android:background="?attr/drawableCardBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
