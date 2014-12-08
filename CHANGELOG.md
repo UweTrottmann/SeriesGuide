@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 20.1 *(2014-12-08)*
+-----------------------------
+
+* Fix crash on launch for certain Samsung and Wiko devices running Android 4.2.2.
+
 Version 20 *(2014-12-02)*
 -----------------------------
 
