@@ -10,12 +10,13 @@
 # Only obfuscate
 -dontshrink
 
-# Keep everything, but obfuscate the v7 support library
-# to work around wrongly exported libraries on some 4.2.2 ROMs
+# Keep source file and line numbers for better crash logs
+-keepattributes SourceFile,LineNumberTable
+
+# Allow obfuscation of android.support.v7.internal.view.menu.**
+# to avoid problem on Samsung 4.2.2 devices with appcompat v21
 # see https://code.google.com/p/android/issues/detail?id=78377
--keep class !android.support.v7.** { *; }
--repackageclasses 'com.uwetrottmann.obfuscated'
--allowaccessmodification
+-keep class !android.support.v7.internal.view.menu.** { *; }
 
 # Google Play Services is stripped of unused parts. Don't warn about them missing.
 -dontwarn com.google.ads.**

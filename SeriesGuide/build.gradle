@@ -92,6 +92,9 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             if(rootProject.file('keystore.properties').exists()) {
                 signingConfig signingConfigs.release
             }
