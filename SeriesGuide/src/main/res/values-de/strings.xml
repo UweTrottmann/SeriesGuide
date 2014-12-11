@@ -191,8 +191,8 @@
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>
   <string name="friends_empty">Keine Aktivität von Freunden auf trakt.</string>
-  <string name="user_stream">Sie</string>
-  <string name="user_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Serien ein!</string>
+  <string name="user_stream">Chronik</string>
+  <string name="user_stream_empty">Keine Chronik auf trakt. Sehen Sie sich Serien and und checken Sie ein!</string>
   <string name="user_movie_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Filme ein!</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>

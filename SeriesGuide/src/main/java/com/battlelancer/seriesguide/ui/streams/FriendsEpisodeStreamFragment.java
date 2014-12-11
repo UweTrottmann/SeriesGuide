@@ -17,15 +17,22 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodeStreamAdapter;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.List;
 
@@ -83,6 +90,56 @@ public class FriendsEpisodeStreamFragment extends StreamFragment {
                     // do nothing
                 }
             };
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // do not respond if we get a header position (e.g. shortly after data was refreshed)
+        if (position < 0) {
+            return;
+        }
+
+        ActivityItem activity = mAdapter.getItem(position);
+        if (activity == null) {
+            return;
+        }
+
+        TvShowEpisode episode = activity.episode;
+        if (episode == null && activity.episodes != null && activity.episodes.size() > 0) {
+            // looks like we have multiple episodes, get first one
+            episode = activity.episodes.get(0);
+        }
+        if (episode == null) {
+            // still no episode? give up
+            return;
+        }
+
+        Cursor episodeQuery = getActivity().getContentResolver().query(
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id),
+                new String[] {
+                        SeriesGuideContract.Episodes._ID
+                }, SeriesGuideContract.Episodes.NUMBER + "=" + episode.number + " AND "
+                        + SeriesGuideContract.Episodes.SEASON + "=" + episode.season, null,
+                null
+        );
+        if (episodeQuery == null) {
+            return;
+        }
+
+        if (episodeQuery.getCount() != 0) {
+            // display the episode details if we have a match
+            episodeQuery.moveToFirst();
+            showDetails(view, episodeQuery.getInt(0));
+        } else {
+            // offer to add the show if it's not in the show database yet
+            SearchResult showToAdd = new SearchResult();
+            showToAdd.tvdbid = activity.show.tvdb_id;
+            showToAdd.title = activity.show.title;
+            showToAdd.overview = activity.show.overview;
+            AddShowDialogFragment.showAddDialog(showToAdd, getFragmentManager());
+        }
+
+        episodeQuery.close();
+    }
 
     private static class FriendsEpisodeActivityLoader
             extends GenericSimpleLoader<List<ActivityItem>> {

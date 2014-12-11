@@ -27,21 +27,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
 import com.battlelancer.seriesguide.adapters.MovieStreamAdapter;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.ActivityItem;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.List;
+import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
  * Displays a stream of movies the user has recently watched on trakt.
  */
 public class UserMovieStreamFragment extends StreamFragment {
 
-    private MovieStreamAdapter mAdapter;
+    private MovieHistoryAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -58,7 +67,7 @@ public class UserMovieStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new MovieStreamAdapter(getActivity());
+            mAdapter = new MovieHistoryAdapter(getActivity());
         }
         return mAdapter;
     }
@@ -82,14 +91,17 @@ public class UserMovieStreamFragment extends StreamFragment {
             return;
         }
 
-        ActivityItem activity = mAdapter.getItem(position);
-        if (activity == null) {
+        HistoryEntry item = mAdapter.getItem(position);
+        if (item == null) {
             return;
         }
 
         // display movie details
+        if (item.movie == null || item.movie.ids == null) {
+            return;
+        }
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, activity.movie.tmdbId);
+        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movie.ids.tmdb);
 
         ActivityCompat.startActivity(getActivity(), i,
                 ActivityOptionsCompat
@@ -98,64 +110,55 @@ public class UserMovieStreamFragment extends StreamFragment {
         );
     }
 
-    private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
+    private LoaderManager.LoaderCallbacks<List<HistoryEntry>> mActivityLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<HistoryEntry>>() {
                 @Override
-                public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
+                public Loader<List<HistoryEntry>> onCreateLoader(int id, Bundle args) {
                     return new UserMoviesActivityLoader(getActivity());
                 }
 
                 @Override
-                public void onLoadFinished(Loader<List<ActivityItem>> loader,
-                        List<ActivityItem> data) {
+                public void onLoadFinished(Loader<List<HistoryEntry>> loader,
+                        List<HistoryEntry> data) {
                     mAdapter.setData(data);
                     showProgressBar(false);
                 }
 
                 @Override
-                public void onLoaderReset(Loader<List<ActivityItem>> loader) {
+                public void onLoaderReset(Loader<List<HistoryEntry>> loader) {
                     // do nothing
                 }
             };
 
     private static class UserMoviesActivityLoader
-            extends GenericSimpleLoader<List<ActivityItem>> {
+            extends GenericSimpleLoader<List<HistoryEntry>> {
 
         public UserMoviesActivityLoader(Context context) {
             super(context);
         }
 
         @Override
-        public List<ActivityItem> loadInBackground() {
-            //Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
-            //if (manager == null) {
-            //    return null;
-            //}
-            //
-            //try {
-            //    final ActivityService activityService = manager.activityService();
-            //    // get movies from the last 2 months
-            //    Activity activity = activityService.user(
-            //            TraktCredentials.get(getContext()).getUsername(),
-            //            ActivityType.Movie.toString(),
-            //            ActivityAction.Watching + ","
-            //                    + ActivityAction.Checkin + ","
-            //                    + ActivityAction.Scrobble + ","
-            //                    + ActivityAction.Seen,
-            //            (System.currentTimeMillis() - 8 * DateUtils.WEEK_IN_MILLIS) / 1000,
-            //            null,
-            //            null
-            //    );
-            //
-            //    if (activity == null || activity.activity == null) {
-            //        Timber.e("Loading user movie activity failed, was null");
-            //        return null;
-            //    }
-            //
-            //    return activity.activity;
-            //} catch (RetrofitError e) {
-            //    Timber.e(e, "Loading user movie activity failed");
-            //}
+        public List<HistoryEntry> loadInBackground() {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
+            if (trakt == null) {
+                return null;
+            }
+
+            try {
+                List<HistoryEntry> history = trakt.users()
+                        .historyMovies("me", 1, 25, Extended.IMAGES);
+
+                if (history == null) {
+                    Timber.e("Loading user movie history failed, was null");
+                    return null;
+                }
+
+                return history;
+            } catch (RetrofitError e) {
+                Timber.e(e, "Loading user movie history failed");
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(getContext()).setCredentialsInvalid();
+            }
 
             return null;
         }
