@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -291,17 +292,8 @@ public class TraktCommentsFragment extends Fragment implements
             }
         } else {
             // open shout or review page
-            int showTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
-            int episodeNumber = getArguments().getInt(InitBundle.EPISODE_NUMBER);
-            String typeUrl;
-            if (showTvdbId == 0) {
-                typeUrl = TRAKT_MOVIE_COMMENT_PAGE_URL;
-            } else if (episodeNumber == 0) {
-                typeUrl = TRAKT_SHOW_COMMENT_PAGE_URL;
-            } else {
-                typeUrl = TRAKT_EPISODE_COMMENT_PAGE_URL;
-            }
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(typeUrl + comment.id));
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(TraktLink.comment(comment.id)));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             Utils.tryStartActivity(getActivity(), intent, true);
         }

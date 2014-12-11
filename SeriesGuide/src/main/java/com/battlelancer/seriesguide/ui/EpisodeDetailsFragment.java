@@ -514,8 +514,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mSkipButton.setEnabled(true);
 
         // service buttons
-        ServiceUtils.setUpTraktButton(mShowTvdbId, mSeasonNumber, mEpisodeNumber, mTraktButton,
-                TAG);
+        ServiceUtils.setUpTraktButton(getEpisodeTvdbId(), mTraktButton, TAG);
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {
@@ -563,7 +562,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         if (mEpisodeTitle == null || mShowTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(getActivity(), mShowTvdbId, mSeasonNumber, mEpisodeNumber,
+        ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber,
                 mShowTitle, mEpisodeTitle);
 
         fireTrackerEvent("Share");

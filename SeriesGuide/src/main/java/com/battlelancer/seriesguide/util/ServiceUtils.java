@@ -282,20 +282,17 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows or episodes
-     * trakt.tv page.<br> If any of the season or episode numbers is below 0, displays the show
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show or episode trakt.tv
      * page.
      */
-    public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
-            final int episodeNumber,
-            final View traktButton, final String logTag) {
+    public static void setUpTraktButton(final int showTvdbId, final View traktButton,
+            final String logTag) {
         if (traktButton != null) {
             traktButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber,
-                            episodeNumber);
+                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -305,13 +302,6 @@ public final class ServiceUtils {
                 }
             });
         }
-    }
-
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows trakt.tv page.
-     */
-    public static void setUpTraktButton(int showTvdbId, View traktButton, String logTag) {
-        setUpTraktButton(showTvdbId, -1, -1, traktButton, logTag);
     }
 
     /**

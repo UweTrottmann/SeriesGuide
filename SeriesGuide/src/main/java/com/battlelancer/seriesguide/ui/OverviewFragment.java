@@ -413,8 +413,8 @@ public class OverviewFragment extends Fragment implements
         int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         String episodeTitle = mCurrentEpisodeCursor.getString(EpisodeQuery.TITLE);
 
-        ShareUtils.shareEpisode(getActivity(), getShowId(), seasonNumber, episodeNumber, mShowTitle,
-                episodeTitle);
+        ShareUtils.shareEpisode(getActivity(), mCurrentEpisodeTvdbId, seasonNumber, episodeNumber,
+                mShowTitle, episodeTitle);
 
         fireTrackerEvent("Share");
     }
@@ -754,7 +754,7 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpTvdbButton(getShowId(), seasonTvdbId, episodeTvdbId, buttonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktButton(getShowId(), seasonNumber, episodeNumber, buttonTrakt, TAG);
+        ServiceUtils.setUpTraktButton(mCurrentEpisodeTvdbId, buttonTrakt, TAG);
 
         // trakt shouts button
         buttonComments.setOnClickListener(new OnClickListener() {

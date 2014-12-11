@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
@@ -668,23 +669,12 @@ public class TraktTools {
         }
     }
 
-    public static String buildEpisodeOrShowUrl(int showTvdbId, int seasonNumber,
-            int episodeNumber) {
-        String uri;
-        if (seasonNumber < 0 || episodeNumber < 0) {
-            // look just for the show page
-            uri = TRAKT_SEARCH_SHOW_URL + showTvdbId;
-        } else {
-            // look for the episode page
-            uri = TRAKT_SEARCH_SHOW_URL + showTvdbId
-                    + TRAKT_SEARCH_SEASON_ARG + seasonNumber
-                    + TRAKT_SEARCH_EPISODE_ARG + episodeNumber;
-        }
-        return uri;
+    public static String buildEpisodeOrShowUrl(int tvdbId) {
+        return TraktLink.tvdb(tvdbId);
     }
 
     public static String buildMovieUrl(int movieTmdbId) {
-        return TRAKT_SEARCH_MOVIE_URL + movieTmdbId;
+        return TraktLink.tmdb(movieTmdbId);
     }
 
     /**
