@@ -125,7 +125,9 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup:tape:1.2.3'
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
-    compile 'com.uwetrottmann:trakt-java:4.0.0-SNAPSHOT'
+    compile ('com.uwetrottmann:trakt-java:4.0.0-SNAPSHOT') {
+        exclude group: 'org.json', module: 'json'
+    }
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'joda-time:joda-time:2.5'
 
