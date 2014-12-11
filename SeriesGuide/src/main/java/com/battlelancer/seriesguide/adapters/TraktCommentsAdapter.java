@@ -74,9 +74,17 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         // Bind the data efficiently with the holder.
         final Comment comment = getItem(position);
 
-        holder.name.setText(comment.user.username);
+        String name = null;
+        String avatarPath = null;
+        if (comment.user != null) {
+            name = comment.user.username;
+            if (comment.user.images != null && comment.user.images.avatar != null) {
+                avatarPath = comment.user.images.avatar.full;
+            }
+        }
+        holder.name.setText(name);
         ServiceUtils.getPicasso(getContext())
-                .load(comment.user.images.avatar.full)
+                .load(avatarPath)
                 .into(holder.avatar);
 
         if (comment.spoiler) {
