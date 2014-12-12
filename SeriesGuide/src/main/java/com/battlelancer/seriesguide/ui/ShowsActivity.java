@@ -86,7 +86,7 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
 
-    private static final int TAB_COUNT_WITH_TRAKT = 4;
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
 
     private IabHelper mBillingHelper;
 
