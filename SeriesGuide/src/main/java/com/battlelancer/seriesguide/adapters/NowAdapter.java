@@ -16,130 +16,185 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.model.HeaderData;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Sectioned adapter displaying recently watched episodes, episodes released today and episodes
  * recently watched by trakt friends.
  */
-public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
+        implements StickyGridHeadersBaseAdapter {
 
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
+    private List<HeaderData> mHeaders;
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+    public enum NowType {
+        RECENTLY_WATCHED,
+        RELEASED_TODAY,
+        FRIENDS
+    }
+
+    public static class NowItem {
+        public String title;
+        public String description;
+        public String poster;
+        public NowType type;
+
+        public NowItem(String title, String description, String poster, NowType type) {
+            this.title = title;
+            this.description = description;
+            this.poster = poster;
+            this.type = type;
+        }
+    }
+
+    public NowAdapter(Context context) {
+        super(context, 0);
+    }
+
+    public class HeaderViewHolder {
         public TextView title;
 
         public HeaderViewHolder(View itemView) {
-            super(itemView);
-
             title = (TextView) itemView.findViewById(R.id.textViewNowHeader);
         }
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder {
         public TextView title;
         public TextView description;
 
         public ItemViewHolder(View itemView) {
-            super(itemView);
-
             title = (TextView) itemView.findViewById(R.id.textViewNowTitle);
             description = (TextView) itemView.findViewById(R.id.textViewNowDescription);
         }
     }
 
     @Override
-    public int getItemViewType(int position) {
-        int recents = getRecentlyWatchedCount();
-        int today = getReleasedTodayCount();
-
-        // section headers (order is fixed!)
-        // recents, today or friends (1 total)
-        if (position == 0) {
-            // first item is always a header
-            return TYPE_HEADER;
-        }
-        // recents or friends first (2 total)
-        if (recents != 0 && position == recents + 1) {
-            return TYPE_HEADER;
-        }
-        if (recents == 0 && today != 0 && position == today + 1) {
-            return TYPE_HEADER;
-        }
-        // recents, today and friends (3 total)
-        if (recents != 0 && today != 0 && position == recents + 1 + today + 1) {
-            return TYPE_HEADER;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ItemViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_now, parent, false);
+            holder = new ItemViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ItemViewHolder) convertView.getTag();
         }
 
-        // show/episode item otherwise
-        return TYPE_ITEM;
+        NowItem item = getItem(position);
+
+        // TODO
+        holder.title.setText(item.title);
+        holder.description.setText(item.type.toString());
+
+        return convertView;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from(parent.getContext())
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        // get header position for item position
+        position = mHeaders.get(position).getRefPosition();
+
+        NowItem item = getItem(position);
+        if (item == null) {
+            return null;
+        }
+
+        HeaderViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_now_header, parent, false);
-            return new HeaderViewHolder(v);
+            holder = new HeaderViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
         }
 
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_now, parent, false);
-        return new ItemViewHolder(v);
+        int titleResId;
+        if (item.type == NowType.RECENTLY_WATCHED) {
+            titleResId = R.string.recently_watched;
+        } else if (item.type == NowType.RELEASED_TODAY) {
+            titleResId = R.string.released_today;
+        } else {
+            titleResId = R.string.friends_recently;
+        }
+        holder.title.setText(titleResId);
+
+        return convertView;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        switch (holder.getItemViewType()) {
-            case TYPE_HEADER: {
-                HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
-                viewHolder.title.setText("Section header");
-                break;
-            }
-            case TYPE_ITEM: {
-                ItemViewHolder viewHolder = (ItemViewHolder) holder;
-                viewHolder.title.setText("Item Title");
-                viewHolder.description.setText("Item Description");
-                break;
-            }
+    public int getCountForHeader(int position) {
+        if (mHeaders != null) {
+            return mHeaders.get(position).getCount();
         }
+        return 0;
     }
 
     @Override
-    public int getItemCount() {
-        int recents = getRecentlyWatchedCount();
-        int today = getReleasedTodayCount();
-        int friends = getFriendsRecentlyWatchedCount();
-
-        // +1 for each section header
-        if (recents != 0) {
-            recents += 1;
+    public int getNumHeaders() {
+        if (mHeaders != null) {
+            return mHeaders.size();
         }
-        if (today != 0) {
-            today += 1;
-        }
-        if (friends != 0) {
-            friends += 1;
-        }
-
-        return recents + today + friends;
+        return 0;
     }
 
-    private int getRecentlyWatchedCount() {
-        return 1;
+    @Override
+    public void notifyDataSetChanged() {
+        // re-create headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = generateHeaderList();
+        super.notifyDataSetChanged();
     }
 
-    private int getReleasedTodayCount() {
-        return 2;
+    @Override
+    public void notifyDataSetInvalidated() {
+        // remove headers before letting notifyDataSetChanged reach the AdapterView
+        mHeaders = null;
+        super.notifyDataSetInvalidated();
     }
 
-    private int getFriendsRecentlyWatchedCount() {
+    protected List<HeaderData> generateHeaderList() {
+        if (getCount() == 0) {
+            return null;
+        }
+
+        Map<Long, HeaderData> mapping = new HashMap<>();
+        List<HeaderData> headers = new ArrayList<>();
+
+        for (int i = 0; i < getCount(); i++) {
+            long headerId = getHeaderId(i);
+            HeaderData headerData = mapping.get(headerId);
+            if (headerData == null) {
+                headerData = new HeaderData(i);
+                headers.add(headerData);
+            }
+            headerData.incrementCount();
+            mapping.put(headerId, headerData);
+        }
+
+        return headers;
+    }
+
+    /**
+     * Maps items to their section.
+     */
+    private long getHeaderId(int position) {
+        NowItem item = getItem(position);
+        if (item != null) {
+            return item.type.ordinal();
+        }
         return 0;
     }
 }

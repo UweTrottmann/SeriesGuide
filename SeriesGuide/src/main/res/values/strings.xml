@@ -191,6 +191,9 @@
 
     <!-- Now -->
     <string name="now_tab">Now</string>
+    <string name="recently_watched">Recently watched</string>
+    <string name="released_today">Released today</string>
+    <string name="friends_recently">Your friends</string>
 
     <!-- Activity -->
     <string name="upcoming">Upcoming</string>

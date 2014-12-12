@@ -18,8 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
@@ -34,7 +35,7 @@ import com.battlelancer.seriesguide.adapters.NowAdapter;
  */
 public class NowFragment extends Fragment {
 
-    @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
+    @InjectView(R.id.gridViewNow) StickyGridHeadersGridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,11 +50,16 @@ public class NowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        List<NowAdapter.NowItem> nowItems = new ArrayList<>();
+        nowItems.add(new NowAdapter.NowItem("Homeland", "", "", NowAdapter.NowType.RECENTLY_WATCHED));
+        nowItems.add(new NowAdapter.NowItem("Homeland2", "", "", NowAdapter.NowType.RELEASED_TODAY));
+        nowItems.add(new NowAdapter.NowItem("Homeland3", "", "", NowAdapter.NowType.RELEASED_TODAY));
 
-        NowAdapter adapter = new NowAdapter();
-        recyclerView.setAdapter(adapter);
+        NowAdapter adapter = new NowAdapter(getActivity());
+        adapter.addAll(nowItems);
+
+        gridView.setAdapter(adapter);
+        gridView.setAreHeadersSticky(false);
     }
 
     @Override

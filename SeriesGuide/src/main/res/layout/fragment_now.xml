@@ -20,9 +20,16 @@
     android:layout_height="match_parent"
     tools:context="com.battlelancer.seriesguide.ui.NowFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewNow"
+    <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
+        android:id="@+id/gridViewNow"
+        style="@style/Widget.SeriesGuide.GridSelectorTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:horizontalSpacing="@dimen/grid_horizontal_spacing"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/default_padding"
+        android:verticalSpacing="@dimen/grid_vertical_spacing" />
 
 </FrameLayout>
