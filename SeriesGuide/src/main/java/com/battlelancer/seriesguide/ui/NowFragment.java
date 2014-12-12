@@ -18,6 +18,8 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +38,8 @@ import java.util.List;
 public class NowFragment extends Fragment {
 
     @InjectView(R.id.gridViewNow) StickyGridHeadersGridView gridView;
+
+    private NowAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,16 +54,13 @@ public class NowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        List<NowAdapter.NowItem> nowItems = new ArrayList<>();
-        nowItems.add(new NowAdapter.NowItem("Homeland", "", "", NowAdapter.NowType.RECENTLY_WATCHED));
-        nowItems.add(new NowAdapter.NowItem("Homeland2", "", "", NowAdapter.NowType.RELEASED_TODAY));
-        nowItems.add(new NowAdapter.NowItem("Homeland3", "", "", NowAdapter.NowType.RELEASED_TODAY));
-
-        NowAdapter adapter = new NowAdapter(getActivity());
-        adapter.addAll(nowItems);
+        adapter = new NowAdapter(getActivity());
 
         gridView.setAdapter(adapter);
         gridView.setAreHeadersSticky(false);
+
+        getLoaderManager().initLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
+                releasedTodayCallbacks);
     }
 
     @Override
@@ -68,4 +69,23 @@ public class NowFragment extends Fragment {
 
         ButterKnife.reset(this);
     }
+
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
+            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @Override
+        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
+            return new ReleasedTodayLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+                List<NowAdapter.NowItem> data) {
+            adapter.setReleasedTodayData(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+            // do nothing
+        }
+    };
 }

@@ -21,9 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
+import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,10 +76,12 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     public class ItemViewHolder {
         public TextView title;
         public TextView description;
+        public ImageView poster;
 
         public ItemViewHolder(View itemView) {
             title = (TextView) itemView.findViewById(R.id.textViewNowTitle);
             description = (TextView) itemView.findViewById(R.id.textViewNowDescription);
+            poster = (ImageView) itemView.findViewById(R.id.imageViewNowPoster);
         }
     }
 
@@ -94,10 +98,9 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         }
 
         NowItem item = getItem(position);
-
-        // TODO
         holder.title.setText(item.title);
-        holder.description.setText(item.type.toString());
+        holder.description.setText(item.description);
+        Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
 
         return convertView;
     }
@@ -165,7 +168,12 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         super.notifyDataSetInvalidated();
     }
 
-    protected List<HeaderData> generateHeaderList() {
+    public void setReleasedTodayData(List<NowItem> items) {
+        clear();
+        addAll(items);
+    }
+
+    private List<HeaderData> generateHeaderList() {
         if (getCount() == 0) {
             return null;
         }
