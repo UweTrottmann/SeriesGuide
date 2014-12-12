@@ -21,4 +21,4 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/default_padding"
     tools:text="Recently Watched"
-    android:textAppearance="@style/TextAppearance.Subhead" />
+    android:textAppearance="@style/TextAppearance.Title" />
