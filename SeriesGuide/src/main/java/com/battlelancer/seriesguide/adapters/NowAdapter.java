@@ -39,7 +39,10 @@ import java.util.Map;
 public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         implements StickyGridHeadersBaseAdapter {
 
-    private List<HeaderData> mHeaders;
+    private List<HeaderData> headers;
+    private List<NowItem> recentlyWatched;
+    private List<NowItem> releasedToday;
+    private List<NowItem> friendsRecently;
 
     public enum NowType {
         RECENTLY_WATCHED,
@@ -108,7 +111,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
         // get header position for item position
-        position = mHeaders.get(position).getRefPosition();
+        position = headers.get(position).getRefPosition();
 
         NowItem item = getItem(position);
         if (item == null) {
@@ -140,16 +143,16 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     @Override
     public int getCountForHeader(int position) {
-        if (mHeaders != null) {
-            return mHeaders.get(position).getCount();
+        if (headers != null) {
+            return headers.get(position).getCount();
         }
         return 0;
     }
 
     @Override
     public int getNumHeaders() {
-        if (mHeaders != null) {
-            return mHeaders.size();
+        if (headers != null) {
+            return headers.size();
         }
         return 0;
     }
@@ -157,20 +160,43 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     @Override
     public void notifyDataSetChanged() {
         // re-create headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = generateHeaderList();
+        headers = generateHeaderList();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetInvalidated() {
         // remove headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = null;
+        headers = null;
         super.notifyDataSetInvalidated();
     }
 
-    public void setReleasedTodayData(List<NowItem> items) {
+    public synchronized void setRecentlyWatched(List<NowItem> items) {
+        recentlyWatched = items;
+        reloadData();
+    }
+
+    public synchronized void setReleasedTodayData(List<NowItem> items) {
+        releasedToday = items;
+        reloadData();
+    }
+
+    public synchronized void setFriendsRecentlyWatched(List<NowItem> items) {
+        friendsRecently = items;
+        reloadData();
+    }
+
+    private void reloadData() {
         clear();
-        addAll(items);
+        if (recentlyWatched != null) {
+            addAll(recentlyWatched);
+        }
+        if (releasedToday != null) {
+            addAll(releasedToday);
+        }
+        if (friendsRecently != null) {
+            addAll(friendsRecently);
+        }
     }
 
     private List<HeaderData> generateHeaderList() {
