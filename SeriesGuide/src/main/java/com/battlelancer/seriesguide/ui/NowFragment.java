@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import java.util.List;
@@ -59,6 +60,8 @@ public class NowFragment extends Fragment {
         gridView.setAdapter(adapter);
         gridView.setAreHeadersSticky(false);
 
+        getLoaderManager().initLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                recentlyCallbacks);
         getLoaderManager().initLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
     }
@@ -69,6 +72,25 @@ public class NowFragment extends Fragment {
 
         ButterKnife.reset(this);
     }
+
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
+            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @Override
+        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
+            return new RecentlyWatchedLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+                List<NowAdapter.NowItem> data) {
+            adapter.setRecentlyWatched(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+            // do nothing
+        }
+    };
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
