@@ -25,9 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,14 +54,16 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     public static class NowItem {
         public int episodeTvdbId;
+        public long timestamp;
         public String title;
         public String description;
         public String poster;
         public NowType type;
 
-        public NowItem(int episodeTvdbId, String title, String description, String poster,
-                NowType type) {
+        public NowItem(int episodeTvdbId, long timestamp, String title, String description,
+                String poster, NowType type) {
             this.episodeTvdbId = episodeTvdbId;
+            this.timestamp = timestamp;
             this.title = title;
             this.description = description;
             this.poster = poster;
@@ -82,11 +86,13 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     public class ItemViewHolder {
         public TextView title;
         public TextView description;
+        public TextView timestamp;
         public ImageView poster;
 
         public ItemViewHolder(View itemView) {
             title = (TextView) itemView.findViewById(R.id.textViewNowTitle);
             description = (TextView) itemView.findViewById(R.id.textViewNowDescription);
+            timestamp = (TextView) itemView.findViewById(R.id.textViewNowTimestamp);
             poster = (ImageView) itemView.findViewById(R.id.imageViewNowPoster);
         }
     }
@@ -106,6 +112,8 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         NowItem item = getItem(position);
         holder.title.setText(item.title);
         holder.description.setText(item.description);
+        holder.timestamp.setText(
+                TimeTools.formatToRelativeLocalReleaseTime(getContext(), new Date(item.timestamp)));
         Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
 
         return convertView;

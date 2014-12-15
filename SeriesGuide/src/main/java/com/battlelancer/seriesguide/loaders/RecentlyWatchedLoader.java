@@ -86,6 +86,7 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
             if (episodeQuery.moveToFirst()) {
                 NowAdapter.NowItem item = new NowAdapter.NowItem(
                         episodeTvdbId,
+                        timestamp,
                         episodeQuery.getString(8),
                         Utils.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
                                 episodeQuery.getInt(2), episodeQuery.getString(1)),
