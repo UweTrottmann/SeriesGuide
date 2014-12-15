@@ -441,6 +441,14 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "movies_last_updated";
     }
 
+    interface ActivityColumns {
+
+        String TIMESTAMP = "activity_time";
+
+        String EPISODE_TVDB_ID  = "activity_tvdb";
+
+    }
+
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SeriesGuideApplication.CONTENT_AUTHORITY);
 
@@ -477,6 +485,8 @@ public class SeriesGuideContract {
     public static final String PATH_WITH_LAST_EPISODE = "with-last-episode";
 
     public static final String PATH_MOVIES = "movies";
+
+    public static final String PATH_ACTIVITY = "activity";
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
@@ -806,6 +816,22 @@ public class SeriesGuideContract {
 
         public static String getId(Uri uri) {
             return uri.getPathSegments().get(1);
+        }
+    }
+
+    public static class Activity implements ActivityColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ACTIVITY)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
+
+        public static Uri buildActivityUri(String episodeTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
         }
     }
 

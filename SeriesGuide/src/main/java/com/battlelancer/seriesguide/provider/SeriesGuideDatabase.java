@@ -43,6 +43,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -126,7 +127,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_34_TRAKT_V2 = 34;
 
-    public static final int DATABASE_VERSION = DBVER_34_TRAKT_V2;
+    /**
+     * Added activity table to store recently watched episodes.
+     */
+    public static final int DBVER_35_ACTIVITY_TABLE = 35;
+
+    public static final int DATABASE_VERSION = DBVER_35_ACTIVITY_TABLE;
 
     private DatabaseUtils.InsertHelper mShowsInserter;
     private DatabaseUtils.InsertHelper mSeasonsInserter;
@@ -134,6 +140,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private DatabaseUtils.InsertHelper mListsInserter;
     private DatabaseUtils.InsertHelper mListItemsInserter;
     private DatabaseUtils.InsertHelper mMoviesInserter;
+    private DatabaseUtils.InsertHelper mActivityInserter;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -202,6 +209,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + ")";
 
         String MOVIES = "movies";
+
+        String ACTIVITY = "activity";
     }
 
     private interface Selections {
@@ -507,6 +516,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
+            + " ("
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
+            + ActivityColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -535,6 +552,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         return mMoviesInserter.insert(values);
     }
 
+    public long insertActivity(ContentValues values) {
+        return mActivityInserter.insert(values);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_SHOWS_TABLE);
@@ -550,6 +571,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
 
         db.execSQL(CREATE_MOVIES_TABLE);
+
+        db.execSQL(CREATE_ACTIVITY_TABLE);
     }
 
     @Override
@@ -560,6 +583,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         mListsInserter = new DatabaseUtils.InsertHelper(db, Tables.LISTS);
         mListItemsInserter = new DatabaseUtils.InsertHelper(db, Tables.LIST_ITEMS);
         mMoviesInserter = new DatabaseUtils.InsertHelper(db, Tables.MOVIES);
+        mActivityInserter = new DatabaseUtils.InsertHelper(db, Tables.ACTIVITY);
     }
 
     @Override
@@ -611,7 +635,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyThree(db);
             case DBVER_33_IGNORE_ARTICLE_SORT:
                 upgradeToThirtyFour(db);
-                version = DBVER_34_TRAKT_V2;
+            case DBVER_34_TRAKT_V2:
+                upgradeToThirtyFive(db);
+                version = DBVER_35_ACTIVITY_TABLE;
         }
 
         // drop all tables if version is not right
@@ -632,10 +658,20 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.ACTIVITY);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_35_ACTIVITY_TABLE}.
+     */
+    private static void upgradeToThirtyFive(SQLiteDatabase db) {
+        if (!isTableExisting(db, Tables.ACTIVITY)) {
+            db.execSQL(CREATE_ACTIVITY_TABLE);
+        }
     }
 
     /**
