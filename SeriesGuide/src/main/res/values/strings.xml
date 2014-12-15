@@ -194,6 +194,7 @@
     <string name="recently_watched">Recently watched</string>
     <string name="released_today">Released today</string>
     <string name="friends_recently">Your friends</string>
+    <string name="now_empty">Nothing going on. Watch some TV shows!</string>
 
     <!-- Activity -->
     <string name="upcoming">Upcoming</string>

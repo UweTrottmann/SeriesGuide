@@ -16,19 +16,29 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
+import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import java.util.List;
 
@@ -36,9 +46,13 @@ import java.util.List;
  * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
  * to trakt).
  */
-public class NowFragment extends Fragment {
+public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+        AdapterView.OnItemClickListener {
+
+    @InjectView(R.id.swipeRefreshLayoutNow) SwipeRefreshLayout swipeRefreshLayout;
 
     @InjectView(R.id.gridViewNow) StickyGridHeadersGridView gridView;
+    @InjectView(R.id.emptyViewNow) TextView emptyView;
 
     private NowAdapter adapter;
 
@@ -48,12 +62,26 @@ public class NowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
         ButterKnife.inject(this, v);
 
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false,
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_start_margin),
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_end_margin));
+
+        gridView.setOnItemClickListener(this);
+        gridView.setEmptyView(emptyView);
+
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                R.attr.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
         adapter = new NowAdapter(getActivity());
 
@@ -64,6 +92,8 @@ public class NowFragment extends Fragment {
                 recentlyCallbacks);
         getLoaderManager().initLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -71,6 +101,71 @@ public class NowFragment extends Fragment {
         super.onDestroyView();
 
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.stream_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_stream_refresh) {
+            refreshStream();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshStream();
+    }
+
+    private void refreshStream() {
+        getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                recentlyCallbacks);
+        getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
+                releasedTodayCallbacks);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // do not respond if we get a header position (e.g. shortly after data was refreshed)
+        if (position < 0) {
+            return;
+        }
+
+        NowAdapter.NowItem item = adapter.getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        // TODO show episode
+    }
+
+    /**
+     * Starts an activity to display the given episode.
+     */
+    protected void showDetails(View view, int episodeId) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), EpisodesActivity.class);
+        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+
+        ActivityCompat.startActivity(getActivity(), intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
+    }
+
+    /**
+     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * wrapping the stream view.
+     */
+    protected void showProgressBar(boolean isShowing) {
+        swipeRefreshLayout.setRefreshing(isShowing);
     }
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
@@ -84,6 +179,7 @@ public class NowFragment extends Fragment {
         public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             adapter.setRecentlyWatched(data);
+            showProgressBar(false);
         }
 
         @Override
@@ -103,6 +199,7 @@ public class NowFragment extends Fragment {
         public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             adapter.setReleasedTodayData(data);
+            showProgressBar(false);
         }
 
         @Override
