@@ -73,6 +73,7 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
 
             while (query.moveToNext()) {
                 NowAdapter.NowItem item = new NowAdapter.NowItem(
+                        query.getInt(0),
                         query.getString(8),
                         Utils.getNextEpisodeString(getContext(), query.getInt(3), query.getInt(2),
                                 query.getString(1)),

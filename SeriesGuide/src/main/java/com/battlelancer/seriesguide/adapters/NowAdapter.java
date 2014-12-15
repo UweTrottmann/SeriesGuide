@@ -51,12 +51,15 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     }
 
     public static class NowItem {
+        public int episodeTvdbId;
         public String title;
         public String description;
         public String poster;
         public NowType type;
 
-        public NowItem(String title, String description, String poster, NowType type) {
+        public NowItem(int episodeTvdbId, String title, String description, String poster,
+                NowType type) {
+            this.episodeTvdbId = episodeTvdbId;
             this.title = title;
             this.description = description;
             this.poster = poster;

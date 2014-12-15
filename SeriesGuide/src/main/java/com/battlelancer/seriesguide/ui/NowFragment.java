@@ -142,7 +142,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             return;
         }
 
-        // TODO show episode
+        showDetails(view, item.episodeTvdbId);
     }
 
     /**
