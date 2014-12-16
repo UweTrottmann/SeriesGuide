@@ -560,14 +560,13 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute() {
-            // create activity entry for watched episode
             if (isWatched(mEpisodeFlag)) {
-                ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Activity.EPISODE_TVDB_ID, mEpisodeTvdbId);
-                values.put(SeriesGuideContract.Activity.TIMESTAMP, System.currentTimeMillis());
-
-                mContext.getContentResolver()
-                        .insert(SeriesGuideContract.Activity.CONTENT_URI, values);
+                // create activity entry for watched episode
+                ActivityTools.addActivity(mContext, mEpisodeTvdbId);
+            } else if (isUnwatched(mEpisodeFlag)) {
+                // remove any previous activity entries for this episode
+                // use case: user accidentally toggled watched flag
+                ActivityTools.removeActivity(mContext, mEpisodeTvdbId);
             }
         }
 
