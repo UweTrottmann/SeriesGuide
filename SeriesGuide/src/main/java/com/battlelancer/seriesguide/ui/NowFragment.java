@@ -124,6 +124,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
     private void refreshStream() {
+        showProgressBar(true);
         getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                 recentlyCallbacks);
         getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
