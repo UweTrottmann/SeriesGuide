@@ -282,7 +282,21 @@ public class TimeTools {
         if (releaseDateTime == null || releaseDateTime.length() == 0) {
             return null;
         }
-        DateTime dateTime = DATE_TIME_FORMATTER_UTC.parseDateTime(releaseDateTime);
+
+        DateTime dateTime;
+
+        try {
+            dateTime = DATE_TIME_FORMATTER_UTC.parseDateTime(releaseDateTime);
+        } catch (IllegalArgumentException ignored) {
+            // legacy format, or otherwise invalid
+            try {
+                // try legacy date only parser
+                dateTime = TVDB_DATE_FORMATTER.parseDateTime(releaseDateTime);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        }
+
         return new SimpleDateFormat("yyyy", Locale.getDefault()).format(dateTime.toDate());
     }
 

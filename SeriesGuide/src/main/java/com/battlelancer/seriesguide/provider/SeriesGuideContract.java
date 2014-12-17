@@ -80,7 +80,8 @@ public class SeriesGuideContract {
         String GENRES = "genres";
 
         /**
-         * Release date of the first episode. Encoded as ISO 8601 datetime string.
+         * Release date of the first episode. Encoded as ISO 8601 datetime string. Might be a legacy
+         * value which only includes the date.
          *
          * <pre>
          * Example: "2008-01-20T02:00:00.000Z"
