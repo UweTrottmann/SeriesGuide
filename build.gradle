@@ -30,6 +30,6 @@ ext {
 
 ext.libraries = [
 
-        supportv4: 'com.android.support:support-v4:21.0.2',
+        supportv4: 'com.android.support:support-v4:21.0.3',
 
 ]
