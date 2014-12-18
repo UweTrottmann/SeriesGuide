@@ -16,9 +16,10 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="590dp"
     android:layout_height="match_parent"
-    tools:context=".ui.MovieDetailsActivity">
+    android:layout_gravity="center_horizontal"
+    tools:context=".ui.MovieDetailsFragment">
 
     <ImageView
         android:id="@+id/imageViewMoviePoster"
