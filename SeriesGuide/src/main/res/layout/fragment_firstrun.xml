@@ -64,14 +64,7 @@
             android:paddingTop="@dimen/larger_padding"
             android:paddingBottom="@dimen/large_padding"
             android:gravity="end"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/welcome_setuptrakt"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/connect_trakt" />
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/buttonFirstRunAddShow"
@@ -79,6 +72,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shows_add" />
+
+            <Button
+                android:id="@+id/buttonFirstRunTrakt"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connect_trakt" />
+
+            <Button
+                android:id="@+id/buttonFirstRunRestore"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/import_button" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
