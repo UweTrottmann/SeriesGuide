@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/movie_item_width"
     android:layout_height="@dimen/movie_item_height"
@@ -7,53 +7,47 @@
     android:minHeight="@dimen/movie_item_height"
     android:minWidth="@dimen/movie_item_width">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/imageViewMoviePoster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+        android:layout_height="@dimen/movie_item_poster_height"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/imageViewMoviePoster"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/movie_item_poster_height"
-            android:layout_alignParentTop="true"
-            android:scaleType="centerCrop" />
+    <ImageView
+        android:id="@+id/imageViewMovieItemContextMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageViewMoviePoster"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:paddingBottom="24dp"
+        android:paddingLeft="28dp"
+        android:scaleType="centerInside"
+        android:src="?attr/drawableDropdown" />
 
-        <ImageView
-            android:id="@+id/imageViewMovieItemContextMenu"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/imageViewMoviePoster"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingBottom="24dp"
-            android:paddingLeft="28dp"
-            android:scaleType="centerInside"
-            android:src="?attr/drawableDropdown" />
+    <TextView
+        android:id="@+id/textViewMovieTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewMoviePoster"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.Subhead"
+        tools:text="Awesome Movie Title" />
 
-        <TextView
-            android:id="@+id/textViewMovieTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewMoviePoster"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="@dimen/inline_padding"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="Awesome Movie Title" />
+    <TextView
+        android:id="@+id/textViewMovieDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewMovieTitle"
+        android:layout_marginRight="@dimen/inline_padding"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        tools:text="November 13, 2013" />
 
-        <TextView
-            android:id="@+id/textViewMovieDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewMovieTitle"
-            android:layout_marginRight="@dimen/inline_padding"
-            android:layout_marginLeft="@dimen/inline_padding"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="November 13, 2013" />
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>
