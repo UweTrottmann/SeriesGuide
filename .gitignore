@@ -1,35 +1,22 @@
 ﻿# Specific files to exclude
-com_crashlytics_export_strings.xml
 
 # Any keystores
 *.keystore
 
-### Android
-###########
-# built application files
-*.apk
-*.ap_
+# Local configuration files (sdk path, etc)
+gradle.properties
+keystore.properties
+local.properties
 
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
-bin/
-gen/
-
-# Local configuration file (sdk path, etc)
-*.properties
+### Crashlytics
+crashlytics.properties
+com_crashlytics_export_strings.xml
 
 ### Linux
-#########
 !.gitignore
 *~
 
 ### Windows
-############
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -40,6 +27,9 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
+### OSX
+.DS_Store
+
 ### IntelliJ
 *.iml
 *.ipr
@@ -49,13 +39,3 @@ $RECYCLE.BIN/
 ### Gradle
 .gradle/
 build/
-out/
-
-#Maven
-target
-release.properties
-pom.xml.*
-
-### AppEngine
-google_generated/
-datanucleus.log
