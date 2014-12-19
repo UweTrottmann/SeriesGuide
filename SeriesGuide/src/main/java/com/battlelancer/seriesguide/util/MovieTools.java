@@ -851,7 +851,7 @@ public class MovieTools {
         private static Integer lookupTraktId(Search traktSearch, int movieTmdbId) {
             try {
                 List<SearchResult> lookup = traktSearch.idLookup(IdType.TMDB,
-                        String.valueOf(movieTmdbId));
+                        String.valueOf(movieTmdbId), 1, 10);
                 if (lookup == null || lookup.size() == 0) {
                     Timber.e("Finding trakt movie failed (no results)");
                     return null;

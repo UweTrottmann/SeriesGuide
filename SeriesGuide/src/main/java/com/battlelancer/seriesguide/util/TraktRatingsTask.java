@@ -24,10 +24,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.entities.SearchResult;
-import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.enums.IdType;
-import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -96,17 +92,10 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
 
         try {
             // look up show trakt id
-            List<SearchResult> searchResults = trakt.search()
-                    .idLookup(IdType.TVDB, String.valueOf(mShowTvdbId));
-            if (searchResults == null || searchResults.size() != 1) {
+            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), mShowTvdbId);
+            if (showTraktId == null) {
                 return null;
             }
-            Show show = searchResults.get(0).show;
-            if (show == null || show.ids == null || show.ids.trakt == null) {
-                return null;
-            }
-
-            String showTraktId = String.valueOf(show.ids.trakt);
 
             if (mEpisodeTvdbId == 0) {
                 // download latest show ratings

@@ -46,7 +46,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.enums.IdType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -381,17 +380,12 @@ public class TheTVDB {
         TraktV2 trakt = ServiceUtils.getTraktV2(context);
         try {
             // look up trakt id
-            List<com.uwetrottmann.trakt.v2.entities.SearchResult> results = trakt.search()
-                    .idLookup(IdType.TVDB, String.valueOf(showTvdbId));
-            if (!results.isEmpty()) {
-                traktShow = results.get(0).show;
-                if (traktShow != null && traktShow.ids != null && traktShow.ids.trakt != null) {
-                    // fetch details
-                    traktShow = trakt.shows()
-                            .summary(String.valueOf(traktShow.ids.trakt), Extended.FULL);
-                } else {
-                    traktShow = null;
-                }
+            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+            if (showTraktId != null) {
+                // fetch details
+                traktShow = trakt.shows().summary(showTraktId, Extended.FULL);
+            } else {
+                traktShow = null;
             }
         } catch (RetrofitError e) {
             Timber.e(e, "Loading summary failed: " + e.getUrl());
