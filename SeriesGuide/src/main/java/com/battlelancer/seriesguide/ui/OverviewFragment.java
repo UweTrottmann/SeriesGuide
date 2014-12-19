@@ -714,10 +714,6 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void onLoadEpisodeDetails(final Cursor episode) {
-        final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
-        final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
-        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
-
         // description
         textDescription.setText(episode.getString(EpisodeQuery.OVERVIEW));
 
@@ -757,13 +753,15 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpTraktButton(mCurrentEpisodeTvdbId, buttonTrakt, TAG);
 
         // trakt shouts button
+        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
         buttonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
                     Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(getShowId(),
-                            seasonNumber, episodeNumber, episodeTitle));
+                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
+                            mCurrentEpisodeTvdbId
+                    ));
                     ActivityCompat.startActivity(getActivity(), i,
                             ActivityOptionsCompat
                                     .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())

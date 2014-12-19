@@ -37,14 +37,18 @@ import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
+import com.uwetrottmann.trakt.v2.entities.SearchResult;
+import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.IdType;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -738,6 +742,27 @@ public class TraktTools {
         }
 
         return context.getString(resId);
+    }
+
+    /**
+     * Look up a show's trakt id, may return {@code null} if not found.
+     */
+    public static String lookupShowTraktId(Search traktSearch, int showTvdbId) {
+        // 3 results: may be a show, season or episode (TVDb ids are not unique)
+        List<SearchResult> searchResults = traktSearch.idLookup(IdType.TVDB,
+                String.valueOf(showTvdbId), 1, 3);
+        if (searchResults == null) {
+            return null;
+        }
+
+        for (SearchResult result : searchResults) {
+            Show show = result.show;
+            if (show != null && show.ids != null && show.ids.trakt != null) {
+                return String.valueOf(show.ids.trakt);
+            }
+        }
+
+        return null;
     }
 
     public interface EpisodesQuery {

@@ -150,9 +150,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
-     * int, int, String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt
-     * credentials (check with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()}
-     * and then possibly launch {@link ConnectTraktActivity}) or execution will fail.
+     * String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials (check
+     * with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then
+     * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context) {
         mContext = context.getApplicationContext();
@@ -218,11 +218,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Post a comment for an episode.
      */
-    public TraktTask commentEpisode(int showTvdbid, int season, int episode, String comment,
-            boolean isSpoiler) {
-        commentShow(showTvdbid, comment, isSpoiler);
-        mArgs.putInt(InitBundle.SEASON, season);
-        mArgs.putInt(InitBundle.EPISODE, episode);
+    public TraktTask commentEpisode(int episodeTvdbid, String comment, boolean isSpoiler) {
+        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
+        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbid);
+        mArgs.putString(InitBundle.MESSAGE, comment);
+        mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
@@ -535,31 +535,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     private Response doCommentAction(Comments traktComments) throws OAuthUnauthorizedException {
-        Comment comment = new Comment();
-        comment.comment = mArgs.getString(InitBundle.MESSAGE);
-        comment.spoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
-
-        // movie?
-        int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-        if (tmdbId != 0) {
-            comment.movie = new Movie();
-            comment.movie.ids = MovieIds.tmdb(tmdbId);
-        } else {
-            // show or episode
-            comment.show = new Show();
-            comment.show.ids = ShowIds.tvdb(mArgs.getInt(InitBundle.SHOW_TVDBID));
-
-            // episode?
-            int episode = mArgs.getInt(InitBundle.EPISODE);
-            if (episode != 0) {
-                comment.episode = new Episode();
-                comment.episode.number = episode;
-                comment.episode.season = mArgs.getInt(InitBundle.SEASON);
-            }
-        }
-
         // post comment
-        Comment postedComment = traktComments.post(comment);
+        Comment postedComment = traktComments.post(buildComment());
 
         Response r = new Response();
         if (postedComment != null && postedComment.id != null) {
@@ -570,6 +547,35 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         return r;
+    }
+
+    private Comment buildComment() {
+        Comment comment = new Comment();
+        comment.comment = mArgs.getString(InitBundle.MESSAGE);
+        comment.spoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
+
+        // as determined by "science", episode comments are most likely, so check for them first
+        // episode?
+        int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+        if (episodeTvdbId != 0) {
+            comment.episode = new Episode();
+            comment.episode.ids = EpisodeIds.tvdb(episodeTvdbId);
+            return comment;
+        }
+
+        // show?
+        int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+        if (showTvdbId != 0) {
+            comment.show = new Show();
+            comment.show.ids = ShowIds.tvdb(showTvdbId);
+            return comment;
+        }
+
+        // movie!
+        int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+        comment.movie = new Movie();
+        comment.movie.ids = MovieIds.tmdb(movieTmdbId);
+        return comment;
     }
 
     @Override

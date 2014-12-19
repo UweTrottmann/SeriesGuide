@@ -54,6 +54,7 @@ import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import de.greenrobot.event.EventBus;
 import java.util.List;
+import timber.log.Timber;
 
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
@@ -61,55 +62,11 @@ import java.util.List;
 public class TraktCommentsFragment extends Fragment implements
         LoaderCallbacks<List<Comment>>, SwipeRefreshLayout.OnRefreshListener {
 
-    /**
-     * Build a {@link TraktCommentsFragment} for shouts of an episode.
-     */
-    public static TraktCommentsFragment newInstanceEpisode(int showTvdbId, int seasonNumber,
-            int episodeNumber) {
-        TraktCommentsFragment f = new TraktCommentsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDB_ID, showTvdbId);
-        args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
-        args.putInt(InitBundle.EPISODE_NUMBER, episodeNumber);
-        f.setArguments(args);
-        return f;
-    }
-
-    /**
-     * Build a {@link TraktCommentsFragment} for shouts of a show.
-     */
-    public static TraktCommentsFragment newInstanceShow(int tvdbId) {
-        TraktCommentsFragment f = new TraktCommentsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDB_ID, tvdbId);
-        f.setArguments(args);
-        return f;
-    }
-
-    /**
-     * Build a {@link TraktCommentsFragment} for shouts of a movie.
-     */
-    public static TraktCommentsFragment newInstanceMovie(int tmdbId) {
-        TraktCommentsFragment f = new TraktCommentsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
-        f.setArguments(args);
-        return f;
-    }
-
     public interface InitBundle {
-        String MOVIE_TMDB_ID = "tmdbid";
-        String SHOW_TVDB_ID = "tvdbid";
-        String EPISODE_NUMBER = "episode_number";
-        String SEASON_NUMBER = "season_number";
+        String MOVIE_TMDB_ID = "movie";
+        String SHOW_TVDB_ID = "show";
+        String EPISODE_TVDB_ID = "episode";
     }
-
-    private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "https://trakt.tv/comment/movie/";
-
-    private static final String TRAKT_EPISODE_COMMENT_PAGE_URL
-            = "https://trakt.tv/comment/episode/";
-
-    private static final String TRAKT_SHOW_COMMENT_PAGE_URL = "https://trakt.tv/comment/show/";
 
     private final AdapterView.OnItemClickListener mOnClickListener
             = new AdapterView.OnItemClickListener() {
@@ -178,44 +135,47 @@ public class TraktCommentsFragment extends Fragment implements
     }
 
     private void comment() {
-        // prevent empty shouts
-        String shout = mEditTextShout.getText().toString();
-        if (TextUtils.isEmpty(shout)) {
+        // prevent empty comments
+        String comment = mEditTextShout.getText().toString();
+        if (TextUtils.isEmpty(comment)) {
             return;
         }
 
-        // disable the shout button
+        // disable the comment button
         mButtonShout.setEnabled(false);
 
         Bundle args = getArguments();
         boolean isSpoiler = mCheckBoxIsSpoiler.isChecked();
 
-        // shout for a movie?
+        // as determined by "science", episode comments are most likely, so check for them first
+        // comment for an episode?
+        int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
+        if (episodeTvdbId != 0) {
+            AndroidUtils.executeOnPool(
+                    new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+            );
+            return;
+        }
+
+        // comment for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
             AndroidUtils.executeOnPool(
-                    new TraktTask(getActivity()).commentMovie(movieTmdbId, shout, isSpoiler)
+                    new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
         }
 
-        // shout for an episode?
+        // comment for a show?
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
-        int episodeNumber = args.getInt(InitBundle.EPISODE_NUMBER);
-        if (episodeNumber != 0) {
-            int seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
+        if (showTvdbId != 0) {
             AndroidUtils.executeOnPool(
-                    new TraktTask(getActivity())
-                            .commentEpisode(showTvdbId, seasonNumber, episodeNumber, shout,
-                                    isSpoiler)
+                    new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
             );
-            return;
         }
 
-        // shout for a show!
-        AndroidUtils.executeOnPool(
-                new TraktTask(getActivity()).commentShow(showTvdbId, shout, isSpoiler)
-        );
+        // if all ids were 0, do nothing
+        Timber.e("comment: did nothing, all possible ids were 0");
     }
 
     @Override

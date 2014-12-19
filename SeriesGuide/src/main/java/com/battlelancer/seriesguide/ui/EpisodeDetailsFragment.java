@@ -531,8 +531,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TraktCommentsActivity.class);
-                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(mShowTvdbId,
-                        mSeasonNumber, mEpisodeNumber, mEpisodeTitle));
+                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(mEpisodeTitle,
+                        getEpisodeTvdbId()
+                ));
                 ActivityCompat.startActivity(getActivity(), intent,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
