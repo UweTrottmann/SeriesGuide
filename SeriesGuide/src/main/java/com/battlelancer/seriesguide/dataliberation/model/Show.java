@@ -38,9 +38,6 @@ public class Show {
 
     public String country;
 
-    @SerializedName("check_in_getglue_id")
-    public String checkInGetGlueId;
-
     @SerializedName("last_watched_episode")
     public int lastWatchedEpisode;
 

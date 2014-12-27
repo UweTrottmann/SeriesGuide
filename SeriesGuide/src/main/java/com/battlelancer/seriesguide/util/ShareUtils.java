@@ -20,14 +20,12 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.provider.CalendarContract;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 
 /**
  * Contains various ways to share something about an episode (android share intent, trakt, calendar
@@ -75,13 +73,6 @@ public class ShareUtils {
             // no activity available to handle the intent
             Toast.makeText(activity, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
-    }
-
-    public static String onCreateShareString(Context context, final Cursor episode) {
-        int season = episode.getInt(episode.getColumnIndexOrThrow(Episodes.SEASON));
-        int number = episode.getInt(episode.getColumnIndexOrThrow(Episodes.NUMBER));
-        String title = episode.getString(episode.getColumnIndexOrThrow(Episodes.TITLE));
-        return Utils.getNextEpisodeString(context, season, number, title);
     }
 
     /**

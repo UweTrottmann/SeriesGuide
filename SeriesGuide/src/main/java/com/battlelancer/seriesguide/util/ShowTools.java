@@ -203,28 +203,6 @@ public class ShowTools {
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Saves new GetGlue id to the local database and, if signed in, up into the cloud as well.
-     */
-    public void storeGetGlueId(int showTvdbId, String getglueId) {
-        if (HexagonTools.isSignedIn(mContext)) {
-            if (Utils.isNotConnected(mContext, true)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setTvtagId(getglueId);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.GETGLUEID, getglueId);
-        mContext.getContentResolver()
-                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-    }
-
     private void uploadShowAsync(Show show) {
         AndroidUtils.executeOnPool(
                 new ShowsUploadTask(mContext, show)
@@ -301,8 +279,7 @@ public class ShowTools {
                     .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
                             SeriesGuideContract.Shows._ID,
                             SeriesGuideContract.Shows.FAVORITE,
-                            SeriesGuideContract.Shows.HIDDEN,
-                            SeriesGuideContract.Shows.GETGLUEID
+                            SeriesGuideContract.Shows.HIDDEN
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -313,7 +290,6 @@ public class ShowTools {
                 show.setTvdbId(query.getInt(0));
                 show.setIsFavorite(query.getInt(1) == 1);
                 show.setIsHidden(query.getInt(2) == 1);
-                show.setTvtagId(query.getString(3));
                 shows.add(show);
             }
 
@@ -469,10 +445,6 @@ public class ShowTools {
                     values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
                 }
             }
-            if (show.getTvtagId() != null) {
-                // always overwrite with the hexagon tvtag id
-                values.put(SeriesGuideContract.Shows.GETGLUEID, show.getTvtagId());
-            }
         }
 
         /**
@@ -493,9 +465,6 @@ public class ShowTools {
                 }
                 if (hexagonShow.getIsHidden() != null) {
                     show.hidden = hexagonShow.getIsHidden();
-                }
-                if (hexagonShow.getTvtagId() != null) {
-                    show.checkInGetGlueId = hexagonShow.getTvtagId();
                 }
             }
         }

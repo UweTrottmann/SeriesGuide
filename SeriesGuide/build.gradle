@@ -118,9 +118,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup:tape:1.2.3'
-    compile ('com.uwetrottmann:getglue-java:1.4.0') {
-        exclude group: 'org.json', module: 'json'
-    }
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.4.0'

@@ -448,9 +448,6 @@ public class DBUtils {
             values.put(Shows._ID, show.tvdbId);
             values.put(Shows.FAVORITE, show.favorite);
             values.put(Shows.HIDDEN, show.hidden);
-            if (show.checkInGetGlueId != null) {
-                values.put(Shows.GETGLUEID, show.checkInGetGlueId);
-            }
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
             return ContentProviderOperation

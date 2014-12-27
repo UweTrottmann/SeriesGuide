@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
@@ -77,8 +76,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
 
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
-
-    private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
 
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
@@ -169,24 +166,11 @@ public class SeriesGuidePreferences extends ActionBarActivity {
         }
     };
 
-    protected static void setupSharingSettings(final Context context, Preference traktAutoAddPref,
-            Preference getGluePref) {
+    protected static void setupSharingSettings(final Context context, Preference traktAutoAddPref) {
         if (HexagonTools.isSignedIn(context)) {
             traktAutoAddPref.setEnabled(false);
             traktAutoAddPref.setSummary(R.string.hexagon_warning_trakt);
         }
-        // Disconnect GetGlue
-        getGluePref.setEnabled(GetGlueSettings.isAuthenticated(context));
-        getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent(context, "Disonnect GetGlue");
-
-                GetGlueSettings.clearTokens(context);
-                preference.setEnabled(false);
-                return true;
-            }
-        });
     }
 
     protected static void setupBasicSettings(final Activity activity, final Intent startIntent,
@@ -496,8 +480,7 @@ public class SeriesGuidePreferences extends ActionBarActivity {
                     addPreferencesFromResource(R.xml.settings_services);
                     setupSharingSettings(
                             getActivity(),
-                            findPreference(TraktSettings.KEY_AUTO_ADD_TRAKT_SHOWS),
-                            findPreference(KEY_GETGLUE_DISCONNECT)
+                            findPreference(TraktSettings.KEY_AUTO_ADD_TRAKT_SHOWS)
                     );
                     break;
                 case "advanced":

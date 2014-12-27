@@ -235,7 +235,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
             show.airtime = shows.getLong(ShowsQuery.AIRTIME);
             show.airday = shows.getString(ShowsQuery.AIRDAY);
-            show.checkInGetGlueId = shows.getString(ShowsQuery.GETGLUEID);
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
             show.poster = shows.getString(ShowsQuery.POSTER);
             show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);

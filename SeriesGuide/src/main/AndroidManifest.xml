@@ -128,20 +128,6 @@
             android:label="@string/backup" />
         <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" />
 
-        <!-- GetGlue -->
-        <activity
-            android:name="com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity"
-            android:launchMode="singleTask" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
-
         <!-- trakt -->
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >

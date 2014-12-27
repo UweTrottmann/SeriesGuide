@@ -128,6 +128,8 @@ public class SeriesGuideContract {
         String LASTEDIT = "series_lastedit";
 
         /**
+         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014.
+         *
          * GetGlue object id, added in version 29 to support checking into shows without IMDb id.
          */
         String GETGLUEID = "series_getglueid";
