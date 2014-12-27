@@ -99,12 +99,9 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
-        if (!TextUtils.isEmpty(posterPath)) {
-            ServiceUtils.getPicasso(context).load(mImageBaseUrl + posterPath).into(holder.poster);
-        } else {
-            // no image
-            holder.poster.setImageDrawable(null);
-        }
+        ServiceUtils.getPicasso(context)
+                .load(TextUtils.isEmpty(posterPath) ? null : mImageBaseUrl + posterPath)
+                .into(holder.poster);
 
         // context menu
         final int movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);

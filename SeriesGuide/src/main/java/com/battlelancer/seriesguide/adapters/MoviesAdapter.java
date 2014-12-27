@@ -97,14 +97,11 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         } else {
             holder.date.setText("");
         }
-        if (!TextUtils.isEmpty(movie.poster_path)) {
-            ServiceUtils.getPicasso(getContext())
-                    .load(mImageBaseUrl + movie.poster_path)
-                    .into(holder.poster);
-        } else {
-            // clear image
-            holder.poster.setImageDrawable(null);
-        }
+
+        // poster
+        ServiceUtils.getPicasso(getContext())
+                .load(mImageBaseUrl + movie.poster_path)
+                .into(holder.poster);
 
         // context menu
         final int movieTmdbId = movie.id;
