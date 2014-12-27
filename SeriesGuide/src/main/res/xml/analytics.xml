@@ -18,7 +18,6 @@
     <screenName name="com.battlelancer.seriesguide.ui.OverviewActivity">Overview</screenName>
     <screenName name="com.battlelancer.seriesguide.ui.EpisodesActivity">Episodes</screenName>
     <screenName name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity">Episode Details</screenName>
-    <screenName name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity">Fix GetGlue Check-In</screenName>
 
     <screenName name="com.battlelancer.seriesguide.ui.ListsActivity">Lists</screenName>
 

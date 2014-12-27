@@ -35,11 +35,4 @@
             android:title="@string/pref_autoaddshows" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/getglue">
-        <Preference
-            android:key="clearGetGlueCredentials"
-            android:summary="@string/clearGetGlueCredentialssummary"
-            android:title="@string/clearGetGlueCredentials" />
-    </PreferenceCategory>
-
 </PreferenceScreen>
