@@ -347,15 +347,12 @@ public class MovieDetailsFragment extends Fragment {
 
         // check-in button
         final String title = tmdbMovie.title;
-        // fall back to local title for tvtag check-in if we currently don't have the original one
-        final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
-                ? title : tmdbMovie.original_title;
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a check-in dialog
                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title, originalTitle);
+                        .newInstance(mTmdbId, title);
                 f.show(getFragmentManager(), "checkin-dialog");
                 fireTrackerEvent("Check-In");
             }

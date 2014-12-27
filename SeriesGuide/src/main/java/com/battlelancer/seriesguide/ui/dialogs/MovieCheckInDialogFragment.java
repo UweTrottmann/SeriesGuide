@@ -17,11 +17,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -32,12 +27,10 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    public static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle,
-            String originalMovieTitle) {
+    public static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle) {
         MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
 
         Bundle args = new Bundle();
-        args.putString(InitBundle.TVTAG_ID_OR_TITLE, originalMovieTitle);
         args.putString(InitBundle.ITEM_TITLE, movieTitle);
         args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         f.setArguments(args);
@@ -50,13 +43,8 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Utils.trackView(getActivity(), "Movie Check-In Dialog");
-    }
 
-    protected void checkInGetGlue(final String title, final String message) {
-        // check in, use task on thread pool
-        AndroidUtils.executeOnPool(new GetGlueCheckin.GetGlueCheckInTask(title, message,
-                getActivity()));
+        Utils.trackView(getActivity(), "Movie Check-In Dialog");
     }
 
     /**
@@ -66,26 +54,5 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         int movieTmdbId = getArguments().getInt(InitBundle.MOVIE_TMDB_ID);
         AndroidUtils.executeOnPool(
                 new TraktTask(getActivity()).checkInMovie(movieTmdbId, message));
-    }
-
-    protected void handleGetGlueToggle(boolean isChecked) {
-        if (isChecked) {
-            if (!GetGlueSettings.isAuthenticated(getActivity())) {
-                ensureGetGlueAuthAndConnection();
-            }
-        }
-    }
-
-    @Override
-    protected void setupButtonFixGetGlue(View layout) {
-        View divider = layout.findViewById(R.id.dividerHorizontalCheckIn);
-        divider.setVisibility(View.GONE);
-        mButtonFixGetGlue.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected boolean setupCheckInGetGlue() {
-        // make sure there is a title we can use to check in
-        return !TextUtils.isEmpty(getArguments().getString(InitBundle.TVTAG_ID_OR_TITLE));
     }
 }
