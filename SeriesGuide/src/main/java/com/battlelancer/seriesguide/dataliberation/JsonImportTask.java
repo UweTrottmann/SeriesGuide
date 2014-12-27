@@ -193,7 +193,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.HIDDEN, show.hidden);
         showValues.put(Shows.AIRSTIME, show.airtime);
         showValues.put(Shows.AIRSDAYOFWEEK, show.airday);
-        showValues.put(Shows.GETGLUEID, show.checkInGetGlueId);
         showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
         showValues.put(Shows.POSTER, show.poster);
         showValues.put(Shows.CONTENTRATING, show.contentRating);
