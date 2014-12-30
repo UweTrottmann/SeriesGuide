@@ -5,6 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/large_padding"
         android:paddingRight="@dimen/large_padding"
         android:paddingBottom="@dimen/large_padding"
         android:measureWithLargestChild="true"
