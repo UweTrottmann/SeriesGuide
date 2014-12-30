@@ -351,15 +351,12 @@
   <string name="addtocalendar">Dodaj u kalendar</string>
   <string name="addtocalendar_failed">Ne mogu stvoriti događaj u kalendaru.</string>
   <string name="username">Korisničko ime</string>
-  <string name="email">Email</string>
-  <string name="password">Lozinka</string>
   <string name="waitplease">Trenutak, molim…</string>
   <string name="connect">Povežite</string>
   <string name="disconnect">Isključi</string>
   <string name="trakt_error">Komunikacija sa traktom nije uspjela</string>
   <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
   <string name="trakt_error_general">Nije se moguće povezati s traktom. Pokušajte ponovno kasnije.</string>
-  <string name="trakt_createaccount">Stvori novi račun</string>
   <string name="get_started">Prvi koraci</string>
   <string name="welcome_setuplanguage">Odaberi jezik</string>
   <string name="dismiss">Odbaci</string>

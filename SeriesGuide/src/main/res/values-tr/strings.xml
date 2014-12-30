@@ -351,15 +351,12 @@
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
   <string name="username">Kullanıcı Adı</string>
-  <string name="email">E-posta</string>
-  <string name="password">Şifre</string>
   <string name="waitplease">Bir dakika lütfen…</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
   <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
-  <string name="trakt_createaccount">Yeni hesap oluştur</string>
   <string name="get_started">Başlarken... </string>
   <string name="welcome_setuplanguage">Dil seçin</string>
   <string name="dismiss">Kapat</string>

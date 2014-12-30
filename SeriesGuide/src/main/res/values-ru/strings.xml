@@ -351,15 +351,12 @@
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
   <string name="username">Имя пользователя</string>
-  <string name="email">Электронная почта</string>
-  <string name="password">Пароль</string>
   <string name="waitplease">Пожалуйста, подождите…</string>
   <string name="connect">Подключиться</string>
   <string name="disconnect">Отключить</string>
   <string name="trakt_error">Связь с trakt не удалась</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
-  <string name="trakt_createaccount">Создать новую учетную запись</string>
   <string name="get_started">Начать</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="dismiss">Отменить</string>

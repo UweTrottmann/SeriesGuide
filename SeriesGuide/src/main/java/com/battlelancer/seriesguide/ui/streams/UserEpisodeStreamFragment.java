@@ -17,24 +17,27 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.format.DateUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.EpisodeStreamAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodeHistoryAdapter;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Activity;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.jakewharton.trakt.services.ActivityService;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -44,7 +47,7 @@ import timber.log.Timber;
  */
 public class UserEpisodeStreamFragment extends StreamFragment {
 
-    private EpisodeStreamAdapter mAdapter;
+    private EpisodeHistoryAdapter mAdapter;
 
     @Override
     public void onStart() {
@@ -60,7 +63,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
     @Override
     protected ListAdapter getListAdapter() {
         if (mAdapter == null) {
-            mAdapter = new EpisodeStreamAdapter(getActivity());
+            mAdapter = new EpisodeHistoryAdapter(getActivity());
         }
         return mAdapter;
     }
@@ -76,60 +79,99 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 mActivityLoaderCallbacks);
     }
 
-    private LoaderManager.LoaderCallbacks<List<ActivityItem>> mActivityLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<ActivityItem>>() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // do not respond if we get a header position (e.g. shortly after data was refreshed)
+        if (position < 0) {
+            return;
+        }
+
+        HistoryEntry item = mAdapter.getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        if (item.episode == null || item.episode.season == null || item.episode.number == null
+                || item.show == null || item.show.ids == null || item.show.ids.tvdb == null) {
+            // no episode or show? give up
+            return;
+        }
+
+        Cursor episodeQuery = getActivity().getContentResolver().query(
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(item.show.ids.tvdb),
+                new String[] {
+                        SeriesGuideContract.Episodes._ID
+                }, SeriesGuideContract.Episodes.NUMBER + "=" + item.episode.number + " AND "
+                        + SeriesGuideContract.Episodes.SEASON + "=" + item.episode.season, null,
+                null
+        );
+        if (episodeQuery == null) {
+            return;
+        }
+
+        if (episodeQuery.getCount() != 0) {
+            // display the episode details if we have a match
+            episodeQuery.moveToFirst();
+            showDetails(view, episodeQuery.getInt(0));
+        } else {
+            // offer to add the show if it's not in the show database yet
+            SearchResult showToAdd = new SearchResult();
+            showToAdd.tvdbid = item.show.ids.tvdb;
+            showToAdd.title = item.show.title;
+            showToAdd.overview = item.show.overview;
+            AddShowDialogFragment.showAddDialog(showToAdd, getFragmentManager());
+        }
+
+        episodeQuery.close();
+    }
+
+    private LoaderManager.LoaderCallbacks<List<HistoryEntry>> mActivityLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<HistoryEntry>>() {
                 @Override
-                public Loader<List<ActivityItem>> onCreateLoader(int id, Bundle args) {
+                public Loader<List<HistoryEntry>> onCreateLoader(int id, Bundle args) {
                     return new UserEpisodeActivityLoader(getActivity());
                 }
 
                 @Override
-                public void onLoadFinished(Loader<List<ActivityItem>> loader,
-                        List<ActivityItem> data) {
+                public void onLoadFinished(Loader<List<HistoryEntry>> loader,
+                        List<HistoryEntry> data) {
                     mAdapter.setData(data);
                     showProgressBar(false);
                 }
 
                 @Override
-                public void onLoaderReset(Loader<List<ActivityItem>> loader) {
+                public void onLoaderReset(Loader<List<HistoryEntry>> loader) {
                     // do nothing
                 }
             };
 
-    private static class UserEpisodeActivityLoader extends GenericSimpleLoader<List<ActivityItem>> {
+    private static class UserEpisodeActivityLoader extends GenericSimpleLoader<List<HistoryEntry>> {
 
         public UserEpisodeActivityLoader(Context context) {
             super(context);
         }
 
         @Override
-        public List<ActivityItem> loadInBackground() {
-            Trakt manager = ServiceUtils.getTraktWithAuth(getContext());
-            if (manager == null) {
+        public List<HistoryEntry> loadInBackground() {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
+            if (trakt == null) {
                 return null;
             }
 
             try {
-                final ActivityService activityService = manager.activityService();
-                Activity activity = activityService.user(
-                        TraktCredentials.get(getContext()).getUsername(),
-                        ActivityType.Episode.toString(),
-                        ActivityAction.Watching + ","
-                                + ActivityAction.Checkin + ","
-                                + ActivityAction.Scrobble + ","
-                                + ActivityAction.Seen,
-                        (System.currentTimeMillis() - DateUtils.WEEK_IN_MILLIS) / 1000,
-                        null, null
-                );
+                List<HistoryEntry> history = trakt.users()
+                        .historyEpisodes("me", 1, 25, Extended.IMAGES);
 
-                if (activity == null || activity.activity == null) {
-                    Timber.e("Loading user episode activity failed, was null");
+                if (history == null) {
+                    Timber.e("Loading user episode history failed, was null");
                     return null;
                 }
 
-                return activity.activity;
+                return history;
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading user episode activity failed");
+                Timber.e(e, "Loading user episode history failed");
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(getContext()).setCredentialsInvalid();
             }
 
             return null;

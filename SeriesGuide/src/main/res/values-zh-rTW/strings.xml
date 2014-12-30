@@ -351,15 +351,12 @@
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
   <string name="username">帳號</string>
-  <string name="email">電子信箱</string>
-  <string name="password">密碼</string>
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="trakt_error">與trakt的互動失敗</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
-  <string name="trakt_createaccount">註冊</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="dismiss">Dismiss</string>

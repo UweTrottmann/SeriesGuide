@@ -351,15 +351,12 @@
   <string name="addtocalendar">Přidat do kalendáře</string>
   <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
   <string name="username">Uživatelské jméno</string>
-  <string name="email">E-mail</string>
-  <string name="password">Heslo</string>
   <string name="waitplease">Chvilku strpení…</string>
   <string name="connect">Připojit</string>
   <string name="disconnect">Odpojit</string>
   <string name="trakt_error">Chyba v komunikaci s traktem</string>
   <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
   <string name="trakt_error_general">Nelze se připojit na trakt.tv. Opakujte akci později.</string>
-  <string name="trakt_createaccount">Vytvořit nový účet</string>
   <string name="get_started">Začněte</string>
   <string name="welcome_setuplanguage">Zvolte jazyk</string>
   <string name="dismiss">Storno</string>

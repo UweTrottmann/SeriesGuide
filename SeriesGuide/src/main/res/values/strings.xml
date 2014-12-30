@@ -114,28 +114,6 @@
         <item quantity="other">%d minutes</item>
     </plurals>
 
-    <!-- Trakt ratings -->
-    <string name="action_rate">Rate</string>
-    <string name="your_rating">Your rating</string>
-    <string name="love">Totally ninja!</string>
-    <string name="hate">Weak Sauce :(</string>
-    <string name="rating2">Terrible</string>
-    <string name="rating3">Bad</string>
-    <string name="rating4">Poor</string>
-    <string name="rating5">Meh</string>
-    <string name="rating6">Fair</string>
-    <string name="rating7">Good</string>
-    <string name="rating8">Great</string>
-    <string name="rating9">Superb</string>
-    <plurals name="votes">
-        <item quantity="zero">%d votes</item>
-        <item quantity="one">%d vote</item>
-        <item quantity="two">%d votes</item>
-        <item quantity="few">%d votes</item>
-        <item quantity="many">%d votes</item>
-        <item quantity="other">%d votes</item>
-    </plurals>
-
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
     <string name="episode_number_disk">DVD</string>
@@ -173,11 +151,6 @@
     <string name="uncollect_all">Collected none</string>
     <string name="action_skip">Skip</string>
     <string name="action_dont_skip">Don\'t skip</string>
-    <string name="trakt_submitqueued">Submitting to trakt.</string>
-    <string name="trakt_seen">%s seen.</string>
-    <string name="trakt_notseen">%s not seen.</string>
-    <string name="trakt_collected">%s collected.</string>
-    <string name="trakt_notcollected">%s not collected.</string>
     <string name="action_collection_add">Add to collection</string>
     <string name="action_collection_remove">Remove from collection</string>
     <string name="action_collection_added">Added to collection</string>
@@ -221,8 +194,8 @@
     <string name="recent">Recent</string>
     <string name="friends">Friends</string>
     <string name="friends_empty">No friend activity on trakt.</string>
-    <string name="user_stream">You</string>
-    <string name="user_stream_empty">No recent activity on trakt. Check into some shows!</string>
+    <string name="user_stream">History</string>
+    <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
     <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
@@ -284,14 +257,59 @@
     <string name="hexagon_remove_account_failure">Could not remove account.</string>
     <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
 
+    <!-- trakt -->
+    <string name="trakt_submitqueued">Submitting to trakt.</string>
+    <string name="trakt_seen">%s seen.</string>
+    <string name="trakt_notseen">%s not seen.</string>
+    <string name="trakt_collected">%s collected.</string>
+    <string name="trakt_notcollected">%s not collected.</string>
+    <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+    <string name="traktcheckin_cancel">Override</string>
+    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
+    <string name="traktcheckin_wait">I\'ll wait</string>
+    <string name="trakt_error">Interaction with trakt failed</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
+    <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+
     <!-- Connect trakt -->
+    <string name="trakt_account">trakt account</string>
+    <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
     <string name="connect_trakt">Connect trakt</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
+    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="username">Username</string>
+    <string name="waitplease">A moment, please…</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="connect_trakt_done">Connected to trakt!</string>
     <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
     <string name="add_trakt_shows">Add more shows from your trakt library:</string>
     <string name="show_library">Show your trakt library</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+
+    <!-- trakt ratings -->
+    <string name="action_rate">Rate</string>
+    <string name="your_rating">Your rating</string>
+    <string name="love">Totally ninja!</string>
+    <string name="hate">Weak Sauce :(</string>
+    <string name="rating2">Terrible</string>
+    <string name="rating3">Bad</string>
+    <string name="rating4">Poor</string>
+    <string name="rating5">Meh</string>
+    <string name="rating6">Fair</string>
+    <string name="rating7">Good</string>
+    <string name="rating8">Great</string>
+    <string name="rating9">Superb</string>
+    <plurals name="votes">
+        <item quantity="zero">%d votes</item>
+        <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
@@ -391,25 +409,10 @@
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_hint">Type a message (optional)</string>
     <string name="paste_title">Paste title</string>
-    <string name="checkin_success_trakt">Checked into %s on trakt.</string>
-    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
 
     <!-- Share methods -->
-    <string name="traktcheckin_cancel">Override</string>
-    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
-    <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="waitplease">A moment, please…</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="trakt_error">Interaction with trakt failed</string>
-    <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
-    <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
-    <string name="trakt_createaccount">Create new account</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>

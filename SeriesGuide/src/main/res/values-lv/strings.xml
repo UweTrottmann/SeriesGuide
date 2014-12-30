@@ -352,15 +352,12 @@
   <string name="addtocalendar">Pievienot kalendāram</string>
   <string name="addtocalendar_failed">Nevar radīt kalendāru pasākumu.</string>
   <string name="username">Lietotājvārds</string>
-  <string name="email">Epasts</string>
-  <string name="password">Parole</string>
   <string name="waitplease">Vienu momentu, lūdzu...</string>
   <string name="connect">Savienot</string>
   <string name="disconnect">Atvienot</string>
   <string name="trakt_error">Saskare ar trakt izgāzās</string>
   <string name="trakt_error_credentials">Kaut kas izgāzās. Lūdzu pārbaudi savus datus un mēģini vēlreiz.</string>
   <string name="trakt_error_general">Saruna ar trakt izgāzās. Mēģini vēlreiz.</string>
-  <string name="trakt_createaccount">Uztaisi jaunu kontu</string>
   <string name="get_started">Gūsti startu</string>
   <string name="welcome_setuplanguage">Izvēlies valodu</string>
   <string name="dismiss">Atcelt</string>

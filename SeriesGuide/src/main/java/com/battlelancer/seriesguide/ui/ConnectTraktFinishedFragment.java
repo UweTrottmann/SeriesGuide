@@ -51,6 +51,7 @@ public class ConnectTraktFinishedFragment extends Fragment {
                 Intent i = new Intent(getActivity(), AddActivity.class);
                 i.putExtra(AddActivity.InitBundle.DEFAULT_TAB, AddPagerAdapter.LIBRARY_TAB_POSITION);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

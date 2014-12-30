@@ -115,7 +115,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
         holder.day.setText(
-                TimeTools.formatToDayAndRelativeTime(getContext(), new Date(headerTime)));
+                TimeTools.formatToLocalDayAndRelativeTime(getContext(), new Date(headerTime)));
 
         return convertView;
     }

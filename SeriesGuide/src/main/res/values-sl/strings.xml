@@ -351,15 +351,12 @@
   <string name="addtocalendar">Dodaj v koledar</string>
   <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
   <string name="username">Uporabniško ime</string>
-  <string name="email">Elektronska pošta</string>
-  <string name="password">Geslo</string>
   <string name="waitplease">Trenutek, prosim…</string>
   <string name="connect">Poveži</string>
   <string name="disconnect">Odklopi</string>
   <string name="trakt_error">Interakcija s trakt-om ni uspela</string>
   <string name="trakt_error_credentials">Something went wrong. Please check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
-  <string name="trakt_createaccount">Izdelaj nov račun</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Izberi jezik</string>
   <string name="dismiss">Razveljavi</string>

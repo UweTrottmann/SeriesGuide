@@ -351,15 +351,12 @@
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
   <string name="username">שם משתמש</string>
-  <string name="email">כתובת דוא"ל</string>
-  <string name="password">סיסמא</string>
   <string name="waitplease">רק רגע, בבקשה</string>
   <string name="connect">התחבר</string>
   <string name="disconnect">התנתק</string>
   <string name="trakt_error">אינטראקציה עם trakt נכשלה</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
-  <string name="trakt_createaccount">צור חשבון חדש</string>
   <string name="get_started">התחל</string>
   <string name="welcome_setuplanguage">בחר שפה</string>
   <string name="dismiss">סגור</string>

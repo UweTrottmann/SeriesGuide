@@ -19,11 +19,9 @@ package com.battlelancer.seriesguide.ui;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.streams.FriendsMovieStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -41,7 +39,7 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int USER_LOADER_ID = 104;
 
     private static final String TAG = "Movies";
-    private static final int TAB_COUNT_WITH_TRAKT = 5;
+    private static final int TAB_COUNT_WITH_TRAKT = 4;
 
     private TabStripAdapter tabsAdapter;
 
@@ -75,7 +73,6 @@ public class MoviesActivity extends BaseTopActivity {
 
         // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
-            tabsAdapter.addTab(R.string.friends, FriendsMovieStreamFragment.class, null);
             tabsAdapter.addTab(R.string.user_stream, UserMovieStreamFragment.class, null);
         }
 
@@ -104,7 +101,6 @@ public class MoviesActivity extends BaseTopActivity {
         boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
 
         if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
-            tabsAdapter.addTab(R.string.friends, FriendsMovieStreamFragment.class, null);
             tabsAdapter.addTab(R.string.user_stream, UserMovieStreamFragment.class, null);
             // update tabs
             tabsAdapter.notifyTabsChanged();

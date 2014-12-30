@@ -351,15 +351,12 @@
   <string name="addtocalendar">添加到日历</string>
   <string name="addtocalendar_failed">创建日历事件失败</string>
   <string name="username">用户名</string>
-  <string name="email">电子邮件地址</string>
-  <string name="password">密码</string>
   <string name="waitplease">请稍等一段时间……</string>
   <string name="connect">关联</string>
   <string name="disconnect">断开</string>
   <string name="trakt_error">与 trakt 交互失败</string>
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
   <string name="trakt_error_general">无法与 trakt 关联</string>
-  <string name="trakt_createaccount">创建新用户</string>
   <string name="get_started">入门</string>
   <string name="welcome_setuplanguage">选择语言</string>
   <string name="dismiss">忽略</string>

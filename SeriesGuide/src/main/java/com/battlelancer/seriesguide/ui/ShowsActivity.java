@@ -61,7 +61,6 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -88,7 +87,7 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
 
-    private static final int TAB_COUNT_WITH_TRAKT = 5;
+    private static final int TAB_COUNT_WITH_TRAKT = 4;
 
     private IabHelper mHelper;
 
@@ -245,7 +244,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
-            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
             mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
         }
 
@@ -341,7 +339,6 @@ public class ShowsActivity extends BaseTopActivity implements
         boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
 
         if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
-            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
             mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
             // update tabs
             mTabsAdapter.notifyTabsChanged();
@@ -449,7 +446,7 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Called if the user adds a show from {@link FriendsEpisodeStreamFragment}.
+     * Called if the user adds a show from a trakt stream fragment.
      */
     @Override
     public void onAddShow(SearchResult show) {

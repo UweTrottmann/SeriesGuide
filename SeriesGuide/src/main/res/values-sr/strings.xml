@@ -351,15 +351,12 @@
   <string name="addtocalendar">Додај у календар</string>
   <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
   <string name="username">Корисничко име</string>
-  <string name="email">Адреса е-поште</string>
-  <string name="password">Лозинка</string>
   <string name="waitplease">Тренутак, молим…</string>
   <string name="connect">Повежи</string>
   <string name="disconnect">Прекини везу</string>
   <string name="trakt_error">Грешка у комуникацији са трактом</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
   <string name="trakt_error_general">Не могу да комуницирам са trakt-ом. Покушајте поново касније.</string>
-  <string name="trakt_createaccount">Отвори нови налог</string>
   <string name="get_started">Почни</string>
   <string name="welcome_setuplanguage">Изабери језик</string>
   <string name="dismiss">Одбаци</string>

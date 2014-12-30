@@ -16,6 +16,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -24,8 +25,8 @@ ext {
     buildToolsVersion = '21.1.1'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15072
-    versionName = '20.1.0'
+    versionCode = 15074
+    versionName = '20.1.2'
 }
 
 ext.libraries = [

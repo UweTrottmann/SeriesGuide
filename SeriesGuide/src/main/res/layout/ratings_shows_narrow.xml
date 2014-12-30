@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2014 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerRatings"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:padding="@dimen/large_padding"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- ratings layout for narrow show details, currently only smaller font sizes -->
+
+    <TextView
+        android:id="@+id/textViewRatingsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_rating"
+        tools:text="9.6"
+        android:textAppearance="@style/TextAppearance.Display1"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textViewRatingsRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_alignBaseline="@+id/textViewRatingsValue"
+        android:layout_toRightOf="@+id/textViewRatingsValue"
+        android:text="@string/tvdb_range"
+        android:textAppearance="@style/TextAppearance.Caption" />
+
+    <TextView
+        android:id="@+id/textViewRatingsVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewRatingsValue"
+        android:layout_toRightOf="@id/textViewRatingsRange"
+        android:text="@string/norating"
+        tools:text="1234 votes"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.Caption" />
+
+    <TextView
+        android:id="@+id/textViewRatingsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-4dp"
+        android:layout_below="@+id/textViewRatingsValue"
+        android:text="@string/trakt"
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+
+    <TextView
+        android:id="@+id/textViewRatingsUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewRatingsLabel"
+        android:text="@string/action_rate"
+        android:textAppearance="@style/TextAppearance.Body.Highlight" />
+
+    <TextView
+        android:id="@+id/textViewRatingsUserLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewRatingsUser"
+        android:text="@string/your_rating"
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+
+</RelativeLayout>

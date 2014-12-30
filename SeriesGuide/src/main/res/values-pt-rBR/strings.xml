@@ -351,15 +351,12 @@
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
   <string name="username">Usuário</string>
-  <string name="email">Email</string>
-  <string name="password">Senha</string>
   <string name="waitplease">Um momento, por favor…</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
-  <string name="trakt_createaccount">Criar nova conta</string>
   <string name="get_started">Começar</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="dismiss">Dispensar</string>

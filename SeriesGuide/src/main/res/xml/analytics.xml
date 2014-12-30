@@ -28,7 +28,7 @@
 
     <screenName name="com.battlelancer.seriesguide.ui.SearchActivity">Search</screenName>
 
-    <screenName name="com.battlelancer.seriesguide.ui.TraktShoutsActivity">Comments</screenName>
+    <screenName name="com.battlelancer.seriesguide.ui.TraktCommentsActivity">Comments</screenName>
 
     <screenName name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences">Settings</screenName>
     <screenName name="com.battlelancer.seriesguide.ui.BackupDeleteActivity">Backup</screenName>

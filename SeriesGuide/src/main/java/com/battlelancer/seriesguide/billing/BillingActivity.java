@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -324,7 +325,7 @@ public class BillingActivity extends BaseActivity {
         // show the notification
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(R.string.subscription_expired, notification);
+        nm.notify(SeriesGuideApplication.NOTIFICATION_SUBSCRIPTION_ID, notification);
     }
 
     /**

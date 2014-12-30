@@ -51,8 +51,10 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      * Start the trakt check in task.
      */
     protected void checkInTrakt(String message) {
-        int movieTmdbId = getArguments().getInt(InitBundle.MOVIE_TMDB_ID);
         AndroidUtils.executeOnPool(
-                new TraktTask(getActivity()).checkInMovie(movieTmdbId, message));
+                new TraktTask(getActivity()).checkInMovie(
+                        getArguments().getInt(InitBundle.MOVIE_TMDB_ID),
+                        getArguments().getString(InitBundle.ITEM_TITLE),
+                        message));
     }
 }

@@ -30,16 +30,17 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.jakewharton.trakt.Trakt;
+import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb.Tmdb;
+import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import timber.log.Timber;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -82,9 +83,9 @@ public final class ServiceUtils {
 
     private static Picasso sPicasso;
 
-    private static Trakt trakt;
+    private static TraktV2 traktV2;
 
-    private static Trakt traktWithAuth;
+    private static TraktV2 traktV2WithAuth;
 
     private static Tmdb tmdb;
 
@@ -179,54 +180,53 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get a {@link com.jakewharton.trakt.Trakt} service manager with just the API key set. NO user
-     * auth data.
+     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with just the API key set. NO
+     * user auth data.
      *
-     * @return A {@link com.jakewharton.trakt.Trakt} instance.
+     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
      */
-    public static synchronized Trakt getTrakt(Context context) {
-        if (trakt == null) {
-            trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
+    public static synchronized TraktV2 getTraktV2(Context context) {
+        if (traktV2 == null) {
+            traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
         }
-        return trakt;
+        return traktV2;
     }
 
     /**
-     * Get a {@link com.jakewharton.trakt.Trakt} service manager with user credentials and API key
-     * set.
+     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with OAuth access token and
+     * API key set.
      *
-     * @return A {@link com.jakewharton.trakt.Trakt} instance or null if there are no valid
+     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance or null if there are no valid
      * credentials.
      */
-    public static synchronized Trakt getTraktWithAuth(Context context) {
+    public static synchronized TraktV2 getTraktV2WithAuth(Context context) {
         if (!TraktCredentials.get(context).hasCredentials()) {
+            Timber.e("getTraktV2WithAuth: no auth");
             return null;
         }
 
-        if (traktWithAuth == null) {
-            Trakt trakt = new SgTrakt(context).setApiKey(BuildConfig.TRAKT_API_KEY);
-            final String username = TraktCredentials.get(context).getUsername();
-            final String password = TraktCredentials.get(context).getPassword();
-            trakt.setAuthentication(username, password);
-            traktWithAuth = trakt;
+        if (traktV2WithAuth == null) {
+            TraktV2 trakt = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
+            final String accessToken = TraktCredentials.get(context).getAccessToken();
+            trakt.setAccessToken(accessToken);
+            traktV2WithAuth = trakt;
         }
 
-        return traktWithAuth;
+        return traktV2WithAuth;
     }
 
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com
      * web page. If the IMDb id is empty, disables the button.
      */
-    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
-            final Context context) {
+    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag) {
         if (imdbButton != null) {
             if (!TextUtils.isEmpty(imdbId)) {
                 imdbButton.setEnabled(true);
                 imdbButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openImdb(imdbId, logTag, context);
+                        openImdb(imdbId, logTag, v.getContext());
                     }
                 });
             } else {
@@ -282,20 +282,17 @@ public final class ServiceUtils {
     }
 
     /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows or episodes
-     * trakt.tv page.<br> If any of the season or episode numbers is below 0, displays the show
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show or episode trakt.tv
      * page.
      */
-    public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
-            final int episodeNumber,
-            final View traktButton, final String logTag) {
+    public static void setUpTraktButton(final int showTvdbId, final View traktButton,
+            final String logTag) {
         if (traktButton != null) {
             traktButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber,
-                            episodeNumber);
+                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(uri));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -305,13 +302,6 @@ public final class ServiceUtils {
                 }
             });
         }
-    }
-
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows trakt.tv page.
-     */
-    public static void setUpTraktButton(int showTvdbId, View traktButton, String logTag) {
-        setUpTraktButton(showTvdbId, -1, -1, traktButton, logTag);
     }
 
     /**

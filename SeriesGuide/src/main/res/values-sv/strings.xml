@@ -352,15 +352,12 @@
   <string name="addtocalendar">Lägg till i kalendern</string>
   <string name="addtocalendar_failed">Kan inte lägga till i kalendern. </string>
   <string name="username">Användarnamn</string>
-  <string name="email">E-post</string>
-  <string name="password">Lösenord</string>
   <string name="waitplease">Ett ögonblick…</string>
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
   <string name="trakt_error">Interaktion med trakt misslyckades</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
-  <string name="trakt_createaccount">Skapa nytt konto</string>
   <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="dismiss">Avfärda</string>

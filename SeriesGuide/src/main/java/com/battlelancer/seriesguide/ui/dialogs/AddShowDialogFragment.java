@@ -45,8 +45,10 @@ import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -100,15 +102,15 @@ public class AddShowDialogFragment extends DialogFragment {
     @InjectView(R.id.textViewAddTitle) TextView title;
     @InjectView(R.id.textViewAddShowMeta) TextView showmeta;
     @InjectView(R.id.textViewAddDescription) TextView overview;
-    @InjectView(R.id.textViewAddRatingsTvdbValue) TextView tvdbRating;
+    @InjectView(R.id.textViewAddRatingValue) TextView rating;
     @InjectView(R.id.textViewAddGenres) TextView genres;
     @InjectView(R.id.textViewAddReleased) TextView released;
     @InjectView(R.id.imageViewAddPoster) ImageView poster;
 
     @InjectViews({
-            R.id.textViewAddRatingsTvdbValue,
-            R.id.textViewAddRatingsTvdbLabel,
-            R.id.textViewAddRatingsTvdbRange,
+            R.id.textViewAddRatingValue,
+            R.id.textViewAddRatingLabel,
+            R.id.textViewAddRatingRange,
             R.id.textViewAddGenresLabel,
             R.id.textViewAddReleasedLabel
     }) List<View> labelViews;
@@ -261,11 +263,19 @@ public class AddShowDialogFragment extends DialogFragment {
                 meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         meta.append("\n");
 
-        // release day and time
-        String[] values = TimeTools.formatToShowReleaseTimeAndDay(getActivity(), show.airtime,
-                show.country, show.airday);
-        meta.append(values[1]).append(" ").append(values[0]);
-        meta.append("\n");
+        // next release day and time
+        if (show.release_time != -1) {
+            Date release = TimeTools.getShowReleaseDateTime(getActivity(),
+                    TimeTools.getShowReleaseTime(show.release_time),
+                    show.release_weekday,
+                    show.release_timezone,
+                    show.country);
+            String day = TimeTools.formatToLocalDayOrDaily(getActivity(), release,
+                    show.release_weekday);
+            String time = TimeTools.formatToLocalTime(getActivity(), release);
+            meta.append(day).append(" ").append(time);
+            meta.append("\n");
+        }
 
         // network, runtime
         meta.append(show.network);
@@ -274,16 +284,14 @@ public class AddShowDialogFragment extends DialogFragment {
 
         showmeta.setText(meta);
 
-        // TheTVDB rating
-        tvdbRating.setText(
-                show.rating > 0 ? String.valueOf(show.rating) : getString(R.string.norating));
+        // rating
+        rating.setText(TraktTools.buildRatingString(show.rating));
 
         // genres
         Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
 
         // original release
-        Utils.setValueOrPlaceholder(released,
-                TimeTools.getShowReleaseYear(show.firstAired, show.airtime, show.country));
+        Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
 
         // poster
         Utils.loadPosterThumbnail(getActivity(), poster, show.poster);

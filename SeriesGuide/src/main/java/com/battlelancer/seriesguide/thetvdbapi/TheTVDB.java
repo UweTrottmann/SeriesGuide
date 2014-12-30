@@ -43,9 +43,9 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.Extended;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -54,7 +54,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import retrofit.RetrofitError;
@@ -139,8 +142,8 @@ public class TheTVDB {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(Context context, int showTvdbId, List<TvShow> seenTraktShows,
-            List<TvShow> collectedTraktShows) throws TvdbException {
+    public static boolean addShow(Context context, int showTvdbId, List<BaseShow> traktWatched,
+            List<BaseShow> traktCollection) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
@@ -181,14 +184,31 @@ public class TheTVDB {
             ShowTools.get(context).sendIsRemoved(showTvdbId, false);
         } else {
             // ...from trakt
-            storeTraktFlags(showTvdbId, seenTraktShows, context, true);
-            storeTraktFlags(showTvdbId, collectedTraktShows, context, false);
+            storeTraktFlags(context, traktWatched, showTvdbId, true);
+            storeTraktFlags(context, traktCollection, showTvdbId, false);
         }
 
         // calculate next episode
         DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
+    }
+
+    private static void storeTraktFlags(Context context, List<BaseShow> shows, int showTvdbId,
+            boolean isWatchedList) {
+        // try to find seen episodes from trakt of the given show
+        for (BaseShow show : shows) {
+            if (show.show == null || show.show.ids == null || show.show.ids.tvdb == null
+                    || show.show.ids.tvdb != showTvdbId) {
+                continue; // skip
+            }
+
+            TraktTools.applyEpisodeFlagChanges(context, show,
+                    isWatchedList ? Episodes.WATCHED : Episodes.COLLECTED, false);
+
+            // done, found the show we were looking for
+            return;
+        }
     }
 
     /**
@@ -280,13 +300,12 @@ public class TheTVDB {
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED, Shows.AIRSDAYOFWEEK
+                Shows._ID, Shows.LASTUPDATED, Shows.RELEASE_WEEKDAY
         }, null, null, null);
 
         if (shows != null) {
             while (shows.moveToNext()) {
-                boolean isDailyShow = TimeTools.getDayOfWeek(shows.getString(2))
-                        == TimeTools.RELEASE_DAY_DAILY;
+                boolean isDailyShow = shows.getInt(2) == TimeTools.RELEASE_WEEKDAY_DAILY;
                 long lastUpdatedTime = shows.getLong(1);
                 // update daily shows more frequently than weekly shows
                 if (currentTime - lastUpdatedTime >
@@ -335,23 +354,6 @@ public class TheTVDB {
         return true;
     }
 
-    private static void storeTraktFlags(int showTvdbId, List<TvShow> shows, Context context,
-            boolean isSeenFlags) {
-        // try to find seen episodes from trakt of the given show
-        for (TvShow tvShow : shows) {
-            if (tvShow == null || tvShow.tvdb_id == null || tvShow.tvdb_id != showTvdbId) {
-                // skip, does not match
-                continue;
-            }
-
-            TraktTools.applyEpisodeFlagChanges(context, tvShow,
-                    isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED, false);
-
-            // done, found the show we were looking for
-            return;
-        }
-    }
-
     /**
      * Get show details from TVDb in the user preferred language ({@link
      * DisplaySettings#getContentLanguage(android.content.Context)}). Tries to fetch additional
@@ -363,7 +365,7 @@ public class TheTVDB {
     }
 
     /**
-     * Get show details from TVDb. Tries to fetch additional information from trakt.
+     * Get show details from TVDb and trakt.
      *
      * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
      * >TVDb wiki</a>).
@@ -374,21 +376,30 @@ public class TheTVDB {
         Show show = downloadAndParseShow(context, showTvdbId, language);
 
         // get some more details from trakt
-        TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTrakt(context);
-        if (manager != null) {
-            try {
-                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Downloading summary failed");
+        com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
+        TraktV2 trakt = ServiceUtils.getTraktV2(context);
+        try {
+            // look up trakt id
+            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+            if (showTraktId != null) {
+                // fetch details
+                traktShow = trakt.shows().summary(showTraktId, Extended.FULL);
+            } else {
+                traktShow = null;
             }
+        } catch (RetrofitError e) {
+            Timber.e(e, "Loading summary failed: " + e.getUrl());
         }
-        if (traktShow == null) {
+        if (traktShow == null || traktShow.airs == null) {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
         }
 
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
+        show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
+        show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
+        show.release_timezone = traktShow.airs.timezone;
         show.country = traktShow.country;
+        show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+        show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
 
         return show;
     }
@@ -424,16 +435,6 @@ public class TheTVDB {
                 currentShow.actors = body.trim();
             }
         });
-        show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.airday = body.trim();
-            }
-        });
-        show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.firstAired = body;
-            }
-        });
         show.getChild("Genre").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.genres = body.trim();
@@ -442,15 +443,6 @@ public class TheTVDB {
         show.getChild("Network").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.network = body;
-            }
-        });
-        show.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                try {
-                    currentShow.rating = Double.parseDouble(body);
-                } catch (NumberFormatException e) {
-                    currentShow.rating = 0.0;
-                }
             }
         });
         show.getChild("Runtime").setEndTextElementListener(new EndTextElementListener() {
@@ -524,12 +516,16 @@ public class TheTVDB {
     private static ArrayList<ContentValues> parseEpisodes(
             final ArrayList<ContentProviderOperation> batch, String url, final Show show,
             Context context) throws TvdbException {
-        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
+        final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
+        final LocalTime showReleaseTime = TimeTools.getShowReleaseTime(show.release_time);
+        final String deviceTimeZone = TimeZone.getDefault().getID();
 
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
+
+        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils
                 .getEpisodeMapForShow(context, show.tvdbId);
@@ -610,11 +606,10 @@ public class TheTVDB {
                 }
         );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                long episodeAirTime = TimeTools
-                        .parseEpisodeReleaseTime(body, show.airtime, show.country);
-                values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
-                values.put(Episodes.FIRSTAIRED, body.trim());
+            public void end(String releaseDate) {
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(showTimeZone, releaseDate,
+                        showReleaseTime, show.country, deviceTimeZone);
+                values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
             }
         });
         episode.getChild("EpisodeName").setEndTextElementListener(new EndTextElementListener() {
@@ -650,11 +645,6 @@ public class TheTVDB {
         episode.getChild("Writer").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 values.put(Episodes.WRITERS, body.trim());
-            }
-        });
-        episode.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.RATING, body.trim());
             }
         });
         episode.getChild("filename").setEndTextElementListener(new EndTextElementListener() {
