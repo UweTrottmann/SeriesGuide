@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/buttonCheckInPasteTitle"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/large_padding"
@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/buttonCheckInClear"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/large_padding"
@@ -50,7 +50,7 @@
 
     <Button
         android:id="@+id/buttonCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

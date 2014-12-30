@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/buttonClose"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dismiss" />
