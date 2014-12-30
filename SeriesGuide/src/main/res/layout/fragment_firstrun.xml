@@ -68,21 +68,21 @@
 
             <Button
                 android:id="@+id/buttonFirstRunAddShow"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shows_add" />
 
             <Button
                 android:id="@+id/buttonFirstRunTrakt"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/connect_trakt" />
 
             <Button
                 android:id="@+id/buttonFirstRunRestore"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/import_button" />

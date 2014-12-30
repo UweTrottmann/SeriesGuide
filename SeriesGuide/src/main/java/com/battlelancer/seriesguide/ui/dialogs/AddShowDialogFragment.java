@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -149,13 +148,7 @@ public class AddShowDialogFragment extends DialogFragment {
         }
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
-        }
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override

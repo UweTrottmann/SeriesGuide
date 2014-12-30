@@ -35,7 +35,6 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndDigitInputFilter;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -56,13 +55,7 @@ public class AddListDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
-        }
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override

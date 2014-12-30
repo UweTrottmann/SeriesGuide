@@ -19,8 +19,7 @@
 <resources>
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Material.Button" />
-
+    <!-- Bend to material here to avoid creating attributes for each borderless button variant -->
     <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">
         <item name="android:maxLines">2</item>
     </style>

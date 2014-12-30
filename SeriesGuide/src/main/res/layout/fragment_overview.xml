@@ -81,7 +81,7 @@
 
                 <ImageView
                     android:id="@+id/imageViewFavorite"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/buttonbar_button_width"
                     android:layout_height="match_parent"
                     android:focusable="true"

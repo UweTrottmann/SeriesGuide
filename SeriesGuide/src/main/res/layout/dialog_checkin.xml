@@ -1,68 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/large_padding"
-    android:paddingBottom="@dimen/default_padding">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonCheckInPasteTitle"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:text="@string/paste_title" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/buttonCheckInClear"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/large_padding"
-        android:layout_toRightOf="@+id/buttonCheckInPasteTitle"
-        android:text="@string/clear" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingLeft="@dimen/large_padding"
+            android:paddingRight="@dimen/large_padding">
 
-    <EditText
-        android:id="@+id/editTextCheckInMessage"
+            <Button
+                android:id="@+id/buttonCheckInPasteTitle"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paste_title" />
+
+            <Button
+                android:id="@+id/buttonCheckInClear"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/buttonCheckInPasteTitle"
+                android:text="@string/clear" />
+
+            <EditText
+                android:id="@+id/editTextCheckInMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonCheckInPasteTitle"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:gravity="top"
+                android:hint="@string/checkin_hint"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLength="100">
+
+                <requestFocus />
+            </EditText>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/containerCheckInButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCheckInPasteTitle"
-        android:layout_marginBottom="@dimen/large_padding"
-        android:layout_marginLeft="@dimen/larger_padding"
-        android:layout_marginRight="@dimen/larger_padding"
-        android:gravity="top"
-        android:hint="@string/checkin_hint"
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:maxLength="100">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/larger_padding"
+        android:paddingRight="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding">
 
-        <requestFocus />
-    </EditText>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_trakt"
+            android:contentDescription="@string/powered_by_trakt" />
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_below="@+id/editTextCheckInMessage"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="@dimen/larger_padding"
-        android:src="@drawable/ic_trakt"
-        android:contentDescription="@string/powered_by_trakt" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/buttonCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextCheckInMessage"
-        android:layout_marginRight="@dimen/large_padding"
-        android:text="@string/checkin" />
+        <ProgressBar
+            android:id="@+id/progressBarCheckIn"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBarCheckIn"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/editTextCheckInMessage"
-        android:layout_toLeftOf="@+id/buttonCheckIn" />
+        <Button
+            android:id="@+id/buttonCheckIn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkin" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

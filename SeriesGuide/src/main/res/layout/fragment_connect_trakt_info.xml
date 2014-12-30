@@ -65,14 +65,14 @@
 
         <Button
             android:id="@+id/buttonDiscard"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/discard" />
 
         <Button
             android:id="@+id/buttonConnectTrakt"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/connect" />
