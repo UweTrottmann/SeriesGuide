@@ -45,18 +45,18 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         if (episode != null) {
             if (episode.moveToFirst()) {
                 f = new CheckInDialogFragment();
+
                 Bundle args = new Bundle();
                 args.putInt(InitBundle.EPISODE_TVDB_ID, episodeTvdbId);
-                String showTitle = episode.getString(CheckInQuery.SHOW_TITLE);
-                args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(CheckInQuery.SHOW_TVDB_ID));
-
-                String episodeTitleWithNumbers = showTitle + " "
+                String episodeTitleWithNumbers = episode.getString(CheckInQuery.SHOW_TITLE)
+                        + " "
                         + Utils.getNextEpisodeString(context,
                         episode.getInt(CheckInQuery.SEASON),
                         episode.getInt(CheckInQuery.NUMBER),
                         episode.getString(CheckInQuery.EPISODE_TITLE));
                 args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
                 args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
+
                 f.setArguments(args);
             }
             episode.close();
@@ -71,24 +71,13 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 Episodes.SEASON,
                 Episodes.NUMBER,
                 Episodes.TITLE,
-                Shows.REF_SHOW_ID,
                 Shows.TITLE
         };
 
         int SEASON = 0;
         int NUMBER = 1;
         int EPISODE_TITLE = 2;
-        int SHOW_TVDB_ID = 3;
-        int SHOW_TITLE = 4;
-    }
-
-    private int mShowTvdbId;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mShowTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
+        int SHOW_TITLE = 3;
     }
 
     @Override

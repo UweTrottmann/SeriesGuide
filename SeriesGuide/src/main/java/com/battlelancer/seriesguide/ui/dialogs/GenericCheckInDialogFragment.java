@@ -55,11 +55,6 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         String MOVIE_TMDB_ID = "movietmdbid";
 
         /**
-         * Show TVDb id. <b>Required for episodes.</b>
-         */
-        String SHOW_TVDB_ID = "showtvdbid";
-
-        /**
          * Season number. <b>Required for episodes.</b>
          */
         String EPISODE_TVDB_ID = "episodetvdbid";
