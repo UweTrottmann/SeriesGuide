@@ -31,8 +31,6 @@ android {
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
         buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
         buildConfigField("String", "TRAKT_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET")}\"")
-        buildConfigField("String", "TVTAG_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_ID")}\"")
-        buildConfigField("String", "TVTAG_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_SECRET")}\"")
         buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
