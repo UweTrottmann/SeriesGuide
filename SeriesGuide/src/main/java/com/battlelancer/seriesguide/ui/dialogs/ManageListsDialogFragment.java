@@ -52,7 +52,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -89,11 +88,7 @@ public class ManageListsDialogFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME != R.style.Theme_SeriesGuide) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
-        }
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override

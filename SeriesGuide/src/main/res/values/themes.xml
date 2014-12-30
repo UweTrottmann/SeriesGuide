@@ -10,6 +10,9 @@
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
 
+        <!-- Windows -->
+        <item name="android:dialogTheme">@style/Theme.SeriesGuide.Dialog</item>
+
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
@@ -104,6 +107,9 @@
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_dark</item>
 
+        <!-- Windows -->
+        <item name="android:dialogTheme">@style/Theme.AppCompat.Dialog</item>
+
         <!-- System widgets -->
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
         <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
@@ -181,6 +187,9 @@
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
 
+        <!-- Windows -->
+
+
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
@@ -214,6 +223,7 @@
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="android:dialogTheme">@style/Theme.SeriesGuide.Light.Dialog</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
@@ -273,44 +283,32 @@
     </style>
 
     <!-- Special themes -->
-    <style name="Theme.SeriesGuide.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorPrimaryInverse">@android:color/primary_text_light</item>
-        <item name="android:windowMinWidthMajor">45%</item>
-        <item name="android:windowMinWidthMinor">75%</item>
+    <style name="Theme.SeriesGuide.Dialog" parent="Theme.AppCompat.Dialog">
+        <!-- Copy of attributes relevant for our dialogs -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <item name="colorAccent">@color/accent_primary</item>
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
+
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
     </style>
 
     <style name="Theme.SeriesGuide.Dialog.CheckIn">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Light.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/Widget.SeriesGuide.DialogWindowTitle</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowMinWidthMajor">45%</item>
-        <item name="android:windowMinWidthMinor">75%</item>
+    <style name="Theme.SeriesGuide.Light.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Copy of attributes relevant for our dialogs -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <item name="colorAccent">@color/accent_primary</item>
+        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
+
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
     </style>
 
     <style name="Theme.SeriesGuide.Light.Dialog.CheckIn">

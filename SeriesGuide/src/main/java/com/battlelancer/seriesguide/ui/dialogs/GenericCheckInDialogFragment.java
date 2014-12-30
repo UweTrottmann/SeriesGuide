@@ -73,7 +73,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // hide title
+        // hide title, use special theme with exit animation
         if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
             setStyle(STYLE_NO_TITLE, 0);
         } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
