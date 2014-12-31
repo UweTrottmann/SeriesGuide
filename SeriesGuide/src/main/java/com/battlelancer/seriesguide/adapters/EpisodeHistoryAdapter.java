@@ -24,17 +24,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
 /**
- * Creates a list of episodes from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
- * displaying user name and avatar.
+ * Creates a list of episodes from a list of trakt {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry}.
  */
 public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
