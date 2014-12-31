@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -203,8 +204,13 @@ public class TheTVDB {
                 continue; // skip
             }
 
-            TraktTools.applyEpisodeFlagChanges(context, show,
-                    isWatchedList ? Episodes.WATCHED : Episodes.COLLECTED, false);
+            try {
+                TraktTools.applyEpisodeFlagChanges(context, show,
+                        isWatchedList ? TraktTools.Flag.WATCHED : TraktTools.Flag.COLLECTED, false,
+                        null);
+            } catch (OAuthUnauthorizedException ignored) {
+                // we do not enable merging, so no trakt interaction will occur
+            }
 
             // done, found the show we were looking for
             return;

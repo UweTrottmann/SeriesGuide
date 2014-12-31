@@ -539,27 +539,23 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
         // download watched and collected flags
-        int resultCode = TraktTools.downloadEpisodeFlags(context, localShows, lastActivity,
+        // if initial sync, upload any flags missing on trakt
+        // otherwise clear all local flags not on trakt
+        int resultCode = TraktTools.syncEpisodeFlags(context, localShows, lastActivity,
                 isInitialSync);
-        if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
+
+        if (resultCode < 0) {
             return UpdateResult.INCOMPLETE;
         }
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
                 .edit();
-
         if (isInitialSync) {
-            // upload
-            resultCode = TraktTools.uploadEpisodeFlags(context, localShows);
-            if (resultCode < 0) {
-                return UpdateResult.INCOMPLETE;
-            } else {
-                // success, set initial sync as complete
-                editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
-            }
+            // success, set initial sync as complete
+            editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
         }
 
-        // success, set last full sync time to now
+        // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
         Timber.d("performTraktEpisodeSync: success, last sync at " + currentTime);
 
