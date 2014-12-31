@@ -562,6 +562,8 @@ public class SeriesGuideContract {
 
         public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
 
+        public static final String SORT_NUMBER_ASC = Episodes.NUMBER + " ASC";
+
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }
