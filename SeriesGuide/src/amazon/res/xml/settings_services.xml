@@ -36,12 +36,6 @@
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
                 android:targetPackage="@string/package_name" />
         </Preference>
-
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.autoaddtraktshows"
-            android:summary="@string/pref_autoaddshowssummary"
-            android:title="@string/pref_autoaddshows" />
     </PreferenceCategory>
 
 </PreferenceScreen>
