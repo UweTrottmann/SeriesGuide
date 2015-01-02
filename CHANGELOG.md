@@ -10,7 +10,7 @@ Version 21 *(2015-01-02)*
 
 * Support for the new trakt (v2). You will have to sign in and re-approve SeriesGuide.
 
-#### 20 *(2014-12-02)*
+#### 21 *(2014-12-02)*
 
 * FEATURE Support for trakt v2.
 * TWEAK Improved trakt sync, now ratings are available offline as well.
