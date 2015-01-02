@@ -511,6 +511,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static LastActivities getTraktLastActivity(Context context) {
+        Timber.d("performTraktSync: get last activity");
+
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
         if (trakt == null) {
             return null;
