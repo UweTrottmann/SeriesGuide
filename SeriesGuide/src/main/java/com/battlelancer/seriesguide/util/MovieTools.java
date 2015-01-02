@@ -578,6 +578,9 @@ public class MovieTools {
          * Updates the local movie database against trakt movie watchlist and collection. Adds,
          * updates and removes movies in the database.
          *
+         * <p> When syncing the first time, will upload any local movies missing from trakt
+         * collection or watchlist instead of removing them locally.
+         *
          * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
          * thread.
          */
@@ -630,7 +633,8 @@ public class MovieTools {
 
             // build updates
             // loop through all local movies
-            Set<Integer> moviesToRemoveOrUpload = new HashSet<>();
+            Set<Integer> moviesNotOnTraktCollection = new HashSet<>();
+            Set<Integer> moviesNotOnTraktWatchlist = new HashSet<>();
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
             for (Integer tmdbId : getMovieTmdbIdsAsSet(context)) {
                 // is local movie in trakt collection or watchlist?
@@ -639,8 +643,11 @@ public class MovieTools {
 
                 if (merging) {
                     // upload movie if missing from trakt collection or watchlist
-                    if (!inCollection || !inWatchlist) {
-                        moviesToRemoveOrUpload.add(tmdbId);
+                    if (!inCollection) {
+                        moviesNotOnTraktCollection.add(tmdbId);
+                    }
+                    if (!inWatchlist) {
+                        moviesNotOnTraktWatchlist.add(tmdbId);
                     }
                     // add to local collection or watchlist, but do NOT remove
                     if (inCollection || inWatchlist) {
@@ -657,7 +664,7 @@ public class MovieTools {
                 } else {
                     if (!inCollection && !inWatchlist) {
                         // remove local movie if removed from collection and watchlist on trakt
-                        moviesToRemoveOrUpload.add(tmdbId);
+                        moviesNotOnTraktCollection.add(tmdbId);
                     } else {
                         // mirror trakt collection and watchlist flag
                         ContentProviderOperation op = ContentProviderOperation
@@ -683,7 +690,8 @@ public class MovieTools {
             // merge on first run, delete on consequent runs
             if (merging) {
                 // upload movies not in trakt collection or watchlist
-                if (Upload.toTrakt(context, sync, moviesToRemoveOrUpload) != UpdateResult.SUCCESS) {
+                if (Upload.toTrakt(context, sync, moviesNotOnTraktCollection,
+                        moviesNotOnTraktWatchlist) != UpdateResult.SUCCESS) {
                     return UpdateResult.INCOMPLETE;
                 } else {
                     // set merge successful
@@ -694,14 +702,14 @@ public class MovieTools {
                 }
             } else {
                 // remove movies not on trakt
-                buildMovieDeleteOps(moviesToRemoveOrUpload, batch);
+                buildMovieDeleteOps(moviesNotOnTraktCollection, batch);
                 try {
                     DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e, "syncMoviesWithTrakt: database deletes failed");
                     return UpdateResult.INCOMPLETE;
                 }
-                Timber.d("syncMoviesWithTrakt: removed " + moviesToRemoveOrUpload.size());
+                Timber.d("syncMoviesWithTrakt: removed " + moviesNotOnTraktCollection.size());
             }
 
             // add movies from trakt missing locally
@@ -1009,11 +1017,12 @@ public class MovieTools {
         }
 
         /**
-         * Uploads the given movies to the appropriate list(s) on trakt.
+         * Checks if the given movies are in the local collection or watchlist, then uploads them to
+         * the appropriate list(s) on trakt.
          */
         public static UpdateResult toTrakt(Context context, Sync sync,
-                Set<Integer> moviesToUpload) {
-            if (moviesToUpload.size() == 0) {
+                Set<Integer> moviesNotOnTraktCollection, Set<Integer> moviesNotOnTraktWatchlist) {
+            if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
                 // nothing to upload
                 Timber.d("toTrakt: nothing to upload");
                 return UpdateResult.SUCCESS;
@@ -1026,10 +1035,11 @@ public class MovieTools {
 
             Cursor localMovies = context.getContentResolver()
                     .query(SeriesGuideContract.Movies.CONTENT_URI,
-                            new String[] { SeriesGuideContract.Movies._ID,
-                                    SeriesGuideContract.Movies.TMDB_ID,
+                            new String[] {
+                                    SeriesGuideContract.Movies.TMDB_ID, // 0
                                     SeriesGuideContract.Movies.IN_COLLECTION,
-                                    SeriesGuideContract.Movies.IN_WATCHLIST }, null, null, null
+                                    SeriesGuideContract.Movies.IN_WATCHLIST // 2
+                            }, null, null, null
                     );
             if (localMovies == null) {
                 Timber.e("toTrakt: query failed");
@@ -1040,20 +1050,15 @@ public class MovieTools {
             List<SyncMovie> moviesToCollect = new LinkedList<>();
             List<SyncMovie> moviesToWatchlist = new LinkedList<>();
             while (localMovies.moveToNext()) {
-                int tmdbId = localMovies.getInt(1);
-                if (!moviesToUpload.contains(tmdbId)) {
-                    continue;
-                }
+                int tmdbId = localMovies.getInt(0);
 
-                SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(tmdbId));
-
-                // in collection?
-                if (localMovies.getInt(2) == 1) {
-                    moviesToCollect.add(movie);
+                // in local collection, but not on trakt?
+                if (localMovies.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
+                    moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
-                // in watchlist?
-                if (localMovies.getInt(3) == 1) {
-                    moviesToWatchlist.add(movie);
+                // in local watchlist, but not on trakt?
+                if (localMovies.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
+                    moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
             }
 
@@ -1079,7 +1084,9 @@ public class MovieTools {
                 return UpdateResult.INCOMPLETE;
             }
 
-            Timber.d("toTrakt: success, uploaded " + moviesToUpload.size());
+            Timber.d("toTrakt: success, uploaded "
+                    + moviesToCollect.size() + " to collection, "
+                    + moviesToWatchlist.size() + " to watchlist");
             return UpdateResult.SUCCESS;
         }
     }
