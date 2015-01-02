@@ -787,7 +787,7 @@ public class MovieTools {
                         languageCode, tmdbId);
                 if (movieDetails.tmdbMovie() == null || movieDetails.released == null) {
                     // skip if minimal values failed to load
-                    Timber.d("addMovies: downloaded movie was incomplete, skipping");
+                    Timber.d("addMovies: downloaded movie " + tmdbId + " incomplete, skipping");
                     continue;
                 }
 
