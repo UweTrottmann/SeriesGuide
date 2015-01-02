@@ -18,55 +18,59 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+import timber.log.Timber;
 
 /**
- * Helps with converting timestamps used by TVDb and other services.
+ * Helper tools for converting and formatting date times for shows and episodes.
  */
 public class TimeTools {
 
-    public static final String TIMEZONE_ID_CUSTOM = "GMT-08:00";
-    public static final int RELEASE_DAY_DAILY = 0;
+    public static final int RELEASE_WEEKDAY_DAILY = 0;
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
 
     private static final String AUSTRALIA = "Australia";
-    private static final String TIMEZONE_ID_AUSTRALIA = "Australia/Sydney";
+    private static final String ISO3166_1_AUSTRALIA = "au";
 
     private static final String CANADA = "Canada";
-    private static final String TIMEZONE_ID_CANADA_ATLANTIC = "America/Halifax";
-    private static final String TIMEZONE_ID_CANADA_EASTERN = "America/Montreal";
-    private static final String TIMEZONE_ID_CANADA_CENTRAL = "America/Winnipeg";
-    private static final String TIMEZONE_ID_CANADA_MOUNTAIN = "America/Edmonton";
-    private static final String TIMEZONE_ID_CANADA_PACIFIC = "America/Vancouver";
+    private static final String ISO3166_1_CANADA = "ca";
 
     private static final String FINLAND = "Finland";
-    private static final String TIMEZONE_ID_FINLAND = "Europe/Helsinki";
+    private static final String ISO3166_1_FINLAND = "fi";
 
     private static final String GERMANY = "Germany";
-    private static final String TIMEZONE_ID_GERMANY = "Europe/Berlin";
+    private static final String ISO3166_1_GERMANY = "de";
 
     private static final String JAPAN = "Japan";
-    private static final String TIMEZONE_ID_JAPAN = "Asia/Tokyo";
+    private static final String ISO3166_1_JAPAN = "jp";
 
     private static final String NETHERLANDS = "Netherlands";
-    private static final String TIMEZONE_ID_NETHERLANDS = "Europe/Amsterdam";
+    private static final String ISO3166_1_NETHERLANDS = "nl";
 
     private static final String UNITED_KINGDOM = "United Kingdom";
-    private static final String TIMEZONE_ID_UK = "Europe/London";
+    private static final String ISO3166_1_UNITED_KINGDOM = "gb";
 
     private static final String UNITED_STATES = "United States";
+    private static final String ISO3166_1_UNITED_STATES = "us";
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
     private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
@@ -74,207 +78,312 @@ public class TimeTools {
     private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
-    private static final SimpleDateFormat TIME_FORMAT_TRAKT = new SimpleDateFormat(
-            "h:mmaa", Locale.US);
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_UTC
+            = ISODateTimeFormat.dateTime().withZoneUTC();
 
-    private static final SimpleDateFormat DATE_FORMAT_TVDB = new SimpleDateFormat("yyyy-MM-dd",
-            Locale.US);
+    private static final DateTimeFormatter TVDB_DATE_FORMATTER = ISODateTimeFormat.date();
 
-    static {
-        // assume all times are in a custom time zone
-        TimeZone customTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM);
-        TIME_FORMAT_TRAKT.setTimeZone(customTimeZone);
-        DATE_FORMAT_TVDB.setTimeZone(customTimeZone);
+    /**
+     * Returns the appropriate time zone for the given tzdata zone identifier.
+     *
+     * <p> Falls back to "America/New_York" if timezone string is empty.
+     */
+    public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
+        return (timezone == null || timezone.length() == 0) ?
+                DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(timezone);
     }
 
     /**
-     * Converts a release time from trakt (e.g. "12:00pm") into a millisecond value. The given time
-     * is assumed to be in a custom UTC-08:00 time zone.
+     * Parses a ISO 8601 time string (e.g. "20:30") and encodes it into an integer with format
+     * "hhmm" (e.g. 2030).
      *
-     * @return -1 if no conversion was possible, a millisecond value storing the time in UTC-08:00
-     * otherwise. The date of the millisecond value should be considered as random, only the time
-     * matches the input.
+     * <p> If time is invalid returns -1. Performs no extensive formatting check, though.
      */
-    public static long parseShowReleaseTime(String traktAirTimeString) {
-        // try parsing with different formats, starting with the most likely
-        Date time = null;
-        if (traktAirTimeString != null && traktAirTimeString.length() != 0) {
-            try {
-                time = TIME_FORMAT_TRAKT.parse(traktAirTimeString);
-            } catch (ParseException e) {
-                // string may be wrongly formatted
-                time = null;
-            }
-        }
-
-        if (time != null) {
-            return time.getTime();
-        } else {
-            // times resolution is at most in minutes, so -1 (ms) can never exist
+    public static int parseShowReleaseTime(@Nullable String localTime) {
+        if (localTime == null || localTime.length() != 5) {
             return -1;
         }
-    }
 
-    public static long parseEpisodeReleaseTime(String releaseDateEpisode, long releaseTimeShow,
-            String releaseCountry) {
-        // create calendar, set to custom time zone
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
+        // extract hour and minute, example: "20:30" => hour = 20, minute = 30
+        int hour = Integer.valueOf(localTime.substring(0, 2));
+        int minute = Integer.valueOf(localTime.substring(3, 5));
 
-        // extract day, month and year
-        Date releaseDate;
-        try {
-            releaseDate = DATE_FORMAT_TVDB.parse(releaseDateEpisode);
-        } catch (ParseException e) {
-            releaseDate = null;
-        }
-        if (releaseDate == null) {
-            return -1;
-        }
-        calendar.setTime(releaseDate);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // extract hour and minute
-        int hour;
-        int minute;
-        if (releaseTimeShow != -1) {
-            calendar.setTimeInMillis(releaseTimeShow);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-        } else {
-            // no exact time? default to 5 in the morning
-            hour = 5;
-            minute = 0;
-        }
-
-        // set calendar to release time zone
-        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZoneId));
-
-        // set parsed date and time
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        // this depends on the current device time zone, so if it changes to/from a US time zone
-        // updating all episode time stamps is necessary
-        // as current episodes are updated regularly this should not be an issue
-        applyCustomCorrections(calendar, hour, releaseCountry);
-
-        return calendar.getTimeInMillis();
-    }
-
-    public static String[] formatToShowReleaseTimeAndDay(Context context, long releaseTime,
-            String releaseCountry, String releaseDay) {
-        // return empty strings if time is missing
-        if (releaseTime == -1) {
-            return new String[] {
-                    "", ""
-            };
-        }
-
-        int releaseDayOfWeek = getDayOfWeek(releaseDay);
-
-        Calendar calendar = getShowReleaseTime(releaseTime, releaseCountry, releaseDayOfWeek);
-
-        setUserOffset(context, calendar);
-
-        // convert and format to local
-        Date actualRelease = calendar.getTime();
-        return new String[] {
-                formatToLocalReleaseTime(context, actualRelease),
-                formatToLocalReleaseDay(context, releaseDayOfWeek, actualRelease)
-        };
+        // return int encoded time, e.g. hhmm (2030)
+        return hour * 100 + minute;
     }
 
     /**
-     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a given US English day
-     * string (Monday through Sunday) or "Daily".
+     * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
      *
-     * @return Either e.g. <code>Calendar.SUNDAY</code> or 0 if Daily or -1 if no match.
+     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
      */
-    public static int getDayOfWeek(String day) {
-        if (TextUtils.isEmpty(day)) {
+    public static int parseShowReleaseWeekDay(String day) {
+        if (day == null || day.length() == 0) {
             return -1;
-        }
-
-        // catch Daily
-        if ("Daily".equals(day)) {
-            return RELEASE_DAY_DAILY;
         }
 
         // catch Monday through Sunday
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
-        String[] weekdays = dfs.getWeekdays();
-
-        for (int i = 1; i < weekdays.length; i++) {
-            if (day.equals(weekdays[i])) {
-                return i;
-            }
+        switch (day) {
+            case "Monday":
+                return DateTimeConstants.MONDAY;
+            case "Tuesday":
+                return DateTimeConstants.TUESDAY;
+            case "Wednesday":
+                return DateTimeConstants.WEDNESDAY;
+            case "Thursday":
+                return DateTimeConstants.THURSDAY;
+            case "Friday":
+                return DateTimeConstants.FRIDAY;
+            case "Saturday":
+                return DateTimeConstants.SATURDAY;
+            case "Sunday":
+                return DateTimeConstants.SUNDAY;
+            case "Daily":
+                return 0;
         }
 
         // no match
         return -1;
     }
 
-    private static Calendar getShowReleaseTime(long releaseTime, String releaseCountry,
-            int releaseDayOfWeek) {
-        // create calendar, set to custom time zone
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ID_CUSTOM));
-
-        // get release "hours"
-        calendar.setTimeInMillis(releaseTime);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        // set calendar to release time zone
-        String timeZoneId = getTimeZoneIdForCountry(releaseCountry);
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZoneId));
-
-        // set to today
-        calendar.setTimeInMillis(System.currentTimeMillis());
-
-        // set release "hours" on release country calendar
-        // has to be done as release time typically stays the same even if DST starts
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        // move to correct release day (not for daily shows)
-        if (releaseDayOfWeek > 0) {
-            // make sure we always assume a release date which is today or in the future
-            // to get correct local DST information when converting
-            int todayDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            // get how far release day is ahead of today
-            int daysToMoveAhead = (releaseDayOfWeek + 7 - todayDayOfWeek) % 7;
-            // move ahead accordingly
-            calendar.add(Calendar.DAY_OF_MONTH, daysToMoveAhead);
-        }
-
-        // apply some TV specific corrections
-        applyCustomCorrections(calendar, hour, releaseCountry);
-
-        return calendar;
+    /**
+     * Parses a {@link DateTime} to its ISO datetime string representation (in UTC).
+     */
+    public static String parseShowFirstRelease(@Nullable DateTime dateTime) {
+        return dateTime == null ? "" : DATE_TIME_FORMATTER_UTC.print(dateTime);
     }
 
     /**
-     * Takes the UTC time in ms of an episode release (see {@link #parseEpisodeReleaseTime(String,
-     * long, String)}) and adds user-set offsets.
+     * Calculates the episode release date time as a millisecond instant. Adjusts for time zone
+     * effects on release time, e.g. delays between time zones (e.g. in the United States) and DST.
+     *
+     * @param showTimeZone See {@link #getDateTimeZone(String)}.
+     * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
+     * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
-    public static Date getEpisodeReleaseTime(Context context, long releaseTime) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(releaseTime);
+    public static long parseEpisodeReleaseDate(@Nonnull DateTimeZone showTimeZone,
+            @Nullable String releaseDate, @Nonnull LocalTime showReleaseTime,
+            @Nullable String showCountry, @Nonnull String deviceTimeZone) {
+        if (releaseDate == null || releaseDate.length() == 0) {
+            return -1;
+        }
 
-        setUserOffset(context, calendar);
+        // get date
+        LocalDate localDate;
+        try {
+            localDate = TVDB_DATE_FORMATTER.parseLocalDate(releaseDate);
+        } catch (IllegalArgumentException e) {
+            // date string could not be parsed
+            Timber.e(e, "TheTVDB date could not be parsed: " + releaseDate);
+            return -1;
+        }
 
-        return calendar.getTime();
+        // set time
+        LocalDateTime localDateTime = localDate.toLocalDateTime(showReleaseTime);
+
+        localDateTime = handleHourPastMidnight(localDateTime);
+        localDateTime = handleDstGap(showTimeZone, localDateTime);
+
+        // finally get a valid datetime in the show time zone
+        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
+
+        // handle time zone effects on release time for US shows (only if device is set to US zone)
+        if (deviceTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
+            dateTime = applyUnitedStatesCorrections(showCountry, deviceTimeZone, dateTime);
+        }
+
+        return dateTime.getMillis();
+    }
+
+    /**
+     * Creates the show release time from a {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#RELEASE_TIME}
+     * encoded value.
+     *
+     * <p> If the encoded time passed is not from 0 to 2359 or the encoded minute is larger than 59,
+     * a sensible default is returned.
+     */
+    public static LocalTime getShowReleaseTime(int showReleaseTime) {
+        if (showReleaseTime >= 0 && showReleaseTime <= 2359) {
+            int hour = showReleaseTime / 100;
+            int minute = showReleaseTime - (hour * 100);
+            if (minute <= 59) {
+                return new LocalTime(hour, minute);
+            }
+        }
+
+        // if no time is available, use a sensible default
+        return new LocalTime(7, 0);
+    }
+
+    /**
+     * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
+     * delays between time zones (e.g. in the United States) and DST. Adjusts for user-defined
+     * offset.
+     *
+     * @param time See {@link #getShowReleaseTime(int)}.
+     * @return The date is today or on the next day matching the given week day.
+     */
+    public static Date getShowReleaseDateTime(@Nonnull Context context, @Nonnull LocalTime time,
+            int weekDay, @Nullable String timeZone, @Nullable String country) {
+        // determine show time zone (falls back to America/New_York)
+        DateTimeZone showTimeZone = getDateTimeZone(timeZone);
+
+        // create current date in show time zone, set local show release time
+        LocalDateTime localDateTime = new LocalDate(showTimeZone).toLocalDateTime(time);
+
+        // adjust day of week so datetime is today or within the next week
+        // for daily shows (weekDay == 0) just use the current day
+        if (weekDay >= 1 && weekDay <= 7) {
+            // joda tries to preserve week
+            // so if we want a week day earlier in the week, advance by 7 days first
+            if (weekDay < localDateTime.getDayOfWeek()) {
+                localDateTime = localDateTime.plusWeeks(1);
+            }
+            localDateTime = localDateTime.withDayOfWeek(weekDay);
+        }
+
+        localDateTime = handleHourPastMidnight(localDateTime);
+        localDateTime = handleDstGap(showTimeZone, localDateTime);
+
+        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
+
+        // handle time zone effects on release time for US shows (only if device is set to US zone)
+        String localTimeZone = TimeZone.getDefault().getID();
+        if (localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
+            dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime);
+        }
+
+        dateTime = applyUserOffset(context, dateTime);
+
+        return dateTime.toDate();
+    }
+
+    /**
+     * If the release time is within the hour past midnight (0:00 until 0:59) moves the date one day
+     * into the future.
+     *
+     * <p> This is based on late night shows being commonly listed as releasing the day before if
+     * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
+     */
+    private static LocalDateTime handleHourPastMidnight(LocalDateTime localDateTime) {
+        if (localDateTime.getHourOfDay() == 0) {
+            return localDateTime.plusDays(1);
+        }
+        return localDateTime;
+    }
+
+    /**
+     * Calculate the year string of a show's first release in the user's default locale from an ISO
+     * date time string.
+     *
+     * @return Returns {@code null} if the given date time is empty.
+     */
+    public static String getShowReleaseYear(@Nullable String releaseDateTime) {
+        if (releaseDateTime == null || releaseDateTime.length() == 0) {
+            return null;
+        }
+
+        DateTime dateTime;
+
+        try {
+            dateTime = DATE_TIME_FORMATTER_UTC.parseDateTime(releaseDateTime);
+        } catch (IllegalArgumentException ignored) {
+            // legacy format, or otherwise invalid
+            try {
+                // try legacy date only parser
+                dateTime = TVDB_DATE_FORMATTER.parseDateTime(releaseDateTime);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        }
+
+        return new SimpleDateFormat("yyyy", Locale.getDefault()).format(dateTime.toDate());
+    }
+
+    private static DateTime applyUnitedStatesCorrections(@Nullable String country,
+            @Nonnull String localTimeZone, @Nonnull DateTime dateTime) {
+        // assumed base time zone for US shows by trakt is America/New_York
+        // EST UTC−5:00, EDT UTC−4:00
+
+        // east feed (default): simultaneously in Eastern and Central
+        // delayed 1 hour in Mountain
+        // delayed three hours in Pacific
+        // <==>
+        // same local time in Eastern + Pacific (e.g. 20:00)
+        // same local time in Central + Mountain (e.g. 19:00)
+
+        // not a US show or no correction necessary (getting east feed)
+        if (!ISO3166_1_UNITED_STATES.equals(country)
+                || localTimeZone.equals(TIMEZONE_ID_US_EASTERN)
+                || localTimeZone.equals(TIMEZONE_ID_US_EASTERN_DETROIT)
+                || localTimeZone.equals(TIMEZONE_ID_US_CENTRAL)) {
+            return dateTime;
+        }
+
+        int offset = 0;
+        if (localTimeZone.equals(TIMEZONE_ID_US_MOUNTAIN)) {
+            // MST UTC−7:00, MDT UTC−6:00
+            offset += 1;
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
+            // is always UTC-07:00, so like Mountain, but no DST
+            boolean noDstInEastern = DateTimeZone.forID(TIMEZONE_ID_US_EASTERN)
+                    .isStandardOffset(dateTime.getMillis());
+            if (noDstInEastern) {
+                offset += 1;
+            } else {
+                offset += 2;
+            }
+        } else if (localTimeZone.equals(TIMEZONE_ID_US_PACIFIC)) {
+            // PST UTC−8:00 or PDT UTC−7:00
+            offset += 3;
+        }
+
+        dateTime = dateTime.plusHours(offset);
+
+        return dateTime;
+    }
+
+    /**
+     * Handles DST gap (typically a missing clock hour when DST is getting enabled) by moving the
+     * time forward in hour increments until the local date time is outside the gap.
+     */
+    private static LocalDateTime handleDstGap(DateTimeZone showTimeZone,
+            LocalDateTime localDateTime) {
+        while (showTimeZone.isLocalDateTimeGap(localDateTime)) {
+            // move time forward in 1 hour increments, until outside of the gap
+            localDateTime = localDateTime.plusHours(1);
+        }
+        return localDateTime;
+    }
+
+    /**
+     * Returns the text representation of the given country code. If the country is not supported,
+     * "unknown" will be returned.
+     */
+    public static String getCountry(Context context, String releaseCountry) {
+        if (releaseCountry == null || releaseCountry.length() == 0) {
+            return context.getString(R.string.unknown);
+        }
+        switch (releaseCountry) {
+            case ISO3166_1_AUSTRALIA:
+                return AUSTRALIA;
+            case ISO3166_1_CANADA:
+                return CANADA;
+            case ISO3166_1_JAPAN:
+                return JAPAN;
+            case ISO3166_1_FINLAND:
+                return FINLAND;
+            case ISO3166_1_GERMANY:
+                return GERMANY;
+            case ISO3166_1_NETHERLANDS:
+                return NETHERLANDS;
+            case ISO3166_1_UNITED_KINGDOM:
+                return UNITED_KINGDOM;
+            case ISO3166_1_UNITED_STATES:
+                return UNITED_STATES;
+            default:
+                return context.getString(R.string.unknown);
+        }
     }
 
     /**
@@ -283,323 +392,144 @@ public class TimeTools {
     public static long getCurrentTime(Context context) {
         Calendar calendar = Calendar.getInstance();
 
-        setUserOffsetInverted(context, calendar);
+        applyUserOffsetInverted(context, calendar);
 
         return calendar.getTimeInMillis();
     }
 
-    private static String formatToLocalReleaseDay(Context context, int releaseDayOfWeek,
-            Date actualRelease) {
-        String localReleaseDay;
-        if (releaseDayOfWeek == -1) {
-            localReleaseDay = "";
-        } else if (releaseDayOfWeek == 0) {
-            localReleaseDay = context.getString(R.string.daily);
-        } else {
-            localReleaseDay = formatToLocalReleaseDay(actualRelease);
-        }
-        return localReleaseDay;
-    }
-
     /**
-     * Takes a UTC release time and returns the week day abbreviation (e.g. "Mon") defined by the
-     * devices locale.
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale.
      */
-    public static String formatToLocalReleaseDay(Date actualRelease) {
+    public static String formatToLocalDay(Date dateTime) {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
-        return localDayFormat.format(actualRelease);
+        return localDayFormat.format(dateTime);
     }
 
     /**
-     * Takes a UTC release time and converts it to the absolute time format (e.g. "08:00 PM")
-     * defined by the devices locale.
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
+     * given weekDay is 0, returns the local version of "Daily".
      */
-    public static String formatToLocalReleaseTime(Context context, Date actualRelease) {
+    public static String formatToLocalDayOrDaily(Context context, Date dateTime, int weekDay) {
+        if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            return context.getString(R.string.daily);
+        }
+        return formatToLocalDay(dateTime);
+    }
+
+    /**
+     * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
+     */
+    public static String formatToLocalTime(Context context, Date dateTime) {
         java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
-        return localTimeFormat.format(actualRelease);
+        return localTimeFormat.format(dateTime);
     }
 
     /**
-     * Takes a UTC release time and returns the relative time until the current system time (e.g.
-     * "in 12 min") defined by the devices locale. If the relative time difference is lower than a
-     * minute, returns the localized equivalent of "now".
+     * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined
+     * by the devices locale. If the time difference is lower than a minute, returns the localized
+     * equivalent of "now".
      */
-    public static String formatToRelativeLocalReleaseTime(Context context, Date actualRelease) {
+    public static String formatToLocalRelativeTime(Context context, Date dateTime) {
         long now = System.currentTimeMillis();
-        long releaseTime = actualRelease.getTime();
+        long dateTimeInstant = dateTime.getTime();
 
         // if we are below the resolution of getRelativeTimeSpanString, return "now"
-        if (Math.abs(now - releaseTime) < DateUtils.MINUTE_IN_MILLIS) {
+        if (Math.abs(now - dateTimeInstant) < DateUtils.MINUTE_IN_MILLIS) {
             return context.getString(R.string.now);
         }
 
         return DateUtils
-                .getRelativeTimeSpanString(releaseTime, now, DateUtils.MINUTE_IN_MILLIS,
+                .getRelativeTimeSpanString(dateTimeInstant, now, DateUtils.MINUTE_IN_MILLIS,
                         DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     /**
-     * Takes a UTC release time and returns the day as well as relative time until the current
-     * system time (e.g. "Mon in 3 days") as defined by the devices locale. If the time is today,
-     * only the local equivalent for "today" will be returned.
+     * Formats to day and relative time in relation to the current system time (e.g. "Mon in 3
+     * days") as defined by the devices locale. If the time is today, returns the local equivalent
+     * for "today".
      */
-    public static String formatToDayAndRelativeTime(Context context, Date actualRelease) {
-        StringBuilder timeAndDay = new StringBuilder();
+    public static String formatToLocalDayAndRelativeTime(Context context, Date dateTime) {
+        StringBuilder dayAndTime = new StringBuilder();
 
-        timeAndDay.append(formatToLocalReleaseDay(actualRelease));
+        // day abbreviation, e.g. "Mon"
+        dayAndTime.append(formatToLocalDay(dateTime));
+        dayAndTime.append(" ");
 
-        timeAndDay.append(" ");
-
-        // Show 'today' instead of '0 days ago'
-        if (DateUtils.isToday(actualRelease.getTime())) {
-            timeAndDay.append(context.getString(R.string.today));
+        // relative time to dateTime, "today" or e.g. "3 days ago"
+        if (DateUtils.isToday(dateTime.getTime())) {
+            // show 'today' instead of '0 days ago'
+            dayAndTime.append(context.getString(R.string.today));
         } else {
-            timeAndDay.append(DateUtils
+            dayAndTime.append(DateUtils
                     .getRelativeTimeSpanString(
-                            actualRelease.getTime(),
+                            dateTime.getTime(),
                             System.currentTimeMillis(),
                             DateUtils.DAY_IN_MILLIS,
                             DateUtils.FORMAT_ABBREV_ALL));
         }
 
-        return timeAndDay.toString();
+        return dayAndTime.toString();
     }
 
     /**
-     * Takes a UTC release time and returns the date and time zone (e.g. "2014/02/04 CET") as
-     * defined by the devices locale. If the given time is today, the date is prefixed with the
-     * local equivalent of "today, ".
+     * Formats to a date, time zone and week day (e.g. "2014/02/04 CET (Mon)") as defined by the
+     * devices locale. If the date time is today, uses the local equivalent of "today" instead of a
+     * week day.
      */
-    public static String formatToDate(Context context, Date actualRelease) {
+    public static String formatToLocalDateAndDay(Context context, Date dateTime) {
         StringBuilder date = new StringBuilder();
 
         // date, e.g. "2014/05/31"
-        date.append(DateFormat.getDateFormat(context).format(actualRelease));
-
+        date.append(DateFormat.getDateFormat(context).format(dateTime));
         date.append(" ");
 
-        // time zone, e.g. "CEST"
+        // device time zone, e.g. "CEST"
         TimeZone timeZone = TimeZone.getDefault();
-        date.append(timeZone.getDisplayName(timeZone.inDaylightTime(actualRelease), TimeZone.SHORT,
+        date.append(timeZone.getDisplayName(timeZone.inDaylightTime(dateTime), TimeZone.SHORT,
                 Locale.getDefault()));
 
+        //
         // Show 'today' instead of e.g. 'Mon'
         String day;
-        if (DateUtils.isToday(actualRelease.getTime())) {
+        if (DateUtils.isToday(dateTime.getTime())) {
             day = context.getString(R.string.today);
         } else {
-            day = formatToLocalReleaseDay(actualRelease);
+            day = formatToLocalDay(dateTime);
         }
 
         return context.getString(R.string.release_date_and_day, date.toString(), day);
     }
 
     /**
-     * Calculate the year string of a show's release in the user's default locale.
-     *
-     * @return Returns {@code null} if one of the parameters is null (or -1 in the case of {@code
-     * releaseTime}).
+     * Returns a date time equal to the given date time plus the user-defined offset.
      */
-    public static String getShowReleaseYear(String releaseDate, long releaseTime, String country) {
-        if (TextUtils.isEmpty(releaseDate)
-                || releaseTime == -1
-                || TextUtils.isEmpty(country)) {
-            return null;
-        }
-        long time = parseEpisodeReleaseTime(releaseDate, releaseTime, country);
-        return new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date(time));
-    }
-
-    /**
-     * Corrects the "hour past midnight" and for US shows the release time if the device is set to a
-     * US time zone.
-     */
-    private static void applyCustomCorrections(Calendar calendar, int releaseHourOfDay,
-            String releaseCountry) {
-        // TV scheduling madness: times between 12:00AM (midnight) and 12:59AM are attributed
-        // to the hour after the end of the current day
-        // example: Late Night with Jimmy Fallon
-        if (releaseHourOfDay == 0) {
-            // move ahead one day (24 hours)
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        // Shows from Canada typically air at the same time across its time zones
-        if (CANADA.equals(releaseCountry)) {
-            applyCanadaCorrections(calendar);
-            return;
-        }
-
-        // US shows air at the same LOCAL time across all its time zones (with exceptions)
-        if (releaseCountry == null || releaseCountry.length() == 0
-                || UNITED_STATES.equals(releaseCountry)) {
-            applyUnitedStatesCorrections(calendar);
-        }
-    }
-
-    /**
-     * Reverse some time zone based release time shifts for Canadian time zones.
-     */
-    private static void applyCanadaCorrections(Calendar calendar) {
-        // get device time zone
-        final String localTimeZone = TimeZone.getDefault().getID();
-
-        /**
-         * Base time zone for Canada is Eastern (see getTimeZoneIdForCountry()).
-         *
-         * Eastern feed is aired at the same LOCAL time in Pacific.
-         * Eastern feed is aired at the same GLOBAL time in Central, Mountain.
-         * Eastern feed is aired 1 hour earlier in Atlantic.
-         */
-
-        // do nothing when automatic conversion is enough
-        if (!localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA, 0)
-                || localTimeZone.equals(TIMEZONE_ID_CANADA_EASTERN)
-                || localTimeZone.equals(TIMEZONE_ID_CANADA_CENTRAL)
-                || localTimeZone.equals(TIMEZONE_ID_CANADA_MOUNTAIN)) {
-            return;
-        }
-
-        // need to correct Pacific + Atlantic time zones
-        int hourOffset = 0;
-        if (localTimeZone.equals(TIMEZONE_ID_CANADA_ATLANTIC)) {
-            // 1 hour earlier than Eastern
-            hourOffset -= 1;
-        } else if (localTimeZone.equals(TIMEZONE_ID_CANADA_PACIFIC)) {
-            // same LOCAL time as Eastern
-            hourOffset += 3;
-        }
-
-        if (hourOffset != 0) {
-            calendar.add(Calendar.HOUR_OF_DAY, hourOffset);
-        }
-    }
-
-    /**
-     * If the device is set to a US time zone, adjusts the time based on the assumption that all US
-     * shows air at the same LOCAL time across US time zones (also handles exceptions for e.g. US
-     * Central time).<br/> <b>Do only call this for TV shows released in the US!</b>
-     */
-    private static void applyUnitedStatesCorrections(Calendar calendar) {
-        // get device time zone
-        final String localTimeZone = TimeZone.getDefault().getID();
-
-        // no-op if device is set to US Pacific or non-US time zone
-        if (!localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA, 0)
-                || localTimeZone.equals(TIMEZONE_ID_US_PACIFIC)) {
-            return;
-        }
-
-        // by default US shows are either in PST UTC−8:00 or PDT UTC−7:00
-        // see #getTimeZoneIdForCountry()
-
-        int offset = 0;
-        if (localTimeZone.equals(TIMEZONE_ID_US_MOUNTAIN)) {
-            // MST UTC−7:00, MDT UTC−6:00
-            offset -= 1;
-        } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
-            // is always UTC-07:00, so like Mountain, but no DST
-            boolean pacificInDaylight = calendar.getTimeZone().inDaylightTime(calendar.getTime());
-            if (!pacificInDaylight) {
-                offset -= 1;
-            }
-        } else if (localTimeZone.equals(TIMEZONE_ID_US_CENTRAL)) {
-            // CST UTC−6:00, CDT UTC−5:00
-            // shows typically release an hour earlier, so subtract one hour more
-            offset -= (2 + 1);
-        } else if (localTimeZone.equals(TIMEZONE_ID_US_EASTERN) || localTimeZone
-                .equals(TIMEZONE_ID_US_EASTERN_DETROIT)) {
-            // EST UTC−5:00, EDT UTC−4:00
-            offset -= 3;
-        }
-
-        // TODO all applicable US time zones enter/leave DST at the same LOCAL time
-        // correct for the short period where eastern zones already enabled/disabled DST,
-        // but the given calendar is still in PST/PDT
-        // boolean isInDaylight = TimeZone.getTimeZone(localTimeZone).inDaylightTime();
-
-        if (offset != 0) {
-            calendar.add(Calendar.HOUR_OF_DAY, offset);
-        }
-    }
-
-    /**
-     * Returns {@code true}, if the country is not supported for calculating release times in the
-     * countries time zone and falls back to US Pacific time.
-     */
-    public static boolean isUnsupportedCountry(String releaseCountry) {
-        if (releaseCountry == null || releaseCountry.length() == 0) {
-            return true;
-        }
-        switch (releaseCountry) {
-            case AUSTRALIA:
-            case CANADA:
-            case JAPAN:
-            case FINLAND:
-            case GERMANY:
-            case NETHERLANDS:
-            case UNITED_STATES:
-            case UNITED_KINGDOM:
-                return false;
-            default:
-                return true;
-        }
-    }
-
-    private static String getTimeZoneIdForCountry(String releaseCountry) {
-        String timeZoneId;
-        if (releaseCountry == null || releaseCountry.length() == 0) {
-            timeZoneId = TIMEZONE_ID_US_PACIFIC;
-        } else {
-            switch (releaseCountry) {
-                case UNITED_STATES:
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-                case CANADA:
-                    // example: https://trakt.tv/show/rookie-blue
-                    timeZoneId = TIMEZONE_ID_CANADA_EASTERN;
-                    break;
-                case UNITED_KINGDOM:
-                    // example: https://trakt.tv/show/top-gear
-                    timeZoneId = TIMEZONE_ID_UK;
-                    break;
-                case JAPAN:
-                    // example: https://trakt.tv/show/naruto-shippuuden
-                    timeZoneId = TIMEZONE_ID_JAPAN;
-                    break;
-                case FINLAND:
-                    // example: https://trakt.tv/show/madventures
-                    timeZoneId = TIMEZONE_ID_FINLAND;
-                    break;
-                case GERMANY:
-                    // example: https://trakt.tv/show/heuteshow
-                    timeZoneId = TIMEZONE_ID_GERMANY;
-                    break;
-                case NETHERLANDS:
-                    // example: https://trakt.tv/show/divorce
-                    timeZoneId = TIMEZONE_ID_NETHERLANDS;
-                    break;
-                case AUSTRALIA:
-                    // example: https://trakt.tv/show/masterchef-australia
-                    timeZoneId = TIMEZONE_ID_AUSTRALIA;
-                    break;
-                default:
-                    timeZoneId = TIMEZONE_ID_US_PACIFIC;
-                    break;
-            }
-        }
-        return timeZoneId;
-    }
-
-    private static void setUserOffset(Context context, Calendar calendar) {
+    private static DateTime applyUserOffset(Context context, DateTime dateTime) {
         int offset = getUserOffset(context);
-
         if (offset != 0) {
-            calendar.add(Calendar.HOUR_OF_DAY, offset);
+            dateTime = dateTime.plusHours(offset);
         }
+        return dateTime;
     }
 
-    private static void setUserOffsetInverted(Context context, Calendar calendar) {
+    /**
+     * Takes a millisecond date time instant and adds the user-defined offset.
+     *
+     * <p> Typically required for episode date times stored in the database before formatting them
+     * for display.
+     */
+    public static Date applyUserOffset(Context context, long releaseInstant) {
+        // using Android calendar to avoid joda-time lock-up with time zone access
+        Calendar dateTime = Calendar.getInstance();
+        dateTime.setTimeInMillis(releaseInstant);
+
+        int offset = getUserOffset(context);
+        if (offset != 0) {
+            dateTime.add(Calendar.HOUR_OF_DAY, offset);
+        }
+        return dateTime.getTime();
+    }
+
+    private static void applyUserOffsetInverted(Context context, Calendar calendar) {
         int offset = getUserOffset(context);
 
         // invert

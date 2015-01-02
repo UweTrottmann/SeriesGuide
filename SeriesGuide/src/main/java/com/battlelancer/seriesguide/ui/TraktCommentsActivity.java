@@ -22,30 +22,36 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 
-public class TraktShoutsActivity extends BaseActivity {
+public class TraktCommentsActivity extends BaseActivity {
 
     public static final int LOADER_ID_COMMENTS = 100;
 
-    public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
-            int episodeNumber, String title) {
+    /**
+     * Display comments of an episode.
+     */
+    public static Bundle createInitBundleEpisode(String title, int episodeTvdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, showTvdbid);
-        extras.putInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER, seasonNumber);
-        extras.putInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER, episodeNumber);
+        extras.putInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID, episodeTvdbId);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
-    public static Bundle createInitBundleShow(String title, int tvdbId) {
+    /**
+     * Display comments of a show.
+     */
+    public static Bundle createInitBundleShow(String title, int showTvdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID, tvdbId);
+        extras.putInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID, showTvdbId);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
 
-    public static Bundle createInitBundleMovie(String title, int tmdbId) {
+    /**
+     * Display comments of a movie.
+     */
+    public static Bundle createInitBundleMovie(String title, int movieTmdbId) {
         Bundle extras = new Bundle();
-        extras.putInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID, tmdbId);
+        extras.putInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         extras.putString(InitBundle.TITLE, title);
         return extras;
     }
@@ -61,22 +67,10 @@ public class TraktShoutsActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            // embed the shouts fragment dialog
-            Fragment f;
-            Bundle args = getIntent().getExtras();
-            int showTvdbId = args.getInt(TraktShoutsFragment.InitBundle.SHOW_TVDB_ID);
-            int episode = args.getInt(TraktShoutsFragment.InitBundle.EPISODE_NUMBER);
-            if (showTvdbId == 0) {
-                int tmdbId = args.getInt(TraktShoutsFragment.InitBundle.MOVIE_TMDB_ID);
-                f = TraktShoutsFragment.newInstanceMovie(tmdbId);
-            } else if (episode == 0) {
-                f = TraktShoutsFragment.newInstanceShow(showTvdbId);
-            } else {
-                int season = args.getInt(TraktShoutsFragment.InitBundle.SEASON_NUMBER);
-                f = TraktShoutsFragment
-                        .newInstanceEpisode(showTvdbId, season, episode);
-            }
-            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f)
+            Fragment f = new TraktCommentsFragment();
+            f.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_frame, f)
                     .commit();
         }
     }

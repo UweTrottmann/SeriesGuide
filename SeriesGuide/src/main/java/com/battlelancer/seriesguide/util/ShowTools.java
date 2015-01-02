@@ -37,6 +37,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,7 +142,7 @@ public class ShowTools {
      * Sets the isRemoved flag of the given show on Hexagon.
      *
      * @param isRemoved If true, the show will not be auto-added on any device connected to
-     *                  Hexagon.
+     * Hexagon.
      */
     public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
         Show show = new Show();
@@ -204,24 +205,14 @@ public class ShowTools {
     }
 
     /**
-     * Saves new GetGlue id to the local database and, if signed in, up into the cloud as well.
+     * Store the rating for the given episode in the database and send it to trakt.
      */
-    public void storeGetGlueId(int showTvdbId, String getglueId) {
-        if (HexagonTools.isSignedIn(mContext)) {
-            if (Utils.isNotConnected(mContext, true)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setTvtagId(getglueId);
-            uploadShowAsync(show);
-        }
+    public static void rate(Context context, int showTvdbId, Rating rating) {
+        AndroidUtils.executeOnPool(new TraktTask(context).rateShow(showTvdbId, rating));
 
-        // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.GETGLUEID, getglueId);
-        mContext.getContentResolver()
+        values.put(SeriesGuideContract.Shows.RATING_USER, rating.value);
+        context.getContentResolver()
                 .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
     }
 
@@ -301,8 +292,7 @@ public class ShowTools {
                     .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
                             SeriesGuideContract.Shows._ID,
                             SeriesGuideContract.Shows.FAVORITE,
-                            SeriesGuideContract.Shows.HIDDEN,
-                            SeriesGuideContract.Shows.GETGLUEID
+                            SeriesGuideContract.Shows.HIDDEN
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -313,7 +303,6 @@ public class ShowTools {
                 show.setTvdbId(query.getInt(0));
                 show.setIsFavorite(query.getInt(1) == 1);
                 show.setIsHidden(query.getInt(2) == 1);
-                show.setTvtagId(query.getString(3));
                 shows.add(show);
             }
 
@@ -452,8 +441,8 @@ public class ShowTools {
         }
 
         /**
-         * @param mergeValues If set, only overwrites property if remote show property has a
-         *                    certain value.
+         * @param mergeValues If set, only overwrites property if remote show property has a certain
+         * value.
          */
         private static void buildShowPropertyValues(Show show, ContentValues values,
                 boolean mergeValues) {
@@ -468,10 +457,6 @@ public class ShowTools {
                 if (!mergeValues || !show.getIsHidden()) {
                     values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
                 }
-            }
-            if (show.getTvtagId() != null) {
-                // always overwrite with the hexagon tvtag id
-                values.put(SeriesGuideContract.Shows.GETGLUEID, show.getTvtagId());
             }
         }
 
@@ -493,9 +478,6 @@ public class ShowTools {
                 }
                 if (hexagonShow.getIsHidden() != null) {
                     show.hidden = hexagonShow.getIsHidden();
-                }
-                if (hexagonShow.getTvtagId() != null) {
-                    show.checkInGetGlueId = hexagonShow.getTvtagId();
                 }
             }
         }

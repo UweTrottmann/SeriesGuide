@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">SeriesGuide beta</string>
-    <string name="package_name">com.battlelancer.seriesguide.beta</string>
-    <string name="provider_authority">com.battlelancer.seriesguide.beta.provider</string>
-</resources>

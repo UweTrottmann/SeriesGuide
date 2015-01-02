@@ -393,13 +393,8 @@ public class Utils {
      */
     public static void loadPosterThumbnail(Context context, ImageView imageView,
             String posterPath) {
-        if (TextUtils.isEmpty(posterPath)) {
-            // there is no image available
-            imageView.setImageBitmap(null);
-            return;
-        }
-
-        ServiceUtils.getPicasso(context).load(TheTVDB.buildPosterUrl(posterPath))
+        ServiceUtils.getPicasso(context)
+                .load(TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)

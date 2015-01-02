@@ -49,29 +49,90 @@ public class SeriesGuideContract {
         String RUNTIME = "runtime";
 
         /**
-         * Rating value of TVDb as double ranging from 0.0 to 10.0.
+         * Global rating. Encoded as double.
+         * <pre>
+         * Range:   0.0-10.0
+         * Default: 0.0
+         * </pre>
          */
-        String RATING = "rating";
+        String RATING_GLOBAL = "rating";
+
+        /**
+         * Global rating votes. Encoded as integer.
+         * <pre>
+         * Example: 42
+         * Default: 0
+         * </pre>
+         */
+        String RATING_VOTES = "series_rating_votes";
+
+        /**
+         * User rating. Encoded as integer.
+         * <pre>
+         * Range:   1-10
+         * Default: 0
+         * </pre>
+         */
+        String RATING_USER = "series_rating_user";
 
         String NETWORK = "network";
 
         String GENRES = "genres";
 
         /**
-         * Air date of first episode, e.g. 2009-01-25.
+         * Release date of the first episode. Encoded as ISO 8601 datetime string. Might be a legacy
+         * value which only includes the date.
+         *
+         * <pre>
+         * Example: "2008-01-20T02:00:00.000Z"
+         * Default: ""
+         * </pre>
          */
-        String FIRSTAIRED = "firstaired";
+        String FIRST_RELEASE = "firstaired";
 
         /**
-         * Release time (e.g. 08:00pm), but encoded in ms. See {@link com.battlelancer.seriesguide.util.TimeTools#parseShowReleaseTime(String)}.
+         * Local release time. Encoded as integer (hhmm).
+         *
+         * <pre>
+         * Example: 2035
+         * Default: -1
+         * </pre>
          */
-        String AIRSTIME = "airstime";
+        String RELEASE_TIME = "airstime";
 
-        /** CURRENT: Stores the country episodes release originally in.<br/>
-         * ORIGINALLY: Was added in db version 21 to store the air time in pure text. */
+        /**
+         * Local release week day. Encoded as integer.
+         * <pre>
+         * Range:   1-7
+         * Daily:   0
+         * Default: -1
+         * </pre>
+         */
+        String RELEASE_WEEKDAY = "airsdayofweek";
+
+        /**
+         * Release time zone. Encoded as tzdata "Area/Location" string.
+         *
+         * <pre>
+         * Example: "America/New_York"
+         * Default: ""
+         * </pre>
+         *
+         * <p> Added with {@link com.battlelancer.seriesguide.provider.SeriesGuideDatabase#DBVER_34_TRAKT_V2}.
+         */
+        String RELEASE_TIMEZONE = "series_timezone";
+
+        /**
+         * Release country. Encoded as ISO3166-1 alpha-2 string.
+         *
+         * <pre>
+         * Example: "us"
+         * Default: ""
+         * </pre>
+         *
+         * <p> Previous use: Was added in db version 21 to store the air time in pure text.
+         */
         String RELEASE_COUNTRY = "series_airtime";
-
-        String AIRSDAYOFWEEK = "airsdayofweek";
 
         String ACTORS = "actors";
 
@@ -89,16 +150,31 @@ public class SeriesGuideContract {
 
         /**
          * Whether this show was merged with data on Hexagon after signing in the last time.
+         *
+         * <pre>
+         * Range: 0-1
+         * Default: 1
+         * </pre>
          */
         String HEXAGON_MERGE_COMPLETE = "series_syncenabled";
 
         /**
-         * Next episode ID.
+         * Next episode TheTVDB id.
+         *
+         * <pre>
+         * Example: "42"
+         * Default: ""
+         * </pre>
          */
         String NEXTEPISODE = "next";
 
         /**
-         * Next episode text, e.g. '0x12 Episode Name'.
+         * Next episode text.
+         *
+         * <pre>
+         * Example: "0x12 Episode Name"
+         * Default: ""
+         * </pre>
          */
         String NEXTTEXT = "nexttext";
 
@@ -108,12 +184,24 @@ public class SeriesGuideContract {
         String NEXTAIRDATE = "nextairdate";
 
         /**
-         * Added in db version 25 to allow correct sorting by next air date.
+         * Next episode release time instant.
+         *
+         * <pre>
+         * Range:   long
+         * Default: DBUtils.UNKNOWN_RELEASE_DATE (Long.MAX_VALUE)
+         * </pre>
+         *
+         * <p> Added in db version 25 to allow correct sorting by next air date.
          */
         String NEXTAIRDATEMS = "series_nextairdate";
 
         /**
-         * Next air date text, e.g. 'Apr 2 (Mon)'.
+         * Next episode release time formatted as text.
+         *
+         * <pre>
+         * Example: "Apr 2 (Mon)"
+         * Default: ""
+         * </pre>
          */
         String NEXTAIRDATETEXT = "series_nextairdatetext";
 
@@ -128,6 +216,8 @@ public class SeriesGuideContract {
         String LASTEDIT = "series_lastedit";
 
         /**
+         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014.
+         *
          * GetGlue object id, added in version 29 to support checking into shows without IMDb id.
          */
         String GETGLUEID = "series_getglueid";
@@ -137,7 +227,6 @@ public class SeriesGuideContract {
          * version 31.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
-
     }
 
     interface SeasonsColumns {
@@ -214,10 +303,14 @@ public class SeriesGuideContract {
 
         String DIRECTORS = "directors";
 
-        /**
-         * Rating value of TVDb as double ranging from 0.0 to 10.0.
-         */
-        String RATING = "rating";
+        /** See {@link ShowsColumns#RATING_GLOBAL}. */
+        String RATING_GLOBAL = "rating";
+
+        /** See {@link ShowsColumns#RATING_VOTES}. */
+        String RATING_VOTES = "episode_rating_votes";
+
+        /** See {@link ShowsColumns#RATING_USER}. */
+        String RATING_USER = "episode_rating_user";
 
         /**
          * First aired date in text as given by TVDb.com
@@ -245,10 +338,10 @@ public class SeriesGuideContract {
         String IMDBID = "episode_imdbid";
 
         /**
-         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds). Added in db version 27.
+         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
+         * Added in db version 27.
          */
         String LAST_EDITED = "episode_lastedit";
-
     }
 
     interface EpisodeSearchColumns {
@@ -338,8 +431,10 @@ public class SeriesGuideContract {
 
         String RATING_VOTES_TRAKT = "movies_rating_votes_trakt";
 
-        String LAST_UPDATED = "movies_last_updated";
+        /** See {@link ShowsColumns#RATING_USER}. */
+        String RATING_USER = "movies_rating_user";
 
+        String LAST_UPDATED = "movies_last_updated";
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
@@ -452,7 +547,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
 
-        public static final String SELECTION_WATCHED = Episodes.WATCHED + "=" + EpisodeFlags.WATCHED;
+        public static final String SELECTION_WATCHED = Episodes.WATCHED + "="
+                + EpisodeFlags.WATCHED;
 
         public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
 
@@ -463,6 +559,10 @@ public class SeriesGuideContract {
         public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!=-1";
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
+
+        public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
+
+        public static final String SORT_NUMBER_ASC = Episodes.NUMBER + " ASC";
 
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();

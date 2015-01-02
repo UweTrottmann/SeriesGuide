@@ -19,10 +19,18 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
-import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.entities.ShowIds;
+import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncSeason;
+import com.uwetrottmann.trakt.v2.entities.SyncShow;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import retrofit.RetrofitError;
 
@@ -37,26 +45,21 @@ public class FlagTapedTask {
 
     private static final Handler MAIN_THREAD = new Handler(Looper.getMainLooper());
 
-    private Context mContext;
+    private final Context context;
+    private final Sync traktSync;
+    private final EpisodeTools.EpisodeAction flagAction;
+    private final int showTvdbId;
+    private final List<Flag> flags;
+    private final boolean isAddNotDelete;
 
-    private ShowService mShowService;
-
-    private EpisodeTools.EpisodeAction mAction;
-
-    private int mShowId;
-
-    private List<Flag> mFlags;
-
-    private boolean mIsFlag;
-
-    public FlagTapedTask(Context context, ShowService showService, EpisodeTools.EpisodeAction action, int showId,
-            List<Flag> flags, boolean isFlag) {
-        mContext = context;
-        mShowService = showService;
-        mAction = action;
-        mShowId = showId;
-        mFlags = flags;
-        mIsFlag = isFlag;
+    public FlagTapedTask(Context context, Sync traktSync, EpisodeTools.EpisodeAction action,
+            int showTvdbId, List<Flag> flags, boolean isAddNotDelete) {
+        this.context = context;
+        this.traktSync = traktSync;
+        this.flagAction = action;
+        this.showTvdbId = showTvdbId;
+        this.flags = flags;
+        this.isAddNotDelete = isAddNotDelete;
     }
 
     public void execute(final Callback callback) {
@@ -65,85 +68,56 @@ public class FlagTapedTask {
             @Override
             public void run() {
                 // do not even try if we are offline
-                if (!AndroidUtils.isNetworkConnected(mContext)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     postFailure(true);
                     return;
                 }
 
+                // outer wrapper and show are always required
+                SyncShow show = new SyncShow().id(ShowIds.tvdb(showTvdbId));
+                SyncItems items = new SyncItems().shows(show);
+
+                // add season or episodes
+                switch (flagAction) {
+                    case SEASON_WATCHED:
+                    case SEASON_COLLECTED:
+                        show.seasons(new SyncSeason().number(flags.get(0).season));
+                        break;
+                    case EPISODE_WATCHED:
+                    case EPISODE_COLLECTED:
+                        Flag flag = flags.get(0);
+                        show.seasons(new SyncSeason().number(flag.season)
+                                .episodes(new SyncEpisode().number(flag.episode)));
+                        break;
+                    case EPISODE_WATCHED_PREVIOUS:
+                        show.seasons(buildEpisodeList(flags));
+                        break;
+                }
+
+                // execute network call
                 try {
-                    switch (mAction) {
-                        case EPISODE_WATCHED: {
-                            Flag episode = mFlags.get(0);
-                            if (mIsFlag) {
-                                mShowService.episodeSeen(
-                                        new ShowService.Episodes(mShowId, episode.season,
-                                                episode.episode));
+                    switch (flagAction) {
+                        case SHOW_WATCHED:
+                        case SEASON_WATCHED:
+                        case EPISODE_WATCHED:
+                            if (isAddNotDelete) {
+                                traktSync.addItemsToWatchedHistory(items);
                             } else {
-                                mShowService.episodeUnseen(
-                                        new ShowService.Episodes(mShowId, episode.season,
-                                                episode.episode));
+                                traktSync.deleteItemsFromWatchedHistory(items);
                             }
                             break;
-                        }
-                        case EPISODE_COLLECTED: {
-                            Flag episode = mFlags.get(0);
-                            if (mIsFlag) {
-                                mShowService.episodeLibrary(
-                                        new ShowService.Episodes(mShowId, episode.season,
-                                                episode.episode));
+                        case SHOW_COLLECTED:
+                        case SEASON_COLLECTED:
+                        case EPISODE_COLLECTED:
+                            if (isAddNotDelete) {
+                                traktSync.addItemsToCollection(items);
                             } else {
-                                mShowService.episodeUnlibrary(
-                                        new ShowService.Episodes(mShowId, episode.season,
-                                                episode.episode));
+                                traktSync.deleteItemsFromCollection(items);
                             }
                             break;
-                        }
-                        case SEASON_WATCHED: {
-                            if (mIsFlag) {
-                                mShowService.seasonSeen(
-                                        new ShowService.Season(mShowId, mFlags.get(0).season));
-                            } else {
-                                mShowService.episodeUnseen(new ShowService.Episodes(
-                                        mShowId, buildEpisodeList(mFlags)));
-                            }
+                        case EPISODE_WATCHED_PREVIOUS:
+                            traktSync.addItemsToWatchedHistory(items);
                             break;
-                        }
-                        case SEASON_COLLECTED: {
-                            if (mIsFlag) {
-                                mShowService.seasonLibrary(
-                                        new ShowService.Season(mShowId, mFlags.get(0).season));
-                            } else {
-                                mShowService.episodeUnlibrary(new ShowService.Episodes(
-                                        mShowId, buildEpisodeList(mFlags)));
-                            }
-                            break;
-                        }
-                        case SHOW_WATCHED: {
-                            if (mIsFlag) {
-                                mShowService.showSeen(new ShowService.Show(mShowId));
-                            } else {
-                                mShowService.episodeUnseen(new ShowService.Episodes(
-                                        mShowId, buildEpisodeList(mFlags)
-                                ));
-                            }
-                            break;
-                        }
-                        case SHOW_COLLECTED: {
-                            if (mIsFlag) {
-                                mShowService.showLibrary(new ShowService.Show(mShowId));
-                            } else {
-                                mShowService.episodeUnlibrary(new ShowService.Episodes(
-                                        mShowId, buildEpisodeList(mFlags)
-                                ));
-                            }
-                            break;
-                        }
-                        case EPISODE_WATCHED_PREVIOUS: {
-                            mShowService.episodeSeen(new ShowService.Episodes(
-                                    mShowId, buildEpisodeList(mFlags)
-                            ));
-                            break;
-                        }
                     }
 
                     // Get back to the main thread before invoking a callback.
@@ -154,6 +128,9 @@ public class FlagTapedTask {
                         }
                     });
                 } catch (RetrofitError e) {
+                    postFailure(false);
+                } catch (OAuthUnauthorizedException e) {
+                    TraktCredentials.get(context).setCredentialsInvalid();
                     postFailure(false);
                 }
             }
@@ -170,12 +147,31 @@ public class FlagTapedTask {
         }).start();
     }
 
-    private static List<ShowService.Episodes.Episode> buildEpisodeList(List<Flag> flags) {
-        List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
-        for (Flag episode : flags) {
-            episodes.add(new ShowService.Episodes.Episode(episode.season, episode.episode));
-        }
-        return episodes;
-    }
+    /**
+     * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}. Iterates through
+     * given flags based on the assumption they are sorted ascending by season number.
+     */
+    private static List<SyncSeason> buildEpisodeList(List<Flag> flags) {
+        List<SyncSeason> seasons = new ArrayList<>();
 
+        SyncSeason currentSeason = null;
+        for (Flag flag : flags) {
+            if (currentSeason != null && flag.season < currentSeason.number) {
+                // skip out of order flags
+                continue;
+            }
+
+            // start new season?
+            if (currentSeason == null || flag.season > currentSeason.number) {
+                currentSeason = new SyncSeason().number(flag.season);
+                currentSeason.episodes = new LinkedList<>();
+                seasons.add(currentSeason);
+            }
+
+            // add episode
+            currentSeason.episodes.add(new SyncEpisode().number(flag.episode));
+        }
+
+        return seasons;
+    }
 }

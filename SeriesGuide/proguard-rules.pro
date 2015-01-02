@@ -13,6 +13,9 @@
 # Keep source file and line numbers for better crash logs
 -keepattributes SourceFile,LineNumberTable
 
+# Avoid throws declarations getting removed from retrofit service definitions
+-keepattributes Exceptions
+
 # Allow obfuscation of android.support.v7.internal.view.menu.**
 # to avoid problem on Samsung 4.2.2 devices with appcompat v21
 # see https://code.google.com/p/android/issues/detail?id=78377

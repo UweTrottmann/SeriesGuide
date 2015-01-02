@@ -1,17 +1,18 @@
 Manage (re-)watching your favorite TV shows and movies.
 
-- See what is coming up, keep track of what to watch next.
-- Check in with trakt (https://trakt.tv) or tvtag (http://tvtag.com) to share what you are watching.
-- Sync shows and movies with trakt.
-- No sign-in required, keep going even without an internet connection.
+- Track your watched episodes, keep tabs on new releases and your media collection.
+- Check in, comment and rate with trakt to share what you are watching.
+- Sync shows and movies between devices and media centers with trakt.
+- No sign-in required, keep going without an internet connection.
 - DashClock extension.
+- Plug in extensions or build your own: http://seriesgui.de/api
 
 .....
 
-Get the X Subscription in Settings! X features include more list widget options and notifications for new episodes. You also support continued fixes and new features.
-
-NOTE: Dates and times are limited to the first release in the country of origin. You can't watch episodes.
+Get the subscription to unlock all features and support SeriesGuide! You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
 
 http://seriesgui.de/whypay
 
-Get permanent access to X features of SeriesGuide. Requires SeriesGuide to be installed.
+NOTE: Dates and times are limited to the first release in the country of origin. You can't watch episodes.
+
+Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.

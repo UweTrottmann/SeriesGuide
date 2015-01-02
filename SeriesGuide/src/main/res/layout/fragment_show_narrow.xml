@@ -94,7 +94,7 @@
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/sgColorDivider" />
 
-        <include layout="@layout/ratingbar_narrow" />
+        <include layout="@layout/ratings_shows_narrow" />
 
         <View
             android:layout_width="match_parent"

@@ -18,15 +18,19 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.Trakt;
+import com.uwetrottmann.trakt.v2.TraktV2;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
-public class SgTrakt extends Trakt {
+/**
+ * Custom {@link com.uwetrottmann.trakt.v2.TraktV2} which uses our shared {@link
+ * com.squareup.okhttp.OkHttpClient} instance.
+ */
+public class SgTraktV2 extends TraktV2 {
 
     private final Context context;
 
-    public SgTrakt(Context context) {
+    public SgTraktV2(Context context) {
         this.context = context.getApplicationContext();
     }
 

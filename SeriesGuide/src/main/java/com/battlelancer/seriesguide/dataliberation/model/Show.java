@@ -32,14 +32,11 @@ public class Show {
 
     public boolean hidden;
 
-    public long airtime;
-
-    public String airday;
+    public int release_time;
+    public int release_weekday;
+    public String release_timezone;
 
     public String country;
-
-    @SerializedName("check_in_getglue_id")
-    public String checkInGetGlueId;
 
     @SerializedName("last_watched_episode")
     public int lastWatchedEpisode;
@@ -68,6 +65,8 @@ public class Show {
     public String overview;
 
     public double rating;
+    public int rating_votes;
+    public int rating_user;
 
     public String genres;
 

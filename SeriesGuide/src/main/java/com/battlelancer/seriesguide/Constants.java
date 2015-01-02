@@ -37,7 +37,7 @@ public class Constants {
 
         ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " COLLATE NOCASE ASC"),
 
-        TOP_RATED(4, "toprated", Tables.EPISODES + "." + Episodes.RATING + " COLLATE NOCASE DESC"),
+        TOP_RATED(4, "toprated", Tables.EPISODES + "." + Episodes.RATING_GLOBAL + " COLLATE NOCASE DESC"),
 
         DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " DESC," + Episodes.NUMBER
                 + " DESC"),

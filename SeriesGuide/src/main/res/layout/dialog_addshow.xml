@@ -13,6 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minWidth="@dimen/dialog_min_width"
             android:padding="@dimen/larger_padding"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -57,34 +58,34 @@
                 android:textIsSelectable="true" />
 
             <TextView
-                android:id="@+id/textViewAddRatingsTvdbValue"
+                android:id="@+id/textViewAddRatingValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageViewAddPoster"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_centerHorizontal="true"
-                android:text="@string/notvdbrating"
+                android:text="@string/placeholder_rating"
                 tools:text="9.6"
                 android:textAppearance="@style/TextAppearance.Display1" />
 
             <TextView
-                android:id="@+id/textViewAddRatingsTvdbRange"
+                android:id="@+id/textViewAddRatingRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/default_padding"
-                android:layout_alignBaseline="@+id/textViewAddRatingsTvdbValue"
-                android:layout_toRightOf="@+id/textViewAddRatingsTvdbValue"
+                android:layout_alignBaseline="@+id/textViewAddRatingValue"
+                android:layout_toRightOf="@+id/textViewAddRatingValue"
                 android:text="@string/tvdb_range"
                 android:textAppearance="@style/TextAppearance.Caption" />
 
             <TextView
-                android:id="@+id/textViewAddRatingsTvdbLabel"
+                android:id="@+id/textViewAddRatingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-4dp"
-                android:layout_below="@+id/textViewAddRatingsTvdbValue"
-                android:layout_alignLeft="@+id/textViewAddRatingsTvdbValue"
-                android:text="@string/tvdb"
+                android:layout_below="@+id/textViewAddRatingValue"
+                android:layout_alignLeft="@+id/textViewAddRatingValue"
+                android:text="@string/trakt"
                 android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
             <TextView
@@ -93,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/max_width_text_size_body"
-                android:layout_below="@+id/textViewAddRatingsTvdbLabel"
+                android:layout_below="@+id/textViewAddRatingLabel"
                 android:layout_marginTop="@dimen/large_padding"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"

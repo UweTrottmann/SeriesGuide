@@ -21,7 +21,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -79,11 +78,6 @@ public class QuickCheckInActivity extends FragmentActivity {
     public void onEvent(GenericCheckInDialogFragment.CheckInDialogDismissedEvent event) {
         // if check-in dialog is dismissed, finish ourselves as well
         finish();
-    }
-
-    public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {
-        // display status toast about GetGlue check-in
-        event.handle(this);
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {

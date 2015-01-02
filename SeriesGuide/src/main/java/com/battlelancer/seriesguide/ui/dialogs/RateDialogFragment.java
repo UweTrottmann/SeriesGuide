@@ -20,64 +20,71 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 
 /**
- * Displays the trakt advanced rating scale. If a rating is chosen, launches an appropriate {@link
- * com.battlelancer.seriesguide.util.TraktTask} to submit the rating to trakt.
+ * Displays a 10 value rating scale. If a rating is clicked it will be stored to the database and
+ * sent to trakt (if the user is connected).
  */
-public class TraktRateDialogFragment extends DialogFragment {
+public class RateDialogFragment extends DialogFragment {
+
+    private interface InitBundle {
+        String ITEM_TYPE = "item-type";
+        String ITEM_ID = "item-id";
+    }
+
+    private static final String ITEM_SHOW = "show";
+    private static final String ITEM_EPISODE = "episode";
+    private static final String ITEM_MOVIE = "movie";
 
     /**
-     * Create {@link TraktRateDialogFragment} to rate a show.
-     *
-     * @return TraktRateDialogFragment
+     * Create {@link RateDialogFragment} to rate a show.
      */
-    public static TraktRateDialogFragment newInstanceShow(int showTvdbId) {
-        TraktRateDialogFragment f = new TraktRateDialogFragment();
+    public static RateDialogFragment newInstanceShow(int showTvdbId) {
+        RateDialogFragment f = new RateDialogFragment();
+
         Bundle args = new Bundle();
-        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.name());
-        args.putInt(TraktTask.InitBundle.SHOW_TVDBID, showTvdbId);
+        args.putString(InitBundle.ITEM_TYPE, ITEM_SHOW);
+        args.putInt(InitBundle.ITEM_ID, showTvdbId);
         f.setArguments(args);
+
         return f;
     }
 
     /**
-     * Create {@link TraktRateDialogFragment} to rate an episode.
-     *
-     * @return TraktRateDialogFragment
+     * Create {@link RateDialogFragment} to rate an episode.
      */
-    public static TraktRateDialogFragment newInstanceEpisode(int showTvdbid, int seasonNumber,
-            int episodeNumber) {
-        TraktRateDialogFragment f = new TraktRateDialogFragment();
+    public static RateDialogFragment newInstanceEpisode(int episodeTvdbId) {
+        RateDialogFragment f = new RateDialogFragment();
+
         Bundle args = new Bundle();
-        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.name());
-        args.putInt(TraktTask.InitBundle.SHOW_TVDBID, showTvdbid);
-        args.putInt(TraktTask.InitBundle.SEASON, seasonNumber);
-        args.putInt(TraktTask.InitBundle.EPISODE, episodeNumber);
+        args.putString(InitBundle.ITEM_TYPE, ITEM_EPISODE);
+        args.putInt(InitBundle.ITEM_ID, episodeTvdbId);
         f.setArguments(args);
+
         return f;
     }
 
     /**
-     * Create {@link TraktRateDialogFragment} to rate a show.
-     *
-     * @return TraktRateDialogFragment
+     * Create {@link RateDialogFragment} to rate a movie.
      */
-    public static TraktRateDialogFragment newInstanceMovie(int movieTmdbId) {
-        TraktRateDialogFragment f = new TraktRateDialogFragment();
+    public static RateDialogFragment newInstanceMovie(int movieTmdbId) {
+        RateDialogFragment f = new RateDialogFragment();
+
         Bundle args = new Bundle();
-        args.putString(TraktTask.InitBundle.TRAKTACTION, TraktAction.RATE_MOVIE.name());
-        args.putInt(TraktTask.InitBundle.MOVIE_TMDB_ID, movieTmdbId);
+        args.putString(InitBundle.ITEM_TYPE, ITEM_MOVIE);
+        args.putInt(InitBundle.ITEM_ID, movieTmdbId);
         f.setArguments(args);
+
         return f;
     }
 
@@ -87,6 +94,7 @@ public class TraktRateDialogFragment extends DialogFragment {
         Utils.trackView(getActivity(), "Rate Dialog");
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder;
@@ -95,56 +103,55 @@ public class TraktRateDialogFragment extends DialogFragment {
                 Context.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.dialog_trakt_rate, null);
 
-        layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onRate(Rating.TotallyNinja);
-            }
-        });
+        // rating buttons from 1 (worst) to 10 (best)
         layout.findViewById(R.id.weaksauce).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.WeakSauce);
+                rate(Rating.WEAKSAUCE);
             }
         });
-
-        // advanced rating steps
         layout.findViewById(R.id.rating2).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Terrible);
+                rate(Rating.TERRIBLE);
             }
         });
         layout.findViewById(R.id.rating3).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Bad);
+                rate(Rating.BAD);
             }
         });
         layout.findViewById(R.id.rating4).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Poor);
+                rate(Rating.POOR);
             }
         });
         layout.findViewById(R.id.rating5).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Meh);
+                rate(Rating.MEH);
             }
         });
         layout.findViewById(R.id.rating6).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Fair);
+                rate(Rating.FAIR);
             }
         });
         layout.findViewById(R.id.rating7).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Good);
+                rate(Rating.GOOD);
             }
         });
         layout.findViewById(R.id.rating8).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Great);
+                rate(Rating.GREAT);
             }
         });
         layout.findViewById(R.id.rating9).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onRate(Rating.Superb);
+                rate(Rating.SUPERB);
+            }
+        });
+        layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                rate(Rating.TOTALLYNINJA);
             }
         });
 
@@ -154,9 +161,26 @@ public class TraktRateDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void onRate(Rating rating) {
-        getArguments().putString(TraktTask.InitBundle.RATING, rating.toString());
-        AndroidUtils.executeOnPool(new TraktTask(getActivity(), getArguments()));
+    private void rate(Rating rating) {
+        Bundle args = getArguments();
+
+        String itemType = args.getString(InitBundle.ITEM_TYPE);
+        int itemId = args.getInt(InitBundle.ITEM_ID);
+        switch (itemType) {
+            case ITEM_MOVIE: {
+                MovieTools.rate(getActivity(), itemId, rating);
+                break;
+            }
+            case ITEM_SHOW: {
+                ShowTools.rate(getActivity(), itemId, rating);
+                break;
+            }
+            case ITEM_EPISODE: {
+                EpisodeTools.rate(getActivity(), itemId, rating);
+                break;
+            }
+        }
+
         dismiss();
     }
 }

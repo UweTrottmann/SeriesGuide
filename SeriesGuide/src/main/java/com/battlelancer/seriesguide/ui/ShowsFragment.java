@@ -556,9 +556,10 @@ public class ShowsFragment extends Fragment implements
 
             // network, day and time
             viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getLong(ShowsQuery.RELEASE_TIME),
+                    cursor.getInt(ShowsQuery.RELEASE_TIME),
+                    cursor.getInt(ShowsQuery.RELEASE_WEEKDAY),
+                    cursor.getString(ShowsQuery.RELEASE_TIMEZONE),
                     cursor.getString(ShowsQuery.RELEASE_COUNTRY),
-                    cursor.getString(ShowsQuery.RELEASE_DAY),
                     cursor.getString(ShowsQuery.NETWORK)));
 
             // set poster
@@ -654,36 +655,36 @@ public class ShowsFragment extends Fragment implements
     private interface ShowsQuery {
 
         String[] PROJECTION = {
-                BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
-                Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.RELEASE_COUNTRY, Shows.HIDDEN
+                BaseColumns._ID,
+                Shows.TITLE,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.NETWORK,
+                Shows.POSTER,
+                Shows.STATUS,
+                Shows.NEXTEPISODE,
+                Shows.NEXTTEXT,
+                Shows.NEXTAIRDATETEXT,
+                Shows.FAVORITE,
+                Shows.HIDDEN
         };
 
         int _ID = 0;
-
         int TITLE = 1;
-
-        int NEXTTEXT = 2;
-
-        int RELEASE_TIME = 3;
-
-        int NETWORK = 4;
-
-        int POSTER = 5;
-
-        int RELEASE_DAY = 6;
-
-        int STATUS = 7;
-
-        int NEXTAIRDATETEXT = 8;
-
-        int FAVORITE = 9;
-
-        int NEXTEPISODE = 10;
-
-        int RELEASE_COUNTRY = 11;
-
-        int HIDDEN = 12;
+        int RELEASE_TIME = 2;
+        int RELEASE_WEEKDAY = 3;
+        int RELEASE_TIMEZONE = 4;
+        int RELEASE_COUNTRY = 5;
+        int NETWORK = 6;
+        int POSTER = 7;
+        int STATUS = 8;
+        int NEXTEPISODE = 9;
+        int NEXTTEXT = 10;
+        int NEXTAIRDATETEXT = 11;
+        int FAVORITE = 12;
+        int HIDDEN = 13;
     }
 
     private void onFavoriteShow(int showTvdbId, boolean isFavorite) {

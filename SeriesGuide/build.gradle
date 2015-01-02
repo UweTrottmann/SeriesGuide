@@ -29,9 +29,8 @@ android {
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
-        buildConfigField("String", "TRAKT_API_KEY", "\"${loadStringPropertyOrPlaceholder("TRAKT_API_KEY")}\"")
-        buildConfigField("String", "TVTAG_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_ID")}\"")
-        buildConfigField("String", "TVTAG_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TVTAG_CLIENT_SECRET")}\"")
+        buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET")}\"")
         buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
@@ -69,10 +68,10 @@ android {
             versionCode rootProject.ext.versionCode
             versionName rootProject.ext.versionName
         }
-        internal {
-            applicationId "com.battlelancer.seriesguide.beta"
+        preview {
+            applicationId "com.uwetrottmann.seriesguide.preview"
             versionCode rootProject.ext.versionCode
-            versionName rootProject.ext.versionName + "-internal"
+            versionName rootProject.ext.versionName + "-preview"
         }
     }
 
@@ -108,7 +107,7 @@ dependencies {
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
-    compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile('com.crashlytics.sdk.android:crashlytics:2.1.0@aar') {
         transitive = true
     }
@@ -123,19 +122,19 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup:tape:1.2.3'
-    compile ('com.uwetrottmann:getglue-java:1.4.0') {
+    compile 'com.uwetrottmann:tmdb-java:0.7.0'
+    compile ('com.uwetrottmann:trakt-java:4.0.0') {
         exclude group: 'org.json', module: 'json'
     }
-    compile 'com.uwetrottmann:tmdb-java:0.7.0'
-    compile 'com.uwetrottmann:trakt-java:3.3.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'joda-time:joda-time:2.5'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services:6.1.71'
+    compile 'com.google.android.gms:play-services-base:6.5.87'
+    compile 'com.google.android.gms:play-services-identity:6.5.87'
 
     // App Engine
-    compile ('com.google.api-client:google-api-client-android:1.19.0') {
+    compile('com.google.api-client:google-api-client-android:1.19.0') {
         exclude group: 'com.google.android.google-play-services'
         exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
     }
@@ -146,58 +145,7 @@ dependencies {
     // Amazon flavor specific
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.1.jar')
 
-    // android unit tests
-    androidTestCompile 'com.squareup:fest-android:1.0.8'
-}
+    // Android unit tests
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
 
-// Google Play Services stripping to avoid dex method limit
-// https://gist.github.com/dmarcato/d7c91b94214acd936e42
-def toCamelCase(String string) {
-    String result = ""
-    string.findAll("[^\\W]+") { String word ->
-        result += word.capitalize()
-    }
-    return result
-}
-
-afterEvaluate { project ->
-    Configuration runtimeConfiguration = project.configurations.getByName('compile')
-    ResolutionResult resolution = runtimeConfiguration.incoming.resolutionResult
-    // Forces resolve of configuration
-    ModuleVersionIdentifier module = resolution.getAllComponents().find { it.moduleVersion.name.equals("play-services") }.moduleVersion
-    String prepareTaskName = "prepare${toCamelCase("${module.group} ${module.name} ${module.version}")}Library"
-    Task prepareTask = project.tasks.findByName(prepareTaskName)
-    File playServiceRootFolder = prepareTask.explodedDir
-
-    // Add the stripping to the existing task that extracts the AAR containing the original classes.jar
-    prepareTask.doLast {
-        // Create a copy of GMS classes.jar
-        copy {
-            from(file(new File(playServiceRootFolder, "classes.jar")))
-            into(file(playServiceRootFolder))
-            rename { fileName ->
-                fileName = "classes_orig.jar"
-            }
-        }
-        // Create new .jar file without stripped packages
-        tasks.create(name: "stripPlayServices" + module.version, type: Jar) {
-            destinationDir = playServiceRootFolder
-            archiveName = "classes.jar"
-            from(zipTree(new File(playServiceRootFolder, "classes_orig.jar"))) {
-                exclude "com/google/ads/**"
-                exclude "com/google/android/gms/ads/**"
-                exclude "com/google/android/gms/cast/**"
-                exclude "com/google/android/gms/drive/**"
-                exclude "com/google/android/gms/fitness/**"
-                exclude "com/google/android/gms/games/**"
-                exclude "com/google/android/gms/location/**"
-                exclude "com/google/android/gms/maps/**"
-                exclude "com/google/android/gms/panorama/**"
-                exclude "com/google/android/gms/plus/**"
-                exclude "com/google/android/gms/wallet/**"
-                exclude "com/google/android/gms/wearable/**"
-            }
-        }.execute()
-        delete file(new File(playServiceRootFolder, "classes_orig.jar"))
-    }
 }

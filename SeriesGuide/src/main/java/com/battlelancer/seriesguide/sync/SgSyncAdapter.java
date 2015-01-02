@@ -21,10 +21,8 @@ import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
-import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.database.Cursor;
@@ -36,7 +34,6 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -53,16 +50,12 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Activity;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Configuration;
-import java.util.ArrayList;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.LastActivities;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -133,9 +126,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Schedules a sync for a single show if
-     * {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
+     * Schedules a sync for a single show if {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
      * int)} returns true.
+     *
      * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
@@ -148,7 +141,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param syncType   Any of {@link SyncType}.
+     * @param syncType Any of {@link SyncType}.
      * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
      */
     public static void requestSyncIfConnected(Context context, SyncType syncType, int showTvdbId) {
@@ -168,13 +161,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
      * connection.
      *
-     * @param syncType        Any of {@link SyncType}.
-     * @param showTvdbId      If using {@link SyncType#SINGLE}, the TVDb id of a show.
-     * @param isUserRequested If set, shows a status toast and aborts if offline.
+     * @param syncType Any of {@link SyncType}.
+     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param showStatusToast If set, shows a status toast and aborts if offline.
      */
     public static void requestSyncImmediate(Context context, SyncType syncType, int showTvdbId,
-            boolean isUserRequested) {
-        if (isUserRequested) {
+            boolean showStatusToast) {
+        if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
                 Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
@@ -224,8 +217,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Returns true if there is currently a sync operation for the given account or authority in
-     * the
+     * Returns true if there is currently a sync operation for the given account or authority in the
      * pending list, or actively being processed.
      */
     public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
@@ -337,7 +329,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     // ...OR sync with trakt
                     UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting,
-                            showsNew, syncImmediately, currentTime);
+                            currentTime);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTrakt;
@@ -447,271 +439,131 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private static UpdateResult performTraktSync(Context context, HashSet<Integer> existingShows,
-            HashMap<Integer, SearchResult> newShows, boolean forceSync, long currentTime) {
-        Timber.d("Syncing...trakt auth check");
-        TraktCredentials.get(context).validateCredentials();
-        Trakt trakt = ServiceUtils.getTraktWithAuth(context);
-        if (trakt == null) {
-            // not connected to trakt, we are done here
+    private static UpdateResult performTraktSync(Context context, HashSet<Integer> localShows,
+            long currentTime) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            Timber.d("performTraktSync: no auth, skip");
             return UpdateResult.SUCCESS;
         }
 
-        UpdateResult result = UpdateResult.SUCCESS;
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
 
-        // full episode sync
-        if (forceSync || TraktSettings.isTimeForFullEpisodeSync(context, currentTime)) {
+        // get last activity timestamps
+        LastActivities lastActivity = getTraktLastActivity(context);
+        if (lastActivity == null) {
+            // trakt is likely offline or busy, try later
+            Timber.e("performTraktSync: last activity download failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        if (localShows.size() == 0) {
+            Timber.d("performTraktSync: no local shows, skip shows");
+        } else {
+            // download and upload episode watched and collected flags
+            if (performTraktEpisodeSync(context, localShows, lastActivity.episodes, currentTime)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
+
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return UpdateResult.INCOMPLETE;
             }
 
-            Timber.d("Syncing...trakt episodes (full)...");
-            UpdateResult fullSyncResult = performTraktEpisodeSync(context, trakt, existingShows,
-                    currentTime);
-            Timber.d("Syncing...trakt episodes (full)..."
-                    + (fullSyncResult == UpdateResult.SUCCESS ? "SUCCESS" : "INCOMPLETE"));
+            // download show ratings
+            if (TraktTools.downloadShowRatings(context, lastActivity.shows)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
 
-            result = fullSyncResult;
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            // download episode ratings
+            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes)
+                    != UpdateResult.SUCCESS) {
+                return UpdateResult.INCOMPLETE;
+            }
+
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return UpdateResult.INCOMPLETE;
+            }
+        }
+
+        // sync watchlist and collection with trakt
+        if (MovieTools.Download.syncMoviesWithTrakt(context, lastActivity.movies)
+                != UpdateResult.SUCCESS) {
+            return UpdateResult.INCOMPLETE;
         }
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;
         }
 
-        // episode activity
-        Timber.d("Syncing...trakt episodes (activity)...");
-        UpdateResult activityResult = performTraktEpisodeActivityDownload(context, trakt,
-                existingShows, newShows);
-        Timber.d("Syncing...trakt episodes (activity)..." + activityResult.toString());
-
-        // don't overwrite failure
-        if (result == UpdateResult.SUCCESS) {
-            result = activityResult;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // movies
-        Timber.d("Syncing...trakt movies...");
-        UpdateResult resultMovies = MovieTools.Download.syncMoviesFromTrakt(context);
-        Timber.d("Syncing...trakt movies..." + resultMovies.toString());
-
-        // don't overwrite failure
-        if (result == UpdateResult.SUCCESS) {
-            result = resultMovies;
-        }
-
-        return result;
+        // download movie ratings
+        return TraktTools.downloadMovieRatings(context, lastActivity.movies.rated_at);
     }
 
+    private static LastActivities getTraktLastActivity(Context context) {
+        Timber.d("performTraktSync: get last activity");
+
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return null;
+        }
+
+        try {
+            return trakt.sync().lastActivities();
+        } catch (RetrofitError e) {
+            Timber.e(e, "Failed to get trakt last activity");
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+        }
+
+        return null;
+    }
+
+    /**
+     * Downloads and uploads episode watched and collected flags.
+     *
+     * <p> Do <b>NOT</b> call if there are no local shows to avoid unnecessary work.
+     */
     @SuppressLint("CommitPrefEdits")
-    private static UpdateResult performTraktEpisodeSync(Context context, Trakt trakt,
-            HashSet<Integer> existingShows, long currentTime) {
+    private static UpdateResult performTraktEpisodeSync(Context context,
+            HashSet<Integer> localShows, LastActivityMore lastActivity, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
-        // download
-        Timber.d("Syncing...trakt episodes (full)...downloading");
-        int resultCode = TraktTools.syncToSeriesGuide(context, trakt, existingShows,
-                !isInitialSync);
+        // download watched and collected flags
+        // if initial sync, upload any flags missing on trakt
+        // otherwise clear all local flags not on trakt
+        int resultCode = TraktTools.syncEpisodeFlags(context, localShows, lastActivity,
+                isInitialSync);
 
-        if (resultCode < 0 || !AndroidUtils.isNetworkConnected(context)) {
+        if (resultCode < 0) {
             return UpdateResult.INCOMPLETE;
         }
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
                 .edit();
-
         if (isInitialSync) {
-            // upload
-            Timber.d("Syncing...trakt episodes (full)...uploading");
-            resultCode = TraktTools.uploadToTrakt(context, trakt, existingShows);
-
-            if (resultCode < 0) {
-                return UpdateResult.INCOMPLETE;
-            } else {
-                // success, set initial sync as complete
-                editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
-            }
+            // success, set initial sync as complete
+            editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
         }
 
-        // success, set last full sync time to now
+        // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
+        Timber.d("performTraktEpisodeSync: success, last sync at " + currentTime);
 
         editor.commit();
 
         return UpdateResult.SUCCESS;
-    }
-
-    /**
-     * Downloads new trakt episode activity (checkins, seen, scrobbles, collected) and applies
-     * resulting episode flag changes (watched, collected) to the database for the given {@code
-     * existingShows}.<br/>If {@link TraktSettings#isAutoAddingShows(android.content.Context)} is
-     * enabled, detects new shows based on {@code existingShows} and adds them to {@code newShows}.
-     */
-    private static UpdateResult performTraktEpisodeActivityDownload(Context context, Trakt trakt,
-            HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows) {
-        // get cut-off for activity stream
-        final long startTimeTrakt = TraktSettings.getLastActivityDownloadTime(context) / 1000;
-
-        // download activity stream
-        Activity activities;
-        try {
-            activities = trakt
-                    .activityService()
-                    .user(TraktCredentials.get(context).getUsername(),
-                            ActivityType.Episode.toString(),
-                            ActivityAction.Checkin + "," + ActivityAction.Seen + "," +
-                                    ActivityAction.Scrobble + "," + ActivityAction.Collection,
-                            startTimeTrakt, 1, 0
-                    );
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading activity failed");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        if (activities == null || activities.activity == null) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // build an update batch for episode flag changes of existing shows, detect new shows
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        final boolean isAutoAddingShows = TraktSettings.isAutoAddingShows(context);
-
-        for (ActivityItem activity : activities.activity) {
-            if (activity == null || activity.show == null
-                    || activity.show.tvdb_id == null) {
-                // invalid activity, skip
-                continue;
-            }
-
-            if (existingShows.contains(activity.show.tvdb_id)) {
-                // show exists locally, get episode flag changes
-                buildActionBatch(batch, activity);
-            } else if (isAutoAddingShows && !newShows.containsKey(activity.show.tvdb_id)) {
-                // new show, remember to add to local database later
-                SearchResult show = new SearchResult();
-                show.tvdbid = activity.show.tvdb_id;
-                show.title = activity.show.title;
-                newShows.put(activity.show.tvdb_id, show);
-            }
-        }
-
-        // apply all episode updates from downloaded trakt activity
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Applying trakt activity failed");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // store time of this update as seen by the trakt server
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putLong(TraktSettings.KEY_LAST_ACTIVITY_DOWNLOAD,
-                        activities.timestamps.current.getTime())
-                .commit();
-
-        return UpdateResult.SUCCESS;
-    }
-
-    /**
-     * Adds episode update ops based on the action of the given activity item.
-     */
-    private static void buildActionBatch(ArrayList<ContentProviderOperation> batch,
-            ActivityItem item) {
-        if (item.action == null) {
-            return;
-        }
-        switch (item.action) {
-            case Seen: {
-                // recently watched episode
-                if (item.episodes == null) {
-                    break;
-                }
-
-                // seen uses an array of episodes
-                List<TvShowEpisode> episodes = item.episodes;
-                int season = -1;
-                int number = -1;
-                TvShowEpisode highestEpisode = null;
-                for (TvShowEpisode episode : episodes) {
-                    if (episode == null) {
-                        continue;
-                    }
-                    if (episode.season > season || episode.number > number) {
-                        season = episode.season;
-                        number = episode.number;
-                        highestEpisode = episode;
-                    }
-                    addEpisodeSeenUpdateOp(batch, episode);
-                }
-
-                // set highest season + number combo as last watched
-                if (highestEpisode != null) {
-                    addLastWatchedUpdateOp(batch, item.show, highestEpisode);
-                }
-
-                break;
-            }
-            case Checkin:
-            case Scrobble: {
-                if (item.episode == null) {
-                    break;
-                }
-                // checkin and scrobble use a single episode
-                TvShowEpisode episode = item.episode;
-                addEpisodeSeenUpdateOp(batch, episode);
-                addLastWatchedUpdateOp(batch, item.show, episode);
-                break;
-            }
-            case Collection: {
-                if (item.episodes == null) {
-                    break;
-                }
-
-                // collection uses an array of episodes
-                List<TvShowEpisode> episodes = item.episodes;
-                for (TvShowEpisode episode : episodes) {
-                    if (episode == null) {
-                        continue;
-                    }
-                    addEpisodeCollectedUpdateOp(batch, episode);
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Helper method to build update to flag an episode watched.
-     */
-    private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
-                .withValue(Episodes.WATCHED, EpisodeFlags.WATCHED).build());
-    }
-
-    /**
-     * Helper method to build update to flag an episode collected.
-     */
-    private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
-            TvShowEpisode episode) {
-        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episode.tvdb_id))
-                .withValue(Episodes.COLLECTED, true).build());
-    }
-
-    /**
-     * Adds a content provider op to set the episode TVDb id as last watched for the given show.
-     */
-    private static void addLastWatchedUpdateOp(ArrayList<ContentProviderOperation> batch,
-            TvShow show, TvShowEpisode episode) {
-        // store the episode id as last watched for the given show
-        batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(show.tvdb_id))
-                .withValue(Shows.LASTWATCHEDID, episode.tvdb_id).build());
     }
 
     private static boolean isTimeForSync(Context context, long currentTime) {

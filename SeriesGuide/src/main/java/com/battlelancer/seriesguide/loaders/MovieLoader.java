@@ -22,11 +22,10 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.jakewharton.trakt.entities.Movie;
-import com.jakewharton.trakt.entities.Ratings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import java.util.Date;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
+import org.joda.time.DateTime;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -64,31 +63,30 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             }
             // ensure list flags are false on failure
             // (assumption: movie is not in db, it has the truth, so can't be in any lists)
-            if (details.traktMovie() != null) {
-                details.traktMovie().inCollection = false;
-                details.traktMovie().inWatchlist = false;
-            }
+            details.inCollection = false;
+            details.inWatchlist = false;
             return details;
         }
 
-        // only overwrite other info if there is no remote data
-        if (details.traktMovie() == null) {
-            details.traktMovie(new Movie());
-            details.traktMovie().released = new Date(
-                    movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
-            details.traktMovie().ratings = new Ratings();
-            details.traktMovie().ratings.percentage = movieQuery.getInt(MovieQuery.RATING_TRAKT);
-            details.traktMovie().ratings.votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
-        }
-        // prefer local state for watched, collected and watchlist status
+        // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
-        details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.WATCHED));
-        details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
+        details.inCollection = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_COLLECTION));
-        details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
+        details.inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-        
+        details.watched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
+        // also use local state of user rating
+        details.userRating = movieQuery.getInt(MovieQuery.RATING_USER);
+
+        // only overwrite other info if remote data failed to load
+        if (details.released == null) {
+            details.released = new DateTime(movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
+        }
+        if (details.traktRatings() == null) {
+            details.traktRatings(new Ratings());
+            details.traktRatings().rating = (double) movieQuery.getInt(MovieQuery.RATING_TRAKT);
+            details.traktRatings().votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
+        }
         if (details.tmdbMovie() == null) {
             details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
             details.tmdbMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
@@ -131,7 +129,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
                 Movies.RUNTIME_MIN,
                 Movies.RATING_TMDB,
                 Movies.RATING_TRAKT,
-                Movies.RATING_VOTES_TRAKT
+                Movies.RATING_VOTES_TRAKT,
+                Movies.RATING_USER
         };
 
         int TITLE = 0;
@@ -146,5 +145,6 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         int RATING_TMDB = 9;
         int RATING_TRAKT = 10;
         int RATING_VOTES_TRAKT = 11;
+        int RATING_USER = 12;
     }
 }

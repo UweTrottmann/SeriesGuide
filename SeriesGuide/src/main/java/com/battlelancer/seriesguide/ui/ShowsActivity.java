@@ -61,7 +61,6 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.ui.streams.FriendsEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -88,7 +87,7 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int USER_LOADER_ID = 104;
     public static final int ADD_SHOW_LOADER_ID = 105;
 
-    private static final int TAB_COUNT_WITH_TRAKT = 5;
+    private static final int TAB_COUNT_WITH_TRAKT = 4;
 
     private IabHelper mHelper;
 
@@ -245,7 +244,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // trakt tabs only visible if connected
         if (TraktCredentials.get(this).hasCredentials()) {
-            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
             mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
         }
 
@@ -341,7 +339,6 @@ public class ShowsActivity extends BaseTopActivity implements
         boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
 
         if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
-            mTabsAdapter.addTab(R.string.friends, FriendsEpisodeStreamFragment.class, null);
             mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
             // update tabs
             mTabsAdapter.notifyTabsChanged();
@@ -449,7 +446,7 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Called if the user adds a show from {@link FriendsEpisodeStreamFragment}.
+     * Called if the user adds a show from a trakt stream fragment.
      */
     @Override
     public void onAddShow(SearchResult show) {
@@ -490,63 +487,41 @@ public class ShowsActivity extends BaseTopActivity implements
      */
     @SuppressLint("CommitPrefEdits")
     private void onUpgrade() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final int lastVersion = AppSettings.getLastVersionCode(this);
         final int currentVersion = BuildConfig.VERSION_CODE;
 
         if (lastVersion < currentVersion) {
-            Editor editor = prefs.edit();
+            // user feedback about update
+            Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_LONG).show();
 
-            int VER_TRAKT_SEC_CHANGES;
-            int VER_SUMMERTIME_FIX;
-            int VER_HIGHRES_THUMBS;
-            if (SeriesGuideApplication.FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
-                // internal dev version
-                VER_TRAKT_SEC_CHANGES = 131;
-                VER_SUMMERTIME_FIX = 155;
-                VER_HIGHRES_THUMBS = 177;
-            } else {
-                // public release version
-                VER_TRAKT_SEC_CHANGES = 129;
-                VER_SUMMERTIME_FIX = 136;
-                VER_HIGHRES_THUMBS = 140;
-            }
-
-            if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                TraktCredentials.get(this).removeCredentials();
-                editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
-            }
-            if (lastVersion < VER_SUMMERTIME_FIX) {
-                scheduleAllShowsUpdate();
-            }
-            if (lastVersion < VER_HIGHRES_THUMBS
-                    && DisplaySettings.isVeryLargeScreen(getApplicationContext())) {
-                scheduleAllShowsUpdate();
-            }
-            // time calculation has changed, all episodes need re-calculation
-            if (lastVersion < 218) {
+            /**
+             * Run some required tasks after updating to certain versions.
+             *
+             * NOTE: see version codes for upgrade description.
+             */
+            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_12_BETA5) {
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
                 getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null,
                         null);
-                // flag all shows outdated as well (in case the full sync is aborted, delta sync will pick up)
-                scheduleAllShowsUpdate();
-                // trigger full sync
-                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, false);
+                // sync is triggered in last condition
+                // (if we are in here we will definitely hit the ones below)
             }
-            // migrated all image caching to Picasso, drop all old cached images
-            if (lastVersion < 15010) {
+            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_16_BETA1) {
                 Utils.clearLegacyExternalFileCache(this);
             }
-
-            // update notification
-            Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_LONG).show();
+            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_21) {
+                // flag all shows outdated so delta sync will pick up, if full sync was aborted
+                scheduleAllShowsUpdate();
+                // force a sync
+                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+            }
 
             // set this as lastVersion
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             editor.putInt(AppSettings.KEY_VERSION, currentVersion);
-
-            editor.commit();
+            editor.apply();
         }
     }
 

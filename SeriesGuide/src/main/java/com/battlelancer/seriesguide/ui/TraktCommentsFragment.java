@@ -49,66 +49,24 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktLink;
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import de.greenrobot.event.EventBus;
 import java.util.List;
+import timber.log.Timber;
 
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
-public class TraktShoutsFragment extends Fragment implements
+public class TraktCommentsFragment extends Fragment implements
         LoaderCallbacks<List<Comment>>, SwipeRefreshLayout.OnRefreshListener {
 
-    /**
-     * Build a {@link TraktShoutsFragment} for shouts of an episode.
-     */
-    public static TraktShoutsFragment newInstanceEpisode(int showTvdbId, int seasonNumber,
-            int episodeNumber) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDB_ID, showTvdbId);
-        args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
-        args.putInt(InitBundle.EPISODE_NUMBER, episodeNumber);
-        f.setArguments(args);
-        return f;
-    }
-
-    /**
-     * Build a {@link TraktShoutsFragment} for shouts of a show.
-     */
-    public static TraktShoutsFragment newInstanceShow(int tvdbId) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDB_ID, tvdbId);
-        f.setArguments(args);
-        return f;
-    }
-
-    /**
-     * Build a {@link TraktShoutsFragment} for shouts of a movie.
-     */
-    public static TraktShoutsFragment newInstanceMovie(int tmdbId) {
-        TraktShoutsFragment f = new TraktShoutsFragment();
-        Bundle args = new Bundle();
-        args.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
-        f.setArguments(args);
-        return f;
-    }
-
     public interface InitBundle {
-        String MOVIE_TMDB_ID = "tmdbid";
-        String SHOW_TVDB_ID = "tvdbid";
-        String EPISODE_NUMBER = "episode_number";
-        String SEASON_NUMBER = "season_number";
+        String MOVIE_TMDB_ID = "movie";
+        String SHOW_TVDB_ID = "show";
+        String EPISODE_TVDB_ID = "episode";
     }
-
-    private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "https://trakt.tv/comment/movie/";
-
-    private static final String TRAKT_EPISODE_COMMENT_PAGE_URL
-            = "https://trakt.tv/comment/episode/";
-
-    private static final String TRAKT_SHOW_COMMENT_PAGE_URL = "https://trakt.tv/comment/show/";
 
     private final AdapterView.OnItemClickListener mOnClickListener
             = new AdapterView.OnItemClickListener() {
@@ -152,7 +110,7 @@ public class TraktShoutsFragment extends Fragment implements
         mButtonShout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                shout();
+                comment();
             }
         });
 
@@ -176,44 +134,48 @@ public class TraktShoutsFragment extends Fragment implements
         return v;
     }
 
-    private void shout() {
-        // prevent empty shouts
-        String shout = mEditTextShout.getText().toString();
-        if (TextUtils.isEmpty(shout)) {
+    private void comment() {
+        // prevent empty comments
+        String comment = mEditTextShout.getText().toString();
+        if (TextUtils.isEmpty(comment)) {
             return;
         }
 
-        // disable the shout button
+        // disable the comment button
         mButtonShout.setEnabled(false);
 
         Bundle args = getArguments();
         boolean isSpoiler = mCheckBoxIsSpoiler.isChecked();
 
-        // shout for a movie?
+        // as determined by "science", episode comments are most likely, so check for them first
+        // comment for an episode?
+        int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
+        if (episodeTvdbId != 0) {
+            AndroidUtils.executeOnPool(
+                    new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+            );
+            return;
+        }
+
+        // comment for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
             AndroidUtils.executeOnPool(
-                    new TraktTask(getActivity()).shoutMovie(movieTmdbId, shout, isSpoiler)
+                    new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
         }
 
-        // shout for an episode?
+        // comment for a show?
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
-        int episodeNumber = args.getInt(InitBundle.EPISODE_NUMBER);
-        if (episodeNumber != 0) {
-            int seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
+        if (showTvdbId != 0) {
             AndroidUtils.executeOnPool(
-                    new TraktTask(getActivity())
-                            .shoutEpisode(showTvdbId, seasonNumber, episodeNumber, shout, isSpoiler)
+                    new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
             );
-            return;
         }
 
-        // shout for a show!
-        AndroidUtils.executeOnPool(
-                new TraktTask(getActivity()).shoutShow(showTvdbId, shout, isSpoiler)
-        );
+        // if all ids were 0, do nothing
+        Timber.e("comment: did nothing, all possible ids were 0");
     }
 
     @Override
@@ -231,7 +193,7 @@ public class TraktShoutsFragment extends Fragment implements
         mAdapter = new TraktCommentsAdapter(getActivity());
         mList.setAdapter(mAdapter);
 
-        getLoaderManager().initLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+        getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
                 this);
 
         setHasOptionsMenu(true);
@@ -282,25 +244,16 @@ public class TraktShoutsFragment extends Fragment implements
         }
 
         if (comment.spoiler) {
-            // if shout is a spoiler, first click will reveal the shout
+            // if comment is a spoiler it is hidden, first click should reveal it
             comment.spoiler = false;
             TextView shoutText = (TextView) v.findViewById(R.id.shout);
             if (shoutText != null) {
-                shoutText.setText(comment.text);
+                shoutText.setText(comment.comment);
             }
         } else {
             // open shout or review page
-            int showTvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
-            int episodeNumber = getArguments().getInt(InitBundle.EPISODE_NUMBER);
-            String typeUrl;
-            if (showTvdbId == 0) {
-                typeUrl = TRAKT_MOVIE_COMMENT_PAGE_URL;
-            } else if (episodeNumber == 0) {
-                typeUrl = TRAKT_SHOW_COMMENT_PAGE_URL;
-            } else {
-                typeUrl = TRAKT_EPISODE_COMMENT_PAGE_URL;
-            }
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(typeUrl + comment.id));
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(TraktLink.comment(comment.id)));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             Utils.tryStartActivity(getActivity(), intent, true);
         }
@@ -347,7 +300,7 @@ public class TraktShoutsFragment extends Fragment implements
     }
 
     private void refreshComments() {
-        getLoaderManager().restartLoader(TraktShoutsActivity.LOADER_ID_COMMENTS, getArguments(),
+        getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
                 this);
     }
 
@@ -360,7 +313,7 @@ public class TraktShoutsFragment extends Fragment implements
     }
 
     public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
-        if (event.mTraktAction != TraktAction.SHOUT || getView() == null) {
+        if (event.mTraktAction != TraktAction.COMMENT || getView() == null) {
             return;
         }
 

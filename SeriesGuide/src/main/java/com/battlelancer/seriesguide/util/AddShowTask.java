@@ -18,19 +18,22 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.enumerations.Extended;
-import com.jakewharton.trakt.services.UserService;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -39,8 +42,8 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
- * Adds shows to the local database, tries to get watched and collected episodes
- * if a trakt account is connected.
+ * Adds shows to the local database, tries to get watched and collected episodes if a trakt account
+ * is connected.
  */
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
@@ -88,8 +91,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     }
 
     /**
-     * Adds shows to the add queue. If this returns false, the shows were not
-     * added because the task is finishing up. Create a new one instead.
+     * Adds shows to the add queue. If this returns false, the shows were not added because the task
+     * is finishing up. Create a new one instead.
      */
     public boolean addShows(List<SearchResult> show, boolean isSilentMode, boolean isMergingShows) {
         if (mIsFinishedAddingShows) {
@@ -127,26 +130,27 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
 
         // get watched episodes from trakt (only if not connected to Hexagon) once
-        List<TvShow> watched = new ArrayList<>();
-        List<TvShow> collection = new ArrayList<>();
+        List<BaseShow> collection = new ArrayList<>();
+        List<BaseShow> watched = new ArrayList<>();
         if (!HexagonTools.isSignedIn(mContext)) {
-            Trakt manager = ServiceUtils.getTraktWithAuth(mContext);
-            if (manager != null) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
+            if (trakt != null) {
                 Timber.d("Getting watched and collected episodes from trakt.");
-                String username = TraktCredentials.get(mContext).getUsername();
                 try {
-                    UserService userService = manager.userService();
-                    watched = userService.libraryShowsWatched(username, Extended.MIN);
-                    collection = userService.libraryShowsCollection(username, Extended.MIN);
+                    Sync sync = trakt.sync();
+                    collection = sync.collectionShows(Extended.DEFAULT_MIN);
+                    watched = sync.watchedShows(Extended.DEFAULT_MIN);
                 } catch (RetrofitError e) {
                     // something went wrong, continue anyhow
                     Timber.w(e, "Getting watched and collected episodes failed");
+                } catch (OAuthUnauthorizedException e) {
+                    TraktCredentials.get(mContext).setCredentialsInvalid();
                 }
             }
         }
 
         int result;
-        boolean modifiedDatabase = false;
+        boolean addedAtLeastOneShow = false;
         boolean failedToAddShow = false;
         while (!mAddQueue.isEmpty()) {
             Timber.d("Starting to add next show...");
@@ -169,8 +173,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             try {
                 boolean addedShow = TheTVDB.addShow(mContext, nextShow.tvdbid, watched, collection);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
-                modifiedDatabase = addedShow
-                        || modifiedDatabase; // do not overwrite previous success
+                addedAtLeastOneShow = addedShow
+                        || addedAtLeastOneShow; // do not overwrite previous success
             } catch (TvdbException e) {
                 result = ADD_ERROR;
                 failedToAddShow = true;
@@ -189,8 +193,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             HexagonSettings.setHasMergedShows(mContext, true);
         }
 
-        // renew FTS3 table
-        if (modifiedDatabase) {
+        if (addedAtLeastOneShow) {
+            // make sure the next sync will download all ratings
+            PreferenceManager.getDefaultSharedPreferences(mContext).edit()
+                    .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
+                    .commit();
+
+            // renew FTS3 table
             Timber.d("Renewing search table.");
             DBUtils.rebuildFtsTable(mContext);
         }

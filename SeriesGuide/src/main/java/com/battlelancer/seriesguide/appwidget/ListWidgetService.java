@@ -162,16 +162,16 @@ public class ListWidgetService extends RemoteViewsService {
                     Utils.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
 
             // relative release time
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(context,
+            Date actualRelease = TimeTools.applyUserOffset(context,
                     dataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
                             : ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
             // "Fri 2 days ago"
             rv.setTextViewText(R.id.widgetAirtime,
-                    TimeTools.formatToDayAndRelativeTime(context, actualRelease));
+                    TimeTools.formatToLocalDayAndRelativeTime(context, actualRelease));
 
             // absolute release time and network (if any)
-            String absoluteTime = TimeTools.formatToLocalReleaseTime(context, actualRelease);
+            String absoluteTime = TimeTools.formatToLocalTime(context, actualRelease);
             String network = dataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
             if (!TextUtils.isEmpty(network)) {

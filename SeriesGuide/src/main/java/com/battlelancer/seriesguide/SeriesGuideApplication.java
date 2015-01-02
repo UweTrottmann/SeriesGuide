@@ -40,6 +40,22 @@ import timber.log.Timber;
 public class SeriesGuideApplication extends Application {
 
     public static final String FLAVOR_INTERNAL = "internal";
+    public static final int NOTIFICATION_EPISODE_ID = 1;
+    public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
+    public static final int NOTIFICATION_TRAKT_AUTH_ID = 3;
+
+    /**
+     * Time calculation has changed, all episodes need re-calculation.
+     */
+    public static final int RELEASE_VERSION_12_BETA5 = 218;
+    /**
+     * Requires legacy cache clearing due to switch to Picasso for posters.
+     */
+    public static final int RELEASE_VERSION_16_BETA1 = 15010;
+    /**
+     * Requires full show update due to upgrade to trakt v2.
+     */
+    public static final int RELEASE_VERSION_21 = 15075;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
