@@ -166,7 +166,7 @@
   <string name="recent">אחרונים</string>
   <string name="friends">חברים</string>
   <string name="friends_empty">אין פעילות חברים בtrakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">היסטוריה</string>
   <string name="user_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה תוכניות!</string>
   <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה סרטים!</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">אינטראקציה עם trakt נכשלה</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">חשבון trakt</string>
+  <string name="trakt_connect_instructions">במסך הבא, התחבר ל trakt או צור חשבון חדש. לאחר מכן, אפשר ל SeriesGuide גישה לחשבונך.</string>
   <string name="connect_trakt">התחבר trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">חבר את SeriesGuide ל trakt</string>
+  <string name="trakt_reconnect_details">בדוק את פרטי ההתחברות שלך ל trakt</string>
   <string name="username">שם משתמש</string>
   <string name="waitplease">רק רגע, בבקשה</string>
   <string name="connect">התחבר</string>
