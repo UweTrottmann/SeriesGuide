@@ -7,7 +7,7 @@
   <string name="statistics">Tilastot</string>
   <string name="search">Hae</string>
   <string name="preferences">Asetukset</string>
-  <string name="help">Ohje</string>
+  <string name="help">Ohjeet</string>
   <string name="drawer_open">Avaa sivuvalikko</string>
   <string name="drawer_close">Sulje sivuvalikko</string>
   <string name="show">Ohjelma</string>
@@ -166,7 +166,7 @@
   <string name="recent">Viimeisimmät</string>
   <string name="friends">Ystävät</string>
   <string name="friends_empty">Ei ystävien toimintaa traktissa.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">Historia</string>
   <string name="user_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihinkin ohjelmiin!</string>
   <string name="user_movie_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihinkin elokuviin!</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">trakt-tili</string>
+  <string name="trakt_connect_instructions">Seuraavalla ruudulla voit kirjautua traktiin tai luoda uuden tilin. Sitten salli SeriesGuidelle pääsy trakt-tiliisi.</string>
   <string name="connect_trakt">Yhdistä traktiin</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Yhdistä SeriesGuide traktiin</string>
+  <string name="trakt_reconnect_details">Tarkista trakt-käyttäjätietosi</string>
   <string name="username">Käyttäjänimi</string>
   <string name="waitplease">Odota hetki pieni…</string>
   <string name="connect">Yhdistä</string>

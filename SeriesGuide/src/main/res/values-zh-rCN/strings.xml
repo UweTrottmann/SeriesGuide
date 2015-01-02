@@ -166,7 +166,7 @@
   <string name="recent">已播剧集</string>
   <string name="friends">朋友动态</string>
   <string name="friends_empty">近期 trakt 上没有朋友活动</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">历史记录</string>
   <string name="user_stream_empty">近期没有 trakt 动态\n观看剧集时的签到会显示在这里</string>
   <string name="user_movie_stream_empty">近期没有 trakt 动态\n观看电影时的签到会显示在这里</string>
   <string name="noupcoming">没有即将播出的剧集</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">与 trakt 交互失败</string>
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
   <string name="trakt_error_general">无法与 trakt 关联</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">trakt 帐户</string>
+  <string name="trakt_connect_instructions">请在下一界面登录或注册您的 trakt 帐户，然后允许 SeriesGuide 访问此帐户。</string>
   <string name="connect_trakt">关联 trakt 帐户</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">关联 SeriesGuide 与 trakt</string>
+  <string name="trakt_reconnect_details">请检查 trakt 授权信息。</string>
   <string name="username">用户名</string>
   <string name="waitplease">请稍等一段时间……</string>
   <string name="connect">关联</string>

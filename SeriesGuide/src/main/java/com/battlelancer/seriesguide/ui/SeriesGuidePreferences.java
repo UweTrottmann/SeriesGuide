@@ -166,13 +166,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
         }
     };
 
-    protected static void setupSharingSettings(final Context context, Preference traktAutoAddPref) {
-        if (HexagonTools.isSignedIn(context)) {
-            traktAutoAddPref.setEnabled(false);
-            traktAutoAddPref.setSummary(R.string.hexagon_warning_trakt);
-        }
-    }
-
     protected static void setupBasicSettings(final Activity activity, final Intent startIntent,
             Preference noAiredPref, Preference noSpecialsPref, Preference languagePref,
             Preference themePref, Preference numberFormatPref, Preference updatePref) {
@@ -478,10 +471,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
                     break;
                 case "sharing":
                     addPreferencesFromResource(R.xml.settings_services);
-                    setupSharingSettings(
-                            getActivity(),
-                            findPreference(TraktSettings.KEY_AUTO_ADD_TRAKT_SHOWS)
-                    );
                     break;
                 case "advanced":
                     addPreferencesFromResource(R.xml.settings_advanced);

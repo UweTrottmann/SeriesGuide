@@ -5,6 +5,22 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 21 *(2015-01-02)*
+-------------------------
+
+* Support for the new trakt (v2). You will have to sign in and re-approve SeriesGuide.
+
+#### 20 *(2014-12-02)*
+
+* FEATURE Support for trakt v2.
+* TWEAK Improved trakt sync, now ratings are available offline as well.
+* NOTICE Friend streams and movie watched toggles are gone for now.
+* NOTICE Release time and country support improved. E.g. for non-US users, US shows are now all on east coast time.
+* TWEAK Small design and layout fixes in some places.
+* FIX Movie could show wrong poster, if it did not have one.
+* FIX List widget layout is broken on RTL layouts.
+* NOTICE tvtag has closed down and was removed.
+
 Version 20.1 *(2014-12-08)*
 -----------------------------
 

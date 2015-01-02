@@ -163,11 +163,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      *
      * @param syncType Any of {@link SyncType}.
      * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
-     * @param isUserRequested If set, shows a status toast and aborts if offline.
+     * @param showStatusToast If set, shows a status toast and aborts if offline.
      */
     public static void requestSyncImmediate(Context context, SyncType syncType, int showTvdbId,
-            boolean isUserRequested) {
-        if (isUserRequested) {
+            boolean showStatusToast) {
+        if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
                 Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
@@ -511,6 +511,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static LastActivities getTraktLastActivity(Context context) {
+        Timber.d("performTraktSync: get last activity");
+
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
         if (trakt == null) {
             return null;
