@@ -604,6 +604,7 @@ public class TraktTools {
 
             // upload, if any
             if (!syncSeasons.isEmpty()) {
+                Timber.d("applyEpisodeFlagChanges: upload " + syncSeasons.size() + " seasons");
                 SyncItems syncItems = new SyncItems().shows(
                         new SyncShow().id(ShowIds.tvdb(showTvdbId)).seasons(syncSeasons));
                 try {
