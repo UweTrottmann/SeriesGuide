@@ -937,6 +937,10 @@ public class TraktTools {
         }
 
         for (SearchResult result : searchResults) {
+            if (result.episode != null) {
+                // not a show result
+                continue;
+            }
             Show show = result.show;
             if (show != null && show.ids != null && show.ids.trakt != null) {
                 return String.valueOf(show.ids.trakt);
