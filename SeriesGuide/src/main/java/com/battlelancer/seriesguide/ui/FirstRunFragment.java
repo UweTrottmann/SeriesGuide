@@ -35,15 +35,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 
 /**
- * Helps the user to get familiar with the basic functions of SeriesGuide. Shown
- * only on first start up.
- *
- * @author Uwe Trottmann
+ * Helps the user to get familiar with the basic functions of SeriesGuide. Shown only on first start
+ * up.
  */
 public class FirstRunFragment extends Fragment {
 
@@ -67,7 +66,8 @@ public class FirstRunFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_firstrun, container, false);
     }
 
@@ -88,14 +88,15 @@ public class FirstRunFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // add button
-        getView().findViewById(R.id.buttonFirstRunAddShow).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fireTrackerEvent("Add show");
-                startActivity(new Intent(getActivity(), AddActivity.class));
-                setFirstRunDismissed();
-            }
-        });
+        getView().findViewById(R.id.buttonFirstRunAddShow)
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), AddActivity.class));
+                        setFirstRunDismissed();
+                        fireTrackerEvent("Add show");
+                    }
+                });
 
         // language chooser
         Spinner spinner = (Spinner) getView().findViewById(R.id.welcome_setuplanguage);
@@ -106,15 +107,23 @@ public class FirstRunFragment extends Fragment {
         spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
 
         // trakt connect button
-        getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
+        getView().findViewById(R.id.buttonFirstRunTrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
                 fireTrackerEvent("Connect trakt");
-
-                Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
-                startActivity(i);
             }
         });
+
+        // restore backup button
+        getView().findViewById(R.id.buttonFirstRunRestore)
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), DataLiberationActivity.class));
+                        fireTrackerEvent("Restore backup");
+                    }
+                });
 
         // dismiss button
         View buttonDismiss = getView().findViewById(R.id.buttonFirstRunDismiss);

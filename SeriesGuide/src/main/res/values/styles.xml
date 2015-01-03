@@ -121,6 +121,7 @@
     <style name="Widget.SeriesGuide" parent="Widget"/>
 
     <!-- Buttons -->
+    <!-- Always has a purple background, so can use non-theme text color -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:minWidth">88dp</item>
         <item name="android:minHeight">48dp</item>
@@ -133,8 +134,9 @@
         <item name="android:textColor">@color/text_primary_sg</item>
     </style>
 
+    <!-- Has no background, so use theme text color -->
     <style name="Widget.SeriesGuide.Button.Borderless">
-        <item name="android:textColor">?attr/textColorPrimarySg</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:maxLines">2</item>
     </style>

@@ -115,11 +115,11 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         long releaseTime = cursor.getLong(
                 ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
-            Date actualRelease = TimeTools.getEpisodeReleaseTime(context, releaseTime);
+            Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
             // 10:00 | in 3 days, 10:00 PM | 23 Jul
-            metaText.append(TimeTools.formatToLocalReleaseTime(context, actualRelease));
+            metaText.append(TimeTools.formatToLocalTime(context, actualRelease));
             metaText.append(" | ")
-                    .append(TimeTools.formatToRelativeLocalReleaseTime(context, actualRelease));
+                    .append(TimeTools.formatToLocalRelativeTime(context, actualRelease));
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
@@ -163,7 +163,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private long getHeaderTime(Cursor item) {
         long releaseTime = item.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
-        Date actualRelease = TimeTools.getEpisodeReleaseTime(mContext, releaseTime);
+        Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
 
         mCalendar.setTime(actualRelease);
         // not midnight because upcoming->recent is delayed 1 hour
@@ -218,7 +218,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         Cursor item = (Cursor) obj;
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
-        holder.day.setText(TimeTools.formatToDayAndRelativeTime(mContext, new Date(headerTime)));
+        holder.day.setText(TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
 
         return convertView;
     }

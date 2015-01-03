@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -58,13 +59,14 @@ import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
+import org.joda.time.DateTime;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -111,12 +113,12 @@ public class MovieDetailsFragment extends Fragment {
     @InjectView(R.id.buttonMovieCollected) Button mCollectedButton;
     @InjectView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
-    @InjectView(R.id.ratingbar) View mRatingsContainer;
-    @InjectView(R.id.textViewRatingsTvdbLabel) TextView mRatingsTmdbLabel;
-    @InjectView(R.id.textViewRatingsTvdbValue) TextView mRatingsTmdbValue;
+    @InjectView(R.id.containerRatings) View mRatingsContainer;
+    @InjectView(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
     @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
     @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
+    @InjectView(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
 
     @InjectView(R.id.containerMovieCast) View mCastView;
     TextView mCastLabel;
@@ -141,14 +143,6 @@ public class MovieDetailsFragment extends Fragment {
         // important action buttons
         mButtonContainer.setVisibility(View.GONE);
         mRatingsContainer.setVisibility(View.GONE);
-        mRatingsContainer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateOnTrakt();
-            }
-        });
-        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
-        mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
         mCastLabel = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
@@ -279,8 +273,8 @@ public class MovieDetailsFragment extends Fragment {
                 playStoreItem.setVisible(isEnableShare);
             }
 
-            boolean isEnableImdb = mMovieDetails.traktMovie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.traktMovie().imdb_id);
+            boolean isEnableImdb = mMovieDetails.tmdbMovie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.tmdbMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
@@ -301,7 +295,7 @@ public class MovieDetailsFragment extends Fragment {
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.traktMovie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.tmdbMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
@@ -326,20 +320,24 @@ public class MovieDetailsFragment extends Fragment {
 
     private void populateMovieViews() {
         /**
-         * Take title, overview and poster from TMDb as they are localized.
-         * Everything else from trakt.
+         * Ensure to take title, overview and poster from TMDb as they are localized.
+         * Get release time from trakt.
          */
-        Movie traktMovie = mMovieDetails.traktMovie();
-        com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        final Ratings traktRatings = mMovieDetails.traktRatings();
+        final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        final boolean inCollection = mMovieDetails.inCollection;
+        final boolean inWatchlist = mMovieDetails.inWatchlist;
+        final DateTime released = mMovieDetails.released;
+        final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
-        if (traktMovie.released != null && traktMovie.released.getTime() != 0) {
+        if (released != null && released.getMillis() != 0) {
             releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
-                    traktMovie.released.getTime(), DateUtils.FORMAT_SHOW_DATE));
+                    released.getMillis(), DateUtils.FORMAT_SHOW_DATE));
             releaseAndRuntime.append(" | ");
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
@@ -347,68 +345,37 @@ public class MovieDetailsFragment extends Fragment {
 
         // check-in button
         final String title = tmdbMovie.title;
-        // fall back to local title for tvtag check-in if we currently don't have the original one
-        final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
-                ? title : tmdbMovie.original_title;
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a check-in dialog
                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title, originalTitle);
+                        .newInstance(mTmdbId, title);
                 f.show(getFragmentManager(), "checkin-dialog");
                 fireTrackerEvent("Check-In");
             }
         });
         CheatSheet.setup(mCheckinButton);
 
-        // watched button (only supported when connected to trakt)
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
-            final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
-                    isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatched)
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableWatch), 0, 0);
-            mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
-            CheatSheet.setup(mWatchedButton,
-                    isWatched ? R.string.action_unwatched : R.string.action_watched);
-            mWatchedButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // disable button, will be re-enabled on data reload once action completes
-                    v.setEnabled(false);
-                    if (isWatched) {
-                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Unwatched movie");
-                    } else {
-                        MovieTools.watchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Watched movie");
-                    }
-                }
-            });
-            mWatchedButton.setEnabled(true);
-        } else {
-            mWatchedButton.setVisibility(View.GONE);
-        }
+        // hide watched button (currently not supported)
+        mWatchedButton.setVisibility(View.GONE);
 
         // collected button
-        final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mCollectedButton, 0,
-                isInCollection
+                inCollection
                         ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableCollect), 0, 0);
-        mCollectedButton.setText(isInCollection ? R.string.action_collection_remove
+        mCollectedButton.setText(inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
-        CheatSheet.setup(mCollectedButton, isInCollection ? R.string.action_collection_remove
+        CheatSheet.setup(mCollectedButton, inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
-                if (isInCollection) {
+                if (inCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
                     fireTrackerEvent("Uncollected movie");
                 } else {
@@ -420,22 +387,21 @@ public class MovieDetailsFragment extends Fragment {
         mCollectedButton.setEnabled(true);
 
         // watchlist button
-        final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchlistedButton, 0,
-                isInWatchlist
+                inWatchlist
                         ? R.drawable.ic_listed
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableList), 0, 0);
         mWatchlistedButton.setText(
-                isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
+                inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         CheatSheet.setup(mWatchlistedButton,
-                isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
+                inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
-                if (isInWatchlist) {
+                if (inWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
                     fireTrackerEvent("Unwatchlist movie");
                 } else {
@@ -451,13 +417,28 @@ public class MovieDetailsFragment extends Fragment {
 
         // ratings
         mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
-        mRatingsTraktUserValue.setText(
-                TraktTools.buildUserRatingString(getActivity(), traktMovie.rating_advanced));
-        if (traktMovie.ratings != null) {
+        if (traktRatings != null) {
             mRatingsTraktVotes.setText(
-                    TraktTools.buildRatingVotesString(getActivity(), traktMovie.ratings.votes));
+                    TraktTools.buildRatingVotesString(getActivity(), traktRatings.votes));
             mRatingsTraktValue.setText(
-                    TraktTools.buildRatingPercentageString(traktMovie.ratings.percentage));
+                    TraktTools.buildRatingString(traktRatings.rating));
+        }
+        // if movie is not in database, can't handle user ratings
+        if (!inCollection && !inWatchlist) {
+            mRatingsTraktUserLabel.setVisibility(View.GONE);
+            mRatingsTraktUserValue.setVisibility(View.GONE);
+            mRatingsContainer.setClickable(false);
+        } else {
+            mRatingsTraktUserLabel.setVisibility(View.VISIBLE);
+            mRatingsTraktUserValue.setVisibility(View.VISIBLE);
+            mRatingsTraktUserValue.setText(TraktTools.buildUserRatingString(getActivity(), rating));
+            mRatingsContainer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rateMovie();
+                }
+            });
+            CheatSheet.setup(mRatingsContainer, R.string.action_rate);
         }
         mRatingsContainer.setVisibility(View.VISIBLE);
 
@@ -469,8 +450,8 @@ public class MovieDetailsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
+                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+                i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, mTmdbId));
                 ActivityCompat.startActivity(getActivity(), i,
                         ActivityOptionsCompat
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
@@ -530,9 +511,12 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void rateOnTrakt() {
-        TraktTools.rateMovie(getActivity(), getFragmentManager(), mTmdbId);
-        fireTrackerEvent("Rate (trakt)");
+    private void rateMovie() {
+        if (TraktCredentials.ensureCredentials(getActivity())) {
+            RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(mTmdbId);
+            newFragment.show(getFragmentManager(), "ratedialog");
+            fireTrackerEvent("Rate (trakt)");
+        }
     }
 
     private void restartMovieLoader() {
@@ -558,11 +542,12 @@ public class MovieDetailsFragment extends Fragment {
             mMovieDetails = movieDetails;
             mProgressBar.setVisibility(View.GONE);
 
-            if (movieDetails.traktMovie() != null && movieDetails.tmdbMovie() != null) {
+            // we need at least values from database or tmdb
+            if (movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
                 getActivity().invalidateOptionsMenu();
             } else {
-                // display offline message
+                // if there is no local data and loading from network failed
                 mMovieDescription.setText(R.string.offline);
             }
         }

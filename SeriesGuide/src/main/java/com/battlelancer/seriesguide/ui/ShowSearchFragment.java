@@ -63,7 +63,8 @@ public class ShowSearchFragment extends ListFragment {
         setListAdapter(adapter);
 
         // initially display shows with recently released episodes
-        getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, new Bundle(), searchLoaderCallbacks);
+        getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, new Bundle(),
+                searchLoaderCallbacks);
     }
 
     @Override
@@ -152,9 +153,10 @@ public class ShowSearchFragment extends ListFragment {
 
             // network, day and time
             viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getLong(SearchQuery.RELEASE_TIME),
+                    cursor.getInt(SearchQuery.RELEASE_TIME),
+                    cursor.getInt(SearchQuery.RELEASE_WEEKDAY),
+                    cursor.getString(SearchQuery.RELEASE_TIMEZONE),
                     cursor.getString(SearchQuery.RELEASE_COUNTRY),
-                    cursor.getString(SearchQuery.RELEASE_DAY),
                     cursor.getString(SearchQuery.NETWORK)));
 
             // poster
@@ -180,9 +182,10 @@ public class ShowSearchFragment extends ListFragment {
                 SeriesGuideContract.Shows.TITLE,
                 SeriesGuideContract.Shows.POSTER,
                 SeriesGuideContract.Shows.FAVORITE,
-                SeriesGuideContract.Shows.AIRSTIME,
+                SeriesGuideContract.Shows.RELEASE_TIME,
+                SeriesGuideContract.Shows.RELEASE_WEEKDAY,
+                SeriesGuideContract.Shows.RELEASE_TIMEZONE,
                 SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.AIRSDAYOFWEEK,
                 SeriesGuideContract.Shows.NETWORK
         };
 
@@ -191,8 +194,9 @@ public class ShowSearchFragment extends ListFragment {
         int POSTER = 2;
         int FAVORITE = 3;
         int RELEASE_TIME = 4;
-        int RELEASE_COUNTRY = 5;
-        int RELEASE_DAY = 6;
-        int NETWORK = 7;
+        int RELEASE_WEEKDAY = 5;
+        int RELEASE_TIMEZONE = 6;
+        int RELEASE_COUNTRY = 7;
+        int NETWORK = 8;
     }
 }

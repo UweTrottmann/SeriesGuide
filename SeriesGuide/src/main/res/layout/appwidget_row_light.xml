@@ -27,6 +27,7 @@
         android:layout_width="@dimen/widget_item_width"
         android:layout_height="@dimen/widget_item_height"
         android:layout_marginRight="@dimen/inline_padding"
+        android:layout_alignParentLeft="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing" />
 

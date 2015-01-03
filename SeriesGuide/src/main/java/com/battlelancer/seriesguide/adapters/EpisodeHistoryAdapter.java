@@ -24,18 +24,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.enumerations.ActivityAction;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
 /**
- * Creates a list of movies from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
- * displaying user name and avatar.
+ * Creates a list of episodes from a list of trakt {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry}.
  */
-public class MovieStreamAdapter extends SectionedStreamAdapter {
+public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
-    public MovieStreamAdapter(Context context) {
+    public EpisodeHistoryAdapter(Context context) {
         super(context);
     }
 
@@ -49,16 +47,15 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
             convertView = mInflater.inflate(R.layout.item_friend, parent, false);
 
             holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
+            holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
+            holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
+            holder.more = (TextView) convertView.findViewById(R.id.textViewFriendMore);
             holder.timestamp = (TextView) convertView.findViewById(
                     R.id.textViewFriendTimestamp);
-            holder.movie = (TextView) convertView.findViewById(R.id.textViewFriendShow);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-            holder.username = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
             holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
             holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
-
-            // no need for secondary text
-            convertView.findViewById(R.id.textViewFriendEpisode).setVisibility(View.GONE);
 
             convertView.setTag(holder);
         } else {
@@ -66,54 +63,55 @@ public class MovieStreamAdapter extends SectionedStreamAdapter {
         }
 
         // Bind the data efficiently with the holder.
-        ActivityItem activity = getItem(position);
+        HistoryEntry item = getItem(position);
 
-        // movie poster
-        if (activity.movie.images != null && !TextUtils.isEmpty(activity.movie.images.poster)) {
-            String posterPath = activity.movie.images.poster.replace(
-                    TraktSettings.POSTER_SIZE_SPEC_DEFAULT, TraktSettings.POSTER_SIZE_SPEC_138);
-            ServiceUtils.getPicasso(getContext()).load(posterPath).into(holder.poster);
+        // show title and poster
+        holder.show.setText(item.show == null ? null : item.show.title);
+        if (item.show.images != null && item.show.images.poster != null && !TextUtils.isEmpty(
+                item.show.images.poster.thumb)) {
+            ServiceUtils.getPicasso(getContext())
+                    .load(item.show.images.poster.thumb)
+                    .into(holder.poster);
         }
 
-        holder.username.setText(activity.user.username);
-        ServiceUtils.getPicasso(getContext()).load(activity.user.avatar).into(holder.avatar);
-
+        // timestamp
+        CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
+                item.watched_at.getMillis(), System.currentTimeMillis(),
+                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Caption_Dim);
+        holder.timestamp.setText(timestamp);
 
-        CharSequence timestamp;
-        // friend is watching something right now?
-        if (activity.action == ActivityAction.Watching) {
-            timestamp = getContext().getString(R.string.now);
-            holder.timestamp.setTextAppearance(getContext(),
-                    R.style.TextAppearance_Caption_Red);
-        } else {
-            timestamp = DateUtils.getRelativeTimeSpanString(
-                    activity.timestamp.getTime(), System.currentTimeMillis(),
-                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-        }
-
-        // activity type indicator
-        if (activity.action == ActivityAction.Seen) {
+        // action type indicator
+        if ("watch".equals(item.action)) {
+            // marked watched
             holder.type.setImageResource(getResIdDrawableWatched());
         } else {
+            // check-in, scrobble
             holder.type.setImageResource(getResIdDrawableCheckin());
         }
 
-        holder.movie.setText(activity.movie.title);
-        holder.timestamp.setText(timestamp);
+        // episode
+        holder.episode.setText(item.episode == null ? null
+                : Utils.getNextEpisodeString(getContext(), item.episode.season, item.episode.number,
+                        item.episode.title));
+        holder.more.setText(null);
 
         return convertView;
     }
 
     static class ViewHolder {
 
+        TextView name;
+
+        TextView show;
+
+        TextView episode;
+
+        TextView more;
+
         TextView timestamp;
 
-        TextView movie;
-
         ImageView poster;
-
-        TextView username;
 
         ImageView avatar;
 

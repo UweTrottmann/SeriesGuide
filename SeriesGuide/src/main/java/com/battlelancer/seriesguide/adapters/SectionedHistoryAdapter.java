@@ -26,8 +26,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.ActivityItem;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,10 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A sectioned {@link com.jakewharton.trakt.entities.ActivityItem} adapter, grouping the activities
- * by day.
+ * A sectioned {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry} adapter, grouping watched
+ * items by day.
  */
-public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> implements
+public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
         StickyGridHeadersBaseAdapter {
 
     protected final LayoutInflater mInflater;
@@ -49,7 +49,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
     private final int mResIdDrawableWatched;
     private final int mResIdDrawableCheckin;
 
-    public SectionedStreamAdapter(Context context) {
+    public SectionedHistoryAdapter(Context context) {
         super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCalendar = Calendar.getInstance();
@@ -59,7 +59,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
                 R.attr.drawableCheckin);
     }
 
-    public void setData(List<ActivityItem> data) {
+    public void setData(List<HistoryEntry> data) {
         clear();
         if (data != null) {
             addAll(data);
@@ -95,7 +95,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
         // get header position for item position
         position = mHeaders.get(position).getRefPosition();
 
-        ActivityItem item = getItem(position);
+        HistoryEntry item = getItem(position);
         if (item == null) {
             return null;
         }
@@ -115,7 +115,7 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
         holder.day.setText(
-                TimeTools.formatToDayAndRelativeTime(getContext(), new Date(headerTime)));
+                TimeTools.formatToLocalDayAndRelativeTime(getContext(), new Date(headerTime)));
 
         return convertView;
     }
@@ -157,11 +157,11 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
     }
 
     /**
-     * Maps all activities of the same day in the device time zone to the same id (which
-     * equals the time in ms close to midnight of that day).
+     * Maps all actions of the same day in the device time zone to the same id (which equals the
+     * time in ms close to midnight of that day).
      */
     private long getHeaderId(int position) {
-        ActivityItem item = getItem(position);
+        HistoryEntry item = getItem(position);
         if (item != null) {
             return getHeaderTime(item);
         }
@@ -169,11 +169,11 @@ public abstract class SectionedStreamAdapter extends ArrayAdapter<ActivityItem> 
     }
 
     /**
-     * Extracts the activity timestamp and "rounds" it down to shortly after midnight in the
-     * current device time zone.
+     * Extracts the action timestamp and "rounds" it down to shortly after midnight in the current
+     * device time zone.
      */
-    private long getHeaderTime(ActivityItem item) {
-        mCalendar.setTime(item.timestamp);
+    private long getHeaderTime(HistoryEntry item) {
+        mCalendar.setTimeInMillis(item.watched_at.getMillis());
         //
         mCalendar.set(Calendar.HOUR_OF_DAY, 0);
         mCalendar.set(Calendar.MINUTE, 0);

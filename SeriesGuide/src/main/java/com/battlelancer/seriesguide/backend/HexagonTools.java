@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -40,13 +39,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
-import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import timber.log.Timber;
 
 /**
@@ -113,8 +112,8 @@ public class HexagonTools {
     }
 
     /**
-     * Checks if it is possible to retrieve a valid OAuth2 token for the given account,
-     * hence, it can be used for connecting to Hexagon.
+     * Checks if it is possible to retrieve a valid OAuth2 token for the given account, hence, it
+     * can be used for connecting to Hexagon.
      */
     public static boolean validateAccount(Context context, String accountName) {
         GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
@@ -277,9 +276,10 @@ public class HexagonTools {
         boolean hasMergedMovies = HexagonSettings.hasMergedMovies(context);
 
         // download movies and apply property changes, build list of new movies
-        HashMap<Integer, Movie> newMovies = new HashMap<>();
-        boolean downloadSuccessful = MovieTools.Download.fromHexagon(context, newMovies,
-                hasMergedMovies);
+        Set<Integer> newCollectionMovies = new HashSet<>();
+        Set<Integer> newWatchlistMovies = new HashSet<>();
+        boolean downloadSuccessful = MovieTools.Download.fromHexagon(context, newCollectionMovies,
+                newWatchlistMovies, hasMergedMovies);
         if (!downloadSuccessful) {
             return false;
         }
@@ -293,7 +293,7 @@ public class HexagonTools {
 
         // add new movies with the just downloaded properties
         SgSyncAdapter.UpdateResult result = MovieTools.Download.addMovies(context,
-                ServiceUtils.getTrakt(context), newMovies.keySet(), newMovies);
+                newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete

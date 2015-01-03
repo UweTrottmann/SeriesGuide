@@ -17,12 +17,7 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -30,32 +25,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 public abstract class GenericCheckInDialogFragment extends DialogFragment {
 
     public interface InitBundle {
-
-        /**
-         * Title of show or movie. <b>Required.</b>
-         */
-        String TVTAG_ID_OR_TITLE = "title";
 
         /**
          * Title of episode or movie. <b>Required.</b>
@@ -73,62 +55,25 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         String MOVIE_TMDB_ID = "movietmdbid";
 
         /**
-         * Show TVDb id. <b>Required for episodes.</b>
-         */
-        String SHOW_TVDB_ID = "showtvdbid";
-
-        /**
-         * Show GetGlue id. <b>Required for episodes.</b>
-         */
-        String SHOW_GETGLUE_ID = "showgetglueid";
-
-        /**
          * Season number. <b>Required for episodes.</b>
          */
-        String SEASON = "season";
-
-        /**
-         * Episode number. <b>Required for episodes.</b>
-         */
-        String EPISODE = "episode";
+        String EPISODE_TVDB_ID = "episodetvdbid";
     }
 
     public class CheckInDialogDismissedEvent {
     }
 
-    protected boolean mGetGlueChecked;
-
-    protected boolean mTraktChecked;
-
-    protected CompoundButton mCheckBoxTrakt;
-
-    protected CompoundButton mCheckBoxGetGlue;
-
-    protected View mButtonFixGetGlue;
-
-    private EditText mEditTextMessage;
-
-    private View mButtonCheckIn;
-
-    private View mProgressBar;
-
-    private View mButtonPasteTitle;
-
-    private View mButtonClear;
-
-    private boolean mCheckInActiveGetGlue;
-
-    private boolean mCheckInActiveTrakt;
-
-    private boolean mCheckInSuccessGetGlue;
-
-    private boolean mCheckInSuccessTrakt;
+    @InjectView(R.id.editTextCheckInMessage) EditText mEditTextMessage;
+    @InjectView(R.id.buttonCheckIn) View mButtonCheckIn;
+    @InjectView(R.id.buttonCheckInPasteTitle) View mButtonPasteTitle;
+    @InjectView(R.id.buttonCheckInClear) View mButtonClear;
+    @InjectView(R.id.progressBarCheckIn) View mProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // hide title
+        // hide title, use special theme with exit animation
         if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
             setStyle(STYLE_NO_TITLE, 0);
         } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
@@ -141,26 +86,19 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_checkin, container, false);
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+        final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
+        ButterKnife.inject(this, v);
 
         // some required values
         final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
 
-        // get share service enabled settings
-        mGetGlueChecked = GetGlueSettings.isSharingWithGetGlue(getActivity());
-        mTraktChecked = TraktSettings.isSharingWithTrakt(getActivity());
-
         // Message box, set title as default comment
-        mEditTextMessage = (EditText) layout.findViewById(R.id.editTextCheckInMessage);
         if (!TextUtils.isEmpty(defaultMessage)) {
             mEditTextMessage.setText(defaultMessage);
         }
 
         // Paste episode button
-        mButtonPasteTitle = layout.findViewById(R.id.buttonCheckInPasteTitle);
         if (!TextUtils.isEmpty(itemTitle)) {
             mButtonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override
@@ -174,7 +112,6 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         }
 
         // Clear button
-        mButtonClear = layout.findViewById(R.id.buttonCheckInClear);
         mButtonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,39 +119,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
             }
         });
 
-        // GetGlue toggle
-        mCheckBoxGetGlue = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInGetGlue);
-        mCheckBoxGetGlue.setChecked(mGetGlueChecked);
-        mCheckBoxGetGlue.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                handleGetGlueToggle(isChecked);
-
-                mGetGlueChecked = isChecked;
-                prefs.edit().putBoolean(GetGlueSettings.KEY_SHARE_WITH_GETGLUE, isChecked).apply();
-                updateCheckInButtonState();
-            }
-        });
-
-        // Trakt toggle
-        mCheckBoxTrakt = (CompoundButton) layout.findViewById(R.id.checkBoxCheckInTrakt);
-        mCheckBoxTrakt.setChecked(mTraktChecked);
-        mCheckBoxTrakt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // ask the user for credentials if there are none
-                    TraktCredentials.ensureCredentials(getActivity());
-                }
-
-                mTraktChecked = isChecked;
-                prefs.edit().putBoolean(TraktSettings.KEY_SHARE_WITH_TRAKT, isChecked).apply();
-                updateCheckInButtonState();
-            }
-        });
-
         // Checkin Button
-        mButtonCheckIn = layout.findViewById(R.id.buttonCheckIn);
         mButtonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,16 +127,9 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
             }
         });
 
-        // progress indicator
-        mProgressBar = layout.findViewById(R.id.progressBarCheckIn);
-
-        // fix getglue button
-        mButtonFixGetGlue = layout.findViewById(R.id.buttonCheckInFixGetGlue);
-        setupButtonFixGetGlue(layout);
-
         setProgressLock(false);
 
-        return layout;
+        return v;
     }
 
     @Override
@@ -255,33 +153,21 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         EventBus.getDefault().post(new CheckInDialogDismissedEvent());
     }
 
-    public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {
-        mCheckInActiveGetGlue = false;
-        mCheckInSuccessGetGlue = event.statusCode == Result.SUCCESS;
-        updateViews();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
-        mCheckInActiveTrakt = false;
-        mCheckInSuccessTrakt = event.mWasSuccessful;
-        updateViews();
-    }
-
-    private void updateViews() {
-        if (mCheckInActiveGetGlue || mCheckInActiveTrakt) {
-            return;
-        }
-
         // done with checking in, unlock UI
         setProgressLock(false);
 
-        if ((mGetGlueChecked && !mCheckInSuccessGetGlue)
-                || (mTraktChecked && !mCheckInSuccessTrakt)) {
-            return;
+        if (event.mWasSuccessful) {
+            // all went well, dismiss ourselves
+            dismissAllowingStateLoss();
         }
-
-        // all went well, dismiss ourselves
-        dismissAllowingStateLoss();
     }
 
     public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
@@ -293,97 +179,31 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     }
 
     private void checkIn() {
-        // connected?
-        if (Utils.isNotConnected(getActivity(), true)) {
-            return;
-        }
-
         // lock down UI
         setProgressLock(true);
 
-        // make sure we can check into...
-        boolean canCheckIn = true;
-        // ...GetGlue
-        if (mGetGlueChecked) {
-            if (!GetGlueSettings.isAuthenticated(getActivity())
-                    || !setupCheckInGetGlue()) {
-                mCheckBoxGetGlue.setChecked(false);
-                mGetGlueChecked = false;
-                canCheckIn = false;
-            }
-        }
-        // ...trakt
-        if (mTraktChecked && !TraktCredentials.get(getActivity()).hasCredentials()) {
-            // not connected to trakt
-            mCheckBoxTrakt.setChecked(false);
-            mTraktChecked = false;
-            canCheckIn = false;
-        }
-
-        if (!canCheckIn) {
-            // abort
+        // connected?
+        if (Utils.isNotConnected(getActivity(), true)) {
+            // no? abort
             setProgressLock(false);
-            updateCheckInButtonState();
             return;
         }
 
-        final String itemTitle = getArguments().getString(InitBundle.TVTAG_ID_OR_TITLE);
-        final String message = mEditTextMessage.getText().toString();
+        // launch connect flow if trakt is not connected
+        if (!TraktCredentials.ensureCredentials(getActivity())) {
+            // not connected? abort
+            setProgressLock(false);
+            return;
+        }
 
-        // try check-ins (at least one is true)
-        if (mGetGlueChecked) {
-            mCheckInActiveGetGlue = true;
-            checkInGetGlue(itemTitle, message);
-        }
-        if (mTraktChecked) {
-            mCheckInActiveTrakt = true;
-            checkInTrakt(message);
-        }
+        // try to check in
+        checkInTrakt(mEditTextMessage.getText().toString());
     }
-
-    /**
-     * Start the GetGlue check-in task.
-     */
-    protected abstract void checkInGetGlue(final String title, final String comment);
 
     /**
      * Start the trakt check-in task.
      */
     protected abstract void checkInTrakt(String message);
-
-    protected abstract void handleGetGlueToggle(boolean isChecked);
-
-    protected void ensureGetGlueAuthAndConnection() {
-        if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
-            mCheckBoxGetGlue.setChecked(false);
-        } else {
-            // authenticate already here
-            Intent i = new Intent(getActivity(),
-                    GetGlueAuthActivity.class);
-            startActivity(i);
-        }
-    }
-
-    protected void launchFixGetGlueCheckInActivity(View v, int showTvdbId) {
-        Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
-        i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_TVDB_ID, String.valueOf(showTvdbId));
-        ActivityCompat.startActivity(getActivity(), i,
-                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                        .toBundle());
-    }
-
-    protected abstract void setupButtonFixGetGlue(View layout);
-
-    /**
-     * Perform additional setup and validation required before a GetGlue check-in can be attempted.
-     * Valid auth is already covered, no need to check for it again.
-     *
-     * @return Whether it is save to go ahead and call {@link #checkInGetGlue}.
-     */
-    protected boolean setupCheckInGetGlue() {
-        return true;
-    }
 
     /**
      * Disables all interactive UI elements and shows a progress indicator.
@@ -391,19 +211,8 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     private void setProgressLock(boolean lock) {
         mProgressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
         mEditTextMessage.setEnabled(!lock);
-        mCheckBoxTrakt.setEnabled(!lock);
-        mCheckBoxGetGlue.setEnabled(!lock);
         mButtonPasteTitle.setEnabled(!lock);
         mButtonClear.setEnabled(!lock);
-        mButtonFixGetGlue.setEnabled(!lock);
-
-        mButtonCheckIn.setEnabled(!lock && (mGetGlueChecked || mTraktChecked));
-    }
-
-    /**
-     * Enables the check-in button if either GetGlue or trakt are enabled.
-     */
-    private void updateCheckInButtonState() {
-        mButtonCheckIn.setEnabled(mGetGlueChecked || mTraktChecked);
+        mButtonCheckIn.setEnabled(!lock);
     }
 }

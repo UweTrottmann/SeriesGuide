@@ -10,16 +10,19 @@
 # Only obfuscate
 -dontshrink
 
-# Keep everything, but obfuscate the v7 support library
-# to work around wrongly exported libraries on some 4.2.2 ROMs
-# see https://code.google.com/p/android/issues/detail?id=78377
--keep class !android.support.v7.** { *; }
--repackageclasses 'com.uwetrottmann.obfuscated'
--allowaccessmodification
+# Keep source file and line numbers for better crash logs
+-keepattributes SourceFile,LineNumberTable
 
-# Google Play Services is stripped of unused parts. Don't warn about them missing.
--dontwarn com.google.ads.**
--dontwarn com.google.android.gms.**
+# Avoid throws declarations getting removed from retrofit service definitions
+-keepattributes Exceptions
+
+# Allow obfuscation of android.support.v7.internal.view.menu.**
+# to avoid problem on Samsung 4.2.2 devices with appcompat v21
+# see https://code.google.com/p/android/issues/detail?id=78377
+-keep class !android.support.v7.internal.view.menu.** { *; }
+
+# Amazon IAP library has some missing stuff
+-dontwarn com.amazon.**
 
 # ButterKnife uses some annotations not available on Android.
 -dontwarn butterknife.internal.**

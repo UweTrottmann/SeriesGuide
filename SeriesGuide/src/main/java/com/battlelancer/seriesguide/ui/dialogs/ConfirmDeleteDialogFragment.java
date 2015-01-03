@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -78,13 +77,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         }
 
         // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light_Dialog);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog);
-        }
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override

@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -36,15 +35,9 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -70,7 +63,7 @@ public abstract class StreamFragment extends Fragment implements
 
         mContentContainer.setOnRefreshListener(this);
         mContentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
-                R.dimen.swipe_refresh_progress_bar_start_margin),
+                        R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
@@ -172,56 +165,6 @@ public abstract class StreamFragment extends Fragment implements
      * Once finished you should hide the progress bar with {@link #showProgressBar(boolean)}.
      */
     protected abstract void refreshStream();
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // do not respond if we get a header position (e.g. shortly after data was refreshed)
-        if (position < 0) {
-            return;
-        }
-
-        ActivityItem activity = (ActivityItem) mAdapter.getItem(position);
-        if (activity == null) {
-            return;
-        }
-
-        TvShowEpisode episode = activity.episode;
-        if (episode == null && activity.episodes != null && activity.episodes.size() > 0) {
-            // looks like we have multiple episodes, get first one
-            episode = activity.episodes.get(0);
-        }
-        if (episode == null) {
-            // still no episode? give up
-            return;
-        }
-
-        Cursor episodeQuery = getActivity().getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(activity.show.tvdb_id),
-                new String[] {
-                        SeriesGuideContract.Episodes._ID
-                }, SeriesGuideContract.Episodes.NUMBER + "=" + episode.number + " AND "
-                        + SeriesGuideContract.Episodes.SEASON + "=" + episode.season, null,
-                null
-        );
-        if (episodeQuery == null) {
-            return;
-        }
-
-        if (episodeQuery.getCount() != 0) {
-            // display the episode details if we have a match
-            episodeQuery.moveToFirst();
-            showDetails(view, episodeQuery.getInt(0));
-        } else {
-            // offer to add the show if it's not in the show database yet
-            SearchResult showToAdd = new SearchResult();
-            showToAdd.tvdbid = activity.show.tvdb_id;
-            showToAdd.title = activity.show.title;
-            showToAdd.overview = activity.show.overview;
-            AddShowDialogFragment.showAddDialog(showToAdd, getFragmentManager());
-        }
-
-        episodeQuery.close();
-    }
 
     /**
      * Starts an activity to display the given episode.

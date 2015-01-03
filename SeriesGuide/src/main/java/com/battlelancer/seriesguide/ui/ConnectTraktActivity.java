@@ -30,6 +30,8 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
  */
 public class ConnectTraktActivity extends BaseActivity {
 
+    static final int OAUTH_CODE_REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -23,23 +23,26 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.jakewharton.trakt.Trakt;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.services.AccountService;
+import com.battlelancer.seriesguide.traktapi.SgTraktV2;
+import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.Settings;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import retrofit.RetrofitError;
+import timber.log.Timber;
 
 /**
- * Expects a trakt username, password and email (can be null) as parameters. Checks the validity
- * with trakt servers or creates a new account if an email address is given. If successful, the
- * credentials are stored.
+ * Expects a valid trakt OAuth auth code. Retrieves the access token and username for the associated
+ * user. If successful, the credentials are stored.
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
@@ -49,7 +52,6 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
          * Returns one of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
          */
         public void onTaskFinished(int resultCode);
-
     }
 
     private final Context mContext;
@@ -70,54 +72,66 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // get account data
-        String username = params[0];
-        String password = params[1];
-        String email = params[2];
+        String authCode = params[0];
 
         // check if we have any usable data
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(authCode)) {
             return Result.ERROR;
         }
 
-        // create SHA1 of password
-        password = Utils.toSHA1(password);
-
-        // check validity
-        // use a new Trakt instance for testing
-        Trakt trakt = new Trakt();
-        trakt.setApiKey(BuildConfig.TRAKT_API_KEY);
-        trakt.setAuthentication(username, password);
-
-        Response response = null;
+        // get access token
+        String accessToken = null;
         try {
-            if (TextUtils.isEmpty(email)) {
-                // validate existing account
-                response = trakt.accountService().test();
-            } else {
-                // create new account
-                response = trakt.accountService().create(
-                        new AccountService.NewAccount(username, password, email));
+            OAuthAccessTokenResponse response = TraktV2.getAccessToken(
+                    BuildConfig.TRAKT_CLIENT_ID,
+                    BuildConfig.TRAKT_CLIENT_SECRET,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    authCode
+            );
+            if (response != null) {
+                accessToken = response.getAccessToken();
             }
-        } catch (RetrofitError e) {
-            response = null;
+        } catch (OAuthSystemException | OAuthProblemException e) {
+            accessToken = null;
+            Timber.e(e, "Getting access token failed");
         }
 
-        // did anything go wrong?
-        if (response == null || response.status.equals(TraktStatus.FAILURE)) {
+        // did we obtain an access token?
+        if (TextUtils.isEmpty(accessToken)) {
+            return Result.ERROR;
+        }
+
+        // get user name
+        String username = null;
+        TraktV2 temporaryTrakt = new SgTraktV2(mContext)
+                .setApiKey(BuildConfig.TRAKT_CLIENT_ID)
+                .setAccessToken(accessToken);
+        try {
+            Settings settings = temporaryTrakt.users().settings();
+            if (settings != null && settings.user != null) {
+                username = settings.user.username;
+            }
+        } catch (RetrofitError | OAuthUnauthorizedException e) {
+            username = null;
+            Timber.e(e, "Getting user name failed");
+        }
+
+        // did we obtain a username?
+        if (TextUtils.isEmpty(username)) {
             return Result.ERROR;
         }
 
         // store the new credentials
-        TraktCredentials.get(mContext).setCredentials(username, password);
+        TraktCredentials.get(mContext).setCredentials(username, accessToken);
 
         // try to get service manager
-        trakt = ServiceUtils.getTraktWithAuth(mContext);
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
         if (trakt == null) {
             // looks like credentials weren't saved properly
             return Result.ERROR;
         }
         // set new credentials
-        trakt.setAuthentication(username, password);
+        trakt.setAccessToken(accessToken);
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .edit();
@@ -129,6 +143,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // make sure the next sync will run a full episode sync
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
+        // make sure the next sync will download all ratings
+        editor.putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0);
+        editor.putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0);
+        editor.putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0);
 
         editor.commit();
 

@@ -25,7 +25,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.AddShowTask;
@@ -120,11 +119,6 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     public void onEvent(AddShowTask.OnShowAddedEvent event) {
         // display status toast about adding shows
-        event.handle(this);
-    }
-
-    public void onEvent(GetGlueCheckin.GetGlueCheckInTask.GetGlueCheckInCompleteEvent event) {
-        // display status toast about GetGlue check-in
         event.handle(this);
     }
 

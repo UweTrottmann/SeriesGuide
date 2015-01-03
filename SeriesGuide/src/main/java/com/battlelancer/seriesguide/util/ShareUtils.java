@@ -20,14 +20,12 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.provider.CalendarContract;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 
 /**
  * Contains various ways to share something about an episode (android share intent, trakt, calendar
@@ -39,18 +37,18 @@ public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    public static void shareEpisode(Activity activity, int showTvdbId, int seasonNumber,
+    public static void shareEpisode(Activity activity, int episodeTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = activity.getString(R.string.share_checkout,
                 showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber,
                         episodeTitle))
-                + " " + TraktTools.buildEpisodeOrShowUrl(showTvdbId, seasonNumber, episodeNumber);
+                + " " + TraktTools.buildEpisodeOrShowUrl(episodeTvdbId);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
     public static void shareShow(Activity activity, int showTvdbId, String showTitle) {
         String message = activity.getString(R.string.share_checkout, showTitle) + " "
-                + TraktTools.buildEpisodeOrShowUrl(showTvdbId, -1, -1);
+                + TraktTools.buildEpisodeOrShowUrl(showTvdbId);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 
@@ -77,13 +75,6 @@ public class ShareUtils {
         }
     }
 
-    public static String onCreateShareString(Context context, final Cursor episode) {
-        int season = episode.getInt(episode.getColumnIndexOrThrow(Episodes.SEASON));
-        int number = episode.getInt(episode.getColumnIndexOrThrow(Episodes.NUMBER));
-        String title = episode.getString(episode.getColumnIndexOrThrow(Episodes.TITLE));
-        return Utils.getNextEpisodeString(context, season, number, title);
-    }
-
     /**
      * Launches a calendar insert intent for the given episode.
      */
@@ -94,7 +85,7 @@ public class ShareUtils {
                 .putExtra(CalendarContract.Events.TITLE, showTitle)
                 .putExtra(CalendarContract.Events.DESCRIPTION, episodeTitle);
 
-        long beginTime = TimeTools.getEpisodeReleaseTime(context, episodeReleaseTime).getTime();
+        long beginTime = TimeTools.applyUserOffset(context, episodeReleaseTime).getTime();
         long endTime = beginTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
