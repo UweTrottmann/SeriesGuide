@@ -10,7 +10,14 @@ Version 21 *(2015-01-02)*
 
 * Support for the new trakt (v2). You will have to sign in and re-approve SeriesGuide.
 
-#### 21 *(2014-12-02)*
+#### 21.0.1 *(2014-12-03)*
+
+* FIX Crash when loading movie, but trakt credentials are invalid.
+* FIX trakt links open the development site.
+* FIX Crash when upgrading database is interrupted.
+* TWEAK Search TheTVDB in all languages if there are no results using the user preferred language.
+
+#### 21.0.0 *(2014-12-02)*
 
 * FEATURE Support for trakt v2.
 * TWEAK Improved trakt sync, now ratings are available offline as well.
