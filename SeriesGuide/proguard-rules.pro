@@ -21,9 +21,8 @@
 # see https://code.google.com/p/android/issues/detail?id=78377
 -keep class !android.support.v7.internal.view.menu.** { *; }
 
-# Google Play Services is stripped of unused parts. Don't warn about them missing.
--dontwarn com.google.ads.**
--dontwarn com.google.android.gms.**
+# Amazon IAP library has some missing stuff
+-dontwarn com.amazon.**
 
 # ButterKnife uses some annotations not available on Android.
 -dontwarn butterknife.internal.**
