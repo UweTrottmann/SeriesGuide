@@ -230,7 +230,11 @@ public class TvdbAddFragment extends AddFragment {
             String query = params[0];
 
             try {
-                results = TheTVDB.searchShow(query, mContext);
+                results = TheTVDB.searchShow(mContext, query, false);
+                if (results.size() == 0) {
+                    // query again, but allow all languages
+                    results = TheTVDB.searchShow(mContext, query, true);
+                }
             } catch (TvdbException e) {
                 Timber.e(e, "Searching show failed");
                 return null;
