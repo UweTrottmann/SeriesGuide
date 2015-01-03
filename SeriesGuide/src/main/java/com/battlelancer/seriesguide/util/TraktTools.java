@@ -927,8 +927,13 @@ public class TraktTools {
 
     /**
      * Look up a show's trakt id, may return {@code null} if not found.
+     *
+     * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on
+     * auth errors.
      */
-    public static String lookupShowTraktId(Search traktSearch, int showTvdbId) {
+    public static String lookupShowTraktId(Context context, int showTvdbId) {
+        Search traktSearch = ServiceUtils.getTraktV2(context).search();
+
         // 3 results: may be a show, season or episode (TVDb ids are not unique)
         List<SearchResult> searchResults = traktSearch.idLookup(IdType.TVDB,
                 String.valueOf(showTvdbId), 1, 3);

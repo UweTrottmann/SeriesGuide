@@ -92,7 +92,7 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
 
         try {
             // look up show trakt id
-            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), mShowTvdbId);
+            String showTraktId = TraktTools.lookupShowTraktId(mContext, mShowTvdbId);
             if (showTraktId == null) {
                 return null;
             }

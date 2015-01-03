@@ -383,12 +383,12 @@ public class TheTVDB {
 
         // get some more details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
-        TraktV2 trakt = ServiceUtils.getTraktV2(context);
         try {
             // look up trakt id
-            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+            String showTraktId = TraktTools.lookupShowTraktId(context, showTvdbId);
             if (showTraktId != null) {
                 // fetch details
+                TraktV2 trakt = ServiceUtils.getTraktV2(context);
                 traktShow = trakt.shows().summary(showTraktId, Extended.FULL);
             } else {
                 traktShow = null;
