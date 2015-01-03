@@ -16,6 +16,7 @@ Version 21 *(2015-01-02)*
 * FIX trakt links open the development site.
 * FIX Crash when upgrading database is interrupted.
 * TWEAK Search TheTVDB in all languages if there are no results using the user preferred language.
+* NOTICE Latest translations from crowdin.
 
 #### 21.0.0 *(2014-12-02)*
 
@@ -27,6 +28,7 @@ Version 21 *(2015-01-02)*
 * FIX Movie could show wrong poster, if it did not have one.
 * FIX List widget layout is broken on RTL layouts.
 * NOTICE tvtag has closed down and was removed.
+* NOTICE Latest translations from crowdin.
 
 Version 20.1 *(2014-12-08)*
 -----------------------------
