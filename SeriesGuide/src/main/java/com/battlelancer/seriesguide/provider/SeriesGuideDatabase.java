@@ -629,22 +629,34 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             // shows
-            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.RELEASE_TIMEZONE + " TEXT;");
-            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.RATING_VOTES + " INTEGER;");
-            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.RATING_USER + " INTEGER;");
+            if (isTableColumnMissing(db, Tables.SHOWS, Shows.RELEASE_TIMEZONE)) {
+                db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                        + Shows.RELEASE_TIMEZONE + " TEXT;");
+            }
+            if (isTableColumnMissing(db, Tables.SHOWS, Shows.RATING_VOTES)) {
+                db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                        + Shows.RATING_VOTES + " INTEGER;");
+            }
+            if (isTableColumnMissing(db, Tables.SHOWS, Shows.RATING_USER)) {
+                db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                        + Shows.RATING_USER + " INTEGER;");
+            }
 
             // episodes
-            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
-                    + Episodes.RATING_VOTES + " INTEGER;");
-            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
-                    + Episodes.RATING_USER + " INTEGER;");
+            if (isTableColumnMissing(db, Tables.EPISODES, Episodes.RATING_VOTES)) {
+                db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                        + Episodes.RATING_VOTES + " INTEGER;");
+            }
+            if (isTableColumnMissing(db, Tables.EPISODES, Episodes.RATING_USER)) {
+                db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                        + Episodes.RATING_USER + " INTEGER;");
+            }
 
             // movies
-            db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN "
-                    + Movies.RATING_USER + " INTEGER;");
+            if (isTableColumnMissing(db, Tables.MOVIES, Movies.RATING_USER)) {
+                db.execSQL("ALTER TABLE " + Tables.MOVIES + " ADD COLUMN "
+                        + Movies.RATING_USER + " INTEGER;");
+            }
 
             db.setTransactionSuccessful();
         } finally {

@@ -715,7 +715,7 @@ public class MovieTools {
             // add movies from trakt missing locally
             // all local movies were removed from trakt collection and watchlist,
             // so they only contain movies missing locally
-            UpdateResult result = addMovies(context, trakt, collection, watchlist);
+            UpdateResult result = addMovies(context, collection, watchlist);
 
             if (result == UpdateResult.SUCCESS) {
                 // store last activity timestamps
@@ -749,11 +749,10 @@ public class MovieTools {
         /**
          * Adds new movies to the database.
          *
-         * @param trakt Requires a trakt with user auth, except when supplying movies from hexagon.
          * @param newCollectionMovies Movie TMDB ids to add to the collection.
          * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
          */
-        public static UpdateResult addMovies(@Nonnull Context context, @Nonnull TraktV2 trakt,
+        public static UpdateResult addMovies(@Nonnull Context context,
                 @Nonnull Set<Integer> newCollectionMovies,
                 @Nonnull Set<Integer> newWatchlistMovies) {
             Timber.d("addMovies: " + newCollectionMovies.size() + " to collection, "
@@ -768,6 +767,7 @@ public class MovieTools {
                 newMovies.add(tmdbId);
             }
 
+            TraktV2 trakt = ServiceUtils.getTraktV2(context);
             Search traktSearch = trakt.search();
             Movies traktMovies = trakt.movies();
             MoviesService tmdbMovies = ServiceUtils.getTmdb(context).moviesService();
@@ -819,10 +819,7 @@ public class MovieTools {
          */
         public static MovieDetails getMovieDetails(Context context, int movieTmdbId) {
             // trakt
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-            if (trakt == null) {
-                trakt = ServiceUtils.getTraktV2(context);
-            }
+            TraktV2 trakt = ServiceUtils.getTraktV2(context);
             Movies traktMovies = trakt.movies();
             Search traktSearch = trakt.search();
 
@@ -835,6 +832,9 @@ public class MovieTools {
 
         /**
          * Download movie data from trakt and TMDb.
+         *
+         * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on
+         * auth errors.
          */
         public static MovieDetails getMovieDetails(Search traktSearch, Movies traktMovies,
                 MoviesService tmdbMovies, String languageCode, int movieTmdbId) {
@@ -890,8 +890,7 @@ public class MovieTools {
 
         private static Ratings loadRatingsFromTrakt(Movies traktMovies, int movieTraktId) {
             try {
-                Ratings ratings = traktMovies.ratings(String.valueOf(movieTraktId));
-                return ratings;
+                return traktMovies.ratings(String.valueOf(movieTraktId));
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading trakt movie ratings failed " + e.getUrl());
                 return null;

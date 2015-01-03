@@ -93,7 +93,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
 
                 if (season != -1 && episode != -1 && showTvdbId != -1) {
                     // look up show trakt id
-                    String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+                    String showTraktId = TraktTools.lookupShowTraktId(getContext(), showTvdbId);
                     if (showTraktId != null) {
                         return trakt.episodes().comments(showTraktId, season, episode, 1, PAGE_SIZE,
                                 Extended.IMAGES);
@@ -107,7 +107,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<List<Comment>> {
 
             // show comments!
             int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
-            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+            String showTraktId = TraktTools.lookupShowTraktId(getContext(), showTvdbId);
             if (showTraktId != null) {
                 return trakt.shows().comments(showTraktId, 1, PAGE_SIZE, Extended.IMAGES);
             }
