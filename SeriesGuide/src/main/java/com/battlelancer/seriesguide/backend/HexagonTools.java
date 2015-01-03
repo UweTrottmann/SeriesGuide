@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -40,7 +39,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
-import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import java.io.IOException;
 import java.util.HashMap;
@@ -295,7 +293,7 @@ public class HexagonTools {
 
         // add new movies with the just downloaded properties
         SgSyncAdapter.UpdateResult result = MovieTools.Download.addMovies(context,
-                ServiceUtils.getTraktV2(context), newCollectionMovies, newWatchlistMovies);
+                newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
