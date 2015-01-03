@@ -166,7 +166,7 @@
   <string name="recent">De siste</string>
   <string name="friends">Venner</string>
   <string name="friends_empty">Ingen venneaktivitet på trakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">Logg</string>
   <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Sjekk inn på noen serier!</string>
   <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Sjekk inn på noen filmer!</string>
   <string name="noupcoming">Det er ingen kommende episoder.</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">Interaksjonen med trakt mislyktes</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
   <string name="trakt_error_general">Kunne ikke kontakte trakt. Prøv igjen senere.</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">trakt konto</string>
+  <string name="trakt_connect_instructions">På neste skjerm logg inn på trakt eller opprett en ny konto. Deretter gi SeriesGuide tilgang til din trakt konto.</string>
   <string name="connect_trakt">Koble til trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Koble SeriesGuide til trakt</string>
+  <string name="trakt_reconnect_details">Kontroller din trakt påloggingsinformasjon</string>
   <string name="username">Brukernavn</string>
   <string name="waitplease">Vennligst vent…</string>
   <string name="connect">Koble til</string>
