@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
+import javax.annotation.Nonnull;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
@@ -232,14 +233,16 @@ public class TheTVDB {
     }
 
     /**
-     * Search for shows which include a certain keyword in their title. Dependent on the TheTVDB
-     * search algorithms.
+     * Search TheTVDB for shows which include a certain keyword in their title.
      *
-     * @return a List with SearchResult objects, max 100
+     * @param allLanguages If set, will query for results in all languages instead of the user
+     * preferred language.
+     * @return At most 100 results (limited by TheTVDB API).
      */
-    public static List<SearchResult> searchShow(String title, Context context)
+    @Nonnull
+    public static List<SearchResult> searchShow(Context context, String query, boolean allLanguages)
             throws TvdbException {
-        final List<SearchResult> series = new ArrayList<SearchResult>();
+        final List<SearchResult> series = new ArrayList<>();
         final SearchResult currentShow = new SearchResult();
 
         RootElement root = new RootElement("Data");
@@ -266,13 +269,18 @@ public class TheTVDB {
             }
         });
 
-        String language = DisplaySettings.getContentLanguage(context);
+        // build search URL: encode query...
         String url;
         try {
-            url = TVDB_API_GETSERIES + URLEncoder.encode(title, "UTF-8")
-                    + (language != null ? TVDB_PARAM_LANGUAGE + language : "");
+            url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new TvdbException("Encoding show title failed", e);
+        }
+        // ...and set language filter
+        if (allLanguages) {
+            url += TVDB_PARAM_LANGUAGE + "all";
+        } else {
+            url += TVDB_PARAM_LANGUAGE + DisplaySettings.getContentLanguage(context);
         }
 
         try {
@@ -383,12 +391,12 @@ public class TheTVDB {
 
         // get some more details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
-        TraktV2 trakt = ServiceUtils.getTraktV2(context);
         try {
             // look up trakt id
-            String showTraktId = TraktTools.lookupShowTraktId(trakt.search(), showTvdbId);
+            String showTraktId = TraktTools.lookupShowTraktId(context, showTvdbId);
             if (showTraktId != null) {
                 // fetch details
+                TraktV2 trakt = ServiceUtils.getTraktV2(context);
                 traktShow = trakt.shows().summary(showTraktId, Extended.FULL);
             } else {
                 traktShow = null;

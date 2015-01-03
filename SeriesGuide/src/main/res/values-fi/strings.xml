@@ -60,7 +60,7 @@
   <string name="movie_cast">Näyttelijät</string>
   <string name="movie_crew">Kuvausryhmä</string>
   <string name="action_movies_sort">Lajittele elokuvat</string>
-  <string name="action_movies_sort_title">Otsikko</string>
+  <string name="action_movies_sort_title">Nimi</string>
   <string name="action_movies_sort_release">Julkaisupäivä</string>
   <string name="statistics_shows">ohjelmaa</string>
   <string name="statistics_episodes">jaksoa</string>
@@ -155,7 +155,7 @@
   <string name="action_shows_filter_upcoming">Tulevat</string>
   <string name="action_shows_filter_hidden">Piilotetut</string>
   <string name="action_shows_sort">Lajittele ohjelmat</string>
-  <string name="action_shows_sort_title">Otsikko</string>
+  <string name="action_shows_sort_title">Nimi</string>
   <string name="action_shows_sort_episode">Seuraava jakso</string>
   <string name="action_shows_sort_favorites">Suosikit ensin</string>
   <string name="updateall_yes">Päivitä kaikki</string>
