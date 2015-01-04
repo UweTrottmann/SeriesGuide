@@ -50,12 +50,6 @@ public class UserEpisodeStreamFragment extends StreamFragment {
     private EpisodeHistoryAdapter mAdapter;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "You");
-    }
-
-    @Override
     protected int getEmptyMessageResId() {
         return R.string.user_stream_empty;
     }
