@@ -73,7 +73,7 @@ public class SeriesGuideApplication extends Application {
         }
         if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
             // crash and error reporting
-            Timber.plant(new AnalyticsTree());
+            Timber.plant(new AnalyticsTree(this));
             if (!Fabric.isInitialized()) {
                 Fabric.with(this, new Crashlytics());
             }
