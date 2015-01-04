@@ -16,11 +16,13 @@
 
 package com.battlelancer.seriesguide;
 
+import android.content.Context;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 import timber.log.Timber;
 
 /**
@@ -30,6 +32,12 @@ import timber.log.Timber;
 public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTree {
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
     private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
+
+    private final Context context;
+
+    public AnalyticsTree(Context context) {
+        this.context = context.getApplicationContext();
+    }
 
     @Override
     public void i(String message, Object... args) {
@@ -58,30 +66,34 @@ public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTre
 
     @Override
     public void e(Throwable t, String message, Object... args) {
-        logToCrashlytics("ERROR", createTag(), message, args);
+        String tag = createTag();
 
         // special treatment for retrofit errors
         if (t instanceof RetrofitError) {
             RetrofitError e = (RetrofitError) t;
 
-            Response response = e.getResponse();
-            if (response == null) {
-                // do NOT log anything
-                return;
+            // only logging retrofit HTTP and conversion errors for now
+            if (e.getKind() == RetrofitError.Kind.HTTP) {
+                Utils.trackCustomEvent(context,
+                        "Network Request Error",
+                        tag + ": " + message,
+                        e.getResponse().getStatus() + " " + e.getUrl());
+            } else if (e.getKind() == RetrofitError.Kind.CONVERSION) {
+                Utils.trackCustomEvent(context,
+                        "Request Conversion Error",
+                        tag + ": " + message,
+                        e.getResponse().getStatus() + " " + e.getUrl());
             }
-            int statusCode = response.getStatus();
-            // log url and status code
-            if (statusCode < 500) {
-                // non-server errors are more interesting
-                i("URL: %s", e.getUrl());
-                i("Status Code: %d", statusCode);
-            } else {
-                d("URL: %s", e.getUrl());
-                d("Status Code: %d", statusCode);
-            }
+        } else if (t instanceof TvdbException) {
+            TvdbException e = (TvdbException) t;
+            Utils.trackCustomEvent(context,
+                    "TheTVDB Error",
+                    tag + ": " + message,
+                    e.getMessage());
+        } else {
+            logToCrashlytics("ERROR", tag, message, args);
+            Crashlytics.logException(t);
         }
-
-        Crashlytics.logException(t);
     }
 
     @Override

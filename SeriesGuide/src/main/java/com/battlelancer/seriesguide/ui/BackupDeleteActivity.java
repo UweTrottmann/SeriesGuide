@@ -49,8 +49,6 @@ import timber.log.Timber;
  */
 public class BackupDeleteActivity extends BaseActivity {
 
-    private static final String TAG = "Backup";
-
     private static final int EXPORT_DIALOG = 0;
 
     private static final int IMPORT_DIALOG = 1;
@@ -182,12 +180,10 @@ public class BackupDeleteActivity extends BaseActivity {
             if (errorMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Backup", "Success");
             } else {
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Backup", "Failure");
             }
             setResult(RESULT_OK);
             finish();
@@ -275,12 +271,10 @@ public class BackupDeleteActivity extends BaseActivity {
             if (errMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Import", "Success");
             } else {
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
-                Utils.trackCustomEvent(BackupDeleteActivity.this, TAG, "Import", "Failure");
             }
             setResult(RESULT_OK);
             finish();

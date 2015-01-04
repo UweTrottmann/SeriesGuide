@@ -285,8 +285,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
         clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent(context, "Clear Image Cache");
-
                 // try to open app info where user can clear app cache folders
                 Intent intent = new Intent(
                         android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -345,10 +343,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
     public static void setListPreferenceSummary(ListPreference listPref) {
         // Set summary to be the user-description for the selected value
         listPref.setSummary(listPref.getEntry().toString().replaceAll("%", "%%"));
-    }
-
-    private static void fireTrackerEvent(Context context, String label) {
-        Utils.trackClick(context, TAG, label);
     }
 
     public static class SettingsHeadersFragment extends Fragment {

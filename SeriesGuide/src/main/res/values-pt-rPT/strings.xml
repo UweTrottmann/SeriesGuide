@@ -95,7 +95,7 @@
     <item quantity="many">%d minutos</item>
     <item quantity="other">%d minutos</item>
   </plurals>
-  <string name="episode_number_absolute">O Todo-Poderoso</string>
+  <string name="episode_number_absolute">ABSOLUTO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de lançamento</string>
   <string name="episode_firstaired_unknown">Data de lançamento desconhecida</string>

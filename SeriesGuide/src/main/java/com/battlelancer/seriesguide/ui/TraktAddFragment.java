@@ -34,15 +34,14 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -121,25 +120,6 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        String tag = null;
-        switch (getListType()) {
-            case AddPagerAdapter.TRENDING_TAB_POSITION:
-                tag = "Trending";
-                break;
-            case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                tag = "Library";
-                break;
-            case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                tag = "Recommended";
-                break;
-            case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                tag = "Watchlist";
-                break;
-        }
-        if (tag != null) {
-            Utils.trackView(getActivity(), tag);
-        }
 
         EventBus.getDefault().register(this);
     }
