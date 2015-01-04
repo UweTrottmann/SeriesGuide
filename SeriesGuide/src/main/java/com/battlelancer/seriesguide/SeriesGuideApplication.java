@@ -39,7 +39,6 @@ import timber.log.Timber;
  */
 public class SeriesGuideApplication extends Application {
 
-    public static final String FLAVOR_INTERNAL = "internal";
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
     public static final int NOTIFICATION_TRAKT_AUTH_ID = 3;
@@ -70,10 +69,9 @@ public class SeriesGuideApplication extends Application {
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-        }
-        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
+        } else {
             // crash and error reporting
-            Timber.plant(new AnalyticsTree());
+            Timber.plant(new AnalyticsTree(this));
             if (!Fabric.isInitialized()) {
                 Fabric.with(this, new Crashlytics());
             }
