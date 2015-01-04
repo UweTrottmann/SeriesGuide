@@ -10,6 +10,11 @@ Version 21 *(2015-01-02)*
 
 * Support for the new trakt (v2). You will have to sign in and re-approve SeriesGuide.
 
+#### 21.0.2 *(2014-12-04)*
+
+* TWEAK Better error reports.
+* NOTICE Latest translations from crowdin.
+
 #### 21.0.1 *(2014-12-03)*
 
 * FIX Crash when loading movie, but trakt credentials are invalid.

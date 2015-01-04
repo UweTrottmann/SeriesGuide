@@ -166,7 +166,7 @@
   <string name="recent">Dernièrement</string>
   <string name="friends">Amis</string>
   <string name="friends_empty">Pas d\'activité d\'amis sur Trakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">historique</string>
   <string name="user_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">Compte trakt</string>
+  <string name="trakt_connect_instructions">Sur le prochain écran connectez vous dans trakt ou créez un nouveau compte. Puis permettez l\'accès à votre compte trakt par SeriesGuide.</string>
   <string name="connect_trakt">Me connecter à trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Connecter SeriesGuide à trakt</string>
+  <string name="trakt_reconnect_details">Vérifier vos informations d\'identification trakt</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="waitplease">Veuillez patienter…</string>
   <string name="connect">Se connecter</string>
