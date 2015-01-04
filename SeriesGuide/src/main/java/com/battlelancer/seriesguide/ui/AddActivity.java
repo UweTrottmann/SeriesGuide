@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Locale;
@@ -79,6 +80,43 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         tabs.setViewPager(pager);
+        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+                // do nothing
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String tag = null;
+                switch (position) {
+                    case AddPagerAdapter.TRENDING_TAB_POSITION:
+                        tag = "Trending";
+                        break;
+                    case AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION:
+                        tag = "TVDb Search";
+                        break;
+                    case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
+                        tag = "Recommended";
+                        break;
+                    case AddPagerAdapter.LIBRARY_TAB_POSITION:
+                        tag = "Library";
+                        break;
+                    case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                        tag = "Watchlist";
+                        break;
+                }
+                if (tag != null) {
+                    Utils.trackView(AddActivity.this, tag);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // do nothing
+            }
+        });
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {

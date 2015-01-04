@@ -93,7 +93,6 @@ public class ShareUtils {
         if (!Utils.tryStartActivity(context, intent, false)) {
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
                     Toast.LENGTH_SHORT).show();
-            Utils.trackCustomEvent(context, TAG, "Calendar", "Failed");
         }
     }
 }

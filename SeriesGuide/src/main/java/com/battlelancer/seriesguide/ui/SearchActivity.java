@@ -158,7 +158,6 @@ public class SearchActivity extends BaseNavDrawerActivity {
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             displayEpisode(id);
-            Utils.trackCustomEvent(this, TAG, "Search action", "View");
             finish();
         }
     }
@@ -180,8 +179,6 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
     private void submitSearchQuery(Bundle args) {
         EventBus.getDefault().postSticky(new SearchQueryEvent(args));
-
-        Utils.trackCustomEvent(this, TAG, "Search action", "Search");
     }
 
     private void displayEpisode(String episodeTvdbId) {

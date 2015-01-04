@@ -51,13 +51,6 @@ public class UserMovieStreamFragment extends StreamFragment {
     private MovieHistoryAdapter mAdapter;
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), "Movies You");
-    }
-
-    @Override
     protected int getEmptyMessageResId() {
         return R.string.user_movie_stream_empty;
     }
