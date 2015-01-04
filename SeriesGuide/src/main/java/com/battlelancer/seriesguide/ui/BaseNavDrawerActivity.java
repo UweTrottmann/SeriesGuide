@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.util.Utils;
 public abstract class BaseNavDrawerActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
+    private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
 
     public static final int MENU_ITEM_ACCOUNT = 0;
@@ -147,6 +148,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 } else {
                     launchIntent = new Intent(this, ConnectTraktActivity.class);
                 }
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
                 break;
             }
             case MENU_ITEM_SHOWS_POSITION:
@@ -156,6 +158,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 launchIntent = new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
             case MENU_ITEM_LISTS_POSITION:
                 if (this instanceof ListsActivity) {
@@ -163,6 +166,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 }
                 launchIntent = new Intent(this, ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
             case MENU_ITEM_MOVIES_POSITION:
                 if (this instanceof MoviesActivity) {
@@ -170,6 +174,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 }
                 launchIntent = new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
             case MENU_ITEM_STATS_POSITION:
                 if (this instanceof StatsActivity) {
@@ -177,12 +182,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 }
                 launchIntent = new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
             case MENU_ITEM_SETTINGS_POSITION:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
             case MENU_ITEM_HELP_POSITION:
                 launchIntent = new Intent(this, HelpActivity.class);
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
             case MENU_ITEM_SUBSCRIBE_POSITION:
                 if (Utils.isAmazonVersion()) {
@@ -190,6 +198,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 } else {
                     launchIntent = new Intent(this, BillingActivity.class);
                 }
+                Utils.trackAction(this, TAG_NAV_DRAWER, "Unlock");
                 break;
         }
 
