@@ -12,6 +12,9 @@ Version 21 *(2015-01-02)*
 
 #### 21.0.4 *(2014-12-05)*
 
+* FIX Crash when leaving episode details view while it reloads.
+* FIX Crash if notification intent is null.
+* FIX Crash if content provider id is unknown at runtime.
 * FIX Disabled Javascript on the trakt sign-in page blocked some Google accounts from signing in.
 
 #### 21.0.3 *(2014-12-05)*
