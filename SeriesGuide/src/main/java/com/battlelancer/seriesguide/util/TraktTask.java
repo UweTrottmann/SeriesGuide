@@ -350,7 +350,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } catch (RetrofitError e) {
-            Timber.e(e, mAction.toString() + " failed " + e.getUrl());
+            Timber.e(e, mAction.toString() + " failed");
             r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_error_general);

@@ -873,7 +873,7 @@ public class MovieTools {
 
                 Timber.e("Finding trakt movie failed (not in results)");
             } catch (RetrofitError e) {
-                Timber.e(e, "Finding trakt movie failed " + e.getUrl());
+                Timber.e(e, "Finding trakt movie failed");
             }
 
             return null;
@@ -883,7 +883,7 @@ public class MovieTools {
             try {
                 return traktMovies.summary(String.valueOf(movieTraktId), Extended.FULL);
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading trakt movie summary failed " + e.getUrl());
+                Timber.e(e, "Loading trakt movie summary failed");
                 return null;
             }
         }
@@ -892,7 +892,7 @@ public class MovieTools {
             try {
                 return traktMovies.ratings(String.valueOf(movieTraktId));
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading trakt movie ratings failed " + e.getUrl());
+                Timber.e(e, "Loading trakt movie ratings failed");
                 return null;
             }
         }

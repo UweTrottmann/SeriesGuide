@@ -405,7 +405,7 @@ public class TheTVDB {
                 traktShow = null;
             }
         } catch (RetrofitError e) {
-            Timber.e(e, "Loading summary failed: " + e.getUrl());
+            Timber.e(e, "Loading summary failed");
         }
         if (traktShow == null || traktShow.airs == null) {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
