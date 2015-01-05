@@ -31,12 +31,11 @@ title: Help
       <li><a href="#syncfail">Shows are not updated</a></li>
       <li><a href="#missing">Missing or incorrect information</a></li>
       <li><a href="#airtimes">Wrong air/release times</a></li>
-      <li><a href="#fixcheckin">tvtag check-ins do not work</a></li>
       <li><a href="#widget">The widget displays no data or is missing</a></li>
       <li><a href="#timezone">After changing the time zone times are incorrect</a></li>
     </ul>
     
-    <a href="#trakt"><h2>trakt integration</h2></a>
+    <a href="#trakt"><h2><img src="images/trakt-80.png" width="32" height="32" alt="trakt logo"/> trakt integration</h2></a>
     <ul class="toc">
       <li><a href="#connecttrakt">Connect to trakt/Troubleshooting</a></li>
       <li><a href="#library">Add shows from your trakt library</a></li>
@@ -61,7 +60,7 @@ title: Help
     <p>Each episode displays a button bar with four actions:</p>
     <p><img src="images/buttons.png" alt="Episode actions" width="345" height="65" class="img-responsive"></img></p>
     <ul>
-        <li><a href="#checkins"><b>Check in</b> via tvtag or trakt</a> if you are watching right now.</li>
+        <li><a href="#checkins"><b>Check in</b> via trakt</a> if you are watching right now.</li>
         <li><b>Set watched</b> if you have (just) watched this.</li>
         <li><b>Add to collection</b> if you purchased (DVD, Blu-Ray) or downloaded this.</li>
         <li><b>Skip</b> if you don't want to watch this episode right now. (Not synced with trakt!)</li>
@@ -72,11 +71,8 @@ title: Help
     <div class="spacer"></div>
   
     <h3>How check-ins work</h3>
-    <p>Check-in to let friends or the world know what you are watching right now. With SeriesGuide, depending on which service you use, check-ins behave a little differently.</p>
-    <dt>trakt</dt>
-    <dd>Checks into <strong>single episodes</strong>, so look out which episode is displayed when you check in.</dd>
-    <dt>tvtag</dt>
-    <dd>Checks into a <strong>show</strong>. You can use the <em>Paste title</em> button to include the watched episode title in your check in comment.</dd>
+    <p>Check-in to let friends or the world know what you are watching right now. Checking in requires you to <a href="#trakt">connect SeriesGuide with trakt</a>.</p>
+    <p>After the runtime of the episode or movie has passed, the episode or movie will be set watched on your trakt profile and in SeriesGuide.</p>
     
     <a name="remove"></a>
     <div class="spacer"></div>
@@ -172,7 +168,7 @@ title: Help
       <li>Touch <strong>Backup Shows</strong>.</li>
       <li>Once the backup is complete a new option appears offering to install SeriesGuide. Touch <strong>Install SeriesGuide</strong> and proceed with installation.</li>
     </ol>
-    <p>Once installed, in SeriesGuide use the <strong>Backup/Restore</strong> tool to <a href="#backup">restore the backup you created.</a> Reconnect any accounts (trakt, tvtag) and change settings to your liking.</p>
+    <p>Once installed, in SeriesGuide use the <strong>Backup/Restore</strong> tool to <a href="#backup">restore the backup you created.</a> Reconnect any accounts (trakt) and change settings to your liking.</p>
   
     <a name="fixes"></a>
     <div class="largespacer"></div>	
@@ -213,21 +209,10 @@ title: Help
     <h3>Wrong air/release times</h3>
     <p>SeriesGuide gets its data from <a href="http://thetvdb.com">thetvdb.com</a>, an open user-maintained TV database (see above) and <a href="https://trakt.tv">trakt</a>. The release times there are restricted to the <strong>original release</strong> in the country of origin.</p>
     <p><span class="label label-info">Tip</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
-    <p>If <strong>the release country is known</strong> (check <a href="https://trakt.tv">trakt</a> show page), SeriesGuide will assume the release time to be in a timezone of this country (e.g. Pacific Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>. See <a href="https://github.com/UweTrottmann/SeriesGuide/issues/382">supported countries and time zones</a>.</p>
+    <p>If <strong>the release country is known</strong> (check <a href="https://trakt.tv">trakt</a> show page), SeriesGuide will assume the release time to be in a timezone of this country (e.g. Eastern Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>. See <a href="https://github.com/UweTrottmann/SeriesGuide/issues/382">supported countries and time zones</a>.</p>
     <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
-    <p><span class="label label-info">Info</span> If your device is <strong>set to a US or Canada mainland time zone</strong>, SeriesGuide will automatically adjust the release time (e.g. one hour earlier in Central Time).</p>
+    <p><span class="label label-info">Info</span> If your device is <strong>set to a US mainland time zone</strong>, SeriesGuide will automatically adjust the release time (e.g. one hour earlier in Central Time).</p>
     <p>If you believe a release time is incorrectly converted from the time displayed on <a href="https://trakt.tv">trakt</a>, please <a href="#contact">drop a message</a>.</p>
-  
-    <a name="fixcheckin"></a>
-    <div class="spacer"></div>
-  
-    <h3>tvtag check-ins do not work</h3>
-    <ol>
-      <li>From the check-in dialog, touch <b>Fix tvtag check-in</b>.</li>
-      <li>Select the show you want to check in to. If it is not listed, touch <b>Looking for something else?</b> and enter a search term, then press Enter or Search on your keyboard.</li>
-      <li>Select the show you want to check into and touch <strong>Save selection</strong>.</li>
-      <li>Touch <strong>Check-In</strong> to repeat the check-in.</li>	
-    </ol>
   
     <a name="widget"></a>
     <div class="spacer"></div>
@@ -253,7 +238,7 @@ title: Help
     <div class="largespacer"></div>
 
     <a name="connecttrakt"></a>
-    <h2>trakt integration</h2>
+    <h2><img src="images/trakt-80.png" width="32" height="32" alt="trakt logo"/> trakt integration</h2>
 
     <h3>Connect to trakt</h3>
     <ol>
@@ -262,15 +247,16 @@ title: Help
       <li>Touch <strong>Services</strong>.</li>
       <li>Touch <strong>Connect to trakt</strong> and follow the given instructions.</p></li>
     </ol>
-    <p><span class="label label-info">Troubleshooting</span> If you can't connect, try changing your password so it does not contain any special characters (but keep it long!). Make sure to connect with your trakt username and not your email address.</p>
+    <p><span class="label label-info">Troubleshooting</span> If you can't connect (white screen, error message), trakt may currently be unreachable (check <a href="https://twitter.com/trakt">@trakt</a> and <a href="https://twitter.com/seriesguide">@SeriesGuide</a> for status updates). Please try again later.</p>
     <p>When using a privacy tool (e.g. a Xposed module), make sure SeriesGuide has access to the Android account system. It needs an account to store your trakt credentials and sync.</p>
+    <p>If your issue persists, please <a href="#contact">contact me</a> or <a href="https://support.trakt.tv">trakt support</a> about what is going wrong (e.g. send a screenshot).</p>
 
     <a name="library"></a>
     <div class="spacer"></div>
         
     <h3>Add shows from your trakt library</h3>
     <ol>
-      <li>From the show list, touch <img src="images/ic_action_new_show_inverse.png" width="32" height="32"/>.</li>
+      <li>From the show list, touch <img src="images/ic_action_new_show_inverse.png" width="24" height="24"/>.</li>
       <li>Swipe to the <strong>Library</strong> tab.</li>
       <li>Touch on the + next to a show to add it to SeriesGuide.</li>
     </ol>
@@ -293,7 +279,7 @@ title: Help
     <div class="largespacer"></div>
   
     <h2>Drop a message!</h2>
-    <p>Post to the <a href="https://plus.google.com/communities/103447253937737054097">SeriesGuide Community <span class="glyphicon glyphicon-new-window"></span></a> or <a href="mailto:uwe@seriesgui.de">email me</a>.</p>
+    <p>Tweet <a href="https://twitter.com/seriesguide">@SeriesGuide</a>, post to the <a href="https://plus.google.com/communities/103447253937737054097">SeriesGuide Community <span class="glyphicon glyphicon-new-window"></span></a> or <a href="mailto:uwe@seriesgui.de">email me</a>.</p>
 
   </div> <!-- span -->
 </div> <!-- row -->
