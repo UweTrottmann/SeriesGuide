@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 
 public class AppSettings {
@@ -31,9 +32,10 @@ public class AppSettings {
 
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
+    public static final String KEY_LAST_STATS_REPORT = "timeLastStatsReport";
+
     /**
-     * Returns the version code of the previously installed version. Is the current version on
-     * fresh
+     * Returns the version code of the previously installed version. Is the current version on fresh
      * installs.
      */
     @SuppressLint("CommitPrefEdits")
@@ -61,5 +63,24 @@ public class AppSettings {
     public static boolean hasSeenNavDrawer(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_HAS_SEEN_NAV_DRAWER, false);
+    }
+
+    /**
+     * Whether to report stats, or if this was done today already.
+     */
+    @SuppressLint("CommitPrefEdits")
+    public static boolean shouldReportStats(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        long currentTime = System.currentTimeMillis();
+        long lastReportTime = prefs.getLong(KEY_LAST_STATS_REPORT, 0);
+        boolean shouldReport = lastReportTime + DateUtils.DAY_IN_MILLIS < currentTime;
+
+        if (shouldReport) {
+            // reset report time
+            prefs.edit().putLong(KEY_LAST_STATS_REPORT, currentTime).commit();
+        }
+
+        return shouldReport;
     }
 }

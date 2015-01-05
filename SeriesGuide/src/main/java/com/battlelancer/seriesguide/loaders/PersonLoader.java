@@ -40,7 +40,7 @@ public class PersonLoader extends GenericSimpleLoader<Person> {
         try {
             return ServiceUtils.getTmdb(getContext()).personService().summary(mTmdbId);
         } catch (RetrofitError e) {
-            Timber.e(e, "Could not load person summary from TMDB: " + mTmdbId);
+            Timber.e(e, "Could not load person summary from TMDB");
         }
 
         return null;

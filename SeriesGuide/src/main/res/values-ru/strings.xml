@@ -166,7 +166,7 @@
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
   <string name="friends_empty">Нет активности друзей на trakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">История</string>
   <string name="user_stream_empty">Нет последней информации об активности в trakt. Проверьте в некоторых сериалах!</string>
   <string name="user_movie_stream_empty">Нет последней информации об активности в trakt. Проверьте в некоторых фильмах!</string>
   <string name="noupcoming">Выходящих эпизодов нет.</string>
@@ -231,11 +231,11 @@
   <string name="trakt_error">Связь с trakt не удалась</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
-  <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_account">Аккаунт trakt</string>
+  <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставте SeriesGuide доступ к вашему аккаунту на trakt.</string>
   <string name="connect_trakt">Подключение trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
+  <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
   <string name="username">Имя пользователя</string>
   <string name="waitplease">Пожалуйста, подождите…</string>
   <string name="connect">Подключиться</string>

@@ -41,7 +41,6 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.SearchHistory;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
@@ -147,7 +146,6 @@ public class TvdbAddFragment extends AddFragment {
         super.onStart();
 
         EventBus.getDefault().register(this);
-        Utils.trackView(getActivity(), "TVDb Search");
     }
 
     @Override

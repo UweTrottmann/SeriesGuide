@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -329,8 +330,10 @@ public class TheTVDB {
                 }
             }
 
-            long showCount = (long) shows.getCount();
-            Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
+            int showCount = shows.getCount();
+            if (showCount > 0 && AppSettings.shouldReportStats(context)) {
+                Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
+            }
 
             shows.close();
         }
@@ -402,7 +405,7 @@ public class TheTVDB {
                 traktShow = null;
             }
         } catch (RetrofitError e) {
-            Timber.e(e, "Loading summary failed: " + e.getUrl());
+            Timber.e(e, "Loading summary failed");
         }
         if (traktShow == null || traktShow.airs == null) {
             throw new TvdbException("Could not load show from trakt: " + showTvdbId);
