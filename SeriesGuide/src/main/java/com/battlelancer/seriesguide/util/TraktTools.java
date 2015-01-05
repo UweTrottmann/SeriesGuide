@@ -618,7 +618,7 @@ public class TraktTools {
                             break;
                     }
                 } catch (RetrofitError e) {
-                    Timber.e(e, "applyEpisodeFlagChanges: upload failed for " + showTvdbId);
+                    Timber.e(e, "applyEpisodeFlagChanges: upload failed");
                     return FAILED_API;
                 }
             }
