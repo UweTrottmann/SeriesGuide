@@ -213,7 +213,7 @@ public class TraktAddFragment extends AddFragment {
                     }
                 }
             } catch (RetrofitError e) {
-                Timber.e(e, "Loading shows failed: " + e.getUrl());
+                Timber.e(e, "Loading shows failed");
                 // ignored, just display empty list
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
