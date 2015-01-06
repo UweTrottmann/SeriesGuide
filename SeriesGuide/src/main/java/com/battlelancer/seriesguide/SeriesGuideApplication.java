@@ -59,7 +59,7 @@ public class SeriesGuideApplication extends Application {
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
-    public static String CONTENT_AUTHORITY;
+    public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     @Override
     public void onCreate() {
@@ -76,9 +76,6 @@ public class SeriesGuideApplication extends Application {
                 Fabric.with(this, new Crashlytics());
             }
         }
-
-        // Set provider authority
-        CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
