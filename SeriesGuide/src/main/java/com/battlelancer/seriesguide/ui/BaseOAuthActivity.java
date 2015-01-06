@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -55,8 +56,10 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     protected void setupViews(WebView webview) {
         webview.setWebViewClient(webViewClient);
+        webview.getSettings().setJavaScriptEnabled(true);
 
         // make sure we start fresh
         CookieManager cookieManager = CookieManager.getInstance();

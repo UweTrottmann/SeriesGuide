@@ -31,6 +31,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -111,7 +113,7 @@ public class SeriesGuideProvider extends ContentProvider {
      */
     private static UriMatcher buildUriMatcher(Context context) {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = context.getPackageName() + ".provider";
+        final String authority = SeriesGuideApplication.CONTENT_AUTHORITY;
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
