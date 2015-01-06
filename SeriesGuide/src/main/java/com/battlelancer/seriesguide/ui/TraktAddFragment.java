@@ -181,9 +181,10 @@ public class TraktAddFragment extends AddFragment {
 
             try {
                 if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
+                    // get some more trending shows, in case the user has added some (default is 10)
                     List<TrendingShow> trendingShows = ServiceUtils.getTraktV2(context)
                             .shows()
-                            .trending(null, null, Extended.IMAGES);
+                            .trending(1, 35, Extended.IMAGES);
                     for (TrendingShow show : trendingShows) {
                         if (show.show == null || show.show.ids == null
                                 || show.show.ids.tvdb == null) {
