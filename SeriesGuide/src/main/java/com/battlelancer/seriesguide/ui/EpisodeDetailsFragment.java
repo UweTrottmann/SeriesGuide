@@ -303,6 +303,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (!isAdded()) {
+                return;
+            }
             populateEpisodeData(data);
         }
 

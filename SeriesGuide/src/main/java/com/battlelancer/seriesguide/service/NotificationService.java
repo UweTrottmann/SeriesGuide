@@ -328,6 +328,10 @@ public class NotificationService extends IntentService {
      * Extracts the last cleared time and stores it in settings.
      */
     public static boolean handleDeleteIntent(Context context, Intent intent) {
+        if (intent == null) {
+            return false;
+        }
+
         long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
         if (clearedTime != 0) {
             // Never show the cleared episode(s) again
