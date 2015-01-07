@@ -723,6 +723,7 @@ public class TraktTools {
         for (Integer tvShowTvdbId : skippedShows) {
             batch.add(ContentProviderOperation
                     .newUpdate(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShowTvdbId))
+                    .withSelection(flag.clearFlagSelection, null)
                     .withValue(flag.databaseColumn, flag.nonFlaggedValue).build());
         }
 
