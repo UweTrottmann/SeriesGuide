@@ -257,8 +257,10 @@
     <string name="hexagon_remove_account_failure">Could not remove account.</string>
     <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
     <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
 
     <!-- trakt -->
+    <string name="trakt_submitqueued">Sending to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
     <string name="trakt_notseen">%s not seen.</string>
     <string name="trakt_collected">%s collected.</string>

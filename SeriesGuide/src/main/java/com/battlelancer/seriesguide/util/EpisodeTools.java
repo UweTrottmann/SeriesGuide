@@ -903,10 +903,24 @@ public class EpisodeTools {
         private final FlagType mType;
 
         private boolean mIsSendingToTrakt;
+        private boolean mIsSendingToHexagon;
 
         public EpisodeFlagTask(Context context, FlagType type) {
-            mContext = context;
+            mContext = context.getApplicationContext();
             mType = type;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // network ops may run long, so immediately show a status toast
+            mIsSendingToHexagon = HexagonTools.isSignedIn(mContext);
+            if (mIsSendingToHexagon) {
+                Toast.makeText(mContext, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
+            }
+            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag);
+            if (mIsSendingToTrakt) {
+                Toast.makeText(mContext, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -930,7 +944,6 @@ public class EpisodeTools {
              * However, if the skipped flag is removed this will be handled identical
              * to flagging as unwatched.
              */
-            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag);
             if (mIsSendingToTrakt) {
                 if (!AndroidUtils.isNetworkConnected(mContext)) {
                     return ERROR_NETWORK;
