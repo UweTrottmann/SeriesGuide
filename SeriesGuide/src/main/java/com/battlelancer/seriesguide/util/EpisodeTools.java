@@ -1040,6 +1040,7 @@ public class EpisodeTools {
                     return ERROR_TRAKT_API;
                 }
             } catch (RetrofitError e) {
+                Timber.e(e, "uploadToTrakt: failed");
                 return ERROR_TRAKT_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
@@ -1110,7 +1111,7 @@ public class EpisodeTools {
 
             // display success message
             if (mIsSendingToTrakt) {
-                int status = R.string.trakt_submitqueued;
+                int status = R.string.trakt_success;
                 if (mType.mAction == EpisodeAction.SHOW_WATCHED
                         || mType.mAction == EpisodeAction.SHOW_COLLECTED
                         || mType.mAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {

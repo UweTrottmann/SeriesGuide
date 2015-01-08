@@ -431,7 +431,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 if (season == -1 || episode == -1 || showTvdbId == -1) {
                     Response r = new Response();
                     r.status = TraktStatus.FAILURE;
-                    r.error = mContext.getString(R.string.trakt_error);
+                    r.error = mContext.getString(R.string.trakt_error_general);
                     return r;
                 }
 
@@ -459,7 +459,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         // handle errors
         Response r = new Response();
         r.status = TraktStatus.SUCCESS;
-        r.message = mContext.getString(R.string.trakt_submitqueued);
+        r.message = mContext.getString(R.string.trakt_success);
 
         if (response == null) {
             r.status = TraktStatus.FAILURE;

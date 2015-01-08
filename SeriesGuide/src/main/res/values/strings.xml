@@ -259,7 +259,6 @@
     <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
 
     <!-- trakt -->
-    <string name="trakt_submitqueued">Submitting to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
     <string name="trakt_notseen">%s not seen.</string>
     <string name="trakt_collected">%s collected.</string>
@@ -269,7 +268,7 @@
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="trakt_error">Interaction with trakt failed</string>
+    <string name="trakt_success">Sent to trakt.</string>
     <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
 
