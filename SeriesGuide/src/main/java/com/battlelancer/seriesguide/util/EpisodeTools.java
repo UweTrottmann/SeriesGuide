@@ -39,12 +39,23 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
+import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt.v2.entities.ShowIds;
+import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.entities.SyncSeason;
+import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Rating;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class EpisodeTools {
@@ -885,89 +896,242 @@ public class EpisodeTools {
 
         @Override
         protected Integer doInBackground(Void... params) {
-            // upload updated episodes to hexagon
+            // upload to hexagon
             if (HexagonTools.isSignedIn(mContext)) {
                 if (!AndroidUtils.isNetworkConnected(mContext)) {
-                    return -1;
+                    return ERROR_NETWORK;
                 }
 
-                uploadToHexagon();
+                int result = uploadToHexagon(mContext, mType.getShowTvdbId(),
+                        mType.getEpisodesForHexagon());
+                if (result < 0) {
+                    return result;
+                }
             }
 
+            // upload to trakt
             /**
-             * Do net send to trakt if we skipped episodes, this is not supported by trakt.
+             * Do net send skipped episodes, this is not supported by trakt.
              * However, if the skipped flag is removed this will be handled identical
              * to flagging as unwatched.
              */
-            // check for valid trakt credentials
-            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag)
-                    && TraktCredentials.get(mContext).hasCredentials();
-
-            // prepare trakt stuff
+            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag);
             if (mIsSendingToTrakt) {
                 if (!AndroidUtils.isNetworkConnected(mContext)) {
-                    return -1;
+                    return ERROR_NETWORK;
                 }
 
-                List<FlagTapeEntry.Flag> episodes = mType.getEpisodesForTrakt();
-
-                // convert to boolean flag used by trakt (un/watched, un/collected)
-                boolean isFlag = !isUnwatched(mType.mEpisodeFlag);
-
-                // Add a new taped flag task to the tape queue
-                FlagTapeEntryQueue.getInstance(mContext).add(
-                        new FlagTapeEntry(mType.mAction, mType.mShowTvdbId, episodes, isFlag));
+                int result = uploadToTrakt(mContext,
+                        mType.getShowTvdbId(),
+                        mType.mAction,
+                        mType.getEpisodesForTrakt(),
+                        !isUnwatched(mType.mEpisodeFlag));
+                if (result < 0) {
+                    return result;
+                }
             }
 
-            // always update local database
+            // update local database if uploading went smoothly
             mType.updateDatabase();
             mType.storeLastEpisode();
 
-            return 0;
+            return SUCCESS;
         }
 
-        private void uploadToHexagon() {
-            List<Episode> batch = mType.getEpisodesForHexagon();
-
+        private static int uploadToHexagon(Context context, int showTvdbId, List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
-            uploadWrapper.setShowTvdbId(mType.mShowTvdbId);
+            uploadWrapper.setShowTvdbId(showTvdbId);
 
             // upload in small batches
             List<Episode> smallBatch = new ArrayList<>();
             while (!batch.isEmpty()) {
-                // batch small enough? upload right away
+                // batch small enough?
                 if (batch.size() <= EPISODE_MAX_BATCH_SIZE) {
-                    uploadWrapper.setEpisodes(batch);
-                    Upload.flagsToHexagon(mContext, uploadWrapper);
-                    return;
-                }
-
-                // build smaller batch
-                for (int count = 0; count < EPISODE_MAX_BATCH_SIZE; count++) {
-                    if (batch.isEmpty()) {
-                        break;
+                    smallBatch = batch;
+                } else {
+                    // build smaller batch
+                    for (int count = 0; count < EPISODE_MAX_BATCH_SIZE; count++) {
+                        if (batch.isEmpty()) {
+                            break;
+                        }
+                        smallBatch.add(batch.remove(0));
                     }
-                    smallBatch.add(batch.remove(0));
                 }
 
-                // upload small batch
+                // upload
                 uploadWrapper.setEpisodes(smallBatch);
-                Upload.flagsToHexagon(mContext, uploadWrapper);
+                if (!Upload.flagsToHexagon(context, uploadWrapper)) {
+                    return ERROR_HEXAGON_API;
+                }
 
-                // reset
-                smallBatch = new ArrayList<>();
+                // prepare for next batch
+                smallBatch.clear();
             }
+
+            return SUCCESS;
         }
+
+        private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
+                List<FlagTapeEntry.Flag> flags, boolean isAddNotDelete) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+            if (trakt == null) {
+                return ERROR_TRAKT_AUTH;
+            }
+            Sync traktSync = trakt.sync();
+
+            // outer wrapper and show are always required
+            SyncShow show = new SyncShow().id(ShowIds.tvdb(showTvdbId));
+            SyncItems items = new SyncItems().shows(show);
+
+            // add season or episodes
+            switch (flagAction) {
+                case SEASON_WATCHED:
+                case SEASON_COLLECTED:
+                    show.seasons(new SyncSeason().number(flags.get(0).season));
+                    break;
+                case EPISODE_WATCHED:
+                case EPISODE_COLLECTED:
+                    FlagTapeEntry.Flag flag = flags.get(0);
+                    show.seasons(new SyncSeason().number(flag.season)
+                            .episodes(new SyncEpisode().number(flag.episode)));
+                    break;
+                case EPISODE_WATCHED_PREVIOUS:
+                    show.seasons(buildEpisodeList(flags));
+                    break;
+            }
+
+            // execute network call
+            try {
+                SyncResponse response = null;
+
+                switch (flagAction) {
+                    case SHOW_WATCHED:
+                    case SEASON_WATCHED:
+                    case EPISODE_WATCHED:
+                        if (isAddNotDelete) {
+                            response = traktSync.addItemsToWatchedHistory(items);
+                        } else {
+                            response = traktSync.deleteItemsFromWatchedHistory(items);
+                        }
+                        break;
+                    case SHOW_COLLECTED:
+                    case SEASON_COLLECTED:
+                    case EPISODE_COLLECTED:
+                        if (isAddNotDelete) {
+                            response = traktSync.addItemsToCollection(items);
+                        } else {
+                            response = traktSync.deleteItemsFromCollection(items);
+                        }
+                        break;
+                    case EPISODE_WATCHED_PREVIOUS:
+                        response = traktSync.addItemsToWatchedHistory(items);
+                        break;
+                }
+
+                // check if any items were not found
+                if (!isSyncSuccessful(response)) {
+                    return ERROR_TRAKT_API;
+                }
+            } catch (RetrofitError e) {
+                return ERROR_TRAKT_API;
+            } catch (OAuthUnauthorizedException e) {
+                TraktCredentials.get(context).setCredentialsInvalid();
+                return ERROR_TRAKT_AUTH;
+            }
+
+            return SUCCESS;
+        }
+
+        /**
+         * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}. Iterates through
+         * given flags based on the assumption they are sorted ascending by season number.
+         */
+        private static List<SyncSeason> buildEpisodeList(List<FlagTapeEntry.Flag> flags) {
+            List<SyncSeason> seasons = new ArrayList<>();
+
+            SyncSeason currentSeason = null;
+            for (FlagTapeEntry.Flag flag : flags) {
+                if (currentSeason != null && flag.season < currentSeason.number) {
+                    // skip out of order flags
+                    continue;
+                }
+
+                // start new season?
+                if (currentSeason == null || flag.season > currentSeason.number) {
+                    currentSeason = new SyncSeason().number(flag.season);
+                    currentSeason.episodes = new LinkedList<>();
+                    seasons.add(currentSeason);
+                }
+
+                // add episode
+                currentSeason.episodes.add(new SyncEpisode().number(flag.episode));
+            }
+
+            return seasons;
+        }
+
+        /**
+         * If the {@link com.uwetrottmann.trakt.v2.entities.SyncResponse} is invalid or any show,
+         * season or episode was not found returns {@code false}.
+         */
+        private static boolean isSyncSuccessful(SyncResponse response) {
+            if (response == null || response.not_found == null) {
+                // invalid response, assume failure
+                return false;
+            }
+
+            if (response.not_found.shows != null && !response.not_found.shows.isEmpty()) {
+                // show not found
+                return false;
+            }
+            if (response.not_found.seasons != null && !response.not_found.seasons.isEmpty()) {
+                // show exists, but seasons not found
+                return false;
+            }
+            if (response.not_found.episodes != null && !response.not_found.episodes.isEmpty()) {
+                // show and season exists, but episodes not found
+                return false;
+            }
+
+            return true;
+        }
+
+        private static final int SUCCESS = 0;
+        private static final int ERROR_NETWORK = -1;
+        private static final int ERROR_TRAKT_AUTH = -2;
+        private static final int ERROR_TRAKT_API = -3;
+        private static final int ERROR_HEXAGON_API = -4;
 
         @Override
         protected void onPostExecute(Integer result) {
-            if (result == -1) {
-                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+            // handle errors
+            Integer errorResId = null;
+            switch (result) {
+                case ERROR_NETWORK:
+                    errorResId = R.string.offline;
+                    break;
+                case ERROR_TRAKT_AUTH:
+                    errorResId = R.string.trakt_error_credentials;
+                    break;
+                case ERROR_TRAKT_API:
+                    errorResId = R.string.trakt_error_general;
+                    break;
+                case ERROR_HEXAGON_API:
+                    errorResId = R.string.hexagon_api_error;
+                    break;
             }
-            // display a small toast if submission to trakt was successful
-            else if (mIsSendingToTrakt) {
-                int status = R.string.trakt_submitqueued;
+            if (errorResId != null) {
+                Toast.makeText(mContext, errorResId, Toast.LENGTH_LONG).show();
+                return;
+            }
 
+            // success!
+            // notify UI it may do relevant updates
+            EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
+
+            // display success message
+            if (mIsSendingToTrakt) {
+                int status = R.string.trakt_submitqueued;
                 if (mType.mAction == EpisodeAction.SHOW_WATCHED
                         || mType.mAction == EpisodeAction.SHOW_COLLECTED
                         || mType.mAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {
@@ -983,8 +1147,6 @@ public class EpisodeTools {
                             Toast.LENGTH_SHORT).show();
                 }
             }
-
-            EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
         }
     }
 
