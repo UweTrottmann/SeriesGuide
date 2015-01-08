@@ -37,7 +37,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import de.greenrobot.event.EventBus;
@@ -48,6 +47,10 @@ import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
+/**
+ * Multi-purpose "Add show" tab. Can display either the connected trakt user's recommendations,
+ * library or watchlist.
+ */
 public class TraktAddFragment extends AddFragment {
 
     public static TraktAddFragment newInstance(int position) {
@@ -180,37 +183,22 @@ public class TraktAddFragment extends AddFragment {
 
             List<Show> shows = new LinkedList<>();
             try {
-                if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
-                    // get some more trending shows, in case the user has added some (default is 10)
-                    List<TrendingShow> trendingShows = ServiceUtils.getTraktV2(context)
-                            .shows()
-                            .trending(1, 35, Extended.IMAGES);
-                    for (TrendingShow show : trendingShows) {
-                        if (show.show == null || show.show.ids == null
-                                || show.show.ids.tvdb == null) {
-                            // skip if required values are missing
-                            continue;
-                        }
-                        shows.add(show.show);
-                    }
-                } else {
-                    TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-                    if (trakt != null) {
-                        switch (type) {
-                            case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                                shows = trakt.recommendations().shows(Extended.IMAGES);
-                                break;
-                            case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                                List<BaseShow> watchedShows = trakt.sync().watchedShows(
-                                        Extended.IMAGES);
-                                extractShows(watchedShows, shows);
-                                break;
-                            case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                                List<BaseShow> watchlistedShows = trakt.sync()
-                                        .watchlistShows(Extended.IMAGES);
-                                extractShows(watchlistedShows, shows);
-                                break;
-                        }
+                TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+                if (trakt != null) {
+                    switch (type) {
+                        case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
+                            shows = trakt.recommendations().shows(Extended.IMAGES);
+                            break;
+                        case AddPagerAdapter.LIBRARY_TAB_POSITION:
+                            List<BaseShow> watchedShows = trakt.sync().watchedShows(
+                                    Extended.IMAGES);
+                            extractShows(watchedShows, shows);
+                            break;
+                        case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                            List<BaseShow> watchlistedShows = trakt.sync()
+                                    .watchlistShows(Extended.IMAGES);
+                            extractShows(watchlistedShows, shows);
+                            break;
                     }
                 }
             } catch (RetrofitError e) {

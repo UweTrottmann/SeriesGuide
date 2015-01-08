@@ -226,7 +226,6 @@
     <string name="add_started">%s will appear in your show list shortly.</string>
     <string name="add_error">Could not add %s.</string>
     <string name="add_already_exists">%s is already in your show list.</string>
-    <string name="trending">Trending</string>
     <string name="recommended">Recommended</string>
     <string name="library">Library</string>
     <string name="watchlist">Watchlist</string>
