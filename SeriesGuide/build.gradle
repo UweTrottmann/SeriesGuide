@@ -126,7 +126,7 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'joda-time:joda-time:2.5'
+    compile 'joda-time:joda-time:2.6'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:6.5.87'
