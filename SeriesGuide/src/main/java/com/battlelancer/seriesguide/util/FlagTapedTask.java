@@ -25,6 +25,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -96,37 +97,38 @@ public class FlagTapedTask {
 
                 // execute network call
                 try {
+                    SyncResponse response = null;
+
                     switch (flagAction) {
                         case SHOW_WATCHED:
                         case SEASON_WATCHED:
                         case EPISODE_WATCHED:
                             if (isAddNotDelete) {
-                                traktSync.addItemsToWatchedHistory(items);
+                                response = traktSync.addItemsToWatchedHistory(items);
                             } else {
-                                traktSync.deleteItemsFromWatchedHistory(items);
+                                response = traktSync.deleteItemsFromWatchedHistory(items);
                             }
                             break;
                         case SHOW_COLLECTED:
                         case SEASON_COLLECTED:
                         case EPISODE_COLLECTED:
                             if (isAddNotDelete) {
-                                traktSync.addItemsToCollection(items);
+                                response = traktSync.addItemsToCollection(items);
                             } else {
-                                traktSync.deleteItemsFromCollection(items);
+                                response = traktSync.deleteItemsFromCollection(items);
                             }
                             break;
                         case EPISODE_WATCHED_PREVIOUS:
-                            traktSync.addItemsToWatchedHistory(items);
+                            response = traktSync.addItemsToWatchedHistory(items);
                             break;
                     }
 
-                    // Get back to the main thread before invoking a callback.
-                    MAIN_THREAD.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onSuccess();
-                        }
-                    });
+                    // check if any items were not found
+                    if (isSyncSuccessful(response)) {
+                        postSuccess();
+                    } else {
+                        postFailure(false);
+                    }
                 } catch (RetrofitError e) {
                     postFailure(false);
                 } catch (OAuthUnauthorizedException e) {
@@ -144,6 +146,17 @@ public class FlagTapedTask {
                     }
                 });
             }
+
+            public void postSuccess() {
+                // Get back to the main thread before invoking a callback.
+                MAIN_THREAD.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess();
+                    }
+                });
+            }
+
         }).start();
     }
 
@@ -173,5 +186,31 @@ public class FlagTapedTask {
         }
 
         return seasons;
+    }
+
+    /**
+     * If the {@link com.uwetrottmann.trakt.v2.entities.SyncResponse} is invalid or any show, season
+     * or episode was not found returns {@code false}.
+     */
+    private boolean isSyncSuccessful(SyncResponse response) {
+        if (response == null || response.not_found == null) {
+            // invalid response, assume failure
+            return false;
+        }
+
+        if (response.not_found.shows != null && !response.not_found.shows.isEmpty()) {
+            // show not found
+            return false;
+        }
+        if (response.not_found.seasons != null && !response.not_found.seasons.isEmpty()) {
+            // show exists, but seasons not found
+            return false;
+        }
+        if (response.not_found.episodes != null && !response.not_found.episodes.isEmpty()) {
+            // show and season exists, but episodes not found
+            return false;
+        }
+
+        return true;
     }
 }
