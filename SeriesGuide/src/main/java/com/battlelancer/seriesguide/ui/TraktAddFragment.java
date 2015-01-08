@@ -65,10 +65,12 @@ public class TraktAddFragment extends AddFragment {
     public static class TraktAddResultsEvent {
         public int type;
         public List<SearchResult> results;
+        public Integer errorResId;
 
-        public TraktAddResultsEvent(int type, List<SearchResult> results) {
+        public TraktAddResultsEvent(int type, List<SearchResult> results, Integer errorResId) {
             this.type = type;
             this.results = results;
+            this.errorResId = errorResId;
         }
     }
 
@@ -156,13 +158,19 @@ public class TraktAddFragment extends AddFragment {
     }
 
     public void onEventMainThread(TraktAddResultsEvent event) {
-        if (event.type == getListType()) {
-            setSearchResults(event.results);
-            setProgressVisible(false, true);
+        if (event.type != getListType()) {
+            return;
+        }
+        setSearchResults(event.results);
+        setProgressVisible(false, true);
+        if (event.errorResId != null) {
+            setEmptyMessage(event.errorResId);
+        } else {
+            setEmptyMessage(R.string.add_empty);
         }
     }
 
-    public static class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
+    public static class GetTraktShowsTask extends AsyncTask<Integer, Void, Void> {
 
         private Context context;
         private int type;
@@ -172,13 +180,10 @@ public class TraktAddFragment extends AddFragment {
         }
 
         @Override
-        protected List<SearchResult> doInBackground(Integer... params) {
-            Timber.d("Getting shows...");
+        protected Void doInBackground(Integer... params) {
             type = params[0];
-            List<SearchResult> showList = new ArrayList<>();
 
             List<Show> shows = new LinkedList<>();
-
             try {
                 if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                     // get some more trending shows, in case the user has added some (default is 10)
@@ -215,14 +220,18 @@ public class TraktAddFragment extends AddFragment {
                 }
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading shows failed");
-                // ignored, just display empty list
+                postFailure(type, R.string.trakt_error_general);
+                return null;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
+                postFailure(type, R.string.trakt_error_credentials);
+                return null;
             }
 
             // return empty list right away if there are no results
             if (shows == null || shows.size() == 0) {
-                return showList;
+                postResults(type, new LinkedList<SearchResult>());
+                return null;
             }
 
             // get a list of existing shows to filter against
@@ -238,9 +247,11 @@ public class TraktAddFragment extends AddFragment {
                 existingShows.close();
             }
 
+            List<SearchResult> showList = new ArrayList<>();
             parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds);
+            postResults(type, showList);
 
-            return showList;
+            return null;
         }
 
         private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
@@ -253,9 +264,14 @@ public class TraktAddFragment extends AddFragment {
             }
         }
 
-        @Override
-        protected void onPostExecute(List<SearchResult> results) {
-            EventBus.getDefault().post(new TraktAddResultsEvent(type, results));
+        private static void postResults(int type, List<SearchResult> results) {
+            EventBus.getDefault().post(new TraktAddResultsEvent(type, results, null));
+        }
+
+        private static void postFailure(int type, int errorResId) {
+            EventBus.getDefault()
+                    .post(new TraktAddResultsEvent(type, new LinkedList<SearchResult>(),
+                            errorResId));
         }
     }
 
