@@ -289,7 +289,7 @@ public class EpisodeTools {
             return buildEpisodeList();
         }
 
-        public abstract List<FlagTapeEntry.Flag> getEpisodesForTrakt();
+        public abstract List<SyncSeason> getEpisodesForTrakt();
 
         public int getShowTvdbId() {
             return mShowTvdbId;
@@ -329,18 +329,18 @@ public class EpisodeTools {
         protected abstract void setEpisodeProperties(Episode episode);
 
         /**
-         * Builds a list of {@link com.battlelancer.seriesguide.util.FlagTapeEntry.Flag} objects to
-         * pass to a {@link com.battlelancer.seriesguide.util.FlagTapedTask} to submit to trakt.
+         * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason} objects to submit
+         * to trakt.
          */
-        protected List<FlagTapeEntry.Flag> createEpisodeFlags() {
-            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+        protected List<SyncSeason> createEpisodeFlags() {
+            List<SyncSeason> seasons = new ArrayList<>();
 
             // determine uri
             Uri uri = getUri();
             String selection = getSelection();
 
             // query and add episodes to list
-            // sort ascending by season for FlagTapedTask
+            // sort ascending by season for trakt
             final Cursor episodeCursor = mContext.getContentResolver().query(
                     uri,
                     new String[] {
@@ -348,14 +348,28 @@ public class EpisodeTools {
                     }, selection, null, SeriesGuideContract.Episodes.SORT_SEASON_ASC
             );
             if (episodeCursor != null) {
+                SyncSeason currentSeason = null;
                 while (episodeCursor.moveToNext()) {
-                    episodes.add(new FlagTapeEntry.Flag(episodeCursor.getInt(0),
-                            episodeCursor.getInt(1)));
+                    int seasonNumber = episodeCursor.getInt(0);
+                    if (currentSeason != null && seasonNumber < currentSeason.number) {
+                        // skip out of order flags
+                        continue;
+                    }
+
+                    // start new season?
+                    if (currentSeason == null || seasonNumber > currentSeason.number) {
+                        currentSeason = new SyncSeason().number(seasonNumber);
+                        currentSeason.episodes = new LinkedList<>();
+                        seasons.add(currentSeason);
+                    }
+
+                    // add episode
+                    currentSeason.episodes.add(new SyncEpisode().number(episodeCursor.getInt(1)));
                 }
                 episodeCursor.close();
             }
 
-            return episodes;
+            return seasons;
         }
 
         /**
@@ -466,11 +480,12 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
-            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
+        public List<SyncSeason> getEpisodesForTrakt() {
             // flag a single episode
-            episodes.add(new FlagTapeEntry.Flag(mSeason, mEpisode));
-            return episodes;
+            List<SyncSeason> seasons = new LinkedList<>();
+            seasons.add(new SyncSeason().number(mSeason)
+                    .episodes(new SyncEpisode().number(mEpisode)));
+            return seasons;
         }
     }
 
@@ -636,11 +651,11 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
-            // only need the season number
-            List<FlagTapeEntry.Flag> episodes = new ArrayList<>();
-            episodes.add(new FlagTapeEntry.Flag(mSeason, -1));
-            return episodes;
+        public List<SyncSeason> getEpisodesForTrakt() {
+            // flag a single season
+            List<SyncSeason> seasons = new LinkedList<>();
+            seasons.add(new SyncSeason().number(mSeason));
+            return seasons;
         }
     }
 
@@ -763,7 +778,7 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+        public List<SyncSeason> getEpisodesForTrakt() {
             return null;
         }
 
@@ -855,7 +870,7 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<FlagTapeEntry.Flag> getEpisodesForTrakt() {
+        public List<SyncSeason> getEpisodesForTrakt() {
             return createEpisodeFlags();
         }
 
@@ -972,7 +987,7 @@ public class EpisodeTools {
         }
 
         private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
-                List<FlagTapeEntry.Flag> flags, boolean isAddNotDelete) {
+                List<SyncSeason> flags, boolean isAddNotDelete) {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt == null) {
                 return ERROR_TRAKT_AUTH;
@@ -984,20 +999,12 @@ public class EpisodeTools {
             SyncItems items = new SyncItems().shows(show);
 
             // add season or episodes
-            switch (flagAction) {
-                case SEASON_WATCHED:
-                case SEASON_COLLECTED:
-                    show.seasons(new SyncSeason().number(flags.get(0).season));
-                    break;
-                case EPISODE_WATCHED:
-                case EPISODE_COLLECTED:
-                    FlagTapeEntry.Flag flag = flags.get(0);
-                    show.seasons(new SyncSeason().number(flag.season)
-                            .episodes(new SyncEpisode().number(flag.episode)));
-                    break;
-                case EPISODE_WATCHED_PREVIOUS:
-                    show.seasons(buildEpisodeList(flags));
-                    break;
+            if (flagAction == EpisodeAction.SEASON_WATCHED
+                    || flagAction == EpisodeAction.SEASON_COLLECTED
+                    || flagAction == EpisodeAction.EPISODE_WATCHED
+                    || flagAction == EpisodeAction.EPISODE_COLLECTED
+                    || flagAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {
+                show.seasons(flags);
             }
 
             // execute network call
@@ -1040,34 +1047,6 @@ public class EpisodeTools {
             }
 
             return SUCCESS;
-        }
-
-        /**
-         * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}. Iterates through
-         * given flags based on the assumption they are sorted ascending by season number.
-         */
-        private static List<SyncSeason> buildEpisodeList(List<FlagTapeEntry.Flag> flags) {
-            List<SyncSeason> seasons = new ArrayList<>();
-
-            SyncSeason currentSeason = null;
-            for (FlagTapeEntry.Flag flag : flags) {
-                if (currentSeason != null && flag.season < currentSeason.number) {
-                    // skip out of order flags
-                    continue;
-                }
-
-                // start new season?
-                if (currentSeason == null || flag.season > currentSeason.number) {
-                    currentSeason = new SyncSeason().number(flag.season);
-                    currentSeason.episodes = new LinkedList<>();
-                    seasons.add(currentSeason);
-                }
-
-                // add episode
-                currentSeason.episodes.add(new SyncEpisode().number(flag.episode));
-            }
-
-            return seasons;
         }
 
         /**
