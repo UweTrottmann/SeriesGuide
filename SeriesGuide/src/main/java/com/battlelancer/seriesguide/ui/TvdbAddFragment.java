@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,11 +42,16 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.TrendingShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
@@ -124,6 +130,8 @@ public class TvdbAddFragment extends AddFragment {
         if (adapter == null) {
             adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
                     new ArrayList<SearchResult>());
+            // load trending shows
+            search();
         }
 
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
@@ -191,19 +199,18 @@ public class TvdbAddFragment extends AddFragment {
         }
 
         String query = searchBox.getText().toString().trim();
-        if (query.length() == 0) {
-            return;
-        }
-        // query for results
+        // query for results or trending shows
         if (searchTask == null || searchTask.getStatus() == AsyncTask.Status.FINISHED) {
             setProgressVisible(true, false);
             searchTask = new SearchTask(getActivity());
             AndroidUtils.executeOnPool(searchTask, query);
         }
-        // update history
-        if (searchHistory.saveRecentSearch(query)) {
-            searchHistoryAdapter.clear();
-            searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
+        if (query.length() > 0) {
+            // update history
+            if (searchHistory.saveRecentSearch(query)) {
+                searchHistoryAdapter.clear();
+                searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
+            }
         }
     }
 
@@ -213,46 +220,65 @@ public class TvdbAddFragment extends AddFragment {
         setProgressVisible(false, true);
     }
 
-    public static class SearchTask extends AsyncTask<String, Void, List<SearchResult>> {
+    public static class SearchTask extends AsyncTask<String, Void, Void> {
 
-        private Context mContext;
+        private Context context;
 
         public SearchTask(Context context) {
-            mContext = context;
+            this.context = context;
         }
 
         @Override
-        protected List<SearchResult> doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
             List<SearchResult> results;
 
             String query = params[0];
-
-            try {
-                results = TheTVDB.searchShow(mContext, query, false);
-                if (results.size() == 0) {
-                    // query again, but allow all languages
-                    results = TheTVDB.searchShow(mContext, query, true);
+            if (TextUtils.isEmpty(query)) {
+                // no query? load a list of trending shows from trakt
+                try {
+                    List<TrendingShow> trendingShows = ServiceUtils.getTraktV2(context)
+                            .shows()
+                            .trending(1, 35, Extended.IMAGES);
+                    List<Show> shows = new LinkedList<>();
+                    for (TrendingShow show : trendingShows) {
+                        if (show.show == null || show.show.ids == null
+                                || show.show.ids.tvdb == null) {
+                            // skip if required values are missing
+                            continue;
+                        }
+                        shows.add(show.show);
+                    }
+                    results = TraktAddFragment.parseTraktShowsToSearchResults(context, shows);
+                } catch (RetrofitError e) {
+                    Timber.e(e, "Loading trending shows failed");
+                    postResults(null, R.string.trakt_error_general);
+                    return null;
                 }
-            } catch (TvdbException e) {
-                Timber.e(e, "Searching show failed");
-                return null;
+            } else {
+                // have a query? search TheTVDB
+                try {
+                    results = TheTVDB.searchShow(context, query, false);
+                    if (results.size() == 0) {
+                        // query again, but allow all languages
+                        results = TheTVDB.searchShow(context, query, true);
+                    }
+                } catch (TvdbException e) {
+                    Timber.e(e, "Searching show failed");
+                    postResults(null, R.string.search_error);
+                    return null;
+                }
             }
 
-            return results;
+            postResults(results, R.string.no_results);
+
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(List<SearchResult> result) {
-            TvdbAddResultsEvent event;
-            if (result == null) {
-                // display error in empty view
-                event = new TvdbAddResultsEvent(R.string.search_error,
-                        new LinkedList<SearchResult>());
-            } else {
-                // empty or there are shows
-                event = new TvdbAddResultsEvent(R.string.no_results, result);
+        private static void postResults(List<SearchResult> results, int emptyTextResId) {
+            if (results == null) {
+                results = new LinkedList<>();
             }
-            EventBus.getDefault().post(event);
+            EventBus.getDefault().post(new TvdbAddResultsEvent(emptyTextResId, results));
         }
     }
 }

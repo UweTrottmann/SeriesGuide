@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,10 +28,10 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
@@ -65,12 +64,12 @@ public class TraktAddFragment extends AddFragment {
     public static class TraktAddResultsEvent {
         public int type;
         public List<SearchResult> results;
-        public Integer errorResId;
+        public int emptyTextResId;
 
-        public TraktAddResultsEvent(int type, List<SearchResult> results, Integer errorResId) {
+        public TraktAddResultsEvent(int type, List<SearchResult> results, int emptyTextResId) {
             this.type = type;
             this.results = results;
-            this.errorResId = errorResId;
+            this.emptyTextResId = emptyTextResId;
         }
     }
 
@@ -163,11 +162,7 @@ public class TraktAddFragment extends AddFragment {
         }
         setSearchResults(event.results);
         setProgressVisible(false, true);
-        if (event.errorResId != null) {
-            setEmptyMessage(event.errorResId);
-        } else {
-            setEmptyMessage(R.string.add_empty);
-        }
+        setEmptyMessage(event.emptyTextResId);
     }
 
     public static class GetTraktShowsTask extends AsyncTask<Integer, Void, Void> {
@@ -234,22 +229,7 @@ public class TraktAddFragment extends AddFragment {
                 return null;
             }
 
-            // get a list of existing shows to filter against
-            final Cursor existingShows = context.getContentResolver().query(Shows.CONTENT_URI,
-                    new String[] {
-                            Shows._ID
-                    }, null, null, null);
-            final HashSet<Integer> existingShowTvdbIds = new HashSet<>();
-            if (existingShows != null) {
-                while (existingShows.moveToNext()) {
-                    existingShowTvdbIds.add(existingShows.getInt(0));
-                }
-                existingShows.close();
-            }
-
-            List<SearchResult> showList = new ArrayList<>();
-            parseTvShowsToSearchResults(shows, showList, existingShowTvdbIds);
-            postResults(type, showList);
+            postResults(type, parseTraktShowsToSearchResults(context, shows));
 
             return null;
         }
@@ -265,7 +245,7 @@ public class TraktAddFragment extends AddFragment {
         }
 
         private static void postResults(int type, List<SearchResult> results) {
-            EventBus.getDefault().post(new TraktAddResultsEvent(type, results, null));
+            EventBus.getDefault().post(new TraktAddResultsEvent(type, results, R.string.add_empty));
         }
 
         private static void postFailure(int type, int errorResId) {
@@ -276,27 +256,34 @@ public class TraktAddFragment extends AddFragment {
     }
 
     /**
-     * Transform a list of trakt shows to a list of {@link SearchResult}.
+     * Transforms a list of trakt shows to a list of {@link SearchResult}, filters out shows already
+     * in the local database.
      */
-    private static void parseTvShowsToSearchResults(List<Show> inputList,
-            List<SearchResult> outputList, HashSet<Integer> existingShowTvdbIds) {
+    public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
+            List<Show> traktShows) {
+        List<SearchResult> results = new ArrayList<>();
+
         // build list
-        for (Show show : inputList) {
+        HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(context);
+        for (Show show : traktShows) {
             if (show.ids == null || show.ids.tvdb == null) {
-                // skip, can't handle non-TheTVDB shows
+                // has no TheTVDB id
                 continue;
             }
-            // only list shows not in the database already
-            if (!existingShowTvdbIds.contains(show.ids.tvdb)) {
-                SearchResult result = new SearchResult();
-                result.tvdbid = show.ids.tvdb;
-                result.title = show.title;
-                result.overview = String.valueOf(show.year);
-                if (show.images != null && show.images.poster != null) {
-                    result.poster = show.images.poster.thumb;
-                }
-                outputList.add(result);
+            if (existingShows.contains(show.ids.tvdb)) {
+                // is already in local database
+                continue;
             }
+            SearchResult result = new SearchResult();
+            result.tvdbid = show.ids.tvdb;
+            result.title = show.title;
+            result.overview = String.valueOf(show.year);
+            if (show.images != null && show.images.poster != null) {
+                result.poster = show.images.poster.thumb;
+            }
+            results.add(result);
         }
+
+        return results;
     }
 }
