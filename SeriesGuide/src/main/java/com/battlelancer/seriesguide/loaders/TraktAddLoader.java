@@ -61,10 +61,6 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     @Override
     public Result loadInBackground() {
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return buildResultFailure(R.string.offline);
-        }
-
         List<Show> shows = new LinkedList<>();
         try {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
@@ -90,7 +86,9 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             }
         } catch (RetrofitError e) {
             Timber.e(e, "Loading shows failed");
-            return buildResultFailure(R.string.trakt_error_general);
+            // only check for network here to allow hitting the response cache
+            return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
+                    ? R.string.trakt_error_general : R.string.offline);
         } catch (OAuthUnauthorizedException e) {
             TraktCredentials.get(getContext()).setCredentialsInvalid();
             return buildResultFailure(R.string.trakt_error_credentials);

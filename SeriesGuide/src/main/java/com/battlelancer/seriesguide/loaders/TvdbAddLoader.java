@@ -57,10 +57,6 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
     @Override
     public Result loadInBackground() {
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return buildResultFailure(R.string.offline);
-        }
-
         List<SearchResult> results;
 
         if (TextUtils.isEmpty(query)) {
@@ -81,7 +77,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows);
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading trending shows failed");
-                return buildResultFailure(R.string.trakt_error_general);
+                return buildResultFailure(getContext(), R.string.trakt_error_general);
             }
         } else {
             // have a query? search TheTVDB
@@ -93,7 +89,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 }
             } catch (TvdbException e) {
                 Timber.e(e, "Searching show failed");
-                return buildResultFailure(R.string.search_error);
+                return buildResultFailure(getContext(), R.string.search_error);
             }
         }
 
@@ -107,7 +103,11 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         return new Result(results, emptyTextResId);
     }
 
-    private static Result buildResultFailure(int emptyTextResId) {
+    private static Result buildResultFailure(Context context, int emptyTextResId) {
+        // only check for network here to allow hitting the response cache
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            emptyTextResId = R.string.offline;
+        }
         return new Result(new LinkedList<SearchResult>(), emptyTextResId);
     }
 }
