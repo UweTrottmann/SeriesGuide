@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
@@ -48,11 +48,6 @@ import timber.log.Timber;
 public class UserEpisodeStreamFragment extends StreamFragment {
 
     private EpisodeHistoryAdapter mAdapter;
-
-    @Override
-    protected int getEmptyMessageResId() {
-        return R.string.user_stream_empty;
-    }
 
     @Override
     protected ListAdapter getListAdapter() {
@@ -119,56 +114,75 @@ public class UserEpisodeStreamFragment extends StreamFragment {
         episodeQuery.close();
     }
 
-    private LoaderManager.LoaderCallbacks<List<HistoryEntry>> mActivityLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<HistoryEntry>>() {
+    private LoaderManager.LoaderCallbacks<UserEpisodeHistoryLoader.Result> mActivityLoaderCallbacks
+            =
+            new LoaderManager.LoaderCallbacks<UserEpisodeHistoryLoader.Result>() {
                 @Override
-                public Loader<List<HistoryEntry>> onCreateLoader(int id, Bundle args) {
-                    return new UserEpisodeActivityLoader(getActivity());
+                public Loader<UserEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+                    showProgressBar(true);
+                    return new UserEpisodeHistoryLoader(getActivity());
                 }
 
                 @Override
-                public void onLoadFinished(Loader<List<HistoryEntry>> loader,
-                        List<HistoryEntry> data) {
-                    mAdapter.setData(data);
+                public void onLoadFinished(Loader<UserEpisodeHistoryLoader.Result> loader,
+                        UserEpisodeHistoryLoader.Result data) {
+                    mAdapter.setData(data.results);
+                    setEmptyMessage(data.emptyTextResId);
                     showProgressBar(false);
                 }
 
                 @Override
-                public void onLoaderReset(Loader<List<HistoryEntry>> loader) {
-                    // do nothing
+                public void onLoaderReset(Loader<UserEpisodeHistoryLoader.Result> loader) {
+                    // keep current data
                 }
             };
 
-    private static class UserEpisodeActivityLoader extends GenericSimpleLoader<List<HistoryEntry>> {
+    private static class UserEpisodeHistoryLoader
+            extends GenericSimpleLoader<UserEpisodeHistoryLoader.Result> {
 
-        public UserEpisodeActivityLoader(Context context) {
+        public static class Result {
+            public List<HistoryEntry> results;
+            public int emptyTextResId;
+
+            public Result(List<HistoryEntry> results, int emptyTextResId) {
+                this.results = results;
+                this.emptyTextResId = emptyTextResId;
+            }
+        }
+
+        public UserEpisodeHistoryLoader(Context context) {
             super(context);
         }
 
         @Override
-        public List<HistoryEntry> loadInBackground() {
+        public Result loadInBackground() {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt == null) {
                 return null;
             }
 
+            List<HistoryEntry> history;
             try {
-                List<HistoryEntry> history = trakt.users()
-                        .historyEpisodes("me", 1, 25, Extended.IMAGES);
-
-                if (history == null) {
-                    Timber.e("Loading user episode history failed, was null");
-                    return null;
-                }
-
-                return history;
+                history = trakt.users().historyEpisodes("me", 1, 25, Extended.IMAGES);
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading user episode history failed");
+                return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
+                        ? R.string.trakt_error_general : R.string.offline);
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(getContext()).setCredentialsInvalid();
+                return buildResultFailure(R.string.trakt_error_credentials);
             }
 
-            return null;
+            if (history == null) {
+                Timber.e("Loading user episode history failed, was null");
+                return buildResultFailure(R.string.trakt_error_general);
+            } else {
+                return new Result(history, R.string.user_stream_empty);
+            }
+        }
+
+        private static Result buildResultFailure(int emptyTextResId) {
+            return new Result(null, emptyTextResId);
         }
     }
 }

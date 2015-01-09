@@ -81,14 +81,6 @@ public abstract class StreamFragment extends Fragment implements
                 R.attr.colorAccent);
         mContentContainer.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
-        // change empty message if we are offline
-        if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.offline);
-        } else {
-            mEmptyView.setText(getEmptyMessageResId());
-            showProgressBar(true);
-        }
-
         if (mAdapter == null) {
             mAdapter = getListAdapter();
         }
@@ -127,27 +119,27 @@ public abstract class StreamFragment extends Fragment implements
     }
 
     private void refreshStreamWithNetworkCheck() {
-        if (!TraktCredentials.ensureCredentials(getActivity())) {
-            showProgressBar(false);
-            return;
-        }
+        // launch trakt connect flow if disconnected
+        TraktCredentials.ensureCredentials(getActivity());
 
+        // intercept loader call if offline to avoid replacing data with error message
+        // once trakt data has proper cache headers this might become irrelevant
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            // keep existing data, but update empty view anyhow
             showProgressBar(false);
-            mEmptyView.setText(R.string.offline);
+            setEmptyMessage(R.string.offline);
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
-        showProgressBar(true);
-        mEmptyView.setText(getEmptyMessageResId());
+
         refreshStream();
     }
 
     /**
-     * Return the string resource that should be used if there is no item in the stream.
+     * Changes the empty message.
      */
-    protected abstract int getEmptyMessageResId();
+    protected void setEmptyMessage(int stringResourceId) {
+        mEmptyView.setText(stringResourceId);
+    }
 
     /**
      * Implementers should create their grid view adapter here.
