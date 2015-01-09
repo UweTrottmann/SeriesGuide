@@ -445,7 +445,9 @@ public class SeriesGuideContract {
 
         String TIMESTAMP = "activity_time";
 
-        String EPISODE_TVDB_ID  = "activity_tvdb";
+        String EPISODE_TVDB_ID  = "activity_episode";
+
+        String SHOW_TVDB_ID  = "activity_show";
 
     }
 

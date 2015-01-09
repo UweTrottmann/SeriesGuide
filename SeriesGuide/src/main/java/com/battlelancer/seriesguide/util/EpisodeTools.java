@@ -562,7 +562,7 @@ public class EpisodeTools {
         protected void onPostExecute() {
             if (isWatched(mEpisodeFlag)) {
                 // create activity entry for watched episode
-                ActivityTools.addActivity(mContext, mEpisodeTvdbId);
+                ActivityTools.addActivity(mContext, mEpisodeTvdbId, mShowTvdbId);
             } else if (isUnwatched(mEpisodeFlag)) {
                 // remove any previous activity entries for this episode
                 // use case: user accidentally toggled watched flag

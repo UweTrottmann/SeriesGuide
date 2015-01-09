@@ -31,9 +31,10 @@ public class ActivityTools {
      * Adds an activity entry for the given episode with the current time as timestamp. If an entry
      * already exists it is replaced.
      */
-    public static void addActivity(Context context, int episodeTvdbId) {
+    public static void addActivity(Context context, int episodeTvdbId, int showTvdbId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Activity.EPISODE_TVDB_ID, episodeTvdbId);
+        values.put(SeriesGuideContract.Activity.SHOW_TVDB_ID, showTvdbId);
         long currentTime = System.currentTimeMillis();
         values.put(SeriesGuideContract.Activity.TIMESTAMP, currentTime);
 
