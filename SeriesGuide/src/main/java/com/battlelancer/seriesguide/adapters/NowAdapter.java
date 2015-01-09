@@ -113,7 +113,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         holder.title.setText(item.title);
         holder.description.setText(item.description);
         holder.timestamp.setText(
-                TimeTools.formatToRelativeLocalReleaseTime(getContext(), new Date(item.timestamp)));
+                TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
         Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
 
         return convertView;
