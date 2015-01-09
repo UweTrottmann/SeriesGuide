@@ -107,8 +107,8 @@ public class ShowsActivity extends BaseTopActivity implements
         String SELECTED_TAB = "selectedtab";
 
         int INDEX_TAB_SHOWS = 0;
-        int INDEX_TAB_UPCOMING = 1;
-        int INDEX_TAB_RECENT = 2;
+        int INDEX_TAB_UPCOMING = 2;
+        int INDEX_TAB_RECENT = 3;
     }
 
     @Override
