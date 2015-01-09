@@ -225,6 +225,9 @@ public class ShowsActivity extends BaseTopActivity implements
             mTabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
         }
 
+        // now tab
+        mTabsAdapter.addTab(R.string.now_tab, NowFragment.class, null);
+
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
