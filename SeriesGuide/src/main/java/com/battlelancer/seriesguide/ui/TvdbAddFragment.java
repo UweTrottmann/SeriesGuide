@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
@@ -76,6 +77,13 @@ public class TvdbAddFragment extends AddFragment {
     private SearchTask searchTask;
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // so we don't have to do a network op each config change
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -248,7 +256,7 @@ public class TvdbAddFragment extends AddFragment {
                         }
                         shows.add(show.show);
                     }
-                    results = TraktAddFragment.parseTraktShowsToSearchResults(context, shows);
+                    results = TraktAddLoader.parseTraktShowsToSearchResults(context, shows);
                 } catch (RetrofitError e) {
                     Timber.e(e, "Loading trending shows failed");
                     postResults(null, R.string.trakt_error_general);
