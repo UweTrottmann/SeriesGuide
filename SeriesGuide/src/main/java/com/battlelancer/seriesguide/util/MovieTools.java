@@ -399,6 +399,29 @@ public class MovieTools {
         EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
     }
 
+    public static Integer lookupTraktId(Search traktSearch, int movieTmdbId) {
+        try {
+            List<SearchResult> lookup = traktSearch.idLookup(IdType.TMDB,
+                    String.valueOf(movieTmdbId), 1, 10);
+            if (lookup == null || lookup.size() == 0) {
+                Timber.e("Finding trakt movie failed (no results)");
+                return null;
+            }
+            for (SearchResult result : lookup) {
+                // find movie (tmdb ids are not unique for tv and movies)
+                if (result.movie != null && result.movie.ids != null) {
+                    return result.movie.ids.trakt;
+                }
+            }
+
+            Timber.e("Finding trakt movie failed (not in results)");
+        } catch (RetrofitError e) {
+            Timber.e(e, "Finding trakt movie failed");
+        }
+
+        return null;
+    }
+
     private static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
 
         private final Context mContext;
@@ -854,29 +877,6 @@ public class MovieTools {
             details.tmdbMovie(loadSummaryFromTmdb(tmdbMovies, languageCode, movieTmdbId));
 
             return details;
-        }
-
-        private static Integer lookupTraktId(Search traktSearch, int movieTmdbId) {
-            try {
-                List<SearchResult> lookup = traktSearch.idLookup(IdType.TMDB,
-                        String.valueOf(movieTmdbId), 1, 10);
-                if (lookup == null || lookup.size() == 0) {
-                    Timber.e("Finding trakt movie failed (no results)");
-                    return null;
-                }
-                for (SearchResult result : lookup) {
-                    // find movie (tmdb ids are not unique for tv and movies)
-                    if (result.movie != null && result.movie.ids != null) {
-                        return result.movie.ids.trakt;
-                    }
-                }
-
-                Timber.e("Finding trakt movie failed (not in results)");
-            } catch (RetrofitError e) {
-                Timber.e(e, "Finding trakt movie failed");
-            }
-
-            return null;
         }
 
         private static Movie loadSummaryFromTrakt(Movies traktMovies, int movieTraktId) {

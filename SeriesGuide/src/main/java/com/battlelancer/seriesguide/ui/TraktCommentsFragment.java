@@ -53,14 +53,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import de.greenrobot.event.EventBus;
-import java.util.List;
 import timber.log.Timber;
 
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
-public class TraktCommentsFragment extends Fragment implements
-        LoaderCallbacks<List<Comment>>, SwipeRefreshLayout.OnRefreshListener {
+public class TraktCommentsFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     public interface InitBundle {
         String MOVIE_TMDB_ID = "movie";
@@ -68,23 +67,11 @@ public class TraktCommentsFragment extends Fragment implements
         String EPISODE_TVDB_ID = "episode";
     }
 
-    private final AdapterView.OnItemClickListener mOnClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position, id);
-        }
-    };
-
     @InjectView(R.id.listViewShouts) ListView mList;
-
     @InjectView(R.id.textViewShoutsEmpty) TextView mEmptyView;
-
     @InjectView(R.id.swipeRefreshLayoutShouts) SwipeRefreshLayout mSwipeRefreshLayout;
-
     @InjectView(R.id.imageButtonShouts) ImageButton mButtonShout;
-
     @InjectView(R.id.editTextShouts) EditText mEditTextShout;
-
     @InjectView(R.id.checkBoxShouts) CheckBox mCheckBoxIsSpoiler;
 
     private TraktCommentsAdapter mAdapter;
@@ -182,20 +169,15 @@ public class TraktCommentsFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // change empty message if we are offline
-        if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.offline);
-        } else {
-            mEmptyView.setText(getEmptyMessageResId());
-            showProgressBar(true);
-        }
-
+        // setup adapter
         mAdapter = new TraktCommentsAdapter(getActivity());
         mList.setAdapter(mAdapter);
 
+        // load data
         getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                this);
+                mCommentsCallbacks);
 
+        // enable menu
         setHasOptionsMenu(true);
     }
 
@@ -219,6 +201,7 @@ public class TraktCommentsFragment extends Fragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         ButterKnife.reset(this);
     }
 
@@ -236,6 +219,13 @@ public class TraktCommentsFragment extends Fragment implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private final AdapterView.OnItemClickListener mOnClickListener
+            = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            onListItemClick((ListView) parent, v, position, id);
+        }
+    };
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         final Comment comment = (Comment) l.getItemAtPosition(position);
@@ -259,27 +249,27 @@ public class TraktCommentsFragment extends Fragment implements
         }
     }
 
-    @Override
-    public Loader<List<Comment>> onCreateLoader(int id, Bundle args) {
-        showProgressBar(true);
-        return new TraktCommentsLoader(getActivity(), args);
-    }
+    private LoaderCallbacks<TraktCommentsLoader.Result> mCommentsCallbacks
+            = new LoaderCallbacks<TraktCommentsLoader.Result>() {
+        @Override
+        public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
+            showProgressBar(true);
+            return new TraktCommentsLoader(getActivity(), args);
+        }
 
-    @Override
-    public void onLoadFinished(Loader<List<Comment>> loader, List<Comment> data) {
-        mAdapter.setData(data);
+        @Override
+        public void onLoadFinished(Loader<TraktCommentsLoader.Result> loader,
+                TraktCommentsLoader.Result data) {
+            mAdapter.setData(data.results);
+            setEmptyMessage(data.emptyTextResId);
+            showProgressBar(false);
+        }
 
-        showProgressBar(false);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Comment>> data) {
-        mAdapter.setData(null);
-    }
-
-    private int getEmptyMessageResId() {
-        return R.string.no_shouts;
-    }
+        @Override
+        public void onLoaderReset(Loader<TraktCommentsLoader.Result> loader) {
+            // keep existing data
+        }
+    };
 
     @Override
     public void onRefresh() {
@@ -290,18 +280,24 @@ public class TraktCommentsFragment extends Fragment implements
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             // keep existing data, but update empty view anyhow
             showProgressBar(false);
-            mEmptyView.setText(R.string.offline);
+            setEmptyMessage(R.string.offline);
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
-        showProgressBar(true);
-        mEmptyView.setText(getEmptyMessageResId());
+
         refreshComments();
     }
 
     private void refreshComments() {
         getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                this);
+                mCommentsCallbacks);
+    }
+
+    /**
+     * Changes the empty message.
+     */
+    private void setEmptyMessage(int stringResourceId) {
+        mEmptyView.setText(stringResourceId);
     }
 
     /**
