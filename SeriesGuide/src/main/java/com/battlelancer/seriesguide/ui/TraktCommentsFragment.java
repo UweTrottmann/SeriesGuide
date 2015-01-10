@@ -118,6 +118,9 @@ public class TraktCommentsFragment extends Fragment
             }
         });
 
+        // set initial view states
+        showProgressBar(true);
+
         return v;
     }
 

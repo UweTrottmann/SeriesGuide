@@ -56,7 +56,8 @@ public class TraktAddFragment extends AddFragment {
         View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
         ButterKnife.inject(this, v);
 
-        setEmptyMessage(R.string.add_empty);
+        // set initial view states
+        setProgressVisible(true, false);
 
         return v;
     }
@@ -108,7 +109,6 @@ public class TraktAddFragment extends AddFragment {
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            setProgressVisible(true, false);
             return new TraktAddLoader(getActivity(), getListType());
         }
 

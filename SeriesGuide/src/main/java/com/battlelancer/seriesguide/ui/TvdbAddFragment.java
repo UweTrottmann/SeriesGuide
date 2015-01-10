@@ -98,6 +98,9 @@ public class TvdbAddFragment extends AddFragment {
         // drop-down is auto-shown on config change, ensure it is hidden when recreating views
         searchBox.dismissDropDown();
 
+        // set initial view states
+        setProgressVisible(true, false);
+
         return v;
     }
 
