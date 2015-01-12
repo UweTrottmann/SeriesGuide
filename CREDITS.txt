@@ -3,50 +3,63 @@
 
 I express my thanks to the following people and projects.
 
-Chris and Craig for testing the thing out. Craig for always pushing and supporting with all his heart and mind. Jake Wharton for his general wisdom and support.
+Chris and Craig for testing the thing out. Craig for always pushing and
+supporting with all his heart and mind. Jake Wharton for his general
+wisdom and support.
 
 The minds behind trakt.tv, especially Justin. - http://trakt.tv
 
-The creators of the Google I/O app for lots of useful code patterns. - http://code.google.com/p/iosched
+The creators of the Google I/O app for lots of useful code patterns.
+- https://github.com/google/iosched
 
-The Oxygen Icon Theme Team for the TV Icon on which the original logo was based on. - http://www.oxygen-icons.org
+The Oxygen Icon Theme Team for the TV Icon on which the original logo
+was based on. - http://www.oxygen-icons.org
 
-Matthew Altman for creating javatvdbapi - http://code.google.com/p/javatvdbapi
+Matthew Altman for creating javatvdbapi.
+- http://code.google.com/p/javatvdbapi
 
-Charlie Collins for his Android examples - http://code.google.com/p/and-examples
+Charlie Collins for his Android examples.
+- http://code.google.com/p/and-examples
 
-Matthias Käppler for Droid-Fu - http://github.com/kaeppler/droid-fu
+Matthias Käppler for Droid-Fu. - http://github.com/kaeppler/droid-fu
 
-Roman Nurik for his great DashClock and Muzei apps - https://github.com/romannurik/muzei
+Roman Nurik for his great DashClock and Muzei apps.
+- https://github.com/romannurik/muzei
 
-Webdesigner Depot for the Primo Icon Set - http://www.webdesignerdepot.com/2009/07/200-free-exclusive-vector-icons-primo/
-
-The translators on Crowdin - http://crowdin.net/project/seriesguide-translations
+The translators on Crowdin.
+- http://crowdin.net/project/seriesguide-translations
 
 SeriesGuide uses the following libraries or projects:
 
 TheTVDB.com (http://thetvdb.com)
 --------------------------------
 
-Original database website by Josh Walters (walts81) | Original banner site by Richard Skarsten (t0ffluss)
+Original database website by Josh Walters (walts81)
+Original banner site by Richard Skarsten (t0ffluss)
 Redesign and programming by Scott Zsori and Paul Taylor
-This work is licensed under a Creative Commons Attribution 3.0 United States License.
+This work is licensed under a Creative Commons Attribution 3.0
+United States License.
 
 
 TMDb - The Movie Database (http://themoviedb.org)
 -------------------------------------------------
 
-themoviedb.org is a free and community maintained movie database. It's completely user built by people like you. TMDb is currently used by millions of people every month and with our and powerful API, also used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
+themoviedb.org is a free and community maintained movie database.
+It's completely user built by people like you. TMDb is currently used
+by millions of people every month and with our and powerful API, also
+used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
 
-http://www.themoviedb.org/terms-of-use
+https://www.themoviedb.org/terms-of-use
 
 
 trakt (http://trakt.tv)
 -----------------------
 
-trakt helps keep a record of what TV shows and movies you are watching. Based on your favorites, trakt recommends additional shows and movies you'll enjoy!
+trakt helps keep a record of what TV shows and movies you are
+watching. Based on your favorites, trakt recommends additional
+shows and movies you'll enjoy!
 
-http://trakt.tv/terms
+https://trakt.tv/terms
 
 
 trakt-java (https://github.com/UweTrottmann/trakt-java)
