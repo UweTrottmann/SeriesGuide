@@ -192,7 +192,6 @@
   <string name="add_started">%s vil blive vist i din serieliste om et kort øjeblik.</string>
   <string name="add_error">Kunne ikke tilføje %s.</string>
   <string name="add_already_exists">%s er allerede i din serieliste.</string>
-  <string name="trending">Trending</string>
   <string name="recommended">Anbefalet</string>
   <string name="library">Bibliotek</string>
   <string name="watchlist">Overvågningsliste</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Konto udslettet.</string>
   <string name="hexagon_remove_account_failure">Kunne ikke fjerne konto.</string>
   <string name="hexagon_remove_account_confirmation">At fjerne din konto vil slette alle film og serier fra SeriesGuide Cloud. Sørg for at fjerne den på andre tilsluttede enheder.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Gemmer i trakt.</string>
   <string name="trakt_seen">%s set.</string>
   <string name="trakt_notseen">%s ikke set.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
-  <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Noget gik galt. Kontroller venligt dine legitimationsoplysninger og prøv igen.</string>
   <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Prøv igen senere.</string>
   <string name="trakt_account">trakt konto</string>

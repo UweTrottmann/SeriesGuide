@@ -192,7 +192,6 @@
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
-  <string name="trending">Trenduri</string>
   <string name="recommended">Recomandat</string>
   <string name="library">Bibliotecă</string>
   <string name="watchlist">Watchlist</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Contul a fost șters.</string>
   <string name="hexagon_remove_account_failure">Nu se poate șterge contul.</string>
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Trimite pe trakt.</string>
   <string name="trakt_seen">%s văzut.</string>
   <string name="trakt_notseen">%s nevăzut.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Suprascrie</string>
   <string name="traktcheckin_inprogress">Deja ați înregistrat alt episod sau film. Ori suprascrieți precedenta înregistrare sau așteptați %s și încercați din nou.</string>
   <string name="traktcheckin_wait">Voi aștepta</string>
-  <string name="trakt_error">Interacţiunea cu trakt a eșuat</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
   <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Încercați mai tarziu.</string>
   <string name="trakt_account">trakt account</string>

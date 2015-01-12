@@ -192,7 +192,6 @@
   <string name="add_started">%s hamarosan megjelenik a sorozatlistában.</string>
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A %s már a listádon van.</string>
-  <string name="trending">Legnépszerűbb</string>
   <string name="recommended">Ajánlott</string>
   <string name="library">Saját</string>
   <string name="watchlist">Figyelőlista</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Fiók törölve.</string>
   <string name="hexagon_remove_account_failure">Fiók eltávolítása sikertelen.</string>
   <string name="hexagon_remove_account_confirmation">Fiókod eltávolításával, minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj róla, hogy minden más eszközről is törlöd.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Elküldés a traktnak.</string>
   <string name="trakt_seen">A(z) %s-t láttam.</string>
   <string name="trakt_notseen">A(z) %s-t nem láttam.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkezett egy másik epizódba, vagy filmbe. Bírálja felül a korábbi bejelentkezést, vagy várjon %s és próbálja újra.</string>
   <string name="traktcheckin_wait">Várok</string>
-  <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
   <string name="trakt_account">trakt account</string>

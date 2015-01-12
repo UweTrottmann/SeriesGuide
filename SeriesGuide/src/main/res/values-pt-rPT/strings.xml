@@ -192,7 +192,6 @@
   <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
   <string name="add_error">Não foi possível adicionar %s.</string>
   <string name="add_already_exists">%s já está na sua lista de séries.</string>
-  <string name="trending">Tendências</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
   <string name="watchlist">A Minha Lista</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Conta destruída.</string>
   <string name="hexagon_remove_account_failure">Não pudemos remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Ao remover a sua conta todas as séries e filmes serão removidos do servidor SeriesGuide. Certifique-se que remove a sua conta também noutros dispositivos.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Submeter ao trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s por ver.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Já deu entrada noutro episódio ou filme. Ou substitui a entrada anterior ou espere %s e tente novamente.</string>
   <string name="traktcheckin_wait">Prefiro aguardar</string>
-  <string name="trakt_error">Interação com trakt falhada</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Algo está errado. Certifique-se, por favor, que as suas credenciais estão correctas e tente de novo.</string>
   <string name="trakt_error_general">Não poderia falar trakt. Tente novamente mais tarde.</string>
   <string name="trakt_account">conta trakt</string>

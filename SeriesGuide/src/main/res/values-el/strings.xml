@@ -192,7 +192,6 @@
   <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
-  <string name="trending">Τάσεις</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="library">Βιβλιοθήκη</string>
   <string name="watchlist">Λίστα προς παρακολούθηση</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Ο λογαριασμός διαγράφηκε.</string>
   <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
   <string name="trakt_seen">%s έχουν παρακολουθηθεί.</string>
   <string name="trakt_notseen">το %s δεν έχουν παρακολουθηθεί.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>
-  <string name="trakt_error">Αλληλεπίδραση με Trakt απέτυχε</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
   <string name="trakt_account">trakt account</string>

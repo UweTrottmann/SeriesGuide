@@ -192,7 +192,6 @@
   <string name="add_started">%s 将很快出现在节目单中。</string>
   <string name="add_error">无法将 %s 加入节目单。</string>
   <string name="add_already_exists">%s 已存在于您的节目单中</string>
-  <string name="trending">热门</string>
   <string name="recommended">推荐</string>
   <string name="library">资料库</string>
   <string name="watchlist">待看列表</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">用户数据已删除。</string>
   <string name="hexagon_remove_account_failure">无法删除帐户。</string>
   <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">正在与 trakt 同步…</string>
   <string name="trakt_seen">%s 已观看。</string>
   <string name="trakt_notseen">%s 未观看。</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">替换</string>
   <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
   <string name="traktcheckin_wait">等待</string>
-  <string name="trakt_error">与 trakt 交互失败</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
   <string name="trakt_error_general">无法与 trakt 关联</string>
   <string name="trakt_account">trakt 帐户</string>

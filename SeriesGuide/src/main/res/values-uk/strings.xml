@@ -192,7 +192,6 @@
   <string name="add_started">%s з\'явиться у вашому списку серіалів  найближчим часом.</string>
   <string name="add_error">Не вдалося додати %s.</string>
   <string name="add_already_exists">%s вже є у вашому списку.</string>
-  <string name="trending">Популярне</string>
   <string name="recommended">Рекомендовано</string>
   <string name="library">Бібліотека</string>
   <string name="watchlist">Список перегляду</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Обліковий запис видалено.</string>
   <string name="hexagon_remove_account_failure">Не вдалося видалити обліковий запис.</string>
   <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Надсилання до trakt.</string>
   <string name="trakt_seen">%s переглянуто.</string>
   <string name="trakt_notseen">%s не переглянуто.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
-  <string name="trakt_error">Взаємодія з trakt не вдалася</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
   <string name="trakt_account">Аккаунт в trakt</string>

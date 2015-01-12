@@ -192,7 +192,6 @@
   <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
   <string name="add_error">Немогуће додати %s.</string>
   <string name="add_already_exists">%s је већ на вашој листи.</string>
-  <string name="trending">Популарне</string>
   <string name="recommended">Препоручене</string>
   <string name="library">Библиотека</string>
   <string name="watchlist">Листа за гледање</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Налог обрисан.</string>
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Послато на тракт.</string>
   <string name="trakt_seen">%s погледано.</string>
   <string name="trakt_notseen">%s неодгледано.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>
-  <string name="trakt_error">Грешка у комуникацији са трактом</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
   <string name="trakt_error_general">Не могу да комуницирам са trakt-ом. Покушајте поново касније.</string>
   <string name="trakt_account">trakt account</string>

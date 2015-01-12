@@ -192,7 +192,6 @@
   <string name="add_started">%s는 당신의 쇼 리스트에 곧 나타날 것입니다.</string>
   <string name="add_error">%s를 추가할 수 없음</string>
   <string name="add_already_exists">%s는 이미 리스트에 있습니다.</string>
-  <string name="trending">트렌드</string>
   <string name="recommended">추천</string>
   <string name="library">라이브러리</string>
   <string name="watchlist">관심목록</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">계정이 삭제됩니다.</string>
   <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다.</string>
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>
   <string name="trakt_seen">%s 시청.</string>
   <string name="trakt_notseen">%s 미시청.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
   <string name="traktcheckin_wait">기다리겠소</string>
-  <string name="trakt_error">trakt와 통신 실패</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
   <string name="trakt_account">trakt account</string>

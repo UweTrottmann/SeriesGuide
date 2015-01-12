@@ -192,7 +192,6 @@
   <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
   <string name="add_error">Neuspješno dodavanje %s.</string>
   <string name="add_already_exists">%s je već u vašoj listi serija.</string>
-  <string name="trending">Popularno</string>
   <string name="recommended">Preporučeno</string>
   <string name="library">Zbirka</string>
   <string name="watchlist">Popis gledanja</string>
@@ -218,6 +217,8 @@
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Poslano na trakt.</string>
   <string name="trakt_seen">%s pogledano.</string>
   <string name="trakt_notseen">%s nije pogledano.</string>
@@ -228,7 +229,7 @@
   <string name="traktcheckin_cancel">Zamijeni</string>
   <string name="traktcheckin_inprogress">Već si prijavljen u drugu epizodu ili film. Ili zamijeni prošlu prijavu ili pričekaj %s i pokušaj ponovno.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>
-  <string name="trakt_error">Komunikacija sa traktom nije uspjela</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
   <string name="trakt_error_general">Nije se moguće povezati s traktom. Pokušajte ponovno kasnije.</string>
   <string name="trakt_account">trakt account</string>
