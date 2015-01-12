@@ -917,7 +917,8 @@ public class EpisodeTools {
             if (mIsSendingToHexagon) {
                 Toast.makeText(mContext, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
             }
-            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag);
+            mIsSendingToTrakt = TraktCredentials.get(mContext).hasCredentials()
+                    && !isSkipped(mType.mEpisodeFlag);
             if (mIsSendingToTrakt) {
                 Toast.makeText(mContext, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
             }
@@ -926,7 +927,7 @@ public class EpisodeTools {
         @Override
         protected Integer doInBackground(Void... params) {
             // upload to hexagon
-            if (HexagonTools.isSignedIn(mContext)) {
+            if (mIsSendingToHexagon) {
                 if (!AndroidUtils.isNetworkConnected(mContext)) {
                     return ERROR_NETWORK;
                 }
@@ -959,7 +960,7 @@ public class EpisodeTools {
                 }
             }
 
-            // update local database if uploading went smoothly
+            // update local database (if uploading went smoothly or not uploading at all)
             mType.updateDatabase();
             mType.storeLastEpisode();
 
