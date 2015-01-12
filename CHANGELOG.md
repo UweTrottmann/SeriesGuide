@@ -14,7 +14,7 @@ Version 21.1 *(in development)*
 * TWEAK Combine trending shows and search tab. Display more trending shows.
 * TWEAK Better error messages if loading data from trakt fails.
 * FIX Skipped episodes were removed if syncing an unwatched/uncollected local show with trakt.
-
+* NOTICE Latest translations from crowdin.
 
 Version 21 *(2015-01-02)*
 -------------------------
