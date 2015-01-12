@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 21.1 *(in development)*
 -------------------------------
 
+#### 21.1.0-beta2 *(2015-01-05)*
+
+* FIX Do not try to send watched/collected episodes to trakt if not connected.
+
 #### 21.1.0-beta1 *(2015-01-05)*
 
 * TWEAK If connected to trakt or Cloud and setting episodes watched or collected, will wait until network operation has completed before changing local state.
