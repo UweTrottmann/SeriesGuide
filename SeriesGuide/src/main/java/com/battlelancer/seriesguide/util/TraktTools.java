@@ -163,7 +163,7 @@ public class TraktTools {
             }
             if (!localMovies.contains(movie.movie.ids.tmdb)) {
                 // movie not in local database
-                break;
+                continue;
             }
 
             // set movie watched
