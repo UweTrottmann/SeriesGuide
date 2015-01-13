@@ -461,8 +461,8 @@ public class MovieTools {
             // add to database
             mContext.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
 
-            // ensure ratings are downloaded on next sync
-            TraktSettings.resetLastMoviesRatedAt(mContext);
+            // ensure ratings and watched flags are downloaded on next sync
+            TraktSettings.resetMoviesLastActivity(mContext);
 
             return movieTmdbId;
         }
@@ -744,9 +744,10 @@ public class MovieTools {
                 // store last activity timestamps
                 TraktSettings.storeLastMoviesChangedAt(context, activity.collected_at,
                         activity.watchlisted_at);
-                // if movies were added, ensure all movie ratings are downloaded next
+                // if movies were added,
+                // ensure all movie ratings and watched flags are downloaded next
                 if (collection.size() > 0 || watchlist.size() > 0) {
-                    TraktSettings.resetLastMoviesRatedAt(context);
+                    TraktSettings.resetMoviesLastActivity(context);
                 }
             }
 

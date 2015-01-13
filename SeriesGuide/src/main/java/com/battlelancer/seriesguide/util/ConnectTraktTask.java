@@ -143,6 +143,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // make sure the next sync will run a full episode sync
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
+        // make sure the next sync will download all watched movies
+        editor.putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0);
         // make sure the next sync will download all ratings
         editor.putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0);
         editor.putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0);

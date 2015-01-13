@@ -171,13 +171,14 @@ public class TraktSettings {
     }
 
     /**
-     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} to 0 so all ratings will be downloaded the next time
-     * {@link com.battlelancer.seriesguide.util.TraktTools#downloadMovieRatings} is called.
+     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} and {@link #KEY_LAST_MOVIES_WATCHED_AT} to 0 so all
+     * ratings and watched movies will be downloaded the next time a sync runs.
      */
-    public static boolean resetLastMoviesRatedAt(Context context) {
+    public static boolean resetMoviesLastActivity(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0)
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0)
                 .commit();
     }
 
