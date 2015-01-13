@@ -333,18 +333,18 @@ public class MovieTools {
      *
      * @return null if there was an error, empty list if there are no movies.
      */
-    private static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
+    public static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
         Cursor movies = context.getContentResolver().query(SeriesGuideContract.Movies.CONTENT_URI,
-                new String[] { SeriesGuideContract.Movies._ID, SeriesGuideContract.Movies.TMDB_ID },
+                new String[] { SeriesGuideContract.Movies.TMDB_ID },
                 null, null, null);
         if (movies == null) {
             return null;
         }
 
         while (movies.moveToNext()) {
-            localMoviesIds.add(movies.getInt(1));
+            localMoviesIds.add(movies.getInt(0));
         }
 
         movies.close();

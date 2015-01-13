@@ -50,6 +50,9 @@ public class TraktSettings {
     public static final String KEY_LAST_MOVIES_RATED_AT
             = "trakt.last_activity.movies.rated";
 
+    public static final String KEY_LAST_MOVIES_WATCHED_AT
+            = "trakt.last_activity.movies.watched";
+
     public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
@@ -136,6 +139,14 @@ public class TraktSettings {
     public static long getLastMoviesRatedAt(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_MOVIES_RATED_AT, 0);
+    }
+
+    /**
+     * The last time movie watched flags have changed or 0 if no value exists.
+     */
+    public static long getLastMoviesWatchedAt(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_MOVIES_WATCHED_AT, 0);
     }
 
     /**

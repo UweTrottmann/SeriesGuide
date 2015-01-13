@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
+import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.LastActivity;
@@ -102,6 +103,93 @@ public class TraktTools {
             this.flaggedValue = flaggedValue;
             this.nonFlaggedValue = nonFlaggedValue;
         }
+    }
+
+    /**
+     * Downloads trakt movie watched flags and mirrors them in the local database. Does NOT upload
+     * any flags (e.g. trakt is considered the truth).
+     */
+    public static UpdateResult downloadWatchedMovies(Context context, DateTime watchedAt) {
+        if (watchedAt == null) {
+            Timber.e("downloadWatchedMovies: null watched_at");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        long lastWatchedAt = TraktSettings.getLastMoviesWatchedAt(context);
+        if (!watchedAt.isAfter(lastWatchedAt)) {
+            // not initial sync, no watched flags have changed
+            Timber.d("downloadWatchedMovies: no changes since " + lastWatchedAt);
+            return UpdateResult.SUCCESS;
+        }
+
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (trakt == null) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // download watched movies
+        List<BaseMovie> watchedMovies;
+        try {
+            watchedMovies = trakt.sync().watchedMovies(Extended.DEFAULT_MIN);
+        } catch (RetrofitError e) {
+            Timber.e(e, "downloadWatchedMovies: download failed");
+            return UpdateResult.INCOMPLETE;
+        } catch (OAuthUnauthorizedException e) {
+            TraktCredentials.get(context).setCredentialsInvalid();
+            return UpdateResult.INCOMPLETE;
+        }
+        if (watchedMovies == null) {
+            Timber.e("downloadWatchedMovies: null response");
+            return UpdateResult.INCOMPLETE;
+        }
+        if (watchedMovies.isEmpty()) {
+            Timber.d("downloadWatchedMovies: no watched movies on trakt");
+            return UpdateResult.SUCCESS;
+        }
+
+        // first, drop all watched flags from all local watched movies
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        batch.add(ContentProviderOperation.newUpdate(SeriesGuideContract.Movies.CONTENT_URI)
+                .withSelection(SeriesGuideContract.Movies.SELECTION_WATCHED, null)
+                .withValue(SeriesGuideContract.Movies.WATCHED, false)
+                .build());
+
+        // apply watched flags for all watched trakt movies that are in the local database
+        Set<Integer> localMovies = MovieTools.getMovieTmdbIdsAsSet(context);
+        for (BaseMovie movie : watchedMovies) {
+            if (movie.movie == null || movie.movie.ids == null || movie.movie.ids.tmdb == null) {
+                // required values are missing
+                continue;
+            }
+            if (!localMovies.contains(movie.movie.ids.tmdb)) {
+                // movie not in local database
+                break;
+            }
+
+            // set movie watched
+            ContentProviderOperation op = ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Movies.buildMovieUri(movie.movie.ids.tmdb))
+                    .withValue(SeriesGuideContract.Movies.WATCHED, true)
+                    .build();
+            batch.add(op);
+        }
+
+        // apply database updates
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "downloadWatchedMovies: database update failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // save last watched instant
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, watchedAt.getMillis())
+                .commit();
+
+        Timber.d("downloadWatchedMovies: success, last watched_at " + watchedAt.getMillis());
+        return UpdateResult.SUCCESS;
     }
 
     /**
@@ -929,8 +1017,8 @@ public class TraktTools {
     /**
      * Look up a show's trakt id, may return {@code null} if not found.
      *
-     * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on
-     * auth errors.
+     * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on auth
+     * errors.
      */
     public static String lookupShowTraktId(Context context, int showTvdbId) {
         Search traktSearch = ServiceUtils.getTraktV2(context).search();
