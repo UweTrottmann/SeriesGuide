@@ -74,7 +74,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
                 movieQuery.getInt(MovieQuery.IN_COLLECTION));
         details.inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-        details.watched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
+        details.isWatched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
         // also use local state of user rating
         details.userRating = movieQuery.getInt(MovieQuery.RATING_USER);
 

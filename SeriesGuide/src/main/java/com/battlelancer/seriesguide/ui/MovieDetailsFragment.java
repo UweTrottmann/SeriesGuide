@@ -327,6 +327,7 @@ public class MovieDetailsFragment extends Fragment {
         final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
+        final boolean isWatched = mMovieDetails.isWatched;
         final DateTime released = mMovieDetails.released;
         final int rating = mMovieDetails.userRating;
 
@@ -357,8 +358,34 @@ public class MovieDetailsFragment extends Fragment {
         });
         CheatSheet.setup(mCheckinButton);
 
-        // hide watched button (currently not supported)
-        mWatchedButton.setVisibility(View.GONE);
+        // watched button (only supported when connected to trakt and movie is in local database)
+        if (TraktCredentials.get(getActivity()).hasCredentials() && (inCollection || inWatchlist)) {
+            mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
+            CheatSheet.setup(mWatchedButton,
+                    isWatched ? R.string.action_unwatched : R.string.action_watched);
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0, isWatched
+                    ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                    R.attr.drawableWatched)
+                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatch), 0, 0);
+            mWatchedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // disable button, will be re-enabled on data reload once action completes
+                    v.setEnabled(false);
+                    if (isWatched) {
+                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
+                        fireTrackerEvent("Unwatched movie");
+                    } else {
+                        MovieTools.watchedMovie(getActivity(), mTmdbId);
+                        fireTrackerEvent("Watched movie");
+                    }
+                }
+            });
+            mWatchedButton.setEnabled(true);
+        } else {
+            mWatchedButton.setVisibility(View.GONE);
+        }
 
         // collected button
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mCollectedButton, 0,

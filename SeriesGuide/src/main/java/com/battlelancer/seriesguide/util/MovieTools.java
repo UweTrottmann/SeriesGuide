@@ -214,13 +214,13 @@ public class MovieTools {
             if (Utils.isNotConnected(context, true)) {
                 return;
             }
-            // remove from trakt watchlist
+            // set as watched on trakt
             AndroidUtils.executeOnPool(
                     new TraktTask(context).watchedMovie(movieTmdbId)
             );
         }
 
-        // try updating local movie (if any)
+        // update local movie
         updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, true);
     }
 
@@ -229,13 +229,13 @@ public class MovieTools {
             if (Utils.isNotConnected(context, true)) {
                 return;
             }
-            // remove from trakt watchlist
+            // remove from trakt watched history
             AndroidUtils.executeOnPool(
                     new TraktTask(context).unwatchedMovie(movieTmdbId)
             );
         }
 
-        // try updating local movie (if any)
+        // update local movie
         updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, false);
     }
 
