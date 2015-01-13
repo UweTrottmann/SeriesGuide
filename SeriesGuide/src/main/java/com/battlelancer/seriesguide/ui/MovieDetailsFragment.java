@@ -383,6 +383,7 @@ public class MovieDetailsFragment extends Fragment {
                 }
             });
             mWatchedButton.setEnabled(true);
+            mWatchedButton.setVisibility(View.VISIBLE);
         } else {
             mWatchedButton.setVisibility(View.GONE);
         }
