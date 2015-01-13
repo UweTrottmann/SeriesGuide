@@ -8,11 +8,15 @@ All dates are in the European Central timezone.
 Version 21.1 *(in development)*
 -------------------------------
 
-#### 21.1.0-beta2 *(2015-01-05)*
+#### 21.1.0-beta3 *(2015-01-13)*
+
+* TWEAK Re-enable watched button for movies in either watchlist or collection, if connected to trakt.
+
+#### 21.1.0-beta2 *(2015-01-12)*
 
 * FIX Do not try to send watched/collected episodes to trakt if not connected.
 
-#### 21.1.0-beta1 *(2015-01-05)*
+#### 21.1.0-beta1 *(2015-01-12)*
 
 * TWEAK If connected to trakt or Cloud and setting episodes watched or collected, will wait until network operation has completed before changing local state.
 * TWEAK Combine trending shows and search tab. Display more trending shows.
