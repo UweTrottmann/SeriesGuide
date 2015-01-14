@@ -36,6 +36,7 @@
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="add_empty">Det finns inga program här.</string>
   <string name="people_empty">Ingen här? Tryck för att försöka igen.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Dela</string>
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>

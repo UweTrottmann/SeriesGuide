@@ -35,6 +35,7 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Поділитись</string>
   <string name="share_show">Поділитись серіалом</string>
   <string name="share_episode">Поділитись серією</string>

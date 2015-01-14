@@ -35,6 +35,7 @@
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>
   <string name="share_episode">Condividi episodio</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="people_empty">다시 시도해보세요.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">공유</string>
   <string name="share_show">쇼 공유</string>
   <string name="share_episode">에피소드 공유</string>

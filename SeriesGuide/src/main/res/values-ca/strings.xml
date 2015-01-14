@@ -35,6 +35,7 @@
   <string name="app_not_available">No hi ha cap aplicació per suportar-ho.</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
   <string name="share_episode">Comparteix l\'episodi</string>

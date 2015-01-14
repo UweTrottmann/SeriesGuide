@@ -35,6 +35,7 @@
   <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>

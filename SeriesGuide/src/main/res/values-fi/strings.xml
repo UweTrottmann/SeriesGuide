@@ -35,6 +35,7 @@
   <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="add_empty">Täällä ei ole ohjelman ohjelmaa.</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
   <string name="share_episode">Jaa jakso</string>

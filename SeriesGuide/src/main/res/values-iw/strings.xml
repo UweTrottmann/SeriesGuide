@@ -35,6 +35,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>

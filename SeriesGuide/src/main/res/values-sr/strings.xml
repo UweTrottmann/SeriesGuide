@@ -35,6 +35,7 @@
   <string name="app_not_available">Немате потребну апликацију за ово.</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="people_empty">Нема никога?! Поновите претрагу.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Подели</string>
   <string name="share_show">Подели серију</string>
   <string name="share_episode">Подели епизоду</string>

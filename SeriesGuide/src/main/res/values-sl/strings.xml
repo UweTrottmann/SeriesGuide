@@ -35,6 +35,7 @@
   <string name="app_not_available">Za obravnavo tega ni na voljo nobene aplikacije.</string>
   <string name="add_empty">Tukaj ni nobene oddaje.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Share</string>
   <string name="share_show">Deli oddajo</string>
   <string name="share_episode">Deli epizodo</string>

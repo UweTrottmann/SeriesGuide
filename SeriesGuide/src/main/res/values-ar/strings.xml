@@ -35,6 +35,7 @@
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">المشاركة</string>
   <string name="share_show">مشاركة العرض</string>
   <string name="share_episode">مشاركة الحلقة</string>

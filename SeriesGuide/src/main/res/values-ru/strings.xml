@@ -35,6 +35,7 @@
   <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>

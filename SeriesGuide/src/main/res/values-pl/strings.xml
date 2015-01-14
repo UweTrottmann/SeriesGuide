@@ -35,6 +35,7 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>

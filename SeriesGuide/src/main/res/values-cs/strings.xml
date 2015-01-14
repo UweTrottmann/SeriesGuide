@@ -35,6 +35,7 @@
   <string name="app_not_available">Není k dispozici použitelná aplikace.</string>
   <string name="add_empty">Nejsou zde žádné seriály.</string>
   <string name="people_empty">Nikde nikdo? Zkus to znovu.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Sdílet</string>
   <string name="share_show">Sdílet seriál</string>
   <string name="share_episode">Sdílet epizodu</string>

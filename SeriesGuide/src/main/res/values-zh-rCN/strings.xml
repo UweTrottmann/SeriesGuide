@@ -35,6 +35,7 @@
   <string name="app_not_available">没有相关程序可用。</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>
   <string name="share_episode">分享剧集</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">沒有 app 可以處理這個需求</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Share</string>
   <string name="share_show">分享節目</string>
   <string name="share_episode">分享此集</string>

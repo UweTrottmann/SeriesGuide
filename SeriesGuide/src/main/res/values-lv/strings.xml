@@ -35,6 +35,7 @@
   <string name="app_not_available">Nav aplikācijas, lai to izdarītu.</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
   <string name="people_empty">Neviena te nav?! Pieskaries lai mēģinātu vēlreiz.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Dalīties</string>
   <string name="share_show">Kopīgot seriālu</string>
   <string name="share_episode">Kopīgot epizodi</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>

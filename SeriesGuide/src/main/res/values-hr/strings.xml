@@ -35,6 +35,7 @@
   <string name="app_not_available">Ne postoji aplikacija koja moze ovo otvoriti.</string>
   <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Share</string>
   <string name="share_show">Podijeli seriju</string>
   <string name="share_episode">Podijeli epizodu</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί αυτό.</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>

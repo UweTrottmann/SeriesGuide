@@ -35,6 +35,7 @@
   <string name="app_not_available">هیچ برنامه ای در دسترس نمیباشد.</string>
   <string name="add_empty">هیچ سریالی در اینجا موجود نمیباشد.</string>
   <string name="people_empty">کسی نیست ؟ لمس صفحه برای تلاش دوباره.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">اشتراک گذاری</string>
   <string name="share_show">اشتراک سریال</string>
   <string name="share_episode">اشتراک قسمت</string>

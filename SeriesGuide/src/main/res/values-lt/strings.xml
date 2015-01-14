@@ -35,6 +35,7 @@
   <string name="app_not_available">No app available to handle this.</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Share</string>
   <string name="share_show">Share show</string>
   <string name="share_episode">Dalintis serija</string>
