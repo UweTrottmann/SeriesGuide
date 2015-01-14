@@ -31,7 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.util.tasks.HexagonAddMovieToCollectionTask;
+import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.HexagonAddMovieToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromWatchlistTask;
@@ -82,27 +82,7 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        if (HexagonTools.isSignedIn(context)) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            AndroidUtils.executeOnPool(
-                    new HexagonAddMovieToCollectionTask(context, movieTmdbId)
-            );
-        }
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // add to trakt collection
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).collectionAddMovie(movieTmdbId)
-            );
-        }
-
-        // make modifications to local database
-        addToList(context, movieTmdbId, SeriesGuideContract.Movies.IN_COLLECTION,
-                AddMovieTask.AddTo.COLLECTION);
+        AndroidUtils.executeOnPool(new AddMovieToCollectionTask(context, movieTmdbId));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
@@ -129,7 +109,7 @@ public class MovieTools {
                 AddMovieTask.AddTo.WATCHLIST);
     }
 
-    private static void addToList(Context context, int movieTmdbId, String listColumn,
+    public static void addToList(Context context, int movieTmdbId, String listColumn,
             AddMovieTask.AddTo list) {
         // do we have this movie in the database already?
         Boolean movieExists = isMovieExists(context, movieTmdbId);
@@ -422,7 +402,7 @@ public class MovieTools {
         return null;
     }
 
-    private static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
+    public static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
 
         private final Context mContext;
 
