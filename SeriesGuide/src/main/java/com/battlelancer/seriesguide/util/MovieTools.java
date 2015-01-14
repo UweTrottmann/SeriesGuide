@@ -34,6 +34,8 @@ import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
+import com.battlelancer.seriesguide.util.tasks.SetMovieUnwatchedTask;
+import com.battlelancer.seriesguide.util.tasks.SetMovieWatchedTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
@@ -149,33 +151,20 @@ public class MovieTools {
     }
 
     public static void watchedMovie(Context context, int movieTmdbId) {
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // set as watched on trakt
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).watchedMovie(movieTmdbId)
-            );
-        }
-
-        // update local movie
-        updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, true);
+        AndroidUtils.executeOnPool(new SetMovieWatchedTask(context, movieTmdbId));
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // remove from trakt watched history
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).unwatchedMovie(movieTmdbId)
-            );
-        }
+        AndroidUtils.executeOnPool(new SetMovieUnwatchedTask(context, movieTmdbId));
+    }
 
-        // update local movie
-        updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, false);
+    /**
+     * Set watched flag of movie in local database.
+     *
+     * @return If the database operation was successful.
+     */
+    public static boolean setWatchedFlag(Context context, int movieTmdbId, boolean flag) {
+        return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
     }
 
     /**
