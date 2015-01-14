@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
@@ -33,6 +34,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
+import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,9 +131,11 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
             }
         }
 
+        // update local state
         doDatabaseUpdate(context, movieTmdbId);
 
-        // TODO post success event
+        // post success event
+        EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
 
         return SUCCESS;
     }
