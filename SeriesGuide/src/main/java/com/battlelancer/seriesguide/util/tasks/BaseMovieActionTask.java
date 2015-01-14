@@ -137,14 +137,14 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
             return ERROR_DATABASE;
         }
 
-        // post success event
-        EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
-
         return SUCCESS;
     }
 
     @Override
     protected void onPostExecute(Integer result) {
+        // always post event so UI releases locks
+        EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
+
         // handle errors
         Integer errorResId = null;
         switch (result) {
