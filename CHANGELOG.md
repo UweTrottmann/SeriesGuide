@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 21.1 *(in development)*
 -------------------------------
 
+#### 21.1.0-beta4 *(2015-01-14)*
+
+* TWEAK If connected to trakt or Cloud and changing movie watchlist/collection state, will only change local state if sending was successful.
+
 #### 21.1.0-beta3 *(2015-01-13)*
 
 * TWEAK Re-enable watched button for movies in either watchlist or collection, if connected to trakt.
