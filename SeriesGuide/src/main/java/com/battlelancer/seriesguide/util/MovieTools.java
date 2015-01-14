@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -32,9 +31,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
-import com.battlelancer.seriesguide.util.tasks.HexagonAddMovieToWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromCollectionTask;
-import com.battlelancer.seriesguide.util.tasks.HexagonRemoveMovieFromWatchlistTask;
+import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
@@ -55,7 +54,6 @@ import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Sync;
-import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -97,104 +95,56 @@ public class MovieTools {
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        if (HexagonTools.isSignedIn(context)) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            AndroidUtils.executeOnPool(
-                    new HexagonAddMovieToWatchlistTask(context, movieTmdbId)
-            );
-        }
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // add to trakt watchlist
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).watchlistMovie(movieTmdbId)
-            );
-        }
-
-        // make modifications to local database
-        addToList(context, movieTmdbId, Lists.WATCHLIST);
+        AndroidUtils.executeOnPool(new AddMovieToWatchlistTask(context, movieTmdbId));
     }
 
-    public static void addToList(Context context, int movieTmdbId, Lists list) {
+    /**
+     * Adds the movie to the given list. If it was not in any list before, adds the movie to the
+     * local database first.
+     *
+     * @return If the database operation was successful.
+     */
+    public static boolean addToList(Context context, int movieTmdbId, Lists list) {
         // do we have this movie in the database already?
         Boolean movieExists = isMovieExists(context, movieTmdbId);
         if (movieExists == null) {
-            return;
+            return false;
         }
         if (movieExists) {
-            updateMovie(context, movieTmdbId, list.databaseColumn, true);
+            return updateMovie(context, movieTmdbId, list.databaseColumn, true);
         } else {
-            addMovieAsync(context, movieTmdbId, list);
+            return addMovie(context, movieTmdbId, list);
         }
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        if (HexagonTools.isSignedIn(context)) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            AndroidUtils.executeOnPool(
-                    new HexagonRemoveMovieFromCollectionTask(context, movieTmdbId)
-            );
-        }
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // remove from trakt collection
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).collectionRemoveMovie(movieTmdbId)
-            );
-        }
-
-        // make modifications to local database
-        Boolean isInWatchlist = isMovieInList(context, movieTmdbId,
-                SeriesGuideContract.Movies.IN_WATCHLIST);
-        removeFromList(context, movieTmdbId, isInWatchlist,
-                SeriesGuideContract.Movies.IN_COLLECTION);
+        AndroidUtils.executeOnPool(new RemoveMovieFromCollectionTask(context, movieTmdbId));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        if (HexagonTools.isSignedIn(context)) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            AndroidUtils.executeOnPool(
-                    new HexagonRemoveMovieFromWatchlistTask(context, movieTmdbId)
-            );
-        }
-        if (TraktCredentials.get(context).hasCredentials()) {
-            if (Utils.isNotConnected(context, true)) {
-                return;
-            }
-            // remove from trakt watchlist
-            AndroidUtils.executeOnPool(
-                    new TraktTask(context).unwatchlistMovie(movieTmdbId)
-            );
-        }
-
-        // make modifications to local database
-        Boolean isInCollection = isMovieInList(context, movieTmdbId,
-                SeriesGuideContract.Movies.IN_COLLECTION);
-        removeFromList(context, movieTmdbId, isInCollection,
-                SeriesGuideContract.Movies.IN_WATCHLIST);
+        AndroidUtils.executeOnPool(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
     }
 
-    private static void removeFromList(Context context, int movieTmdbId, Boolean isInOtherList,
-            String listColumn) {
+    /**
+     * If the movie exists in the local database: removes it from the given list or if it would not
+     * be on any list afterwards, deletes the movie from the local database.
+     *
+     * @return If the database operation was successful.
+     */
+    public static boolean removeFromList(Context context, int movieTmdbId, Lists listToRemoveFrom) {
+        Lists otherListToCheck = listToRemoveFrom == Lists.COLLECTION
+                ? Lists.WATCHLIST : Lists.COLLECTION;
+        Boolean isInOtherList = isMovieInList(context, movieTmdbId, otherListToCheck);
         if (isInOtherList == null) {
-            return;
+            // query failed, or movie not in local database
+            return false;
         }
         if (isInOtherList) {
             // just update list flag
-            updateMovie(context, movieTmdbId, listColumn, false);
+            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
         } else {
             // completely remove from database
-            deleteMovie(context, movieTmdbId);
+            return deleteMovie(context, movieTmdbId);
         }
     }
 
@@ -239,10 +189,6 @@ public class MovieTools {
         values.put(SeriesGuideContract.Movies.RATING_USER, rating.value);
         context.getContentResolver()
                 .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
-    }
-
-    private static void addMovieAsync(Context context, int movieTmdbId, Lists listToAddTo) {
-        Utils.executeInOrder(new AddMovieTask(context, listToAddTo), movieTmdbId);
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -310,13 +256,6 @@ public class MovieTools {
         return values;
     }
 
-    private static void deleteMovie(Context context, int movieTmdbId) {
-        context.getContentResolver()
-                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), null, null);
-
-        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
-    }
-
     /**
      * Returns a set of the TMDb ids of all movies in the local database.
      *
@@ -342,20 +281,23 @@ public class MovieTools {
     }
 
     /**
-     * Determines if the given movie is in the list determined by the given database column name.
+     * Determines if the movie is in the given list.
      *
      * @return true if the movie is in the given list, false otherwise. Can return {@code null} if
      * the database could not be queried or the movie does not exist.
      */
-    private static Boolean isMovieInList(Context context, int movieTmdbId, String listColumn) {
+    private static Boolean isMovieInList(Context context, int movieTmdbId, Lists list) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                        new String[] { listColumn }, null, null, null);
-        if (movie == null || !movie.moveToFirst()) {
+                        new String[] { list.databaseColumn }, null, null, null);
+        if (movie == null) {
             return null;
         }
 
-        boolean isInList = movie.getInt(0) == 1;
+        Boolean isInList = null;
+        if (movie.moveToFirst()) {
+            isInList = movie.getInt(0) == 1;
+        }
 
         movie.close();
 
@@ -378,14 +320,48 @@ public class MovieTools {
         return movieExists;
     }
 
-    private static void updateMovie(Context context, int movieTmdbId, String column,
+    private static boolean addMovie(Context context, int movieTmdbId, Lists listToAddTo) {
+        // get movie info
+        MovieDetails details = Download.getMovieDetails(context, movieTmdbId);
+        if (details.tmdbMovie() == null || details.released == null) {
+            // abort if minimal data failed to load
+            return false;
+        }
+
+        // build values
+        ContentValues values = buildBasicMovieContentValuesWithId(details);
+
+        // set flags
+        values.put(SeriesGuideContract.Movies.IN_COLLECTION,
+                DBUtils.convertBooleanToInt(listToAddTo == Lists.COLLECTION));
+        values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
+                DBUtils.convertBooleanToInt(listToAddTo == Lists.WATCHLIST));
+
+        // add to database
+        context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
+
+        // ensure ratings and watched flags are downloaded on next sync
+        TraktSettings.resetMoviesLastActivity(context);
+
+        return true;
+    }
+
+    private static boolean updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
         values.put(column, value);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
 
-        EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
+        int rowsUpdated = context.getContentResolver().update(
+                SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
+
+        return rowsUpdated > 0;
+    }
+
+    private static boolean deleteMovie(Context context, int movieTmdbId) {
+        int rowsDeleted = context.getContentResolver()
+                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), null, null);
+
+        return rowsDeleted > 0;
     }
 
     public static Integer lookupTraktId(Search traktSearch, int movieTmdbId) {
@@ -409,54 +385,6 @@ public class MovieTools {
         }
 
         return null;
-    }
-
-    public static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
-
-        private final Context mContext;
-        private final Lists mAddToList;
-
-        public AddMovieTask(Context context, Lists list) {
-            mContext = context;
-            mAddToList = list;
-        }
-
-        @Override
-        protected Integer doInBackground(Integer... params) {
-            int movieTmdbId = params[0];
-
-            // get movie info
-            MovieDetails details = Download.getMovieDetails(mContext, movieTmdbId);
-            if (details.tmdbMovie() == null || details.released == null) {
-                // abort if minimal data failed to load
-                return null;
-            }
-
-            // build values
-            ContentValues values = buildBasicMovieContentValuesWithId(details);
-
-            // set flags
-            values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                    DBUtils.convertBooleanToInt(mAddToList == Lists.COLLECTION));
-            values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                    DBUtils.convertBooleanToInt(mAddToList == Lists.WATCHLIST));
-
-            // add to database
-            mContext.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
-
-            // ensure ratings and watched flags are downloaded on next sync
-            TraktSettings.resetMoviesLastActivity(mContext);
-
-            return movieTmdbId;
-        }
-
-        @Override
-        protected void onPostExecute(Integer movieTmdbId) {
-            // guard against NPE https://github.com/UweTrottmann/SeriesGuide/issues/371
-            if (movieTmdbId != null) {
-                EventBus.getDefault().post(new MovieChangedEvent(movieTmdbId));
-            }
-        }
     }
 
     public static class Download {

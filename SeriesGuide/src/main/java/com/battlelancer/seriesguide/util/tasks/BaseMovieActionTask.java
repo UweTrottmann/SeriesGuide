@@ -48,9 +48,10 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
 
     private static final int SUCCESS = 0;
     private static final int ERROR_NETWORK = -1;
-    private static final int ERROR_TRAKT_AUTH = -2;
-    private static final int ERROR_TRAKT_API = -3;
-    private static final int ERROR_HEXAGON_API = -4;
+    private static final int ERROR_DATABASE = -2;
+    private static final int ERROR_TRAKT_AUTH = -3;
+    private static final int ERROR_TRAKT_API = -4;
+    private static final int ERROR_HEXAGON_API = -5;
 
     private final Context context;
     private final int movieTmdbId;
@@ -132,7 +133,9 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
         }
 
         // update local state
-        doDatabaseUpdate(context, movieTmdbId);
+        if (!doDatabaseUpdate(context, movieTmdbId)) {
+            return ERROR_DATABASE;
+        }
 
         // post success event
         EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
@@ -147,6 +150,9 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
         switch (result) {
             case ERROR_NETWORK:
                 errorResId = R.string.offline;
+                break;
+            case ERROR_DATABASE:
+                errorResId = R.string.database_error;
                 break;
             case ERROR_TRAKT_AUTH:
                 errorResId = R.string.trakt_error_credentials;
@@ -180,7 +186,7 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
         return true;
     }
 
-    protected abstract void doDatabaseUpdate(Context context, int movieTmdbId);
+    protected abstract boolean doDatabaseUpdate(Context context, int movieTmdbId);
 
     protected abstract void setHexagonMovieProperties(Movie movie);
 

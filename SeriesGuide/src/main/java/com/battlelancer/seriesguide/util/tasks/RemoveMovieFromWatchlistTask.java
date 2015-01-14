@@ -24,30 +24,30 @@ import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
 
-public class AddMovieToCollectionTask extends BaseMovieActionTask {
+public class RemoveMovieFromWatchlistTask extends BaseMovieActionTask {
 
-    public AddMovieToCollectionTask(Context context, int movieTmdbId) {
+    public RemoveMovieFromWatchlistTask(Context context, int movieTmdbId) {
         super(context, movieTmdbId);
     }
 
     @Override
     protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return MovieTools.addToList(context, movieTmdbId, MovieTools.Lists.COLLECTION);
+        return MovieTools.removeFromList(context, movieTmdbId, MovieTools.Lists.WATCHLIST);
     }
 
     @Override
     protected void setHexagonMovieProperties(Movie movie) {
-        movie.setIsInCollection(true);
+        movie.setIsInWatchlist(false);
     }
 
     @Override
     protected com.uwetrottmann.trakt.v2.entities.SyncResponse doTraktAction(Sync traktSync,
             SyncItems items) throws OAuthUnauthorizedException {
-        return traktSync.addItemsToCollection(items);
+        return traktSync.deleteItemsFromWatchlist(items);
     }
 
     @Override
     protected int getSuccessTextResId() {
-        return R.string.action_collection_added;
+        return R.string.watchlist_removed;
     }
 }
