@@ -65,7 +65,7 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
 
     @Override
     protected void onPreExecute() {
-        isSendingToHexagon = HexagonTools.isSignedIn(context);
+        isSendingToHexagon = shouldSendToHexagon() && HexagonTools.isSignedIn(context);
         if (isSendingToHexagon) {
             Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
         }
@@ -188,6 +188,18 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
 
     protected abstract boolean doDatabaseUpdate(Context context, int movieTmdbId);
 
+    /**
+     * Override and return {@code false} to not send to hexagon, {@link #setHexagonMovieProperties}
+     * will not be called then.
+     */
+    protected boolean shouldSendToHexagon() {
+        return true;
+    }
+
+    /**
+     * Set properties to send to hexagon. To disable hexagon uploading, override {@link
+     * #shouldSendToHexagon()}.
+     */
     protected abstract void setHexagonMovieProperties(Movie movie);
 
     protected abstract SyncResponse doTraktAction(Sync traktSync, SyncItems items)
