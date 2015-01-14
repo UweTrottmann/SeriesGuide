@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
@@ -36,8 +35,7 @@ public class AddMovieToCollectionTask extends BaseMovieActionTask {
 
     @Override
     protected void doDatabaseUpdate(Context context, int movieTmdbId) {
-        MovieTools.addToList(context, movieTmdbId, SeriesGuideContract.Movies.IN_COLLECTION,
-                MovieTools.AddMovieTask.AddTo.COLLECTION);
+        MovieTools.addToList(context, movieTmdbId, MovieTools.Lists.COLLECTION);
     }
 
     @Override

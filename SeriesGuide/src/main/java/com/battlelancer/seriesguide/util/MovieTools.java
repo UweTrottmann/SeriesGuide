@@ -81,6 +81,17 @@ public class MovieTools {
         }
     }
 
+    public enum Lists {
+        COLLECTION(SeriesGuideContract.Movies.IN_COLLECTION),
+        WATCHLIST(SeriesGuideContract.Movies.IN_WATCHLIST);
+
+        public final String databaseColumn;
+
+        private Lists(String databaseColumn) {
+            this.databaseColumn = databaseColumn;
+        }
+    }
+
     public static void addToCollection(Context context, int movieTmdbId) {
         AndroidUtils.executeOnPool(new AddMovieToCollectionTask(context, movieTmdbId));
     }
@@ -105,19 +116,17 @@ public class MovieTools {
         }
 
         // make modifications to local database
-        addToList(context, movieTmdbId, SeriesGuideContract.Movies.IN_WATCHLIST,
-                AddMovieTask.AddTo.WATCHLIST);
+        addToList(context, movieTmdbId, Lists.WATCHLIST);
     }
 
-    public static void addToList(Context context, int movieTmdbId, String listColumn,
-            AddMovieTask.AddTo list) {
+    public static void addToList(Context context, int movieTmdbId, Lists list) {
         // do we have this movie in the database already?
         Boolean movieExists = isMovieExists(context, movieTmdbId);
         if (movieExists == null) {
             return;
         }
         if (movieExists) {
-            updateMovie(context, movieTmdbId, listColumn, true);
+            updateMovie(context, movieTmdbId, list.databaseColumn, true);
         } else {
             addMovieAsync(context, movieTmdbId, list);
         }
@@ -232,8 +241,8 @@ public class MovieTools {
                 .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
     }
 
-    private static void addMovieAsync(Context context, int movieTmdbId, AddMovieTask.AddTo addTo) {
-        Utils.executeInOrder(new AddMovieTask(context, addTo), movieTmdbId);
+    private static void addMovieAsync(Context context, int movieTmdbId, Lists listToAddTo) {
+        Utils.executeInOrder(new AddMovieTask(context, listToAddTo), movieTmdbId);
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -405,17 +414,11 @@ public class MovieTools {
     public static class AddMovieTask extends AsyncTask<Integer, Void, Integer> {
 
         private final Context mContext;
+        private final Lists mAddToList;
 
-        private final AddTo mAddTo;
-
-        public enum AddTo {
-            COLLECTION,
-            WATCHLIST
-        }
-
-        public AddMovieTask(Context context, AddTo addTo) {
+        public AddMovieTask(Context context, Lists list) {
             mContext = context;
-            mAddTo = addTo;
+            mAddToList = list;
         }
 
         @Override
@@ -434,9 +437,9 @@ public class MovieTools {
 
             // set flags
             values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                    DBUtils.convertBooleanToInt(mAddTo == AddTo.COLLECTION));
+                    DBUtils.convertBooleanToInt(mAddToList == Lists.COLLECTION));
             values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                    DBUtils.convertBooleanToInt(mAddTo == AddTo.WATCHLIST));
+                    DBUtils.convertBooleanToInt(mAddToList == Lists.WATCHLIST));
 
             // add to database
             mContext.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
