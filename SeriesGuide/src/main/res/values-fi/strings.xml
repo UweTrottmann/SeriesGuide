@@ -217,8 +217,8 @@
   <string name="hexagon_remove_account_success">Tili poistettu.</string>
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Ei voitu keskustella SeriesGuide Cloudin kanssa. Yritä myöhemmin uudelleen.</string>
+  <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
   <string name="trakt_seen">%s katsottu.</string>
   <string name="trakt_notseen">%s ei ole katsottu.</string>
@@ -229,7 +229,7 @@
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Lähetetty traktiin.</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_account">trakt-tili</string>

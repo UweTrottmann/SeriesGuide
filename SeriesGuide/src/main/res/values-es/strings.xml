@@ -218,8 +218,8 @@
   <string name="hexagon_remove_account_failure">No se pudo eliminar la cuenta.</string>
   <string name="hexagon_remove_account_confirmation">Quitar tu cuenta borrará todas las series y películas de SeriesGuides Cloud. 
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">No puidera hablar a SeriesGuide Cloud. Por favor tratar otra vez mas tarde.</string>
+  <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Enviando a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s no visto.</string>
@@ -230,7 +230,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="traktcheckin_cancel">Reemplazar</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Enviado a trakt.</string>
   <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
   <string name="trakt_error_general">No es posible conectar con trakt. Inténtalo más tarde.</string>
   <string name="trakt_account">Cuenta Trakt</string>
