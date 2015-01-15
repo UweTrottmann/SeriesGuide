@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
@@ -45,6 +46,16 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
         isSendingToHexagon = HexagonTools.isSignedIn(context);
         isSendingToTrakt = TraktCredentials.get(context).hasCredentials();
 
+        // if sending to services and there is no network, cancel right away
+        if (isSendingToHexagon() || isSendingToTrakt()) {
+            if (!AndroidUtils.isNetworkConnected(getContext())) {
+                cancel(true);
+                Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+        // show toast to which service we send
         if (isSendingToHexagon()) {
             Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
         }

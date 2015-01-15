@@ -39,6 +39,10 @@ public abstract class BaseRateItemTask extends BaseActionTask {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        if (isCancelled()) {
+            return null;
+        }
+
         if (isSendingToTrakt()) {
             if (!AndroidUtils.isNetworkConnected(getContext())) {
                 return ERROR_NETWORK;
