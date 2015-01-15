@@ -23,6 +23,8 @@ import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
+import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class AddMovieToWatchlistTask extends BaseMovieActionTask {
 
@@ -43,7 +45,12 @@ public class AddMovieToWatchlistTask extends BaseMovieActionTask {
     @Override
     protected com.uwetrottmann.trakt.v2.entities.SyncResponse doTraktAction(Sync traktSync,
             SyncItems items) throws OAuthUnauthorizedException {
-        return traktSync.addItemsToWatchlist(items);
+        try {
+            return traktSync.addItemsToWatchlist(items);
+        } catch (RetrofitError e) {
+            Timber.e(e, "doTraktAction: adding movie to watchlist failed");
+            return null;
+        }
     }
 
     @Override

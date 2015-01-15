@@ -119,9 +119,6 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
             SyncResponse response;
             try {
                 response = doTraktAction(traktSync, items);
-            } catch (RetrofitError e) {
-                Timber.e(e, "doInBackground: sending to trakt failed");
-                return ERROR_TRAKT_API;
             } catch (OAuthUnauthorizedException e) {
                 TraktCredentials.get(context).setCredentialsInvalid();
                 return ERROR_TRAKT_AUTH;
@@ -202,6 +199,9 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
      */
     protected abstract void setHexagonMovieProperties(Movie movie);
 
+    /**
+     * Ensure to catch {@link retrofit.RetrofitError} and return {@code null} in that case.
+     */
     protected abstract SyncResponse doTraktAction(Sync traktSync, SyncItems items)
             throws OAuthUnauthorizedException;
 

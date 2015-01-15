@@ -24,6 +24,8 @@ import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
+import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class SetMovieUnwatchedTask extends BaseMovieActionTask {
 
@@ -49,7 +51,12 @@ public class SetMovieUnwatchedTask extends BaseMovieActionTask {
     @Override
     protected SyncResponse doTraktAction(Sync traktSync, SyncItems items)
             throws OAuthUnauthorizedException {
-        return traktSync.deleteItemsFromWatchedHistory(items);
+        try {
+            return traktSync.deleteItemsFromWatchedHistory(items);
+        } catch (RetrofitError e) {
+            Timber.e(e, "doTraktAction: setting movie unwatched failed");
+            return null;
+        }
     }
 
     @Override

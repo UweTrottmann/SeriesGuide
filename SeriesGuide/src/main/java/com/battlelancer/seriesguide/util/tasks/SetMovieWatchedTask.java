@@ -18,13 +18,14 @@ package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
+import retrofit.RetrofitError;
+import timber.log.Timber;
 
 public class SetMovieWatchedTask extends BaseMovieActionTask {
 
@@ -50,7 +51,12 @@ public class SetMovieWatchedTask extends BaseMovieActionTask {
     @Override
     protected SyncResponse doTraktAction(Sync traktSync, SyncItems items)
             throws OAuthUnauthorizedException {
-        return traktSync.addItemsToWatchedHistory(items);
+        try {
+            return traktSync.addItemsToWatchedHistory(items);
+        } catch (RetrofitError e) {
+            Timber.e(e, "doTraktAction: setting movie watched failed");
+            return null;
+        }
     }
 
     @Override
