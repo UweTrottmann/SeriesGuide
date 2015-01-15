@@ -17,9 +17,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -38,54 +35,31 @@ import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
  * Base class for executing movie actions.
  */
-public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer> {
+public abstract class BaseMovieActionTask extends BaseActionTask {
 
-    private static final int SUCCESS = 0;
-    private static final int ERROR_NETWORK = -1;
-    private static final int ERROR_DATABASE = -2;
-    private static final int ERROR_TRAKT_AUTH = -3;
-    private static final int ERROR_TRAKT_API = -4;
-    private static final int ERROR_HEXAGON_API = -5;
-
-    private final Context context;
     private final int movieTmdbId;
-    private boolean isSendingToHexagon;
-    private boolean isSendingToTrakt;
 
     public BaseMovieActionTask(Context context, int movieTmdbId) {
-        this.context = context.getApplicationContext();
+        super(context);
         this.movieTmdbId = movieTmdbId;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        isSendingToHexagon = shouldSendToHexagon() && HexagonTools.isSignedIn(context);
-        if (isSendingToHexagon) {
-            Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
-        }
-        isSendingToTrakt = TraktCredentials.get(context).hasCredentials();
-        if (isSendingToTrakt) {
-            Toast.makeText(context, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
         // if sending to service, check for connection
-        if (isSendingToHexagon || isSendingToTrakt) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
+        if (isSendingToHexagon() || isSendingToTrakt()) {
+            if (!AndroidUtils.isNetworkConnected(getContext())) {
                 return ERROR_NETWORK;
             }
         }
 
         // send to hexagon
-        if (isSendingToHexagon) {
+        if (isSendingToHexagon()) {
             Movie movie = new Movie();
             movie.setTmdbId(movieTmdbId);
 
@@ -98,7 +72,7 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
             movieList.setMovies(movies);
 
             try {
-                HexagonTools.getMoviesService(context).save(movieList).execute();
+                HexagonTools.getMoviesService(getContext()).save(movieList).execute();
             } catch (IOException e) {
                 Timber.e(e, "doInBackground: failed to upload movie to hexagon.");
                 return ERROR_HEXAGON_API;
@@ -106,8 +80,8 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
         }
 
         // send to trakt
-        if (isSendingToTrakt) {
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
+        if (isSendingToTrakt()) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt == null) {
                 return ERROR_TRAKT_AUTH;
             }
@@ -120,7 +94,7 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
             try {
                 response = doTraktAction(traktSync, items);
             } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
+                TraktCredentials.get(getContext()).setCredentialsInvalid();
                 return ERROR_TRAKT_AUTH;
             }
 
@@ -130,7 +104,7 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
         }
 
         // update local state
-        if (!doDatabaseUpdate(context, movieTmdbId)) {
+        if (!doDatabaseUpdate(getContext(), movieTmdbId)) {
             return ERROR_DATABASE;
         }
 
@@ -139,35 +113,10 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
 
     @Override
     protected void onPostExecute(Integer result) {
+        super.onPostExecute(result);
+
         // always post event so UI releases locks
         EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
-
-        // handle errors
-        Integer errorResId = null;
-        switch (result) {
-            case ERROR_NETWORK:
-                errorResId = R.string.offline;
-                break;
-            case ERROR_DATABASE:
-                errorResId = R.string.database_error;
-                break;
-            case ERROR_TRAKT_AUTH:
-                errorResId = R.string.trakt_error_credentials;
-                break;
-            case ERROR_TRAKT_API:
-                errorResId = R.string.trakt_error_general;
-                break;
-            case ERROR_HEXAGON_API:
-                errorResId = R.string.hexagon_api_error;
-                break;
-        }
-        if (errorResId != null) {
-            Toast.makeText(context, errorResId, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // success!
-        Toast.makeText(context, getSuccessTextResId(), Toast.LENGTH_SHORT).show();
     }
 
     private static boolean isTraktActionSuccessful(SyncResponse response) {
@@ -186,16 +135,8 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
     protected abstract boolean doDatabaseUpdate(Context context, int movieTmdbId);
 
     /**
-     * Override and return {@code false} to not send to hexagon, {@link #setHexagonMovieProperties}
-     * will not be called then.
-     */
-    protected boolean shouldSendToHexagon() {
-        return true;
-    }
-
-    /**
      * Set properties to send to hexagon. To disable hexagon uploading, override {@link
-     * #shouldSendToHexagon()}.
+     * #isSendingToHexagon()}}.
      */
     protected abstract void setHexagonMovieProperties(Movie movie);
 
@@ -204,6 +145,4 @@ public abstract class BaseMovieActionTask extends AsyncTask<Void, Void, Integer>
      */
     protected abstract SyncResponse doTraktAction(Sync traktSync, SyncItems items)
             throws OAuthUnauthorizedException;
-
-    protected abstract int getSuccessTextResId();
 }

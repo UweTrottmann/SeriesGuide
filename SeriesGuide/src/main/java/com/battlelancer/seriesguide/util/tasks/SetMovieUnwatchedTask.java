@@ -34,13 +34,18 @@ public class SetMovieUnwatchedTask extends BaseMovieActionTask {
     }
 
     @Override
-    protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return MovieTools.setWatchedFlag(context, movieTmdbId, false);
+    protected int getSuccessTextResId() {
+        return R.string.action_unwatched;
     }
 
     @Override
-    protected boolean shouldSendToHexagon() {
+    protected boolean isSendingToHexagon() {
         return false;
+    }
+
+    @Override
+    protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
+        return MovieTools.setWatchedFlag(context, movieTmdbId, false);
     }
 
     @Override
@@ -57,10 +62,5 @@ public class SetMovieUnwatchedTask extends BaseMovieActionTask {
             Timber.e(e, "doTraktAction: setting movie unwatched failed");
             return null;
         }
-    }
-
-    @Override
-    protected int getSuccessTextResId() {
-        return R.string.action_unwatched;
     }
 }
