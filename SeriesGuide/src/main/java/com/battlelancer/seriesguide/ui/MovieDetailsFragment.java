@@ -42,7 +42,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
@@ -56,7 +55,6 @@ import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -528,15 +526,6 @@ public class MovieDetailsFragment extends Fragment {
         }
         // re-query some movie details to update button states
         restartMovieLoader();
-    }
-
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
-        if (event.mWasSuccessful &&
-                (event.mTraktAction == TraktAction.WATCHED_MOVIE
-                        || event.mTraktAction == TraktAction.UNWATCHED_MOVIE
-                        || event.mTraktAction == TraktAction.RATE_MOVIE)) {
-            restartMovieLoader();
-        }
     }
 
     private void rateMovie() {
