@@ -20,6 +20,7 @@ import android.content.Context;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.SyncErrors;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
@@ -39,6 +40,10 @@ public abstract class BaseRateItemTask extends BaseActionTask {
     @Override
     protected Integer doInBackground(Void... params) {
         if (isSendingToTrakt()) {
+            if (!AndroidUtils.isNetworkConnected(getContext())) {
+                return ERROR_NETWORK;
+            }
+
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt == null) {
                 return ERROR_TRAKT_AUTH;
