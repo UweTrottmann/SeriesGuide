@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
+import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -136,18 +137,7 @@ public class EpisodeTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int episodeTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new TraktTask(context).rateEpisode(episodeTvdbId, rating));
-
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Episodes.RATING_USER, rating.value);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), values, null,
-                        null);
-
-        // notify withshow uri as well (used by episode details view)
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
-                        null);
+        AndroidUtils.executeOnPool(new RateEpisodeTask(context, rating, episodeTvdbId));
     }
 
     public static void validateFlags(int episodeFlags) {

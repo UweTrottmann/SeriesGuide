@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
+import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.SetMovieUnwatchedTask;
@@ -172,12 +173,7 @@ public class MovieTools {
      * to trakt.
      */
     public static void rate(Context context, int movieTmdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new TraktTask(context).rateMovie(movieTmdbId, rating));
-
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Movies.RATING_USER, rating.value);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
+        AndroidUtils.executeOnPool(new RateMovieTask(context, rating, movieTmdbId));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
