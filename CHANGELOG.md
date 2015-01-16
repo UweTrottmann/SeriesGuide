@@ -8,9 +8,16 @@ All dates are in the European Central timezone.
 Version 21.1 *(in development)*
 -------------------------------
 
+#### 21.1.0-beta5 *(2015-01-16)*
+
+* TWEAK When rating, wait for sending to trakt to complete before changing local rating.
+* FIX Rare crash in show overview and history tab when trying to display data, but user is moving away.
+* NOTICE Latest translations from crowdin.
+
 #### 21.1.0-beta4 *(2015-01-14)*
 
 * TWEAK If connected to trakt or Cloud and changing movie watchlist/collection state, will only change local state if sending was successful.
+* NOTICE Latest translations from crowdin.
 
 #### 21.1.0-beta3 *(2015-01-13)*
 
