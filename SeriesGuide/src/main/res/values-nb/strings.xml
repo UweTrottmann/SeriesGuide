@@ -35,7 +35,7 @@
   <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Kan ikke endre dataene.</string>
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
@@ -218,8 +218,8 @@
   <string name="hexagon_remove_account_success">Bruker utslettet.</string>
   <string name="hexagon_remove_account_failure">Kunne ikke fjerne brukeren.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer ifra SeriesGuide Sky. Husk og fjerne den på andre enheter også.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Kan ikke kontakte SeriesGuide skyen.  Prøv senere.</string>
+  <string name="hexagon_api_queued">Sender til SeriesGuide skyen.</string>
   <string name="trakt_submitqueued">Sender til trakt.</string>
   <string name="trakt_seen">%s sett.</string>
   <string name="trakt_notseen">%s ikke sett.</string>
@@ -230,7 +230,7 @@
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Sendt til Trakt.</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
   <string name="trakt_error_general">Kunne ikke kontakte trakt. Prøv igjen senere.</string>
   <string name="trakt_account">trakt konto</string>
