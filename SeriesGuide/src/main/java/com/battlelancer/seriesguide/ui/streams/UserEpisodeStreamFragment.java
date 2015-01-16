@@ -126,6 +126,9 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 @Override
                 public void onLoadFinished(Loader<UserEpisodeHistoryLoader.Result> loader,
                         UserEpisodeHistoryLoader.Result data) {
+                    if (!isAdded()) {
+                        return;
+                    }
                     mAdapter.setData(data.results);
                     setEmptyMessage(data.emptyTextResId);
                     showProgressBar(false);
