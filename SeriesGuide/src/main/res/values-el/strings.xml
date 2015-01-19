@@ -35,7 +35,7 @@
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί αυτό.</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
@@ -167,7 +167,7 @@
   <string name="recent">Πρόσφατο</string>
   <string name="friends">Φίλοι</string>
   <string name="friends_empty">Καμία δραστηριότητα φίλων στο trakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">Ιστορικό</string>
   <string name="user_stream_empty">Καμιά πρόσφατη δραστηριότητα στο trakt. Ελέγξε σε άλλες σειρές!</string>
   <string name="user_movie_stream_empty">Καμιά πρόσφατη δραστηριότητα στο trakt. Ελέγξε σε άλλες ταινίες!</string>
   <string name="noupcoming">Δεν υπάρχουν επερχόμενα επεισόδια.</string>
@@ -230,14 +230,14 @@
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Στάλθηκε στο trakt.</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
-  <string name="trakt_account">trakt account</string>
+  <string name="trakt_account">λογαριασμός trakt</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Σύνδεση trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
+  <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>
   <string name="username">Όνομα χρήστη</string>
   <string name="waitplease">Μια στιγμή, παρακαλώ…</string>
   <string name="connect">Σύνδεση</string>
