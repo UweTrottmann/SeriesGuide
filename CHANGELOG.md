@@ -14,6 +14,7 @@ Version 21.1 *(2015-01-19)*
 #### 21.1.1 *(2015-01-19)*
 
 * FIX Crash when trakt credentials are invalid and trying to load user history.
+* FIX Crash when timezone is not recognized.
 
 #### 21.1.0 *(2015-01-19)*
 
