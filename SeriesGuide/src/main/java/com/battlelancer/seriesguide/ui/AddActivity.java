@@ -91,9 +91,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
             public void onPageSelected(int position) {
                 String tag = null;
                 switch (position) {
-                    case AddPagerAdapter.TRENDING_TAB_POSITION:
-                        tag = "Trending";
-                        break;
                     case AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION:
                         tag = "TVDb Search";
                         break;
@@ -165,21 +162,14 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {
 
-        private static final int DEFAULT_TABCOUNT = 2;
+        private static final int DEFAULT_TABCOUNT = 1;
+        public static final int SEARCH_TAB_DEFAULT_POSITION = 0;
 
-        private static final int TRAKT_CONNECTED_TABCOUNT = 5;
-
-        public static final int TRENDING_TAB_POSITION = 0;
-
-        public static final int RECOMMENDED_TAB_POSITION = 2;
-
-        public static final int LIBRARY_TAB_POSITION = 3;
-
-        public static final int WATCHLIST_TAB_POSITION = 4;
-
-        public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
-
-        public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
+        private static final int TRAKT_CONNECTED_TABCOUNT = 4;
+        public static final int SEARCH_TAB_CONNECTED_POSITION = 0;
+        public static final int RECOMMENDED_TAB_POSITION = 1;
+        public static final int LIBRARY_TAB_POSITION = 2;
+        public static final int WATCHLIST_TAB_POSITION = 3;
 
         private final boolean mIsConnectedToTrakt;
 
@@ -206,10 +196,10 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         @Override
         public int getCount() {
             if (mIsConnectedToTrakt) {
-                // show trakt recommended and libraried shows, too
+                // show trakt recommendations, library and watchlist, too
                 return TRAKT_CONNECTED_TABCOUNT;
             } else {
-                // show search results and trakt trending shows
+                // show only search tab
                 return DEFAULT_TABCOUNT;
             }
         }
@@ -218,9 +208,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         public CharSequence getPageTitle(int position) {
             if (getCount() == TRAKT_CONNECTED_TABCOUNT) {
                 switch (position) {
-                    case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase(
-                                Locale.getDefault());
                     case RECOMMENDED_TAB_POSITION:
                         return mContext.getString(R.string.recommended).toUpperCase(
                                 Locale.getDefault());
@@ -236,9 +223,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
                 }
             } else {
                 switch (position) {
-                    case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase(
-                                Locale.getDefault());
                     case SEARCH_TAB_DEFAULT_POSITION:
                         return mContext.getString(R.string.search).toUpperCase(
                                 Locale.getDefault());

@@ -108,7 +108,7 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile('com.crashlytics.sdk.android:crashlytics:2.1.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
@@ -117,17 +117,16 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.0.0'
     compile 'com.jakewharton.timber:timber:2.5.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    compile 'com.squareup.okhttp:okhttp:2.1.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
-    compile 'com.squareup:tape:1.2.3'
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
     compile ('com.uwetrottmann:trakt-java:4.0.3') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'joda-time:joda-time:2.5'
+    compile 'joda-time:joda-time:2.6'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:6.5.87'

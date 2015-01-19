@@ -31,7 +31,7 @@ public class MovieDetails {
 
     public boolean inCollection;
     public boolean inWatchlist;
-    public boolean watched;
+    public boolean isWatched;
 
     public DateTime released;
     public int userRating;

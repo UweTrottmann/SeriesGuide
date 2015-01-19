@@ -5,28 +5,66 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 21.1 *(2015-01-19)*
+---------------------------
+
+* Improved error messages when interacting with trakt.
+* Combined search and trending tab in "Add show" screen.
+
+#### 21.1.0 *(2015-01-19)*
+
+* TWEAK Better error messages when connecting trakt.
+* TWEAK Smaller sync status progress bar.
+
+#### 21.1.0-beta5 *(2015-01-16)*
+
+* TWEAK When rating, wait for sending to trakt to complete before changing local rating.
+* FIX Rare crash in show overview and history tab when trying to display data, but user is moving away.
+* NOTICE Latest translations from crowdin.
+
+#### 21.1.0-beta4 *(2015-01-14)*
+
+* TWEAK If connected to trakt or Cloud and changing movie watchlist/collection state, will only change local state if sending was successful.
+* NOTICE Latest translations from crowdin.
+
+#### 21.1.0-beta3 *(2015-01-13)*
+
+* TWEAK Re-enable watched button for movies in either watchlist or collection, if connected to trakt.
+
+#### 21.1.0-beta2 *(2015-01-12)*
+
+* FIX Do not try to send watched/collected episodes to trakt if not connected.
+
+#### 21.1.0-beta1 *(2015-01-12)*
+
+* TWEAK If connected to trakt or Cloud and setting episodes watched or collected, will wait until network operation has completed before changing local state.
+* TWEAK Combine trending shows and search tab. Display more trending shows.
+* TWEAK Better error messages if loading data from trakt fails.
+* FIX Skipped episodes were removed if syncing an unwatched/uncollected local show with trakt.
+* NOTICE Latest translations from crowdin.
+
 Version 21 *(2015-01-02)*
 -------------------------
 
 * Support for the new trakt (v2). You will have to sign in and re-approve SeriesGuide.
 
-#### 21.0.4 *(2014-12-05)*
+#### 21.0.4 *(2015-01-05)*
 
 * FIX Crash when leaving episode details view while it reloads.
 * FIX Crash if notification intent is null.
 * FIX Crash if content provider id is unknown at runtime.
 * FIX Disabled Javascript on the trakt sign-in page blocked some Google accounts from signing in.
 
-#### 21.0.3 *(2014-12-05)*
+#### 21.0.3 *(2015-01-05)*
 
 * FIX Crash in some circumstances when loading data from trakt fails.
 
-#### 21.0.2 *(2014-12-04)*
+#### 21.0.2 *(2015-01-04)*
 
 * TWEAK Better error reports.
 * NOTICE Latest translations from crowdin.
 
-#### 21.0.1 *(2014-12-03)*
+#### 21.0.1 *(2015-01-03)*
 
 * FIX Crash when loading movie, but trakt credentials are invalid.
 * FIX trakt links open the development site.
@@ -34,7 +72,7 @@ Version 21 *(2015-01-02)*
 * TWEAK Search TheTVDB in all languages if there are no results using the user preferred language.
 * NOTICE Latest translations from crowdin.
 
-#### 21.0.0 *(2014-12-02)*
+#### 21.0.0 *(2015-01-02)*
 
 * FEATURE Support for trakt v2.
 * TWEAK Improved trakt sync, now ratings are available offline as well.

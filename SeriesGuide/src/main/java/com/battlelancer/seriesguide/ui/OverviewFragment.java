@@ -891,6 +891,9 @@ public class OverviewFragment extends Fragment implements
 
                 @Override
                 public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
+                    if (!isAdded()) {
+                        return;
+                    }
                     if (data == null) {
                         Timber.e("onLoadFinished: did not receive valid actions");
                     } else {

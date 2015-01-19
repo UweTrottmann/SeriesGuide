@@ -35,6 +35,7 @@
   <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
   <string name="add_empty">Niesú tu žiadne seriály.</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Zdieľať</string>
   <string name="share_show">Zdieľať reláciu</string>
   <string name="share_episode">Zdieľať epizódu</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
   <string name="add_error">Nemožno pridať %s.</string>
   <string name="add_already_exists">%s is already in your show list.</string>
-  <string name="trending">V kurze</string>
   <string name="recommended">Odporúčané</string>
   <string name="library">Knižnica</string>
   <string name="watchlist">Watchlist</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
   <string name="trakt_seen">%s pozrené.</string>
   <string name="trakt_notseen">%s nových.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>
-  <string name="trakt_error">Chyba v komunikácii s trakt.tv</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_account">trakt account</string>

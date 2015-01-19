@@ -35,6 +35,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
   <string name="add_error">לא יכול להוסיף %s.</string>
   <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
-  <string name="trending">פופולרי</string>
   <string name="recommended">מומלץ</string>
   <string name="library">ספרייה</string>
   <string name="watchlist">רשימת מעקב</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">החשבון נמחק.</string>
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מענן SeriesGuide. הקפד להסיר אותם גם בהתקנים אחרים המחוברים.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">שלח ל-Trakt.</string>
   <string name="trakt_seen">%s נצפו.</string>
   <string name="trakt_notseen">%s שטרם צפית.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או לסרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
-  <string name="trakt_error">אינטראקציה עם trakt נכשלה</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_account">חשבון trakt</string>

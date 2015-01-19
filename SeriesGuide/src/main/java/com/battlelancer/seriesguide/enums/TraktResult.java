@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2015 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.enums;
 
-import android.content.Context;
-import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
+/**
+ * Adds trakt API related error codes.
+ */
+public interface TraktResult extends NetworkResult {
 
-public class HexagonRemoveMovieFromCollectionTask extends BaseHexagonMovieTask {
+    public int AUTH_ERROR = -3;
+    public int API_ERROR = -4;
 
-    public HexagonRemoveMovieFromCollectionTask(Context context, int movieTmdbId) {
-        super(context, movieTmdbId);
-    }
-
-    @Override
-    protected void setMovieProperties(Movie movie) {
-        movie.setIsInCollection(false);
-    }
 }
