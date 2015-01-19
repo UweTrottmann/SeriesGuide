@@ -161,7 +161,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
         public Result loadInBackground() {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt == null) {
-                return null;
+                return buildResultFailure(R.string.trakt_error_credentials);
             }
 
             List<HistoryEntry> history;

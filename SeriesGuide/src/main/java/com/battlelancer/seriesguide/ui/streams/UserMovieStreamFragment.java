@@ -107,6 +107,9 @@ public class UserMovieStreamFragment extends StreamFragment {
                 @Override
                 public void onLoadFinished(Loader<UserMoviesHistoryLoader.Result> loader,
                         UserMoviesHistoryLoader.Result data) {
+                    if (!isAdded()) {
+                        return;
+                    }
                     mAdapter.setData(data.results);
                     setEmptyMessage(data.emptyTextResId);
                     showProgressBar(false);
@@ -139,7 +142,7 @@ public class UserMovieStreamFragment extends StreamFragment {
         public Result loadInBackground() {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt == null) {
-                return null;
+                return buildResultFailure(R.string.trakt_error_credentials);
             }
 
             List<HistoryEntry> history;
