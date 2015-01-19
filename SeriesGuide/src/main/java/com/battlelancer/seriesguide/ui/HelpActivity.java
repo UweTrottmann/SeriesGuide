@@ -21,9 +21,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -43,8 +45,21 @@ public class HelpActivity extends BaseActivity {
 
         WebView webview = (WebView) findViewById(R.id.webView);
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.setWebViewClient(webViewClient);
         webview.loadUrl(getString(R.string.help_url));
     }
+
+    private WebViewClient webViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null && !url.startsWith(getString(R.string.help_url))) {
+                // launch browser when leaving help page
+                Utils.launchWebsite(view.getContext(), url, TAG, "Non-help page");
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void setupActionBar() {
