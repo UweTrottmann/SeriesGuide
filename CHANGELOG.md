@@ -11,6 +11,10 @@ Version 21.1 *(2015-01-19)*
 * Improved error messages when interacting with trakt.
 * Combined search and trending tab in "Add show" screen.
 
+#### 21.1.1 *(2015-01-19)*
+
+* FIX Crash when trakt credentials are invalid and trying to load user history.
+
 #### 21.1.0 *(2015-01-19)*
 
 * TWEAK Better error messages when connecting trakt.
