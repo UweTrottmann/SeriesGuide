@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
@@ -208,12 +209,7 @@ public class ShowTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int showTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new TraktTask(context).rateShow(showTvdbId, rating));
-
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.RATING_USER, rating.value);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+        AndroidUtils.executeOnPool(new RateShowTask(context, rating, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {

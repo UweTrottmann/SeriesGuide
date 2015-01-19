@@ -35,6 +35,7 @@
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>
   <string name="share_episode">Condividi episodio</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s apparirà nella tua lista degli show tra poco.</string>
   <string name="add_error">Impossibile aggiungere %s.</string>
   <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
-  <string name="trending">Di tendenza</string>
   <string name="recommended">Consigliati</string>
   <string name="library">Archivio</string>
   <string name="watchlist">Da vedere</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Account rimosso.</string>
   <string name="hexagon_remove_account_failure">Impossibile rimuovere l\'account.</string>
   <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Invio a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s non visto.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">Sovrascrivi</string>
   <string name="traktcheckin_inprogress">Check-in già effettuato in un altro episodio o film. Sovrascrivere il precedente check-in o attendere %s e riprovare.</string>
   <string name="traktcheckin_wait">Aspetterò</string>
-  <string name="trakt_error">Interazione con trakt non riuscita</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
   <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
   <string name="trakt_account">Account trakt</string>

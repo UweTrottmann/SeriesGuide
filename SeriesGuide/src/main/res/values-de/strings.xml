@@ -35,6 +35,7 @@
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="add_empty">Keine Serien hier.</string>
   <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
+  <string name="database_error">Daten können nicht geändert werden.</string>
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste.</string>
   <string name="add_error">%s konnte nicht hinzugefügt werden.</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste.</string>
-  <string name="trending">Beliebt</string>
   <string name="recommended">Empfehlungen</string>
   <string name="library">Bibliothek</string>
   <string name="watchlist">Ansehen-Liste</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Konto vaporisiert.</string>
   <string name="hexagon_remove_account_failure">Konto konnte nicht entfernt werden.</string>
   <string name="hexagon_remove_account_confirmation">Das Entfernen Ihres Kontos löscht alle Serien und Filme von SeriesGuide cloud. Achten Sie darauf Ihr Konto auch von anderen verbundenen Geräten zu entfernen.</string>
+  <string name="hexagon_api_error">Konnte SeriesGuide Cloud nicht erreichen. Versuchen Sie es später erneut.</string>
+  <string name="hexagon_api_queued">Sende an SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Sende an trakt.</string>
   <string name="trakt_seen">%s gesehen.</string>
   <string name="trakt_notseen">%s nicht gesehen.</string>
@@ -228,9 +230,9 @@
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>
-  <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
+  <string name="trakt_success">An trakt übermittelt.</string>
   <string name="trakt_error_credentials">Es gab einen Fehler. Bitte prüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
-  <string name="trakt_error_general">Konnte nicht mit trakt sprechen. Versuchen Sie es später noch einmal.</string>
+  <string name="trakt_error_general">Konnte trakt nicht erreichen. Versuchen Sie es später erneut.</string>
   <string name="trakt_account">trakt Konto</string>
   <string name="trakt_connect_instructions">Melden Sie sich auf dem nächsten Bildschirm bei trakt an, oder erstellen Sie ein neues Konto. Erlauben Sie dann SeriesGuide Zugriff auf Ihr trakt Konto.</string>
   <string name="connect_trakt">Mit Trakt verbinden</string>

@@ -35,6 +35,7 @@
   <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
@@ -66,7 +67,7 @@
   <string name="statistics_episodes">Эпизоды</string>
   <string name="statistics_movies">Фильмы</string>
   <string name="shows_with_next">%s с новым эпизодом</string>
-  <string name="shows_continuing">Продолжается %s</string>
+  <string name="shows_continuing">%s продолжается</string>
   <string name="episodes_watched">%s просмотрено</string>
   <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
   <string name="movies_on_watchlist">%s в списке просмотров</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s скоро появится в вашем списке.</string>
   <string name="add_error">Не удалось добавить %s.</string>
   <string name="add_already_exists">%s уже есть в вашем списке.</string>
-  <string name="trending">Популярные</string>
   <string name="recommended">Рекомендуемые</string>
   <string name="library">Библиотека</string>
   <string name="watchlist">Список просмотра</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Аккаунт уничтожены.</string>
   <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Отправка в trakt.</string>
   <string name="trakt_seen">%s просмотрено.</string>
   <string name="trakt_notseen">%s не просмотрено.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Ожидаю</string>
-  <string name="trakt_error">Связь с trakt не удалась</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_account">Аккаунт trakt</string>

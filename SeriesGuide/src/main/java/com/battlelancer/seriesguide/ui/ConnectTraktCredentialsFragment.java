@@ -30,7 +30,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.NetworkResult;
+import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
@@ -167,27 +167,36 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     public void onTaskFinished(int resultCode) {
         mTask = null;
 
-        if (resultCode == NetworkResult.OFFLINE) {
-            setStatus(false, R.string.offline);
-            setButtonStates(true, false);
+        if (resultCode == TraktResult.SUCCESS) {
+            // if we got here, looks like credentials were stored successfully
+
+            // show further options after successful connection
+            if (getFragmentManager() != null) {
+                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, f);
+                ft.commitAllowingStateLoss();
+            }
             return;
         }
 
-        if (resultCode == NetworkResult.ERROR) {
-            setStatus(false, R.string.trakt_error_credentials);
-            setButtonStates(true, false);
-            return;
+        // handle errors
+        int errorResId;
+        switch (resultCode) {
+            case TraktResult.OFFLINE:
+                errorResId = R.string.offline;
+                break;
+            case TraktResult.API_ERROR:
+                errorResId = R.string.trakt_error_general;
+                break;
+            case TraktResult.AUTH_ERROR:
+            case TraktResult.ERROR:
+            default:
+                errorResId = R.string.trakt_error_credentials;
+                break;
         }
-
-        // if we got here, looks like credentials were stored successfully
-
-        // show further options after successful connection
-        if (getFragmentManager() != null) {
-            ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, f);
-            ft.commitAllowingStateLoss();
-        }
+        setStatus(false, errorResId);
+        setButtonStates(true, false);
     }
 
     private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {

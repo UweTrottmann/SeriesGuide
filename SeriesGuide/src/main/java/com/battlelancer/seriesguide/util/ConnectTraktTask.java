@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
+import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -68,7 +69,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     protected Integer doInBackground(String... params) {
         // check for connectivity
         if (!AndroidUtils.isNetworkConnected(mContext)) {
-            return NetworkResult.OFFLINE;
+            return TraktResult.OFFLINE;
         }
 
         // get account data
@@ -76,7 +77,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // check if we have any usable data
         if (TextUtils.isEmpty(authCode)) {
-            return Result.ERROR;
+            return TraktResult.API_ERROR;
         }
 
         // get access token
@@ -98,7 +99,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // did we obtain an access token?
         if (TextUtils.isEmpty(accessToken)) {
-            return Result.ERROR;
+            return TraktResult.API_ERROR;
         }
 
         // get user name
@@ -111,14 +112,18 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             if (settings != null && settings.user != null) {
                 username = settings.user.username;
             }
-        } catch (RetrofitError | OAuthUnauthorizedException e) {
-            username = null;
+        } catch (RetrofitError e) {
             Timber.e(e, "Getting user name failed");
+            return AndroidUtils.isNetworkConnected(mContext)
+                    ? TraktResult.API_ERROR : TraktResult.OFFLINE;
+        } catch (OAuthUnauthorizedException e) {
+            Timber.e(e, "Getting user name failed");
+            return TraktResult.AUTH_ERROR;
         }
 
         // did we obtain a username?
         if (TextUtils.isEmpty(username)) {
-            return Result.ERROR;
+            return TraktResult.API_ERROR;
         }
 
         // store the new credentials
@@ -143,6 +148,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // make sure the next sync will run a full episode sync
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0);
+        // make sure the next sync will download all watched movies
+        editor.putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0);
         // make sure the next sync will download all ratings
         editor.putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0);
         editor.putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0);

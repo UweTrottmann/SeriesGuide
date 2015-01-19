@@ -202,6 +202,12 @@
         <item name="spb_interpolator">spb_interpolator_linear</item>
     </style>
 
+    <style name="Widget.SeriesGuide.SmoothProgressBar.Sync">
+        <item name="spb_speed">0.7</item>
+        <item name="spb_stroke_width">2dp</item>
+        <item name="spb_interpolator">spb_interpolator_accelerate</item>
+    </style>
+
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView"/>
 

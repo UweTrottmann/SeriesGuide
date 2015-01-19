@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
+import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -136,18 +137,7 @@ public class EpisodeTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int episodeTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new TraktTask(context).rateEpisode(episodeTvdbId, rating));
-
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Episodes.RATING_USER, rating.value);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), values, null,
-                        null);
-
-        // notify withshow uri as well (used by episode details view)
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
-                        null);
+        AndroidUtils.executeOnPool(new RateEpisodeTask(context, rating, episodeTvdbId));
     }
 
     public static void validateFlags(int episodeFlags) {
@@ -917,7 +907,8 @@ public class EpisodeTools {
             if (mIsSendingToHexagon) {
                 Toast.makeText(mContext, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
             }
-            mIsSendingToTrakt = !isSkipped(mType.mEpisodeFlag);
+            mIsSendingToTrakt = TraktCredentials.get(mContext).hasCredentials()
+                    && !isSkipped(mType.mEpisodeFlag);
             if (mIsSendingToTrakt) {
                 Toast.makeText(mContext, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
             }
@@ -926,7 +917,7 @@ public class EpisodeTools {
         @Override
         protected Integer doInBackground(Void... params) {
             // upload to hexagon
-            if (HexagonTools.isSignedIn(mContext)) {
+            if (mIsSendingToHexagon) {
                 if (!AndroidUtils.isNetworkConnected(mContext)) {
                     return ERROR_NETWORK;
                 }
@@ -959,7 +950,7 @@ public class EpisodeTools {
                 }
             }
 
-            // update local database if uploading went smoothly
+            // update local database (if uploading went smoothly or not uploading at all)
             mType.updateDatabase();
             mType.storeLastEpisode();
 

@@ -50,6 +50,9 @@ public class TraktSettings {
     public static final String KEY_LAST_MOVIES_RATED_AT
             = "trakt.last_activity.movies.rated";
 
+    public static final String KEY_LAST_MOVIES_WATCHED_AT
+            = "trakt.last_activity.movies.watched";
+
     public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
@@ -139,6 +142,14 @@ public class TraktSettings {
     }
 
     /**
+     * The last time movie watched flags have changed or 0 if no value exists.
+     */
+    public static long getLastMoviesWatchedAt(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_MOVIES_WATCHED_AT, 0);
+    }
+
+    /**
      * If either collection or watchlist have changes newer than last stored.
      */
     public static boolean isMovieListsChanged(Context context, DateTime collectedAt,
@@ -160,13 +171,14 @@ public class TraktSettings {
     }
 
     /**
-     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} to 0 so all ratings will be downloaded the next time
-     * {@link com.battlelancer.seriesguide.util.TraktTools#downloadMovieRatings} is called.
+     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} and {@link #KEY_LAST_MOVIES_WATCHED_AT} to 0 so all
+     * ratings and watched movies will be downloaded the next time a sync runs.
      */
-    public static boolean resetLastMoviesRatedAt(Context context) {
+    public static boolean resetMoviesLastActivity(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0)
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0)
                 .commit();
     }
 
