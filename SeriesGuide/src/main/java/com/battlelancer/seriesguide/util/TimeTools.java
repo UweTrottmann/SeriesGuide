@@ -86,11 +86,17 @@ public class TimeTools {
     /**
      * Returns the appropriate time zone for the given tzdata zone identifier.
      *
-     * <p> Falls back to "America/New_York" if timezone string is empty.
+     * <p> Falls back to "America/New_York" if timezone string is empty or unknown.
      */
     public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
-        return (timezone == null || timezone.length() == 0) ?
-                DateTimeZone.forID(TIMEZONE_ID_US_EASTERN) : DateTimeZone.forID(timezone);
+        if (timezone != null && timezone.length() != 0) {
+            try {
+                return DateTimeZone.forID(timezone);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        return DateTimeZone.forID(TIMEZONE_ID_US_EASTERN);
     }
 
     /**

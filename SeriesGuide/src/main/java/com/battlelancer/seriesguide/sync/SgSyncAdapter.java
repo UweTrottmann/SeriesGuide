@@ -506,6 +506,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
+        // download watched movies
+        if (TraktTools.downloadWatchedMovies(context, lastActivity.movies.watched_at)
+                != UpdateResult.SUCCESS) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
         // download movie ratings
         return TraktTools.downloadMovieRatings(context, lastActivity.movies.rated_at);
     }

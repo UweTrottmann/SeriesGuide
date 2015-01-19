@@ -35,6 +35,7 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
@@ -192,7 +193,6 @@
   <string name="add_started">%s az sonra dizi listenizde görünecek.</string>
   <string name="add_error">%s eklenemedi.</string>
   <string name="add_already_exists">%s zaten dizi listenizde mevcut.</string>
-  <string name="trending">Öne Çıkanlar</string>
   <string name="recommended">Önerilen</string>
   <string name="library">Kitaplık</string>
   <string name="watchlist">İzleme listesi</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
   <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="trakt_seen">%s görüldü.</string>
   <string name="trakt_notseen">%s görülmedi.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
-  <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_account">trakt account</string>

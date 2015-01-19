@@ -55,13 +55,6 @@ public abstract class AddFragment extends Fragment {
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // so we don't have to do a network op each config change
-        setRetainInstance(true);
-    }
-
     /**
      * Implementers should inflate their own layout and inject views with {@link
      * butterknife.ButterKnife#inject(Object, android.view.View)}.

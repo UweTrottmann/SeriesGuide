@@ -35,6 +35,7 @@
   <string name="app_not_available">No hi ha cap aplicació per suportar-ho.</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
+  <string name="database_error">Could not modify data.</string>
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
   <string name="share_episode">Comparteix l\'episodi</string>
@@ -192,7 +193,6 @@
   <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
   <string name="add_error">No es pot afegir %s.</string>
   <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
-  <string name="trending">De moda</string>
   <string name="recommended">Recomanat</string>
   <string name="library">Biblioteca</string>
   <string name="watchlist">Llista de seguiment</string>
@@ -218,6 +218,8 @@
   <string name="hexagon_remove_account_success">Compte esborrat.</string>
   <string name="hexagon_remove_account_failure">No s\'ha pogut esborrar el compte.</string>
   <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
+  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
   <string name="trakt_seen">%s vists.</string>
   <string name="trakt_notseen">%s no vist.</string>
@@ -228,7 +230,7 @@
   <string name="traktcheckin_cancel">Substitueix</string>
   <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
   <string name="traktcheckin_wait">Esperaré</string>
-  <string name="trakt_error">La interacció amb trakt ha fallat</string>
+  <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
   <string name="trakt_error_general">No funciona la comunicació amb trakt. Intenteu-ho més tard.</string>
   <string name="trakt_account">trakt account</string>
