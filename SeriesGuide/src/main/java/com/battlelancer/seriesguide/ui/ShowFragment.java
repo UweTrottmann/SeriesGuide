@@ -256,11 +256,12 @@ public class ShowFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (!isAdded()) {
+                return;
+            }
             if (data != null && data.moveToFirst()) {
                 mShowCursor = data;
-                if (isAdded()) {
-                    populateShow();
-                }
+                populateShow();
             }
         }
 

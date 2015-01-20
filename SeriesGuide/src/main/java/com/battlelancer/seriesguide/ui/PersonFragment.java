@@ -176,10 +176,11 @@ public class PersonFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<Person> loader, Person data) {
-            setProgressVisibility(false);
-            if (isAdded()) {
-                populatePersonViews(data);
+            if (!isAdded()) {
+                return;
             }
+            setProgressVisibility(false);
+            populatePersonViews(data);
         }
 
         @Override

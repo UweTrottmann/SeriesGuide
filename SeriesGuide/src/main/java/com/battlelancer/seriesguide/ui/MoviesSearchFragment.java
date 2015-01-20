@@ -221,6 +221,9 @@ public class MoviesSearchFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        if (!isAdded()) {
+            return;
+        }
         if (AndroidUtils.isNetworkConnected(getActivity())) {
             emptyView.setText(R.string.movies_empty);
         } else {
