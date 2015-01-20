@@ -11,6 +11,16 @@ Version 21.1 *(2015-01-19)*
 * Improved error messages when interacting with trakt.
 * Combined search and trending tab in "Add show" screen.
 
+#### 21.1.2 *(2015-01-20)*
+
+* TWEAK Always open help page in-app.
+* FIX Crash when displaying results in "Add show" tabs and other locations.
+* FIX Crash when trying to launch extension action that was removed or is not currently available.
+* FIX Crash when trying to modify sync settings, but sync account is not available.
+* TWEAK Partially localized error message when in-app billing actions fail.
+* FIX Crash when in-app billing actions fail.
+* FIX Text-to-speech service leak in WebViews (trakt auth and help page) on Android 4.2.2.
+
 #### 21.1.1 *(2015-01-19)*
 
 * FIX Crash when trakt credentials are invalid and trying to load user history.
