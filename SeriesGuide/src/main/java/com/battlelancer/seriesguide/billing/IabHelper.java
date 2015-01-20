@@ -304,10 +304,14 @@ public class IabHelper {
         }
     }
 
-    /** Returns whether subscriptions are supported. */
-    public boolean subscriptionsSupported() {
-        checkNotDisposed();
-        return mSubscriptionsSupported;
+    private boolean isDisposedOrNotSetup() {
+        if (mDisposed) {
+            logWarn("IabHelper was disposed of, so it cannot be used.");
+        }
+        if (!mSetupDone) {
+            logWarn("IAB helper is not set up.");
+        }
+        return mDisposed || !mSetupDone;
     }
 
     /**
@@ -544,29 +548,24 @@ public class IabHelper {
         return true;
     }
 
-    public Inventory queryInventory(boolean querySkuDetails, List<String> moreSkus)
-            throws IabException {
-        return queryInventory(querySkuDetails, moreSkus, null);
-    }
-
     /**
      * Queries the inventory. This will query all owned items from the server, as well as
      * information on additional skus, if specified. This method may block or take long to execute.
      * Do not call from a UI thread. For that, use the non-blocking version {@link
-     * #refreshInventoryAsync}.
+     * #queryInventoryAsync}.
      *
      * @param querySkuDetails if true, SKU details (price, description, etc) will be queried as well
      * as purchase information.
      * @param moreItemSkus additional PRODUCT skus to query information on, regardless of ownership.
      * Ignored if null or if querySkuDetails is false.
-     * @param moreSubsSkus additional SUBSCRIPTIONS skus to query information on, regardless of
-     * ownership. Ignored if null or if querySkuDetails is false.
      * @throws IabException if a problem occurs while refreshing the inventory.
      */
-    public Inventory queryInventory(boolean querySkuDetails, List<String> moreItemSkus,
-            List<String> moreSubsSkus) throws IabException {
-        checkNotDisposed();
-        checkSetupDone("queryInventory");
+    public Inventory queryInventory(boolean querySkuDetails, List<String> moreItemSkus)
+            throws IabException {
+        if (isDisposedOrNotSetup()) {
+            throw new IabException(BILLING_RESPONSE_RESULT_ERROR, "Error refreshing inventory.");
+        }
+
         try {
             Inventory inv = new Inventory();
             int r = queryPurchases(inv, ITEM_TYPE_INAPP);
@@ -627,6 +626,8 @@ public class IabHelper {
      * in {@link #queryInventory}, but will do so asynchronously and call back the specified
      * listener upon completion. This method is safe to call from a UI thread.
      *
+     * <p> Ensure helper is not disposed and setup, or will do nothing.
+     *
      * @param querySkuDetails as in {@link #queryInventory}
      * @param moreSkus as in {@link #queryInventory}
      * @param listener The listener to notify when the refresh operation completes.
@@ -634,9 +635,11 @@ public class IabHelper {
     public void queryInventoryAsync(final boolean querySkuDetails,
             final List<String> moreSkus,
             final QueryInventoryFinishedListener listener) {
+        if (isDisposedOrNotSetup()) {
+            return;
+        }
+
         final Handler handler = new Handler();
-        checkNotDisposed();
-        checkSetupDone("queryInventory");
         flagStartAsync("refresh inventory");
         (new Thread(new Runnable() {
             public void run() {
@@ -645,8 +648,8 @@ public class IabHelper {
                 Inventory inv = null;
                 try {
                     inv = queryInventory(querySkuDetails, moreSkus);
-                } catch (IabException ex) {
-                    result = ex.getResult();
+                } catch (IabException e) {
+                    result = e.getResult();
                 }
 
                 flagEndAsync();
@@ -666,11 +669,6 @@ public class IabHelper {
 
     public void queryInventoryAsync(QueryInventoryFinishedListener listener) {
         queryInventoryAsync(true, null, listener);
-    }
-
-    public void queryInventoryAsync(boolean querySkuDetails,
-            QueryInventoryFinishedListener listener) {
-        queryInventoryAsync(querySkuDetails, null, listener);
     }
 
     /**
@@ -868,11 +866,6 @@ public class IabHelper {
     }
 
     int queryPurchases(Inventory inv, String itemType) throws JSONException, RemoteException {
-        // null check, helper could have gotten disposed
-        if (mDisposed) {
-            return IABHELPER_VERIFICATION_FAILED;
-        }
-
         // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
         logDebug("Package name: " + mContext.getPackageName());
@@ -937,7 +930,7 @@ public class IabHelper {
     int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)
             throws RemoteException, JSONException {
         logDebug("Querying SKU details.");
-        ArrayList<String> skuList = new ArrayList<String>();
+        ArrayList<String> skuList = new ArrayList<>();
         skuList.addAll(inv.getAllOwnedSkus(itemType));
         if (moreSkus != null) {
             for (String sku : moreSkus) {
