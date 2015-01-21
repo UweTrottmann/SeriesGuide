@@ -276,6 +276,12 @@
         <item name="android:paddingRight">@dimen/default_padding</item>
     </style>
 
+    <style name="DefaultPadding.DialogContent">
+        <item name="android:paddingLeft">@dimen/larger_padding</item>
+        <item name="android:paddingTop">@dimen/larger_padding</item>
+        <item name="android:paddingRight">@dimen/larger_padding</item>
+    </style>
+
     <style name="Block">
         <item name="android:layout_marginLeft">24dp</item>
         <item name="android:layout_marginRight">24dp</item>

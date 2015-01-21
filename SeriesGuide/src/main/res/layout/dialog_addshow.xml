@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/default_padding"
                 android:text="@string/action_shows_add"
-                android:textAppearance="@style/TextAppearance.Headline"
+                android:textAppearance="@style/TextAppearance.Title"
                 android:textIsSelectable="true" />
 
             <ImageView
@@ -151,8 +151,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <include layout="@layout/divider_horizontal" />
-
-    <include layout="@layout/dialog_buttons" />
+    <include layout="@layout/dialog_buttons_divided" />
 
 </LinearLayout>

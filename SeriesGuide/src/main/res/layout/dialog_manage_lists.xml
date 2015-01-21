@@ -11,21 +11,25 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:minWidth="@dimen/dialog_min_width"
-        android:orientation="vertical"
-        android:padding="@dimen/larger_padding">
+        android:paddingTop="@dimen/large_padding"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
             android:text="@string/list_item_manage"
-            android:textAppearance="@style/TextAppearance.Headline" />
+            android:textAppearance="@style/TextAppearance.Title" />
 
         <TextView
             android:id="@+id/item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
             tools:text="Defiance"
             android:textAppearance="@style/TextAppearance.Caption" />
 
@@ -35,9 +39,9 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="@bool/gridClipToPadding" />
+            android:clipToPadding="false" />
     </LinearLayout>
 
-    <include layout="@layout/dialog_buttons" />
+    <include layout="@layout/dialog_buttons_divided" />
 
 </LinearLayout>
