@@ -50,18 +50,6 @@ public class HelpActivity extends BaseActivity {
         webview.loadUrl(getString(R.string.help_url));
     }
 
-    private WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url != null && !url.startsWith(getString(R.string.help_url))) {
-                // launch browser when leaving help page
-                Utils.launchWebsite(view.getContext(), url, TAG, "Non-help page");
-                return true;
-            }
-            return false;
-        }
-    };
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
