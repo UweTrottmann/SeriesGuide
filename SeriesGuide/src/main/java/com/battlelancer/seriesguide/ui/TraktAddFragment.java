@@ -115,6 +115,9 @@ public class TraktAddFragment extends AddFragment {
         @Override
         public void onLoadFinished(Loader<TraktAddLoader.Result> loader,
                 TraktAddLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
             setSearchResults(data.results);
             setEmptyMessage(data.emptyTextResId);
             setProgressVisible(false, true);

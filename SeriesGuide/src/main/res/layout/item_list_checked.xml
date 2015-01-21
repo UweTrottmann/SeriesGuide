@@ -7,8 +7,8 @@
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:ellipsize="marquee"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/large_padding"
-    android:paddingRight="@dimen/large_padding"
+    android:paddingLeft="@dimen/larger_padding"
+    android:paddingRight="@dimen/larger_padding"
     tools:text="Example List"
     android:textAppearance="@style/TextAppearance.Menu"
     android:textColor="@color/text_default" />

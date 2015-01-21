@@ -21,9 +21,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -33,6 +35,7 @@ import com.battlelancer.seriesguide.util.Utils;
 public class HelpActivity extends BaseActivity {
 
     private static final String TAG = "Help";
+    private WebView webview;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -41,10 +44,51 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_webview);
         setupActionBar();
 
-        WebView webview = (WebView) findViewById(R.id.webView);
+        webview = (WebView) findViewById(R.id.webView);
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.setWebViewClient(webViewClient);
         webview.loadUrl(getString(R.string.help_url));
     }
+
+    private WebViewClient webViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null && !url.startsWith(getString(R.string.help_url))) {
+                // launch browser when leaving help page
+                Utils.launchWebsite(view.getContext(), url, TAG, "Non-help page");
+                return true;
+            }
+            return false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        /**
+         * Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
+         * get shutdown, to avoid leaking its context.
+         *
+         * http://stackoverflow.com/a/18798305/1000543
+         */
+        if (webview != null) {
+            webview.getSettings().setJavaScriptEnabled(false);
+            webview = null;
+        }
+    }
+
+    private WebViewClient webViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null && !url.startsWith(getString(R.string.help_url))) {
+                // launch browser when leaving help page
+                Utils.launchWebsite(view.getContext(), url, TAG, "Non-help page");
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void setupActionBar() {
