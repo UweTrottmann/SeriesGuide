@@ -151,6 +151,8 @@
         </RelativeLayout>
     </ScrollView>
 
+    <include layout="@layout/divider_horizontal" />
+
     <include layout="@layout/dialog_buttons" />
 
 </LinearLayout>
