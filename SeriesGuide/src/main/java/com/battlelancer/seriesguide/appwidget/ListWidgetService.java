@@ -194,8 +194,7 @@ public class ListWidgetService extends RemoteViewsService {
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();
             } catch (IOException e) {
-                Timber.w(e.getMessage() + " Failed to load show poster for widget item: "
-                        + posterPath);
+                Timber.w(e, "getViewAt: Loading show poster for widget item failed");
                 poster = null;
             }
             if (poster != null) {
