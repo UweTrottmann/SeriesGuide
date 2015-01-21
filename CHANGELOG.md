@@ -11,7 +11,7 @@ Version 21.1 *(2015-01-19)*
 * Improved error messages when interacting with trakt.
 * Combined search and trending tab in "Add show" screen.
 
-#### 21.1.2 *(2015-01-20)*
+#### 21.1.2 *(2015-01-21)*
 
 * TWEAK Always open help page in-app.
 * FIX Crash when displaying results in "Add show" tabs and other locations.
@@ -20,6 +20,8 @@ Version 21.1 *(2015-01-19)*
 * TWEAK Partially localized error message when in-app billing actions fail.
 * FIX Crash when in-app billing actions fail.
 * FIX Text-to-speech service leak in WebViews (trakt auth and help page) on Android 4.2.2.
+* FIX Crash when Android settings could not be found when trying to display system app settings.
+* TWEAK Button text less likely to get cut off in add dialog.
 
 #### 21.1.1 *(2015-01-19)*
 
