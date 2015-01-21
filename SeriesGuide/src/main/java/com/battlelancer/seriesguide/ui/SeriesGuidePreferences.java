@@ -289,13 +289,11 @@ public class SeriesGuidePreferences extends ActionBarActivity {
                 Intent intent = new Intent(
                         android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 intent.setData(Uri.parse("package:" + context.getPackageName()));
-                try {
-                    context.startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    // open all apps view
+                if (!Utils.tryStartActivity(context, intent, false)) {
+                    // try to open all apps view if detail view not available
                     intent = new Intent(
                             android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                    context.startActivity(intent);
+                    Utils.tryStartActivity(context, intent, true);
                 }
 
                 return true;
@@ -423,6 +421,7 @@ public class SeriesGuidePreferences extends ActionBarActivity {
         public static final class Header {
             public int titleRes;
             public String settingsId;
+
             public Header(int titleResId, String settingsId) {
                 this.titleRes = titleResId;
                 this.settingsId = settingsId;
