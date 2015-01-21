@@ -17,6 +17,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="160dp"
             tools:text="Button Negative" />
 
         <Button
@@ -24,6 +25,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="160dp"
             tools:text="Button Positive" />
     </LinearLayout>
 
