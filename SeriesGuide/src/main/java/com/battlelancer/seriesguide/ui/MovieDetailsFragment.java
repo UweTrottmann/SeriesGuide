@@ -556,6 +556,9 @@ public class MovieDetailsFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<MovieDetails> movieLoader, MovieDetails movieDetails) {
+            if (!isAdded()) {
+                return;
+            }
             mMovieDetails = movieDetails;
             mProgressBar.setVisibility(View.GONE);
 
@@ -584,6 +587,9 @@ public class MovieDetailsFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
+            if (!isAdded()) {
+                return;
+            }
             if (trailers != null) {
                 mTrailers = trailers;
                 getActivity().invalidateOptionsMenu();
@@ -605,9 +611,10 @@ public class MovieDetailsFragment extends Fragment {
 
         @Override
         public void onLoadFinished(Loader<Credits> creditsLoader, Credits credits) {
-            if (isAdded()) {
-                populateMovieCreditsViews(credits);
+            if (!isAdded()) {
+                return;
             }
+            populateMovieCreditsViews(credits);
         }
 
         @Override

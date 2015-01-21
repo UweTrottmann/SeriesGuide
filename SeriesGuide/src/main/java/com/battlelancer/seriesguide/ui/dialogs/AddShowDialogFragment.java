@@ -217,6 +217,9 @@ public class AddShowDialogFragment extends DialogFragment {
 
         @Override
         public void onLoadFinished(Loader<Show> loader, Show data) {
+            if (!isAdded()) {
+                return;
+            }
             showProgressBar(false);
             populateShowViews(data);
         }

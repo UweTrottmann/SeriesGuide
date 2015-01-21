@@ -395,7 +395,7 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Why pay? Learn more.</string>
-  <string name="subscription_activated">You are now subscribed to X features.</string>
+  <string name="subscription_activated">You are now subscribed, all are features unlocked.</string>
   <string name="subscription_expired">Naročnina potekla</string>
   <string name="subscription_expired_details">Naročnina na X funkcije je potekla.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
