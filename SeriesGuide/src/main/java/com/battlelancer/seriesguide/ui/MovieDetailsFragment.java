@@ -454,6 +454,7 @@ public class MovieDetailsFragment extends Fragment {
             mRatingsTraktUserLabel.setVisibility(View.GONE);
             mRatingsTraktUserValue.setVisibility(View.GONE);
             mRatingsContainer.setClickable(false);
+            mRatingsContainer.setLongClickable(false); // cheat sheet
         } else {
             mRatingsTraktUserLabel.setVisibility(View.VISIBLE);
             mRatingsTraktUserValue.setVisibility(View.VISIBLE);
