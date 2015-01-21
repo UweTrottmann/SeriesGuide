@@ -29,8 +29,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Utils;
@@ -38,8 +36,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
- * Handles removing a show from the database, ensures it can be removed (its seasons or episodes
- * or itself are not in lists).
+ * Dialog asking if a show should be removed from the database.
  */
 public class ConfirmDeleteDialogFragment extends DialogFragment {
 
@@ -105,7 +102,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
         EventBus.getDefault().register(this);
 
-        AndroidUtils.executeOnPool(new CheckForRemovalTask(getActivity()), showTvdbId);
+        AndroidUtils.executeOnPool(new GetShowTitleTask(getActivity()), showTvdbId);
     }
 
     @Override
@@ -123,114 +120,67 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
-    private static class CheckForRemovalTask
-            extends AsyncTask<Integer, Void, CheckForRemovalTask.CheckForRemovalCompleteEvent> {
+    private static class GetShowTitleTask
+            extends AsyncTask<Integer, Void, GetShowTitleTask.ShowTitleEvent> {
 
-        public class CheckForRemovalCompleteEvent {
+        public class ShowTitleEvent {
             public String showTitle;
-            public boolean hasListItems;
         }
 
         private final Context context;
 
-        public CheckForRemovalTask(Context context) {
+        public GetShowTitleTask(Context context) {
             this.context = context.getApplicationContext();
         }
 
         @Override
-        protected CheckForRemovalCompleteEvent doInBackground(Integer... params) {
+        protected ShowTitleEvent doInBackground(Integer... params) {
             int showTvdbId = params[0];
 
-            CheckForRemovalCompleteEvent result = new CheckForRemovalCompleteEvent();
+            ShowTitleEvent result = new ShowTitleEvent();
 
-            // make sure this show isn't added to any lists
-            /*
-             * Selection explanation: Filter for type when looking for show list items, as it looks like
-             * the WHERE is pushed down as far as possible, excluding all shows in the original list
-             * items query.
-             */
-            final Cursor itemsInLists = context.getContentResolver().query(
-                    ListItems.CONTENT_WITH_DETAILS_URI,
-                    new String[] {
-                            ListItems.LIST_ITEM_ID
-                    },
-                    Shows.REF_SHOW_ID + "=" + showTvdbId
-                            + " OR ("
-                            + ListItems.TYPE + "=" + ListItemTypes.SHOW + " AND "
-                            + ListItems.ITEM_REF_ID + "=" + showTvdbId
-                            + ")",
-                    null, null
-            );
-            if (itemsInLists == null) {
-                return result;
-            }
-
-            result.hasListItems = itemsInLists.getCount() > 0;
-
-            itemsInLists.close();
-
-            // determine show title
+            // get show title
             final Cursor show = context.getContentResolver().query(
                     Shows.buildShowUri(showTvdbId),
                     new String[] {
                             Shows.TITLE
                     }, null, null, null
             );
-            if (show == null) {
-                return result;
-            }
-            if (!show.moveToFirst()) {
-                // show not found, abort
+            if (show != null) {
+                if (show.moveToFirst()) {
+                    result.showTitle = show.getString(0);
+                }
                 show.close();
-                return result;
             }
-
-            result.showTitle = show.getString(0);
-
-            show.close();
 
             return result;
         }
 
         @Override
-        protected void onPostExecute(CheckForRemovalCompleteEvent result) {
+        protected void onPostExecute(ShowTitleEvent result) {
             EventBus.getDefault().post(result);
         }
     }
 
-    public void onEventMainThread(CheckForRemovalTask.CheckForRemovalCompleteEvent event) {
+    public void onEventMainThread(GetShowTitleTask.ShowTitleEvent event) {
         if (event.showTitle == null) {
             // failed to find show
             dismiss();
+            return;
         }
 
-        if (event.hasListItems) {
-            // prevent removal, there are still list items
-            dialogText.setText(getString(R.string.delete_has_list_items, event.showTitle));
-            positiveButton.setText(R.string.dismiss);
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismiss();
-                }
-            });
-            negativeButton.setVisibility(View.GONE);
-        } else {
-            dialogText.setText(getString(R.string.confirm_delete, event.showTitle));
-            positiveButton.setText(R.string.delete_show);
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    RemoveShowWorkerFragment f = RemoveShowWorkerFragment.newInstance(showTvdbId);
-                    getFragmentManager().beginTransaction()
-                            .add(f, RemoveShowWorkerFragment.TAG)
-                            .commit();
+        dialogText.setText(getString(R.string.confirm_delete, event.showTitle));
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RemoveShowWorkerFragment f = RemoveShowWorkerFragment.newInstance(showTvdbId);
+                getFragmentManager().beginTransaction()
+                        .add(f, RemoveShowWorkerFragment.TAG)
+                        .commit();
 
-                    dismiss();
-                }
-            });
-            negativeButton.setVisibility(View.VISIBLE);
-        }
+                dismiss();
+            }
+        });
 
         showProgressBar(false);
     }

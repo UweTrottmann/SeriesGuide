@@ -146,7 +146,8 @@ public class ListsFragment extends Fragment implements
         String listId = args.getString(InitBundle.LIST_ID);
         return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
                 ListItemsQuery.PROJECTION,
-                Lists.LIST_ID + "=?",
+                // items of this list, exclude any where the show has been removed
+                Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
                 new String[] {
                         listId
                 }, ListItemsQuery.SORTING
