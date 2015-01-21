@@ -55,7 +55,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -89,7 +88,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private static final int TAB_COUNT_WITH_TRAKT = 4;
 
-    private IabHelper mHelper;
+    private IabHelper mBillingHelper;
 
     private SmoothProgressBar mProgressBar;
 
@@ -281,29 +280,23 @@ public class ShowsActivity extends BaseTopActivity implements
         if (Utils.hasXpass(this)) {
             return;
         }
-        mHelper = new IabHelper(this, BillingActivity.getPublicKey());
-        mHelper.enableDebugLogging(BuildConfig.DEBUG);
-
-        Timber.i("Starting In-App Billing helper setup.");
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+        mBillingHelper = new IabHelper(this, BillingActivity.getPublicKey());
+        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
+        mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
-                Timber.d("Setup finished.");
+                if (mBillingHelper == null) {
+                    // disposed
+                    return;
+                }
 
                 if (!result.isSuccess()) {
-                    // Oh noes, there was a problem. But do not go crazy.
+                    // Oh noes, there was a problem. Try again next time.
                     disposeIabHelper();
                     return;
                 }
 
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) {
-                    return;
-                }
-
-                // Hooray, IAB is fully set up. Now, let's get an inventory
-                // of stuff we own.
-                Timber.d("Setup successful. Querying inventory.");
-                mHelper.queryInventoryAsync(mGotInventoryListener);
+                Timber.d("onIabSetupFinished: Successful. Querying inventory.");
+                mBillingHelper.queryInventoryAsync(mGotInventoryListener);
             }
         });
     }
@@ -562,34 +555,28 @@ public class ShowsActivity extends BaseTopActivity implements
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener
             = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Timber.d("Query inventory finished.");
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) {
+            if (mBillingHelper == null) {
+                // disposed
                 return;
             }
 
             if (result.isFailure()) {
-                // ignore failures (maybe not, requires testing)
+                // do not care about failure, will try again next time
                 disposeIabHelper();
                 return;
             }
 
-            Timber.d("Query inventory was successful.");
-
             BillingActivity.checkForSubscription(ShowsActivity.this, inventory);
-
-            Timber.d("Inventory query finished.");
             disposeIabHelper();
         }
     };
 
     private void disposeIabHelper() {
-        if (mHelper != null) {
-            Timber.i("Disposing of IabHelper.");
-            mHelper.dispose();
+        Timber.i("Disposing of IabHelper.");
+        if (mBillingHelper != null) {
+            mBillingHelper.dispose();
         }
-        mHelper = null;
+        mBillingHelper = null;
     }
 
     /**

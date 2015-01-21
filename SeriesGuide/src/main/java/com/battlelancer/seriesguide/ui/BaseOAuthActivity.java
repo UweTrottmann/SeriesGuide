@@ -37,6 +37,7 @@ import timber.log.Timber;
 public abstract class BaseOAuthActivity extends BaseActivity {
 
     public static final String OAUTH_CALLBACK_URL_LOCALHOST = "http://localhost";
+    private WebView webview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,24 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         setContentView(R.layout.activity_webview);
         setupActionBar();
 
-        WebView webview = (WebView) findViewById(R.id.webView);
-
+        webview = (WebView) findViewById(R.id.webView);
         setupViews(webview);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        /**
+         * Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
+         * get shutdown, to avoid leaking its context.
+         *
+         * http://stackoverflow.com/a/18798305/1000543
+         */
+        if (webview != null) {
+            webview.getSettings().setJavaScriptEnabled(false);
+            webview = null;
+        }
     }
 
     @Override

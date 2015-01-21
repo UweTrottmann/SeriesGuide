@@ -61,7 +61,7 @@ public class BillingActivity extends BaseActivity {
 
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
 
-    private IabHelper mHelper;
+    private IabHelper mBillingHelper;
 
     private View mProgressScreen;
 
@@ -96,38 +96,9 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mHelper = new IabHelper(this, getPublicKey());
-
-        // enable debug logging (for a production application, you should set
-        // this to false).
-        mHelper.enableDebugLogging(BuildConfig.DEBUG);
-
-        Timber.i("Starting setup.");
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Timber.d("Setup finished.");
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up In-app Billing: " + result);
-                    enableFallBackMode();
-                    setWaitMode(false);
-                    return;
-                }
-
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) {
-                    return;
-                }
-
-                // Hooray, IAB is fully set up.
-                // Get an inventory of stuff we own, also get SKU details for pricing info
-                Timber.d("Setup successful. Querying inventory.");
-                List<String> detailSkus = new ArrayList<>();
-                detailSkus.add(SKU_X_SUB);
-                mHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
-            }
-        });
+        mBillingHelper = new IabHelper(this, getPublicKey());
+        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
+        mBillingHelper.startSetup(mBillingSetupListener);
     }
 
     @Override
@@ -183,12 +154,12 @@ public class BillingActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Timber.d("onActivityResult(" + requestCode + "," + resultCode + "," + data);
         // Have we been disposed of in the meantime? If so, quit.
-        if (mHelper == null) {
+        if (mBillingHelper == null) {
             return;
         }
 
         // Pass on the activity result to the helper for handling
-        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+        if (!mBillingHelper.handleActivityResult(requestCode, resultCode, data)) {
             // not handled, so handle it ourselves (here's where you'd
             // perform any handling of activity results not related to in-app
             // billing...
@@ -203,30 +174,50 @@ public class BillingActivity extends BaseActivity {
         super.onDestroy();
 
         Timber.i("Disposing of IabHelper.");
-        if (mHelper != null) {
-            mHelper.dispose();
+        if (mBillingHelper != null) {
+            mBillingHelper.dispose();
         }
-        mHelper = null;
+        mBillingHelper = null;
     }
+
+    private IabHelper.OnIabSetupFinishedListener mBillingSetupListener
+            = new IabHelper.OnIabSetupFinishedListener() {
+        public void onIabSetupFinished(IabResult result) {
+            if (mBillingHelper == null) {
+                // disposed
+                return;
+            }
+
+            if (!result.isSuccess()) {
+                logAndShowAlertDialog(R.string.subscription_unavailable,
+                        "Problem setting up In-app Billing: " + result.getMessage());
+                enableFallBackMode();
+                setWaitMode(false);
+                return;
+            }
+
+            Timber.d("onIabSetupFinished: Successful. Querying inventory.");
+            List<String> detailSkus = new ArrayList<>();
+            detailSkus.add(SKU_X_SUB);
+            mBillingHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
+        }
+    };
 
     // Listener that's called when we finish querying the items and
     // subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener
             = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Timber.d("Query inventory finished.");
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) {
+            if (mBillingHelper == null) {
+                // disposed
                 return;
             }
 
             if (result.isFailure()) {
-                complain("Could not query inventory: " + result);
+                logAndShowAlertDialog(R.string.subscription_unavailable,
+                        "Could not query inventory: " + result.getMessage());
                 return;
             }
-
-            Timber.d("Query inventory was successful.");
 
             // get sub state
             boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
@@ -238,9 +229,7 @@ public class BillingActivity extends BaseActivity {
 
             updateViewStates(hasUpgrade);
             setWaitMode(false);
-            Timber.d("Initial inventory query finished; enabling main UI.");
         }
-
     };
 
     /**
@@ -349,7 +338,7 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
+        mBillingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
                 mPurchaseFinishedListener, payload);
     }
 
@@ -360,19 +349,20 @@ public class BillingActivity extends BaseActivity {
             Timber.d("Purchase finished: " + result + ", purchase: " + purchase);
 
             // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) {
+            if (mBillingHelper == null) {
                 return;
             }
 
             if (result.isFailure()) {
                 if (result.getResponse() != IabHelper.IABHELPER_USER_CANCELLED) {
-                    complain("Error purchasing: " + result);
+                    logAndShowAlertDialog(R.string.subscription_failed, result.getMessage());
                 }
                 setWaitMode(false);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
-                complain("Error purchasing. Authenticity verification failed.");
+                logAndShowAlertDialog(R.string.subscription_failed,
+                        "Authenticity verification failed.");
                 setWaitMode(false);
                 return;
             }
@@ -420,17 +410,13 @@ public class BillingActivity extends BaseActivity {
         mContentContainer.setVisibility(isActive ? View.GONE : View.VISIBLE);
     }
 
-    private void complain(String message) {
+    private void logAndShowAlertDialog(int errorResId, String message) {
         Timber.e(message);
-        alert("Error: " + message);
-    }
 
-    private void alert(String message) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(this);
-        bld.setMessage(message);
-        bld.setNeutralButton(android.R.string.ok, null);
-        Timber.d("Showing alert dialog: " + message);
-        bld.create().show();
+        new AlertDialog.Builder(this)
+                .setMessage(getString(errorResId) + "\n\n" + message)
+                .setNeutralButton(android.R.string.ok, null)
+                .create()
+                .show();
     }
-
 }

@@ -20,34 +20,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <RelativeLayout
+        style="@style/DefaultPadding.DialogContent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textViewRemove"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/larger_padding">
+            tools:text="@string/confirm_delete"
+            android:textAppearance="@style/TextAppearance.Body" />
 
-            <TextView
-                android:id="@+id/textViewRemove"
-                style="@style/Block.FlowText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                tools:text="@string/confirm_delete"
-                android:textAppearance="@style/TextAppearance.Body" />
+        <ProgressBar
+            android:id="@+id/progressBarRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
-            <ProgressBar
-                android:id="@+id/progressBarRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-
-        </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 
     <include layout="@layout/dialog_buttons" />
 

@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -529,21 +530,34 @@ public class Utils {
     }
 
     /**
-     * Calls {@link Context#startActivity(Intent)} with the given <b>implicit</b> {@link Intent}
-     * after making sure there is an {@link Activity} to handle it. Can show an error toast, if not.
-     * <br> <br> This may happen if e.g. the web browser has been disabled through restricted
-     * profiles.
+     * Calls {@link Context#startActivity(Intent)} with the given {@link Intent}. If it is
+     * <b>implicit</b>, makes sure there is an {@link Activity} to handle it. If <b>explicit</b>,
+     * will intercept {@link android.content.ActivityNotFoundException}. Can show an error toast on
+     * failure.
      *
-     * @return Whether there was an {@link Activity} to handle the given {@link Intent}.
+     * <p> E.g. an implicit intent may fail if e.g. the web browser has been disabled through
+     * restricted profiles.
+     *
+     * @return Whether the {@link Intent} could be handled.
      */
     public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
+        boolean handled = false;
+
+        // check if an implicit intent can be handled (always true for explicit intents)
         if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
-            return true;
-        } else if (displayError) {
+            try {
+                context.startActivity(intent);
+                handled = true;
+            } catch (ActivityNotFoundException ignored) {
+                // catch failure to handle explicit intents
+            }
+        }
+
+        if (displayError && !handled) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
-        return false;
+
+        return handled;
     }
 
     /**

@@ -263,6 +263,9 @@ public class TraktCommentsFragment extends Fragment
         @Override
         public void onLoadFinished(Loader<TraktCommentsLoader.Result> loader,
                 TraktCommentsLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
             mAdapter.setData(data.results);
             setEmptyMessage(data.emptyTextResId);
             showProgressBar(false);

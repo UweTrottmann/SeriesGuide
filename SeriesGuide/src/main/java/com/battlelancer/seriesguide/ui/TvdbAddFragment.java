@@ -185,6 +185,9 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         public void onLoadFinished(Loader<TvdbAddLoader.Result> loader, TvdbAddLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
             setSearchResults(data.results);
             setEmptyMessage(data.emptyTextResId);
             setProgressVisible(false, true);
