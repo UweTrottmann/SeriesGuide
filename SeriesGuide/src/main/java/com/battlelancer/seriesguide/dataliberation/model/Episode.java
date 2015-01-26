@@ -61,6 +61,8 @@ public class Episode {
     public String directors;
 
     public double rating;
+    public int rating_votes;
+    public int rating_user;
 
     @SerializedName("last_edited")
     public long lastEdited;
