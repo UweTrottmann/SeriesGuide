@@ -376,7 +376,7 @@ public class SeriesGuideContract {
         String ITEM_REF_ID = "item_ref_id";
 
         /**
-         * Type of item: show, season or episode.
+         * One of {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes}.
          */
         String TYPE = "item_type";
     }
@@ -716,6 +716,11 @@ public class SeriesGuideContract {
          */
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
+
+        public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
+        public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
+        public static final String SELECTION_EPISODES = ListItems.TYPE + "="
+                + ListItemTypes.EPISODE;
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
