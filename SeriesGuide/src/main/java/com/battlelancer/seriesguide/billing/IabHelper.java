@@ -550,21 +550,19 @@ public class IabHelper {
      * Ignored if null or if querySkuDetails is false.
      * @throws IabException if a problem occurs while refreshing the inventory.
      */
-    public Inventory queryInventory(boolean querySkuDetails, List<String> moreItemSkus)
+    private static Inventory queryInventory(IInAppBillingService service, String packageName,
+            String signatureBase64, boolean subscriptionsSupported, boolean querySkuDetails,
+            List<String> moreItemSkus)
             throws IabException {
-        if (isDisposedOrNotSetup()) {
-            throw new IabException(BILLING_RESPONSE_RESULT_ERROR, "Error refreshing inventory.");
-        }
-
         try {
             Inventory inv = new Inventory();
-            int r = queryPurchases(inv, ITEM_TYPE_INAPP);
+            int r = queryPurchases(service, packageName, signatureBase64, inv, ITEM_TYPE_INAPP);
             if (r != BILLING_RESPONSE_RESULT_OK) {
                 throw new IabException(r, "Error refreshing inventory (querying owned items).");
             }
 
             if (querySkuDetails) {
-                r = querySkuDetails(ITEM_TYPE_INAPP, inv, moreItemSkus);
+                r = querySkuDetails(service, packageName, ITEM_TYPE_INAPP, inv, moreItemSkus);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
                     throw new IabException(r,
                             "Error refreshing inventory (querying prices of items).");
@@ -572,15 +570,15 @@ public class IabHelper {
             }
 
             // if subscriptions are supported, then also query for subscriptions
-            if (mSubscriptionsSupported) {
-                r = queryPurchases(inv, ITEM_TYPE_SUBS);
+            if (subscriptionsSupported) {
+                r = queryPurchases(service, packageName, signatureBase64, inv, ITEM_TYPE_SUBS);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
                     throw new IabException(r,
                             "Error refreshing inventory (querying owned subscriptions).");
                 }
 
                 if (querySkuDetails) {
-                    r = querySkuDetails(ITEM_TYPE_SUBS, inv, moreItemSkus);
+                    r = querySkuDetails(service, packageName, ITEM_TYPE_SUBS, inv, moreItemSkus);
                     if (r != BILLING_RESPONSE_RESULT_OK) {
                         throw new IabException(r,
                                 "Error refreshing inventory (querying prices of subscriptions).");
@@ -633,11 +631,17 @@ public class IabHelper {
         flagStartAsync("refresh inventory");
         (new Thread(new Runnable() {
             public void run() {
+                if (isDisposedOrNotSetup()) {
+                    flagEndAsync();
+                    return;
+                }
+
                 IabResult result = new IabResult(BILLING_RESPONSE_RESULT_OK,
                         "Inventory refresh successful.");
                 Inventory inv = null;
                 try {
-                    inv = queryInventory(querySkuDetails, moreSkus);
+                    inv = queryInventory(mService, mContext.getPackageName(), mSignatureBase64,
+                            mSubscriptionsSupported, querySkuDetails, moreSkus);
                 } catch (IabException e) {
                     result = e.getResult();
                 }
@@ -708,7 +712,7 @@ public class IabHelper {
     }
 
     // Workaround to bug where sometimes response codes come as Long instead of Integer
-    int getResponseCodeFromBundle(Bundle b) {
+    private static int getResponseCodeFromBundle(Bundle b) {
         Object o = b.get(RESPONSE_CODE);
         if (o == null) {
             logDebug("Bundle with null response code, assuming OK (known issue)");
@@ -760,17 +764,18 @@ public class IabHelper {
         mAsyncInProgress = false;
     }
 
-    int queryPurchases(Inventory inv, String itemType) throws JSONException, RemoteException {
+    private static int queryPurchases(IInAppBillingService service, String packageName,
+            String signatureBase64, Inventory inv, String itemType)
+            throws JSONException, RemoteException {
         // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
-        logDebug("Package name: " + mContext.getPackageName());
+        logDebug("Package name: " + packageName);
         boolean verificationFailed = false;
         String continueToken = null;
 
         do {
             logDebug("Calling getPurchases with continuation token: " + continueToken);
-            Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(),
-                    itemType, continueToken);
+            Bundle ownedItems = service.getPurchases(3, packageName, itemType, continueToken);
 
             int response = getResponseCodeFromBundle(ownedItems);
             logDebug("Owned items response: " + String.valueOf(response));
@@ -796,7 +801,7 @@ public class IabHelper {
                 String purchaseData = purchaseDataList.get(i);
                 String signature = signatureList.get(i);
                 String sku = ownedSkus.get(i);
-                if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
+                if (Security.verifyPurchase(signatureBase64, purchaseData, signature)) {
                     logDebug("Sku is owned: " + sku);
                     Purchase purchase = new Purchase(itemType, purchaseData, signature);
 
@@ -822,7 +827,8 @@ public class IabHelper {
         return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
     }
 
-    int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)
+    private static int querySkuDetails(IInAppBillingService service, String packageName,
+            String itemType, Inventory inv, List<String> moreSkus)
             throws RemoteException, JSONException {
         logDebug("Querying SKU details.");
         ArrayList<String> skuList = new ArrayList<>();
@@ -842,8 +848,7 @@ public class IabHelper {
 
         Bundle querySkus = new Bundle();
         querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
-        Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(),
-                itemType, querySkus);
+        Bundle skuDetails = service.getSkuDetails(3, packageName, itemType, querySkus);
 
         if (!skuDetails.containsKey(RESPONSE_GET_SKU_DETAILS_LIST)) {
             int response = getResponseCodeFromBundle(skuDetails);
@@ -868,17 +873,15 @@ public class IabHelper {
         return BILLING_RESPONSE_RESULT_OK;
     }
 
-    void logDebug(String msg) {
-        if (mDebugLog) {
-            Timber.d(msg);
-        }
+    static void logDebug(String msg) {
+        Timber.d(msg);
     }
 
-    void logError(String msg) {
+    static void logError(String msg) {
         Timber.e("In-app billing error: " + msg);
     }
 
-    void logWarn(String msg) {
+    static void logWarn(String msg) {
         Timber.w("In-app billing warning: " + msg);
     }
 }
