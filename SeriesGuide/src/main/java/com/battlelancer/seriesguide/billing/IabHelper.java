@@ -63,7 +63,6 @@ import timber.log.Timber;
 public class IabHelper {
     // Is debug logging enabled?
     boolean mDebugLog = false;
-    String mDebugTag = "IabHelper";
 
     // Is setup done?
     boolean mSetupDone = false;
@@ -156,15 +155,6 @@ public class IabHelper {
         mContext = ctx.getApplicationContext();
         mSignatureBase64 = base64PublicKey;
         logDebug("IAB helper created.");
-    }
-
-    /**
-     * Enables or disable debug logging through LogCat.
-     */
-    public void enableDebugLogging(boolean enable, String tag) {
-        checkNotDisposed();
-        mDebugLog = enable;
-        mDebugTag = tag;
     }
 
     public void enableDebugLogging(boolean enable) {
@@ -672,101 +662,6 @@ public class IabHelper {
     }
 
     /**
-     * Consumes a given in-app product. Consuming can only be done on an item that's owned, and as a
-     * result of consumption, the user will no longer own it. This method may block or take long to
-     * return. Do not call from the UI thread. For that, see {@link #consumeAsync}.
-     *
-     * @param itemInfo The PurchaseInfo that represents the item to consume.
-     * @throws IabException if there is a problem during consumption.
-     */
-    void consume(Purchase itemInfo) throws IabException {
-        checkNotDisposed();
-        checkSetupDone("consume");
-
-        if (!itemInfo.mItemType.equals(ITEM_TYPE_INAPP)) {
-            throw new IabException(IABHELPER_INVALID_CONSUMPTION,
-                    "Items of type '" + itemInfo.mItemType + "' can't be consumed.");
-        }
-
-        try {
-            String token = itemInfo.getToken();
-            String sku = itemInfo.getSku();
-            if (token == null || token.equals("")) {
-                logError("Can't consume " + sku + ". No token.");
-                throw new IabException(IABHELPER_MISSING_TOKEN,
-                        "PurchaseInfo is missing token for sku: "
-                                + sku + " " + itemInfo);
-            }
-
-            logDebug("Consuming sku: " + sku + ", token: " + token);
-            int response = mService.consumePurchase(3, mContext.getPackageName(), token);
-            if (response == BILLING_RESPONSE_RESULT_OK) {
-                logDebug("Successfully consumed sku: " + sku);
-            } else {
-                logDebug("Error consuming consuming sku " + sku + ". " + getResponseDesc(response));
-                throw new IabException(response, "Error consuming sku " + sku);
-            }
-        } catch (RemoteException e) {
-            throw new IabException(IABHELPER_REMOTE_EXCEPTION,
-                    "Remote exception while consuming. PurchaseInfo: " + itemInfo, e);
-        }
-    }
-
-    /**
-     * Callback that notifies when a consumption operation finishes.
-     */
-    public interface OnConsumeFinishedListener {
-        /**
-         * Called to notify that a consumption has finished.
-         *
-         * @param purchase The purchase that was (or was to be) consumed.
-         * @param result The result of the consumption operation.
-         */
-        public void onConsumeFinished(Purchase purchase, IabResult result);
-    }
-
-    /**
-     * Callback that notifies when a multi-item consumption operation finishes.
-     */
-    public interface OnConsumeMultiFinishedListener {
-        /**
-         * Called to notify that a consumption of multiple items has finished.
-         *
-         * @param purchases The purchases that were (or were to be) consumed.
-         * @param results The results of each consumption operation, corresponding to each sku.
-         */
-        public void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results);
-    }
-
-    /**
-     * Asynchronous wrapper to item consumption. Works like {@link #consume}, but performs the
-     * consumption in the background and notifies completion through the provided listener. This
-     * method is safe to call from a UI thread.
-     *
-     * @param purchase The purchase to be consumed.
-     * @param listener The listener to notify when the consumption operation finishes.
-     */
-    public void consumeAsync(Purchase purchase, OnConsumeFinishedListener listener) {
-        checkNotDisposed();
-        checkSetupDone("consume");
-        List<Purchase> purchases = new ArrayList<Purchase>();
-        purchases.add(purchase);
-        consumeAsyncInternal(purchases, listener, null);
-    }
-
-    /**
-     * Same as {@link consumeAsync}, but for multiple items at once.
-     *
-     * @param purchases The list of PurchaseInfo objects representing the purchases to consume.
-     * @param listener The listener to notify when the consumption operation finishes.
-     */
-    public void consumeAsync(List<Purchase> purchases, OnConsumeMultiFinishedListener listener) {
-        checkNotDisposed();
-        checkSetupDone("consume");
-        consumeAsyncInternal(purchases, null, listener);
-    }
-
-    /**
      * Returns a human-readable description for the given response code.
      *
      * @param code The response code
@@ -971,43 +866,6 @@ public class IabHelper {
             inv.addSkuDetails(d);
         }
         return BILLING_RESPONSE_RESULT_OK;
-    }
-
-    void consumeAsyncInternal(final List<Purchase> purchases,
-            final OnConsumeFinishedListener singleListener,
-            final OnConsumeMultiFinishedListener multiListener) {
-        final Handler handler = new Handler();
-        flagStartAsync("consume");
-        (new Thread(new Runnable() {
-            public void run() {
-                final List<IabResult> results = new ArrayList<IabResult>();
-                for (Purchase purchase : purchases) {
-                    try {
-                        consume(purchase);
-                        results.add(new IabResult(BILLING_RESPONSE_RESULT_OK,
-                                "Successful consume of sku " + purchase.getSku()));
-                    } catch (IabException ex) {
-                        results.add(ex.getResult());
-                    }
-                }
-
-                flagEndAsync();
-                if (!mDisposed && singleListener != null) {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            singleListener.onConsumeFinished(purchases.get(0), results.get(0));
-                        }
-                    });
-                }
-                if (!mDisposed && multiListener != null) {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            multiListener.onConsumeMultiFinished(purchases, results);
-                        }
-                    });
-                }
-            }
-        })).start();
     }
 
     void logDebug(String msg) {
