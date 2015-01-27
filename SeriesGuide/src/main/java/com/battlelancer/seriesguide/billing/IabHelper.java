@@ -29,6 +29,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import com.android.vending.billing.IInAppBillingService;
+import com.battlelancer.seriesguide.BuildConfig;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -92,7 +93,8 @@ public class IabHelper {
     String mPurchasingItemType;
 
     // Public key for verifying signature, in base64 encoding
-    String mSignatureBase64 = null;
+    private static final String SIGNATURE_BASE_64 = BuildConfig.IAP_KEY_A + BuildConfig.IAP_KEY_B
+            + BuildConfig.IAP_KEY_C + BuildConfig.IAP_KEY_D;
 
     // Billing response codes
     public static final int BILLING_RESPONSE_RESULT_OK = 0;
@@ -143,14 +145,9 @@ public class IabHelper {
      *
      * @param ctx Your application or Activity context. Needed to bind to the in-app billing
      * service.
-     * @param base64PublicKey Your application's public key, encoded in base64. This is used for
-     * verification of purchase signatures. You can find your app's base64-encoded public key in
-     * your application's page on Google Play Developer Console. Note that this is NOT your
-     * "developer public key".
      */
-    public IabHelper(Context ctx, String base64PublicKey) {
+    public IabHelper(Context ctx) {
         mContext = ctx.getApplicationContext();
-        mSignatureBase64 = base64PublicKey;
         logDebug("IAB helper created.");
     }
 
@@ -479,7 +476,7 @@ public class IabHelper {
                 String sku = purchase.getSku();
 
                 // Verify signature
-                if (!Security.verifyPurchase(mSignatureBase64, purchaseData, dataSignature)) {
+                if (!Security.verifyPurchase(SIGNATURE_BASE_64, purchaseData, dataSignature)) {
                     logError("Purchase signature verification FAILED for sku " + sku);
                     result = new IabResult(IABHELPER_VERIFICATION_FAILED,
                             "Signature verification failed for sku " + sku);
@@ -543,12 +540,12 @@ public class IabHelper {
      * @throws IabException if a problem occurs while refreshing the inventory.
      */
     private static Inventory queryInventory(IInAppBillingService service, String packageName,
-            String signatureBase64, boolean subscriptionsSupported, boolean querySkuDetails,
+            boolean subscriptionsSupported, boolean querySkuDetails,
             List<String> moreItemSkus)
             throws IabException {
         try {
             Inventory inv = new Inventory();
-            int r = queryPurchases(service, packageName, signatureBase64, inv, ITEM_TYPE_INAPP);
+            int r = queryPurchases(service, packageName, inv, ITEM_TYPE_INAPP);
             if (r != BILLING_RESPONSE_RESULT_OK) {
                 throw new IabException(r, "Error refreshing inventory (querying owned items).");
             }
@@ -563,7 +560,7 @@ public class IabHelper {
 
             // if subscriptions are supported, then also query for subscriptions
             if (subscriptionsSupported) {
-                r = queryPurchases(service, packageName, signatureBase64, inv, ITEM_TYPE_SUBS);
+                r = queryPurchases(service, packageName, inv, ITEM_TYPE_SUBS);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
                     throw new IabException(r,
                             "Error refreshing inventory (querying owned subscriptions).");
@@ -632,7 +629,7 @@ public class IabHelper {
                         "Inventory refresh successful.");
                 Inventory inv = null;
                 try {
-                    inv = queryInventory(mService, mContext.getPackageName(), mSignatureBase64,
+                    inv = queryInventory(mService, mContext.getPackageName(),
                             mSubscriptionsSupported, querySkuDetails, moreSkus);
                 } catch (IabException e) {
                     result = e.getResult();
@@ -757,7 +754,7 @@ public class IabHelper {
     }
 
     private static int queryPurchases(IInAppBillingService service, String packageName,
-            String signatureBase64, Inventory inv, String itemType)
+            Inventory inv, String itemType)
             throws JSONException, RemoteException {
         // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
@@ -793,7 +790,7 @@ public class IabHelper {
                 String purchaseData = purchaseDataList.get(i);
                 String signature = signatureList.get(i);
                 String sku = ownedSkus.get(i);
-                if (Security.verifyPurchase(signatureBase64, purchaseData, signature)) {
+                if (Security.verifyPurchase(SIGNATURE_BASE_64, purchaseData, signature)) {
                     logDebug("Sku is owned: " + sku);
                     Purchase purchase = new Purchase(itemType, purchaseData, signature);
 
