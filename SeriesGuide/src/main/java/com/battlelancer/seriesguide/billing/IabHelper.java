@@ -61,9 +61,6 @@ import timber.log.Timber;
  * @author Bruno Oliveira (Google)
  */
 public class IabHelper {
-    // Is debug logging enabled?
-    boolean mDebugLog = false;
-
     // Is setup done?
     boolean mSetupDone = false;
 
@@ -155,11 +152,6 @@ public class IabHelper {
         mContext = ctx.getApplicationContext();
         mSignatureBase64 = base64PublicKey;
         logDebug("IAB helper created.");
-    }
-
-    public void enableDebugLogging(boolean enable) {
-        checkNotDisposed();
-        mDebugLog = enable;
     }
 
     /**

@@ -281,7 +281,6 @@ public class ShowsActivity extends BaseTopActivity implements
             return;
         }
         mBillingHelper = new IabHelper(this, BillingActivity.getPublicKey());
-        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
         mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
                 if (mBillingHelper == null) {

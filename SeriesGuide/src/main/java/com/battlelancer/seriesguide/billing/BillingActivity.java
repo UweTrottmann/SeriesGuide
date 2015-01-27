@@ -97,7 +97,6 @@ public class BillingActivity extends BaseActivity {
         setWaitMode(true);
 
         mBillingHelper = new IabHelper(this, getPublicKey());
-        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
         mBillingHelper.startSetup(mBillingSetupListener);
     }
 
