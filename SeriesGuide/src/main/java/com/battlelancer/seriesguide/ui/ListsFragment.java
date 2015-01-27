@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -150,7 +151,7 @@ public class ListsFragment extends Fragment implements
                 Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
                 new String[] {
                         listId
-                }, ListItemsQuery.SORTING
+                }, ListsDistillationSettings.getSortQuery(getActivity())
         );
     }
 
@@ -316,17 +317,17 @@ public class ListsFragment extends Fragment implements
                 ListItems.ITEM_REF_ID,
                 ListItems.TYPE,
                 Shows.REF_SHOW_ID,
-                Shows.TITLE,
+                Shows.TITLE, // 5
                 Shows.OVERVIEW,
                 Shows.POSTER,
                 Shows.NETWORK,
                 Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_WEEKDAY, // 10
                 Shows.RELEASE_TIMEZONE,
                 Shows.RELEASE_COUNTRY,
                 Shows.STATUS,
                 Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT,
+                Shows.NEXTAIRDATETEXT, // 15
                 Shows.FAVORITE
         };
 

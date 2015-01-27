@@ -722,6 +722,15 @@ public class SeriesGuideContract {
         public static final String SELECTION_EPISODES = ListItems.TYPE + "="
                 + ListItemTypes.EPISODE;
 
+        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
+
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
