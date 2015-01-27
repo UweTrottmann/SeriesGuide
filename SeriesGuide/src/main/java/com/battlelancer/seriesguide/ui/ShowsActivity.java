@@ -280,8 +280,7 @@ public class ShowsActivity extends BaseTopActivity implements
         if (Utils.hasXpass(this)) {
             return;
         }
-        mBillingHelper = new IabHelper(this, BillingActivity.getPublicKey());
-        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
+        mBillingHelper = new IabHelper(this);
         mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
                 if (mBillingHelper == null) {

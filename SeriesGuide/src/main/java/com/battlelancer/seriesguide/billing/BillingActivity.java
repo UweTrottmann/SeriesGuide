@@ -33,7 +33,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -96,8 +95,7 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mBillingHelper = new IabHelper(this, getPublicKey());
-        mBillingHelper.enableDebugLogging(BuildConfig.DEBUG);
+        mBillingHelper = new IabHelper(this);
         mBillingHelper.startSetup(mBillingSetupListener);
     }
 
@@ -378,14 +376,6 @@ public class BillingActivity extends BaseActivity {
             }
         }
     };
-
-    /**
-     * Returns the public key used for verification of purchases by {@link IabHelper}.
-     */
-    public static String getPublicKey() {
-        return BuildConfig.IAP_KEY_A + BuildConfig.IAP_KEY_B + BuildConfig.IAP_KEY_C
-                + BuildConfig.IAP_KEY_D;
-    }
 
     private void updateViewStates(boolean hasUpgrade) {
         // Only enable purchase button if the user does not have the upgrade yet
