@@ -273,37 +273,25 @@ public class ManageListsDialogFragment extends DialogFragment implements
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!mDataValid) {
-                throw new IllegalStateException(
-                        "this should only be called when the cursor is valid");
-            }
-            if (!mCursor.moveToPosition(position)) {
-                throw new IllegalStateException("couldn't move cursor to position " + position);
-            }
+        public void bindView(View view, Context context, Cursor cursor) {
+            CheckedTextView checkedView = (CheckedTextView) view.findViewById(android.R.id.text1);
+            checkedView.setText(cursor.getString(ListsQuery.NAME));
+            checkedView.setTextAppearance(context, R.style.TextAppearance);
 
-            View v;
-            if (convertView == null) {
-                v = newView(mContext, mCursor, parent);
+            int position = cursor.getPosition();
+
+            // prefer state set by user over database
+            boolean isChecked;
+            if (mCheckedItems.indexOfKey(position) >= 0) {
+                // user has changed checked state, prefer it
+                isChecked = mCheckedItems.get(position);
             } else {
-                v = convertView;
+                // otherwise prefer database state, check if item is in this list
+                String itemId = cursor.getString(ListsQuery.LIST_ITEM_ID);
+                isChecked = !TextUtils.isEmpty(itemId);
+                mCheckedItems.put(position, isChecked);
             }
-
-            CheckedTextView checkedView = (CheckedTextView) v.findViewById(android.R.id.text1);
-            checkedView.setText(mCursor.getString(ListsQuery.NAME));
-            checkedView.setTextAppearance(mContext, R.style.TextAppearance);
-
-            // check list entry if this item is already added to it
-            String itemId = mCursor.getString(ListsQuery.LIST_ITEM_ID);
-            boolean isInList = !TextUtils.isEmpty(itemId);
-            mCheckedItems.put(position, isInList);
-            checkedView.setChecked(isInList);
-
-            return v;
-        }
-
-        @Override
-        public void bindView(View arg0, Context arg1, Cursor arg2) {
+            checkedView.setChecked(isChecked);
         }
 
         @Override
