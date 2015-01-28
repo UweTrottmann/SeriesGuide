@@ -5,14 +5,33 @@
     <item
         android:id="@+id/menu_action_lists_add"
         android:icon="@drawable/ic_action_new_list"
-        android:orderInCategory="1"
+        android:orderInCategory="0"
         app:showAsAction="always"
         android:title="@string/list_add" />
     <item
         android:id="@+id/menu_action_lists_search"
         android:icon="@drawable/ic_action_search"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         app:showAsAction="ifRoom"
         android:title="@string/search" />
+    <item
+        android:id="@+id/menu_action_lists_sort"
+        android:icon="@drawable/ic_action_sort"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_lists_sort">
+        <menu>
+            <item
+                android:id="@+id/menu_action_lists_sort_title"
+                android:title="@string/action_shows_sort_title" />
+            <item
+                android:id="@+id/menu_action_lists_sort_episode"
+                android:title="@string/action_shows_sort_episode" />
+            <item
+                android:id="@+id/menu_action_lists_sort_ignore_articles"
+                android:checkable="true"
+                android:title="@string/action_sort_ignore_articles" />
+        </menu>
+    </item>
 
 </menu>

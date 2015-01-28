@@ -376,7 +376,7 @@ public class SeriesGuideContract {
         String ITEM_REF_ID = "item_ref_id";
 
         /**
-         * Type of item: show, season or episode.
+         * One of {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes}.
          */
         String TYPE = "item_type";
     }
@@ -716,6 +716,26 @@ public class SeriesGuideContract {
          */
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
+
+        public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
+        public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
+        public static final String SELECTION_EPISODES = ListItems.TYPE + "="
+                + ListItemTypes.EPISODE;
+
+        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_NEWEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
+        public static final String SORT_OLDEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " ASC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
