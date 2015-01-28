@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -26,10 +27,13 @@ import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import de.greenrobot.event.EventBus;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
@@ -99,6 +103,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lists_menu, menu);
+
+        menu.findItem(R.id.menu_action_lists_sort_ignore_articles)
+                .setChecked(DisplaySettings.isSortOrderIgnoringArticles(this));
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -115,6 +123,20 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
             fireTrackerEvent("Search");
             return true;
         }
+        if (itemId == R.id.menu_action_lists_sort_title) {
+            if (ListsDistillationSettings.getSortOrderId(this)
+                    == ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID) {
+                changeSortOrder(
+                        ListsDistillationSettings.ListsSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
+            } else {
+                changeSortOrder(ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID);
+            }
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_sort_ignore_articles) {
+            toggleSortIgnoreArticles();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -124,6 +146,28 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         mListsAdapter.onListsChanged();
         // update tabs
         mTabs.setViewPager(mPager);
+    }
+
+    private void changeSortOrder(int sortOrderId) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putInt(ListsDistillationSettings.KEY_SORT_ORDER, sortOrderId)
+                .apply();
+
+        // post event, so all active list fragments can react
+        EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());
+    }
+
+    private void toggleSortIgnoreArticles() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
+                        !DisplaySettings.isSortOrderIgnoringArticles(this))
+                .apply();
+
+        // refresh icon state
+        supportInvalidateOptionsMenu();
+
+        // post event, so all active list fragments can react
+        EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());
     }
 
     protected void fireTrackerEvent(String label) {

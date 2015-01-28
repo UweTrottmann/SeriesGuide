@@ -45,15 +45,16 @@ import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import de.greenrobot.event.EventBus;
 import java.util.Date;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
+public class ListsFragment extends Fragment implements OnItemClickListener, View.OnClickListener {
 
-    private static final int LOADER_ID = R.layout.fragment_list;
+    /** LoaderManager is created unique to fragment, so use same id for all of them */
+    private static final int LOADER_ID = 1;
 
     private static final String TAG = "Lists";
 
@@ -94,7 +95,21 @@ public class ListsFragment extends Fragment implements
         list.setFastScrollAlwaysVisible(false);
         list.setFastScrollEnabled(true);
 
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+        getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -142,28 +157,36 @@ public class ListsFragment extends Fragment implements
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String listId = args.getString(InitBundle.LIST_ID);
-        return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
-                ListItemsQuery.PROJECTION,
-                // items of this list, exclude any where the show has been removed
-                Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
-                new String[] {
-                        listId
-                }, ListsDistillationSettings.getSortQuery(getActivity())
-        );
+    public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
+        // sort order has changed, reload lists
+        getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
-    }
+    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            String listId = args.getString(InitBundle.LIST_ID);
+            return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
+                    ListItemsQuery.PROJECTION,
+                    // items of this list, but exclude any where the show has been removed
+                    Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
+                    new String[] {
+                            listId
+                    }, ListsDistillationSettings.getSortQuery(getActivity())
+            );
+        }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
-    }
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            mAdapter.swapCursor(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            mAdapter.swapCursor(null);
+        }
+    };
 
     private class ListItemAdapter extends BaseShowsAdapter {
 

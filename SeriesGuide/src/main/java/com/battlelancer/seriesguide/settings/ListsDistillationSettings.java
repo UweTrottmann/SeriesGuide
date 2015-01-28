@@ -25,6 +25,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
  */
 public class ListsDistillationSettings {
 
+    public static class ListsSortOrderChangedEvent {
+    }
+
     public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder";
 
     /**
