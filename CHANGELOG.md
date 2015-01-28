@@ -5,6 +5,23 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 22 *(in development)*
+-----------------------------
+
+#### 22.0.0-beta1 *(2015-01-28)*
+
+* FEATURE Sort lists by title or next episode. When sorted by next episode, seasons are treated
+  like shows (e.g. next episode of show determines order).
+* TWEAK Sort movies without release date as newest.
+* TWEAK Backup/Restore tool includes user ratings. Restore sets sensible defaults, skips broken data.
+* TWEAK Movie trakt links now immediately redirect to movie (could show multiple results before).
+* TWEAK Allow removing a show even if parts of it are added to lists. List items will disappear
+  until show is added again.
+* FIX "Manage Lists" dialog does not remember user choice when scrolling list item out of view.
+* FIX Movies could be rated even after removing them from watchlist and collection.
+* FIX Crash in "Unlock features".
+* NOTICE Latest translations from crowdin.
+
 Version 21.1 *(2015-01-19)*
 ---------------------------
 
