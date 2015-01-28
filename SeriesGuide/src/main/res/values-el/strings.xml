@@ -135,7 +135,6 @@
   <string name="action_watched">Έχει παρακολουθηθεί </string>
   <string name="action_unwatched">Δεν παρακολούθησα</string>
   <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
-  <string name="delete_has_list_items">Δεν μπορώ να το κάνω, παρακαλώ αφαιρέστε πρώτα το %s από όλες τις λίστες.</string>
   <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Διαχείριση λιστών</string>
   <string name="list_item_remove">Κατάργηση από τη λίστα</string>
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
   <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>

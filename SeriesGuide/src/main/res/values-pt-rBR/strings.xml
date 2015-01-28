@@ -135,7 +135,6 @@
   <string name="action_watched">Assistido</string>
   <string name="action_unwatched">Não visto</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
-  <string name="delete_has_list_items">Primeiro remova %s de todas as listas.</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Gerenciar listas</string>
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar a nuvem SeriesGuide</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>

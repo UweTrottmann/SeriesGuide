@@ -135,7 +135,6 @@
   <string name="action_watched">Переглянуто</string>
   <string name="action_unwatched">Не переглянуто</string>
   <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
-  <string name="delete_has_list_items">Не можливо виконати, спершу видаліть %s зі всіх списків.</string>
   <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
   <string name="delete_show">Видалити</string>
   <string name="dontdelete_show">Не видаляти</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Керувати списками</string>
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>

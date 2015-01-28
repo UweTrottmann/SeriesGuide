@@ -135,7 +135,6 @@
   <string name="action_watched">تم مشاهدتها</string>
   <string name="action_unwatched">تعيين كغير مشاهدة</string>
   <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
-  <string name="delete_has_list_items">لا يمكن الإكمال, أزل أولاً %s من كل القوائم.</string>
   <string name="delete_error">لم يتم إزالة المسلسل، حاول مرة أخرى.</string>
   <string name="delete_show">إزالة</string>
   <string name="dontdelete_show">لا تقم بالإزالة</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">إدارة القوائم</string>
   <string name="list_item_remove">إزالة من القائمة</string>
   <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">تجريبي</string>
   <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>

@@ -135,7 +135,6 @@
   <string name="action_watched">Vist</string>
   <string name="action_unwatched">No vist</string>
   <string name="confirm_delete">Realment voleu eliminar %s?</string>
-  <string name="delete_has_list_items">No es pot realitzar; cal que, primer, elimineu «%s» de totes les llistes.</string>
   <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
   <string name="delete_show">Elimina</string>
   <string name="dontdelete_show">No eliminis</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Gestiona llistes</string>
   <string name="list_item_remove">Esborra de la llista</string>
   <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configureu el Cloud de SeriesGuide</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>

@@ -135,7 +135,6 @@
   <string name="action_watched">Просмотрен</string>
   <string name="action_unwatched">Не просмотрено</string>
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
-  <string name="delete_has_list_items">Невозможно выполнить. Сначала удалите %s из всех списков.</string>
   <string name="delete_error">Нельзя удалить сериал. Повторите позже.</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Управление списками</string>
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>

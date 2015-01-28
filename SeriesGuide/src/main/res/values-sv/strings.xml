@@ -136,7 +136,6 @@
   <string name="action_watched">Sett</string>
   <string name="action_unwatched">Markera som osedd</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
-  <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Ta inte bort</string>
@@ -205,6 +204,7 @@
   <string name="list_item_manage">Hantera listor</string>
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina program och filmer.</string>

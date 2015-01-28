@@ -135,7 +135,6 @@
   <string name="action_watched">Set</string>
   <string name="action_unwatched">Ikke set</string>
   <string name="confirm_delete">Vil du fjerne %s?</string>
-  <string name="delete_has_list_items">Kan ikke udføres, fjern %s fra alle lister først.</string>
   <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Fjern ikke</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Administrer lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Eksperimentel!</string>
   <string name="hexagon_setup">Opsæt SeriesGuide Cloud</string>
   <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>

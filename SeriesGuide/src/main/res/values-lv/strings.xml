@@ -135,7 +135,6 @@
   <string name="action_watched">Redzēta</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Vai tu tiešām vēlies noņemt %s?</string>
-  <string name="delete_has_list_items">Nav iespējams apkopot, sākumā noņem %s no visiem sarakstiem.</string>
   <string name="delete_error">Nebija iespējams noņemt šo šovu. Mēģini vēlreiz.</string>
   <string name="delete_show">Noņemt</string>
   <string name="dontdelete_show">Nenoņemt</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Pārvaldīt sarakstus</string>
   <string name="list_item_remove">Noņemt no saraksta</string>
   <string name="list_empty">Tu vari pievienot šovus, sezonas vai epizodes šim sarakstam.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>

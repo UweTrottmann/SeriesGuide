@@ -135,7 +135,6 @@
   <string name="action_watched">Zhliadnute</string>
   <string name="action_unwatched">Nezhliadnute</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
-  <string name="delete_has_list_items">Spĺňa\Nespĺňa požiadavky, odstrániť %s zo všetkých zoznamov.</string>
   <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovať</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Spravovať zoznamy</string>
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>

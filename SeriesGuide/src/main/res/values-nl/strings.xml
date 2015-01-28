@@ -135,7 +135,6 @@
   <string name="action_watched">Bekeken</string>
   <string name="action_unwatched">Niet bekeken</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
-  <string name="delete_has_list_items">Kan geen overeenkomst vinden; verwijder eerst %s uit alle lijsten.</string>
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Lijsten beheren</string>
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>

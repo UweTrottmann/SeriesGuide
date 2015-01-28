@@ -135,7 +135,6 @@
   <string name="action_watched">Pogledano</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Zaista želite ukloniti %s?</string>
-  <string name="delete_has_list_items">Ne može se izvršiti, prvo uklonite %s sa svih popisa.</string>
   <string name="delete_error">Nemoguće ukloniti seriju. Pokušajte kasnije.</string>
   <string name="delete_show">Izbriši</string>
   <string name="dontdelete_show">Nemoj odustati</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Uredi popise</string>
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>

@@ -135,7 +135,6 @@
   <string name="action_watched">Katsottu</string>
   <string name="action_unwatched">Katsomaton</string>
   <string name="confirm_delete">Haluatko varmasti poistaa ohjelman: %s?</string>
-  <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Hallitse listoja</string>
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>

@@ -135,7 +135,6 @@
   <string name="action_watched">Megnézve</string>
   <string name="action_unwatched">Beállítás nem látottra</string>
   <string name="confirm_delete">Biztosan törli a következőt: %s?</string>
-  <string name="delete_has_list_items">Nem folytatható, távolítsa el a %s-t minden listáról előbb.</string>
   <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Listák kezelése</string>
   <string name="list_item_remove">Listáról törlés</string>
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is adhat hozzá ehhez a listához.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_setup">SeriesGuide cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz egy felhőhöz, hogy elmenthesd és szinkronizáld a sorozataidat és filmjeidet.</string>

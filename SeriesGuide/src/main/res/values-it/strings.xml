@@ -135,7 +135,6 @@
   <string name="action_watched">Visto</string>
   <string name="action_unwatched">Non visto</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
-  <string name="delete_has_list_items">Impossibile procedere, eliminare prima %s dalle liste.</string>
   <string name="delete_error">Impossibile rimuovere la serie. Riprovare più tardi.</string>
   <string name="delete_show">Rimuovi</string>
   <string name="dontdelete_show">Non rimuovere</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Gestisci liste</string>
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Sperimentale!</string>
   <string name="hexagon_setup">Configura SeriesGuide Cloud</string>
   <string name="hexagon_description">Connettiti alla cloud per eseguire il backup e la sincronizzazione delle tue serie TV e dei film.</string>

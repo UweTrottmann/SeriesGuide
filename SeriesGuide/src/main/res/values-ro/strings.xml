@@ -135,7 +135,6 @@
   <string name="action_watched">Vizionat</string>
   <string name="action_unwatched">Marchează nevizionat</string>
   <string name="confirm_delete">Doriți să eliminați %s?</string>
-  <string name="delete_has_list_items">Nu putem fi deacord, întâi ștergeți %s din toate listele.</string>
   <string name="delete_error">Nu se poate șterge emisiunea. Încearcă mai tîrziu.</string>
   <string name="delete_show">Ștergeți</string>
   <string name="dontdelete_show">Nu ștergeți</string>
@@ -204,6 +203,7 @@
   <string name="list_item_manage">Gestionați listele</string>
   <string name="list_item_remove">Șterge din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
