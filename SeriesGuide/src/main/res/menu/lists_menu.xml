@@ -25,6 +25,9 @@
                 android:id="@+id/menu_action_lists_sort_title"
                 android:title="@string/action_shows_sort_title" />
             <item
+                android:id="@+id/menu_action_lists_sort_episode"
+                android:title="@string/action_shows_sort_episode" />
+            <item
                 android:id="@+id/menu_action_lists_sort_ignore_articles"
                 android:checkable="true"
                 android:title="@string/action_sort_ignore_articles" />

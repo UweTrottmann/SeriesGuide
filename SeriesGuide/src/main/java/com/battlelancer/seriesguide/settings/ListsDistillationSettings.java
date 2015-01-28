@@ -43,6 +43,12 @@ public class ListsDistillationSettings {
                 return SeriesGuideContract.ListItems.SORT_TITLE_REVERSE;
             }
         }
+        if (sortOrderId == ListsSortOrder.NEWEST_EPISODE_FIRST_ID) {
+            return SeriesGuideContract.ListItems.SORT_NEWEST_EPISODE_FIRST;
+        }
+        if (sortOrderId == ListsSortOrder.OLDEST_EPISODE_FIRST_ID) {
+            return SeriesGuideContract.ListItems.SORT_OLDEST_EPISODE_FIRST;
+        }
 
         if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
             return SeriesGuideContract.ListItems.SORT_TITLE_NOARTICLE;
@@ -63,5 +69,7 @@ public class ListsDistillationSettings {
     public interface ListsSortOrder {
         int TITLE_ALPHABETICAL_ID = 0;
         int TITLE_REVERSE_ALHPABETICAL_ID = 1;
+        int NEWEST_EPISODE_FIRST_ID = 2;
+        int OLDEST_EPISODE_FIRST_ID = 3;
     }
 }

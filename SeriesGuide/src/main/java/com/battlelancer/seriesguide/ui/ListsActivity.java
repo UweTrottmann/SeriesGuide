@@ -35,6 +35,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
 
+import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.ListsSortOrder;
+
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
  */
@@ -125,11 +127,19 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         }
         if (itemId == R.id.menu_action_lists_sort_title) {
             if (ListsDistillationSettings.getSortOrderId(this)
-                    == ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID) {
-                changeSortOrder(
-                        ListsDistillationSettings.ListsSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
+                    == ListsSortOrder.TITLE_ALPHABETICAL_ID) {
+                changeSortOrder(ListsSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
             } else {
-                changeSortOrder(ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID);
+                changeSortOrder(ListsSortOrder.TITLE_ALPHABETICAL_ID);
+            }
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_sort_episode) {
+            if (ListsDistillationSettings.getSortOrderId(this)
+                    == ListsSortOrder.NEWEST_EPISODE_FIRST_ID) {
+                changeSortOrder(ListsSortOrder.OLDEST_EPISODE_FIRST_ID);
+            } else {
+                changeSortOrder(ListsSortOrder.NEWEST_EPISODE_FIRST_ID);
             }
             return true;
         }

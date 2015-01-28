@@ -730,6 +730,12 @@ public class SeriesGuideContract {
                 + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
         public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
                 + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_NEWEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
+        public static final String SORT_OLDEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " ASC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
