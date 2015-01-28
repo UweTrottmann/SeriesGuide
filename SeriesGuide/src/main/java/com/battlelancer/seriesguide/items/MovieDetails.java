@@ -33,7 +33,6 @@ public class MovieDetails {
     public boolean inWatchlist;
     public boolean isWatched;
 
-    public DateTime released;
     public int userRating;
 
     public Ratings traktRatings() {

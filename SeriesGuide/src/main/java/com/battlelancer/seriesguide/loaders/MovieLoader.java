@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import org.joda.time.DateTime;
+import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -79,9 +79,6 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         details.userRating = movieQuery.getInt(MovieQuery.RATING_USER);
 
         // only overwrite other info if remote data failed to load
-        if (details.released == null) {
-            details.released = new DateTime(movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
-        }
         if (details.traktRatings() == null) {
             details.traktRatings(new Ratings());
             details.traktRatings().rating = (double) movieQuery.getInt(MovieQuery.RATING_TRAKT);
@@ -95,6 +92,10 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
             details.tmdbMovie().runtime = movieQuery.getInt(MovieQuery.RUNTIME_MIN);
             details.tmdbMovie().vote_average = movieQuery.getDouble(MovieQuery.RATING_TMDB);
+            // if stored release date is Long.MAX, movie has no release date
+            long releaseDateMs = movieQuery.getLong(MovieQuery.RELEASED_UTC_MS);
+            details.tmdbMovie().release_date = releaseDateMs == Long.MAX_VALUE ? null
+                    : new Date(releaseDateMs);
         }
 
         // clean up
