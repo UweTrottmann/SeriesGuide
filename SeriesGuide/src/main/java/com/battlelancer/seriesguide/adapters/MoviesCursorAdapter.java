@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -91,7 +90,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // release date
         long released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS);
-        if (released != 0) {
+        if (released != Long.MAX_VALUE) {
             holder.releaseDate.setText(dateFormatMovieReleaseDate.format(new Date(released)));
         } else {
             holder.releaseDate.setText("");

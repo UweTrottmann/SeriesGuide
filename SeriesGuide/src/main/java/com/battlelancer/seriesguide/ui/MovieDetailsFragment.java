@@ -64,7 +64,6 @@ import com.uwetrottmann.tmdb.entities.Credits;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
-import org.joda.time.DateTime;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -326,7 +325,6 @@ public class MovieDetailsFragment extends Fragment {
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
         final boolean isWatched = mMovieDetails.isWatched;
-        final DateTime released = mMovieDetails.released;
         final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
@@ -334,9 +332,9 @@ public class MovieDetailsFragment extends Fragment {
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
-        if (released != null && released.getMillis() != 0) {
+        if (tmdbMovie.release_date != null) {
             releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
-                    released.getMillis(), DateUtils.FORMAT_SHOW_DATE));
+                    tmdbMovie.release_date.getTime(), DateUtils.FORMAT_SHOW_DATE));
             releaseAndRuntime.append(" | ");
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
