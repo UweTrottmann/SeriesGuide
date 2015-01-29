@@ -21,6 +21,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.CalendarContract;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
@@ -62,7 +63,8 @@ public class ShareUtils {
      * Share a text snippet. Displays a share intent chooser with the given title, share type is
      * text/plain.
      */
-    public static void startShareIntentChooser(Activity activity, String message, int titleResId) {
+    public static void startShareIntentChooser(Activity activity, String message,
+            @StringRes int titleResId) {
         IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
         ib.setText(message);
         ib.setChooserTitle(titleResId);
