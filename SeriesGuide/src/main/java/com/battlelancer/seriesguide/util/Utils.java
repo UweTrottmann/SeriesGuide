@@ -31,6 +31,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.AnyRes;
+import android.support.annotation.AttrRes;
+import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -231,8 +234,9 @@ public class Utils {
      * intrinsic bounds.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
-            int top, int right, int bottom) {
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+            @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
+            @DrawableRes int bottom) {
         if (AndroidUtils.isJellyBeanMR1OrHigher()) {
             button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
             return;
@@ -339,8 +343,7 @@ public class Utils {
      * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
      * without any resizing or cropping.
      */
-    public static void loadPoster(Context context, ImageView imageView,
-            String posterPath) {
+    public static void loadPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.getPicasso(context)
                 .load(TheTVDB.buildPosterUrl(posterPath))
                 .noFade()
@@ -534,7 +537,9 @@ public class Utils {
     /**
      * Resolves the given attribute to the resource id for the given theme.
      */
-    public static int resolveAttributeToResourceId(Resources.Theme theme, int attributeResId) {
+    @AnyRes
+    public static int resolveAttributeToResourceId(Resources.Theme theme,
+            @AttrRes int attributeResId) {
         TypedValue outValue = new TypedValue();
         theme.resolveAttribute(attributeResId, outValue, true);
         return outValue.resourceId;

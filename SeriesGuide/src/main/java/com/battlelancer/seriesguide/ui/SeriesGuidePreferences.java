@@ -36,6 +36,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -89,7 +90,7 @@ public class SeriesGuidePreferences extends ActionBarActivity {
 
     public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 
-    public static int THEME = R.style.Theme_SeriesGuide;
+    public static @StyleRes int THEME = R.style.Theme_SeriesGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
