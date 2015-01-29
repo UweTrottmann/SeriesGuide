@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -52,7 +53,7 @@ public class AppWidget extends AppWidgetProvider {
     private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         if (REFRESH.equals(intent.getAction())) {
             context.startService(createUpdateIntent(context));
         } else {

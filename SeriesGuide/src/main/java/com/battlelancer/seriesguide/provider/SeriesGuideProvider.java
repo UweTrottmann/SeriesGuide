@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
@@ -348,7 +349,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(Uri uri, @NonNull ContentValues[] values) {
         int numValues = values.length;
         boolean notifyChange = false;
 
@@ -513,7 +514,8 @@ public class SeriesGuideProvider extends ContentProvider {
      * SQLiteDatabase} transaction. All changes will be rolled back if any single one fails.
      */
     @Override
-    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
+    public ContentProviderResult[] applyBatch(
+            @NonNull ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
         final int numOperations = operations.size();
         if (numOperations == 0) {
