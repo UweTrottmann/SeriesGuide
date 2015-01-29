@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;

@@ -57,7 +57,6 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 
 /**

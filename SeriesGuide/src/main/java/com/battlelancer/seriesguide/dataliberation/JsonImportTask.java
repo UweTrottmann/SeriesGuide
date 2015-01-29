@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.google.myjson.Gson;
 import com.google.myjson.JsonParseException;
 import com.google.myjson.stream.JsonReader;
@@ -53,7 +52,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;

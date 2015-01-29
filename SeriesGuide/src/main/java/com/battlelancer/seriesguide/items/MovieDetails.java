@@ -17,8 +17,6 @@
 package com.battlelancer.seriesguide.items;
 
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.enums.Rating;
-import org.joda.time.DateTime;
 
 /**
  * Holder object for trakt and TMDb entities related to a movie.
