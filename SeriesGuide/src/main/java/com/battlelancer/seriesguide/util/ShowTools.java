@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -484,7 +485,7 @@ public class ShowTools {
      *
      * @return null if there was an error, empty list if there are no shows.
      */
-    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
+    public static @Nullable HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,

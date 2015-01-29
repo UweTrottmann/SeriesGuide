@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -125,7 +126,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
      * in the local database.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            List<Show> traktShows) {
+            @Nonnull List<Show> traktShows) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
@@ -135,7 +136,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 // has no TheTVDB id
                 continue;
             }
-            if (existingShows.contains(show.ids.tvdb)) {
+            if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
                 // is already in local database
                 continue;
             }
