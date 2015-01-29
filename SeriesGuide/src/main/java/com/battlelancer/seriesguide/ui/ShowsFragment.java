@@ -174,7 +174,7 @@ public class ShowsFragment extends Fragment implements
     private void updateEmptyView() {
         View oldEmptyView = mGrid.getEmptyView();
 
-        View emptyView = null;
+        View emptyView;
         if (mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming || mIsFilterHidden) {
             emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
         } else {

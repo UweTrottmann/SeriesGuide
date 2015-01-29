@@ -919,12 +919,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // populate the new column from existing data
         final Cursor shows = db.query(Tables.SHOWS, new String[] {
-                Shows._ID, Shows.RELEASE_TIME
+                Shows._ID
         }, null, null, null, null, null);
 
         while (shows.moveToNext()) {
             final String showId = shows.getString(0);
-            final long airtime = shows.getLong(1);
 
             final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED

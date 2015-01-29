@@ -56,7 +56,7 @@ public final class ShortcutUtils {
             @Override
             protected Intent doInBackground(Void... params) {
                 // try to get the show poster
-                Bitmap posterBitmap = null;
+                Bitmap posterBitmap;
 
                 try {
                     posterBitmap = ServiceUtils.getPicasso(context)
