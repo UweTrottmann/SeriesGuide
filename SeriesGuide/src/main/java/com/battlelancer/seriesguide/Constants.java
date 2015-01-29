@@ -26,8 +26,6 @@ import java.util.Map;
 
 public class Constants {
 
-    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
     public static enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
 
@@ -74,7 +72,7 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<String, EpisodeSorting>();
+        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<>();
 
         static {
             for (EpisodeSorting via : EpisodeSorting.values()) {
