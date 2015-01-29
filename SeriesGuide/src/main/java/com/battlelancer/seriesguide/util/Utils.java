@@ -27,7 +27,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -58,11 +57,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import timber.log.Timber;
 
 public class Utils {
@@ -159,27 +155,6 @@ public class Utils {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
                 * DateUtils.MINUTE_IN_MILLIS, pi);
-    }
-
-    /**
-     * Creates a SHA1 hex encoded representation of the given String.
-     */
-    public static String toSHA1(String message) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] messageBytes = message.getBytes("UTF-8");
-            byte[] digest = md.digest(messageBytes);
-
-            String result = "";
-            for (int i = 0; i < digest.length; i++) {
-                result += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
-            }
-
-            return result;
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Timber.e(e, "Failed creating SHA1");
-        }
-        return null;
     }
 
     /**
@@ -421,13 +396,6 @@ public class Utils {
     }
 
     /**
-     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
-     */
-    public static int setColorAlpha(int color, int alpha) {
-        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
-    }
-
-    /**
      * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
      */
     public static void trackView(Context context, String screenName) {
@@ -596,20 +564,6 @@ public class Utils {
     @SafeVarargs
     public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
-    }
-
-    /**
-     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect to
-     * the given URL. <p/> Responses are downloaded and cached using the default HTTP client
-     * instance (see {@link com.battlelancer.seriesguide.util.ServiceUtils}.
-     */
-    public static InputStream downloadUrl(String urlString) throws IOException {
-        URL url = new URL(urlString);
-
-        HttpURLConnection conn = ServiceUtils.getUrlFactory().open(url);
-        conn.connect();
-
-        return conn.getInputStream();
     }
 
     /**
