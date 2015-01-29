@@ -756,7 +756,7 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
         super.dispatchDraw(canvas);
 
         // Find headers.
-        List<Integer> headerPositions = new ArrayList<Integer>();
+        List<Integer> headerPositions = new ArrayList<>();
         int vi = 0;
         for (int i = getFirstVisiblePosition(); i <= getLastVisiblePosition();) {
             long id = getItemIdAtPosition(i);

@@ -198,7 +198,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         }
     }
 
-    List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
+    List<WeakReference<Fragment>> mFragments = new ArrayList<>();
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -208,12 +208,12 @@ public class OverviewActivity extends BaseNavDrawerActivity {
          * we switch to a non-pager layout.
          */
         if (fragment.getTag() != null) {
-            mFragments.add(new WeakReference<Fragment>(fragment));
+            mFragments.add(new WeakReference<>(fragment));
         }
     }
 
     public ArrayList<Fragment> getActiveFragments() {
-        ArrayList<Fragment> ret = new ArrayList<Fragment>();
+        ArrayList<Fragment> ret = new ArrayList<>();
         for (WeakReference<Fragment> ref : mFragments) {
             Fragment f = ref.get();
             if (f != null) {
