@@ -173,6 +173,7 @@ public class Utils {
      */
     public static boolean hasXpass(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the Play store
+        //noinspection ConstantConditions,PointlessBooleanExpression
         return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
@@ -328,6 +329,7 @@ public class Utils {
         final File[] files = path.listFiles();
         if (files != null) {
             for (File file : files) {
+                //noinspection ResultOfMethodCallIgnored
                 file.delete();
             }
         }
@@ -355,6 +357,7 @@ public class Utils {
         if (AndroidUtils.isJellyBeanOrHigher()) {
             imageView.setImageAlpha(30);
         } else {
+            //noinspection deprecation
             imageView.setAlpha(30);
         }
 
