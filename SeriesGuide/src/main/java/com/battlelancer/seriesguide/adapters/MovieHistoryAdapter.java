@@ -28,8 +28,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
 /**
- * Creates a list of movies from a list of {@link com.jakewharton.trakt.entities.ActivityItem},
- * displaying user name and avatar.
+ * Creates a list of movies from a list of {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry}.
  */
 public class MovieHistoryAdapter extends SectionedHistoryAdapter {
 
