@@ -18,9 +18,12 @@ package com.battlelancer.seriesguide.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.IntDef;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class SeriesGuideContract {
 
@@ -381,8 +384,9 @@ public class SeriesGuideContract {
         String TYPE = "item_type";
     }
 
-    public interface ListItemTypes {
-
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ ListItemTypes.SHOW, ListItemTypes.SEASON, ListItemTypes.EPISODE })
+    public @interface ListItemTypes {
         int SHOW = 1;
         int SEASON = 2;
         int EPISODE = 3;

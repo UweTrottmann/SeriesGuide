@@ -46,6 +46,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
@@ -65,7 +66,8 @@ import timber.log.Timber;
 public class ManageListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
-    public static ManageListsDialogFragment newInstance(int itemTvdbId, int itemType) {
+    public static ManageListsDialogFragment newInstance(int itemTvdbId,
+            @SeriesGuideContract.ListItemTypes int itemType) {
         ManageListsDialogFragment f = new ManageListsDialogFragment();
         Bundle args = new Bundle();
         args.putInt(InitBundle.INT_ITEM_TVDB_ID, itemTvdbId);
@@ -183,21 +185,21 @@ public class ManageListsDialogFragment extends DialogFragment implements
             case 1:
                 // show
                 uri = Shows.buildShowUri(itemTvdbId);
-                projection = new String[]{
+                projection = new String[] {
                         Shows._ID, Shows.TITLE
                 };
                 break;
             case 2:
                 // season
                 uri = Seasons.buildSeasonUri(itemTvdbId);
-                projection = new String[]{
+                projection = new String[] {
                         Seasons._ID, Seasons.COMBINED
                 };
                 break;
             case 3:
                 // episode
                 uri = Episodes.buildEpisodeUri(itemTvdbId);
-                projection = new String[]{
+                projection = new String[] {
                         Episodes._ID, Episodes.TITLE
                 };
                 break;
@@ -306,12 +308,11 @@ public class ManageListsDialogFragment extends DialogFragment implements
         public SparseBooleanArray getCheckedPositions() {
             return mCheckedItems;
         }
-
     }
 
     interface ListsQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Tables.LISTS + "." + Lists._ID, Tables.LISTS + "." + Lists.LIST_ID, Lists.NAME,
                 ListItems.LIST_ITEM_ID
         };
@@ -326,10 +327,11 @@ public class ManageListsDialogFragment extends DialogFragment implements
     /**
      * Display a dialog which asks if the user wants to add the given show to one or more lists.
      *
-     * @param itemTvdbId   TVDb id of the item to add
+     * @param itemTvdbId TVDb id of the item to add
      * @param itemType type of the item to add (show, season or episode)
      */
-    public static void showListsDialog(int itemTvdbId, int itemType, FragmentManager fm) {
+    public static void showListsDialog(int itemTvdbId,
+            @SeriesGuideContract.ListItemTypes int itemType, FragmentManager fm) {
         if (fm == null) {
             return;
         }
