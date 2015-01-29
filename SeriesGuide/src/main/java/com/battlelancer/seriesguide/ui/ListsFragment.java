@@ -339,39 +339,35 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                 ListItems.LIST_ITEM_ID, // 1
                 ListItems.ITEM_REF_ID,
                 ListItems.TYPE,
-                Shows.REF_SHOW_ID,
-                Shows.TITLE, // 5
-                Shows.OVERVIEW,
+                Shows.TITLE,
+                Shows.OVERVIEW, // 5
                 Shows.POSTER,
                 Shows.NETWORK,
                 Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY, // 10
-                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_WEEKDAY,
+                Shows.RELEASE_TIMEZONE, // 10
                 Shows.RELEASE_COUNTRY,
                 Shows.STATUS,
                 Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT, // 15
-                Shows.FAVORITE
+                Shows.NEXTAIRDATETEXT,
+                Shows.FAVORITE // 15
         };
-
-        String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
 
         int LIST_ITEM_ID = 1;
         int ITEM_REF_ID = 2;
         int ITEM_TYPE = 3;
-        int SHOW_ID = 4;
-        int SHOW_TITLE = 5;
-        int ITEM_TITLE = 6;
-        int SHOW_POSTER = 7;
-        int SHOW_NETWORK = 8;
-        int SHOW_OR_EPISODE_RELEASE_TIME = 9;
-        int SHOW_RELEASE_WEEKDAY = 10;
-        int SHOW_RELEASE_TIMEZONE = 11;
-        int SHOW_RELEASE_COUNTRY = 12;
-        int SHOW_STATUS = 13;
-        int SHOW_NEXTTEXT = 14;
-        int SHOW_NEXTAIRDATETEXT = 15;
-        int SHOW_FAVORITE = 16;
+        int SHOW_TITLE = 4;
+        int ITEM_TITLE = 5;
+        int SHOW_POSTER = 6;
+        int SHOW_NETWORK = 7;
+        int SHOW_OR_EPISODE_RELEASE_TIME = 8;
+        int SHOW_RELEASE_WEEKDAY = 9;
+        int SHOW_RELEASE_TIMEZONE = 10;
+        int SHOW_RELEASE_COUNTRY = 11;
+        int SHOW_STATUS = 12;
+        int SHOW_NEXTTEXT = 13;
+        int SHOW_NEXTAIRDATETEXT = 14;
+        int SHOW_FAVORITE = 15;
     }
 
     private void fireTrackerEvent(String label) {
