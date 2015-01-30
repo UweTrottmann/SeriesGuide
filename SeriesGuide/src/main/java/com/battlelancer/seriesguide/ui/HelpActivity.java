@@ -27,6 +27,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
+import org.apache.http.protocol.HTTP;
 
 /**
  * Displays the SeriesGuide online help page.
@@ -98,20 +99,25 @@ public class HelpActivity extends BaseActivity {
             return true;
         }
         if (itemId == R.id.menu_feedback) {
+            sendEmail();
             fireTrackerEvent("Feedback");
-
-            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    SeriesGuidePreferences.SUPPORT_MAIL
-            });
-            intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                    "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-            intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-            startActivity(Intent.createChooser(intent, getString(R.string.feedback)));
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendEmail() {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType(HTTP.PLAIN_TEXT_TYPE);
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                SeriesGuidePreferences.SUPPORT_MAIL
+        });
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                "SeriesGuide " + Utils.getVersion(this) + " Feedback");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+
+        Intent chooser = Intent.createChooser(intent, getString(R.string.feedback));
+        Utils.tryStartActivity(this, chooser, true);
     }
 
     private void fireTrackerEvent(String label) {
