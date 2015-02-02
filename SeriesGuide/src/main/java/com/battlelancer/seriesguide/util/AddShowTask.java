@@ -62,23 +62,18 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     }
 
     private static final int ADD_ALREADYEXISTS = 0;
-
     private static final int ADD_SUCCESS = 1;
-
     private static final int ADD_ERROR = 2;
-
     private static final int ADD_OFFLINE = 3;
+    private static final int ADD_TRAKT_API_ERROR = 4;
+    private static final int ADD_TRAKT_AUTH_ERROR = 5;
 
     private final Context mContext;
-
     private final LinkedList<SearchResult> mAddQueue = new LinkedList<>();
 
     private boolean mIsFinishedAddingShows = false;
-
     private boolean mIsSilentMode;
-
     private boolean mIsMergingShows;
-
     private String mCurrentShowName;
 
     public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
@@ -143,8 +138,12 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 } catch (RetrofitError e) {
                     // something went wrong, continue anyhow
                     Timber.w(e, "Getting watched and collected episodes failed");
+                    publishProgress(ADD_TRAKT_API_ERROR);
+                    return null;
                 } catch (OAuthUnauthorizedException e) {
                     TraktCredentials.get(mContext).setCredentialsInvalid();
+                    publishProgress(ADD_TRAKT_AUTH_ERROR);
+                    return null;
                 }
             }
         }
@@ -234,6 +233,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 break;
             case ADD_OFFLINE:
                 event = new OnShowAddedEvent(mContext.getString(R.string.offline),
+                        Toast.LENGTH_LONG);
+                break;
+            case ADD_TRAKT_API_ERROR:
+                event = new OnShowAddedEvent(mContext.getString(R.string.trakt_error_general),
+                        Toast.LENGTH_LONG);
+                break;
+            case ADD_TRAKT_AUTH_ERROR:
+                event = new OnShowAddedEvent(mContext.getString(R.string.trakt_error_credentials),
                         Toast.LENGTH_LONG);
                 break;
         }
