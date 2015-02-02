@@ -31,9 +31,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
@@ -75,6 +76,20 @@ public abstract class AddFragment extends Fragment {
         if (adapter != null) {
             resultsGridView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -127,6 +142,13 @@ public abstract class AddFragment extends Fragment {
             AddShowDialogFragment.showAddDialog(show, getFragmentManager());
         }
     };
+
+    /**
+     * Called if the user adds a new show through the dialog.
+     */
+    public void onEvent(AddShowDialogFragment.AddShowEvent event) {
+        adapter.notifyDataSetChanged();
+    }
 
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
