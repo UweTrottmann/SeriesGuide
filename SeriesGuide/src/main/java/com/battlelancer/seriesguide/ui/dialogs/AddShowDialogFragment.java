@@ -31,12 +31,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
+import de.greenrobot.event.EventBus;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -58,6 +61,9 @@ public class AddShowDialogFragment extends DialogFragment {
     public static final String TAG = "AddDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
     private SearchResult mShow;
+
+    public class AddShowEvent {
+    }
 
     /**
      * Display a dialog which asks if the user wants to add the given show to his show database. If
@@ -169,6 +175,9 @@ public class AddShowDialogFragment extends DialogFragment {
         mButtonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                mShow.isAdded = true;
+                EventBus.getDefault().post(new AddShowEvent());
+                
                 mListener.onAddShow(mShow);
                 dismiss();
             }
