@@ -111,7 +111,8 @@ public class FriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.No
                             entry.episode.number, entry.episode.title),
                     poster,
                     friend.user.username,
-                    avatar
+                    avatar,
+                    entry.action
             );
             items.add(nowItem);
         }

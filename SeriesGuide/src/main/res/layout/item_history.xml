@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright 2014 Uwe Trottmann
+  ~ Copyright 2015 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -23,53 +23,64 @@
     android:background="?attr/drawableCardBackground">
 
     <ImageView
-        android:id="@+id/imageViewNowPoster"
+        android:id="@+id/imageViewHistoryPoster"
         android:layout_width="68dp"
         android:layout_height="100dp"
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@string/description_poster"
-        android:scaleType="centerInside" />
+        android:scaleType="centerCrop"
+        tools:src="@color/protection_dark" />
 
     <TextView
-        android:id="@+id/textViewNowTitle"
+        android:id="@+id/textViewHistoryTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="120dp"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:gravity="end"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="11 hours ago"
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+
+    <TextView
+        android:id="@+id/textViewHistoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewActivityShow"
-        android:layout_toRightOf="@+id/imageViewNowPoster"
+        android:layout_toLeftOf="@+id/textViewHistoryTimestamp"
+        android:layout_toRightOf="@+id/imageViewHistoryPoster"
         android:paddingTop="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="Somewhere in the middle of the park"
         android:textAppearance="@style/TextAppearance.Subhead" />
 
     <TextView
-        android:id="@+id/textViewNowDescription"
+        android:id="@+id/textViewHistoryDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewNowTitle"
-        android:layout_toRightOf="@+id/imageViewNowPoster"
+        android:layout_below="@+id/textViewHistoryTitle"
+        android:layout_toRightOf="@+id/imageViewHistoryPoster"
         android:paddingTop="@dimen/inline_padding"
         android:paddingRight="@dimen/default_padding"
         android:ellipsize="end"
         android:maxLines="2"
-        tools:text="8:00 PM | Aug 17\nShowtime"
+        tools:text="24x10 On a Troublesome Terribly Long Episode Name"
         android:textAppearance="@style/TextAppearance.Body.Dim" />
 
-    <TextView
-        android:id="@+id/textViewNowTimestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+    <ImageView
+        android:id="@+id/imageViewHistoryType"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/imageViewNowPoster"
+        android:layout_alignParentBottom="true"
+        android:src="?attr/drawableWatch"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingBottom="@dimen/default_padding"
-        android:gravity="end"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="2 hours ago"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/inline_padding" />
 
 </RelativeLayout>

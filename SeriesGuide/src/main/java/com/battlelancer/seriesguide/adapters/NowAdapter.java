@@ -45,6 +45,9 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     private static final int VIEW_TYPE_DEFAULT = 0;
     private static final int VIEW_TYPE_FRIEND = 1;
 
+    private final int resIdDrawableCheckin;
+    private final int resIdDrawableWatched;
+
     private List<HeaderData> headers;
     private List<NowItem> recentlyWatched;
     private List<NowItem> releasedToday;
@@ -64,6 +67,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         public String poster;
         public String username;
         public String avatar;
+        public String action;
         public NowType type;
 
         public NowItem recentlyWatched(int episodeTvdbId, long timestamp, String show,
@@ -83,10 +87,11 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         }
 
         public NowItem friend(long timestamp, String show, String episode, String poster,
-                String username, String avatar) {
+                String username, String avatar, String action) {
             setCommonValues(timestamp, show, episode, poster);
             this.username = username;
             this.avatar = avatar;
+            this.action = action;
             this.type = NowType.FRIENDS;
             return this;
         }
@@ -101,9 +106,14 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     public NowAdapter(Context context) {
         super(context, 0);
+
+        resIdDrawableCheckin = Utils.resolveAttributeToResourceId(getContext().getTheme(),
+                R.attr.drawableCheckin);
+        resIdDrawableWatched = Utils.resolveAttributeToResourceId(getContext().getTheme(),
+                R.attr.drawableWatch);
     }
 
-    public class HeaderViewHolder {
+    static class HeaderViewHolder {
         public TextView title;
 
         public HeaderViewHolder(View itemView) {
@@ -111,27 +121,14 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         }
     }
 
-    public class ItemViewHolder {
-        public TextView show;
-        public TextView episode;
-        public TextView timestamp;
-        public ImageView poster;
-
-        public ItemViewHolder(View itemView) {
-            show = (TextView) itemView.findViewById(R.id.textViewNowTitle);
-            episode = (TextView) itemView.findViewById(R.id.textViewNowDescription);
-            timestamp = (TextView) itemView.findViewById(R.id.textViewNowTimestamp);
-            poster = (ImageView) itemView.findViewById(R.id.imageViewNowPoster);
-        }
-    }
-
-    public class FriendViewHolder {
+    static class FriendViewHolder {
         public TextView show;
         public TextView episode;
         public TextView timestamp;
         public ImageView poster;
         public TextView username;
         public ImageView avatar;
+        public ImageView type;
 
         public FriendViewHolder(View itemView) {
             show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
@@ -140,6 +137,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             poster = (ImageView) itemView.findViewById(R.id.imageViewFriendPoster);
             username = (TextView) itemView.findViewById(R.id.textViewFriendUsername);
             avatar = (ImageView) itemView.findViewById(R.id.imageViewFriendAvatar);
+            type = (ImageView) itemView.findViewById(R.id.imageViewFriendActionType);
         }
     }
 
@@ -179,20 +177,32 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             // trakt poster urls
             ServiceUtils.getPicasso(getContext()).load(item.poster).into(holder.poster);
             ServiceUtils.getPicasso(getContext()).load(item.avatar).into(holder.avatar);
+
+            // action type indicator
+            if ("watch".equals(item.action)) {
+                // marked watched
+                holder.type.setImageResource(resIdDrawableWatched);
+            } else {
+                // check-in, scrobble
+                holder.type.setImageResource(resIdDrawableCheckin);
+            }
         } else if (viewType == VIEW_TYPE_DEFAULT) {
-            ItemViewHolder holder;
+            SectionedHistoryAdapter.ViewHolder holder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_now, parent, false);
-                holder = new ItemViewHolder(convertView);
+                        .inflate(R.layout.item_history, parent, false);
+
+                holder = new SectionedHistoryAdapter.ViewHolder(convertView);
+                holder.type.setVisibility(View.GONE);
+
                 convertView.setTag(holder);
             } else {
-                holder = (ItemViewHolder) convertView.getTag();
+                holder = (SectionedHistoryAdapter.ViewHolder) convertView.getTag();
             }
 
             NowItem item = getItem(position);
-            holder.show.setText(item.title);
-            holder.episode.setText(item.description);
+            holder.title.setText(item.title);
+            holder.description.setText(item.description);
             holder.timestamp.setText(
                     TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
             // TheTVDB poster path
