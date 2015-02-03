@@ -69,6 +69,7 @@ public abstract class StreamFragment extends Fragment implements
 
         mGridView.setOnItemClickListener(this);
         mGridView.setEmptyView(mEmptyView);
+        mGridView.setAreHeadersSticky(false);
 
         // set initial view states
         showProgressBar(true);
