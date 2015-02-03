@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.loaders.FriendsHistoryLoader;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.battlelancer.seriesguide.util.Utils;
@@ -92,6 +93,8 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 recentlyCallbacks);
         getLoaderManager().initLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
+        getLoaderManager().initLoader(ShowsActivity.NOW_FRIENDS_LOADER_ID, null,
+                friendsHistoryCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -129,6 +132,8 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 recentlyCallbacks);
         getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
+        getLoaderManager().restartLoader(ShowsActivity.NOW_FRIENDS_LOADER_ID, null,
+                friendsHistoryCallbacks);
     }
 
     @Override
@@ -139,7 +144,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
 
         NowAdapter.NowItem item = adapter.getItem(position);
-        if (item == null) {
+        if (item == null || item.episodeTvdbId <= 0) {
             return;
         }
 
@@ -179,6 +184,9 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         @Override
         public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
+            if (!isAdded()) {
+                return;
+            }
             adapter.setRecentlyWatched(data);
             showProgressBar(false);
         }
@@ -199,7 +207,33 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         @Override
         public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
+            if (!isAdded()) {
+                return;
+            }
             adapter.setReleasedTodayData(data);
+            showProgressBar(false);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+            // do nothing
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> friendsHistoryCallbacks
+            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @Override
+        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
+            return new FriendsHistoryLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+                List<NowAdapter.NowItem> data) {
+            if (!isAdded()) {
+                return;
+            }
+            adapter.setFriendsRecentlyWatched(data);
             showProgressBar(false);
         }
 

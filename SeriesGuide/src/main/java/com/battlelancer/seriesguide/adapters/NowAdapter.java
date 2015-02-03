@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
@@ -114,7 +115,13 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         holder.description.setText(item.description);
         holder.timestamp.setText(
                 TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
-        Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
+        if (item.poster != null && item.poster.startsWith("http")) {
+            // trakt poster url
+            ServiceUtils.getPicasso(getContext()).load(item.poster).into(holder.poster);
+        } else {
+            // TheTVDB poster path or null
+            Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
+        }
 
         return convertView;
     }
