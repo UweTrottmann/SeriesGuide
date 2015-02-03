@@ -19,6 +19,9 @@
     android:id="@+id/textViewNowHeader"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding"
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingRight="@dimen/default_padding"
+    android:paddingTop="@dimen/default_padding"
+    android:paddingBottom="@dimen/inline_padding"
     tools:text="Recently Watched"
-    android:textAppearance="@style/TextAppearance.Title" />
+    android:textAppearance="@style/TextAppearance.Body.Bold" />
