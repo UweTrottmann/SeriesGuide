@@ -78,8 +78,6 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static OkHttpClient httpClient;
-    private static OkUrlFactory urlFactory;
     private static OkHttpClient cachingHttpClient;
     private static OkUrlFactory cachingUrlFactory;
 
@@ -93,19 +91,6 @@ public final class ServiceUtils {
 
     /* This class is never initialized */
     private ServiceUtils() {
-    }
-
-    /**
-     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with no cache enabled.
-     */
-    @Nonnull
-    public static synchronized OkHttpClient getOkHttpClient() {
-        if (httpClient == null) {
-            httpClient = new OkHttpClient();
-            httpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            httpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        }
-        return httpClient;
     }
 
     /**
@@ -149,14 +134,6 @@ public final class ServiceUtils {
 
         // Bound inside min/max size for disk cache.
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
-    }
-
-    @Nonnull
-    public static synchronized OkUrlFactory getUrlFactory() {
-        if (urlFactory == null) {
-            urlFactory = new OkUrlFactory(getOkHttpClient());
-        }
-        return urlFactory;
     }
 
     @Nonnull
