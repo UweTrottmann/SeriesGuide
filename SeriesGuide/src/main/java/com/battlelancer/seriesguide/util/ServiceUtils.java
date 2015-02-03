@@ -40,6 +40,8 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -96,6 +98,7 @@ public final class ServiceUtils {
     /**
      * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with no cache enabled.
      */
+    @Nonnull
     public static synchronized OkHttpClient getOkHttpClient() {
         if (httpClient == null) {
             httpClient = new OkHttpClient();
@@ -109,6 +112,7 @@ public final class ServiceUtils {
      * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
      * Should be used with API calls.
      */
+    @Nonnull
     public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
         if (cachingHttpClient == null) {
             cachingHttpClient = new OkHttpClient();
@@ -147,6 +151,7 @@ public final class ServiceUtils {
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
     }
 
+    @Nonnull
     public static synchronized OkUrlFactory getUrlFactory() {
         if (urlFactory == null) {
             urlFactory = new OkUrlFactory(getOkHttpClient());
@@ -154,6 +159,7 @@ public final class ServiceUtils {
         return urlFactory;
     }
 
+    @Nonnull
     public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
         if (cachingUrlFactory == null) {
             cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
@@ -161,6 +167,7 @@ public final class ServiceUtils {
         return cachingUrlFactory;
     }
 
+    @Nonnull
     public static synchronized Picasso getPicasso(Context context) {
         if (sPicasso == null) {
             sPicasso = new Picasso.Builder(context).downloader(
@@ -172,6 +179,7 @@ public final class ServiceUtils {
     /**
      * Get a tmdb-java instance with our API key set.
      */
+    @Nonnull
     public static synchronized Tmdb getTmdb(Context context) {
         if (tmdb == null) {
             tmdb = new SgTmdb(context).setApiKey(BuildConfig.TMDB_API_KEY);
@@ -185,6 +193,7 @@ public final class ServiceUtils {
      *
      * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
      */
+    @Nonnull
     public static synchronized TraktV2 getTraktV2(Context context) {
         if (traktV2 == null) {
             traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
@@ -199,6 +208,7 @@ public final class ServiceUtils {
      * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance or null if there are no valid
      * credentials.
      */
+    @Nullable
     public static synchronized TraktV2 getTraktV2WithAuth(Context context) {
         if (!TraktCredentials.get(context).hasCredentials()) {
             Timber.e("getTraktV2WithAuth: no auth");
