@@ -42,6 +42,9 @@ import java.util.Map;
 public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         implements StickyGridHeadersBaseAdapter {
 
+    private static final int VIEW_TYPE_DEFAULT = 0;
+    private static final int VIEW_TYPE_FRIEND = 1;
+
     private List<HeaderData> headers;
     private List<NowItem> recentlyWatched;
     private List<NowItem> releasedToday;
@@ -54,21 +57,45 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     }
 
     public static class NowItem {
-        public int episodeTvdbId;
+        public Integer episodeTvdbId;
         public long timestamp;
         public String title;
         public String description;
         public String poster;
+        public String username;
+        public String avatar;
         public NowType type;
 
-        public NowItem(int episodeTvdbId, long timestamp, String title, String description,
-                String poster, NowType type) {
+        public NowItem recentlyWatched(int episodeTvdbId, long timestamp, String show,
+                String episode, String poster) {
+            setCommonValues(timestamp, show, episode, poster);
             this.episodeTvdbId = episodeTvdbId;
+            this.type = NowType.RECENTLY_WATCHED;
+            return this;
+        }
+
+        public NowItem releasedToday(int episodeTvdbId, long timestamp, String show,
+                String episode, String poster) {
+            setCommonValues(timestamp, show, episode, poster);
+            this.episodeTvdbId = episodeTvdbId;
+            this.type = NowType.RELEASED_TODAY;
+            return this;
+        }
+
+        public NowItem friend(long timestamp, String show, String episode, String poster,
+                String username, String avatar) {
+            setCommonValues(timestamp, show, episode, poster);
+            this.username = username;
+            this.avatar = avatar;
+            this.type = NowType.FRIENDS;
+            return this;
+        }
+
+        private void setCommonValues(long timestamp, String show, String episode, String poster) {
             this.timestamp = timestamp;
-            this.title = title;
-            this.description = description;
+            this.title = show;
+            this.description = episode;
             this.poster = poster;
-            this.type = type;
         }
     }
 
@@ -85,42 +112,93 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     }
 
     public class ItemViewHolder {
-        public TextView title;
-        public TextView description;
+        public TextView show;
+        public TextView episode;
         public TextView timestamp;
         public ImageView poster;
 
         public ItemViewHolder(View itemView) {
-            title = (TextView) itemView.findViewById(R.id.textViewNowTitle);
-            description = (TextView) itemView.findViewById(R.id.textViewNowDescription);
+            show = (TextView) itemView.findViewById(R.id.textViewNowTitle);
+            episode = (TextView) itemView.findViewById(R.id.textViewNowDescription);
             timestamp = (TextView) itemView.findViewById(R.id.textViewNowTimestamp);
             poster = (ImageView) itemView.findViewById(R.id.imageViewNowPoster);
         }
     }
 
+    public class FriendViewHolder {
+        public TextView show;
+        public TextView episode;
+        public TextView timestamp;
+        public ImageView poster;
+        public TextView username;
+        public ImageView avatar;
+
+        public FriendViewHolder(View itemView) {
+            show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
+            episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
+            timestamp = (TextView) itemView.findViewById(R.id.textViewFriendTimestamp);
+            poster = (ImageView) itemView.findViewById(R.id.imageViewFriendPoster);
+            username = (TextView) itemView.findViewById(R.id.textViewFriendUsername);
+            avatar = (ImageView) itemView.findViewById(R.id.imageViewFriendAvatar);
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (getItem(position).type == NowType.FRIENDS) {
+            return VIEW_TYPE_FRIEND;
+        }
+        return VIEW_TYPE_DEFAULT;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ItemViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_now, parent, false);
-            holder = new ItemViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ItemViewHolder) convertView.getTag();
-        }
+        int viewType = getItemViewType(position);
+        if (viewType == VIEW_TYPE_FRIEND) {
+            FriendViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_friend, parent, false);
+                holder = new FriendViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (FriendViewHolder) convertView.getTag();
+            }
 
-        NowItem item = getItem(position);
-        holder.title.setText(item.title);
-        holder.description.setText(item.description);
-        holder.timestamp.setText(
-                TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
-        if (item.poster != null && item.poster.startsWith("http")) {
-            // trakt poster url
+            NowItem item = getItem(position);
+            holder.show.setText(item.title);
+            holder.episode.setText(item.description);
+            holder.timestamp.setText(
+                    TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
+            holder.username.setText(item.username);
+            // trakt poster urls
             ServiceUtils.getPicasso(getContext()).load(item.poster).into(holder.poster);
-        } else {
-            // TheTVDB poster path or null
+            ServiceUtils.getPicasso(getContext()).load(item.avatar).into(holder.avatar);
+        } else if (viewType == VIEW_TYPE_DEFAULT) {
+            ItemViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_now, parent, false);
+                holder = new ItemViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ItemViewHolder) convertView.getTag();
+            }
+
+            NowItem item = getItem(position);
+            holder.show.setText(item.title);
+            holder.episode.setText(item.description);
+            holder.timestamp.setText(
+                    TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
+            // TheTVDB poster path
             Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
+        } else {
+            throw new IllegalArgumentException("Using unrecognized view type.");
         }
 
         return convertView;

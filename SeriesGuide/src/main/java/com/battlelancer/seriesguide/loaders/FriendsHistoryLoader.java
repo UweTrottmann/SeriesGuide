@@ -54,7 +54,7 @@ public class FriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.No
         // get all trakt friends
         List<Friend> friends;
         try {
-            friends = traktUsers.friends("me", Extended.DEFAULT_MIN);
+            friends = traktUsers.friends("me", Extended.IMAGES);
         } catch (RetrofitError e) {
             Timber.e(e, "Failed to load trakt friends");
             return null;
@@ -100,17 +100,18 @@ public class FriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.No
                 continue;
             }
 
-            String poster =
-                    (entry.show.images == null || entry.show.images.poster == null)
-                            ? null : entry.show.images.poster.thumb;
-            NowAdapter.NowItem nowItem = new NowAdapter.NowItem(
-                    -1,
+            String poster = (entry.show.images == null || entry.show.images.poster == null)
+                    ? null : entry.show.images.poster.thumb;
+            String avatar = (friend.user.images == null || friend.user.images.avatar == null)
+                    ? null : friend.user.images.avatar.full;
+            NowAdapter.NowItem nowItem = new NowAdapter.NowItem().friend(
                     entry.watched_at.getMillis(),
                     entry.show.title,
                     Utils.getNextEpisodeString(getContext(), entry.episode.season,
                             entry.episode.number, entry.episode.title),
                     poster,
-                    NowAdapter.NowType.FRIENDS
+                    friend.user.username,
+                    avatar
             );
             items.add(nowItem);
         }

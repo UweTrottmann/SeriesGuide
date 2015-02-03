@@ -73,7 +73,7 @@
             android:id="@+id/imageViewFriendActionType"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="?attr/drawableWatch"
+            tools:src="?attr/drawableWatch"
             android:paddingTop="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:paddingBottom="@dimen/inline_padding"

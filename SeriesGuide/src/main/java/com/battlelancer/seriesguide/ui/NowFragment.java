@@ -144,7 +144,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
 
         NowAdapter.NowItem item = adapter.getItem(position);
-        if (item == null || item.episodeTvdbId <= 0) {
+        if (item == null || item.episodeTvdbId == null) {
             return;
         }
 

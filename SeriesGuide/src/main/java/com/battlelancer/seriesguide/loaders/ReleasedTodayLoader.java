@@ -72,14 +72,13 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
             List<NowAdapter.NowItem> items = new ArrayList<>();
 
             while (query.moveToNext()) {
-                NowAdapter.NowItem item = new NowAdapter.NowItem(
+                NowAdapter.NowItem item = new NowAdapter.NowItem().releasedToday(
                         query.getInt(0),
                         query.getLong(4),
                         query.getString(8),
                         Utils.getNextEpisodeString(getContext(), query.getInt(3), query.getInt(2),
                                 query.getString(1)),
-                        query.getString(10),
-                        NowAdapter.NowType.RELEASED_TODAY
+                        query.getString(10)
                 );
                 items.add(item);
             }
