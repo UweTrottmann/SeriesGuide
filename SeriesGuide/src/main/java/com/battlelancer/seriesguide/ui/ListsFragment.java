@@ -169,7 +169,8 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             String listId = args.getString(InitBundle.LIST_ID);
             return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
                     ListItemsQuery.PROJECTION,
-                    // items of this list, but exclude any where the show has been removed
+                    // items of this list, but exclude any if show was removed from the database
+                    // (the join on show data will fail, hence the show id will be 0/null)
                     Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
                     new String[] {
                             listId
