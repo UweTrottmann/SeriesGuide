@@ -61,6 +61,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     public static class NowItem {
         public Integer episodeTvdbId;
+        public Integer showTvdbId;
         public long timestamp;
         public String title;
         public String description;
@@ -86,9 +87,12 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             return this;
         }
 
-        public NowItem friend(long timestamp, String show, String episode, String poster,
-                String username, String avatar, String action) {
+        public NowItem friend(Integer episodeTvdbId, Integer showTvdbId, long timestamp,
+                String show, String episode, String poster, String username, String avatar,
+                String action) {
             setCommonValues(timestamp, show, episode, poster);
+            this.episodeTvdbId = episodeTvdbId;
+            this.showTvdbId = showTvdbId;
             this.username = username;
             this.avatar = avatar;
             this.action = action;

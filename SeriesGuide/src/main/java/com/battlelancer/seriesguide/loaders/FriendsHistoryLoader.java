@@ -105,6 +105,8 @@ public class FriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.No
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().friend(
+                    entry.episode.ids == null ? null : entry.episode.ids.tvdb,
+                    entry.show.ids == null ? null : entry.show.ids.tvdb,
                     entry.watched_at.getMillis(),
                     entry.show.title,
                     Utils.getNextEpisodeString(getContext(), entry.episode.season,

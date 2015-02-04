@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -39,6 +40,8 @@ import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.FriendsHistoryLoader;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import java.util.List;
@@ -148,7 +151,22 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             return;
         }
 
-        showDetails(view, item.episodeTvdbId);
+        // check if episode is in database
+        Cursor query = getActivity().getContentResolver()
+                .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
+                        new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
+        if (query == null) {
+            // query failed
+            return;
+        }
+        if (query.getCount() == 1) {
+            // episode in database: display details
+            showDetails(view, item.episodeTvdbId);
+        } else if (item.showTvdbId != null) {
+            // episode missing: show likely not in database, suggest adding it
+            AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
+        }
+        query.close();
     }
 
     /**
