@@ -26,6 +26,9 @@ import java.util.Map;
 
 public class Constants {
 
+    // Use non-application id-based type as beaming is meant to be cross-flavor compatible
+    public static final String ANDROID_BEAM_NDEF_MIME_TYPE = "application/vnd.com.uwetrottmann.seriesguide";
+
     public static enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
 

@@ -16,12 +16,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -37,7 +35,6 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment.OnAddShowLi
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Locale;
 
 /**
@@ -127,11 +124,11 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     @Override
     public void onResume() {
         super.onResume();
-        if (AndroidUtils.isICSOrHigher()) {
-            // Check to see that the Activity started due to an Android Beam
-            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-                processIntent(getIntent());
-            }
+
+        // If the activity was started due to an Android Beam, handle the incoming beam
+        if (getIntent() != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(
+                getIntent().getAction())) {
+            processBeamIntent(getIntent());
         }
     }
 
@@ -142,19 +139,19 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
     }
 
     /**
-     * Parses the NDEF Message from the intent and prints to the TextView
+     * Extracts the beamed show from the NDEF Message and displays an add dialog for the show.
      */
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    void processIntent(Intent intent) {
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-                NfcAdapter.EXTRA_NDEF_MESSAGES);
+    void processBeamIntent(Intent intent) {
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+        if (rawMsgs == null || rawMsgs.length == 0) {
+            // corrupted or invalid data
+            return;
+        }
 
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         SearchResult show = new SearchResult();
         show.tvdbid = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
-        show.title = new String(msg.getRecords()[1].getPayload());
-        show.overview = new String(msg.getRecords()[2].getPayload());
 
         // display add dialog
         AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
