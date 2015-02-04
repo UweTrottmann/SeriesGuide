@@ -26,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodeHistoryAdapter;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -104,11 +103,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
             showDetails(view, episodeQuery.getInt(0));
         } else {
             // offer to add the show if it's not in the show database yet
-            SearchResult showToAdd = new SearchResult();
-            showToAdd.tvdbid = item.show.ids.tvdb;
-            showToAdd.title = item.show.title;
-            showToAdd.overview = item.show.overview;
-            AddShowDialogFragment.showAddDialog(showToAdd, getFragmentManager());
+            AddShowDialogFragment.showAddDialog(item.show.ids.tvdb, getFragmentManager());
         }
 
         episodeQuery.close();

@@ -174,9 +174,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 // no such episode, offer to add show
                 int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
                 if (showTvdbId > 0) {
-                    SearchResult show = new SearchResult();
-                    show.tvdbid = showTvdbId;
-                    AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                    AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
                 }
             }
         }
@@ -192,9 +190,7 @@ public class ShowsActivity extends BaseTopActivity implements
                         .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
             } else {
                 // no such show, offer to add it
-                SearchResult show = new SearchResult();
-                show.tvdbid = showTvdbId;
-                AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
             }
         }
 

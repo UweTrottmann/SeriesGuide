@@ -55,19 +55,21 @@ import java.util.List;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
+ * Displays show details as well.
  */
 public class AddShowDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddDialogFragment";
+    public static final String TAG = "AddShowDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
+
     private SearchResult mShow;
 
     public class AddShowEvent {
     }
 
     /**
-     * Display a dialog which asks if the user wants to add the given show to his show database. If
-     * necessary an AsyncTask will be started which takes care of adding the show.
+     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * show.
      */
     public static void showAddDialog(SearchResult show, FragmentManager fm) {
         // DialogFragment.show() will take care of adding the fragment
@@ -83,6 +85,18 @@ public class AddShowDialogFragment extends DialogFragment {
         // Create and show the dialog.
         DialogFragment newFragment = AddShowDialogFragment.newInstance(show);
         newFragment.show(ft, TAG);
+    }
+
+    /**
+     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * show.
+     *
+     * <p> Use if there is no actual search result, but just a TheTVDB id available.
+     */
+    public static void showAddDialog(int showTvdbId, FragmentManager fm) {
+        SearchResult fakeResult = new SearchResult();
+        fakeResult.tvdbid = showTvdbId;
+        showAddDialog(fakeResult, fm);
     }
 
     public static AddShowDialogFragment newInstance(SearchResult show) {
@@ -177,7 +191,7 @@ public class AddShowDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 mShow.isAdded = true;
                 EventBus.getDefault().post(new AddShowEvent());
-                
+
                 mListener.onAddShow(mShow);
                 dismiss();
             }
