@@ -42,8 +42,10 @@ import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
@@ -92,14 +94,44 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         gridView.setAdapter(adapter);
         gridView.setAreHeadersSticky(false);
 
-        getLoaderManager().initLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                recentlyCallbacks);
-        getLoaderManager().initLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
-                releasedTodayCallbacks);
         getLoaderManager().initLoader(ShowsActivity.NOW_FRIENDS_LOADER_ID, null,
                 friendsHistoryCallbacks);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+
+        /**
+         * Init recently watched and released today loaders here the earliest.
+         * So we can restart them if they already exist to ensure up to date data (the loaders do
+         * not react to database changes themselves) and avoid loading data twice in a row.
+         */
+        initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyCallbacks);
+        initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
+    }
+
+    /**
+     * Init the loader. If the loader already exists, will restart it (the default behavior of init
+     * would be to get the last loaded data).
+     */
+    private void initAndMaybeRestartLoader(int loaderId, LoaderManager.LoaderCallbacks callbacks) {
+        boolean isLoaderExists = getLoaderManager().getLoader(loaderId) != null;
+        getLoaderManager().initLoader(loaderId, null, callbacks);
+        if (isLoaderExists) {
+            getLoaderManager().restartLoader(loaderId, null, callbacks);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -190,6 +222,17 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
      */
     protected void showProgressBar(boolean isShowing) {
         swipeRefreshLayout.setRefreshing(isShowing);
+    }
+
+    public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        // reload recently watched if user set or unset an episode watched
+        if (event.mType instanceof EpisodeTools.EpisodeWatchedType) {
+            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                    recentlyCallbacks);
+        }
     }
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
