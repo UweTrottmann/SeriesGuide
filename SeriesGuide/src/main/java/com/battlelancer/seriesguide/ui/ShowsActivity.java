@@ -82,11 +82,13 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int SHOWS_LOADER_ID = 100;
     public static final int UPCOMING_LOADER_ID = 101;
     public static final int RECENT_LOADER_ID = 102;
-    public static final int FRIENDS_LOADER_ID = 103;
-    public static final int USER_LOADER_ID = 104;
-    public static final int ADD_SHOW_LOADER_ID = 105;
+    public static final int USER_LOADER_ID = 103;
+    public static final int ADD_SHOW_LOADER_ID = 104;
+    public static final int NOW_RECENTLY_LOADER_ID = 105;
+    public static final int NOW_TODAY_LOADER_ID = 106;
+    public static final int NOW_FRIENDS_LOADER_ID = 107;
 
-    private static final int TAB_COUNT_WITH_TRAKT = 4;
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
 
     private IabHelper mBillingHelper;
 
@@ -105,8 +107,8 @@ public class ShowsActivity extends BaseTopActivity implements
         String SELECTED_TAB = "selectedtab";
 
         int INDEX_TAB_SHOWS = 0;
-        int INDEX_TAB_UPCOMING = 1;
-        int INDEX_TAB_RECENT = 2;
+        int INDEX_TAB_UPCOMING = 2;
+        int INDEX_TAB_RECENT = 3;
     }
 
     @Override
@@ -171,9 +173,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 // no such episode, offer to add show
                 int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
                 if (showTvdbId > 0) {
-                    SearchResult show = new SearchResult();
-                    show.tvdbid = showTvdbId;
-                    AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                    AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
                 }
             }
         }
@@ -189,9 +189,7 @@ public class ShowsActivity extends BaseTopActivity implements
                         .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
             } else {
                 // no such show, offer to add it
-                SearchResult show = new SearchResult();
-                show.tvdbid = showTvdbId;
-                AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
+                AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
             }
         }
 
@@ -222,6 +220,9 @@ public class ShowsActivity extends BaseTopActivity implements
         } else {
             mTabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
         }
+
+        // now tab
+        mTabsAdapter.addTab(R.string.now_tab, NowFragment.class, null);
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();

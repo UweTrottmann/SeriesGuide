@@ -150,11 +150,16 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
-        SearchResult show = new SearchResult();
-        show.tvdbid = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
+
+        int showTvdbId;
+        try {
+            showTvdbId = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
+        } catch (NumberFormatException e) {
+            return;
+        }
 
         // display add dialog
-        AddShowDialogFragment.showAddDialog(show, getSupportFragmentManager());
+        AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {

@@ -44,19 +44,8 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friend, parent, false);
-
-            holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
-            holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
-            holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
-            holder.more = (TextView) convertView.findViewById(R.id.textViewFriendMore);
-            holder.timestamp = (TextView) convertView.findViewById(
-                    R.id.textViewFriendTimestamp);
-            holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
-            holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
-
+            convertView = mInflater.inflate(R.layout.item_history, parent, false);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -66,7 +55,7 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         HistoryEntry item = getItem(position);
 
         // show title and poster
-        holder.show.setText(item.show == null ? null : item.show.title);
+        holder.title.setText(item.show == null ? null : item.show.title);
         if (item.show.images != null && item.show.images.poster != null && !TextUtils.isEmpty(
                 item.show.images.poster.thumb)) {
             ServiceUtils.getPicasso(getContext())
@@ -91,30 +80,10 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         }
 
         // episode
-        holder.episode.setText(item.episode == null ? null
+        holder.description.setText(item.episode == null ? null
                 : Utils.getNextEpisodeString(getContext(), item.episode.season, item.episode.number,
                         item.episode.title));
-        holder.more.setText(null);
 
         return convertView;
-    }
-
-    static class ViewHolder {
-
-        TextView name;
-
-        TextView show;
-
-        TextView episode;
-
-        TextView more;
-
-        TextView timestamp;
-
-        ImageView poster;
-
-        ImageView avatar;
-
-        ImageView type;
     }
 }

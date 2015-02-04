@@ -43,19 +43,11 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friend, parent, false);
+            convertView = mInflater.inflate(R.layout.item_history, parent, false);
 
-            holder = new ViewHolder();
-            holder.timestamp = (TextView) convertView.findViewById(
-                    R.id.textViewFriendTimestamp);
-            holder.movie = (TextView) convertView.findViewById(R.id.textViewFriendShow);
-            holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-            holder.username = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
-            holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
-
+            holder = new ViewHolder(convertView);
             // no need for secondary text
-            convertView.findViewById(R.id.textViewFriendEpisode).setVisibility(View.GONE);
+            holder.description.setVisibility(View.GONE);
 
             convertView.setTag(holder);
         } else {
@@ -66,7 +58,7 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         HistoryEntry item = getItem(position);
 
         // movie title and poster
-        holder.movie.setText(item.movie == null ? null : item.movie.title);
+        holder.title.setText(item.movie == null ? null : item.movie.title);
         if (item.movie.images != null && item.movie.images.poster != null && !TextUtils.isEmpty(
                 item.movie.images.poster.thumb)) {
             ServiceUtils.getPicasso(getContext())
@@ -91,20 +83,5 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         }
 
         return convertView;
-    }
-
-    static class ViewHolder {
-
-        TextView timestamp;
-
-        TextView movie;
-
-        ImageView poster;
-
-        TextView username;
-
-        ImageView avatar;
-
-        ImageView type;
     }
 }

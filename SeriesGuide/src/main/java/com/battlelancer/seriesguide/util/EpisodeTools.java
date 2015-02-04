@@ -240,8 +240,7 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once the database ops are finished, sending to trakt may still be in progress or queued
-     * due to no available connection.
+     * Sent once sending to services and the database ops are finished.
      */
     public static class EpisodeActionCompletedEvent {
 
@@ -413,6 +412,12 @@ public class EpisodeTools {
         }
 
         /**
+         * Will be called after {@link #updateDatabase()} and {@link #storeLastEpisode()}. Do any
+         * additional operations here.
+         */
+        protected abstract void onPostExecute();
+
+        /**
          * Returns the text which should be prepended to the submission status message. Tells e.g.
          * which episode was flagged watched.
          */
@@ -553,6 +558,18 @@ public class EpisodeTools {
         }
 
         @Override
+        protected void onPostExecute() {
+            if (isWatched(mEpisodeFlag)) {
+                // create activity entry for watched episode
+                ActivityTools.addActivity(mContext, mEpisodeTvdbId, mShowTvdbId);
+            } else if (isUnwatched(mEpisodeFlag)) {
+                // remove any previous activity entries for this episode
+                // use case: user accidentally toggled watched flag
+                ActivityTools.removeActivity(mContext, mEpisodeTvdbId);
+            }
+        }
+
+        @Override
         public String getNotificationText() {
             if (isSkipped(mEpisodeFlag)) {
                 // skipping is not sent to trakt, no need for a message
@@ -591,6 +608,11 @@ public class EpisodeTools {
         protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
+        }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -647,6 +669,11 @@ public class EpisodeTools {
             seasons.add(new SyncSeason().number(mSeason));
             return seasons;
         }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
+        }
     }
 
     public static class SeasonWatchedType extends SeasonType {
@@ -694,6 +721,11 @@ public class EpisodeTools {
 
                 return lastWatchedId;
             }
+        }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -770,6 +802,11 @@ public class EpisodeTools {
         @Override
         public List<SyncSeason> getEpisodesForTrakt() {
             return null;
+        }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -882,6 +919,11 @@ public class EpisodeTools {
         }
 
         @Override
+        protected void onPostExecute() {
+            // do nothing
+        }
+
+        @Override
         public String getNotificationText() {
             return null;
         }
@@ -953,6 +995,7 @@ public class EpisodeTools {
             // update local database (if uploading went smoothly or not uploading at all)
             mType.updateDatabase();
             mType.storeLastEpisode();
+            mType.onPostExecute();
 
             return SUCCESS;
         }
