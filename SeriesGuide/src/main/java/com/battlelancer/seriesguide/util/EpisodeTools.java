@@ -240,8 +240,7 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once the database ops are finished, sending to trakt may still be in progress or queued
-     * due to no available connection.
+     * Sent once sending to services and the database ops are finished.
      */
     public static class EpisodeActionCompletedEvent {
 
