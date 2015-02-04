@@ -294,11 +294,11 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     private void reloadData() {
         clear();
-        if (recentlyWatched != null) {
-            addAll(recentlyWatched);
-        }
         if (releasedToday != null) {
             addAll(releasedToday);
+        }
+        if (recentlyWatched != null) {
+            addAll(recentlyWatched);
         }
         if (friendsRecently != null) {
             addAll(friendsRecently);
