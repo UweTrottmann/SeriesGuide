@@ -11,6 +11,10 @@ Version 21.1 *(2015-01-19)*
 * Improved error messages when interacting with trakt.
 * Combined search and trending tab in "Add show" screen.
 
+#### 21.1.3 *(2015-02-05)*
+
+* TWEAK Switch to new dedicated trakt v2 API endpoint.
+
 #### 21.1.2 *(2015-01-21)*
 
 * TWEAK Always open help page in-app.
