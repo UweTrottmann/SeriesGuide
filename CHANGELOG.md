@@ -8,6 +8,21 @@ All dates are in the European Central timezone.
 Version 22 *(in development)*
 -----------------------------
 
+#### 22.0.0-beta2 *(2015-02-05)*
+
+* FEATURE Experimental "Now" tab in shows section. Displays recently watched episodes,
+  episodes released today and recent episodes of trakt friends. Note: Recently watched are currently
+  local only, even if connected to trakt; friends activity loads any last episode, even if it
+  was watched a long time ago.
+* TWEAK After adding show from add dialog, add button will disappear in show lists. Thanks @migueljteixeira!
+* TWEAK Switch to new dedicated trakt v2 API endpoint.
+* TWEAK Update string related to hiding shows for clarity.
+* FIX When adding a show and connected to trakt, would add show even if loading watched or collected
+  episodes failed. Now fails with trakt error message.
+* NOTICE Changed Android Beam NDEF mime type. Beaming shows from their overview will only work
+  against this or a later version.
+* NOTICE Latest translations from crowdin.
+
 #### 22.0.0-beta1 *(2015-01-28)*
 
 * FEATURE Sort lists by title or next episode. When sorted by next episode, seasons are treated
