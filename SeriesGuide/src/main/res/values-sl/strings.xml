@@ -162,6 +162,11 @@
   <string name="menu_update_delta">Posodobi (samo zastarele)</string>
   <string name="context_updateshow">Posodobi</string>
   <string name="context_marknext">Pogledana naslednja epizoda</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Prihajajoče</string>
   <string name="recent">Nedavno</string>
   <string name="friends">Prijatelji</string>

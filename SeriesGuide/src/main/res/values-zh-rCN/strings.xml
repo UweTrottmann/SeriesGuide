@@ -162,6 +162,11 @@
   <string name="menu_update_delta">更新过期节目</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">标记本集为已观看</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">即将播出</string>
   <string name="recent">已播剧集</string>
   <string name="friends">朋友动态</string>

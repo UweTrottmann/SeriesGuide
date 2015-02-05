@@ -162,6 +162,11 @@
   <string name="menu_update_delta">Güncelleştir (yalnızca eski)</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_marknext">Sıradaki bölüm izlendi</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>

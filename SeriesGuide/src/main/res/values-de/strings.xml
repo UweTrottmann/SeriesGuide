@@ -162,6 +162,11 @@
   <string name="menu_update_delta">Aktualisieren (nur veraltete)</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
+  <string name="now_tab">Jetzt</string>
+  <string name="recently_watched">Vor kurzem gesehen</string>
+  <string name="released_today">Heute veröffentlicht</string>
+  <string name="friends_recently">Ihre trakt Freunde</string>
+  <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>

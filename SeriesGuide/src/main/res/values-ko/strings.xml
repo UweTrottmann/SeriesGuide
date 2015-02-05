@@ -162,6 +162,11 @@
   <string name="menu_update_delta">업데이트 (오래된 것만)</string>
   <string name="context_updateshow">업데이트</string>
   <string name="context_marknext">다음 에피소드 시청완료</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">방영예정</string>
   <string name="recent">최근방영됨</string>
   <string name="friends">친구</string>

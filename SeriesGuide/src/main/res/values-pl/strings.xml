@@ -162,6 +162,11 @@
   <string name="menu_update_delta">Aktualizuj (stare)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_marknext">Odcinek obejrzany</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Nadchodzące</string>
   <string name="recent">Ostatnie</string>
   <string name="friends">Znajomi</string>

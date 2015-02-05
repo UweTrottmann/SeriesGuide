@@ -162,6 +162,11 @@
   <string name="menu_update_delta">Atjaunināt (tikai novecojušos)</string>
   <string name="context_updateshow">Atjaunināt</string>
   <string name="context_marknext">Nākamā epizode noskatīta</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Gaidāmās</string>
   <string name="recent">Nesen</string>
   <string name="friends">Draugi</string>
