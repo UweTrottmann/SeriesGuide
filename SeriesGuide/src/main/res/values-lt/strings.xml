@@ -145,8 +145,8 @@
   <string name="unfavorited">Pašalinta iš mėgstamiausių</string>
   <string name="context_hide">Slėpti</string>
   <string name="context_unhide">Nebeslėpti</string>
-  <string name="hidden">Hidden show</string>
-  <string name="unhidden">Un-Hidden show</string>
+  <string name="hidden">Moved to hidden</string>
+  <string name="unhidden">Show is visible again</string>
   <string name="action_shows_add">Add show</string>
   <string name="action_shows_filter">Filter shows</string>
   <string name="empty_filter">Remove all filters</string>

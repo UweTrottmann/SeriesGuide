@@ -203,7 +203,7 @@
   <string name="list_item_manage">Керувати списками</string>
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
-  <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_sort">Сортувати списки</string>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
