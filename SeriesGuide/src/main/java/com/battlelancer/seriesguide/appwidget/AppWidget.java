@@ -153,8 +153,8 @@ public class AppWidget extends AppWidgetProvider {
                     String posterPath = upcomingEpisodes.getString(
                             ActivityFragment.ActivityQuery.SHOW_POSTER);
                     try {
-                        Bitmap poster = ServiceUtils.getPicasso(this)
-                                .load(TheTVDB.buildPosterUrl(posterPath))
+                        Bitmap poster = ServiceUtils.loadWithPicasso(this,
+                                TheTVDB.buildPosterUrl(posterPath))
                                 .centerCrop()
                                 .resizeDimen(R.dimen.show_poster_width,
                                         R.dimen.show_poster_height)

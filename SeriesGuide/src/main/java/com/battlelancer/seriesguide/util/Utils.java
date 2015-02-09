@@ -344,8 +344,7 @@ public class Utils {
      * without any resizing or cropping.
      */
     public static void loadPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.getPicasso(context)
-                .load(TheTVDB.buildPosterUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
                 .noFade()
                 .into(imageView);
     }
@@ -375,8 +374,8 @@ public class Utils {
      */
     public static void loadPosterThumbnail(Context context, ImageView imageView,
             String posterPath) {
-        ServiceUtils.getPicasso(context)
-                .load(TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context,
+                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)

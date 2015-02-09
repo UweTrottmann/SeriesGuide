@@ -98,8 +98,8 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
-        ServiceUtils.getPicasso(context)
-                .load(TextUtils.isEmpty(posterPath) ? null : mImageBaseUrl + posterPath)
+        ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
+                ? null : mImageBaseUrl + posterPath)
                 .into(holder.poster);
 
         // context menu

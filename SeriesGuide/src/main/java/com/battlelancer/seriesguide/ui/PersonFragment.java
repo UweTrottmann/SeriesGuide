@@ -139,8 +139,8 @@ public class PersonFragment extends Fragment {
                         : person.biography);
 
         if (!TextUtils.isEmpty(person.profile_path)) {
-            ServiceUtils.getPicasso(getActivity())
-                    .load(TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
+            ServiceUtils.loadWithPicasso(getActivity(),
+                    TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
                             TmdbTools.ProfileImageSize.H632))
                     .placeholder(
                             new ColorDrawable(getResources().getColor(R.color.protection_dark)))

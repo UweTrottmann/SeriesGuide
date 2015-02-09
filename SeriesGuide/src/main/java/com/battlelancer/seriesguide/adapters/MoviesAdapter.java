@@ -98,8 +98,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
 
         // poster
-        ServiceUtils.getPicasso(getContext())
-                .load(mImageBaseUrl + movie.poster_path)
+        ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
                 .into(holder.poster);
 
         // context menu

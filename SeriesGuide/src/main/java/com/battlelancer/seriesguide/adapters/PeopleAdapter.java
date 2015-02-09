@@ -68,8 +68,8 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
         viewHolder.description.setText(person.description);
 
         // load headshot
-        ServiceUtils.getPicasso(getContext())
-                .load(TmdbTools.buildProfileImageUrl(getContext(), person.profilePath,
+        ServiceUtils.loadWithPicasso(getContext(),
+                TmdbTools.buildProfileImageUrl(getContext(), person.profilePath,
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()

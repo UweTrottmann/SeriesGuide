@@ -200,7 +200,7 @@ public abstract class AddFragment extends Fragment {
             viewHolder.description.setText(item.overview);
             if (item.poster != null) {
                 viewHolder.poster.setVisibility(View.VISIBLE);
-                ServiceUtils.getPicasso(getContext()).load(item.poster).into(viewHolder.poster);
+                ServiceUtils.loadWithPicasso(getContext(), item.poster).into(viewHolder.poster);
             } else {
                 viewHolder.poster.setVisibility(View.GONE);
             }

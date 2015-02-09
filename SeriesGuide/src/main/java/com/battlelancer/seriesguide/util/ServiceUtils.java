@@ -34,7 +34,9 @@ import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
@@ -147,10 +149,28 @@ public final class ServiceUtils {
     @Nonnull
     public static synchronized Picasso getPicasso(Context context) {
         if (sPicasso == null) {
-            sPicasso = new Picasso.Builder(context).downloader(
-                    new LocalOnlyOkHttpDownloader(context)).build();
+            sPicasso = new Picasso.Builder(context).build();
         }
         return sPicasso;
+    }
+
+    /**
+     * Build Picasso {@link com.squareup.picasso.RequestCreator} which respects user requirement of
+     * only loading images over WiFi.
+     *
+     * <p>If {@link Utils#isAllowedLargeDataConnection} is false, will set {@link
+     * com.squareup.picasso.NetworkPolicy#OFFLINE} (which will set {@link
+     * com.squareup.okhttp.CacheControl#FORCE_CACHE} on requests) to skip the network and accept
+     * stale images.
+     */
+    @Nonnull
+    public static RequestCreator loadWithPicasso(Context context, String path) {
+        RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
+        if (!Utils.isAllowedLargeDataConnection(context, false)) {
+            // avoid the network, hit the cache immediately + accept stale images.
+            requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
+        }
+        return requestCreator;
     }
 
     /**

@@ -58,8 +58,7 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         holder.title.setText(item.show == null ? null : item.show.title);
         if (item.show.images != null && item.show.images.poster != null && !TextUtils.isEmpty(
                 item.show.images.poster.thumb)) {
-            ServiceUtils.getPicasso(getContext())
-                    .load(item.show.images.poster.thumb)
+            ServiceUtils.loadWithPicasso(getContext(), item.show.images.poster.thumb)
                     .into(holder.poster);
         }
 

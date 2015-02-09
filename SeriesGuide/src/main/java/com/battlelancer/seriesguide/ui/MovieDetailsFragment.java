@@ -488,8 +488,8 @@ public class MovieDetailsFragment extends Fragment {
 
         // load poster, cache on external storage
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.getPicasso(getActivity())
-                    .load(mImageBaseUrl + tmdbMovie.poster_path).into(mMoviePosterBackground);
+            ServiceUtils.loadWithPicasso(getActivity(), mImageBaseUrl + tmdbMovie.poster_path)
+                    .into(mMoviePosterBackground);
         }
     }
 

@@ -179,8 +179,8 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
                     TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
             holder.username.setText(item.username);
             // trakt poster urls
-            ServiceUtils.getPicasso(getContext()).load(item.poster).into(holder.poster);
-            ServiceUtils.getPicasso(getContext()).load(item.avatar).into(holder.avatar);
+            ServiceUtils.loadWithPicasso(getContext(), item.poster).into(holder.poster);
+            ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
 
             // action type indicator
             if ("watch".equals(item.action)) {

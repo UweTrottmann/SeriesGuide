@@ -544,8 +544,8 @@ public class NotificationService extends IntentService {
 
     private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
         try {
-            Bitmap poster = ServiceUtils.getPicasso(context)
-                    .load(TheTVDB.buildPosterUrl(posterPath))
+            Bitmap poster = ServiceUtils.loadWithPicasso(context,
+                    TheTVDB.buildPosterUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();

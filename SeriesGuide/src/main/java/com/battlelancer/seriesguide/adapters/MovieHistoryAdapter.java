@@ -61,8 +61,7 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         holder.title.setText(item.movie == null ? null : item.movie.title);
         if (item.movie.images != null && item.movie.images.poster != null && !TextUtils.isEmpty(
                 item.movie.images.poster.thumb)) {
-            ServiceUtils.getPicasso(getContext())
-                    .load(item.movie.images.poster.thumb)
+            ServiceUtils.loadWithPicasso(getContext(), item.movie.images.poster.thumb)
                     .into(holder.poster);
         }
 

@@ -142,8 +142,7 @@ public class PeopleListHelper {
         // support keyboard nav
         personView.setFocusable(true);
 
-        ServiceUtils.getPicasso(context)
-                .load(TmdbTools.buildProfileImageUrl(context, profilePath,
+        ServiceUtils.loadWithPicasso(context, TmdbTools.buildProfileImageUrl(context, profilePath,
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
