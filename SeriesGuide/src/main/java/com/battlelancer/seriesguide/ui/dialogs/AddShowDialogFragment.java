@@ -262,8 +262,8 @@ public class AddShowDialogFragment extends DialogFragment {
             return;
         }
 
-        mButtonPositive.setEnabled(true);
-        ButterKnife.apply(labelViews, VISIBLE, true);
+        // store title for add task
+        mShow.title = show.title;
 
         // title, overview
         title.setText(show.title);
@@ -314,6 +314,10 @@ public class AddShowDialogFragment extends DialogFragment {
 
         // poster
         Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
+
+        // enable adding of show, display views
+        mButtonPositive.setEnabled(true);
+        ButterKnife.apply(labelViews, VISIBLE, true);
     }
 
     private void showProgressBar(boolean isVisible) {
