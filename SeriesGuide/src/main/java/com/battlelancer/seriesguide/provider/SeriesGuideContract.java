@@ -570,6 +570,9 @@ public class SeriesGuideContract {
         public static final String SELECTION_WATCHED = Episodes.WATCHED + "="
                 + EpisodeFlags.WATCHED;
 
+        public static final String SELECTION_WATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
+                + EpisodeFlags.UNWATCHED;
+
         public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
 
         public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";

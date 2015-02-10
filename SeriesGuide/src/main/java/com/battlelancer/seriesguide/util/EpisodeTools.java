@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -647,23 +648,10 @@ public class EpisodeTools {
         }
 
         @Override
-        public String getSelection() {
-            return null;
-        }
-
-        @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
             values.put(getColumn(), mEpisodeFlag);
             return values;
-        }
-
-        @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            // flag a single season
-            List<SyncSeason> seasons = new LinkedList<>();
-            seasons.add(new SyncSeason().number(mSeason));
-            return seasons;
         }
 
         @Override
@@ -674,10 +662,29 @@ public class EpisodeTools {
 
     public static class SeasonWatchedType extends SeasonType {
 
+        private final long currentTime;
+
         public SeasonWatchedType(Context context, int showTvdbId, int seasonTvdbId, int season,
                 int episodeFlags) {
             super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
             mAction = EpisodeAction.SEASON_WATCHED;
+            currentTime = TimeTools.getCurrentTime(context);
+        }
+
+        @Override
+        public String getSelection() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // set unwatched
+                // include watched or skipped episodes of the season
+                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
+            } else {
+                // set watched or skipped
+                // do NOT mark watched episodes again to avoid trakt adding a new watch
+                // only mark episodes that have been released within the hour
+                return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                        + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
+            }
         }
 
         @Override
@@ -704,7 +711,9 @@ public class EpisodeTools {
                 final Cursor seasonEpisodes = mContext.getContentResolver().query(
                         SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
                                 String.valueOf(mSeasonTvdbId)),
-                        PROJECTION_EPISODE, null, null,
+                        PROJECTION_EPISODE,
+                        SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                                + DateUtils.HOUR_IN_MILLIS), null,
                         SeriesGuideContract.Episodes.NUMBER + " DESC"
                 );
                 if (seasonEpisodes != null) {
@@ -717,6 +726,11 @@ public class EpisodeTools {
 
                 return lastWatchedId;
             }
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
         }
 
         @Override
@@ -749,6 +763,12 @@ public class EpisodeTools {
         }
 
         @Override
+        public String getSelection() {
+            // include all episodes of season
+            return null;
+        }
+
+        @Override
         protected void setEpisodeProperties(Episode episode) {
             episode.setIsInCollection(isCollected(mEpisodeFlag));
         }
@@ -761,6 +781,14 @@ public class EpisodeTools {
         @Override
         protected int getLastWatchedEpisodeTvdbId() {
             return -1;
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            // flag the whole season
+            List<SyncSeason> seasons = new LinkedList<>();
+            seasons.add(new SyncSeason().number(mSeason));
+            return seasons;
         }
 
         @Override
