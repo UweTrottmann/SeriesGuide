@@ -23,11 +23,13 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import retrofit.RetrofitError;
@@ -87,6 +89,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                     // query again, but allow all languages
                     results = TheTVDB.searchShow(getContext(), query, true);
                 }
+                markLocalShows(getContext(), results);
             } catch (TvdbException e) {
                 Timber.e(e, "Searching show failed");
                 return buildResultFailure(getContext(), R.string.search_error);
@@ -94,6 +97,20 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
 
         return buildResultSuccess(results, R.string.no_results);
+    }
+
+    private static void markLocalShows(Context context, List<SearchResult> results) {
+        HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(context);
+        if (localShows == null) {
+            return;
+        }
+
+        for (SearchResult result : results) {
+            if (localShows.contains(result.tvdbid)) {
+                // is already in local database
+                result.isAdded = true;
+            }
+        }
     }
 
     private static Result buildResultSuccess(List<SearchResult> results, int emptyTextResId) {

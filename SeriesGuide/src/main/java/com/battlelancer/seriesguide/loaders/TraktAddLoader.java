@@ -136,16 +136,16 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 // has no TheTVDB id
                 continue;
             }
-            if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
-                // is already in local database
-                continue;
-            }
             SearchResult result = new SearchResult();
             result.tvdbid = show.ids.tvdb;
             result.title = show.title;
             result.overview = String.valueOf(show.year);
             if (show.images != null && show.images.poster != null) {
                 result.poster = show.images.poster.thumb;
+            }
+            if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
+                // is already in local database
+                result.isAdded = true;
             }
             results.add(result);
         }
