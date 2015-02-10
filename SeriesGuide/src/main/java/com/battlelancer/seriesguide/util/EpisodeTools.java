@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -303,6 +304,7 @@ public class EpisodeTools {
             return episodes;
         }
 
+        @Nullable
         public abstract List<SyncSeason> getEpisodesForTrakt();
 
         public int getShowTvdbId() {
@@ -675,12 +677,12 @@ public class EpisodeTools {
         public String getSelection() {
             if (isUnwatched(mEpisodeFlag)) {
                 // set unwatched
-                // include watched or skipped episodes of the season
+                // include watched or skipped episodes
                 return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
             } else {
                 // set watched or skipped
                 // do NOT mark watched episodes again to avoid trakt adding a new watch
-                // only mark episodes that have been released within the hour
+                // only mark episodes that have been released until within the hour
                 return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
                         + DateUtils.HOUR_IN_MILLIS)
                         + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
@@ -812,20 +814,10 @@ public class EpisodeTools {
         }
 
         @Override
-        public String getSelection() {
-            return null;
-        }
-
-        @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
             values.put(getColumn(), mEpisodeFlag);
             return values;
-        }
-
-        @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            return null;
         }
 
         @Override
@@ -841,9 +833,28 @@ public class EpisodeTools {
 
     public static class ShowWatchedType extends ShowType {
 
+        private final long currentTime;
+
         public ShowWatchedType(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId, episodeFlags);
             mAction = EpisodeAction.SHOW_WATCHED;
+            currentTime = TimeTools.getCurrentTime(context);
+        }
+
+        @Override
+        public String getSelection() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // set unwatched
+                // include watched or skipped episodes
+                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
+            } else {
+                // set watched or skipped
+                // do NOT mark watched episodes again to avoid trakt adding a new watch
+                // only mark episodes that have been released until within the hour
+                return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                        + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
+            }
         }
 
         @Override
@@ -866,6 +877,11 @@ public class EpisodeTools {
                 return -1;
             }
         }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
+        }
     }
 
     public static class ShowCollectedType extends ShowType {
@@ -873,6 +889,12 @@ public class EpisodeTools {
         public ShowCollectedType(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId, episodeFlags);
             mAction = EpisodeAction.SHOW_COLLECTED;
+        }
+
+        @Override
+        public String getSelection() {
+            // include all episodes of show
+            return null;
         }
 
         @Override
@@ -889,6 +911,12 @@ public class EpisodeTools {
         protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            // send whole show
+            return null;
         }
     }
 
@@ -910,7 +938,7 @@ public class EpisodeTools {
         @Override
         public String getSelection() {
             // must
-            // - release before current episode,
+            // - be released before current episode,
             // - have a release date,
             // - be unwatched or skipped
             return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired
@@ -1063,9 +1091,12 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
+        /**
+         * @param flags Send {@code null} to upload complete show.
+         */
         private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
-                @Nonnull List<SyncSeason> flags, boolean isAddNotDelete) {
-            if (flags.isEmpty()) {
+                @Nullable List<SyncSeason> flags, boolean isAddNotDelete) {
+            if (flags != null && flags.isEmpty()) {
                 // nothing to upload
                 return SUCCESS;
             }
