@@ -33,20 +33,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
-
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
  * Super class for fragments displaying a list of shows and allowing to add them to the database.
  */
 public abstract class AddFragment extends Fragment {
+
+    public static class AddShowEvent {
+    }
 
     @InjectView(R.id.containerAddContent) View contentContainer;
     @InjectView(R.id.progressBarAdd) View progressBar;
@@ -146,7 +148,7 @@ public abstract class AddFragment extends Fragment {
     /**
      * Called if the user adds a new show through the dialog.
      */
-    public void onEvent(AddShowDialogFragment.AddShowEvent event) {
+    public void onEvent(AddShowEvent event) {
         adapter.notifyDataSetChanged();
     }
 
@@ -183,10 +185,10 @@ public abstract class AddFragment extends Fragment {
             holder.addbutton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TaskManager.getInstance(getContext()).performAddTask(item);
-
                     item.isAdded = true;
-                    v.setVisibility(View.INVISIBLE);
+                    EventBus.getDefault().post(new AddShowEvent());
+
+                    TaskManager.getInstance(getContext()).performAddTask(item);
                 }
             });
 

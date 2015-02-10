@@ -31,25 +31,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
-import de.greenrobot.event.EventBus;
-
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
+import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.Date;
 import java.util.List;
 
@@ -63,9 +62,6 @@ public class AddShowDialogFragment extends DialogFragment {
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
 
     private SearchResult mShow;
-
-    public class AddShowEvent {
-    }
 
     /**
      * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
@@ -190,7 +186,7 @@ public class AddShowDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mShow.isAdded = true;
-                EventBus.getDefault().post(new AddShowEvent());
+                EventBus.getDefault().post(new AddFragment.AddShowEvent());
 
                 mListener.onAddShow(mShow);
                 dismiss();
