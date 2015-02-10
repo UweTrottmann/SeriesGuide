@@ -76,6 +76,18 @@
                 android:text="@string/action_shows_add"
                 android:textAppearance="@style/TextAppearance.Button" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/itemAddedIndicator"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_marginBottom="@dimen/inline_padding"
+            android:scaleType="centerInside"
+            android:src="?attr/drawableWatched"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>

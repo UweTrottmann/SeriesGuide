@@ -56,4 +56,12 @@
         android:scaleType="centerInside"
         android:src="?attr/drawableAddIcon" />
 
+    <ImageView
+        android:id="@+id/itemAddedIndicator"
+        android:layout_width="48dp"
+        android:layout_height="88dp"
+        android:scaleType="centerInside"
+        android:src="?attr/drawableWatched"
+        android:visibility="gone"/>
+
 </LinearLayout>

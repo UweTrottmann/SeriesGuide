@@ -165,27 +165,22 @@ public abstract class AddFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            ViewHolder holder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
-
-                viewHolder = new ViewHolder();
-                viewHolder.addbutton = convertView.findViewById(R.id.addbutton);
-                viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-                viewHolder.description = (TextView) convertView.findViewById(R.id.description);
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
-
-                convertView.setTag(viewHolder);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
             } else {
-                viewHolder = (ViewHolder) convertView.getTag();
+                holder = (ViewHolder) convertView.getTag();
             }
 
             final SearchResult item = getItem(position);
 
-            // hide add button if already added that show
-            viewHolder.addbutton.setVisibility(item.isAdded ? View.INVISIBLE : View.VISIBLE);
-            viewHolder.addbutton.setOnClickListener(new OnClickListener() {
+            // display added indicator instead of add button if already added that show
+            holder.addbutton.setVisibility(item.isAdded ? View.GONE : View.VISIBLE);
+            holder.addedIndicator.setVisibility(item.isAdded ? View.VISIBLE : View.GONE);
+            holder.addbutton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     TaskManager.getInstance(getContext()).performAddTask(item);
@@ -196,13 +191,13 @@ public abstract class AddFragment extends Fragment {
             });
 
             // set text properties immediately
-            viewHolder.title.setText(item.title);
-            viewHolder.description.setText(item.overview);
+            holder.title.setText(item.title);
+            holder.description.setText(item.overview);
             if (item.poster != null) {
-                viewHolder.poster.setVisibility(View.VISIBLE);
-                ServiceUtils.loadWithPicasso(getContext(), item.poster).into(viewHolder.poster);
+                holder.poster.setVisibility(View.VISIBLE);
+                ServiceUtils.loadWithPicasso(getContext(), item.poster).into(holder.poster);
             } else {
-                viewHolder.poster.setVisibility(View.GONE);
+                holder.poster.setVisibility(View.GONE);
             }
 
             return convertView;
@@ -211,12 +206,18 @@ public abstract class AddFragment extends Fragment {
         static class ViewHolder {
 
             public TextView title;
-
             public TextView description;
-
             public ImageView poster;
-
             public View addbutton;
+            public View addedIndicator;
+
+            public ViewHolder(View view) {
+                title = (TextView) view.findViewById(R.id.title);
+                description = (TextView) view.findViewById(R.id.description);
+                poster = (ImageView) view.findViewById(R.id.poster);
+                addbutton = view.findViewById(R.id.addbutton);
+                addedIndicator = view.findViewById(R.id.itemAddedIndicator);
+            }
         }
     }
 }
