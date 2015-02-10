@@ -192,6 +192,7 @@ public class AddShowDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+        mButtonPositive.setEnabled(false);
 
         ButterKnife.apply(labelViews, VISIBLE, false);
 
@@ -203,7 +204,6 @@ public class AddShowDialogFragment extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         showProgressBar(true);
-        populateShowViews(null);
 
         // load show details
         Bundle args = new Bundle();
@@ -226,16 +226,17 @@ public class AddShowDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
-    private LoaderManager.LoaderCallbacks<Show> mShowLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Show>() {
+    private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<TvdbShowLoader.Result>() {
         @Override
-        public Loader<Show> onCreateLoader(int id, Bundle args) {
+        public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
             return new TvdbShowLoader(getActivity(), showTvdbId);
         }
 
         @Override
-        public void onLoadFinished(Loader<Show> loader, Show data) {
+        public void onLoadFinished(Loader<TvdbShowLoader.Result> loader,
+                TvdbShowLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -244,18 +245,26 @@ public class AddShowDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<Show> loader) {
+        public void onLoaderReset(Loader<TvdbShowLoader.Result> loader) {
             // do nothing
         }
     };
 
-    private void populateShowViews(Show show) {
+    private void populateShowViews(TvdbShowLoader.Result result) {
+        Show show = result.show;
         if (show == null) {
-            mButtonPositive.setEnabled(false);
+            // failed to load, can't be added
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
             }
             return;
+        }
+        if (result.isAdded) {
+            // already added, prevent adding
+            mButtonPositive.setVisibility(View.GONE);
+            mButtonNegative.setText(R.string.dismiss);
+        } else {
+            mButtonPositive.setEnabled(true);
         }
 
         // store title for add task
