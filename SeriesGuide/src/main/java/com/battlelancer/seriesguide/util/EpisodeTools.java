@@ -317,7 +317,7 @@ public class EpisodeTools {
          * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason} objects to submit
          * to trakt.
          */
-        protected List<SyncSeason> createEpisodeFlags() {
+        protected List<SyncSeason> buildTraktEpisodeList() {
             List<SyncSeason> seasons = new ArrayList<>();
 
             // determine uri
@@ -325,21 +325,21 @@ public class EpisodeTools {
             String selection = getSelection();
 
             // query and add episodes to list
-            // sort ascending by season for trakt
+            // sort ascending by season, then number for trakt
             final Cursor episodeCursor = mContext.getContentResolver().query(
                     uri,
                     new String[] {
                             SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
-                    }, selection, null, SeriesGuideContract.Episodes.SORT_SEASON_ASC
+                    },
+                    selection,
+                    null,
+                    SeriesGuideContract.Episodes.SORT_SEASON_ASC + " AND "
+                            + SeriesGuideContract.Episodes.SORT_NUMBER_ASC
             );
             if (episodeCursor != null) {
                 SyncSeason currentSeason = null;
                 while (episodeCursor.moveToNext()) {
                     int seasonNumber = episodeCursor.getInt(0);
-                    if (currentSeason != null && seasonNumber < currentSeason.number) {
-                        // skip out of order flags
-                        continue;
-                    }
 
                     // start new season?
                     if (currentSeason == null || seasonNumber > currentSeason.number) {
@@ -899,7 +899,7 @@ public class EpisodeTools {
 
         @Override
         public List<SyncSeason> getEpisodesForTrakt() {
-            return createEpisodeFlags();
+            return buildTraktEpisodeList();
         }
 
         @Override
