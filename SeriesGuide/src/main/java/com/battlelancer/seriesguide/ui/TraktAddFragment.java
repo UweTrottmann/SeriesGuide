@@ -32,6 +32,8 @@ import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Multi-purpose "Add show" tab. Can display either the connected trakt user's recommendations,
@@ -92,7 +94,14 @@ public class TraktAddFragment extends AddFragment {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add_all) {
             if (searchResults != null) {
-                TaskManager.getInstance(getActivity()).performAddTask(searchResults, false, false);
+                List<SearchResult> showsToAdd = new LinkedList<>();
+                // only include shows not already added
+                for (SearchResult result : searchResults) {
+                    if (!result.isAdded) {
+                        showsToAdd.add(result);
+                    }
+                }
+                TaskManager.getInstance(getActivity()).performAddTask(showsToAdd, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);
