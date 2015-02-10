@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.provider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.IntDef;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
@@ -445,10 +446,9 @@ public class SeriesGuideContract {
 
         String TIMESTAMP = "activity_time";
 
-        String EPISODE_TVDB_ID  = "activity_episode";
+        String EPISODE_TVDB_ID = "activity_episode";
 
-        String SHOW_TVDB_ID  = "activity_show";
-
+        String SHOW_TVDB_ID = "activity_show";
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
@@ -561,7 +561,11 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
-        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
+        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "="
+                + EpisodeFlags.UNWATCHED;
+
+        public static final String SELECTION_UNWATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
+                + EpisodeFlags.WATCHED;
 
         public static final String SELECTION_WATCHED = Episodes.WATCHED + "="
                 + EpisodeFlags.WATCHED;
@@ -572,7 +576,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
-        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!=-1";
+        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!="
+                + Constants.EPISODE_UNKNOWN_RELEASE;
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
 

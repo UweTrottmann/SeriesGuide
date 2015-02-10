@@ -275,16 +275,6 @@ public class EpisodeTools {
          * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
          */
         public List<Episode> getEpisodesForHexagon() {
-            return buildEpisodeList();
-        }
-
-        public abstract List<SyncSeason> getEpisodesForTrakt();
-
-        public int getShowTvdbId() {
-            return mShowTvdbId;
-        }
-
-        private List<Episode> buildEpisodeList() {
             List<Episode> episodes = new ArrayList<>();
 
             // determine uri
@@ -310,6 +300,12 @@ public class EpisodeTools {
             }
 
             return episodes;
+        }
+
+        public abstract List<SyncSeason> getEpisodesForTrakt();
+
+        public int getShowTvdbId() {
+            return mShowTvdbId;
         }
 
         /**
@@ -885,8 +881,13 @@ public class EpisodeTools {
 
         @Override
         public String getSelection() {
-            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired + " AND "
-                    + SeriesGuideContract.Episodes.FIRSTAIREDMS + ">0";
+            // must
+            // - release before current episode,
+            // - have a release date,
+            // - be unwatched or skipped
+            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired
+                    + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
+                    + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
         }
 
         @Override
@@ -1000,7 +1001,8 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
-        private static int uploadToHexagon(Context context, int showTvdbId, List<Episode> batch) {
+        private static int uploadToHexagon(Context context, int showTvdbId,
+                @Nonnull List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
             uploadWrapper.setShowTvdbId(showTvdbId);
 
@@ -1034,7 +1036,12 @@ public class EpisodeTools {
         }
 
         private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
-                List<SyncSeason> flags, boolean isAddNotDelete) {
+                @Nonnull List<SyncSeason> flags, boolean isAddNotDelete) {
+            if (flags.isEmpty()) {
+                // nothing to upload
+                return SUCCESS;
+            }
+
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt == null) {
                 return ERROR_TRAKT_AUTH;

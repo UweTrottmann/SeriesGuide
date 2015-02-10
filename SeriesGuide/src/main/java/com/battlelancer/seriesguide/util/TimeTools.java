@@ -20,6 +20,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import java.text.SimpleDateFormat;
@@ -171,7 +172,7 @@ public class TimeTools {
             @Nullable String releaseDate, @Nonnull LocalTime showReleaseTime,
             @Nullable String showCountry, @Nonnull String deviceTimeZone) {
         if (releaseDate == null || releaseDate.length() == 0) {
-            return -1;
+            return Constants.EPISODE_UNKNOWN_RELEASE;
         }
 
         // get date
@@ -181,7 +182,7 @@ public class TimeTools {
         } catch (IllegalArgumentException e) {
             // date string could not be parsed
             Timber.e(e, "TheTVDB date could not be parsed: " + releaseDate);
-            return -1;
+            return Constants.EPISODE_UNKNOWN_RELEASE;
         }
 
         // set time
