@@ -31,25 +31,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
-import de.greenrobot.event.EventBus;
-
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
+import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.Date;
 import java.util.List;
 
@@ -63,9 +62,6 @@ public class AddShowDialogFragment extends DialogFragment {
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
 
     private SearchResult mShow;
-
-    public class AddShowEvent {
-    }
 
     /**
      * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
@@ -190,12 +186,13 @@ public class AddShowDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mShow.isAdded = true;
-                EventBus.getDefault().post(new AddShowEvent());
+                EventBus.getDefault().post(new AddFragment.AddShowEvent());
 
                 mListener.onAddShow(mShow);
                 dismiss();
             }
         });
+        mButtonPositive.setEnabled(false);
 
         ButterKnife.apply(labelViews, VISIBLE, false);
 
@@ -207,7 +204,6 @@ public class AddShowDialogFragment extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         showProgressBar(true);
-        populateShowViews(null);
 
         // load show details
         Bundle args = new Bundle();
@@ -230,16 +226,17 @@ public class AddShowDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
-    private LoaderManager.LoaderCallbacks<Show> mShowLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Show>() {
+    private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<TvdbShowLoader.Result>() {
         @Override
-        public Loader<Show> onCreateLoader(int id, Bundle args) {
+        public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
             return new TvdbShowLoader(getActivity(), showTvdbId);
         }
 
         @Override
-        public void onLoadFinished(Loader<Show> loader, Show data) {
+        public void onLoadFinished(Loader<TvdbShowLoader.Result> loader,
+                TvdbShowLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -248,18 +245,26 @@ public class AddShowDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<Show> loader) {
+        public void onLoaderReset(Loader<TvdbShowLoader.Result> loader) {
             // do nothing
         }
     };
 
-    private void populateShowViews(Show show) {
+    private void populateShowViews(TvdbShowLoader.Result result) {
+        Show show = result.show;
         if (show == null) {
-            mButtonPositive.setEnabled(false);
+            // failed to load, can't be added
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
             }
             return;
+        }
+        if (result.isAdded) {
+            // already added, prevent adding
+            mButtonPositive.setVisibility(View.GONE);
+            mButtonNegative.setText(R.string.dismiss);
+        } else {
+            mButtonPositive.setEnabled(true);
         }
 
         // store title for add task

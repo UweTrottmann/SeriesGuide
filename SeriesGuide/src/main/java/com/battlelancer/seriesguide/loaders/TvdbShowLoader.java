@@ -20,28 +20,39 @@ import android.content.Context;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import timber.log.Timber;
 
 /**
  * Loads show details from TVDb.
  */
-public class TvdbShowLoader extends GenericSimpleLoader<Show> {
+public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
 
-    private int mShowTvdbId;
+    public static class Result {
+        public Show show;
+        public boolean isAdded;
+    }
+
+    private int showTvdbId;
 
     public TvdbShowLoader(Context context, int showTvdbId) {
         super(context);
-        mShowTvdbId = showTvdbId;
+        this.showTvdbId = showTvdbId;
     }
 
     @Override
-    public Show loadInBackground() {
+    public Result loadInBackground() {
+        Result result = new Result();
+
+        result.isAdded = DBUtils.isShowExists(getContext(), showTvdbId);
         try {
-            return TheTVDB.getShow(getContext(), mShowTvdbId);
+            result.show = TheTVDB.getShow(getContext(), showTvdbId);
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
+            result.show = null;
         }
-        return null;
+
+        return result;
     }
 }
