@@ -846,14 +846,16 @@ public class EpisodeTools {
             if (isUnwatched(mEpisodeFlag)) {
                 // set unwatched
                 // include watched or skipped episodes
-                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
+                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
             } else {
                 // set watched or skipped
                 // do NOT mark watched episodes again to avoid trakt adding a new watch
                 // only mark episodes that have been released until within the hour
                 return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
                         + DateUtils.HOUR_IN_MILLIS)
-                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
             }
         }
 
@@ -893,8 +895,8 @@ public class EpisodeTools {
 
         @Override
         public String getSelection() {
-            // include all episodes of show
-            return null;
+            // only exclude specials (here will only affect database + hexagon)
+            return SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
         }
 
         @Override
