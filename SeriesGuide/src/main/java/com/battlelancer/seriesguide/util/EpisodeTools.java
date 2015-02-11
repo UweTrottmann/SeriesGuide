@@ -336,7 +336,7 @@ public class EpisodeTools {
                     },
                     selection,
                     null,
-                    SeriesGuideContract.Episodes.SORT_SEASON_ASC + " AND "
+                    SeriesGuideContract.Episodes.SORT_SEASON_ASC + ", "
                             + SeriesGuideContract.Episodes.SORT_NUMBER_ASC
             );
             if (episodeCursor != null) {
