@@ -318,7 +318,7 @@ public class AddShowDialogFragment extends DialogFragment {
         Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
 
         // poster
-        Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
+        Utils.loadTvdbShowPoster(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
         mButtonPositive.setEnabled(true);

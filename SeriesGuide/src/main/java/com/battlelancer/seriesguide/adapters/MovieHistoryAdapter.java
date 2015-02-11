@@ -17,14 +17,11 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
 /**
@@ -54,23 +51,26 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // Bind the data efficiently with the holder.
         HistoryEntry item = getItem(position);
 
-        // movie title and poster
+        // movie title
         holder.title.setText(item.movie == null ? null : item.movie.title);
-        if (item.movie.images != null && item.movie.images.poster != null && !TextUtils.isEmpty(
-                item.movie.images.poster.thumb)) {
-            ServiceUtils.loadWithPicasso(getContext(), item.movie.images.poster.thumb)
-                    .into(holder.poster);
-        }
+        // movie poster
+        String poster =
+                (item.movie == null || item.movie.images == null
+                        || item.movie.images.poster == null)
+                        ? null : item.movie.images.poster.thumb;
+        Utils.loadSmallPoster(getContext(), holder.poster, poster);
 
         // timestamp
-        CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
-                item.watched_at.getMillis(), System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-        holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Caption_Dim);
-        holder.timestamp.setText(timestamp);
+        if (item.watched_at != null) {
+            CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
+                    item.watched_at.getMillis(), System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
+            holder.timestamp.setText(timestamp);
+        } else {
+            holder.timestamp.setText(null);
+        }
 
         // action type indicator
         if ("watch".equals(item.action)) {

@@ -133,7 +133,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
 
         // set poster
-        Utils.loadPosterThumbnail(context, viewHolder.poster,
+        Utils.loadSmallTvdbShowPoster(context, viewHolder.poster,
                 cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER));
     }
 
@@ -218,7 +218,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         Cursor item = (Cursor) obj;
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
-        holder.day.setText(TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
+        holder.day.setText(
+                TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
 
         return convertView;
     }

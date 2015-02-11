@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -214,21 +212,10 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
             if (item.poster != null && item.poster.startsWith("http")) {
                 // is a trakt poster
-                ServiceUtils.loadWithPicasso(getContext(), item.poster)
-                        .centerCrop()
-                        .resizeDimen(R.dimen.show_poster_small_width,
-                                R.dimen.show_poster_small_height)
-                        .error(R.drawable.ic_image_missing)
-                        .into(holder.poster);
+                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
             } else {
-                // is a TVDb or no poster
-                ServiceUtils.loadWithPicasso(getContext(),
-                        TextUtils.isEmpty(item.poster) ? null : TheTVDB.buildPosterUrl(item.poster))
-                        .centerCrop()
-                        .resizeDimen(R.dimen.show_poster_small_width,
-                                R.dimen.show_poster_small_height)
-                        .error(R.drawable.ic_image_missing)
-                        .into(holder.poster);
+                // is a TVDb (only path then, so build URL) or no poster
+                Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
             }
         } else {
             throw new IllegalArgumentException("Using unrecognized view type.");

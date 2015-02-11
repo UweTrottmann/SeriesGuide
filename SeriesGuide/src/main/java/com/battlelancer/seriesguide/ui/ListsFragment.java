@@ -269,7 +269,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             }
 
             // poster
-            Utils.loadPosterThumbnail(context, viewHolder.poster,
+            Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(ListItemsQuery.SHOW_POSTER));
 
             // context menu
