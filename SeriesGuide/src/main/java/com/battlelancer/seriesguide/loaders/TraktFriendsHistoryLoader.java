@@ -37,9 +37,9 @@ import timber.log.Timber;
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
  */
-public class FriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public FriendsHistoryLoader(Context context) {
+    public TraktFriendsHistoryLoader(Context context) {
         super(context);
     }
 

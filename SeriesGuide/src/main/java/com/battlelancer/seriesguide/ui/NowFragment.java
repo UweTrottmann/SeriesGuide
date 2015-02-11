@@ -37,10 +37,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
-import com.battlelancer.seriesguide.loaders.FriendsHistoryLoader;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
+import com.battlelancer.seriesguide.loaders.TraktFriendsHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktUserHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -94,8 +96,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         gridView.setAdapter(adapter);
         gridView.setAreHeadersSticky(false);
 
-        getLoaderManager().initLoader(ShowsActivity.NOW_FRIENDS_LOADER_ID, null,
-                friendsHistoryCallbacks);
+        // if connected to trakt, replace local history with trakt history, show friends history
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+                    recentlyCallbacks);
+            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                    traktFriendsHistoryCallbacks);
+        }
 
         setHasOptionsMenu(true);
     }
@@ -111,8 +118,10 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
          * So we can restart them if they already exist to ensure up to date data (the loaders do
          * not react to database changes themselves) and avoid loading data twice in a row.
          */
-        initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyCallbacks);
         initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
+        if (!TraktCredentials.get(getActivity()).hasCredentials()) {
+            initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyCallbacks);
+        }
     }
 
     /**
@@ -163,12 +172,31 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private void refreshStream() {
         showProgressBar(true);
-        getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                recentlyCallbacks);
         getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
-        getLoaderManager().restartLoader(ShowsActivity.NOW_FRIENDS_LOADER_ID, null,
-                friendsHistoryCallbacks);
+        // if connected to trakt, replace local history with trakt history, show friends history
+        // user might get disconnected during our life-time,
+        // so properly clean up old loaders so they won't interfere
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
+
+            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+                    recentlyCallbacks);
+            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                    traktFriendsHistoryCallbacks);
+        } else {
+            destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_USER_LOADER_ID);
+            destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
+
+            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                    recentlyCallbacks);
+        }
+    }
+
+    private void destroyLoaderIfExists(int loaderId) {
+        if (getLoaderManager().getLoader(loaderId) != null) {
+            getLoaderManager().destroyLoader(loaderId);
+        }
     }
 
     @Override
@@ -229,34 +257,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             return;
         }
         // reload recently watched if user set or unset an episode watched
-        if (event.mType instanceof EpisodeTools.EpisodeWatchedType) {
+        // however, if connected to trakt do not show local history
+        if (event.mType instanceof EpisodeTools.EpisodeWatchedType
+                && !TraktCredentials.get(getActivity()).hasCredentials()) {
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyCallbacks);
         }
     }
-
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
-            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
-        @Override
-        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new RecentlyWatchedLoader(getActivity());
-        }
-
-        @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
-                List<NowAdapter.NowItem> data) {
-            if (!isAdded()) {
-                return;
-            }
-            adapter.setRecentlyWatched(data);
-            showProgressBar(false);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
-            // do nothing
-        }
-    };
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
@@ -281,11 +288,39 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
     };
 
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> friendsHistoryCallbacks
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new FriendsHistoryLoader(getActivity());
+            if (id == ShowsActivity.NOW_RECENTLY_LOADER_ID) {
+                return new RecentlyWatchedLoader(getActivity());
+            } else if (id == ShowsActivity.NOW_TRAKT_USER_LOADER_ID) {
+                return new TraktUserHistoryLoader(getActivity());
+            }
+            return null;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+                List<NowAdapter.NowItem> data) {
+            if (!isAdded()) {
+                return;
+            }
+            adapter.setRecentlyWatched(data);
+            showProgressBar(false);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+            // do nothing
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
+            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @Override
+        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
+            return new TraktFriendsHistoryLoader(getActivity());
         }
 
         @Override
