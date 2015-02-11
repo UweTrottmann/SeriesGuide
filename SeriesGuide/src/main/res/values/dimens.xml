@@ -35,6 +35,8 @@
 
     <dimen name="show_poster_width">68dp</dimen>
     <dimen name="show_poster_height">100dp</dimen>
+    <dimen name="show_poster_small_width">68dp</dimen>
+    <dimen name="show_poster_small_height">100dp</dimen>
 
     <dimen name="imagecontainer_height">180dp</dimen>
 

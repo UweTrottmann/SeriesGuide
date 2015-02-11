@@ -86,7 +86,8 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int ADD_SHOW_LOADER_ID = 104;
     public static final int NOW_RECENTLY_LOADER_ID = 105;
     public static final int NOW_TODAY_LOADER_ID = 106;
-    public static final int NOW_FRIENDS_LOADER_ID = 107;
+    public static final int NOW_TRAKT_USER_LOADER_ID = 107;
+    public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 108;
 
     private static final int TAB_COUNT_WITH_TRAKT = 5;
 

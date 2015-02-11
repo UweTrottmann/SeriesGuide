@@ -209,8 +209,14 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             holder.description.setText(item.description);
             holder.timestamp.setText(
                     TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
-            // TheTVDB poster path
-            Utils.loadPosterThumbnail(getContext(), holder.poster, item.poster);
+
+            if (item.poster != null && item.poster.startsWith("http")) {
+                // is a trakt poster
+                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+            } else {
+                // is a TVDb (only path then, so build URL) or no poster
+                Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
+            }
         } else {
             throw new IllegalArgumentException("Using unrecognized view type.");
         }

@@ -367,19 +367,46 @@ public class Utils {
     }
 
     /**
-     * Tries to load a down-sized, center cropped version of the given TVDb show poster into the
-     * given {@link android.widget.ImageView}.
+     * Builds a TheTVDB poster url, then tries to load a resized, center cropped version of the show
+     * poster into the given {@link android.widget.ImageView}. On failure displays an error drawable
+     * (ensure image view is set to center inside).
      *
-     * <p> The resize dimensions are those used for posters in the show list.
+     * <p>The resize dimensions are those used for posters in the show list and change depending on
+     * screen size.
      */
-    public static void loadPosterThumbnail(Context context, ImageView imageView,
-            String posterPath) {
+    public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.loadWithPicasso(context,
                 TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
+    }
+
+    /**
+     * Tries to load a resized, center cropped version of the show/movie poster at the given URL
+     * into the given {@link android.widget.ImageView}. On failure displays an error drawable
+     * (ensure image view is set to center inside).
+     *
+     * <p>The resize dimensions are fixed for all screen sizes. E.g. for items using the show list
+     * layout, use {@link #loadTvdbShowPoster(android.content.Context, android.widget.ImageView,
+     * String)}.
+     */
+    public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
+        ServiceUtils.loadWithPicasso(context, posterUrl)
+                .centerCrop()
+                .resizeDimen(R.dimen.show_poster_small_width, R.dimen.show_poster_small_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
+    /**
+     * Builds a TheTVDB poster url, then calls {@link #loadSmallPoster}.
+     */
+    public static void loadSmallTvdbShowPoster(Context context, ImageView imageView,
+            String posterPath) {
+        loadSmallPoster(context, imageView,
+                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath));
     }
 
     /**

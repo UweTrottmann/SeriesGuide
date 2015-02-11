@@ -563,7 +563,7 @@ public class ShowsFragment extends Fragment implements
                     cursor.getString(ShowsQuery.NETWORK)));
 
             // set poster
-            Utils.loadPosterThumbnail(context, viewHolder.poster,
+            Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(ShowsQuery.POSTER));
 
             // context menu
