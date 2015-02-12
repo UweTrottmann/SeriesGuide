@@ -35,7 +35,7 @@
   <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Не получается модифицирофавать данные.</string>
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
@@ -162,10 +162,10 @@
   <string name="menu_update_delta">Обновить (только устаревшие)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_marknext">См. следующий эпизод</string>
-  <string name="now_tab">Now</string>
-  <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_tab">Сейчас</string>
+  <string name="recently_watched">Недавно просмотренные</string>
+  <string name="released_today">Вышедшие сегодня</string>
+  <string name="friends_recently">Ваши Trakt друзья</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Следующие эпизоды</string>
   <string name="recent">Недавние</string>

@@ -162,11 +162,11 @@
   <string name="menu_update_delta">Oppdater (bare utdaterte)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_marknext">Sett neste episode</string>
-  <string name="now_tab">Now</string>
-  <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_tab">Nå</string>
+  <string name="recently_watched">Nylig sett</string>
+  <string name="released_today">Lansert i dag</string>
+  <string name="friends_recently">Trakt venner</string>
+  <string name="now_empty">Ingenting skjer. Se noen serier!</string>
   <string name="upcoming">Kommer snart</string>
   <string name="recent">Siste</string>
   <string name="friends">Venner</string>
@@ -208,7 +208,7 @@
   <string name="list_item_manage">Behandle lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
-  <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_sort">Sorter lister</string>
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_setup">Sett opp SeriesGuide sky</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
