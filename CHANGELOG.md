@@ -8,6 +8,19 @@ All dates are in the European Central timezone.
 Version 22 *(in development)*
 -----------------------------
 
+#### 22.0.0-beta3 *(2015-02-12)*
+
+* TWEAK Recently watched in "Now" is replaced with trakt episode history if connected to trakt.
+* TWEAK The "Add show" screen now displays already added shows, but with an added indicator.
+  Add dialog also prevents adding shows already in the local database.
+* TWEAK When setting a season or show watched, only already released episodes will be set watched.
+* TWEAK When setting a show watched or collected, will now exclude specials. This lines the behavior
+  up with the indicators.
+* FIX When setting a season or show watched/not watched, will now only upload changed episodes to
+  trakt. This prevents new watch dates from being created on trakt.
+* FIX When adding a show from the add dialog, will now correctly display show title in status toast.
+* NOTICE Latest translations from crowdin.
+
 #### 22.0.0-beta2 *(2015-02-05)*
 
 * FEATURE Experimental "Now" tab in shows section. Displays recently watched episodes,
