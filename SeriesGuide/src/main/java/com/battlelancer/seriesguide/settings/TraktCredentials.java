@@ -26,14 +26,19 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import javax.annotation.Nonnull;
+import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
 /**
@@ -112,7 +117,7 @@ public class TraktCredentials {
      */
     private void removeAccessToken() {
         // clear all in-memory credentials from Trakt service manager in any case
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
+        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth();
         if (trakt != null) {
             trakt.setAccessToken(null);
         }
@@ -200,6 +205,58 @@ public class TraktCredentials {
             context.startActivity(new Intent(context, ConnectTraktActivity.class));
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Tries to refresh the current access token. Calls {@link #setCredentialsInvalid()} on failure
+     * and returns {@code false}.
+     */
+    public synchronized boolean refreshAccessToken() {
+        // do we even have a refresh token?
+        String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
+        if (TextUtils.isEmpty(oldRefreshToken)) {
+            setCredentialsInvalid();
+            return false;
+        }
+
+        // try to get a new access token from trakt
+        String accessToken = null;
+        String refreshToken = null;
+        long expiresIn = -1;
+        try {
+            OAuthAccessTokenResponse response = TraktV2.refreshAccessToken(
+                    BuildConfig.TRAKT_CLIENT_ID,
+                    BuildConfig.TRAKT_CLIENT_SECRET,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    oldRefreshToken
+            );
+            if (response != null) {
+                accessToken = response.getAccessToken();
+                refreshToken = response.getRefreshToken();
+                expiresIn = response.getExpiresIn();
+            }
+        } catch (OAuthSystemException | OAuthProblemException e) {
+            Timber.e(e, "refreshAccessToken: network op failed");
+            setCredentialsInvalid();
+            return false;
+        }
+
+        // did we obtain all required data?
+        if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
+            Timber.e("refreshAccessToken: invalid response");
+            setCredentialsInvalid();
+            return false;
+        }
+
+        // store the new access token, refresh token and expiry date
+        if (!setAccessToken(accessToken)
+                || !TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
+            Timber.e("refreshAccessToken: saving failed");
+            setCredentialsInvalid();
+            return false;
+        }
+
         return true;
     }
 }

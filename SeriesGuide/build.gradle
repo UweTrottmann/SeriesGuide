@@ -13,6 +13,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenLocal()
 }
 
 def loadStringPropertyOrPlaceholder(String name) {
@@ -123,7 +124,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.uwetrottmann:tmdb-java:0.7.0'
-    compile ('com.uwetrottmann:trakt-java:4.2.1') {
+    compile ('com.uwetrottmann:trakt-java:4.3.0-SNAPSHOT') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'de.greenrobot:eventbus:2.4.0'

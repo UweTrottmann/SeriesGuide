@@ -29,6 +29,7 @@ import android.widget.Button;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.squareup.okhttp.Cache;
@@ -202,6 +203,8 @@ public final class ServiceUtils {
      * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with OAuth access token and
      * API key set.
      *
+     * <p>If the current access token will or is expired, tries to refresh it.
+     *
      * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance or null if there are no valid
      * credentials.
      */
@@ -212,13 +215,35 @@ public final class ServiceUtils {
             return null;
         }
 
+        // try to refresh access token if it is about to expire or has expired
+        if (TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
+            if (!TraktCredentials.get(context).refreshAccessToken()) {
+                return null;
+            }
+
+            // set new access token
+            if (traktV2WithAuth != null) {
+                traktV2WithAuth.setAccessToken(TraktCredentials.get(context).getAccessToken());
+            }
+        }
+
         if (traktV2WithAuth == null) {
             TraktV2 trakt = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
-            final String accessToken = TraktCredentials.get(context).getAccessToken();
-            trakt.setAccessToken(accessToken);
+            trakt.setAccessToken(TraktCredentials.get(context).getAccessToken());
             traktV2WithAuth = trakt;
         }
 
+        return traktV2WithAuth;
+    }
+
+    /**
+     * Return the existing instance of a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager
+     * with auth or {@code null}.
+     *
+     * <p>In most cases, use {@link #getTraktV2WithAuth(android.content.Context)} instead.
+     */
+    @Nullable
+    public static synchronized TraktV2 getTraktV2WithAuth() {
         return traktV2WithAuth;
     }
 
