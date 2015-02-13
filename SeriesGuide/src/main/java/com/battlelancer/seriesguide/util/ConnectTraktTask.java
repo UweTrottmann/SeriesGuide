@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
@@ -81,6 +82,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // get access token
         String accessToken = null;
+        String refreshToken = null;
+        long expiresIn = -1;
         try {
             OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                     BuildConfig.TRAKT_CLIENT_ID,
@@ -90,14 +93,16 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             );
             if (response != null) {
                 accessToken = response.getAccessToken();
+                refreshToken = response.getRefreshToken();
+                expiresIn = response.getExpiresIn();
             }
         } catch (OAuthSystemException | OAuthProblemException e) {
             accessToken = null;
             Timber.e(e, "Getting access token failed");
         }
 
-        // did we obtain an access token?
-        if (TextUtils.isEmpty(accessToken)) {
+        // did we obtain all required data?
+        if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
             return TraktResult.API_ERROR;
         }
 
@@ -127,6 +132,11 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // store the new credentials
         TraktCredentials.get(mContext).setCredentials(username, accessToken);
+        // store refresh token and expiry date
+        if (!TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
+            // save failed
+            return Result.ERROR;
+        }
 
         // try to get service manager
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
