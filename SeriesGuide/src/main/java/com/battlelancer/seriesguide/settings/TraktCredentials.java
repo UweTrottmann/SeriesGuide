@@ -72,10 +72,15 @@ public class TraktCredentials {
     }
 
     /**
-     * Removes the current trakt access token (but not the username), makes {@link
-     * #hasCredentials()} return {@code false}. Will log error.
+     * Removes the current trakt access token (but not the username), so {@link #hasCredentials()}
+     * will return {@code false}, and shows a notification asking the user to re-connect.
      */
-    public void setCredentialsInvalid() {
+    public synchronized void setCredentialsInvalid() {
+        if (!mHasCredentials) {
+            // already invalidated credentials
+            return;
+        }
+
         removeAccessToken();
         Timber.e("trakt credentials invalid, removed access token");
 
