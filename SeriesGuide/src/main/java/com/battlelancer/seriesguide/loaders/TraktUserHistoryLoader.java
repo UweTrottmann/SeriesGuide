@@ -86,8 +86,9 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
                     ? entry.episode.title
                     : Utils.getNextEpisodeString(getContext(), entry.episode.season,
                             entry.episode.number, entry.episode.title);
-            NowAdapter.NowItem item = new NowAdapter.NowItem().recentlyWatched(
+            NowAdapter.NowItem item = new NowAdapter.NowItem().recentlyWatchedTrakt(
                     entry.episode.ids.tvdb,
+                    entry.show.ids == null ? null : entry.show.ids.tvdb,
                     entry.watched_at.getMillis(),
                     entry.show.title,
                     description,

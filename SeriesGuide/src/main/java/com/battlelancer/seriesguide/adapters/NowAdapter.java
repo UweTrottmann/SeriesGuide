@@ -79,6 +79,15 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             return this;
         }
 
+        public NowItem recentlyWatchedTrakt(Integer episodeTvdbId, Integer showTvdbId,
+                long timestamp, String show, String episode, String poster) {
+            setCommonValues(timestamp, show, episode, poster);
+            this.episodeTvdbId = episodeTvdbId;
+            this.showTvdbId = showTvdbId;
+            this.type = NowType.RECENTLY_WATCHED;
+            return this;
+        }
+
         public NowItem releasedToday(int episodeTvdbId, long timestamp, String show,
                 String episode, String poster) {
             setCommonValues(timestamp, show, episode, poster);
