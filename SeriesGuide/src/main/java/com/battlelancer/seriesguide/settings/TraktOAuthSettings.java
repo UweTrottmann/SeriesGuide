@@ -30,12 +30,13 @@ public class TraktOAuthSettings {
     private static final long REFRESH_THRESHOLD = DateUtils.DAY_IN_MILLIS;
 
     /**
-     * Checks if the access token is about to expire or there is no expiry date. If so returns
-     * {@code true}.
+     * Checks if the access token is about to expire. If so returns {@code true}.
+     *
+     * <p><b>Note:</b> If there is no expiry date, will return {@code false}.
      */
     public static boolean isTimeToRefreshAccessToken(Context context) {
         long expiryDate = getSettings(context).getLong(KEY_ACCESS_TOKEN_EXPIRY_DATE, 0);
-        return expiryDate - REFRESH_THRESHOLD < System.currentTimeMillis();
+        return expiryDate != 0 && expiryDate - REFRESH_THRESHOLD < System.currentTimeMillis();
     }
 
     /**
