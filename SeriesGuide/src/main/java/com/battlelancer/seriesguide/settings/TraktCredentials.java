@@ -65,7 +65,7 @@ public class TraktCredentials {
     }
 
     /**
-     * If there is a username and acess token.
+     * If there is a username and access token.
      */
     public boolean hasCredentials() {
         return mHasCredentials;
@@ -124,7 +124,7 @@ public class TraktCredentials {
     /**
      * Removes the username and access token.
      */
-    public void removeCredentials() {
+    public synchronized void removeCredentials() {
         removeAccessToken();
         setUsername(null);
     }
@@ -154,7 +154,7 @@ public class TraktCredentials {
      * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
      * an exception.
      */
-    public void setCredentials(String username, String accessToken) {
+    public synchronized void setCredentials(String username, String accessToken) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(accessToken)) {
             throw new IllegalArgumentException("Username or access token is null or empty.");
         }
