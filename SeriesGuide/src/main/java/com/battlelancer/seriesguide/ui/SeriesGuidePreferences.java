@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -501,6 +502,8 @@ public class SeriesGuidePreferences extends ActionBarActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            new BackupManager(getActivity()).dataChanged();
+
             if (AdvancedSettings.KEY_UPCOMING_LIMIT.equals(key)
                     || DisplaySettings.KEY_LANGUAGE.equals(key)
                     || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
