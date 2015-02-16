@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * Loads a list of recently watched episodes.
@@ -41,17 +40,12 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
     public List<NowAdapter.NowItem> loadInBackground() {
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
 
-        // delete all entries older than 24 hours
-        int deleted = getContext().getContentResolver()
-                .delete(SeriesGuideContract.Activity.CONTENT_URI,
-                        SeriesGuideContract.Activity.TIMESTAMP + "<" + timeDayAgo, null);
-        Timber.d("loadInBackground: removed " + deleted + " outdated activities");
-
-        // get all current entries with the latest one first
+        // get activity of the last 24 hours with the latest one first
         Cursor query = getContext().getContentResolver()
                 .query(SeriesGuideContract.Activity.CONTENT_URI,
                         new String[] { SeriesGuideContract.Activity.TIMESTAMP,
-                                SeriesGuideContract.Activity.EPISODE_TVDB_ID }, null, null,
+                                SeriesGuideContract.Activity.EPISODE_TVDB_ID },
+                        SeriesGuideContract.Activity.TIMESTAMP + ">" + timeDayAgo, null,
                         SeriesGuideContract.Activity.TIMESTAMP + " DESC");
         if (query == null) {
             return null;
