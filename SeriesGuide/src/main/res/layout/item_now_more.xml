@@ -26,8 +26,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginLeft="@dimen/keyline"
-        android:layout_marginRight="@dimen/large_padding"
-        android:src="?attr/drawableArrowUp" />
+        android:layout_marginRight="@dimen/default_padding"
+        android:src="?attr/drawableArrowRight" />
 
     <TextView
         android:id="@+id/textViewNowMoreText"
