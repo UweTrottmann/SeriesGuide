@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.EpisodeHistoryAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.HistoryActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -42,7 +42,7 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
- * Displays the latest trakt activity of the user.
+ * Displays the latest trakt episode activity of the user.
  */
 public class UserEpisodeStreamFragment extends StreamFragment {
 
@@ -58,12 +58,13 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(ShowsActivity.USER_LOADER_ID, null, mActivityLoaderCallbacks);
+        getLoaderManager().initLoader(HistoryActivity.EPISODES_LOADER_ID, null,
+                mActivityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(ShowsActivity.USER_LOADER_ID, null,
+        getLoaderManager().restartLoader(HistoryActivity.EPISODES_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 

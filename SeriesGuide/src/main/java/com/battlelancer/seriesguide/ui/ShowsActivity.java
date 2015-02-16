@@ -53,14 +53,12 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
@@ -82,14 +80,11 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int SHOWS_LOADER_ID = 100;
     public static final int UPCOMING_LOADER_ID = 101;
     public static final int RECENT_LOADER_ID = 102;
-    public static final int USER_LOADER_ID = 103;
-    public static final int ADD_SHOW_LOADER_ID = 104;
-    public static final int NOW_RECENTLY_LOADER_ID = 105;
-    public static final int NOW_TODAY_LOADER_ID = 106;
-    public static final int NOW_TRAKT_USER_LOADER_ID = 107;
-    public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 108;
-
-    private static final int TAB_COUNT_WITH_TRAKT = 5;
+    public static final int ADD_SHOW_LOADER_ID = 103;
+    public static final int NOW_RECENTLY_LOADER_ID = 104;
+    public static final int NOW_TODAY_LOADER_ID = 105;
+    public static final int NOW_TRAKT_USER_LOADER_ID = 106;
+    public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
 
     private IabHelper mBillingHelper;
 
@@ -108,6 +103,7 @@ public class ShowsActivity extends BaseTopActivity implements
         String SELECTED_TAB = "selectedtab";
 
         int INDEX_TAB_SHOWS = 0;
+        int INDEX_TAB_NOW = 1;
         int INDEX_TAB_UPCOMING = 2;
         int INDEX_TAB_RECENT = 3;
     }
@@ -137,7 +133,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // setup all the views!
         setupViews();
-        setInitialTab(savedInstanceState, getIntent().getExtras());
+        setInitialTab(getIntent().getExtras());
 
         // query for in-app purchases
         if (Utils.isAmazonVersion()) {
@@ -243,11 +239,6 @@ public class ShowsActivity extends BaseTopActivity implements
         argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
 
-        // trakt tabs only visible if connected
-        if (TraktCredentials.get(this).hasCredentials()) {
-            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
-        }
-
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
 
@@ -257,17 +248,17 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Tries to restore the current tab from the given state, if that fails from the given intent
-     * extras. If that fails as well, uses the last known selected tab.
+     * Tries to restore the current tab from given intent extras. If that fails, uses the last known
+     * selected tab. If that fails also, defaults to the first tab.
      */
-    private void setInitialTab(Bundle savedInstanceState, Bundle intentExtras) {
+    private void setInitialTab(Bundle intentExtras) {
         int selection;
         if (intentExtras != null) {
             selection = intentExtras.getInt(InitBundle.SELECTED_TAB,
-                    ActivitySettings.getDefaultActivityTabPosition(this));
+                    DisplaySettings.getLastShowsTabPosition(this));
         } else {
             // use last saved selection
-            selection = ActivitySettings.getDefaultActivityTabPosition(this);
+            selection = DisplaySettings.getLastShowsTabPosition(this);
         }
 
         // never select a non-existent tab
@@ -316,9 +307,6 @@ public class ShowsActivity extends BaseTopActivity implements
                     .apply();
         }
 
-        // add trakt tabs if user just signed in
-        maybeAddTraktTabs();
-
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
         if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
@@ -326,17 +314,6 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // now listen to events
         EventBus.getDefault().register(this);
-    }
-
-    private void maybeAddTraktTabs() {
-        int currentTabCount = mTabsAdapter.getCount();
-        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
-
-        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
-            mTabsAdapter.addTab(R.string.user_stream, UserEpisodeStreamFragment.class, null);
-            // update tabs
-            mTabsAdapter.notifyTabsChanged();
-        }
     }
 
     @Override
@@ -348,7 +325,7 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        setInitialTab(null, intent.getExtras());
+        setInitialTab(intent.getExtras());
     }
 
     @Override
@@ -648,7 +625,7 @@ public class ShowsActivity extends BaseTopActivity implements
         @Override
         public void onPageSelected(int position) {
             // save selected tab index
-            mPrefs.edit().putInt(ActivitySettings.KEY_ACTIVITYTAB, position).apply();
+            mPrefs.edit().putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, position).apply();
         }
     }
 }

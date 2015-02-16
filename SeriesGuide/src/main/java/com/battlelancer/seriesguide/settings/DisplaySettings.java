@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 
 /**
  * Settings related to appearance, display formats and sort orders.
@@ -51,6 +52,9 @@ public class DisplaySettings {
 
     public static final String KEY_SORT_IGNORE_ARTICLE
             = "com.battlelancer.seriesguide.sort.ignorearticle";
+
+    public static final String KEY_LAST_ACTIVE_SHOWS_TAB
+            = "com.battlelancer.seriesguide.activitytab";
 
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
@@ -126,5 +130,13 @@ public class DisplaySettings {
     public static boolean isSortOrderIgnoringArticles(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_SORT_IGNORE_ARTICLE, false);
+    }
+
+    /**
+     * Return the position of the last selected shows tab.
+     */
+    public static int getLastShowsTabPosition(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(KEY_LAST_ACTIVE_SHOWS_TAB, ShowsActivity.InitBundle.INDEX_TAB_SHOWS);
     }
 }
