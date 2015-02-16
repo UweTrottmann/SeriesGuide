@@ -43,7 +43,8 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         implements StickyGridHeadersBaseAdapter {
 
     private static final int VIEW_TYPE_DEFAULT = 0;
-    private static final int VIEW_TYPE_FRIEND = 1;
+    private static final int VIEW_TYPE_MORE_LINK = 1;
+    private static final int VIEW_TYPE_FRIEND = 2;
 
     private final int resIdDrawableCheckin;
     private final int resIdDrawableWatched;
@@ -54,9 +55,16 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     private List<NowItem> friendsRecently;
 
     public enum NowType {
-        RECENTLY_WATCHED,
-        RELEASED_TODAY,
-        FRIENDS
+        RELEASED_TODAY(0),
+        RECENTLY_WATCHED(1),
+        FRIENDS(2),
+        RECENTLY_MORE_LINK(1);
+
+        private final int headerId;
+
+        private NowType(int headerId) {
+            this.headerId = headerId;
+        }
     }
 
     public static class NowItem {
@@ -109,6 +117,11 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             return this;
         }
 
+        public NowItem recentlyWatchedMoreLink() {
+            this.type = NowType.RECENTLY_MORE_LINK;
+            return this;
+        }
+
         private void setCommonValues(long timestamp, String show, String episode, String poster) {
             this.timestamp = timestamp;
             this.title = show;
@@ -156,13 +169,16 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (getItem(position).type == NowType.FRIENDS) {
+        NowItem item = getItem(position);
+        if (item.type == NowType.FRIENDS) {
             return VIEW_TYPE_FRIEND;
+        } else if (item.type == NowType.RECENTLY_MORE_LINK) {
+            return VIEW_TYPE_MORE_LINK;
         }
         return VIEW_TYPE_DEFAULT;
     }
@@ -170,7 +186,12 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         int viewType = getItemViewType(position);
-        if (viewType == VIEW_TYPE_FRIEND) {
+        if (viewType == VIEW_TYPE_MORE_LINK) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_now_more, parent, false);
+            }
+        } else if (viewType == VIEW_TYPE_FRIEND) {
             FriendViewHolder holder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext())
@@ -234,9 +255,9 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
     }
 
     @Override
-    public View getHeaderView(int position, View convertView, ViewGroup parent) {
-        // get header position for item position
-        position = headers.get(position).getRefPosition();
+    public View getHeaderView(int headerPosition, View convertView, ViewGroup parent) {
+        // get position of first item for this header
+        int position = headers.get(headerPosition).getRefPosition();
 
         NowItem item = getItem(position);
         if (item == null) {
@@ -254,7 +275,7 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
         }
 
         int titleResId;
-        if (item.type == NowType.RECENTLY_WATCHED) {
+        if (item.type == NowType.RECENTLY_WATCHED || item.type == NowType.RECENTLY_MORE_LINK) {
             titleResId = R.string.recently_watched;
         } else if (item.type == NowType.RELEASED_TODAY) {
             titleResId = R.string.released_today;
@@ -329,31 +350,29 @@ public class NowAdapter extends ArrayAdapter<NowAdapter.NowItem>
             return null;
         }
 
-        Map<Long, HeaderData> mapping = new HashMap<>();
+        Map<Integer, HeaderData> mapping = new HashMap<>();
         List<HeaderData> headers = new ArrayList<>();
 
-        for (int i = 0; i < getCount(); i++) {
-            long headerId = getHeaderId(i);
+        for (int itemPosition = 0; itemPosition < getCount(); itemPosition++) {
+            // map item to a section by assigning a header id based on its type
+            NowItem item = getItem(itemPosition);
+            int headerId = 0;
+            if (item != null) {
+                headerId = item.type.headerId;
+            }
+
             HeaderData headerData = mapping.get(headerId);
             if (headerData == null) {
-                headerData = new HeaderData(i);
+                // store first item position with new header
+                headerData = new HeaderData(itemPosition);
                 headers.add(headerData);
             }
+            // count items in this section
             headerData.incrementCount();
+
             mapping.put(headerId, headerData);
         }
 
         return headers;
-    }
-
-    /**
-     * Maps items to their section.
-     */
-    private long getHeaderId(int position) {
-        NowItem item = getItem(position);
-        if (item != null) {
-            return item.type.ordinal();
-        }
-        return 0;
     }
 }
