@@ -24,6 +24,7 @@
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableAddShow" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
+    <attr name="drawableArrowRight" format="reference" />
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCardBackground" format="reference" />
     <attr name="drawableCancel" format="reference" />

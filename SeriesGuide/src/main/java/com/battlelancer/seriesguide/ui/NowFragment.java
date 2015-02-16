@@ -207,7 +207,18 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
 
         NowAdapter.NowItem item = adapter.getItem(position);
-        if (item == null || item.episodeTvdbId == null) {
+        if (item == null) {
+            return;
+        }
+
+        // more history link?
+        if (item.type == NowAdapter.NowType.RECENTLY_MORE_LINK) {
+            startActivity(new Intent(getActivity(), HistoryActivity.class));
+            return;
+        }
+
+        // other actions need at least an episode TVDB id
+        if (item.episodeTvdbId == null) {
             return;
         }
 

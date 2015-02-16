@@ -96,6 +96,7 @@
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.HistoryActivity" />
 
         <!-- Movies -->
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" />

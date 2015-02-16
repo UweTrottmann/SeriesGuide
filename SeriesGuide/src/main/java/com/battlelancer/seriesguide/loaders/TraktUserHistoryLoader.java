@@ -97,6 +97,11 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
             items.add(item);
         }
 
+        // add link to more history
+        if (items.size() > 0) {
+            items.add(new NowAdapter.NowItem().recentlyWatchedMoreLink());
+        }
+
         return items;
     }
 }
