@@ -21,12 +21,18 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
+import com.battlelancer.seriesguide.util.TaskManager;
 
 /**
  * Displays history of watched episodes.
  */
-public class HistoryActivity extends BaseActivity {
+public class HistoryActivity extends BaseActivity implements
+        AddShowDialogFragment.OnAddShowListener {
+
+    public static final int EPISODES_LOADER_ID = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,5 +65,13 @@ public class HistoryActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called if the user adds a show from a trakt stream fragment.
+     */
+    @Override
+    public void onAddShow(SearchResult show) {
+        TaskManager.getInstance(this).performAddTask(show);
     }
 }
