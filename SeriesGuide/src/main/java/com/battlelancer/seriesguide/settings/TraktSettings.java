@@ -56,13 +56,8 @@ public class TraktSettings {
     public static final String KEY_LAST_FULL_EPISODE_SYNC
             = "com.battlelancer.seriesguide.trakt.lastfullsync";
 
-    public static final String KEY_SHARE_WITH_TRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
-
     public static final String KEY_AUTO_ADD_TRAKT_SHOWS
             = "com.battlelancer.seriesguide.autoaddtraktshows";
-
-    public static final String KEY_SYNC_UNWATCHED_EPISODES
-            = "com.battlelancer.seriesguide.syncunseenepisodes";
 
     public static final String KEY_HAS_MERGED_EPISODES =
             "com.battlelancer.seriesguide.trakt.mergedepisodes";
@@ -71,11 +66,6 @@ public class TraktSettings {
             = "com.battlelancer.seriesguide.trakt.mergedmovies";
 
     private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
-
-    public static final String POSTER_SIZE_SPEC_DEFAULT = ".jpg";
-
-    public static final String POSTER_SIZE_SPEC_138 = "-138.jpg";
-    public static final String POSTER_SIZE_SPEC_300 = "-300.jpg";
 
     /**
      * The last time trakt episode activity was successfully downloaded.
@@ -203,16 +193,6 @@ public class TraktSettings {
     public static boolean hasMergedMovies(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_HAS_MERGED_MOVIES, false);
-    }
-
-    public static boolean isSharingWithTrakt(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_SHARE_WITH_TRAKT, false);
-    }
-
-    public static boolean isSyncingUnwatchedEpisodes(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_SYNC_UNWATCHED_EPISODES, false);
     }
 
     /**
