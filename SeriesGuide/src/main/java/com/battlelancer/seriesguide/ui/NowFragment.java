@@ -25,6 +25,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +48,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import de.greenrobot.event.EventBus;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @InjectView(R.id.swipeRefreshLayoutNow) SwipeRefreshLayout swipeRefreshLayout;
 
-    @InjectView(R.id.gridViewNow) StickyGridHeadersGridView gridView;
+    @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
     @InjectView(R.id.emptyViewNow) TextView emptyView;
 
     private NowAdapter adapter;
@@ -77,9 +78,6 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
-        gridView.setOnItemClickListener(this);
-        gridView.setEmptyView(emptyView);
-
         return v;
     }
 
@@ -91,10 +89,14 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 R.attr.colorAccent);
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
-        adapter = new NowAdapter(getActivity());
+        // define layout
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
-        gridView.setAdapter(adapter);
-        gridView.setAreHeadersSticky(false);
+        // define dataset
+        adapter = new NowAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
 
         // if connected to trakt, replace local history with trakt history, show friends history
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
@@ -212,7 +214,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
 
         // more history link?
-        if (item.type == NowAdapter.NowType.RECENTLY_MORE_LINK) {
+        if (item.type == NowAdapter.ViewType.MORE_LINK) {
             startActivity(new Intent(getActivity(), HistoryActivity.class));
             return;
         }
