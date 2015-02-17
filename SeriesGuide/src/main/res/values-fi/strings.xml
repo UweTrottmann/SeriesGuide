@@ -164,7 +164,7 @@
   <string name="context_marknext">Seuraava jakso katsottu</string>
   <string name="now_tab">Nyt</string>
   <string name="recently_watched">Viimeksi katsotut</string>
-  <string name="released_today">Tänään lähetetyt</string>
+  <string name="released_today">Lähetetään tänään</string>
   <string name="friends_recently">trakt-ystäväsi</string>
   <string name="now_empty">Mitään ei ole meneillään. Katso joitakin ohjelmia!</string>
   <string name="upcoming">Tulevat</string>

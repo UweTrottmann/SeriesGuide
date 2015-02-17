@@ -162,11 +162,11 @@
   <string name="menu_update_delta">Aktualizovat (jen staré)</string>
   <string name="context_updateshow">Aktualizovat</string>
   <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
-  <string name="now_tab">Now</string>
-  <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_tab">Nyní</string>
+  <string name="recently_watched">Poslední viděl</string>
+  <string name="released_today">Viděno dnes</string>
+  <string name="friends_recently">Zaznamenáno přítelem</string>
+  <string name="now_empty">Nic se děje. Podívejte se na pořady!</string>
   <string name="upcoming">Nadcházející</string>
   <string name="recent">Nedávné</string>
   <string name="friends">Přátelé</string>
@@ -208,7 +208,7 @@
   <string name="list_item_manage">Vybrat seznamy</string>
   <string name="list_item_remove">Odebrat ze seznamu</string>
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
-  <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_sort">Třídit seznamy</string>
   <string name="hexagon_warning">Experimentální!</string>
   <string name="hexagon_setup">Nastavit SeriesGuide cloud</string>
   <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
