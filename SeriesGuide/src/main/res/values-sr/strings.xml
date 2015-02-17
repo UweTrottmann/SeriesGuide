@@ -174,6 +174,7 @@
   <string name="user_stream">History</string>
   <string name="user_stream_empty">Нема недавних активности на trakt-у. Одаберите неке серије!</string>
   <string name="user_movie_stream_empty">Нема недавних активности на trakt-у. Одаберите неке филмове!</string>
+  <string name="more_history_link">More history</string>
   <string name="noupcoming">Нема предстојећих епизода.</string>
   <string name="norecent">Нема скорашњих епизода.</string>
   <string name="only_favorites">Само омиљене серије</string>

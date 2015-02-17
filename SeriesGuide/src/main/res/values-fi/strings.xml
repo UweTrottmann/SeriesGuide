@@ -174,6 +174,7 @@
   <string name="user_stream">Historia</string>
   <string name="user_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihinkin ohjelmiin!</string>
   <string name="user_movie_stream_empty">Ei viimeaikaista toimintaa traktissa. Kuittaa joihinkin elokuviin!</string>
+  <string name="more_history_link">More history</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>

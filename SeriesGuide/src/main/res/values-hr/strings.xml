@@ -174,6 +174,7 @@
   <string name="user_stream">History</string>
   <string name="user_stream_empty">Nema nedavne aktivnosti na trakt-u Prijavite nove serije!</string>
   <string name="user_movie_stream_empty">Nema nedavne aktivnosti na trakt-u. Prijavite nove filmove!</string>
+  <string name="more_history_link">More history</string>
   <string name="noupcoming">Nema nadolazećih epizoda.</string>
   <string name="norecent">Nema nedavnih epizoda.</string>
   <string name="only_favorites">Samo favoriti</string>

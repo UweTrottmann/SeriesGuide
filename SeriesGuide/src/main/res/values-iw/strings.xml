@@ -174,6 +174,7 @@
   <string name="user_stream">היסטוריה</string>
   <string name="user_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה תוכניות!</string>
   <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. בדוק כמה סרטים!</string>
+  <string name="more_history_link">More history</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>

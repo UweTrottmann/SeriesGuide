@@ -174,6 +174,7 @@
   <string name="user_stream">Geschiedenis</string>
   <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
   <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
+  <string name="more_history_link">More history</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
