@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -117,6 +118,12 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                     entry.action
             );
             items.add(nowItem);
+        }
+
+        // add header
+        if (items.size() > 0) {
+            items.add(0, new NowAdapter.NowItem().header(
+                    getContext().getString(R.string.friends_recently)));
         }
 
         return items;

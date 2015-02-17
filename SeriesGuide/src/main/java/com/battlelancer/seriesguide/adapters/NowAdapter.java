@@ -185,8 +185,15 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        public NowItem recentlyWatchedMoreLink() {
+        public NowItem header(String title) {
+            this.type = ViewType.HEADER;
+            this.title = title;
+            return this;
+        }
+
+        public NowItem moreLink(String title) {
             this.type = ViewType.MORE_LINK;
+            this.title = title;
             return this;
         }
 
@@ -232,10 +239,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        NowItem item = getItem(position);
+
         if (viewHolder instanceof DefaultViewHolder) {
             DefaultViewHolder holder = (DefaultViewHolder) viewHolder;
 
-            NowItem item = getItem(position);
             holder.title.setText(item.title);
             holder.description.setText(item.description);
             holder.timestamp.setText(
@@ -250,12 +258,15 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         } else if (viewHolder instanceof HeaderViewHolder) {
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
+
+            holder.title.setText(item.title);
         } else if (viewHolder instanceof MoreViewHolder) {
             MoreViewHolder holder = (MoreViewHolder) viewHolder;
+
+            holder.title.setText(item.title);
         } else if (viewHolder instanceof FriendViewHolder) {
             FriendViewHolder holder = (FriendViewHolder) viewHolder;
 
-            NowItem item = getItem(position);
             holder.show.setText(item.title);
             holder.episode.setText(item.description);
             holder.timestamp.setText(
@@ -285,39 +296,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         return getItem(position).type;
     }
-
-    //@Override
-    //public View getHeaderView(int headerPosition, View convertView, ViewGroup parent) {
-    //    // get position of first item for this header
-    //    int position = headers.get(headerPosition).getRefPosition();
-    //
-    //    NowItem item = getItem(position);
-    //    if (item == null) {
-    //        return null;
-    //    }
-    //
-    //    HeaderViewHolder holder;
-    //    if (convertView == null) {
-    //        convertView = LayoutInflater.from(parent.getContext())
-    //                .inflate(R.layout.item_now_header, parent, false);
-    //        holder = new HeaderViewHolder(convertView);
-    //        convertView.setTag(holder);
-    //    } else {
-    //        holder = (HeaderViewHolder) convertView.getTag();
-    //    }
-    //
-    //    int titleResId;
-    //    if (item.type == NowType.RECENTLY_WATCHED || item.type == NowType.RECENTLY_MORE_LINK) {
-    //        titleResId = R.string.recently_watched;
-    //    } else if (item.type == NowType.RELEASED_TODAY) {
-    //        titleResId = R.string.released_today;
-    //    } else {
-    //        titleResId = R.string.friends_recently;
-    //    }
-    //    holder.title.setText(titleResId);
-    //
-    //    return convertView;
-    //}
 
     private Context getContext() {
         return context;

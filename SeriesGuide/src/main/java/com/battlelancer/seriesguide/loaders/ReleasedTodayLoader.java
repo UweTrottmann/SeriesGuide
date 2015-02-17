@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -71,6 +72,13 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
         if (query != null) {
             List<NowAdapter.NowItem> items = new ArrayList<>();
 
+            // add header
+            if (query.getCount() > 0) {
+                items.add(new NowAdapter.NowItem().header(
+                        getContext().getString(R.string.released_today)));
+            }
+
+            // add items
             while (query.moveToNext()) {
                 NowAdapter.NowItem item = new NowAdapter.NowItem().releasedToday(
                         query.getInt(0),

@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -77,6 +78,13 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
                 continue;
             }
 
+            // add header
+            if (episodeQuery.getCount() > 0) {
+                items.add(new NowAdapter.NowItem().header(
+                        getContext().getString(R.string.recently_watched)));
+            }
+
+            // add items
             if (episodeQuery.moveToFirst()) {
                 NowAdapter.NowItem item = new NowAdapter.NowItem().recentlyWatched(
                         episodeTvdbId,
