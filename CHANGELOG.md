@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 22 *(in development)*
 -----------------------------
 
+#### 22.0.0-beta4 *(2015-02-17)*
+
+* TWEAK On Now tab, added "More history" shortcut in "Recently watched" section. Removed history tab.
+* TWEAK Support trakt refresh tokens. trakt sign-ins are now permanent, unless you disconnect or
+  revoke SeriesGuide's permission on the trakt website.
+* NOTICE If you are connected to trakt, you will have to sign in again once at the latest in 90 days.
+* TWEAK Display search icon in shows section if there is room.
+* FIX Would not offer to add show from "Recently watched" if connected to trakt.
+* NOTICE Latest translations from crowdin.
+
 #### 22.0.0-beta3 *(2015-02-12)*
 
 * TWEAK Recently watched in "Now" is replaced with trakt episode history if connected to trakt.
