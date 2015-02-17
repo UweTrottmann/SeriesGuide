@@ -76,4 +76,6 @@
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
+    <integer name="grid_column_count">1</integer>
+
 </resources>

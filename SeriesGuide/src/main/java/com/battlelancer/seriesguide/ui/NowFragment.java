@@ -90,7 +90,17 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
         // define layout
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+        final int spanCount = getResources().getInteger(R.integer.grid_column_count);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                // make headers and more links span all columns
+                int type = adapter.getItem(position).type;
+                return (type == NowAdapter.ViewType.HEADER || type == NowAdapter.ViewType.MORE_LINK)
+                        ? spanCount : 1;
+            }
+        });
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
