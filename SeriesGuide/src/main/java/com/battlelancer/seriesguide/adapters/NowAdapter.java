@@ -326,19 +326,36 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataset.get(position);
     }
 
-    public synchronized void setRecentlyWatched(List<NowItem> items) {
-        recentlyWatched = items;
-        reloadData();
-    }
-
     public synchronized void setReleasedTodayData(List<NowItem> items) {
+        int oldCount = releasedToday ==  null ? 0 : releasedToday.size();
+        int newCount = items == null ? 0 : items.size();
+
         releasedToday = items;
         reloadData();
+        notifyAboutChanges(0, oldCount, newCount);
+    }
+
+    public synchronized void setRecentlyWatched(List<NowItem> items) {
+        int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
+        int newCount = items == null ? 0 : items.size();
+        // items start after released today (if any)
+        int startPosition = releasedToday == null ? 0 : releasedToday.size() - 1;
+
+        recentlyWatched = items;
+        reloadData();
+        notifyAboutChanges(startPosition, oldCount, newCount);
     }
 
     public synchronized void setFriendsRecentlyWatched(List<NowItem> items) {
+        int oldCount = friendsRecently ==  null ? 0 : friendsRecently.size();
+        int newCount = items == null ? 0 : items.size();
+        // items start after released today and recently watched (if any)
+        int startPosition = (releasedToday == null ? 0 : releasedToday.size() - 1)
+                + (recentlyWatched == null ? 0 : recentlyWatched.size() - 1);
+
         friendsRecently = items;
         reloadData();
+        notifyAboutChanges(startPosition, oldCount, newCount);
     }
 
     private void reloadData() {
@@ -354,6 +371,19 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 dataset.addAll(friendsRecently);
             }
         }
-        notifyDataSetChanged();
+    }
+
+    private void notifyAboutChanges(int startPosition, int oldItemCount, int newItemCount) {
+        if (newItemCount == 0) {
+            if (oldItemCount > 0) {
+                notifyItemRangeRemoved(startPosition, oldItemCount);
+            }
+        } else {
+            if (oldItemCount == 0) {
+                notifyItemRangeInserted(startPosition, newItemCount);
+            } else {
+                notifyItemRangeChanged(startPosition, newItemCount);
+            }
+        }
     }
 }
