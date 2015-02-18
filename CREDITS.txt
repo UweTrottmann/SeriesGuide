@@ -31,18 +31,16 @@ The translators on Crowdin.
 
 SeriesGuide uses the following libraries or projects:
 
-TheTVDB.com (http://thetvdb.com)
---------------------------------
+TheTVDB.com (https://www.thetvdb.com)
+-------------------------------------
 
-Original database website by Josh Walters (walts81)
-Original banner site by Richard Skarsten (t0ffluss)
-Redesign and programming by Scott Zsori and Paul Taylor
-This work is licensed under a Creative Commons Attribution 3.0
-United States License.
+This work is licensed under a Creative Commons Attribution-
+NonCommercial 4.0 International License.
+http://creativecommons.org/licenses/by-nc/4.0/
 
 
-TMDb - The Movie Database (http://themoviedb.org)
--------------------------------------------------
+TMDb - The Movie Database (https://www.themoviedb.org)
+------------------------------------------------------
 
 themoviedb.org is a free and community maintained movie database.
 It's completely user built by people like you. TMDb is currently used
