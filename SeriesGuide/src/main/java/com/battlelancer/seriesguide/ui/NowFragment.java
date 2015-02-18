@@ -106,6 +106,22 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                updateEmptyState();
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                updateEmptyState();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                updateEmptyState();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         // if connected to trakt, replace local history with trakt history, show friends history
@@ -232,6 +248,12 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
      */
     protected void showProgressBar(boolean isShowing) {
         swipeRefreshLayout.setRefreshing(isShowing);
+    }
+
+    private void updateEmptyState() {
+        boolean isEmpty = adapter.getItemCount() == 0;
+        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
     }
 
     public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
