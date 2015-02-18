@@ -76,7 +76,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.textViewNowHeader);
+            title = (TextView) itemView.findViewById(R.id.textViewGridHeader);
         }
     }
 
@@ -242,7 +242,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new DefaultViewHolder(v, listener);
         } else if (viewType == ViewType.HEADER) {
             View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_header, viewGroup, false);
+                    .inflate(R.layout.item_grid_header, viewGroup, false);
             return new HeaderViewHolder(v);
         } else if (viewType == ViewType.MORE_LINK) {
             View v = LayoutInflater.from(viewGroup.getContext())

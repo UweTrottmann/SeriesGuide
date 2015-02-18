@@ -48,10 +48,6 @@ import java.util.Map;
  */
 public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
-    private final int LAYOUT = R.layout.grid_activity_row;
-
-    private final int LAYOUT_HEADER = R.layout.grid_activity_header;
-
     private LayoutInflater mLayoutInflater;
 
     private List<HeaderData> mHeaders;
@@ -139,7 +135,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, parent, false);
+        View v = mLayoutInflater.inflate(R.layout.grid_activity_row, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
         v.setTag(viewHolder);
@@ -204,10 +200,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
-            holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
+            holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
 
             convertView.setTag(holder);
         } else {
