@@ -239,33 +239,28 @@ public class MovieDetailsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         if (mMovieDetails != null) {
+            // choose theme variant
             boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
             inflater.inflate(
                     isLightTheme ? R.menu.movie_details_menu_light : R.menu.movie_details_menu,
                     menu);
 
-            // hide Google Play button in Amazon version
-            if (Utils.isAmazonVersion()) {
-                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
-                playStoreItem.setEnabled(false);
-                playStoreItem.setVisible(false);
-            }
-        }
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        if (mMovieDetails != null) {
+            // enable/disable actions
             boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
                     mMovieDetails.tmdbMovie().title);
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare);
+            MenuItem webSearchItem = menu.findItem(R.id.menu_action_movie_websearch);
+            webSearchItem.setEnabled(isEnableShare);
+            webSearchItem.setVisible(isEnableShare);
 
-            if (!Utils.isAmazonVersion()) {
-                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+            MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+            if (Utils.isAmazonVersion()) {
+                // hide Google Play button in Amazon version
+                playStoreItem.setEnabled(false);
+                playStoreItem.setVisible(false);
+            } else {
                 playStoreItem.setEnabled(isEnableShare);
                 playStoreItem.setVisible(isEnableShare);
             }
@@ -310,6 +305,10 @@ public class MovieDetailsFragment extends Fragment {
         }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);
+            return true;
+        }
+        if (itemId == R.id.menu_action_movie_websearch) {
+            ServiceUtils.performWebSearch(getActivity(), mMovieDetails.tmdbMovie().title, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);

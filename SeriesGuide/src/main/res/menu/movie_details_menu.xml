@@ -28,5 +28,9 @@
         android:id="@+id/menu_open_trakt"
         app:showAsAction="never"
         android:title="@string/trakt" />
+    <item
+        android:id="@+id/menu_action_movie_websearch"
+        app:showAsAction="never"
+        android:title="@string/web_search"/>
 
 </menu>
