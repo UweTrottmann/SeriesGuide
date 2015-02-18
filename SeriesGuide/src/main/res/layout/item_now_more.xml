@@ -18,14 +18,15 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:background="?attr/drawableCardBackground">
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:layout_width="24dp"
-        android:layout_height="@dimen/show_poster_small_height"
+        android:layout_height="24dp"
         android:layout_marginLeft="@dimen/keyline"
         android:layout_marginRight="@dimen/default_padding"
         android:src="?attr/drawableArrowRight" />

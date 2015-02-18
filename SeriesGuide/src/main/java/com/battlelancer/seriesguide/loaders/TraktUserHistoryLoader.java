@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -97,9 +98,12 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
             items.add(item);
         }
 
-        // add link to more history
+        // add header and link to more history
         if (items.size() > 0) {
-            items.add(new NowAdapter.NowItem().recentlyWatchedMoreLink());
+            items.add(0, new NowAdapter.NowItem().header(
+                    getContext().getString(R.string.recently_watched)));
+            items.add(new NowAdapter.NowItem().moreLink(
+                    getContext().getString(R.string.more_history_link)));
         }
 
         return items;

@@ -25,13 +25,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -45,8 +46,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import de.greenrobot.event.EventBus;
 import java.util.List;
 
@@ -54,12 +55,11 @@ import java.util.List;
  * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
  * to trakt).
  */
-public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        AdapterView.OnItemClickListener {
+public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.swipeRefreshLayoutNow) SwipeRefreshLayout swipeRefreshLayout;
 
-    @InjectView(R.id.gridViewNow) StickyGridHeadersGridView gridView;
+    @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
     @InjectView(R.id.emptyViewNow) TextView emptyView;
 
     private NowAdapter adapter;
@@ -77,9 +77,6 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
-        gridView.setOnItemClickListener(this);
-        gridView.setEmptyView(emptyView);
-
         return v;
     }
 
@@ -91,10 +88,41 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 R.attr.colorAccent);
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
 
-        adapter = new NowAdapter(getActivity());
+        // define layout
+        final int spanCount = getResources().getInteger(R.integer.grid_column_count);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                // make headers and more links span all columns
+                int type = adapter.getItem(position).type;
+                return (type == NowAdapter.ViewType.HEADER || type == NowAdapter.ViewType.MORE_LINK)
+                        ? spanCount : 1;
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridInsetDecoration(getActivity()));
+        recyclerView.setHasFixedSize(true);
 
-        gridView.setAdapter(adapter);
-        gridView.setAreHeadersSticky(false);
+        // define dataset
+        adapter = new NowAdapter(getActivity(), itemClickListener);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                updateEmptyState();
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                updateEmptyState();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                updateEmptyState();
+            }
+        });
+        recyclerView.setAdapter(adapter);
 
         // if connected to trakt, replace local history with trakt history, show friends history
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
@@ -199,47 +227,6 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // do not respond if we get a header position (e.g. shortly after data was refreshed)
-        if (position < 0) {
-            return;
-        }
-
-        NowAdapter.NowItem item = adapter.getItem(position);
-        if (item == null) {
-            return;
-        }
-
-        // more history link?
-        if (item.type == NowAdapter.NowType.RECENTLY_MORE_LINK) {
-            startActivity(new Intent(getActivity(), HistoryActivity.class));
-            return;
-        }
-
-        // other actions need at least an episode TVDB id
-        if (item.episodeTvdbId == null) {
-            return;
-        }
-
-        // check if episode is in database
-        Cursor query = getActivity().getContentResolver()
-                .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
-                        new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
-        if (query == null) {
-            // query failed
-            return;
-        }
-        if (query.getCount() == 1) {
-            // episode in database: display details
-            showDetails(view, item.episodeTvdbId);
-        } else if (item.showTvdbId != null) {
-            // episode missing: show likely not in database, suggest adding it
-            AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
-        }
-        query.close();
-    }
-
     /**
      * Starts an activity to display the given episode.
      */
@@ -263,6 +250,12 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         swipeRefreshLayout.setRefreshing(isShowing);
     }
 
+    private void updateEmptyState() {
+        boolean isEmpty = adapter.getItemCount() == 0;
+        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+    }
+
     public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
         if (!isAdded()) {
             return;
@@ -275,6 +268,44 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                     recentlyCallbacks);
         }
     }
+
+    private NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            NowAdapter.NowItem item = adapter.getItem(position);
+            if (item == null) {
+                return;
+            }
+
+            // more history link?
+            if (item.type == NowAdapter.ViewType.MORE_LINK) {
+                startActivity(new Intent(getActivity(), HistoryActivity.class));
+                return;
+            }
+
+            // other actions need at least an episode TVDB id
+            if (item.episodeTvdbId == null) {
+                return;
+            }
+
+            // check if episode is in database
+            Cursor query = getActivity().getContentResolver()
+                    .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
+                            new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
+            if (query == null) {
+                // query failed
+                return;
+            }
+            if (query.getCount() == 1) {
+                // episode in database: display details
+                showDetails(view, item.episodeTvdbId);
+            } else if (item.showTvdbId != null) {
+                // episode missing: show likely not in database, suggest adding it
+                AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
+            }
+            query.close();
+        }
+    };
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
