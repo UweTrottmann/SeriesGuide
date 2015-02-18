@@ -33,7 +33,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,8 +54,7 @@ import java.util.List;
  * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
  * to trakt).
  */
-public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        AdapterView.OnItemClickListener {
+public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.swipeRefreshLayoutNow) SwipeRefreshLayout swipeRefreshLayout;
 
@@ -105,7 +103,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         recyclerView.setHasFixedSize(true);
 
         // define dataset
-        adapter = new NowAdapter(getActivity());
+        adapter = new NowAdapter(getActivity(), itemClickListener);
         recyclerView.setAdapter(adapter);
 
         // if connected to trakt, replace local history with trakt history, show friends history
@@ -211,47 +209,6 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // do not respond if we get a header position (e.g. shortly after data was refreshed)
-        if (position < 0) {
-            return;
-        }
-
-        NowAdapter.NowItem item = adapter.getItem(position);
-        if (item == null) {
-            return;
-        }
-
-        // more history link?
-        if (item.type == NowAdapter.ViewType.MORE_LINK) {
-            startActivity(new Intent(getActivity(), HistoryActivity.class));
-            return;
-        }
-
-        // other actions need at least an episode TVDB id
-        if (item.episodeTvdbId == null) {
-            return;
-        }
-
-        // check if episode is in database
-        Cursor query = getActivity().getContentResolver()
-                .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
-                        new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
-        if (query == null) {
-            // query failed
-            return;
-        }
-        if (query.getCount() == 1) {
-            // episode in database: display details
-            showDetails(view, item.episodeTvdbId);
-        } else if (item.showTvdbId != null) {
-            // episode missing: show likely not in database, suggest adding it
-            AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
-        }
-        query.close();
-    }
-
     /**
      * Starts an activity to display the given episode.
      */
@@ -287,6 +244,44 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                     recentlyCallbacks);
         }
     }
+
+    private NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            NowAdapter.NowItem item = adapter.getItem(position);
+            if (item == null) {
+                return;
+            }
+
+            // more history link?
+            if (item.type == NowAdapter.ViewType.MORE_LINK) {
+                startActivity(new Intent(getActivity(), HistoryActivity.class));
+                return;
+            }
+
+            // other actions need at least an episode TVDB id
+            if (item.episodeTvdbId == null) {
+                return;
+            }
+
+            // check if episode is in database
+            Cursor query = getActivity().getContentResolver()
+                    .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
+                            new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
+            if (query == null) {
+                // query failed
+                return;
+            }
+            if (query.getCount() == 1) {
+                // episode in database: display details
+                showDetails(view, item.episodeTvdbId);
+            } else if (item.showTvdbId != null) {
+                // episode missing: show likely not in database, suggest adding it
+                AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
+            }
+            query.close();
+        }
+    };
 
     private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {

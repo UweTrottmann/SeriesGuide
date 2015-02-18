@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -41,6 +40,10 @@ import java.util.List;
  */
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public interface ItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
     static class DefaultViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView description;
@@ -48,13 +51,23 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView poster;
         ImageView type;
 
-        public DefaultViewHolder(View itemView) {
+        public DefaultViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.textViewHistoryTitle);
             description = (TextView) itemView.findViewById(R.id.textViewHistoryDescription);
             timestamp = (TextView) itemView.findViewById(R.id.textViewHistoryTimestamp);
             poster = (ImageView) itemView.findViewById(R.id.imageViewHistoryPoster);
             type = (ImageView) itemView.findViewById(R.id.imageViewHistoryType);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(v, position);
+                    }
+                }
+            });
         }
     }
 
@@ -70,9 +83,19 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static class MoreViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
 
-        public MoreViewHolder(View itemView) {
+        public MoreViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.textViewNowMoreText);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(v, position);
+                    }
+                }
+            });
         }
     }
 
@@ -85,7 +108,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ImageView avatar;
         public ImageView type;
 
-        public FriendViewHolder(View itemView) {
+        public FriendViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
             episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
@@ -94,6 +117,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             username = (TextView) itemView.findViewById(R.id.textViewFriendUsername);
             avatar = (ImageView) itemView.findViewById(R.id.imageViewFriendAvatar);
             type = (ImageView) itemView.findViewById(R.id.imageViewFriendActionType);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(v, position);
+                    }
+                }
+            });
         }
     }
 
@@ -106,12 +139,12 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         static final int FRIEND = 3;
     }
 
+    private final Context context;
+    private final ItemClickListener listener;
     private final int resIdDrawableCheckin;
     private final int resIdDrawableWatched;
-    private final Context context;
 
     private List<NowItem> dataset;
-    private List<HeaderData> headers;
     private List<NowItem> recentlyWatched;
     private List<NowItem> releasedToday;
     private List<NowItem> friendsRecently;
@@ -121,19 +154,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * array should be synchronized on this lock.
      */
     private final Object lock = new Object();
-
-    public enum NowType {
-        RELEASED_TODAY(0),
-        RECENTLY_WATCHED(1),
-        FRIENDS(2),
-        RECENTLY_MORE_LINK(1);
-
-        private final int headerId;
-
-        private NowType(int headerId) {
-            this.headerId = headerId;
-        }
-    }
 
     public static class NowItem {
         public Integer episodeTvdbId;
@@ -205,8 +225,9 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public NowAdapter(Context context) {
+    public NowAdapter(Context context, ItemClickListener listener) {
         this.context = context;
+        this.listener = listener;
         this.dataset = new ArrayList<>();
         this.resIdDrawableCheckin = Utils.resolveAttributeToResourceId(context.getTheme(),
                 R.attr.drawableCheckin);
@@ -219,7 +240,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == ViewType.DEFAULT) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_history, viewGroup, false);
-            return new DefaultViewHolder(v);
+            return new DefaultViewHolder(v, listener);
         } else if (viewType == ViewType.HEADER) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_header, viewGroup, false);
@@ -227,11 +248,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == ViewType.MORE_LINK) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_more, viewGroup, false);
-            return new MoreViewHolder(v);
+            return new MoreViewHolder(v, listener);
         } else if (viewType == ViewType.FRIEND) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_friend, viewGroup, false);
-            return new FriendViewHolder(v);
+            return new FriendViewHolder(v, listener);
         } else {
             throw new IllegalArgumentException("Using unrecognized view type.");
         }
