@@ -7,27 +7,26 @@ Chris and Craig for testing the thing out. Craig for always pushing and
 supporting with all his heart and mind. Jake Wharton for his general
 wisdom and support.
 
-The minds behind trakt.tv, especially Justin. - http://trakt.tv
+The folks at and the countless contributors to TheTVDB.
+
+The minds behind trakt, especially Justin.
+
+Travis Bell for keeping TMDb in shape.
 
 The creators of the Google I/O app for lots of useful code patterns.
 - https://github.com/google/iosched
 
 The Oxygen Icon Theme Team for the TV Icon on which the original logo
-was based on. - http://www.oxygen-icons.org
+was based on.
 
-Matthew Altman for creating javatvdbapi.
-- http://code.google.com/p/javatvdbapi
-
-Charlie Collins for his Android examples.
-- http://code.google.com/p/and-examples
-
-Matthias Käppler for Droid-Fu. - http://github.com/kaeppler/droid-fu
+Matthew Altman for creating javatvdbapi which was originally used to
+access TheTVDB.
 
 Roman Nurik for his great DashClock and Muzei apps.
 - https://github.com/romannurik/muzei
 
 The translators on Crowdin.
-- http://crowdin.net/project/seriesguide-translations
+- https://crowdin.com/project/seriesguide-translations
 
 SeriesGuide uses the following libraries or projects:
 
@@ -52,8 +51,8 @@ used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
 https://www.themoviedb.org/terms-of-use
 
 
-trakt (http://trakt.tv)
------------------------
+trakt (https://trakt.tv)
+------------------------
 
 trakt helps keep a record of what TV shows and movies you are
 watching. Based on your favorites, trakt recommends additional
