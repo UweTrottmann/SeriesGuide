@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -100,6 +101,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             }
         });
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridInsetDecoration(getActivity()));
         recyclerView.setHasFixedSize(true);
 
         // define dataset
