@@ -239,7 +239,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == ViewType.DEFAULT) {
             View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_history, viewGroup, false);
+                    .inflate(R.layout.item_now_history, viewGroup, false);
             return new DefaultViewHolder(v, listener);
         } else if (viewType == ViewType.HEADER) {
             View v = LayoutInflater.from(viewGroup.getContext())
@@ -251,7 +251,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new MoreViewHolder(v, listener);
         } else if (viewType == ViewType.FRIEND) {
             View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_friend, viewGroup, false);
+                    .inflate(R.layout.item_now_friend, viewGroup, false);
             return new FriendViewHolder(v, listener);
         } else {
             throw new IllegalArgumentException("Using unrecognized view type.");

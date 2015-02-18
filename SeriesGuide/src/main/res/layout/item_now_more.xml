@@ -20,7 +20,9 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:layout_width="24dp"
