@@ -116,9 +116,9 @@
     </style>
 
     <!-- Widget styles -->
-    <style name="Widget"/>
+    <style name="Widget" />
 
-    <style name="Widget.SeriesGuide" parent="Widget"/>
+    <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
     <!-- Always has a purple background, so can use non-theme text color -->
@@ -209,7 +209,7 @@
     </style>
 
     <!-- TextView -->
-    <style name="Widget.SeriesGuide.TextView"/>
+    <style name="Widget.SeriesGuide.TextView" />
 
     <style name="Widget.SeriesGuide.TextView.Body">
         <item name="android:lineSpacingMultiplier">1.25</item>
@@ -225,7 +225,7 @@
     </style>
 
     <!-- Action bar -->
-    <style name="Widget.SeriesGuide.ActionBar"/>
+    <style name="Widget.SeriesGuide.ActionBar" />
 
     <!-- Tabs -->
     <style name="Widget.SeriesGuide.TabLayout">
@@ -261,7 +261,7 @@
     </style>
 
     <!-- Easy layouting -->
-    <style name="DefaultPadding"/>
+    <style name="DefaultPadding" />
 
     <style name="DefaultPadding.List">
         <item name="android:paddingTop">@dimen/default_padding</item>
@@ -302,8 +302,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Page.Centered">
-    </style>
+    <style name="Page.Centered"/>
 
     <!-- Widget items -->
     <style name="WidgetTextView">
