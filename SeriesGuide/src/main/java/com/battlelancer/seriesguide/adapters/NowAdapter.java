@@ -169,25 +169,23 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public NowItem recentlyWatched(int episodeTvdbId, long timestamp, String show,
                 String episode, String poster) {
-            setCommonValues(timestamp, show, episode, poster);
-            this.episodeTvdbId = episodeTvdbId;
+            setCommonValues(episodeTvdbId, timestamp, show, episode, poster);
             this.type = ViewType.DEFAULT;
             return this;
         }
 
         public NowItem recentlyWatchedTrakt(Integer episodeTvdbId, Integer showTvdbId,
-                long timestamp, String show, String episode, String poster) {
-            setCommonValues(timestamp, show, episode, poster);
-            this.episodeTvdbId = episodeTvdbId;
+                long timestamp, String show, String episode, String poster, String action) {
+            setCommonValues(episodeTvdbId, timestamp, show, episode, poster);
             this.showTvdbId = showTvdbId;
+            this.action = action;
             this.type = ViewType.DEFAULT;
             return this;
         }
 
         public NowItem releasedToday(int episodeTvdbId, long timestamp, String show,
                 String episode, String poster) {
-            setCommonValues(timestamp, show, episode, poster);
-            this.episodeTvdbId = episodeTvdbId;
+            setCommonValues(episodeTvdbId, timestamp, show, episode, poster);
             this.type = ViewType.DEFAULT;
             return this;
         }
@@ -195,8 +193,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public NowItem friend(Integer episodeTvdbId, Integer showTvdbId, long timestamp,
                 String show, String episode, String poster, String username, String avatar,
                 String action) {
-            setCommonValues(timestamp, show, episode, poster);
-            this.episodeTvdbId = episodeTvdbId;
+            setCommonValues(episodeTvdbId, timestamp, show, episode, poster);
             this.showTvdbId = showTvdbId;
             this.username = username;
             this.avatar = avatar;
@@ -217,7 +214,9 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        private void setCommonValues(long timestamp, String show, String episode, String poster) {
+        private void setCommonValues(Integer episodeTvdbId, long timestamp, String show,
+                String episode, String poster) {
+            this.episodeTvdbId = episodeTvdbId;
             this.timestamp = timestamp;
             this.title = show;
             this.description = episode;
@@ -277,6 +276,18 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 // is a TVDb (only path then, so build URL) or no poster
                 Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
             }
+
+            // action type indicator
+            if ("watch".equals(item.action)) {
+                holder.type.setImageResource(resIdDrawableWatched);
+                holder.type.setVisibility(View.VISIBLE);
+            } else if (item.action != null) {
+                // check-in, scrobble
+                holder.type.setImageResource(resIdDrawableCheckin);
+                holder.type.setVisibility(View.VISIBLE);
+            } else {
+                holder.type.setVisibility(View.GONE);
+            }
         } else if (viewHolder instanceof HeaderViewHolder) {
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
 
@@ -327,7 +338,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public synchronized void setReleasedTodayData(List<NowItem> items) {
-        int oldCount = releasedToday ==  null ? 0 : releasedToday.size();
+        int oldCount = releasedToday == null ? 0 : releasedToday.size();
         int newCount = items == null ? 0 : items.size();
 
         releasedToday = items;
@@ -347,7 +358,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public synchronized void setFriendsRecentlyWatched(List<NowItem> items) {
-        int oldCount = friendsRecently ==  null ? 0 : friendsRecently.size();
+        int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today and recently watched (if any)
         int startPosition = (releasedToday == null ? 0 : releasedToday.size() - 1)

@@ -93,7 +93,8 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
                     entry.watched_at.getMillis(),
                     entry.show.title,
                     description,
-                    poster
+                    poster,
+                    entry.action
             );
             items.add(item);
         }
