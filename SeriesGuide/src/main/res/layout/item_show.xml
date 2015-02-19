@@ -75,7 +75,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingRight="@dimen/inline_padding"
         tools:text="Jan 8, 2009 (Thur)"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
         android:maxLines="1"
         android:ellipsize="end" />
 
@@ -91,7 +91,7 @@
         android:layout_toRightOf="@+id/showposter"
         android:text="@string/norating"
         tools:text="Tue 08:00 PM | Showtime Network"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="bottom|right" />

@@ -67,7 +67,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="8:00 PM / Showtime"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
     <TextView
         android:id="@+id/textViewActivityTimestamp"
@@ -79,6 +79,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="in 7 hours"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
 </RelativeLayout>

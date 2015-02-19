@@ -52,7 +52,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="in 9 hours"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/textViewReleasedShow"
@@ -91,7 +91,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="Showtime / 8:00 PM"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
     </RelativeLayout>
 </FrameLayout>
