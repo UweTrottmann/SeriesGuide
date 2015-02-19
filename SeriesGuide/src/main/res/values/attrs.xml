@@ -8,7 +8,7 @@
     <attr name="textColorPrimarySg" format="reference|color" />
     <attr name="textColorSecondarySg" format="reference|color" />
     <attr name="textColorSgGreen" format="reference|color" />
-    <attr name="textColorSgDim" format="reference|color" />
+    <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Colors -->
     <attr name="sgColorBackgroundDim" format="reference|color" />

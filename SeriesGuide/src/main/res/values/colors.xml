@@ -52,11 +52,14 @@
     <color name="separator_dim">#40bebebe</color>
     <color name="divider">#26ffffff</color>
     <color name="divider_inverse">#1A000000</color>
-    <color name="white">#ffffffff</color>
-    <color name="white_70">#b3ffffff</color>
 
-    <color name="black_87">#de000000</color>
-    <color name="black_54">#8a000000</color>
+    <color name="white">#ffffffff</color> <!-- primary text dark -->
+    <color name="white_70">#b3ffffff</color> <!-- secondary text dark -->
+    <color name="black_87">#de000000</color> <!-- primary text light -->
+    <color name="black_54">#8a000000</color> <!-- secondary text light -->
+    <color name="text_secondary_disabled_dark">#36ffffff</color>
+    <color name="text_secondary_disabled_light">#24000000</color>
+
     <color name="black_11">#ffe3e3e3</color>
     <color name="protection_dark">#66000000</color>
 

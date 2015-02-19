@@ -3,7 +3,7 @@
 
     <!-- Text styles -->
     <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">?attr/textColorPrimarySg</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
@@ -20,12 +20,12 @@
     </style>
 
     <style name="TextAppearance.Display3">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">56sp</item>
     </style>
 
     <style name="TextAppearance.Display1">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">34sp</item>
     </style>
 
@@ -50,7 +50,7 @@
     </style>
 
     <style name="TextAppearance.Caption">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
     </style>
 
@@ -64,7 +64,7 @@
     </style>
 
     <style name="TextAppearance.Subhead.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Subhead.Green">
@@ -80,7 +80,7 @@
     </style>
 
     <style name="TextAppearance.Body.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Body.White">
@@ -100,7 +100,7 @@
     </style>
 
     <style name="TextAppearance.Caption.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Caption.Narrow">
@@ -108,7 +108,7 @@
     </style>
 
     <style name="TextAppearance.Caption.Narrow.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Caption.Red">
@@ -160,7 +160,7 @@
         <item name="android:padding">4dp</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
