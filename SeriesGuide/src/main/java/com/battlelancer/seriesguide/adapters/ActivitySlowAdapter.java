@@ -98,13 +98,12 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                         ? R.string.action_unwatched : R.string.action_watched
         );
 
-        // number and show
-        final String number = Utils.getEpisodeNumber(context, season, episode);
-        viewHolder.show.setText(
-                number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+        // show title
+        viewHolder.show.setText(cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
-        // title
-        viewHolder.episode.setText(cursor.getString(ActivityFragment.ActivityQuery.TITLE));
+        // episode number and title
+        viewHolder.episode.setText(Utils.getNextEpisodeString(context, season, episode,
+                cursor.getString(ActivityFragment.ActivityQuery.TITLE)));
 
         // meta data: time, day and network
         StringBuilder metaText = new StringBuilder();

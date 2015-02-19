@@ -64,7 +64,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="Somewhere in the middle of the park"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <TextView
             android:id="@+id/textViewHistoryDescription"
@@ -77,7 +77,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="24x10 On a Troublesome Terribly Long Episode Name"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <ImageView
             android:id="@+id/imageViewHistoryType"

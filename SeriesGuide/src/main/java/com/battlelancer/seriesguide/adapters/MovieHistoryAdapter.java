@@ -43,7 +43,9 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
             convertView = mInflater.inflate(R.layout.item_history, parent, false);
 
             holder = new ViewHolder(convertView);
-            // no need for secondary text
+            // tweak layout for movie
+            holder.title.setTextAppearance(convertView.getContext(),
+                    R.style.TextAppearance_Subhead);
             holder.description.setVisibility(View.GONE);
 
             convertView.setTag(holder);

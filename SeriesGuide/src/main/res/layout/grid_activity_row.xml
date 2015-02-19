@@ -35,13 +35,13 @@
         android:id="@+id/textViewActivityShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/inline_padding"
         android:layout_toRightOf="@+id/imageViewActivityPoster"
         android:layout_toLeftOf="@+id/watchedBoxActivity"
+        android:paddingTop="@dimen/default_padding"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="2x08 | Defiance"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        tools:text="Defiance"
+        android:textAppearance="@style/TextAppearance.Body.Dim" />
 
     <TextView
         android:id="@+id/textViewActivityEpisode"
@@ -50,11 +50,11 @@
         android:layout_below="@id/textViewActivityShow"
         android:layout_toRightOf="@+id/imageViewActivityPoster"
         android:layout_toLeftOf="@+id/watchedBoxActivity"
-        android:layout_marginTop="@dimen/inline_padding"
+        android:paddingTop="@dimen/inline_padding"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/no_nextepisode"
-        tools:text="Somewhere in the middle of the park"
+        tools:text="2x08 Somewhere in the middle of the park"
         android:textAppearance="@style/TextAppearance.Subhead" />
 
     <TextView
@@ -62,13 +62,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewActivityEpisode"
-        android:layout_marginTop="2dp"
         android:layout_toRightOf="@+id/imageViewActivityPoster"
         android:layout_toLeftOf="@+id/watchedBoxActivity"
+        android:paddingTop="@dimen/inline_padding"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="@string/norating"
         tools:text="8:00 PM | Aug 17\nShowtime"
-        android:textAppearance="@style/TextAppearance.Body.Dim" />
+        android:textAppearance="@style/TextAppearance.Caption" />
 
 </RelativeLayout>
