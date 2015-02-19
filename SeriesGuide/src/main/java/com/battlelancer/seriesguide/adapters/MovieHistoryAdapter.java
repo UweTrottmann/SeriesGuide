@@ -46,6 +46,7 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
             // tweak layout for movie
             holder.title.setTextAppearance(convertView.getContext(),
                     R.style.TextAppearance_Subhead);
+            holder.title.setMaxLines(2);
             holder.description.setVisibility(View.GONE);
 
             convertView.setTag(holder);
