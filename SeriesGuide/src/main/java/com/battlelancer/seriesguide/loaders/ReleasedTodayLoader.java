@@ -54,13 +54,11 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
                         Episodes.TITLE,
                         Episodes.NUMBER,
                         Episodes.SEASON,
-                        Episodes.FIRSTAIREDMS,
-                        Episodes.WATCHED, // 5
-                        Episodes.COLLECTED,
+                        Episodes.FIRSTAIREDMS, // 4
                         Shows.REF_SHOW_ID,
                         Shows.TITLE,
                         Shows.NETWORK,
-                        Shows.POSTER // 10
+                        Shows.POSTER // 8
                 }, Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS + "<? AND "
                         + Shows.SELECTION_NO_HIDDEN,
                 new String[] {
@@ -80,14 +78,18 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
 
             // add items
             while (query.moveToNext()) {
-                NowAdapter.NowItem item = new NowAdapter.NowItem().releasedToday(
-                        query.getInt(0),
-                        query.getLong(4),
-                        query.getString(8),
-                        Utils.getNextEpisodeString(getContext(), query.getInt(3), query.getInt(2),
-                                query.getString(1)),
-                        query.getString(10)
-                );
+                NowAdapter.NowItem item = new NowAdapter.NowItem()
+                        .displayData(
+                                query.getLong(4),
+                                query.getString(6),
+                                Utils.getNextEpisodeString(getContext(), query.getInt(3),
+                                        query.getInt(2),
+                                        query.getString(1)),
+                                query.getString(8)
+                        )
+                        .tvdbIds(query.getInt(0), query.getInt(5))
+                        .releasedToday(query.getString(7));
+
                 items.add(item);
             }
 

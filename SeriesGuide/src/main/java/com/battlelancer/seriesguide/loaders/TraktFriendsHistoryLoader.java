@@ -105,18 +105,17 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                     ? null : entry.show.images.poster.thumb;
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
-            NowAdapter.NowItem nowItem = new NowAdapter.NowItem().friend(
-                    entry.episode.ids == null ? null : entry.episode.ids.tvdb,
-                    entry.show.ids == null ? null : entry.show.ids.tvdb,
-                    entry.watched_at.getMillis(),
-                    entry.show.title,
-                    Utils.getNextEpisodeString(getContext(), entry.episode.season,
-                            entry.episode.number, entry.episode.title),
-                    poster,
-                    friend.user.username,
-                    avatar,
-                    entry.action
-            );
+            NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
+                    displayData(
+                            entry.watched_at.getMillis(),
+                            entry.show.title,
+                            Utils.getNextEpisodeString(getContext(), entry.episode.season,
+                                    entry.episode.number, entry.episode.title),
+                            poster
+                    )
+                    .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb,
+                            entry.show.ids == null ? null : entry.show.ids.tvdb)
+                    .friend(friend.user.username, avatar, entry.action);
             items.add(nowItem);
         }
 

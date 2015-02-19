@@ -26,7 +26,6 @@
 
     <!-- Add FrameLayout parent so we can set selectable foreground. -->
     <RelativeLayout
-        android:id="@+id/friend_root"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         tools:ignore="UselessParent">
@@ -37,7 +36,7 @@
             android:layout_height="100dp"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             tools:src="@color/protection_dark" />
 
         <TextView
