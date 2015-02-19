@@ -63,7 +63,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:paddingBottom="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        android:textAppearance="@style/TextAppearance.Caption"
         tools:text="Tue 08:00 PM | Showtime Network" />
 
     <TextView
@@ -88,7 +88,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:paddingBottom="@dimen/item_padding"
-        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        android:textAppearance="@style/TextAppearance.Caption"
         tools:text="Jan 8, 2009 (Thu)" />
 
 </RelativeLayout>

@@ -52,7 +52,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="11 hours ago"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption" />
 
         <TextView
             android:id="@+id/textViewHistoryTitle"
