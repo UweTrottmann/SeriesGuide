@@ -34,6 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -277,6 +278,12 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         if (titleResId != 0) {
             snackbarText.setText(titleResId);
         }
+        if (snackbar.getVisibility() == (show ? View.VISIBLE : View.GONE)) {
+            // already in desired state, avoid replaying animation
+            return;
+        }
+        snackbar.startAnimation(AnimationUtils.loadAnimation(snackbar.getContext(),
+                show ? R.anim.fade_in : R.anim.fade_out));
         snackbar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
