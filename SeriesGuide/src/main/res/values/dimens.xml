@@ -30,9 +30,11 @@
     <dimen name="widget_text_large">13sp</dimen>
 
     <dimen name="showgrid_columnWidth">275dp</dimen>
-    <!-- Our card drawable has 3dp bottom padding, so use smaller vertical spacing -->
-    <dimen name="grid_vertical_spacing">5dp</dimen>
-    <dimen name="grid_horizontal_spacing">8dp</dimen>
+    <!-- CardView adds padding on pre-v21 to draw shadows, reduce grid spacing accordingly -->
+    <dimen name="grid_topbottom_padding">5dp</dimen>
+    <dimen name="grid_leftright_padding">6dp</dimen>
+    <dimen name="grid_vertical_spacing">3dp</dimen>
+    <dimen name="grid_horizontal_spacing">4dp</dimen>
 
     <dimen name="show_poster_width">68dp</dimen>
     <dimen name="show_poster_height">100dp</dimen>
