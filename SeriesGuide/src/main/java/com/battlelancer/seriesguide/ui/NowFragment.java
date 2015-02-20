@@ -63,6 +63,9 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @InjectView(R.id.emptyViewNow) TextView emptyView;
 
     private NowAdapter adapter;
+    private boolean isLoadingReleasedToday;
+    private boolean isLoadingRecentlyWatched;
+    private boolean isLoadingFriends;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,6 +129,9 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         // if connected to trakt, replace local history with trakt history, show friends history
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
+            isLoadingRecentlyWatched = true;
+            isLoadingFriends = true;
+            showProgressBar(true);
             getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyCallbacks);
             getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
@@ -146,8 +152,10 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
          * So we can restart them if they already exist to ensure up to date data (the loaders do
          * not react to database changes themselves) and avoid loading data twice in a row.
          */
+        isLoadingReleasedToday = true;
         initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
         if (!TraktCredentials.get(getActivity()).hasCredentials()) {
+            isLoadingRecentlyWatched = true;
             initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyCallbacks);
         }
     }
@@ -200,16 +208,19 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private void refreshStream() {
         showProgressBar(true);
+        isLoadingReleasedToday = true;
         getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
         // if connected to trakt, replace local history with trakt history, show friends history
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
+        isLoadingRecentlyWatched = true;
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
 
             getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyCallbacks);
+            isLoadingFriends = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
@@ -244,10 +255,16 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     /**
      * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
-     * wrapping the stream view.
+     * wrapping view.
      */
-    protected void showProgressBar(boolean isShowing) {
-        swipeRefreshLayout.setRefreshing(isShowing);
+    protected void showProgressBar(boolean show) {
+        // only hide if everybody has finished loading
+        if (!show) {
+            if (isLoadingReleasedToday || isLoadingRecentlyWatched || isLoadingFriends) {
+                return;
+            }
+        }
+        swipeRefreshLayout.setRefreshing(show);
     }
 
     private void updateEmptyState() {
@@ -264,6 +281,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         // however, if connected to trakt do not show local history
         if (event.mType instanceof EpisodeTools.EpisodeWatchedType
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
+            isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyCallbacks);
         }
@@ -321,6 +339,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 return;
             }
             adapter.setReleasedTodayData(data);
+            isLoadingReleasedToday = false;
             showProgressBar(false);
         }
 
@@ -349,6 +368,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 return;
             }
             adapter.setRecentlyWatched(data);
+            isLoadingRecentlyWatched = false;
             showProgressBar(false);
         }
 
@@ -372,6 +392,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 return;
             }
             adapter.setFriendsRecentlyWatched(data);
+            isLoadingFriends = false;
             showProgressBar(false);
         }
 
