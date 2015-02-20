@@ -98,30 +98,32 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                         ? R.string.action_unwatched : R.string.action_watched
         );
 
-        // number and show
-        final String number = Utils.getEpisodeNumber(context, season, episode);
-        viewHolder.show.setText(
-                number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+        // show title
+        viewHolder.show.setText(cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
-        // title
-        viewHolder.episode.setText(cursor.getString(ActivityFragment.ActivityQuery.TITLE));
+        // episode number and title
+        viewHolder.episode.setText(Utils.getNextEpisodeString(context, season, episode,
+                cursor.getString(ActivityFragment.ActivityQuery.TITLE)));
 
-        // meta data: time, day and network
-        StringBuilder metaText = new StringBuilder();
-        long releaseTime = cursor.getLong(
-                ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
+        // timestamp, absolute time and network
+        StringBuilder releaseInfo = new StringBuilder();
+        long releaseTime = cursor.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
-            // 10:00 | in 3 days, 10:00 PM | 23 Jul
-            metaText.append(TimeTools.formatToLocalTime(context, actualRelease));
-            metaText.append(" | ")
-                    .append(TimeTools.formatToLocalRelativeTime(context, actualRelease));
+            // timestamp
+            viewHolder.timestamp.setText(
+                    TimeTools.formatToLocalRelativeTime(context, actualRelease));
+
+            // "10:00 PM / Network", as left aligned, exactly mirrored from show list
+            releaseInfo.append(TimeTools.formatToLocalTime(context, actualRelease));
+        } else {
+            viewHolder.timestamp.setText(null);
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
-            metaText.append("\n").append(network);
+            releaseInfo.append(" / ").append(network);
         }
-        viewHolder.meta.setText(metaText);
+        viewHolder.info.setText(releaseInfo);
 
         // collected indicator
         boolean isCollected = EpisodeTools.isCollected(
@@ -259,15 +261,11 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     static class ViewHolder {
 
         public TextView show;
-
         public TextView episode;
-
         public View collected;
-
         public WatchedBox watchedBox;
-
-        public TextView meta;
-
+        public TextView info;
+        public TextView timestamp;
         public ImageView poster;
 
         public ViewHolder(View v) {
@@ -275,7 +273,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
             episode = (TextView) v.findViewById(R.id.textViewActivityEpisode);
             collected = v.findViewById(R.id.imageViewActivityCollected);
             watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxActivity);
-            meta = (TextView) v.findViewById(R.id.textViewActivityMeta);
+            info = (TextView) v.findViewById(R.id.textViewActivityInfo);
+            timestamp = (TextView) v.findViewById(R.id.textViewActivityTimestamp);
             poster = (ImageView) v.findViewById(R.id.imageViewActivityPoster);
         }
     }

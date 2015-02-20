@@ -65,14 +65,11 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
                                     + SeriesGuideContract.Episodes._ID, // 0
                             SeriesGuideContract.Episodes.TITLE,
                             SeriesGuideContract.Episodes.NUMBER,
-                            SeriesGuideContract.Episodes.SEASON,
+                            SeriesGuideContract.Episodes.SEASON, // 3
                             SeriesGuideContract.Episodes.FIRSTAIREDMS,
-                            SeriesGuideContract.Episodes.WATCHED, // 5
-                            SeriesGuideContract.Episodes.COLLECTED,
                             SeriesGuideContract.Shows.REF_SHOW_ID,
                             SeriesGuideContract.Shows.TITLE,
-                            SeriesGuideContract.Shows.NETWORK,
-                            SeriesGuideContract.Shows.POSTER // 10
+                            SeriesGuideContract.Shows.POSTER // 7
                     }, null, null, null);
             if (episodeQuery == null) {
                 continue;
@@ -86,14 +83,13 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
 
             // add items
             if (episodeQuery.moveToFirst()) {
-                NowAdapter.NowItem item = new NowAdapter.NowItem().recentlyWatched(
-                        episodeTvdbId,
+                NowAdapter.NowItem item = new NowAdapter.NowItem().displayData(
                         timestamp,
-                        episodeQuery.getString(8),
+                        episodeQuery.getString(6),
                         Utils.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
                                 episodeQuery.getInt(2), episodeQuery.getString(1)),
-                        episodeQuery.getString(10)
-                );
+                        episodeQuery.getString(7)
+                ).tvdbIds(episodeTvdbId, episodeQuery.getInt(5)).recentlyWatchedLocal();
                 items.add(item);
             }
 

@@ -26,7 +26,6 @@
 
     <!-- Add FrameLayout parent so we can set selectable foreground. -->
     <RelativeLayout
-        android:id="@+id/friend_root"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         tools:ignore="UselessParent">
@@ -37,7 +36,7 @@
             android:layout_height="100dp"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             tools:src="@color/protection_dark" />
 
         <TextView
@@ -53,7 +52,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="11 hours ago"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <ImageView
             android:id="@+id/imageViewFriendAvatar"
@@ -77,7 +76,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="sgtest"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/textViewFriendShow"
@@ -89,7 +88,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="Somewhere in the middle of the park"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <TextView
             android:id="@+id/textViewFriendEpisode"
@@ -102,7 +101,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="24x10 On a Troublesome Terribly Long Episode Name"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <ImageView
             android:id="@+id/imageViewFriendActionType"

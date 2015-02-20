@@ -47,7 +47,7 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
         tools:text="November 13, 2013" />
 
 </RelativeLayout>

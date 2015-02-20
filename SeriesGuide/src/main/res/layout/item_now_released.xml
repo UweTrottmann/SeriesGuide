@@ -31,7 +31,7 @@
         tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/imageViewHistoryPoster"
+            android:id="@+id/imageViewReleasedPoster"
             android:layout_width="@dimen/show_poster_small_width"
             android:layout_height="@dimen/show_poster_small_height"
             android:layout_marginRight="@dimen/default_padding"
@@ -40,7 +40,7 @@
             tools:src="@color/protection_dark" />
 
         <TextView
-            android:id="@+id/textViewHistoryTimestamp"
+            android:id="@+id/textViewReleasedTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="120dp"
@@ -51,45 +51,47 @@
             android:gravity="end"
             android:ellipsize="end"
             android:maxLines="1"
-            tools:text="11 hours ago"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            tools:text="in 9 hours"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
-            android:id="@+id/textViewHistoryTitle"
+            android:id="@+id/textViewReleasedShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textViewHistoryTimestamp"
-            android:layout_toRightOf="@+id/imageViewHistoryPoster"
+            android:layout_toLeftOf="@+id/textViewReleasedTimestamp"
+            android:layout_toRightOf="@+id/imageViewReleasedPoster"
             android:paddingTop="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="Somewhere in the middle of the park"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <TextView
-            android:id="@+id/textViewHistoryDescription"
+            android:id="@+id/textViewReleasedEpisode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewHistoryTitle"
-            android:layout_toRightOf="@+id/imageViewHistoryPoster"
+            android:layout_below="@+id/textViewReleasedShow"
+            android:layout_toRightOf="@+id/imageViewReleasedPoster"
             android:paddingTop="@dimen/inline_padding"
             android:paddingRight="@dimen/default_padding"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             tools:text="24x10 On a Troublesome Terribly Long Episode Name"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
-        <ImageView
-            android:id="@+id/imageViewHistoryType"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:src="?attr/drawableWatch"
-            android:paddingLeft="@dimen/default_padding"
+        <TextView
+            android:id="@+id/textViewReleasedInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewReleasedEpisode"
+            android:layout_toRightOf="@+id/imageViewReleasedPoster"
             android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:paddingBottom="@dimen/inline_padding" />
+            android:paddingTop="@dimen/inline_padding"
+            android:ellipsize="end"
+            android:maxLines="2"
+            tools:text="Showtime / 8:00 PM"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
     </RelativeLayout>
 </FrameLayout>
