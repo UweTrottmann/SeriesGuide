@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -61,6 +63,9 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
     @InjectView(R.id.emptyViewNow) TextView emptyView;
+    @InjectView(R.id.containerSnackbar) View snackbar;
+    @InjectView(R.id.textViewSnackbar) TextView snackbarText;
+    @InjectView(R.id.buttonSnackbar) Button snackbarButton;
 
     private NowAdapter adapter;
     private boolean isLoadingReleasedToday;
@@ -79,6 +84,15 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
+
+        showError(false, 0);
+        snackbarButton.setText(R.string.refresh);
+        snackbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshStream();
+            }
+        });
 
         return v;
     }
@@ -133,7 +147,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             isLoadingFriends = true;
             showProgressBar(true);
             getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
-                    recentlyCallbacks);
+                    recentlyTraktCallbacks);
             getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         }
@@ -156,7 +170,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
         if (!TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
-            initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyCallbacks);
+            initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyLocalCallbacks);
         }
     }
 
@@ -208,9 +222,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private void refreshStream() {
         showProgressBar(true);
+        showError(false, 0);
+
+        // load released today
         isLoadingReleasedToday = true;
         getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
                 releasedTodayCallbacks);
+
         // if connected to trakt, replace local history with trakt history, show friends history
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
@@ -219,16 +237,18 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
 
             getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
-                    recentlyCallbacks);
+                    recentlyTraktCallbacks);
             isLoadingFriends = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
+            // destroy trakt loaders and remove any shown error message
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_USER_LOADER_ID);
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
+            showError(false, 0);
 
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyCallbacks);
+                    recentlyLocalCallbacks);
         }
     }
 
@@ -253,11 +273,18 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         );
     }
 
+    private void showError(boolean show, @StringRes int titleResId) {
+        if (titleResId != 0) {
+            snackbarText.setText(titleResId);
+        }
+        snackbar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     /**
      * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
      * wrapping view.
      */
-    protected void showProgressBar(boolean show) {
+    private void showProgressBar(boolean show) {
         // only hide if everybody has finished loading
         if (!show) {
             if (isLoadingReleasedToday || isLoadingRecentlyWatched || isLoadingFriends) {
@@ -283,7 +310,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyCallbacks);
+                    recentlyLocalCallbacks);
         }
     }
 
@@ -349,16 +376,11 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         }
     };
 
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyCallbacks
+    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyLocalCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            if (id == ShowsActivity.NOW_RECENTLY_LOADER_ID) {
-                return new RecentlyWatchedLoader(getActivity());
-            } else if (id == ShowsActivity.NOW_TRAKT_USER_LOADER_ID) {
-                return new TraktUserHistoryLoader(getActivity());
-            }
-            return null;
+            return new RecentlyWatchedLoader(getActivity());
         }
 
         @Override
@@ -374,6 +396,31 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         @Override
         public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+            // do nothing
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<TraktUserHistoryLoader.Result> recentlyTraktCallbacks
+            = new LoaderManager.LoaderCallbacks<TraktUserHistoryLoader.Result>() {
+        @Override
+        public Loader<TraktUserHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new TraktUserHistoryLoader(getActivity());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<TraktUserHistoryLoader.Result> loader,
+                TraktUserHistoryLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
+            adapter.setRecentlyWatched(data.items);
+            isLoadingRecentlyWatched = false;
+            showProgressBar(false);
+            showError(data.errorTextResId != 0, data.errorTextResId);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<TraktUserHistoryLoader.Result> loader) {
             // do nothing
         }
     };

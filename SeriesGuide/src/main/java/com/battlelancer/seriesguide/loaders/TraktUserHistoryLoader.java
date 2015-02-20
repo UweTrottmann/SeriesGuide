@@ -17,12 +17,14 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
@@ -30,13 +32,24 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
  * Loads last 24 hours of trakt watched episodes, or at least one older episode.
  */
-public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistoryLoader.Result> {
+
+    public static class Result {
+        public List<NowAdapter.NowItem> items;
+        public @StringRes int errorTextResId;
+
+        public Result(List<NowAdapter.NowItem> items, @StringRes int errorTextResId) {
+            this.items = items;
+            this.errorTextResId = errorTextResId;
+        }
+    }
 
     public static final int MAX_HISTORY_SIZE = 25;
 
@@ -45,10 +58,11 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
     }
 
     @Override
-    public List<NowAdapter.NowItem> loadInBackground() {
+    @Nonnull
+    public Result loadInBackground() {
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
         if (trakt == null) {
-            return null;
+            return buildResultFailure(R.string.trakt_error_credentials);
         }
 
         List<HistoryEntry> history;
@@ -56,18 +70,25 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
             history = trakt.users().historyEpisodes("me", 1, MAX_HISTORY_SIZE, Extended.IMAGES);
         } catch (RetrofitError e) {
             Timber.e(e, "Loading user episode history failed");
-            return null;
+            return buildResultFailure(
+                    AndroidUtils.isNetworkConnected(getContext()) ? R.string.trakt_error_general
+                            : R.string.offline);
         } catch (OAuthUnauthorizedException e) {
             TraktCredentials.get(getContext()).setCredentialsInvalid();
-            return null;
+            return buildResultFailure(R.string.trakt_error_credentials);
         }
 
         if (history == null || history.isEmpty()) {
-            return null;
+            return buildResultFailure(R.string.trakt_error_general);
         }
 
-        long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
+        // add header
         List<NowAdapter.NowItem> items = new LinkedList<>();
+        items.add(new NowAdapter.NowItem().header(
+                getContext().getString(R.string.recently_watched)));
+
+        // add episodes
+        long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
         for (HistoryEntry entry : history) {
             if (entry.episode == null || entry.episode.ids == null || entry.episode.ids.tvdb == null
                     || entry.show == null || entry.watched_at == null) {
@@ -77,7 +98,7 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
 
             // only include episodes watched in the last 24 hours
             // however, include at least one older episode if there are none, yet
-            if (entry.watched_at.isBefore(timeDayAgo) && items.size() > 0) {
+            if (entry.watched_at.isBefore(timeDayAgo) && items.size() > 1) {
                 break;
             }
 
@@ -100,14 +121,14 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<List<NowAdapter.
             items.add(item);
         }
 
-        // add header and link to more history
-        if (items.size() > 0) {
-            items.add(0, new NowAdapter.NowItem().header(
-                    getContext().getString(R.string.recently_watched)));
-            items.add(new NowAdapter.NowItem().moreLink(
-                    getContext().getString(R.string.more_history_link)));
-        }
+        // add link to more history
+        items.add(new NowAdapter.NowItem().moreLink(
+                getContext().getString(R.string.more_history_link)));
 
-        return items;
+        return new Result(items, 0);
+    }
+
+    private static Result buildResultFailure(int emptyTextResId) {
+        return new Result(null, emptyTextResId);
     }
 }

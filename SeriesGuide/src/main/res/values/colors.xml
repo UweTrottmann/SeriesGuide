@@ -46,6 +46,7 @@
     <color name="disabled">#80333333</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
+    <color name="snackbar">#323232</color>
     <color name="widget_default_background">#80000000</color>
     <color name="widget_default_background_light">#80ffffff</color>
     <color name="black_overlay">#aa000000</color>
