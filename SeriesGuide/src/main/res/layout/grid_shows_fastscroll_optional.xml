@@ -24,11 +24,12 @@
     android:clipToPadding="@bool/gridClipToPadding"
     android:paddingTop="@dimen/grid_topbottom_padding"
     android:paddingBottom="@dimen/grid_topbottom_padding"
-    android:paddingRight="@dimen/grid_leftright_padding"
     android:paddingLeft="@dimen/grid_leftright_padding"
+    android:paddingRight="@dimen/grid_leftright_padding"
     android:columnWidth="@dimen/showgrid_columnWidth"
     android:numColumns="auto_fit"
     android:stretchMode="columnWidth"
     android:horizontalSpacing="@dimen/grid_horizontal_spacing"
     android:verticalSpacing="@dimen/grid_vertical_spacing"
-    android:fastScrollEnabled="true" />
+    android:fastScrollEnabled="true"
+    android:scrollbarStyle="outsideOverlay" />
