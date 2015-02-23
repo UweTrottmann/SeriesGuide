@@ -255,10 +255,26 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- Grid view selector -->
-    <style name="Widget.SeriesGuide.GridSelectorTop">
+    <!-- Grid views with cards -->
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
+    <style name="Widget.SeriesGuide.CardGrid">
         <item name="android:listSelector">?attr/selectableItemBackground</item>
         <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>
+        <item name="android:paddingBottom">@dimen/grid_topbottom_padding</item>
+        <item name="android:paddingLeft">@dimen/grid_leftright_padding</item>
+        <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
+        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.CardGrid.FastScroll">
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:fastScrollAlwaysVisible">true</item>
+        <item name="android:scrollbarStyle">outsideInset</item>
     </style>
 
     <!-- Easy layouting -->

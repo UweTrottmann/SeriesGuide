@@ -30,7 +30,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/editTextAddTvdbSearch">
 
-        <include layout="@layout/grid_shows" />
+        <GridView
+            android:id="@+android:id/list"
+            style="@style/Widget.SeriesGuide.CardGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="@dimen/showgrid_columnWidth"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth" />
 
         <TextView
             android:id="@+id/emptyViewAdd"

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/grid_shows" />
+        <include layout="@layout/grid_shows_fastscroll_optional" />
 
         <TextView
             android:id="@+id/emptyViewAdd"

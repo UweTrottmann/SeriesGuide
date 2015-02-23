@@ -15,6 +15,6 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
-    <include layout="@layout/grid_shows_nofastscroll" />
+    <include layout="@layout/grid_shows_fastscroll_optional" />
 
 </FrameLayout>

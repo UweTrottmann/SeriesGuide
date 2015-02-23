@@ -1,84 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/drawableCardBackground">
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false">
 
-    <ImageView
-        android:id="@+id/imageViewActivityPoster"
-        android:layout_width="@dimen/show_poster_small_width"
-        android:layout_height="@dimen/show_poster_small_height"
-        android:layout_marginRight="@dimen/default_padding"
-        android:contentDescription="@string/description_poster"
-        android:scaleType="centerInside" />
-
-    <com.battlelancer.seriesguide.widgets.WatchedBox
-        android:id="@+id/watchedBoxActivity"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="26dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="centerInside" />
-
-    <ImageView
-        android:id="@+id/imageViewActivityCollected"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_below="@+id/watchedBoxActivity"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
-        android:src="@drawable/ic_collected" />
-
-    <TextView
-        android:id="@+id/textViewActivityShow"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageViewActivityPoster"
-        android:layout_toLeftOf="@+id/watchedBoxActivity"
-        android:paddingTop="@dimen/default_padding"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="Defiance"
-        android:textAppearance="@style/TextAppearance.Body.Dim" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textViewActivityEpisode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewActivityShow"
-        android:layout_toRightOf="@+id/imageViewActivityPoster"
-        android:layout_toLeftOf="@+id/watchedBoxActivity"
-        android:paddingTop="@dimen/inline_padding"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="2x08 Somewhere in the middle of the park"
-        android:textAppearance="@style/TextAppearance.Subhead" />
+        <ImageView
+            android:id="@+id/imageViewActivityPoster"
+            android:layout_width="@dimen/show_poster_small_width"
+            android:layout_height="@dimen/show_poster_small_height"
+            android:layout_marginRight="@dimen/default_padding"
+            android:contentDescription="@string/description_poster"
+            android:scaleType="centerInside" />
 
-    <TextView
-        android:id="@+id/textViewActivityInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewActivityEpisode"
-        android:layout_toRightOf="@+id/imageViewActivityPoster"
-        android:layout_toLeftOf="@+id/watchedBoxActivity"
-        android:paddingTop="@dimen/inline_padding"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="8:00 PM / Showtime"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        <com.battlelancer.seriesguide.widgets.WatchedBox
+            android:id="@+id/watchedBoxActivity"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="26dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside" />
 
-    <TextView
-        android:id="@+id/textViewActivityTimestamp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewActivityInfo"
-        android:layout_toRightOf="@+id/imageViewActivityPoster"
-        android:layout_toLeftOf="@+id/watchedBoxActivity"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="in 7 hours"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        <ImageView
+            android:id="@+id/imageViewActivityCollected"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_below="@+id/watchedBoxActivity"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_collected" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewActivityShow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
+            android:paddingTop="@dimen/default_padding"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Defiance"
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
+
+        <TextView
+            android:id="@+id/textViewActivityEpisode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewActivityShow"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
+            android:paddingTop="@dimen/inline_padding"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="2x08 Somewhere in the middle of the park"
+            android:textAppearance="@style/TextAppearance.Subhead" />
+
+        <TextView
+            android:id="@+id/textViewActivityInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewActivityEpisode"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
+            android:paddingTop="@dimen/inline_padding"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="8:00 PM / Showtime"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+
+        <TextView
+            android:id="@+id/textViewActivityTimestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewActivityInfo"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
+            android:layout_toLeftOf="@+id/watchedBoxActivity"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="in 7 hours"
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

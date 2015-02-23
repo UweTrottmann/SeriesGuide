@@ -214,11 +214,11 @@ public abstract class AddFragment extends Fragment {
             public View addedIndicator;
 
             public ViewHolder(View view) {
-                title = (TextView) view.findViewById(R.id.title);
-                description = (TextView) view.findViewById(R.id.description);
-                poster = (ImageView) view.findViewById(R.id.poster);
-                addbutton = view.findViewById(R.id.addbutton);
-                addedIndicator = view.findViewById(R.id.itemAddedIndicator);
+                title = (TextView) view.findViewById(R.id.textViewAddTitle);
+                description = (TextView) view.findViewById(R.id.textViewAddDescription);
+                poster = (ImageView) view.findViewById(R.id.imageViewAddPoster);
+                addbutton = view.findViewById(R.id.viewAddButton);
+                addedIndicator = view.findViewById(R.id.imageViewAddedIndicator);
             }
         }
     }

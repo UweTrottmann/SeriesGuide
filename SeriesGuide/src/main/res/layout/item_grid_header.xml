@@ -22,7 +22,7 @@
     android:paddingLeft="@dimen/default_padding"
     android:paddingRight="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding"
-    android:paddingBottom="@dimen/inline_padding"
+    android:paddingBottom="0dp"
     tools:text="Recently Watched"
     android:textAppearance="@style/TextAppearance.Body.Bold"
     android:textColor="?attr/textColorSecondarySg" />

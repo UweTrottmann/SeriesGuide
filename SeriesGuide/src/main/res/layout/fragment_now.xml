@@ -51,7 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="@dimen/default_padding" />
+                android:paddingTop="@dimen/default_padding"
+                android:paddingBottom="@dimen/grid_topbottom_padding"
+                android:paddingLeft="@dimen/grid_leftright_padding"
+                android:paddingRight="@dimen/grid_leftright_padding" />
 
         </FrameLayout>
 

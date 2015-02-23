@@ -11,6 +11,7 @@
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Colors -->
+    <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />

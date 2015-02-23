@@ -13,6 +13,13 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
-    <include layout="@layout/grid_movies" />
+    <GridView
+        android:id="@+id/gridViewMovies"
+        style="@style/Widget.SeriesGuide.CardGrid.FastScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/movie_item_width"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
 
 </RelativeLayout>

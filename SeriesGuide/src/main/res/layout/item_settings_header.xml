@@ -18,7 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
+    android:minHeight="56dp"
     android:paddingLeft="@dimen/keyline"
     android:paddingRight="@dimen/keyline"
     android:orientation="vertical"

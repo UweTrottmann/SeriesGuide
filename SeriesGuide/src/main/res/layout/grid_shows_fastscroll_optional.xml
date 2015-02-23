@@ -18,17 +18,10 @@
 
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+android:id/list"
-    style="@style/Widget.SeriesGuide.GridSelectorTop"
+    style="@style/Widget.SeriesGuide.CardGrid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="@bool/gridClipToPadding"
     android:columnWidth="@dimen/showgrid_columnWidth"
-    android:horizontalSpacing="@dimen/grid_horizontal_spacing"
     android:numColumns="auto_fit"
-    android:paddingTop="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:paddingBottom="@dimen/default_padding"
-    android:paddingLeft="@dimen/default_padding"
-    android:fastScrollEnabled="true"
     android:stretchMode="columnWidth"
-    android:verticalSpacing="@dimen/grid_vertical_spacing" />
+    android:fastScrollEnabled="true" />
