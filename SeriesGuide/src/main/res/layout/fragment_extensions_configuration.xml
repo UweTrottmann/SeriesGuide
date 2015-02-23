@@ -25,6 +25,7 @@
         android:id="@+id/listViewExtensionsConfiguration"
         style="@style/Page.Centered"
         android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
         android:drawSelectorOnTop="true"
         app:use_default_controller="false"
         app:sort_enabled="true"

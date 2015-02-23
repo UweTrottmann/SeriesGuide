@@ -23,8 +23,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/drawableCardBackground">
+        android:layout_height="wrap_content"
+        android:minHeight="72dp">
 
         <ImageView
             android:id="@+id/imageViewItemExtensionIcon"
@@ -33,17 +33,18 @@
             android:layout_marginLeft="26dp"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_centerVertical="true"
             tools:src="@drawable/ic_launcher" />
 
         <ImageView
             android:id="@+id/imageViewItemExtensionSettings"
             android:layout_width="48dp"
-            android:layout_height="42dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:paddingTop="@dimen/default_padding"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingBottom="@dimen/default_padding"
+            android:layout_centerVertical="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingLeft="@dimen/large_padding"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="?attr/drawableDropdown" />
 
@@ -53,9 +54,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:layout_marginTop="@dimen/default_padding"
             android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
             android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
+            android:paddingTop="20dp"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Sample Extension" />
 
@@ -66,8 +67,10 @@
             android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
             android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
             android:layout_below="@+id/textViewItemExtensionTitle"
-            android:paddingBottom="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Body"
+            android:paddingBottom="20dp"
+            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:maxLines="2"
+            android:ellipsize="end"
             tools:text="Displays some important information about episodes" />
 
     </RelativeLayout>
