@@ -61,7 +61,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.entities.Trailers;
+import com.uwetrottmann.tmdb.entities.Videos;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
 
@@ -91,7 +91,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private MovieDetails mMovieDetails = new MovieDetails();
 
-    private Trailers mTrailers;
+    private Videos.Video mTrailer;
 
     private String mImageBaseUrl;
 
@@ -271,7 +271,7 @@ public class MovieDetailsFragment extends Fragment {
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
 
-            boolean isEnableYoutube = mTrailers != null && mTrailers.youtube.size() > 0;
+            boolean isEnableYoutube = mTrailer != null;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
             youtubeItem.setVisible(isEnableYoutube);
@@ -291,8 +291,7 @@ public class MovieDetailsFragment extends Fragment {
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            ServiceUtils.openYoutube(mTrailers.youtube.get(0).source, TAG,
-                    getActivity());
+            ServiceUtils.openYoutube(mTrailer.key, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_google_play) {
@@ -576,26 +575,26 @@ public class MovieDetailsFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Trailers> mMovieTrailerLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Trailers>() {
+    private LoaderManager.LoaderCallbacks<Videos.Video> mMovieTrailerLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
-        public Loader<Trailers> onCreateLoader(int loaderId, Bundle args) {
+        public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
             return new MovieTrailersLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
-        public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
+        public void onLoadFinished(Loader<Videos.Video> trailersLoader, Videos.Video trailer) {
             if (!isAdded()) {
                 return;
             }
-            if (trailers != null) {
-                mTrailers = trailers;
+            if (trailer != null) {
+                mTrailer = trailer;
                 getActivity().invalidateOptionsMenu();
             }
         }
 
         @Override
-        public void onLoaderReset(Loader<Trailers> trailersLoader) {
+        public void onLoaderReset(Loader<Videos.Video> trailersLoader) {
             // do nothing
         }
     };

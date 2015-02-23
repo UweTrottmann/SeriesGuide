@@ -17,17 +17,20 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.text.TextUtils;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.entities.Trailers;
+import com.uwetrottmann.tmdb.entities.Videos;
 import com.uwetrottmann.tmdb.services.MoviesService;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
- * Loads a list of movie trailers from TMDb.
+ * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
+ * English.
  */
-public class MovieTrailersLoader extends GenericSimpleLoader<Trailers> {
+public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
     private int mTmdbId;
 
@@ -37,12 +40,38 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Trailers> {
     }
 
     @Override
-    public Trailers loadInBackground() {
+    public Videos.Video loadInBackground() {
+        MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
+
+        Videos videos;
         try {
-            MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
-            return movieService.trailers(mTmdbId);
+            // try local trailer first
+            videos = movieService.videos(mTmdbId, DisplaySettings.getContentLanguage(getContext()));
+            Videos.Video trailer = extractTrailer(videos);
+            if (trailer != null) {
+                return trailer;
+            }
+
+            // fall back to default
+            videos = movieService.videos(mTmdbId, null);
+            return extractTrailer(videos);
         } catch (RetrofitError e) {
             Timber.e(e, "Downloading movie trailers failed");
+            return null;
+        }
+    }
+
+    private Videos.Video extractTrailer(Videos videos) {
+        if (videos == null || videos.results == null || videos.results.size() == 0) {
+            return null;
+        }
+
+        // fish out the first YouTube trailer
+        for (Videos.Video video : videos.results) {
+            if ("Trailer".equals(video.type) && "YouTube".equals(video.site)
+                    && !TextUtils.isEmpty(video.key)) {
+                return video;
+            }
         }
 
         return null;
