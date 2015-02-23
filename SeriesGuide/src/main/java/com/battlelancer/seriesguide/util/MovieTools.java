@@ -787,10 +787,10 @@ public class MovieTools {
                 MoviesService moviesService, String languageCode, int movieTmdbId) {
             try {
                 com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
-                        languageCode);
+                        languageCode, null);
                 if (movie != null && TextUtils.isEmpty(movie.overview)) {
                     // fall back to English if TMDb has no localized text
-                    movie = moviesService.summary(movieTmdbId);
+                    movie = moviesService.summary(movieTmdbId, null, null);
                 }
                 return movie;
             } catch (RetrofitError e) {
