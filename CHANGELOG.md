@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 22 *(in development)*
 -----------------------------
 
+#### 22.0.0-beta5 *(2015-02-24)*
+
+* TWEAK Use new CardView to replace old card drawables. Other design updates and fixes.
+* TWEAK Experimental change of the accent color to teal.
+* TWEAK Now tab has better error messages and feedback about loading data.
+* TWEAK Add "Web search" action to movie details menu.
+* FIX Now tab would not respect manual time offset.
+* NOTICE Latest translations from crowdin.
+
 #### 22.0.0-beta4 *(2015-02-17)*
 
 * TWEAK On Now tab, added "More history" shortcut in "Recently watched" section. Removed history tab.
