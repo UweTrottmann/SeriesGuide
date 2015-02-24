@@ -284,7 +284,7 @@ public class ShowFragment extends Fragment {
         if (mShowCursor.getInt(ShowQuery.STATUS) == 1) {
             mTextViewStatus.setTextColor(getResources().getColor(
                     Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.textColorSgGreen)));
+                            R.attr.sgTextColorGreen)));
             mTextViewStatus.setText(getString(R.string.show_isalive));
         } else {
             mTextViewStatus.setTextColor(Color.GRAY);

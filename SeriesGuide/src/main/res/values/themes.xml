@@ -54,9 +54,7 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorPrimarySg">@color/white</item>
-        <item name="textColorSecondarySg">@color/white_70</item>
-        <item name="textColorSgGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_dark</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
@@ -135,9 +133,7 @@
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Colors -->
-        <item name="textColorPrimarySg">@color/white</item>
-        <item name="textColorSecondarySg">@color/white_70</item>
-        <item name="textColorSgGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_dark</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
@@ -238,9 +234,7 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="textColorPrimarySg">@color/black_87</item>
-        <item name="textColorSecondarySg">@color/black_54</item>
-        <item name="textColorSgGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_dark</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>

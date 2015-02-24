@@ -68,7 +68,7 @@
     </style>
 
     <style name="TextAppearance.Subhead.Green">
-        <item name="android:textColor">?attr/textColorSgGreen</item>
+        <item name="android:textColor">?attr/sgTextColorGreen</item>
     </style>
 
     <style name="TextAppearance.Subhead.Narrow">

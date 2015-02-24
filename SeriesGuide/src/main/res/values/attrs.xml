@@ -5,9 +5,7 @@
     <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
 
     <!-- Text colors -->
-    <attr name="textColorPrimarySg" format="reference|color" />
-    <attr name="textColorSecondarySg" format="reference|color" />
-    <attr name="textColorSgGreen" format="reference|color" />
+    <attr name="sgTextColorGreen" format="reference|color" />
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Colors -->
