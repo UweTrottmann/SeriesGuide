@@ -114,7 +114,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             public int getSpanSize(int position) {
                 // make headers and more links span all columns
                 int type = adapter.getItem(position).type;
-                return (type == NowAdapter.ViewType.HEADER || type == NowAdapter.ViewType.MORE_LINK)
+                return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
                         ? spanCount : 1;
             }
         });
