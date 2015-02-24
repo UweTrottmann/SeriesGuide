@@ -183,9 +183,6 @@
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
 
-        <!-- Windows -->
-
-
         <!-- System widgets -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
