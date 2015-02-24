@@ -387,7 +387,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today (if any)
-        int startPosition = releasedToday == null ? 0 : releasedToday.size() - 1;
+        int startPosition = releasedToday == null ? 0 : releasedToday.size();
 
         recentlyWatched = items;
         reloadData();
@@ -398,8 +398,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today and recently watched (if any)
-        int startPosition = (releasedToday == null ? 0 : releasedToday.size() - 1)
-                + (recentlyWatched == null ? 0 : recentlyWatched.size() - 1);
+        int startPosition = (releasedToday == null ? 0 : releasedToday.size())
+                + (recentlyWatched == null ? 0 : recentlyWatched.size());
 
         friendsRecently = items;
         reloadData();
