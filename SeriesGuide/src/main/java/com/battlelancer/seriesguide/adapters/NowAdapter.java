@@ -72,35 +72,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView show;
-        public TextView episode;
-        public TextView timestamp;
-        public ImageView poster;
-        public ImageView type;
-
-        public HistoryViewHolder(View itemView, final ItemClickListener listener) {
-            super(itemView);
-            show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
-            episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
-            timestamp = (TextView) itemView.findViewById(R.id.textViewFriendTimestamp);
-            poster = (ImageView) itemView.findViewById(R.id.imageViewFriendPoster);
-            type = (ImageView) itemView.findViewById(R.id.imageViewFriendActionType);
-            itemView.findViewById(R.id.textViewFriendUsername).setVisibility(View.GONE);
-            itemView.findViewById(R.id.imageViewFriendAvatar).setVisibility(View.GONE);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(v, position);
-                    }
-                }
-            });
-        }
-    }
-
     static class FriendViewHolder extends RecyclerView.ViewHolder {
         public TextView show;
         public TextView episode;
@@ -161,14 +132,23 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ViewType.RELEASED, ViewType.HISTORY, ViewType.FRIEND, ViewType.MORE_LINK,
-            ViewType.HEADER })
-    public @interface ViewType {
+    @IntDef({ ItemType.RELEASED, ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK,
+            ItemType.HEADER })
+    public @interface ItemType {
         static final int RELEASED = 0;
         static final int HISTORY = 1;
         static final int FRIEND = 2;
         static final int MORE_LINK = 3;
         static final int HEADER = 4;
+    }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ ViewType.RELEASED, ViewType.FRIEND, ViewType.MORE_LINK, ViewType.HEADER })
+    public @interface ViewType {
+        static final int RELEASED = 0;
+        static final int FRIEND = 1;
+        static final int MORE_LINK = 2;
+        static final int HEADER = 3;
     }
 
     private final Context context;
@@ -198,22 +178,22 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public String username;
         public String avatar;
         public String action;
-        @ViewType public int type;
+        @ItemType public int type;
 
         public NowItem releasedToday(String network) {
             this.network = network;
-            this.type = ViewType.RELEASED;
+            this.type = ItemType.RELEASED;
             return this;
         }
 
         public NowItem recentlyWatchedLocal() {
-            this.type = ViewType.HISTORY;
+            this.type = ItemType.HISTORY;
             return this;
         }
 
         public NowItem recentlyWatchedTrakt(String action) {
             this.action = action;
-            this.type = ViewType.HISTORY;
+            this.type = ItemType.HISTORY;
             return this;
         }
 
@@ -221,7 +201,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.username = username;
             this.avatar = avatar;
             this.action = action;
-            this.type = ViewType.FRIEND;
+            this.type = ItemType.FRIEND;
             return this;
         }
 
@@ -240,13 +220,13 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public NowItem moreLink(String title) {
-            this.type = ViewType.MORE_LINK;
+            this.type = ItemType.MORE_LINK;
             this.title = title;
             return this;
         }
 
         public NowItem header(String title) {
-            this.type = ViewType.HEADER;
+            this.type = ItemType.HEADER;
             this.title = title;
             return this;
         }
@@ -268,10 +248,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_released, viewGroup, false);
             return new ReleasedViewHolder(v, listener);
-        } else if (viewType == ViewType.HISTORY) {
-            View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_friend, viewGroup, false);
-            return new HistoryViewHolder(v, listener);
         } else if (viewType == ViewType.FRIEND) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_friend, viewGroup, false);
@@ -322,21 +298,37 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             // is a TVDb or no poster
             Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
-        } else if (viewHolder instanceof HistoryViewHolder) {
-            HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
+        } else if (viewHolder instanceof FriendViewHolder) {
+            FriendViewHolder holder = (FriendViewHolder) viewHolder;
+
+            if (item.type == ItemType.HISTORY) {
+                // user history entry
+                holder.username.setVisibility(View.GONE);
+                holder.avatar.setVisibility(View.GONE);
+
+                if (item.poster != null && item.poster.startsWith("http")) {
+                    // is a trakt poster
+                    Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+                } else {
+                    // is a TVDb (only path then, so build URL) or no poster
+                    Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
+                }
+            } else {
+                // friend history entry
+                holder.username.setVisibility(View.VISIBLE);
+                holder.avatar.setVisibility(View.VISIBLE);
+
+                holder.username.setText(item.username);
+
+                // trakt poster and avatar
+                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+                ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
+            }
 
             holder.show.setText(item.title);
             holder.episode.setText(item.description);
             holder.timestamp.setText(
                     TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
-
-            if (item.poster != null && item.poster.startsWith("http")) {
-                // is a trakt poster
-                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
-            } else {
-                // is a TVDb (only path then, so build URL) or no poster
-                Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
-            }
 
             // action type indicator (only if showing trakt history)
             if ("watch".equals(item.action)) {
@@ -349,27 +341,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 holder.type.setVisibility(View.GONE);
             }
-        } else if (viewHolder instanceof FriendViewHolder) {
-            FriendViewHolder holder = (FriendViewHolder) viewHolder;
-
-            holder.show.setText(item.title);
-            holder.episode.setText(item.description);
-            holder.timestamp.setText(
-                    TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
-            holder.username.setText(item.username);
-
-            // trakt poster and avatar
-            Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
-            ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
-
-            // action type indicator
-            if ("watch".equals(item.action)) {
-                // marked watched
-                holder.type.setImageResource(resIdDrawableWatched);
-            } else {
-                // check-in, scrobble
-                holder.type.setImageResource(resIdDrawableCheckin);
-            }
         }
     }
 
@@ -380,7 +351,19 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return getItem(position).type;
+        int itemType = getItem(position).type;
+        switch (itemType) {
+            case ItemType.RELEASED:
+                return ViewType.RELEASED;
+            case ItemType.HISTORY:
+            case ItemType.FRIEND:
+                return ViewType.FRIEND;
+            case ItemType.MORE_LINK:
+                return ViewType.MORE_LINK;
+            case ItemType.HEADER:
+                return ViewType.HEADER;
+        }
+        return 0;
     }
 
     private Context getContext() {

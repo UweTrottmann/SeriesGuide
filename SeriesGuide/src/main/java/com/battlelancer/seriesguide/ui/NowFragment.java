@@ -330,7 +330,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             }
 
             // more history link?
-            if (item.type == NowAdapter.ViewType.MORE_LINK) {
+            if (item.type == NowAdapter.ItemType.MORE_LINK) {
                 startActivity(new Intent(getActivity(), HistoryActivity.class));
                 return;
             }
