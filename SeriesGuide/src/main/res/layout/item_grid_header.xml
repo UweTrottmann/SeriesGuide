@@ -25,4 +25,4 @@
     android:paddingBottom="0dp"
     tools:text="Recently Watched"
     android:textAppearance="@style/TextAppearance.Body.Bold"
-    android:textColor="?attr/textColorSecondarySg" />
+    android:textColor="?android:attr/textColorSecondary" />

@@ -39,6 +39,6 @@
         android:paddingRight="@dimen/large_padding"
         tools:text="@string/user_stream"
         android:textAppearance="@style/TextAppearance.Button"
-        android:textColor="?attr/textColorSecondarySg" />
+        android:textColor="?android:attr/textColorSecondary" />
 
 </LinearLayout>

@@ -120,7 +120,7 @@
             tools:text="61 days 13 hours 29 minutes"
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.Headline"
-            android:textColor="?attr/textColorSecondarySg"
+            android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true" />
 
         <ProgressBar
@@ -195,7 +195,7 @@
             tools:text="61 days 13 hours 29 minutes"
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.Headline"
-            android:textColor="?attr/textColorSecondarySg"
+            android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true" />
 
         <TextView
