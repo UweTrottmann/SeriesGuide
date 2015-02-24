@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="sgSelectableItemBackground" format="reference" />
+    <!-- Special drawables -->
     <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
 
     <!-- Text colors -->
     <attr name="sgTextColorGreen" format="reference|color" />
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
-    <!-- Colors -->
+    <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
