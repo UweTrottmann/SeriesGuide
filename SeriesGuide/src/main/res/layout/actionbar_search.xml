@@ -17,22 +17,22 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="250dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="?attr/colorPrimary">
 
+    <!-- Toolbar will force down its style, no need to force text colors. -->
     <EditText
         android:id="@+id/editTextSearchBar"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/textfield_default_sg"
         android:paddingRight="40dp"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:hint="@string/search"
-        android:textColor="@color/text_primary_sg"
-        android:textColorHint="@color/text_dim">
+        android:hint="@string/search">
 
         <requestFocus />
     </EditText>

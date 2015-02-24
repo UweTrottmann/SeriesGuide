@@ -14,7 +14,7 @@
     </style>
 
     <style name="TextAppearance.Tab">
-        <item name="android:textColor">?attr/sgColorTabStripText</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
     </style>
@@ -68,7 +68,7 @@
     </style>
 
     <style name="TextAppearance.Subhead.Green">
-        <item name="android:textColor">?attr/textColorSgGreen</item>
+        <item name="android:textColor">?attr/sgTextColorGreen</item>
     </style>
 
     <style name="TextAppearance.Subhead.Narrow">
@@ -131,7 +131,7 @@
         <item name="android:paddingBottom">4dp</item>
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Button</item>
-        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
     </style>
 
     <!-- Has no background, so use theme text color -->

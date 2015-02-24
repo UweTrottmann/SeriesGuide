@@ -830,7 +830,7 @@ public class OverviewFragment extends Fragment implements
         int status = show.getInt(ShowQuery.SHOW_STATUS);
         if (status == 1) {
             statusText.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
-                    getActivity().getTheme(), R.attr.textColorSgGreen)));
+                    getActivity().getTheme(), R.attr.sgTextColorGreen)));
             statusText.setText(getString(R.string.show_isalive));
         } else if (status == 0) {
             statusText.setTextColor(Color.GRAY);

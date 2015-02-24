@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -94,6 +95,9 @@ public class SearchActivity extends BaseNavDrawerActivity {
         });
 
         searchBar = ButterKnife.findById(this, R.id.editTextSearchBar);
+        if (!AndroidUtils.isLollipopOrHigher()) {
+            searchBar.setBackgroundResource(R.drawable.textfield_default_sg);
+        }
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
