@@ -10,5 +10,4 @@
     android:paddingLeft="@dimen/larger_padding"
     android:paddingRight="@dimen/larger_padding"
     tools:text="Example List"
-    android:textAppearance="@style/TextAppearance.Menu"
-    android:textColor="@color/text_default" />
+    android:textAppearance="@style/TextAppearance.Menu" />
