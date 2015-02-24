@@ -1,27 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  Copyright 2012 Uwe Trottmann
+  ~ Copyright 2015 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-
-
--->
 <resources>
 
     <color name="transparent">#00000000</color>
-
-    <color name="text_blue">#FF0099CC</color>
-    <color name="text_red">#FFFF4444</color>
 
     <color name="accent_primary">#ff6545a0</color>
     <color name="accent_primary_26">#426545a0</color>
@@ -57,6 +54,8 @@
     <color name="black_54">#8a000000</color> <!-- secondary text light -->
     <color name="text_secondary_disabled_dark">#66ffffff</color> <!-- 40% white -->
     <color name="text_secondary_disabled_light">#66000000</color> <!-- 30% black -->
+    <color name="text_blue">#FF0099CC</color>
+    <color name="text_red">#FFFF4444</color>
 
     <color name="black_11">#ffe3e3e3</color>
     <color name="protection_dark">#66000000</color>
