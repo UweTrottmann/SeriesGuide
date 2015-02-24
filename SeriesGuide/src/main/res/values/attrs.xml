@@ -13,7 +13,6 @@
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
-    <attr name="sgColorTabStripText" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
 
     <!-- Color Arrays -->

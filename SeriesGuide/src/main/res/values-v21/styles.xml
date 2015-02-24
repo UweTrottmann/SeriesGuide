@@ -19,7 +19,7 @@
 <resources>
 
     <style name="TextAppearance.Tab">
-        <item name="android:textColor">?attr/sgColorTabStripText</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">sans-serif-medium</item>

@@ -60,7 +60,6 @@
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorTabStripText">@color/white_70</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
@@ -139,7 +138,6 @@
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorTabStripText">@color/white_70</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
 
         <!-- Color Arrays -->
@@ -240,7 +238,6 @@
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
-        <item name="sgColorTabStripText">@color/black_87</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
 
         <!-- Color Arrays -->
