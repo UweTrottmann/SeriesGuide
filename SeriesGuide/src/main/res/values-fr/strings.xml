@@ -35,7 +35,7 @@
   <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
   <string name="add_empty">Il n\'y a aucune série ici.</string>
   <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Les données n\'ont pu être modifiées.</string>
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
   <string name="share_episode">Partager l\'épisode</string>
@@ -162,11 +162,11 @@
   <string name="menu_update_delta">Mise à jour (juste les obsolètes)</string>
   <string name="context_updateshow">Mettre à jour</string>
   <string name="context_marknext">Prochain épisode vu</string>
-  <string name="now_tab">Now</string>
-  <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_tab">Maintenant</string>
+  <string name="recently_watched">Vu récemment</string>
+  <string name="released_today">Publié aujourd\'hui</string>
+  <string name="friends_recently">Vos amis trakt</string>
+  <string name="now_empty">Rien ici. Regardez des épisodes !</string>
   <string name="upcoming">À venir</string>
   <string name="recent">Dernièrement</string>
   <string name="friends">Amis</string>
@@ -174,7 +174,7 @@
   <string name="user_stream">historique</string>
   <string name="user_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
-  <string name="more_history_link">More history</string>
+  <string name="more_history_link">Plus d\'historique</string>
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
@@ -209,7 +209,7 @@
   <string name="list_item_manage">Gérer les listes</string>
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
-  <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_sort">Trier les listes</string>
   <string name="hexagon_warning">Expérimental !</string>
   <string name="hexagon_setup">Configurer le cloud SeriesGuide</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
@@ -224,8 +224,8 @@
   <string name="hexagon_remove_account_success">Compte supprimé.</string>
   <string name="hexagon_remove_account_failure">Problème lors de la suppression du compte.</string>
   <string name="hexagon_remove_account_confirmation">Retirer votre compte supprimera tous les films et séries se trouvant sur le cloud SeriesGuide. Assurez-vous de le retirer également sur vos autres appareils connectés.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Impossible de communiquer avec SeriesGuide Cloud. Réessayez plus tard.</string>
+  <string name="hexagon_api_queued">Envoi vers SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Envoi vers trakt.</string>
   <string name="trakt_seen">%s vu.</string>
   <string name="trakt_notseen">%s non vu.</string>
@@ -236,7 +236,7 @@
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
   <string name="traktcheckin_wait">J\'attends</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Envoyé à trakt.</string>
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_account">Compte trakt</string>

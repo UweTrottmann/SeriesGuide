@@ -323,7 +323,7 @@
   <string name="pref_upcominglimit">Показы в ближайшие N дней…</string>
   <string name="pref_number">Формат номеров серий</string>
   <string name="pref_offset">Ручное смещение времени</string>
-  <string name="pref_offsetsummary">До прямого эфира осталось %s часов</string>
+  <string name="pref_offsetsummary">Смещение времени эфира на %s часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с вашего устройства</string>
   <string name="pref_ganalyticssummary">Отслеживать использование функций приложения, чтобы улучшить SeriesGuide</string>
