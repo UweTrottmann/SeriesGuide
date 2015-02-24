@@ -41,14 +41,14 @@
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorAccent">@color/teal_dark</item>
     </style>
 
     <style name="Theme.SeriesGuide.Light.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorAccent">@color/teal_dark</item>
     </style>
 
 </resources>
