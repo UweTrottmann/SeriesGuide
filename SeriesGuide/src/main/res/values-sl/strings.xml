@@ -174,7 +174,6 @@
   <string name="user_stream">History</string>
   <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
   <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
-  <string name="more_history_link">More history</string>
   <string name="noupcoming">Ni prihajajočih epizod.</string>
   <string name="norecent">Ni nedavnih epizod.</string>
   <string name="only_favorites">Samo priljubljene oddaje</string>

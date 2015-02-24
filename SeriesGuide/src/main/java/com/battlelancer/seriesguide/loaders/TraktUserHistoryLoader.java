@@ -122,8 +122,7 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistory
         }
 
         // add link to more history
-        items.add(new NowAdapter.NowItem().moreLink(
-                getContext().getString(R.string.more_history_link)));
+        items.add(new NowAdapter.NowItem().moreLink(getContext().getString(R.string.user_stream)));
 
         return new Result(items, 0);
     }

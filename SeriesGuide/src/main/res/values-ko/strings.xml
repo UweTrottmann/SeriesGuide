@@ -174,7 +174,6 @@
   <string name="user_stream">History</string>
   <string name="user_stream_empty">trakt에 최근 활동이 없습니다. 쇼를 확인하세요.</string>
   <string name="user_movie_stream_empty">trakt에 최근 활동이 없습니다. 영화를 확인하세요.</string>
-  <string name="more_history_link">More history</string>
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
