@@ -68,7 +68,7 @@
 
     <integer-array name="progressBarColorsAndroidDark">
         <item>@color/background</item>
-        <item>@color/accent_material_dark</item>
+        <item>@color/white</item>
     </integer-array>
 
 </resources>
