@@ -164,7 +164,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodeDetails);
         tabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorAccent)));
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
         tabs.setViewPager(pager);
 
         if (AndroidUtils.isKitKatOrHigher()) {
