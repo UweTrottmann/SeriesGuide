@@ -6,15 +6,9 @@
     tools:ignore="AlwaysShowAction">
 
     <item
-        android:id="@+id/menu_action_shows_add"
-        android:icon="@drawable/ic_action_new_show"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        android:title="@string/action_shows_add" />
-    <item
         android:id="@+id/menu_action_shows_filter"
         android:icon="@drawable/ic_action_filter"
-        android:orderInCategory="2"
+        android:orderInCategory="0"
         app:showAsAction="always"
         android:title="@string/action_shows_filter">
         <menu>
@@ -39,6 +33,13 @@
                 android:title="@string/empty_filter" />
         </menu>
     </item>
+
+    <item
+        android:id="@+id/menu_action_shows_add"
+        android:icon="@drawable/ic_action_new_show"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/action_shows_add" />
 
     <item
         android:id="@+id/menu_action_shows_sort"

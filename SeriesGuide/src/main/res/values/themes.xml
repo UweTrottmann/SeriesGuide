@@ -37,7 +37,7 @@
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_dark</item>
+        <item name="colorAccent">@color/teal_500</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
@@ -54,10 +54,11 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -123,6 +124,9 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/teal_500</item>
+
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
 
@@ -132,10 +136,11 @@
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -207,7 +212,7 @@
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_dark</item>
+        <item name="colorAccent">@color/teal_500</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg_light</item>
@@ -229,10 +234,11 @@
         <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_dark</item>
+        <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>

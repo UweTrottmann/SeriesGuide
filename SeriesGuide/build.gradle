@@ -120,6 +120,7 @@ dependencies {
     compile 'com.google.code.findbugs:jsr305:3.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.jakewharton.timber:timber:2.5.0'
+    compile 'com.melnykov:floatingactionbutton:1.2.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
