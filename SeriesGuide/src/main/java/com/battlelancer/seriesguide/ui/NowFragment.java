@@ -104,7 +104,7 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_dark);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
         // define layout
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);

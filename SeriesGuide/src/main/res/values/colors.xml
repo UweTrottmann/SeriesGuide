@@ -24,7 +24,8 @@
     <color name="accent_primary_26">#426545a0</color>
     <color name="accent_primary_dark">#ff523991</color>
     <color name="accent_primary_light">#bb7555B0</color>
-    <color name="teal_dark">#ff009688</color>
+    <color name="teal_500">#ff009688</color>
+    <color name="teal_700">#ff00796B</color>
 
     <color name="background">#ff222222</color>
     <color name="background_inverse">#ffebebeb</color>
