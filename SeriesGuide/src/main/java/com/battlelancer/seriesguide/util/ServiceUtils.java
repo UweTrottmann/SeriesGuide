@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.StatFs;
 import android.text.TextUtils;
 import android.view.View;
@@ -129,7 +130,12 @@ public final class ServiceUtils {
 
         try {
             StatFs statFs = new StatFs(dir.getAbsolutePath());
-            long available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
+            long available;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                available = statFs.getBlockCountLong() * statFs.getBlockSizeLong();
+            } else {
+                available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
+            }
             // Target 2% of the total space.
             size = available / 50;
         } catch (IllegalArgumentException ignored) {
