@@ -43,6 +43,9 @@
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
+        <!-- Samsung MultiWindow support -->
+        <meta-data android:name="com.samsung.android.sdk.multiwindow.enable" android:value="true" />
+
         <!-- Content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
