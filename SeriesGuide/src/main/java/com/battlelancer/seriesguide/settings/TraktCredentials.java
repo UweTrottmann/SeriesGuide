@@ -104,7 +104,7 @@ public class TraktCredentials {
 
         nb.setAutoCancel(true);
         nb.setColor(mContext.getResources().getColor(R.color.accent_primary));
-        nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        nb.setPriority(NotificationCompat.PRIORITY_HIGH);
         nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 
         NotificationManager nm = (NotificationManager) mContext.getSystemService(
