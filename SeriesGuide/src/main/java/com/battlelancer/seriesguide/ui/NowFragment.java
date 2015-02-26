@@ -179,7 +179,8 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
      * Init the loader. If the loader already exists, will restart it (the default behavior of init
      * would be to get the last loaded data).
      */
-    private void initAndMaybeRestartLoader(int loaderId, LoaderManager.LoaderCallbacks callbacks) {
+    private <D> void initAndMaybeRestartLoader(int loaderId,
+            LoaderManager.LoaderCallbacks<D> callbacks) {
         boolean isLoaderExists = getLoaderManager().getLoader(loaderId) != null;
         getLoaderManager().initLoader(loaderId, null, callbacks);
         if (isLoaderExists) {
