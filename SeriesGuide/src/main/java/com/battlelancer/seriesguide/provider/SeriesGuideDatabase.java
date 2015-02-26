@@ -20,7 +20,6 @@ import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -133,14 +132,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     public static final int DBVER_35_ACTIVITY_TABLE = 35;
 
     public static final int DATABASE_VERSION = DBVER_35_ACTIVITY_TABLE;
-
-    private DatabaseUtils.InsertHelper mShowsInserter;
-    private DatabaseUtils.InsertHelper mSeasonsInserter;
-    private DatabaseUtils.InsertHelper mEpisodesInserter;
-    private DatabaseUtils.InsertHelper mListsInserter;
-    private DatabaseUtils.InsertHelper mListItemsInserter;
-    private DatabaseUtils.InsertHelper mMoviesInserter;
-    private DatabaseUtils.InsertHelper mActivityInserter;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -527,34 +518,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public long insertShows(ContentValues values) {
-        return mShowsInserter.insert(values);
-    }
-
-    public long insertSeasons(ContentValues values) {
-        return mSeasonsInserter.insert(values);
-    }
-
-    public long insertEpisodes(ContentValues values) {
-        return mEpisodesInserter.insert(values);
-    }
-
-    public long insertLists(ContentValues values) {
-        return mListsInserter.insert(values);
-    }
-
-    public long insertListItems(ContentValues values) {
-        return mListItemsInserter.insert(values);
-    }
-
-    public long insertMovies(ContentValues values) {
-        return mMoviesInserter.insert(values);
-    }
-
-    public long insertActivity(ContentValues values) {
-        return mActivityInserter.insert(values);
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_SHOWS_TABLE);
@@ -572,17 +535,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_MOVIES_TABLE);
 
         db.execSQL(CREATE_ACTIVITY_TABLE);
-    }
-
-    @Override
-    public void onOpen(SQLiteDatabase db) {
-        mShowsInserter = new DatabaseUtils.InsertHelper(db, Tables.SHOWS);
-        mSeasonsInserter = new DatabaseUtils.InsertHelper(db, Tables.SEASONS);
-        mEpisodesInserter = new DatabaseUtils.InsertHelper(db, Tables.EPISODES);
-        mListsInserter = new DatabaseUtils.InsertHelper(db, Tables.LISTS);
-        mListItemsInserter = new DatabaseUtils.InsertHelper(db, Tables.LIST_ITEMS);
-        mMoviesInserter = new DatabaseUtils.InsertHelper(db, Tables.MOVIES);
-        mActivityInserter = new DatabaseUtils.InsertHelper(db, Tables.ACTIVITY);
     }
 
     @Override

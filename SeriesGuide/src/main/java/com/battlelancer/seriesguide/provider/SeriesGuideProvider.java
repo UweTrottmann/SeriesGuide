@@ -336,17 +336,17 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         Uri newItemUri;
 
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         if (!applyingBatch()) {
-            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
             db.beginTransaction();
             try {
-                newItemUri = insertInTransaction(uri, values);
+                newItemUri = insertInTransaction(db, uri, values);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         } else {
-            newItemUri = insertInTransaction(uri, values);
+            newItemUri = insertInTransaction(db, uri, values);
         }
 
         if (newItemUri != null) {
@@ -366,7 +366,7 @@ public class SeriesGuideProvider extends ContentProvider {
         try {
             //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < numValues; i++) {
-                Uri result = insertInTransaction(uri, values[i]);
+                Uri result = insertInTransaction(db, uri, values[i]);
                 if (result != null) {
                     notifyChange = true;
                 }
@@ -384,7 +384,7 @@ public class SeriesGuideProvider extends ContentProvider {
         return numValues;
     }
 
-    private Uri insertInTransaction(Uri uri, ContentValues values) {
+    private Uri insertInTransaction(SQLiteDatabase db, Uri uri, ContentValues values) {
         if (LOGV) {
             Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
@@ -393,7 +393,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                long id = mDbHelper.insertShows(values);
+                long id = db.insertOrThrow(Tables.SHOWS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -401,7 +401,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case SEASONS: {
-                long id = mDbHelper.insertSeasons(values);
+                long id = db.insertOrThrow(Tables.SEASONS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -409,7 +409,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case EPISODES: {
-                long id = mDbHelper.insertEpisodes(values);
+                long id = db.insertOrThrow(Tables.EPISODES, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -417,7 +417,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = mDbHelper.insertLists(values);
+                long id = db.insertOrThrow(Tables.LISTS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -425,7 +425,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LIST_ITEMS: {
-                long id = mDbHelper.insertListItems(values);
+                long id = db.insertOrThrow(Tables.LIST_ITEMS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -433,7 +433,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id = mDbHelper.insertMovies(values);
+                long id = db.insertOrThrow(Tables.MOVIES, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -441,7 +441,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case ACTIVITY: {
-                long id = mDbHelper.insertActivity(values);
+                long id = db.insertOrThrow(Tables.ACTIVITY, null, values);
                 if (id < 0) {
                     break;
                 }
