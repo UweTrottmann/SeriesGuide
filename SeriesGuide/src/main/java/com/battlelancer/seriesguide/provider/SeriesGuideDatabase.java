@@ -350,8 +350,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.GETGLUEID + " TEXT DEFAULT '',"
-
             + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0"
 
             + ");";
