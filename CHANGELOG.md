@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 22 *(in development)*
 -----------------------------
 
+#### 22.0.0 *(2015-02-27)*
+
+* TWEAK Move "Add show" action to a floating action button.
+* TWEAK Remove "events and reminders" category from SeriesGuide episode notifications. To continue
+  receiving episode notifications while Priority mode is active, make SeriesGuide a priority app.
+  Only on Android Lollipop and up.
+* TWEAK Enable Samsung multi-window. However, layouts are not optimized for multi-window.
+* TWEAK Some minor design updates.
+* NOTICE Latest translations from crowdin.
+
 #### 22.0.0-beta5 *(2015-02-24)*
 
 * TWEAK Use new CardView to replace old card drawables. Other design updates and fixes.
