@@ -5,8 +5,13 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 22 *(in development)*
------------------------------
+Version 22 *(2015-02-27)*
+-------------------------
+
+* New "Now" tab displays episodes released today, recently watched (device only or trakt history)
+  and watched by your trakt friends.
+* Further updates towards material design.
+* When setting a season or show watched, only already released episodes will be set watched.
 
 #### 22.0.0 *(2015-02-27)*
 
