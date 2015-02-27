@@ -23,7 +23,7 @@
         android:id="@+id/menu_action_shows_add"
         android:icon="@drawable/ic_action_new_show"
         android:orderInCategory="1"
-        app:showAsAction="always"
+        app:showAsAction="never"
         android:title="@string/action_shows_add" />
 
 </menu>
