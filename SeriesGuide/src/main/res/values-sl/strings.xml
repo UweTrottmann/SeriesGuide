@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Dodaj oddaje iz svoje knjižnjice:</string>
   <string name="show_library">Prikaži knjižnjico</string>
   <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
-  <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Vaša ocena</string>
   <string name="love">Totalno nindža!</string>

@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">הוסף תוכניות מהספריה:</string>
   <string name="show_library">הצג את הספריה שלך</string>
   <string name="about_trakt">trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה. <a href="http://trakt.tv"> למד עוד</a></string>
-  <string name="integration_trakt_items">-הוסף סדרות מהספריה ומהרשימת מעקב שלך\n\n- ראה את ההמלצות שלך ואת פעילות החברים שלך\n\n- דגלי צפייה ואוסף הדגלים שלך מסונכרנים אוטומטית\n\n- תוכניות חדשות שצפית בהן מתווספות באופן אוטומטי</string>
   <string name="action_rate">דרג</string>
   <string name="your_rating">הדירוג שלך</string>
   <string name="love">לגמרי נינג\'ה!</string>

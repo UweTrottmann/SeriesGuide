@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Adicione séries da sua coleção:</string>
   <string name="show_library">Mostrar sua coleção</string>
   <string name="about_trakt">trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
-  <string name="integration_trakt_items">- adicione séries da sua coleção e da lista de A assistir\n\n- veja suas recomendações e atividade dos amigos\n\n- sinalizações de \'assistido\' e \'colecionado\' são sincronizadas automaticamente\n\n- novas séries que você assistir são adicionadas automaticamente</string>
   <string name="action_rate">Avaliar</string>
   <string name="your_rating">Sua classificação</string>
   <string name="love">Muito show!</string>

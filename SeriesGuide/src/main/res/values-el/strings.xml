@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>
   <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
   <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
-  <string name="integration_trakt_items">- προσθέστε σειρές από τη βιβλιοθήκη σας και τη λίστα παρακολούθησης\n\n- δείτε τις προτάσεις για εσάς και τις δραστηριότητες των φίλων σας\n\n- αυτά που μαρκάρονται ότι τα έχετε παρακολουθήσει και συλλέξει, συγχρονίζονται αυτόματα\n\n- νέες σειρές που παρακολουθήσατε προστίθενται αυτόματα</string>
   <string name="action_rate">Αξιολόγηση</string>
   <string name="your_rating">Η βαθμολογία σας</string>
   <string name="love">Εντελώς ninja!</string>

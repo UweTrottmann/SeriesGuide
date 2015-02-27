@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Serien aus Ihrer Bibliothek hinzufügen:</string>
   <string name="show_library">Ihre Bibliothek anzeigen</string>
   <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
-  <string name="integration_trakt_items">- Serien aus Ihrer Bibliothek oder Watchliste hinzufügen\n\n- Empfehlungen und Aktivität von Freunden anzeigen\n\n- Gesehen- und Gesammelt-Flaggen werden automatisch synchronisiert\n\n- neue Serien die Sie angesehen haben werden automatisch hinzugefügt</string>
   <string name="action_rate">Bewerten</string>
   <string name="your_rating">Ihre Bewertung</string>
   <string name="love">Absolut top!</string>

@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Legg til flere serier fra trakt-biblioteket:</string>
   <string name="show_library">Vis ditt trakt bibliotek</string>
   <string name="about_trakt">trakt bidrar til å holde oversikt over hvilke TV-serier og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
-  <string name="integration_trakt_items">- legg til serier fra ditt bibliotek og overvåkningsliste\n\n- Se dine anbefalninger og dine venners aktivitet\n\n- Sett og anskaffet blir synkronisert automatisk\n\n- Nye programmer blir lagt til automatisk</string>
   <string name="action_rate">Bedøm</string>
   <string name="your_rating">Din vurdering</string>
   <string name="love">Helt ninja!</string>

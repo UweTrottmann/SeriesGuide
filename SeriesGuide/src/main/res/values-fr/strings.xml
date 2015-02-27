@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
   <string name="show_library">Voir votre bibliothèque</string>
   <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
-  <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou votre liste à voir.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
   <string name="action_rate">Noter</string>
   <string name="your_rating">Votre note</string>
   <string name="love">Totalement ninja !</string>

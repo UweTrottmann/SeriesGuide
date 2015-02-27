@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Добавьте сериалы из вашей библиотеки на trakt.tv:</string>
   <string name="show_library">Показать вашу библиотеку на trakt.tv</string>
   <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
-  <string name="integration_trakt_items">- добавляйте сериалы из вашей библиотеки и списка просмотра\n\n- смотрите ваши рекомендации и активность друзей\n\n- записи о просмотренном и собранном синхронизируются автоматически\n\n- новые просмотренные сериалы добавляются автоматически</string>
   <string name="action_rate">Oценить</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>

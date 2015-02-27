@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Adiciona séries da tua biblioteca:</string>
   <string name="show_library">Mostrar a tua biblioteca</string>
   <string name="about_trakt">O trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta</a></string>
-  <string name="integration_trakt_items">- Adiciona séries da tua biblioteca e da tua lista de séries\n\n- Vê as tuas recomendações e actividades de amigos\n\n- Os episódios assistidos e adquiridos são sincronizados automaticamente\n\n- As novas séries que assistes são adicionadas automaticamente</string>
   <string name="action_rate">Classificar</string>
   <string name="your_rating">A minha classificação</string>
   <string name="love">Totalmente ninja!</string>

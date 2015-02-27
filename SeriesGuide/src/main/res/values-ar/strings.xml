@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
   <string name="show_library">إظهار المكتبة الخاصة بك</string>
   <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
-  <string name="integration_trakt_items">- أضف مسلسلات إلى مكتبتك و قائمتك\n\n- راجع مقترحاتك و نشاطات أصدقائك\n\n- يتم مزامنة ما شاهدته و الأعلام المجموعة تلقائياً\n\n- يتم إضافة ما شاهدت تلقائياً</string>
   <string name="action_rate">التقييم</string>
   <string name="your_rating">تقييمك</string>
   <string name="love">أعجبني!</string>

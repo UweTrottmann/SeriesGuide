@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
   <string name="show_library">Műsortárad mutatása</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
-  <string name="integration_trakt_items">- adjon hozzá sorozatot a könyvtárából és a nézettek listájáról\n\n-nézze meg az ajánlott sorozatokat és a barátok tevékenységét\n\n-a megnézett és gyűjtött jelzések automatikusan szinkronizálódnak\n\n- az új sorozatok automatikusan hozzáadásra kerülnek</string>
   <string name="action_rate">Értékelj</string>
   <string name="your_rating">Értékelésed</string>
   <string name="love">Totally ninja!</string>

@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
   <string name="show_library">Kütüphaneyi göster</string>
   <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
-  <string name="integration_trakt_items">- kütüphaneden ve izleme listesinden dizileri ekleyin\n\n- yorumlarını ve arkadaşlarının aktivitelerini gör\n\n- izlediklerin otomatik bir şekilde senkronize olsun\n\n- izlediğin yeni diziler otomatik eklensin</string>
   <string name="action_rate">Derecelendir</string>
   <string name="your_rating">Sizin değerlendirmeniz</string>
   <string name="love">Harikulade!</string>

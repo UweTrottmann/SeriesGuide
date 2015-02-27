@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Afegiu més sèries de la vostra biblioteca del trakt:</string>
   <string name="show_library">Mostra\'m la biblioteca del trakt</string>
   <string name="about_trakt">La plataforma trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
-  <string name="integration_trakt_items">- afegiu sèries a la vostra biblioteca i llista de seguiment.\n\n- vegeu les recomanacions i l\'activitat dels vostres amics\n\n- les marques de capítols vists i en possessió se sincronitzen automàticament\n\n- les sèries de les sèries noves que vegeu s\'afegeixen automàticament</string>
   <string name="action_rate">Puntua</string>
   <string name="your_rating">La vostra valoració</string>
   <string name="love">Una passada!</string>

@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Pievienot vairāk šovus no tavas trakt bibliotēkas:</string>
   <string name="show_library">Parādīt tavu trakt bibliotēku</string>
   <string name="about_trakt">trakt palīdz tev ar TV šovu un filmu skatīšanos. <a href="https://trakt.tv">Uzzini vairāk</a></string>
-  <string name="integration_trakt_items">- pievieno šovus no savas bibliotēkas\n\n- redzi savas rekomendācijas un draugu aktivitāti\n\n- jau skatītās un kolekcionētās filmas, šovi tiek sinhronizēti automātiski\n\n- jauni šovi, kurus tu esi noskatījies tiek pievienoti automātiski</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Jūsu vērtējums</string>
   <string name="love">Riktīgi labs!</string>

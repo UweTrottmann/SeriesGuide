@@ -252,7 +252,6 @@
   <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>
   <string name="show_library">Prikaži svoju zbirku</string>
   <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
-  <string name="integration_trakt_items">- dodaj serije iz svoje zbirke i popisa gledanja\n\n- vidi svoje preporuke i aktivnost prijatelja\n\n- pogledane i prikupljene oznake automatski su sinkronizirane\n\n- nove serije koje si gledao automatski su dodane</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>
