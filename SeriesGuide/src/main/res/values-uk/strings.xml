@@ -135,7 +135,6 @@
   <string name="action_watched">Переглянуто</string>
   <string name="action_unwatched">Не переглянуто</string>
   <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
-  <string name="delete_has_list_items">Не можливо виконати, спершу видаліть %s зі всіх списків.</string>
   <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
   <string name="delete_show">Видалити</string>
   <string name="dontdelete_show">Не видаляти</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Оновити (лише ті, що вже вийшли)</string>
   <string name="context_updateshow">Оновити</string>
   <string name="context_marknext">Переглянута наступна серія</string>
+  <string name="now_tab">Сьогодні</string>
+  <string name="recently_watched">Недавно переглянуті</string>
+  <string name="released_today">Вийшли сьогодні</string>
+  <string name="friends_recently">Ваші друзі на trakt</string>
+  <string name="now_empty">Немає подій. Перегляньте наступні серіали!</string>
   <string name="upcoming">Незабаром</string>
   <string name="recent">Нещодавно</string>
   <string name="friends">Друзі</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Керувати списками</string>
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
+  <string name="action_lists_sort">Сортувати списки</string>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Додати ще серіали з бібліотеки trakt:</string>
   <string name="show_library">Показати вашу бібліотеку з trakt</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
-  <string name="integration_trakt_items">- додавайте серіали із вашої бібліотеки та списку переглядів\n\n- переглядайте ваші рекомендації та активність друзів\n\n- переглянуті та вибрані пункти синхронізуються автоматично\n\n- нові серіали, які ви переглядали додаються автоматично</string>
   <string name="action_rate">Рейтинг</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>

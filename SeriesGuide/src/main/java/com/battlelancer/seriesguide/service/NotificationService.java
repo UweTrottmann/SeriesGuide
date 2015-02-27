@@ -524,7 +524,6 @@ public class NotificationService extends IntentService {
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setColor(getResources().getColor(R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        nb.setCategory(NotificationCompat.CATEGORY_EVENT);
 
         Timber.d("Setting delete intent with episode time: " + latestAirtime);
         Intent i = new Intent(this, NotificationService.class);
@@ -544,8 +543,8 @@ public class NotificationService extends IntentService {
 
     private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
         try {
-            Bitmap poster = ServiceUtils.getPicasso(context)
-                    .load(TheTVDB.buildPosterUrl(posterPath))
+            Bitmap poster = ServiceUtils.loadWithPicasso(context,
+                    TheTVDB.buildPosterUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();

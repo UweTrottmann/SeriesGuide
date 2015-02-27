@@ -83,8 +83,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
             }
         }
         holder.name.setText(name);
-        ServiceUtils.getPicasso(getContext())
-                .load(avatarPath)
+        ServiceUtils.loadWithPicasso(getContext(), avatarPath)
                 .into(holder.avatar);
 
         if (comment.spoiler) {

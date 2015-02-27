@@ -44,7 +44,6 @@ import com.uwetrottmann.tmdb.services.MoviesService;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
-import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.SearchResult;
@@ -59,6 +58,7 @@ import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -208,7 +208,7 @@ public class MovieTools {
     }
 
     /**
-     * Extracts ratings and release time from trakt, all other properties from TMDb data.
+     * Extracts ratings from trakt, all other properties from TMDb data.
      *
      * <p> If either movie data is null, will still extract the properties of others.
      */
@@ -216,9 +216,6 @@ public class MovieTools {
         ContentValues values = new ContentValues();
 
         // data from trakt
-        if (details.released != null) {
-            values.put(SeriesGuideContract.Movies.RELEASED_UTC_MS, details.released.getMillis());
-        }
         if (details.traktRatings() != null) {
             values.put(SeriesGuideContract.Movies.RATING_TRAKT,
                     details.traktRatings().rating);
@@ -236,6 +233,11 @@ public class MovieTools {
             values.put(SeriesGuideContract.Movies.POSTER, details.tmdbMovie().poster_path);
             values.put(SeriesGuideContract.Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
             values.put(SeriesGuideContract.Movies.RATING_TMDB, details.tmdbMovie().vote_average);
+            // if there is no release date, store Long.MAX as it is likely in the future
+            // also helps correctly sorting movies by release date
+            Date releaseDate = details.tmdbMovie().release_date;
+            values.put(SeriesGuideContract.Movies.RELEASED_UTC_MS,
+                    releaseDate == null ? Long.MAX_VALUE : releaseDate.getTime());
         }
 
         return values;
@@ -308,7 +310,7 @@ public class MovieTools {
     private static boolean addMovie(Context context, int movieTmdbId, Lists listToAddTo) {
         // get movie info
         MovieDetails details = Download.getMovieDetails(context, movieTmdbId);
-        if (details.tmdbMovie() == null || details.released == null) {
+        if (details.tmdbMovie() == null) {
             // abort if minimal data failed to load
             return false;
         }
@@ -705,7 +707,7 @@ public class MovieTools {
                 // download movie data
                 MovieDetails movieDetails = getMovieDetails(traktSearch, traktMovies, tmdbMovies,
                         languageCode, tmdbId);
-                if (movieDetails.tmdbMovie() == null || movieDetails.released == null) {
+                if (movieDetails.tmdbMovie() == null) {
                     // skip if minimal values failed to load
                     Timber.d("addMovies: downloaded movie " + tmdbId + " incomplete, skipping");
                     continue;
@@ -764,25 +766,12 @@ public class MovieTools {
             Integer movieTraktId = lookupTraktId(traktSearch, movieTmdbId);
             if (movieTraktId != null) {
                 details.traktRatings(loadRatingsFromTrakt(traktMovies, movieTraktId));
-                Movie movie = loadSummaryFromTrakt(traktMovies, movieTraktId);
-                if (movie != null) {
-                    details.released = movie.released;
-                }
             }
 
             // load summary from tmdb
             details.tmdbMovie(loadSummaryFromTmdb(tmdbMovies, languageCode, movieTmdbId));
 
             return details;
-        }
-
-        private static Movie loadSummaryFromTrakt(Movies traktMovies, int movieTraktId) {
-            try {
-                return traktMovies.summary(String.valueOf(movieTraktId), Extended.FULL);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Loading trakt movie summary failed");
-                return null;
-            }
         }
 
         private static Ratings loadRatingsFromTrakt(Movies traktMovies, int movieTraktId) {
@@ -798,43 +787,15 @@ public class MovieTools {
                 MoviesService moviesService, String languageCode, int movieTmdbId) {
             try {
                 com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
-                        languageCode);
+                        languageCode, null);
                 if (movie != null && TextUtils.isEmpty(movie.overview)) {
                     // fall back to English if TMDb has no localized text
-                    movie = moviesService.summary(movieTmdbId);
+                    movie = moviesService.summary(movieTmdbId, null, null);
                 }
                 return movie;
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading TMDb movie summary failed");
                 return null;
-            }
-        }
-
-        private static void buildMovieUpdateOps(List<BaseMovie> remoteMovies,
-                HashSet<Integer> localMovies, Set<Integer> moviesToAdd,
-                HashSet<Integer> moviesToRemove, ArrayList<ContentProviderOperation> batch,
-                ContentValues values) {
-            for (BaseMovie movie : remoteMovies) {
-                if (movie.movie == null || movie.movie.ids == null
-                        || movie.movie.ids.tmdb == null) {
-                    continue; // skip invalid values
-                }
-
-                int movieTmdbId = movie.movie.ids.tmdb;
-
-                if (localMovies.contains(movieTmdbId)) {
-                    // update existing movie
-                    ContentProviderOperation op = ContentProviderOperation
-                            .newUpdate(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId))
-                            .withValues(values).build();
-                    batch.add(op);
-
-                    // prevent movie from getting removed
-                    moviesToRemove.remove(movieTmdbId);
-                } else {
-                    // insert new movie
-                    moviesToAdd.add(movieTmdbId);
-                }
             }
         }
 

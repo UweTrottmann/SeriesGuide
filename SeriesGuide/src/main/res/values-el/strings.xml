@@ -135,7 +135,6 @@
   <string name="action_watched">Έχει παρακολουθηθεί </string>
   <string name="action_unwatched">Δεν παρακολούθησα</string>
   <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
-  <string name="delete_has_list_items">Δεν μπορώ να το κάνω, παρακαλώ αφαιρέστε πρώτα το %s από όλες τις λίστες.</string>
   <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Ενημέρωση (παλιά μόνο)</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Επερχόμενα</string>
   <string name="recent">Πρόσφατο</string>
   <string name="friends">Φίλοι</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Διαχείριση λιστών</string>
   <string name="list_item_remove">Κατάργηση από τη λίστα</string>
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
   <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>
   <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
   <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
-  <string name="integration_trakt_items">- προσθέστε σειρές από τη βιβλιοθήκη σας και τη λίστα παρακολούθησης\n\n- δείτε τις προτάσεις για εσάς και τις δραστηριότητες των φίλων σας\n\n- αυτά που μαρκάρονται ότι τα έχετε παρακολουθήσει και συλλέξει, συγχρονίζονται αυτόματα\n\n- νέες σειρές που παρακολουθήσατε προστίθενται αυτόματα</string>
   <string name="action_rate">Αξιολόγηση</string>
   <string name="your_rating">Η βαθμολογία σας</string>
   <string name="love">Εντελώς ninja!</string>

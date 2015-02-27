@@ -35,7 +35,7 @@
   <string name="app_not_available">Ninguna aplicación disponible para manejar esto.</string>
   <string name="add_empty">No hay series.</string>
   <string name="people_empty">¿Nadie aquí? Toque para intentarlo de nuevo.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">No se pueden modificar los datos.</string>
   <string name="share">Compartir</string>
   <string name="share_show">Compartir serie</string>
   <string name="share_episode">Compartir episodio</string>
@@ -135,7 +135,6 @@
   <string name="action_watched">Visto</string>
   <string name="action_unwatched">No visto</string>
   <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
-  <string name="delete_has_list_items">No se puede realizar, quite %s de todas las listas primero.</string>
   <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>
   <string name="delete_show">Eliminar</string>
   <string name="dontdelete_show">No eliminar</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Actualizar (solo desactualizados)</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Siguiente episodio visto</string>
+  <string name="now_tab">Ahora</string>
+  <string name="recently_watched">Recientemente vistas</string>
+  <string name="released_today">Estrenadas hoy</string>
+  <string name="friends_recently">Tus amigos de trakt</string>
+  <string name="now_empty">No pasa nada. ¡Mira algunas series!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recientes</string>
   <string name="friends">Amigos</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Gestionar listas</string>
   <string name="list_item_remove">Eliminar de la lista</string>
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
+  <string name="action_lists_sort">Ordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
@@ -248,7 +253,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="add_trakt_shows">Añadir series de su biblioteca en trakt:</string>
   <string name="show_library">Muestra su biblioteca</string>
   <string name="about_trakt">trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo. <a href="http://trakt.tv">Saber más</a></string>
-  <string name="integration_trakt_items">- añade episodios de tu libreria o lista de visualización\n\n- vea sus recomendaciones y actividad de amigos\n\n- sincronización automática de capítulos vistos o marcados\n\n- las nuevas series que ves se añaden automáticamente</string>
   <string name="action_rate">Calificar</string>
   <string name="your_rating">Tu calificación</string>
   <string name="love">¡Una pasada!</string>

@@ -35,7 +35,7 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Nie można zmodyfikować danych.</string>
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
@@ -132,10 +132,9 @@
   <string name="action_collection_remove">Usuń z kolekcji</string>
   <string name="action_collection_added">Dodano do kolekcji</string>
   <string name="action_collection_removed">Usunięto z kolekcji</string>
-  <string name="action_watched">Obejrzane</string>
-  <string name="action_unwatched">Nie obejrzane</string>
+  <string name="action_watched">Ust. obejrzane</string>
+  <string name="action_unwatched">Ust. nieobejrzane</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
-  <string name="delete_has_list_items">Nie można kontynuować, usuń %s z wszystkich list.</string>
   <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie usuwaj</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Aktualizuj (stare)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_marknext">Odcinek obejrzany</string>
+  <string name="now_tab">Teraz</string>
+  <string name="recently_watched">Niedawno obejrzane</string>
+  <string name="released_today">Dodane dziś</string>
+  <string name="friends_recently">Twoi znajomi z trakt</string>
+  <string name="now_empty">Nic się nie dzieje. Obejrzyj coś! </string>
   <string name="upcoming">Nadchodzące</string>
   <string name="recent">Ostatnie</string>
   <string name="friends">Znajomi</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Zarządzaj listami</string>
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
+  <string name="action_lists_sort">Sortowanie list</string>
   <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
@@ -218,8 +223,8 @@
   <string name="hexagon_remove_account_success">Konto zostało usunięte.</string>
   <string name="hexagon_remove_account_failure">Usuwanie konta nie powiodło się.</string>
   <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Brak komunikacji z chmurą SeriesGuide. Spróbuj ponownie później.</string>
+  <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
   <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
   <string name="trakt_seen">%s obejrzane.</string>
   <string name="trakt_notseen">%s nieobejrzane.</string>
@@ -230,14 +235,14 @@
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
   <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
   <string name="trakt_account">Konto trakt</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_connect_instructions">Na następnym ekranie zaloguj się do trakt lub utwórz nowe konto. Następnie włącz dostęp SeriesGuide do konta trakt.</string>
   <string name="connect_trakt">Połącz z trakt</string>
   <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect_details">Sprawdź swoje poświadczenia trakt</string>
   <string name="username">Nazwa użytkownika</string>
   <string name="waitplease">Proszę czekać…</string>
   <string name="connect">Połącz</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Dodaj seriale z biblioteki:</string>
   <string name="show_library">Pokaż bibliotekę</string>
   <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
-  <string name="integration_trakt_items">-dodaje seriale z biblioteki i listy obejrzanych odcinków\n\n- zobacz rekomendację i aktywność przyjaciół\n\n - automatyczna synchronizacja oznaczenia jako obejrzane i kupione\n\n- automatyczne dodawanie nowo obejrzanych seriali</string>
   <string name="action_rate">Oceń</string>
   <string name="your_rating">Twoja ocena</string>
   <string name="love">Uwielbiam to!</string>

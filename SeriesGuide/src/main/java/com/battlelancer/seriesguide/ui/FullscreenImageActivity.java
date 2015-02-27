@@ -80,10 +80,10 @@ public class FullscreenImageActivity extends BaseActivity {
         //noinspection ConstantConditions
         if (!TextUtils.isEmpty(imagePath) && imagePath.startsWith("http")) {
             // load from network, typically for high resolution show posters
-            ServiceUtils.getPicasso(this).load(imagePath).into(mContentView);
+            ServiceUtils.loadWithPicasso(this, imagePath).into(mContentView);
         } else {
             // load from network or external cache, typically for episode images
-            ServiceUtils.getPicasso(this).load(TheTVDB.buildScreenshotUrl(imagePath))
+            ServiceUtils.loadWithPicasso(this, TheTVDB.buildScreenshotUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(mContentView, new Callback() {
                         @Override

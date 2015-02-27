@@ -135,7 +135,6 @@
   <string name="action_watched">Set watched</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Ar tikrai norite pašalinti %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">Pašalinti</string>
   <string name="dontdelete_show">Nepašalinti</string>
@@ -146,8 +145,8 @@
   <string name="unfavorited">Pašalinta iš mėgstamiausių</string>
   <string name="context_hide">Slėpti</string>
   <string name="context_unhide">Nebeslėpti</string>
-  <string name="hidden">Hidden show</string>
-  <string name="unhidden">Un-Hidden show</string>
+  <string name="hidden">Moved to hidden</string>
+  <string name="unhidden">Show is visible again</string>
   <string name="action_shows_add">Add show</string>
   <string name="action_shows_filter">Filter shows</string>
   <string name="empty_filter">Remove all filters</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Atnaujinti (tik pasenusius)</string>
   <string name="context_updateshow">Atnaujinti</string>
   <string name="context_marknext">Pažiūrėta kita serija</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Artėjančios</string>
   <string name="recent">Paskutinės</string>
   <string name="friends">Draugai</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Tvarkyti sąrašus</string>
   <string name="list_item_remove">Pašalinti iš sąrašo</string>
   <string name="list_empty">Į šį sąrašą galite įtraukti serialus, sezonus arba serijas.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Įtraukti sąrašus iš jūsų bibliotekos:</string>
   <string name="show_library">Rodyti biblioteką</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Your rating</string>
   <string name="love">Totalus nindzė!</string>

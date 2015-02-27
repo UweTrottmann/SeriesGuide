@@ -21,8 +21,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +30,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.PeopleActivity;
 import com.battlelancer.seriesguide.ui.PersonFragment;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.tmdb.entities.CastMember;
 import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb.entities.CrewMember;
 import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
@@ -77,9 +77,9 @@ public class PeopleListHelper {
         peopleContainer.removeAllViews();
 
         // show at most 3 cast members
-        List<Credits.CastMember> cast = credits.cast;
+        List<CastMember> cast = credits.cast;
         for (int i = 0; i < Math.min(3, cast.size()); i++) {
-            Credits.CastMember castMember = cast.get(i);
+            CastMember castMember = cast.get(i);
 
             View personView = createPersonView(context, inflater, peopleContainer, castMember.name,
                     castMember.character, castMember.profile_path);
@@ -113,9 +113,9 @@ public class PeopleListHelper {
         peopleContainer.removeAllViews();
 
         // show at most 3 crew members
-        List<Credits.CrewMember> crew = credits.crew;
+        List<CrewMember> crew = credits.crew;
         for (int i = 0; i < Math.min(3, crew.size()); i++) {
-            Credits.CrewMember castMember = crew.get(i);
+            CrewMember castMember = crew.get(i);
 
             View personView = createPersonView(context, inflater, peopleContainer, castMember.name,
                     castMember.job, castMember.profile_path);
@@ -144,9 +144,8 @@ public class PeopleListHelper {
         // support keyboard nav
         personView.setFocusable(true);
 
-        ServiceUtils.getPicasso(context)
-                .load(TmdbTools.buildProfileImageUrl(context, profilePath,
-                        TmdbTools.ProfileImageSize.W185))
+        ServiceUtils.loadWithPicasso(context, TmdbTools.buildProfileImageUrl(context, profilePath,
+                TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
                 .error(R.color.protection_dark)
@@ -220,9 +219,9 @@ public class PeopleListHelper {
         peopleContainer.addView(showAllView);
     }
 
-    public static List<Person> transformCastToPersonList(List<Credits.CastMember> cast) {
+    public static List<Person> transformCastToPersonList(List<CastMember> cast) {
         List<Person> people = new ArrayList<>();
-        for (Credits.CastMember castMember : cast) {
+        for (CastMember castMember : cast) {
             Person person = new Person();
             person.tmdbId = castMember.id;
             person.name = castMember.name;
@@ -233,9 +232,9 @@ public class PeopleListHelper {
         return people;
     }
 
-    public static List<Person> transformCrewToPersonList(List<Credits.CrewMember> crew) {
+    public static List<Person> transformCrewToPersonList(List<CrewMember> crew) {
         List<Person> people = new ArrayList<>();
-        for (Credits.CrewMember crewMember : crew) {
+        for (CrewMember crewMember : crew) {
             Person person = new Person();
             person.tmdbId = crewMember.id;
             person.name = crewMember.name;

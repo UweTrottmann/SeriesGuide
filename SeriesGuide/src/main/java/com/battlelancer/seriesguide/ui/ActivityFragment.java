@@ -108,7 +108,7 @@ public class ActivityFragment extends Fragment implements
 
         mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewUpcoming);
         mGridView.setEmptyView(emptyView);
-        mGridView.setAreHeadersSticky(true);
+        mGridView.setAreHeadersSticky(false);
 
         return v;
     }

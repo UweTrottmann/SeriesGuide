@@ -35,7 +35,7 @@
   <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
   <string name="add_empty">Nenhuma série aqui.</string>
   <string name="people_empty">Ninguém aqui?! Toque para tentar novamente.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Não pode modificar os dados.</string>
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>
   <string name="share_episode">Compartilhar episódio</string>
@@ -48,7 +48,7 @@
   <string name="no_shouts">Seja o primeiro a gritar!</string>
   <string name="refresh">Recarregar</string>
   <string name="movies_collection">Coleção</string>
-  <string name="movies_watchlist">Filmes para ver</string>
+  <string name="movies_watchlist">Filmes a assistir</string>
   <string name="watchlist_add">Adicionar à lista</string>
   <string name="watchlist_remove">Remover da lista</string>
   <string name="watchlist_added">Adicionado à lista</string>
@@ -56,7 +56,7 @@
   <string name="movies_search_hint">Digite o título de um filme</string>
   <string name="movies_empty">Procure por um filme acima.</string>
   <string name="movies_collection_empty">Você não adicionou filmes a sua coleção.</string>
-  <string name="movies_watchlist_empty">Você não adicionou filmes a sua lista de filmes para assistir.</string>
+  <string name="movies_watchlist_empty">Você não adicionou filmes à sua lista de filmes para assistir.</string>
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Elenco</string>
   <string name="movie_crew">Equipe</string>
@@ -70,8 +70,8 @@
   <string name="shows_continuing">%s em exibição</string>
   <string name="episodes_watched">%s assistidos</string>
   <string name="runtime_all_episodes">Tempo de execução de todos os episódios assistidos</string>
-  <string name="movies_on_watchlist">%s na lista de vigiados</string>
-  <string name="runtime_movies_watchlist">Tempo de execução do filme watchlist</string>
+  <string name="movies_on_watchlist">%s na lista de filmes a assistir</string>
+  <string name="runtime_movies_watchlist">Tempo de execução dos filmes na lista</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="zero">%d dia</item>
@@ -133,9 +133,8 @@
   <string name="action_collection_added">Adicionado à coleção</string>
   <string name="action_collection_removed">Removido da coleção</string>
   <string name="action_watched">Assistido</string>
-  <string name="action_unwatched">Não visto</string>
+  <string name="action_unwatched">Não assistido</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
-  <string name="delete_has_list_items">Primeiro remova %s de todas as listas.</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
@@ -146,8 +145,8 @@
   <string name="unfavorited">Removido dos favoritos</string>
   <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Exibir</string>
-  <string name="hidden">Ocultar série</string>
-  <string name="unhidden">Exibir série</string>
+  <string name="hidden">Série oculta</string>
+  <string name="unhidden">Série visível novamente</string>
   <string name="action_shows_add">Adicionar série</string>
   <string name="action_shows_filter">Filtrar séries</string>
   <string name="empty_filter">Remover todos os filtros</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Atualizar (obsoletas apenas)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
+  <string name="now_tab">Agora</string>
+  <string name="recently_watched">Recentemente assistidos</string>
+  <string name="released_today">Lançado hoje</string>
+  <string name="friends_recently">Seus amigos do trakt</string>
+  <string name="now_empty">Nada passando. Assista alguma coisa!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recente</string>
   <string name="friends">Amigos</string>
@@ -195,7 +199,7 @@
   <string name="add_already_exists">%s já está na sua lista de séries.</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Coleção</string>
-  <string name="watchlist">Séries para ver</string>
+  <string name="watchlist">A assistir</string>
   <string name="first_list">Primeira lista</string>
   <string name="list_add">Adicionar lista</string>
   <string name="list_title_hint">Nome da sua lista</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Gerenciar listas</string>
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
+  <string name="action_lists_sort">Ordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar a nuvem SeriesGuide</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
@@ -218,11 +223,11 @@
   <string name="hexagon_remove_account_success">Conta obliterada.</string>
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Removendo sua conta irá deletar todos as séries e filmes da nuvem do SeriesGuide. Não se esqueça de remover isso de outros dispositivos conectados.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Não conseguiu se comunicar com SeriesGuide Cloud. Tente novamente mais tarde.</string>
+  <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Enviando ao trakt.</string>
   <string name="trakt_seen">%s visto.</string>
-  <string name="trakt_notseen">%s não visto.</string>
+  <string name="trakt_notseen">%s não assistido.</string>
   <string name="trakt_collected">%s colecionado.</string>
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
@@ -230,14 +235,14 @@
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Enviado ao trakt.</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
-  <string name="trakt_account">conta trakt</string>
-  <string name="trakt_connect_instructions">Na próxima tela faça login no trakt ou crie uma nova conta. Depois de permissões de acesso à sua conta trakt.</string>
+  <string name="trakt_account">Conta trakt</string>
+  <string name="trakt_connect_instructions">Na próxima tela faça login no trakt ou crie uma nova conta. Depois dê permissões de acesso à sua conta trakt.</string>
   <string name="connect_trakt">Conectar trakt</string>
-  <string name="trakt_reconnect">Conecte SeriesGuide ao trakt</string>
-  <string name="trakt_reconnect_details">verefique suas credenciais trakt</string>
+  <string name="trakt_reconnect">Conecte o SeriesGuide ao trakt</string>
+  <string name="trakt_reconnect_details">Verifique suas credenciais do trakt</string>
   <string name="username">Usuário</string>
   <string name="waitplease">Um momento, por favor…</string>
   <string name="connect">Conectar</string>
@@ -246,8 +251,7 @@
   <string name="connect_trakt_done_explanation">SeriesGuide irá sincronizar as séries e filmes neste dispositivo com o trakt. Isto pode demorar um pouco.</string>
   <string name="add_trakt_shows">Adicione séries da sua coleção:</string>
   <string name="show_library">Mostrar sua coleção</string>
-  <string name="about_trakt">Trakt ajuda a manter um registro de quais programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
-  <string name="integration_trakt_items">- adicione séries da sua coleção e da lista de \'séries para assistir\'\n\n- veja suas recomendações e atividade dos amigos\n\n- sinalizações de \'assistido\' e \'colecionado\' são sincronizadas automaticamente\n\n- novas séries que você assistir são adicionadas automaticamente</string>
+  <string name="about_trakt">trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
   <string name="action_rate">Avaliar</string>
   <string name="your_rating">Sua classificação</string>
   <string name="love">Muito show!</string>
@@ -301,8 +305,8 @@
   <string name="upcoming_upto_three_days">3 dias</string>
   <string name="upcoming_upto_one_week">uma semana</string>
   <string name="upcoming_upto_two_weeks">duas semanas</string>
-  <string name="upcoming_upto_one_month">um mês</string>
-  <string name="upcoming_upto_one_hour">hora</string>
+  <string name="upcoming_upto_one_month">Um mês</string>
+  <string name="upcoming_upto_one_hour">1 hora</string>
   <string name="upcoming_upto_six_hours">6 horas</string>
   <string name="upcoming_upto_half_day">12 horas</string>
   <string name="pref_appearance">Aparência</string>
@@ -371,7 +375,7 @@
   <string name="notification_release_exact">no ar</string>
   <string name="notification_release_earlier_five">5 min de antecedência</string>
   <string name="notification_release_earlier_ten">10 min de antecedência</string>
-  <string name="notification_release_earlier_hour">uma hora de antecedência</string>
+  <string name="notification_release_earlier_hour">Uma hora de antecedência</string>
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <string name="bigwidget">SeriesGuide (médio)</string>
   <string name="largewidget">SeriesGuide (grande)</string>
@@ -385,7 +389,7 @@
   <string name="widget_background_opaque">Opaco</string>
   <string name="dashclock_extension_label">Episódio futuro</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios</string>
+  <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios…</string>
   <string name="onlyx">Só para quem desbloqueou o app</string>
   <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>

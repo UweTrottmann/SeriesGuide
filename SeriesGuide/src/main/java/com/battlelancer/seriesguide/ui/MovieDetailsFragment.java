@@ -61,10 +61,9 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.entities.Trailers;
+import com.uwetrottmann.tmdb.entities.Videos;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
-import org.joda.time.DateTime;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -92,7 +91,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private MovieDetails mMovieDetails = new MovieDetails();
 
-    private Trailers mTrailers;
+    private Videos.Video mTrailer;
 
     private String mImageBaseUrl;
 
@@ -240,33 +239,28 @@ public class MovieDetailsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         if (mMovieDetails != null) {
+            // choose theme variant
             boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
             inflater.inflate(
                     isLightTheme ? R.menu.movie_details_menu_light : R.menu.movie_details_menu,
                     menu);
 
-            // hide Google Play button in Amazon version
-            if (Utils.isAmazonVersion()) {
-                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
-                playStoreItem.setEnabled(false);
-                playStoreItem.setVisible(false);
-            }
-        }
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        if (mMovieDetails != null) {
+            // enable/disable actions
             boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
                     mMovieDetails.tmdbMovie().title);
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare);
+            MenuItem webSearchItem = menu.findItem(R.id.menu_action_movie_websearch);
+            webSearchItem.setEnabled(isEnableShare);
+            webSearchItem.setVisible(isEnableShare);
 
-            if (!Utils.isAmazonVersion()) {
-                MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+            MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
+            if (Utils.isAmazonVersion()) {
+                // hide Google Play button in Amazon version
+                playStoreItem.setEnabled(false);
+                playStoreItem.setVisible(false);
+            } else {
                 playStoreItem.setEnabled(isEnableShare);
                 playStoreItem.setVisible(isEnableShare);
             }
@@ -277,7 +271,7 @@ public class MovieDetailsFragment extends Fragment {
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
 
-            boolean isEnableYoutube = mTrailers != null && mTrailers.youtube.size() > 0;
+            boolean isEnableYoutube = mTrailer != null;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
             youtubeItem.setVisible(isEnableYoutube);
@@ -297,8 +291,7 @@ public class MovieDetailsFragment extends Fragment {
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            ServiceUtils.openYoutube(mTrailers.youtube.get(0).source, TAG,
-                    getActivity());
+            ServiceUtils.openYoutube(mTrailer.key, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_google_play) {
@@ -311,6 +304,10 @@ public class MovieDetailsFragment extends Fragment {
         }
         if (itemId == R.id.menu_open_trakt) {
             ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);
+            return true;
+        }
+        if (itemId == R.id.menu_action_movie_websearch) {
+            ServiceUtils.performWebSearch(getActivity(), mMovieDetails.tmdbMovie().title, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -326,7 +323,6 @@ public class MovieDetailsFragment extends Fragment {
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
         final boolean isWatched = mMovieDetails.isWatched;
-        final DateTime released = mMovieDetails.released;
         final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
@@ -334,9 +330,9 @@ public class MovieDetailsFragment extends Fragment {
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
-        if (released != null && released.getMillis() != 0) {
+        if (tmdbMovie.release_date != null) {
             releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
-                    released.getMillis(), DateUtils.FORMAT_SHOW_DATE));
+                    tmdbMovie.release_date.getTime(), DateUtils.FORMAT_SHOW_DATE));
             releaseAndRuntime.append(" | ");
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
@@ -454,6 +450,7 @@ public class MovieDetailsFragment extends Fragment {
             mRatingsTraktUserLabel.setVisibility(View.GONE);
             mRatingsTraktUserValue.setVisibility(View.GONE);
             mRatingsContainer.setClickable(false);
+            mRatingsContainer.setLongClickable(false); // cheat sheet
         } else {
             mRatingsTraktUserLabel.setVisibility(View.VISIBLE);
             mRatingsTraktUserValue.setVisibility(View.VISIBLE);
@@ -489,8 +486,8 @@ public class MovieDetailsFragment extends Fragment {
 
         // load poster, cache on external storage
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.getPicasso(getActivity())
-                    .load(mImageBaseUrl + tmdbMovie.poster_path).into(mMoviePosterBackground);
+            ServiceUtils.loadWithPicasso(getActivity(), mImageBaseUrl + tmdbMovie.poster_path)
+                    .into(mMoviePosterBackground);
         }
     }
 
@@ -578,26 +575,26 @@ public class MovieDetailsFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Trailers> mMovieTrailerLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Trailers>() {
+    private LoaderManager.LoaderCallbacks<Videos.Video> mMovieTrailerLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
-        public Loader<Trailers> onCreateLoader(int loaderId, Bundle args) {
+        public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
             return new MovieTrailersLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
-        public void onLoadFinished(Loader<Trailers> trailersLoader, Trailers trailers) {
+        public void onLoadFinished(Loader<Videos.Video> trailersLoader, Videos.Video trailer) {
             if (!isAdded()) {
                 return;
             }
-            if (trailers != null) {
-                mTrailers = trailers;
+            if (trailer != null) {
+                mTrailer = trailer;
                 getActivity().invalidateOptionsMenu();
             }
         }
 
         @Override
-        public void onLoaderReset(Loader<Trailers> trailersLoader) {
+        public void onLoaderReset(Loader<Videos.Video> trailersLoader) {
             // do nothing
         }
     };

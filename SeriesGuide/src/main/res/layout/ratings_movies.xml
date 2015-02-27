@@ -34,7 +34,7 @@
         android:layout_marginTop="-4dp"
         android:layout_below="@+id/textViewRatingsTmdbValue"
         android:text="@string/tmdb"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:textAppearance="@style/TextAppearance.Caption" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:layout_marginTop="-4dp"
             android:layout_below="@+id/textViewRatingsTraktValue"
             android:text="@string/trakt"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption" />
 
     </RelativeLayout>
 
@@ -91,6 +91,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewRatingsTraktUser"
         android:text="@string/your_rating"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:textAppearance="@style/TextAppearance.Caption" />
 
 </RelativeLayout>

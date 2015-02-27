@@ -42,26 +42,30 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
+import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import de.greenrobot.event.EventBus;
 import java.util.Date;
 import java.util.List;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
+ * Displays show details as well.
  */
 public class AddShowDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddDialogFragment";
+    public static final String TAG = "AddShowDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
+
     private SearchResult mShow;
 
     /**
-     * Display a dialog which asks if the user wants to add the given show to his show database. If
-     * necessary an AsyncTask will be started which takes care of adding the show.
+     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * show.
      */
     public static void showAddDialog(SearchResult show, FragmentManager fm) {
         // DialogFragment.show() will take care of adding the fragment
@@ -77,6 +81,18 @@ public class AddShowDialogFragment extends DialogFragment {
         // Create and show the dialog.
         DialogFragment newFragment = AddShowDialogFragment.newInstance(show);
         newFragment.show(ft, TAG);
+    }
+
+    /**
+     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * show.
+     *
+     * <p> Use if there is no actual search result, but just a TheTVDB id available.
+     */
+    public static void showAddDialog(int showTvdbId, FragmentManager fm) {
+        SearchResult fakeResult = new SearchResult();
+        fakeResult.tvdbid = showTvdbId;
+        showAddDialog(fakeResult, fm);
     }
 
     public static AddShowDialogFragment newInstance(SearchResult show) {
@@ -169,10 +185,14 @@ public class AddShowDialogFragment extends DialogFragment {
         mButtonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                mShow.isAdded = true;
+                EventBus.getDefault().post(new AddFragment.AddShowEvent());
+
                 mListener.onAddShow(mShow);
                 dismiss();
             }
         });
+        mButtonPositive.setEnabled(false);
 
         ButterKnife.apply(labelViews, VISIBLE, false);
 
@@ -184,7 +204,6 @@ public class AddShowDialogFragment extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         showProgressBar(true);
-        populateShowViews(null);
 
         // load show details
         Bundle args = new Bundle();
@@ -207,16 +226,17 @@ public class AddShowDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
-    private LoaderManager.LoaderCallbacks<Show> mShowLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Show>() {
+    private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<TvdbShowLoader.Result>() {
         @Override
-        public Loader<Show> onCreateLoader(int id, Bundle args) {
+        public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
             return new TvdbShowLoader(getActivity(), showTvdbId);
         }
 
         @Override
-        public void onLoadFinished(Loader<Show> loader, Show data) {
+        public void onLoadFinished(Loader<TvdbShowLoader.Result> loader,
+                TvdbShowLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -225,22 +245,30 @@ public class AddShowDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<Show> loader) {
+        public void onLoaderReset(Loader<TvdbShowLoader.Result> loader) {
             // do nothing
         }
     };
 
-    private void populateShowViews(Show show) {
+    private void populateShowViews(TvdbShowLoader.Result result) {
+        Show show = result.show;
         if (show == null) {
-            mButtonPositive.setEnabled(false);
+            // failed to load, can't be added
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
             }
             return;
         }
+        if (result.isAdded) {
+            // already added, prevent adding
+            mButtonPositive.setVisibility(View.GONE);
+            mButtonNegative.setText(R.string.dismiss);
+        } else {
+            mButtonPositive.setEnabled(true);
+        }
 
-        mButtonPositive.setEnabled(true);
-        ButterKnife.apply(labelViews, VISIBLE, true);
+        // store title for add task
+        mShow.title = show.title;
 
         // title, overview
         title.setText(show.title);
@@ -290,7 +318,11 @@ public class AddShowDialogFragment extends DialogFragment {
         Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
 
         // poster
-        Utils.loadPosterThumbnail(getActivity(), poster, show.poster);
+        Utils.loadTvdbShowPoster(getActivity(), poster, show.poster);
+
+        // enable adding of show, display views
+        mButtonPositive.setEnabled(true);
+        ButterKnife.apply(labelViews, VISIBLE, true);
     }
 
     private void showProgressBar(boolean isVisible) {

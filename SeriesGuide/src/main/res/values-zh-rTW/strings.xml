@@ -135,7 +135,6 @@
   <string name="action_watched">Set watched</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_error">Could not remove show. Try again later.</string>
   <string name="delete_show">刪除</string>
   <string name="dontdelete_show">請勿移除</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">更新(僅已過時資料)</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">觀看下一集</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">即將播出</string>
   <string name="recent">最近</string>
   <string name="friends">好友</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Manage lists</string>
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Add more shows from your trakt library:</string>
   <string name="show_library">Show your trakt library</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">您的評分</string>
   <string name="love">太讚啦!</string>

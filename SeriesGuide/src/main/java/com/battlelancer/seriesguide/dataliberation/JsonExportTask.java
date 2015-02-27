@@ -255,9 +255,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
             show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
+            show.rating_user = shows.getInt(ShowsQuery.RATING_USER);
             if (mIsFullDump) {
                 show.overview = shows.getString(ShowsQuery.OVERVIEW);
-                show.rating = shows.getDouble(ShowsQuery.RATING);
+                show.rating = shows.getDouble(ShowsQuery.RATING_GLOBAL);
+                show.rating_votes = shows.getInt(ShowsQuery.RATING_VOTES);
                 show.genres = shows.getString(ShowsQuery.GENRES);
                 show.actors = shows.getString(ShowsQuery.ACTORS);
                 show.lastUpdated = shows.getLong(ShowsQuery.LAST_UPDATED);
@@ -326,13 +328,15 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             episode.title = episodesCursor.getString(EpisodesQuery.TITLE);
             episode.firstAired = episodesCursor.getLong(EpisodesQuery.FIRSTAIRED);
             episode.imdbId = episodesCursor.getString(EpisodesQuery.IMDBID);
+            episode.rating_user = episodesCursor.getInt(EpisodesQuery.RATING_USER);
             if (mIsFullDump) {
                 episode.overview = episodesCursor.getString(EpisodesQuery.OVERVIEW);
                 episode.image = episodesCursor.getString(EpisodesQuery.IMAGE);
                 episode.writers = episodesCursor.getString(EpisodesQuery.WRITERS);
                 episode.gueststars = episodesCursor.getString(EpisodesQuery.GUESTSTARS);
                 episode.directors = episodesCursor.getString(EpisodesQuery.DIRECTORS);
-                episode.rating = episodesCursor.getDouble(EpisodesQuery.RATING);
+                episode.rating = episodesCursor.getDouble(EpisodesQuery.RATING_GLOBAL);
+                episode.rating_votes = episodesCursor.getInt(EpisodesQuery.RATING_VOTES);
                 episode.lastEdited = episodesCursor.getLong(EpisodesQuery.LAST_EDITED);
             }
 
@@ -524,7 +528,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RUNTIME,
                 Shows.NETWORK,
                 Shows.IMDBID,
-                Shows.FIRST_RELEASE
+                Shows.FIRST_RELEASE,
+                Shows.RATING_USER
         };
         String[] PROJECTION_FULL = new String[] {
                 Shows._ID,
@@ -543,8 +548,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.NETWORK,
                 Shows.IMDBID,
                 Shows.FIRST_RELEASE,
+                Shows.RATING_USER,
                 Shows.OVERVIEW,
                 Shows.RATING_GLOBAL,
+                Shows.RATING_VOTES,
                 Shows.GENRES,
                 Shows.ACTORS,
                 Shows.LASTUPDATED,
@@ -569,26 +576,50 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int NETWORK = 13;
         int IMDBID = 14;
         int FIRSTAIRED = 15;
+        int RATING_USER = 16;
         // Full dump only
-        int OVERVIEW = 16;
-        int RATING = 17;
-        int GENRES = 18;
-        int ACTORS = 19;
-        int LAST_UPDATED = 20;
-        int LAST_EDITED = 21;
+        int OVERVIEW = 17;
+        int RATING_GLOBAL = 18;
+        int RATING_VOTES = 19;
+        int GENRES = 20;
+        int ACTORS = 21;
+        int LAST_UPDATED = 22;
+        int LAST_EDITED = 23;
     }
 
     public interface EpisodesQuery {
         String[] PROJECTION = new String[] {
-                Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
-                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
-                Episodes.DVDNUMBER
+                Episodes._ID,
+                Episodes.NUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.WATCHED,
+                Episodes.COLLECTED,
+                Episodes.TITLE,
+                Episodes.FIRSTAIREDMS,
+                Episodes.IMDBID,
+                Episodes.DVDNUMBER,
+                Episodes.RATING_USER
         };
         String[] PROJECTION_FULL = new String[] {
-                Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
-                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
-                Episodes.DVDNUMBER, Episodes.OVERVIEW, Episodes.IMAGE, Episodes.WRITERS,
-                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING_GLOBAL, Episodes.LAST_EDITED
+                Episodes._ID,
+                Episodes.NUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.WATCHED,
+                Episodes.COLLECTED,
+                Episodes.TITLE,
+                Episodes.FIRSTAIREDMS,
+                Episodes.IMDBID,
+                Episodes.DVDNUMBER,
+                Episodes.RATING_USER,
+                // Full dump only
+                Episodes.OVERVIEW,
+                Episodes.IMAGE,
+                Episodes.WRITERS,
+                Episodes.GUESTSTARS,
+                Episodes.DIRECTORS,
+                Episodes.RATING_GLOBAL,
+                Episodes.RATING_VOTES,
+                Episodes.LAST_EDITED
         };
 
         String SORT = Episodes.NUMBER + " ASC";
@@ -602,14 +633,16 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int FIRSTAIRED = 6;
         int IMDBID = 7;
         int NUMBER_DVD = 8;
+        int RATING_USER = 9;
         // Full dump only
-        int OVERVIEW = 9;
-        int IMAGE = 10;
-        int WRITERS = 11;
-        int GUESTSTARS = 12;
-        int DIRECTORS = 13;
-        int RATING = 14;
-        int LAST_EDITED = 15;
+        int OVERVIEW = 10;
+        int IMAGE = 11;
+        int WRITERS = 12;
+        int GUESTSTARS = 13;
+        int DIRECTORS = 14;
+        int RATING_GLOBAL = 15;
+        int RATING_VOTES = 16;
+        int LAST_EDITED = 17;
     }
 
     public interface ListsQuery {
@@ -639,9 +672,16 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface MoviesQuery {
         String[] PROJECTION = new String[] {
-                Movies._ID, Movies.TMDB_ID, Movies.IMDB_ID, Movies.TITLE, Movies.RELEASED_UTC_MS,
-                Movies.RUNTIME_MIN, Movies.POSTER,
-                Movies.IN_COLLECTION, Movies.IN_WATCHLIST, Movies.WATCHED,
+                Movies._ID,
+                Movies.TMDB_ID,
+                Movies.IMDB_ID,
+                Movies.TITLE,
+                Movies.RELEASED_UTC_MS,
+                Movies.RUNTIME_MIN,
+                Movies.POSTER,
+                Movies.IN_COLLECTION,
+                Movies.IN_WATCHLIST,
+                Movies.WATCHED,
                 Movies.OVERVIEW
         };
 

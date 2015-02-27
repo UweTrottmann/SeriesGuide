@@ -581,7 +581,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         // try loading image
         mImageContainer.setVisibility(View.VISIBLE);
-        ServiceUtils.getPicasso(getActivity()).load(TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(mEpisodeImage,
                         new Callback() {

@@ -74,7 +74,7 @@ public class MoviesSearchFragment extends Fragment implements
 
     @InjectView(R.id.containerMoviesSearchContent) View resultsContainer;
     @InjectView(R.id.progressBarMoviesSearch) View progressBar;
-    @InjectView(android.R.id.list) GridView resultsGridView;
+    @InjectView(R.id.gridViewMoviesSearch) GridView resultsGridView;
     @InjectView(R.id.emptyViewMoviesSearch) TextView emptyView;
     @InjectView(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
     @InjectView(R.id.buttonMoviesSearchClear) View clearButton;

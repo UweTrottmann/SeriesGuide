@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,7 +25,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.CheckinResponse;
 import com.battlelancer.seriesguide.traktapi.Response;
@@ -43,18 +41,11 @@ import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncErrors;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.SyncSeason;
-import com.uwetrottmann.trakt.v2.entities.SyncShow;
-import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
-import com.uwetrottmann.trakt.v2.services.Sync;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -81,13 +72,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String EPISODE_TVDBID = "episode-tvdbid";
 
-        String SEASON = "season";
-
-        String EPISODE = "episode";
-
         String MESSAGE = "message";
-
-        String RATING = "rating";
 
         String ISSPOILER = "isspoiler";
     }
@@ -192,18 +177,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         return this;
     }
 
-    public TraktTask collectionAddMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_ADD_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    public TraktTask collectionRemoveMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COLLECTION_REMOVE_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
     /**
      * Post a comment for a show.
      */
@@ -234,66 +207,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         mArgs.putString(InitBundle.MESSAGE, comment);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
-        return this;
-    }
-
-    /**
-     * Rate an episode.
-     */
-    public TraktTask rateEpisode(int episodeTvdbId, Rating rating) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.name());
-        mArgs.putInt(InitBundle.RATING, rating.value);
-        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
-        return this;
-    }
-
-    /**
-     * Rate a show.
-     */
-    public TraktTask rateShow(int showTvdbId, Rating rating) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.name());
-        mArgs.putInt(InitBundle.RATING, rating.value);
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbId);
-        return this;
-    }
-
-    /**
-     * Rate a movie.
-     */
-    public TraktTask rateMovie(int movieTmdbId, Rating rating) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.RATE_MOVIE.name());
-        mArgs.putInt(InitBundle.RATING, rating.value);
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    public TraktTask watchedMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHED_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    public TraktTask unwatchedMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.UNWATCHED_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    /**
-     * Add a movie to a users watchlist.
-     */
-    public TraktTask watchlistMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.WATCHLIST_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        return this;
-    }
-
-    /**
-     * Remove a movie from a users watchlist.
-     */
-    public TraktTask unwatchlistMovie(int movieTmdbId) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.UNWATCHLIST_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
         return this;
     }
 
@@ -331,19 +244,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case CHECKIN_EPISODE:
                 case CHECKIN_MOVIE: {
                     return doCheckInAction(trakt.checkin());
-                }
-                case RATE_EPISODE:
-                case RATE_SHOW:
-                case RATE_MOVIE: {
-                    return doRatingAction(trakt.sync());
-                }
-                case COLLECTION_ADD_MOVIE:
-                case COLLECTION_REMOVE_MOVIE:
-                case WATCHLIST_MOVIE:
-                case UNWATCHLIST_MOVIE:
-                case WATCHED_MOVIE:
-                case UNWATCHED_MOVIE: {
-                    return doMovieAction(trakt.sync());
                 }
                 case COMMENT: {
                     return doCommentAction(trakt.comments());
@@ -400,137 +300,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         r.status = TraktStatus.SUCCESS;
         r.message = mContext.getString(R.string.checkin_success_trakt,
                 mArgs.getString(InitBundle.TITLE));
-        return r;
-    }
-
-    private Response doRatingAction(Sync traktSync) throws OAuthUnauthorizedException {
-        Rating rating = Rating.fromValue(mArgs.getInt(InitBundle.RATING));
-        SyncItems ratedItems = new SyncItems();
-
-        switch (mAction) {
-            case RATE_EPISODE: {
-                int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
-                int season = -1;
-                int episode = -1;
-                int showTvdbId = -1;
-                Cursor query = mContext.getContentResolver()
-                        .query(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId),
-                                new String[] {
-                                        SeriesGuideContract.Episodes.SEASON,
-                                        SeriesGuideContract.Episodes.NUMBER,
-                                        SeriesGuideContract.Shows.REF_SHOW_ID }, null, null, null);
-                if (query != null) {
-                    if (query.moveToFirst()) {
-                        season = query.getInt(0);
-                        episode = query.getInt(1);
-                        showTvdbId = query.getInt(2);
-                    }
-                    query.close();
-                }
-
-                if (season == -1 || episode == -1 || showTvdbId == -1) {
-                    Response r = new Response();
-                    r.status = TraktStatus.FAILURE;
-                    r.error = mContext.getString(R.string.trakt_error_general);
-                    return r;
-                }
-
-                ratedItems.shows(new SyncShow().id(ShowIds.tvdb(showTvdbId))
-                        .seasons(new SyncSeason().number(season)
-                                .episodes(new SyncEpisode().number(episode)
-                                        .rating(rating))));
-                break;
-            }
-            case RATE_SHOW: {
-                int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
-                ratedItems.shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)).rating(rating));
-                break;
-            }
-            case RATE_MOVIE: {
-                int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-                ratedItems.movies(new SyncMovie().id(MovieIds.tmdb(tmdbId)).rating(rating));
-                break;
-            }
-        }
-
-        // upload ratings
-        SyncResponse response = traktSync.addRatings(ratedItems);
-
-        // handle errors
-        Response r = new Response();
-        r.status = TraktStatus.SUCCESS;
-        r.message = mContext.getString(R.string.trakt_success);
-
-        if (response == null) {
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
-        } else {
-            SyncErrors notFound = response.not_found;
-            if (notFound != null) {
-                if ((notFound.movies != null && notFound.movies.size() != 0)
-                        || (notFound.shows != null && notFound.shows.size() != 0)
-                        || (notFound.episodes != null && notFound.episodes.size() != 0)) {
-                    r.status = TraktStatus.FAILURE;
-                    r.error = mContext.getString(R.string.trakt_error_general);
-                }
-            }
-        }
-
-        return r;
-    }
-
-    private Response doMovieAction(Sync traktSync) throws OAuthUnauthorizedException {
-        int tmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-        SyncItems items = new SyncItems().movies(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
-
-        SyncResponse response = null;
-        Response r = new Response();
-        switch (mAction) {
-            case COLLECTION_ADD_MOVIE: {
-                response = traktSync.addItemsToCollection(items);
-                // always returns success, even if movie is already in collection
-                r.message = mContext.getString(R.string.action_collection_added);
-                break;
-            }
-            case COLLECTION_REMOVE_MOVIE: {
-                response = traktSync.deleteItemsFromCollection(items);
-                // always returns success, even if movie was never in collection
-                r.message = mContext.getString(R.string.action_collection_removed);
-                break;
-            }
-            case WATCHED_MOVIE: {
-                response = traktSync.addItemsToWatchedHistory(items);
-                r.message = mContext.getString(R.string.action_watched);
-                break;
-            }
-            case UNWATCHED_MOVIE: {
-                response = traktSync.deleteItemsFromWatchedHistory(items);
-                r.message = mContext.getString(R.string.action_unwatched);
-                break;
-            }
-            case WATCHLIST_MOVIE: {
-                response = traktSync.addItemsToWatchlist(items);
-                // always returns success, even if movie is already on watchlist
-                r.message = mContext.getString(R.string.watchlist_added);
-                break;
-            }
-            case UNWATCHLIST_MOVIE: {
-                response = traktSync.deleteItemsFromWatchlist(items);
-                // always returns success, even if movie is not on watchlist anymore
-                r.message = mContext.getString(R.string.watchlist_removed);
-                break;
-            }
-        }
-
-        if (response == null ||
-                (response.not_found != null && response.not_found.movies != null
-                        && response.not_found.movies.size() != 0)) {
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
-        } else {
-            r.status = TraktStatus.SUCCESS;
-        }
-
         return r;
     }
 

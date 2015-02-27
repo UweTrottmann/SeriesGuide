@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -99,8 +98,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
 
         // poster
-        ServiceUtils.getPicasso(getContext())
-                .load(mImageBaseUrl + movie.poster_path)
+        ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
                 .into(holder.poster);
 
         // context menu

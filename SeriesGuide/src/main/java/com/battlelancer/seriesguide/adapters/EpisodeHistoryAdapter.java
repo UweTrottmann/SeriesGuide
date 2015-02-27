@@ -17,14 +17,10 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
@@ -44,42 +40,32 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friend, parent, false);
-
-            holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.textViewFriendUsername);
-            holder.show = (TextView) convertView.findViewById(R.id.textViewFriendShow);
-            holder.episode = (TextView) convertView.findViewById(R.id.textViewFriendEpisode);
-            holder.more = (TextView) convertView.findViewById(R.id.textViewFriendMore);
-            holder.timestamp = (TextView) convertView.findViewById(
-                    R.id.textViewFriendTimestamp);
-            holder.poster = (ImageView) convertView.findViewById(R.id.imageViewFriendPoster);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewFriendAvatar);
-            holder.type = (ImageView) convertView.findViewById(R.id.imageViewFriendActionType);
-
+            convertView = mInflater.inflate(R.layout.item_history, parent, false);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // Bind the data efficiently with the holder.
         HistoryEntry item = getItem(position);
 
-        // show title and poster
-        holder.show.setText(item.show == null ? null : item.show.title);
-        if (item.show.images != null && item.show.images.poster != null && !TextUtils.isEmpty(
-                item.show.images.poster.thumb)) {
-            ServiceUtils.getPicasso(getContext())
-                    .load(item.show.images.poster.thumb)
-                    .into(holder.poster);
-        }
+        // show title
+        holder.title.setText(item.show == null ? null : item.show.title);
+        // show poster
+        String poster =
+                (item.show == null || item.show.images == null || item.show.images.poster == null)
+                        ? null : item.show.images.poster.thumb;
+        Utils.loadSmallPoster(getContext(), holder.poster, poster);
 
         // timestamp
-        CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
-                item.watched_at.getMillis(), System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-        holder.timestamp.setTextAppearance(getContext(), R.style.TextAppearance_Caption_Dim);
-        holder.timestamp.setText(timestamp);
+        if (item.watched_at != null) {
+            CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
+                    item.watched_at.getMillis(), System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
+            holder.timestamp.setText(timestamp);
+        } else {
+            holder.timestamp.setText(null);
+        }
 
         // action type indicator
         if ("watch".equals(item.action)) {
@@ -91,30 +77,13 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         }
 
         // episode
-        holder.episode.setText(item.episode == null ? null
-                : Utils.getNextEpisodeString(getContext(), item.episode.season, item.episode.number,
-                        item.episode.title));
-        holder.more.setText(null);
+        if (item.episode != null && item.episode.season != null && item.episode.number != null) {
+            holder.description.setText(Utils.getNextEpisodeString(getContext(), item.episode.season,
+                    item.episode.number, item.episode.title));
+        } else {
+            holder.description.setText(null);
+        }
 
         return convertView;
-    }
-
-    static class ViewHolder {
-
-        TextView name;
-
-        TextView show;
-
-        TextView episode;
-
-        TextView more;
-
-        TextView timestamp;
-
-        ImageView poster;
-
-        ImageView avatar;
-
-        ImageView type;
     }
 }

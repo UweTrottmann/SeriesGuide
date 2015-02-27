@@ -24,6 +24,7 @@ import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
@@ -72,6 +73,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
         throw new UnsupportedOperationException();
     }
 
+    @NonNull
     @Override
     public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response, Account account)
             throws NetworkErrorException {

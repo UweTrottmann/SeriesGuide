@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
@@ -41,6 +42,27 @@ import java.util.Map;
  */
 public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
         StickyGridHeadersBaseAdapter {
+
+    public static class ViewHolder {
+
+        TextView title;
+
+        TextView description;
+
+        TextView timestamp;
+
+        ImageView poster;
+
+        ImageView type;
+
+        public ViewHolder(View view) {
+            title = (TextView) view.findViewById(R.id.textViewHistoryTitle);
+            description = (TextView) view.findViewById(R.id.textViewHistoryDescription);
+            timestamp = (TextView) view.findViewById(R.id.textViewHistoryTimestamp);
+            poster = (ImageView) view.findViewById(R.id.imageViewHistoryPoster);
+            type = (ImageView) view.findViewById(R.id.imageViewHistoryType);
+        }
+    }
 
     protected final LayoutInflater mInflater;
 
@@ -102,10 +124,10 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.grid_activity_header, parent, false);
+            convertView = mInflater.inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
-            holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
+            holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
 
             convertView.setTag(holder);
         } else {

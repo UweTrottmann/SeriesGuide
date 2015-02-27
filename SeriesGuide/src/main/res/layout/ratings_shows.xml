@@ -60,7 +60,7 @@
         android:layout_marginTop="-4dp"
         android:layout_below="@+id/textViewRatingsValue"
         android:text="@string/trakt"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:textAppearance="@style/TextAppearance.Caption" />
 
     <TextView
         android:id="@+id/textViewRatingsUser"
@@ -79,6 +79,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewRatingsUser"
         android:text="@string/your_rating"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:textAppearance="@style/TextAppearance.Caption" />
 
 </RelativeLayout>

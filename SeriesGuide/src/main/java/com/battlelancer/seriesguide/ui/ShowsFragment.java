@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.melnykov.fab.FloatingActionButton;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
@@ -152,6 +153,16 @@ public class ShowsFragment extends Fragment implements
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
 
+        // setup floating action button for adding shows
+        FloatingActionButton buttonAddShow = (FloatingActionButton) getView().findViewById(
+                R.id.buttonShowsAdd);
+        buttonAddShow.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddActivity.class));
+            }
+        });
+
         // listen for some settings changes
         PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
@@ -174,7 +185,7 @@ public class ShowsFragment extends Fragment implements
     private void updateEmptyView() {
         View oldEmptyView = mGrid.getEmptyView();
 
-        View emptyView = null;
+        View emptyView;
         if (mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming || mIsFilterHidden) {
             emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
         } else {
@@ -563,7 +574,7 @@ public class ShowsFragment extends Fragment implements
                     cursor.getString(ShowsQuery.NETWORK)));
 
             // set poster
-            Utils.loadPosterThumbnail(context, viewHolder.poster,
+            Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(ShowsQuery.POSTER));
 
             // context menu

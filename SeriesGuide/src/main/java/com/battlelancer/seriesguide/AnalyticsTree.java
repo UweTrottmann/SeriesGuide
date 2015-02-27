@@ -31,7 +31,7 @@ import timber.log.Timber;
  */
 public class AnalyticsTree extends Timber.HollowTree implements Timber.TaggedTree {
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
-    private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
+    private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<>();
 
     private final Context context;
 

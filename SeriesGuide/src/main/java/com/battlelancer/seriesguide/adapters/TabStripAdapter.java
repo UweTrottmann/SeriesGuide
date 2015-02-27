@@ -33,7 +33,7 @@ import java.util.Locale;
  */
 public class TabStripAdapter extends FragmentPagerAdapter {
 
-    private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+    private final ArrayList<TabInfo> mTabs = new ArrayList<>();
 
     private final Context mContext;
 

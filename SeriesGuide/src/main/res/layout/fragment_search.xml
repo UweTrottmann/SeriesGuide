@@ -9,9 +9,11 @@
         style="@style/DefaultPadding.List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/grid_topbottom_padding"
+        android:paddingBottom="@dimen/grid_topbottom_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/search_padding_right"
-        android:dividerHeight="4dp"
+        android:dividerHeight="@dimen/grid_vertical_spacing"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
         android:scrollbarStyle="outsideOverlay" />

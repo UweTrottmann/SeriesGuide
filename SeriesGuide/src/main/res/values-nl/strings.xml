@@ -35,7 +35,7 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="people_empty">Niemand?! Probeer opnieuw.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Wijziging niet mogelijk.</string>
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
@@ -135,7 +135,6 @@
   <string name="action_watched">Bekeken</string>
   <string name="action_unwatched">Niet bekeken</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
-  <string name="delete_has_list_items">Kan geen overeenkomst vinden; verwijder eerst %s uit alle lijsten.</string>
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Bijwerken (alleen verouderde)</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_marknext">Volgende aflevering bekeken</string>
+  <string name="now_tab">Nu</string>
+  <string name="recently_watched">Laatst gekeken</string>
+  <string name="released_today">Vandaag uitgebracht.</string>
+  <string name="friends_recently">Je Trakt contacten</string>
+  <string name="now_empty">Nog niets, kijk eerst wat series.</string>
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
   <string name="friends">Vrienden</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Lijsten beheren</string>
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
+  <string name="action_lists_sort">Sorteer lijst</string>
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
@@ -218,8 +223,8 @@
   <string name="hexagon_remove_account_success">Account vernietigd.</string>
   <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Communicatie met Trakt mislukt, Probeer later opnieuw.</string>
+  <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
   <string name="trakt_seen">%s bekeken.</string>
   <string name="trakt_notseen">%s niet bekeken.</string>
@@ -230,7 +235,7 @@
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Verzonden naar Trakt.</string>
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
   <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
   <string name="trakt_account">trakt-account</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
   <string name="show_library">Uw bibliotheek weergeven</string>
   <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
-  <string name="integration_trakt_items">- voeg series uit uw bibliotheek en watchlist toe\n\n- bekijk uw aanbevelingen en vriendenactiviteit\n\n- bekeken- en verzameld-markeringen worden automatisch gesynchroniseerd\n\n- nieuwe series die u bekeken hebt worden automatisch toegevoegd</string>
   <string name="action_rate">Beoordelen</string>
   <string name="your_rating">Uw beoordeling</string>
   <string name="love">Zeer goed!</string>

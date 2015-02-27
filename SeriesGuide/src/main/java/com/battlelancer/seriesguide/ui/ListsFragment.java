@@ -40,19 +40,21 @@ import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import de.greenrobot.event.EventBus;
 import java.util.Date;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, View.OnClickListener {
+public class ListsFragment extends Fragment implements OnItemClickListener, View.OnClickListener {
 
-    private static final int LOADER_ID = R.layout.fragment_list;
+    /** LoaderManager is created unique to fragment, so use same id for all of them */
+    private static final int LOADER_ID = 1;
 
     private static final String TAG = "Lists";
 
@@ -93,7 +95,21 @@ public class ListsFragment extends Fragment implements
         list.setFastScrollAlwaysVisible(false);
         list.setFastScrollEnabled(true);
 
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+        getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -141,27 +157,37 @@ public class ListsFragment extends Fragment implements
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String listId = args.getString(InitBundle.LIST_ID);
-        return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
-                ListItemsQuery.PROJECTION,
-                Lists.LIST_ID + "=?",
-                new String[] {
-                        listId
-                }, ListItemsQuery.SORTING
-        );
+    public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
+        // sort order has changed, reload lists
+        getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
-    }
+    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            String listId = args.getString(InitBundle.LIST_ID);
+            return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
+                    ListItemsQuery.PROJECTION,
+                    // items of this list, but exclude any if show was removed from the database
+                    // (the join on show data will fail, hence the show id will be 0/null)
+                    Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
+                    new String[] {
+                            listId
+                    }, ListsDistillationSettings.getSortQuery(getActivity())
+            );
+        }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
-    }
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            mAdapter.swapCursor(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            mAdapter.swapCursor(null);
+        }
+    };
 
     private class ListItemAdapter extends BaseShowsAdapter {
 
@@ -243,7 +269,7 @@ public class ListsFragment extends Fragment implements
             }
 
             // poster
-            Utils.loadPosterThumbnail(context, viewHolder.poster,
+            Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(ListItemsQuery.SHOW_POSTER));
 
             // context menu
@@ -314,39 +340,35 @@ public class ListsFragment extends Fragment implements
                 ListItems.LIST_ITEM_ID, // 1
                 ListItems.ITEM_REF_ID,
                 ListItems.TYPE,
-                Shows.REF_SHOW_ID,
                 Shows.TITLE,
-                Shows.OVERVIEW,
+                Shows.OVERVIEW, // 5
                 Shows.POSTER,
                 Shows.NETWORK,
                 Shows.RELEASE_TIME,
                 Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_TIMEZONE, // 10
                 Shows.RELEASE_COUNTRY,
                 Shows.STATUS,
                 Shows.NEXTTEXT,
                 Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE
+                Shows.FAVORITE // 15
         };
-
-        String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
 
         int LIST_ITEM_ID = 1;
         int ITEM_REF_ID = 2;
         int ITEM_TYPE = 3;
-        int SHOW_ID = 4;
-        int SHOW_TITLE = 5;
-        int ITEM_TITLE = 6;
-        int SHOW_POSTER = 7;
-        int SHOW_NETWORK = 8;
-        int SHOW_OR_EPISODE_RELEASE_TIME = 9;
-        int SHOW_RELEASE_WEEKDAY = 10;
-        int SHOW_RELEASE_TIMEZONE = 11;
-        int SHOW_RELEASE_COUNTRY = 12;
-        int SHOW_STATUS = 13;
-        int SHOW_NEXTTEXT = 14;
-        int SHOW_NEXTAIRDATETEXT = 15;
-        int SHOW_FAVORITE = 16;
+        int SHOW_TITLE = 4;
+        int ITEM_TITLE = 5;
+        int SHOW_POSTER = 6;
+        int SHOW_NETWORK = 7;
+        int SHOW_OR_EPISODE_RELEASE_TIME = 8;
+        int SHOW_RELEASE_WEEKDAY = 9;
+        int SHOW_RELEASE_TIMEZONE = 10;
+        int SHOW_RELEASE_COUNTRY = 11;
+        int SHOW_STATUS = 12;
+        int SHOW_NEXTTEXT = 13;
+        int SHOW_NEXTAIRDATETEXT = 14;
+        int SHOW_FAVORITE = 15;
     }
 
     private void fireTrackerEvent(String label) {

@@ -63,7 +63,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
 
-        mGridView = (GridView) v.findViewById(android.R.id.list);
+        mGridView = (GridView) v.findViewById(R.id.gridViewMovies);
         mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
         mGridView.setEmptyView(mEmptyView);
         mGridView.setOnItemClickListener(this);

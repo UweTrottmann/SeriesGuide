@@ -35,7 +35,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
@@ -135,7 +135,6 @@
   <string name="action_watched">נצפה</string>
   <string name="action_unwatched">לא נצפה</string>
   <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
-  <string name="delete_has_list_items">לא ניתן לבצע, הסר קודם את %s מכל הרשימות </string>
   <string name="delete_error">אין אפשרות להסיר סדרות. נסה שוב מאוחר יותר.</string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">עדכן (ישנים בלבד)</string>
   <string name="context_updateshow">עדכן</string>
   <string name="context_marknext">צפה בפרק הבא</string>
+  <string name="now_tab">עכשיו</string>
+  <string name="recently_watched">צפיתי לאחרונה</string>
+  <string name="released_today">פורסם היום</string>
+  <string name="friends_recently">חבריך מ-trakt</string>
+  <string name="now_empty">שום דבר לא קורה. צפה בכמה סדרות!</string>
   <string name="upcoming">בקרוב</string>
   <string name="recent">אחרונים</string>
   <string name="friends">חברים</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">נהל רשימות</string>
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
+  <string name="action_lists_sort">מיון רשימה</string>
   <string name="hexagon_warning">ניסיון!</string>
   <string name="hexagon_setup">הגדר ענן SeriesGuide</string>
   <string name="hexagon_description">התחבר לענן לגיבוי ולסנכרן את התוכניות והסרטים שלך.</string>
@@ -218,8 +223,8 @@
   <string name="hexagon_remove_account_success">החשבון נמחק.</string>
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מענן SeriesGuide. הקפד להסיר אותם גם בהתקנים אחרים המחוברים.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">לא הייתה אפשרות לדבר עם ענן SeriesGuide. נסה שוב מאוחר יותר.</string>
+  <string name="hexagon_api_queued">שולח לענן SeriesGuide.</string>
   <string name="trakt_submitqueued">שלח ל-Trakt.</string>
   <string name="trakt_seen">%s נצפו.</string>
   <string name="trakt_notseen">%s שטרם צפית.</string>
@@ -230,7 +235,7 @@
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או לסרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">שולח ל-trakt.</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את האישורים שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_account">חשבון trakt</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">הוסף תוכניות מהספריה:</string>
   <string name="show_library">הצג את הספריה שלך</string>
   <string name="about_trakt">trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה. <a href="http://trakt.tv"> למד עוד</a></string>
-  <string name="integration_trakt_items">-הוסף סדרות מהספריה ומהרשימת מעקב שלך\n\n- ראה את ההמלצות שלך ואת פעילות החברים שלך\n\n- דגלי צפייה ואוסף הדגלים שלך מסונכרנים אוטומטית\n\n- תוכניות חדשות שצפית בהן מתווספות באופן אוטומטי</string>
   <string name="action_rate">דרג</string>
   <string name="your_rating">הדירוג שלך</string>
   <string name="love">לגמרי נינג\'ה!</string>

@@ -45,8 +45,8 @@ import de.greenrobot.event.EventBus;
 import java.util.Locale;
 
 /**
- * Displays some statistics about the users show database, e.g. number of shows,
- * episodes, share of watched episodes, etc.
+ * Displays some statistics about the users show database, e.g. number of shows, episodes, share of
+ * watched episodes, etc.
  */
 public class StatsFragment extends Fragment {
 
@@ -211,15 +211,13 @@ public class StatsFragment extends Fragment {
         mEpisodesWatched.setVisibility(View.VISIBLE);
 
         // episode runtime
-        if (stats.episodesWatchedRuntime() != 0) {
-            String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
-            if (!stats.hasFinalValues) {
-                // showing minimum (= not the final value)
-                watchedDuration = "> " + watchedDuration;
-            }
-            mEpisodesRuntime.setText(watchedDuration);
-            mEpisodesRuntime.setVisibility(View.VISIBLE);
+        String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
+        if (!stats.hasFinalValues) {
+            // showing minimum (= not the final value)
+            watchedDuration = "> " + watchedDuration;
         }
+        mEpisodesRuntime.setText(watchedDuration);
+        mEpisodesRuntime.setVisibility(View.VISIBLE);
         if (stats.hasFinalValues) {
             mProgressEpisodesRuntime.setVisibility(View.GONE);
         }

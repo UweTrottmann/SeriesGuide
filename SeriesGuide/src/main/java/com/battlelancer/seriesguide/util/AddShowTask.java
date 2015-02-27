@@ -62,32 +62,27 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     }
 
     private static final int ADD_ALREADYEXISTS = 0;
-
     private static final int ADD_SUCCESS = 1;
-
     private static final int ADD_ERROR = 2;
-
     private static final int ADD_OFFLINE = 3;
+    private static final int ADD_TRAKT_API_ERROR = 4;
+    private static final int ADD_TRAKT_AUTH_ERROR = 5;
 
-    private final Context mContext;
+    private final Context context;
+    private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
-    private final LinkedList<SearchResult> mAddQueue = new LinkedList<>();
-
-    private boolean mIsFinishedAddingShows = false;
-
-    private boolean mIsSilentMode;
-
-    private boolean mIsMergingShows;
-
-    private String mCurrentShowName;
+    private boolean isFinishedAddingShows = false;
+    private boolean isSilentMode;
+    private boolean isMergingShows;
+    private String currentShowName;
 
     public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
         // use an activity independent context
-        mContext = context.getApplicationContext();
-        mAddQueue.addAll(shows);
-        mIsSilentMode = isSilentMode;
-        mIsMergingShows = isMergingShows;
+        this.context = context.getApplicationContext();
+        addQueue.addAll(shows);
+        this.isSilentMode = isSilentMode;
+        this.isMergingShows = isMergingShows;
     }
 
     /**
@@ -95,14 +90,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
      * is finishing up. Create a new one instead.
      */
     public boolean addShows(List<SearchResult> show, boolean isSilentMode, boolean isMergingShows) {
-        if (mIsFinishedAddingShows) {
+        if (isFinishedAddingShows) {
             Timber.d("addShows: failed, already finishing up.");
             return false;
         } else {
-            mIsSilentMode = isSilentMode;
-            // never reset mIsMergingShows once true, so merged flag is correctly set on completion
-            mIsMergingShows = mIsMergingShows || isMergingShows;
-            mAddQueue.addAll(show);
+            this.isSilentMode = isSilentMode;
+            // never reset isMergingShows once true, so merged flag is correctly set on completion
+            this.isMergingShows = this.isMergingShows || isMergingShows;
+            addQueue.addAll(show);
             Timber.d("addShows: added shows to queue.");
             return true;
         }
@@ -113,12 +108,12 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         Timber.d("Starting to add shows...");
 
         // don't even get started
-        if (mAddQueue.isEmpty()) {
+        if (addQueue.isEmpty()) {
             Timber.d("Finished. Queue was empty.");
             return null;
         }
 
-        if (!AndroidUtils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.");
             publishProgress(ADD_OFFLINE);
             return null;
@@ -132,8 +127,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // get watched episodes from trakt (only if not connected to Hexagon) once
         List<BaseShow> collection = new ArrayList<>();
         List<BaseShow> watched = new ArrayList<>();
-        if (!HexagonTools.isSignedIn(mContext)) {
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
+        if (!HexagonTools.isSignedIn(context)) {
+            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt != null) {
                 Timber.d("Getting watched and collected episodes from trakt.");
                 try {
@@ -143,8 +138,12 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 } catch (RetrofitError e) {
                     // something went wrong, continue anyhow
                     Timber.w(e, "Getting watched and collected episodes failed");
+                    publishProgress(ADD_TRAKT_API_ERROR);
+                    return null;
                 } catch (OAuthUnauthorizedException e) {
-                    TraktCredentials.get(mContext).setCredentialsInvalid();
+                    TraktCredentials.get(context).setCredentialsInvalid();
+                    publishProgress(ADD_TRAKT_AUTH_ERROR);
+                    return null;
                 }
             }
         }
@@ -152,7 +151,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         int result;
         boolean addedAtLeastOneShow = false;
         boolean failedToAddShow = false;
-        while (!mAddQueue.isEmpty()) {
+        while (!addQueue.isEmpty()) {
             Timber.d("Starting to add next show...");
             if (isCancelled()) {
                 Timber.d("Finished. Cancelled.");
@@ -161,17 +160,17 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return null;
             }
 
-            if (!AndroidUtils.isNetworkConnected(mContext)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
                 publishProgress(ADD_OFFLINE);
                 failedToAddShow = true;
                 break;
             }
 
-            SearchResult nextShow = mAddQueue.removeFirst();
+            SearchResult nextShow = addQueue.removeFirst();
 
             try {
-                boolean addedShow = TheTVDB.addShow(mContext, nextShow.tvdbid, watched, collection);
+                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid, watched, collection);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
@@ -181,28 +180,28 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 Timber.e(e, "Adding show failed");
             }
 
-            mCurrentShowName = nextShow.title;
+            currentShowName = nextShow.title;
             publishProgress(result);
             Timber.d("Finished adding show. (Result code: " + result + ")");
         }
 
-        mIsFinishedAddingShows = true;
+        isFinishedAddingShows = true;
 
         // when merging shows down from Hexagon, set success flag
-        if (mIsMergingShows && !failedToAddShow) {
-            HexagonSettings.setHasMergedShows(mContext, true);
+        if (isMergingShows && !failedToAddShow) {
+            HexagonSettings.setHasMergedShows(context, true);
         }
 
         if (addedAtLeastOneShow) {
             // make sure the next sync will download all ratings
-            PreferenceManager.getDefaultSharedPreferences(mContext).edit()
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
                     .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
                     .commit();
 
             // renew FTS3 table
             Timber.d("Renewing search table.");
-            DBUtils.rebuildFtsTable(mContext);
+            DBUtils.rebuildFtsTable(context);
         }
 
         Timber.d("Finished adding shows.");
@@ -211,7 +210,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        if (mIsSilentMode) {
+        if (isSilentMode) {
             Timber.d("SILENT MODE: do not show progress toast");
             return;
         }
@@ -223,17 +222,25 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return;
             case ADD_ALREADYEXISTS:
                 event = new OnShowAddedEvent(
-                        mContext.getString(R.string.add_already_exists, mCurrentShowName),
+                        context.getString(R.string.add_already_exists, currentShowName),
                         Toast.LENGTH_LONG
                 );
                 break;
             case ADD_ERROR:
                 event = new OnShowAddedEvent(
-                        mContext.getString(R.string.add_error, mCurrentShowName),
+                        context.getString(R.string.add_error, currentShowName),
                         Toast.LENGTH_LONG);
                 break;
             case ADD_OFFLINE:
-                event = new OnShowAddedEvent(mContext.getString(R.string.offline),
+                event = new OnShowAddedEvent(context.getString(R.string.offline),
+                        Toast.LENGTH_LONG);
+                break;
+            case ADD_TRAKT_API_ERROR:
+                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_general),
+                        Toast.LENGTH_LONG);
+                break;
+            case ADD_TRAKT_AUTH_ERROR:
+                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_credentials),
                         Toast.LENGTH_LONG);
                 break;
         }

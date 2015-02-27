@@ -86,7 +86,7 @@
                 android:layout_below="@+id/textViewAddRatingValue"
                 android:layout_alignLeft="@+id/textViewAddRatingValue"
                 android:text="@string/trakt"
-                android:textAppearance="@style/TextAppearance.Caption.Dim" />
+                android:textAppearance="@style/TextAppearance.Caption" />
 
             <TextView
                 android:id="@+id/textViewAddDescription"

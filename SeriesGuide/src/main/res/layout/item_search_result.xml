@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/drawableCardBackground"
-    android:padding="@dimen/large_padding">
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false">
 
-    <ImageView
-        android:id="@+id/imageViewWatchedStatus"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_alignParentRight="true"
-        android:src="?attr/drawableWatch" />
-
-    <TextView
-        android:id="@+id/textViewShowTitle"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="@dimen/inline_padding"
-        android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        tools:text="Homeland"
-        android:textAppearance="@style/TextAppearance.Caption.Dim" />
+        android:padding="@dimen/large_padding">
 
-    <TextView
-        android:id="@+id/textViewEpisodeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/textViewShowTitle"
-        android:layout_toLeftOf="@id/imageViewWatchedStatus"
-        tools:text="2x13 If Tomorrow Never Comes"
-        android:textAppearance="@style/TextAppearance.Subhead" />
+        <ImageView
+            android:id="@+id/imageViewWatchedStatus"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:src="?attr/drawableWatch" />
 
-    <TextView
-        android:id="@+id/textViewSearchSnippet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewEpisodeTitle"
-        tools:text="...some text that was found to have the given search term in it..."
-        android:textAppearance="@style/TextAppearance.Body" />
+        <TextView
+            android:id="@+id/textViewShowTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/inline_padding"
+            android:layout_toLeftOf="@id/imageViewWatchedStatus"
+            tools:text="Homeland"
+            android:textAppearance="@style/TextAppearance.Caption" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewEpisodeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textViewShowTitle"
+            android:layout_toLeftOf="@id/imageViewWatchedStatus"
+            tools:text="2x13 If Tomorrow Never Comes"
+            android:textAppearance="@style/TextAppearance.Subhead" />
+
+        <TextView
+            android:id="@+id/textViewSearchSnippet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewEpisodeTitle"
+            tools:text="...some text that was found to have the given search term in it..."
+            android:textAppearance="@style/TextAppearance.Body" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

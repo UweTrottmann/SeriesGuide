@@ -948,7 +948,7 @@ public class TraktTools {
     }
 
     public static String buildMovieUrl(int movieTmdbId) {
-        return TraktLink.tmdb(movieTmdbId);
+        return TraktLink.tmdb(movieTmdbId) + "?id_type=movie";
     }
 
     /**

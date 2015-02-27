@@ -35,7 +35,7 @@
   <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Не получается модифицирофавать данные.</string>
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
@@ -135,7 +135,6 @@
   <string name="action_watched">Просмотрен</string>
   <string name="action_unwatched">Не просмотрено</string>
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
-  <string name="delete_has_list_items">Невозможно выполнить. Сначала удалите %s из всех списков.</string>
   <string name="delete_error">Нельзя удалить сериал. Повторите позже.</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Обновить (только устаревшие)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_marknext">См. следующий эпизод</string>
+  <string name="now_tab">Сейчас</string>
+  <string name="recently_watched">Недавно просмотренные</string>
+  <string name="released_today">Вышедшие сегодня</string>
+  <string name="friends_recently">Ваши Trakt друзья</string>
+  <string name="now_empty">Ничего не произошло. Посмотрите некоторые сералы!</string>
   <string name="upcoming">Следующие эпизоды</string>
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Управление списками</string>
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
+  <string name="action_lists_sort">Отсортировать списки</string>
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
@@ -218,8 +223,8 @@
   <string name="hexagon_remove_account_success">Аккаунт уничтожены.</string>
   <string name="hexagon_remove_account_failure">Не могу удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Не получается обратиться к SeriesGuid облаку. Пробуйте позже.</string>
+  <string name="hexagon_api_queued">Отправка в SeriesGuide облако.</string>
   <string name="trakt_submitqueued">Отправка в trakt.</string>
   <string name="trakt_seen">%s просмотрено.</string>
   <string name="trakt_notseen">%s не просмотрено.</string>
@@ -230,7 +235,7 @@
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Ожидаю</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Отправили в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_account">Аккаунт trakt</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Добавьте сериалы из вашей библиотеки на trakt.tv:</string>
   <string name="show_library">Показать вашу библиотеку на trakt.tv</string>
   <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
-  <string name="integration_trakt_items">- добавляйте сериалы из вашей библиотеки и списка просмотра\n\n- смотрите ваши рекомендации и активность друзей\n\n- записи о просмотренном и собранном синхронизируются автоматически\n\n- новые просмотренные сериалы добавляются автоматически</string>
   <string name="action_rate">Oценить</string>
   <string name="your_rating">Ваш рейтинг</string>
   <string name="love">Супер!</string>
@@ -317,7 +321,7 @@
   <string name="pref_upcominglimit">Показы в ближайшие N дней…</string>
   <string name="pref_number">Формат номеров серий</string>
   <string name="pref_offset">Ручное смещение времени</string>
-  <string name="pref_offsetsummary">До прямого эфира осталось %s часов</string>
+  <string name="pref_offsetsummary">Смещение времени эфира на %s часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с вашего устройства</string>
   <string name="pref_ganalyticssummary">Отслеживать использование функций приложения, чтобы улучшить SeriesGuide</string>

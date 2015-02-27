@@ -69,6 +69,7 @@ public abstract class StreamFragment extends Fragment implements
 
         mGridView.setOnItemClickListener(this);
         mGridView.setEmptyView(mEmptyView);
+        mGridView.setAreHeadersSticky(false);
 
         // set initial view states
         showProgressBar(true);
@@ -82,7 +83,7 @@ public abstract class StreamFragment extends Fragment implements
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mContentContainer.setColorSchemeResources(accentColorResId, R.color.teal_dark);
+        mContentContainer.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
         if (mAdapter == null) {
             mAdapter = getListAdapter();

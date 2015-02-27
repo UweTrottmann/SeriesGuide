@@ -48,10 +48,6 @@ import java.util.Map;
  */
 public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
-    private final int LAYOUT = R.layout.grid_activity_row;
-
-    private final int LAYOUT_HEADER = R.layout.grid_activity_header;
-
     private LayoutInflater mLayoutInflater;
 
     private List<HeaderData> mHeaders;
@@ -102,30 +98,32 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                         ? R.string.action_unwatched : R.string.action_watched
         );
 
-        // number and show
-        final String number = Utils.getEpisodeNumber(context, season, episode);
-        viewHolder.show.setText(
-                number + " | " + cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+        // show title
+        viewHolder.show.setText(cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
 
-        // title
-        viewHolder.episode.setText(cursor.getString(ActivityFragment.ActivityQuery.TITLE));
+        // episode number and title
+        viewHolder.episode.setText(Utils.getNextEpisodeString(context, season, episode,
+                cursor.getString(ActivityFragment.ActivityQuery.TITLE)));
 
-        // meta data: time, day and network
-        StringBuilder metaText = new StringBuilder();
-        long releaseTime = cursor.getLong(
-                ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
+        // timestamp, absolute time and network
+        StringBuilder releaseInfo = new StringBuilder();
+        long releaseTime = cursor.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
-            // 10:00 | in 3 days, 10:00 PM | 23 Jul
-            metaText.append(TimeTools.formatToLocalTime(context, actualRelease));
-            metaText.append(" | ")
-                    .append(TimeTools.formatToLocalRelativeTime(context, actualRelease));
+            // timestamp
+            viewHolder.timestamp.setText(
+                    TimeTools.formatToLocalRelativeTime(context, actualRelease));
+
+            // "10:00 PM / Network", as left aligned, exactly mirrored from show list
+            releaseInfo.append(TimeTools.formatToLocalTime(context, actualRelease));
+        } else {
+            viewHolder.timestamp.setText(null);
         }
         final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
-            metaText.append("\n").append(network);
+            releaseInfo.append(" / ").append(network);
         }
-        viewHolder.meta.setText(metaText);
+        viewHolder.info.setText(releaseInfo);
 
         // collected indicator
         boolean isCollected = EpisodeTools.isCollected(
@@ -133,13 +131,13 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
 
         // set poster
-        Utils.loadPosterThumbnail(context, viewHolder.poster,
+        Utils.loadSmallTvdbShowPoster(context, viewHolder.poster,
                 cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER));
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, parent, false);
+        View v = mLayoutInflater.inflate(R.layout.grid_activity_row, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
         v.setTag(viewHolder);
@@ -204,10 +202,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_HEADER, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
-            holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
+            holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
 
             convertView.setTag(holder);
         } else {
@@ -218,7 +216,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         Cursor item = (Cursor) obj;
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
-        holder.day.setText(TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
+        holder.day.setText(
+                TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
 
         return convertView;
     }
@@ -262,15 +261,11 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     static class ViewHolder {
 
         public TextView show;
-
         public TextView episode;
-
         public View collected;
-
         public WatchedBox watchedBox;
-
-        public TextView meta;
-
+        public TextView info;
+        public TextView timestamp;
         public ImageView poster;
 
         public ViewHolder(View v) {
@@ -278,7 +273,8 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
             episode = (TextView) v.findViewById(R.id.textViewActivityEpisode);
             collected = v.findViewById(R.id.imageViewActivityCollected);
             watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxActivity);
-            meta = (TextView) v.findViewById(R.id.textViewActivityMeta);
+            info = (TextView) v.findViewById(R.id.textViewActivityInfo);
+            timestamp = (TextView) v.findViewById(R.id.textViewActivityTimestamp);
             poster = (ImageView) v.findViewById(R.id.imageViewActivityPoster);
         }
     }

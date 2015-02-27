@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         Utils.trackView(getActivity(), "Cancel Check-In Dialog");
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Context context = getActivity().getApplicationContext();

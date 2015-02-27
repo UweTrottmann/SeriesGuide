@@ -797,7 +797,7 @@ public class OverviewFragment extends Fragment implements
 
         // try loading image
         mEpisodeImage.setVisibility(View.VISIBLE);
-        ServiceUtils.getPicasso(getActivity()).load(TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(mEpisodeImage,
                         new Callback() {
@@ -830,7 +830,7 @@ public class OverviewFragment extends Fragment implements
         int status = show.getInt(ShowQuery.SHOW_STATUS);
         if (status == 1) {
             statusText.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
-                    getActivity().getTheme(), R.attr.textColorSgGreen)));
+                    getActivity().getTheme(), R.attr.sgTextColorGreen)));
             statusText.setText(getString(R.string.show_isalive));
         } else if (status == 0) {
             statusText.setTextColor(Color.GRAY);

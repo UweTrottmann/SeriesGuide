@@ -3,7 +3,7 @@
 
     <!-- Text styles -->
     <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">?attr/textColorPrimarySg</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
@@ -14,18 +14,18 @@
     </style>
 
     <style name="TextAppearance.Tab">
-        <item name="android:textColor">?attr/sgColorTabStripText</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextAppearance.Display3">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">56sp</item>
     </style>
 
     <style name="TextAppearance.Display1">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">34sp</item>
     </style>
 
@@ -50,7 +50,7 @@
     </style>
 
     <style name="TextAppearance.Caption">
-        <item name="android:textColor">?attr/textColorSecondarySg</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
     </style>
 
@@ -64,11 +64,11 @@
     </style>
 
     <style name="TextAppearance.Subhead.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Subhead.Green">
-        <item name="android:textColor">?attr/textColorSgGreen</item>
+        <item name="android:textColor">?attr/sgTextColorGreen</item>
     </style>
 
     <style name="TextAppearance.Subhead.Narrow">
@@ -80,7 +80,7 @@
     </style>
 
     <style name="TextAppearance.Body.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Body.White">
@@ -100,7 +100,7 @@
     </style>
 
     <style name="TextAppearance.Caption.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Caption.Narrow">
@@ -108,7 +108,7 @@
     </style>
 
     <style name="TextAppearance.Caption.Narrow.Dim">
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Caption.Red">
@@ -116,9 +116,9 @@
     </style>
 
     <!-- Widget styles -->
-    <style name="Widget"/>
+    <style name="Widget" />
 
-    <style name="Widget.SeriesGuide" parent="Widget"/>
+    <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
     <!-- Always has a purple background, so can use non-theme text color -->
@@ -131,7 +131,7 @@
         <item name="android:paddingBottom">4dp</item>
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Button</item>
-        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
     </style>
 
     <!-- Has no background, so use theme text color -->
@@ -146,6 +146,7 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center_vertical|start</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Blue">
@@ -160,7 +161,7 @@
         <item name="android:padding">4dp</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/textColorSgDim</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
@@ -209,7 +210,7 @@
     </style>
 
     <!-- TextView -->
-    <style name="Widget.SeriesGuide.TextView"/>
+    <style name="Widget.SeriesGuide.TextView" />
 
     <style name="Widget.SeriesGuide.TextView.Body">
         <item name="android:lineSpacingMultiplier">1.25</item>
@@ -225,7 +226,7 @@
     </style>
 
     <!-- Action bar -->
-    <style name="Widget.SeriesGuide.ActionBar"/>
+    <style name="Widget.SeriesGuide.ActionBar" />
 
     <!-- Tabs -->
     <style name="Widget.SeriesGuide.TabLayout">
@@ -254,14 +255,30 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- Grid view selector -->
-    <style name="Widget.SeriesGuide.GridSelectorTop">
+    <!-- Grid views with cards -->
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
+    <style name="Widget.SeriesGuide.CardGrid">
         <item name="android:listSelector">?attr/selectableItemBackground</item>
         <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>
+        <item name="android:paddingBottom">@dimen/grid_topbottom_padding</item>
+        <item name="android:paddingLeft">@dimen/grid_leftright_padding</item>
+        <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
+        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.CardGrid.FastScroll">
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:fastScrollAlwaysVisible">true</item>
+        <item name="android:scrollbarStyle">outsideInset</item>
     </style>
 
     <!-- Easy layouting -->
-    <style name="DefaultPadding"/>
+    <style name="DefaultPadding" />
 
     <style name="DefaultPadding.List">
         <item name="android:paddingTop">@dimen/default_padding</item>
@@ -302,8 +319,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Page.Centered">
-    </style>
+    <style name="Page.Centered"/>
 
     <!-- Widget items -->
     <style name="WidgetTextView">

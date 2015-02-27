@@ -135,7 +135,6 @@
   <string name="action_watched">Katsottu</string>
   <string name="action_unwatched">Katsomaton</string>
   <string name="confirm_delete">Haluatko varmasti poistaa ohjelman: %s?</string>
-  <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Päivitä vanhentuneet</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
+  <string name="now_tab">Nyt</string>
+  <string name="recently_watched">Viimeksi katsottu</string>
+  <string name="released_today">Lähetetään tänään</string>
+  <string name="friends_recently">trakt-ystäväsi</string>
+  <string name="now_empty">Mitään ei ole meneillään. Katso joitakin ohjelmia!</string>
   <string name="upcoming">Tulevat</string>
   <string name="recent">Viimeisimmät</string>
   <string name="friends">Ystävät</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Hallitse listoja</string>
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+  <string name="action_lists_sort">Lajittele listat</string>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>
   <string name="show_library">Näytä kokoelmasi</string>
   <string name="about_trakt">trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
-  <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
   <string name="action_rate">Arvostele</string>
   <string name="your_rating">Arvosanasi</string>
   <string name="love">Maailman parasta!</string>

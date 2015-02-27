@@ -135,7 +135,6 @@
   <string name="action_watched">Pogledano</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Zaista želite ukloniti %s?</string>
-  <string name="delete_has_list_items">Ne može se izvršiti, prvo uklonite %s sa svih popisa.</string>
   <string name="delete_error">Nemoguće ukloniti seriju. Pokušajte kasnije.</string>
   <string name="delete_show">Izbriši</string>
   <string name="dontdelete_show">Nemoj odustati</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Ažuriraj (samo zastarjele)</string>
   <string name="context_updateshow">Ažuriraj</string>
   <string name="context_marknext">Pogledana sljedeća epizoda</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Nadolazeće</string>
   <string name="recent">Nedavno</string>
   <string name="friends">Prijatelji</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Uredi popise</string>
   <string name="list_item_remove">Ukloni s popisa</string>
   <string name="list_empty">Možeš dodati serije, sezone ili epizode na ovaj popis.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>
   <string name="show_library">Prikaži svoju zbirku</string>
   <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
-  <string name="integration_trakt_items">- dodaj serije iz svoje zbirke i popisa gledanja\n\n- vidi svoje preporuke i aktivnost prijatelja\n\n- pogledane i prikupljene oznake automatski su sinkronizirane\n\n- nove serije koje si gledao automatski su dodane</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>

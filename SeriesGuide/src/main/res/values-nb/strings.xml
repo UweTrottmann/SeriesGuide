@@ -135,7 +135,6 @@
   <string name="action_watched">Sett</string>
   <string name="action_unwatched">Ikke sett</string>
   <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
-  <string name="delete_has_list_items">Kan ikke utføre, fjern %s fra alle lister først.</string>
   <string name="delete_error">Kunne ikke fjerne serie. Prøv igjen senere.</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Ikke fjern</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Oppdater (bare utdaterte)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_marknext">Sett neste episode</string>
+  <string name="now_tab">Nå</string>
+  <string name="recently_watched">Nylig sett</string>
+  <string name="released_today">Lansert i dag</string>
+  <string name="friends_recently">Trakt venner</string>
+  <string name="now_empty">Ingenting skjer. Se noen serier!</string>
   <string name="upcoming">Kommer snart</string>
   <string name="recent">Siste</string>
   <string name="friends">Venner</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Behandle lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
+  <string name="action_lists_sort">Sorter lister</string>
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_setup">Sett opp SeriesGuide sky</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Legg til flere serier fra trakt-biblioteket:</string>
   <string name="show_library">Vis ditt trakt bibliotek</string>
   <string name="about_trakt">trakt bidrar til å holde oversikt over hvilke TV-serier og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
-  <string name="integration_trakt_items">- legg til serier fra ditt bibliotek og overvåkningsliste\n\n- Se dine anbefalninger og dine venners aktivitet\n\n- Sett og anskaffet blir synkronisert automatisk\n\n- Nye programmer blir lagt til automatisk</string>
   <string name="action_rate">Bedøm</string>
   <string name="your_rating">Din vurdering</string>
   <string name="love">Helt ninja!</string>

@@ -45,10 +45,14 @@
             android:text="@string/movies_empty"
             android:textAppearance="@style/TextAppearance.Light" />
 
-        <include
-            layout="@layout/grid_movies"
+        <GridView
+            android:id="@+id/gridViewMoviesSearch"
+            style="@style/Widget.SeriesGuide.CardGrid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:columnWidth="@dimen/movie_item_width"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth" />
 
     </FrameLayout>
 

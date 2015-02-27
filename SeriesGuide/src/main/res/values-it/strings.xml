@@ -35,7 +35,7 @@
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Impossibile modificare i dati.</string>
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>
   <string name="share_episode">Condividi episodio</string>
@@ -135,7 +135,6 @@
   <string name="action_watched">Visto</string>
   <string name="action_unwatched">Non visto</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
-  <string name="delete_has_list_items">Impossibile procedere, eliminare prima %s dalle liste.</string>
   <string name="delete_error">Impossibile rimuovere la serie. Riprovare più tardi.</string>
   <string name="delete_show">Rimuovi</string>
   <string name="dontdelete_show">Non rimuovere</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Aggiorna (solo vecchi)</string>
   <string name="context_updateshow">Aggiorna</string>
   <string name="context_marknext">Guarda il prossimo episodio</string>
+  <string name="now_tab">Adesso</string>
+  <string name="recently_watched">Visto recentemente</string>
+  <string name="released_today">Rilasciato oggi</string>
+  <string name="friends_recently">I tuoi amici di trakt</string>
+  <string name="now_empty">Non succede nulla. Guarda qualche serie!</string>
   <string name="upcoming">Prossimi</string>
   <string name="recent">Recenti</string>
   <string name="friends">Amici</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Gestisci liste</string>
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
+  <string name="action_lists_sort">Ordina le liste</string>
   <string name="hexagon_warning">Sperimentale!</string>
   <string name="hexagon_setup">Configura SeriesGuide Cloud</string>
   <string name="hexagon_description">Connettiti alla cloud per eseguire il backup e la sincronizzazione delle tue serie TV e dei film.</string>
@@ -218,8 +223,8 @@
   <string name="hexagon_remove_account_success">Account rimosso.</string>
   <string name="hexagon_remove_account_failure">Impossibile rimuovere l\'account.</string>
   <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Impossibile comunicare con SeriesGuide Cloud. Prova più tardi.</string>
+  <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Invio a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s non visto.</string>
@@ -230,7 +235,7 @@
   <string name="traktcheckin_cancel">Sovrascrivi</string>
   <string name="traktcheckin_inprogress">Check-in già effettuato in un altro episodio o film. Sovrascrivere il precedente check-in o attendere %s e riprovare.</string>
   <string name="traktcheckin_wait">Aspetterò</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Inviato a trakt.</string>
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
   <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
   <string name="trakt_account">Account trakt</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Aggiungi serie dalla tua raccolta trakt:</string>
   <string name="show_library">Mostra la tua raccolta trakt</string>
   <string name="about_trakt">trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi. <a href="http://trakt.tv">Maggiori informazioni</a></string>
-  <string name="integration_trakt_items">- aggiungi serie dalla tua raccolta e dalla tuo programma visione\n\n- guarda i suggerimenti per te e cosa guardano i tuoi amici\n\n- sincronizzazione automatica degli episodi guardati e contrassegnati\n\n- sinronizzazione automatica delle nuove serie guardate</string>
   <string name="action_rate">Vota</string>
   <string name="your_rating">Il tuo voto</string>
   <string name="love">Totalmente ninja!</string>

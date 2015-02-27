@@ -8,6 +8,7 @@ Contributing
 3. [Start a pull request][6] against dev. Reference [existing issues][7] when possible.
 
 #### No code!
+* You can [get help][12].
 * You can [suggest features][9].
 * You can [discuss a bug][7] or if it was not reported yet [submit a bug][8]!
 * You can [translate strings][4].
@@ -18,14 +19,14 @@ Branch structure
 The repository is made up of two main branches: master (stable) and dev (unstable).
 
 * **master** has the latest stable code, its tags are released as [SeriesGuide][1] on Google Play.
-* **dev** includes the latest unstable code from contributers (you!).
+* **dev** includes the latest unstable code, contributers (you!) should submit pull requests against it.
 
 Setup
 -----
 
-This project is built with Gradle, the [Android Gradle plugin][3] and uses jars or Maven dependencies. Clone this repository inside your working folder. Import the settings.gradle file in the root folder into e.g. Android Studio. (You can also have a look at the build.gradle files on how the projects depend on another.)
+This project is built with Gradle, the [Android Gradle plugin][3] and uses jar and Maven dependencies. Clone this repository inside your working folder. Import the `settings.gradle` file in the root folder into e.g. Android Studio. (You can also have a look at the `build.gradle` files on how the projects depend on another.)
 
-Before your first build create `gradle.properties` in the root directory (where settings.gradle is), add the following values (do not need to be valid if you do not plan to use that functionality):
+Before your first build create `gradle.properties` in the root directory (where `settings.gradle` is), add the following values (do not need to be valid if you do not plan to use that functionality):
 
 ```
 // used for publishing the API jar
@@ -33,11 +34,9 @@ ossrhUsername=<your sonatype username>
 ossrhPassword=<your sonatype password>
 
 TMDB_API_KEY=<your api key>
-TRAKT_API_KEY=<your api key>
+TRAKT_CLIENT_ID=<your trakt client id>
+TRAKT_CLIENT_SECRET=<your trakt client secret>
 TVDB_API_KEY=<your api key>
-TVTAG_CLIENT_ID=<your client id>
-TVTAG_CLIENT_SECRET=<your client secret>
-CRASHLYTICS_KEY=<a crashlytics api key>
 
 // Play Store in-app billing public key
 IAP_KEY_A=dummy
@@ -59,3 +58,5 @@ Now build any variant of the free flavor (flavor + build type, see [instructions
  [9]: https://seriesguide.uservoice.com
  [10]: http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message
  [11]: https://github.com/UweTrottmann/SeriesGuide/fork
+ [12]: http://seriesgui.de/help
+ 

@@ -18,6 +18,33 @@
 
 <resources>
 
+    <style name="TextAppearance.Tab">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Menu">
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Button">
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Body.Bold">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <!-- Buttons -->
     <!-- Bend to material here to avoid creating attributes for each borderless button variant -->
     <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">

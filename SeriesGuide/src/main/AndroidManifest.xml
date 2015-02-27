@@ -43,6 +43,9 @@
         <!-- Google Play services version tag -->
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
+        <!-- Samsung MultiWindow support -->
+        <meta-data android:name="com.samsung.android.sdk.multiwindow.enable" android:value="true" />
+
         <!-- Content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
@@ -79,10 +82,8 @@
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/com.battlelancer.seriesguide.beam" />
+                <data android:mimeType="application/vnd.com.uwetrottmann.seriesguide" />
             </intent-filter>
         </activity>
         <activity
@@ -98,6 +99,7 @@
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.HistoryActivity" />
 
         <!-- Movies -->
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" />

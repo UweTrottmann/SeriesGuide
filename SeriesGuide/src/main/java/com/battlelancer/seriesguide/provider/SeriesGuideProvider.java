@@ -31,21 +31,23 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import com.battlelancer.seriesguide.BuildConfig;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import timber.log.Timber;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 public class SeriesGuideProvider extends ContentProvider {
 
@@ -103,9 +105,11 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int MOVIES_ID = 701;
 
-    private static final int SEARCH_SUGGEST = 800;
+    private static final int ACTIVITY = 800;
 
-    private static final int RENEW_FTSTABLE = 900;
+    private static final int SEARCH_SUGGEST = 900;
+
+    private static final int RENEW_FTSTABLE = 1000;
 
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
@@ -169,6 +173,9 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES, MOVIES);
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES + "/*", MOVIES_ID);
 
+        // Activity
+        matcher.addURI(authority, SeriesGuideContract.PATH_ACTIVITY, ACTIVITY);
+
         // Search
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
                 + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
@@ -184,7 +191,7 @@ public class SeriesGuideProvider extends ContentProvider {
         return matcher;
     }
 
-    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
+    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<>();
 
     private SeriesGuideDatabase mDbHelper;
 
@@ -314,6 +321,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Movies.CONTENT_TYPE;
             case MOVIES_ID:
                 return Movies.CONTENT_ITEM_TYPE;
+            case ACTIVITY:
+                return Activity.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -327,17 +336,17 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         Uri newItemUri;
 
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         if (!applyingBatch()) {
-            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
             db.beginTransaction();
             try {
-                newItemUri = insertInTransaction(uri, values);
+                newItemUri = insertInTransaction(db, uri, values);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         } else {
-            newItemUri = insertInTransaction(uri, values);
+            newItemUri = insertInTransaction(db, uri, values);
         }
 
         if (newItemUri != null) {
@@ -348,15 +357,16 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(Uri uri, @NonNull ContentValues[] values) {
         int numValues = values.length;
         boolean notifyChange = false;
 
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
+            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < numValues; i++) {
-                Uri result = insertInTransaction(uri, values[i]);
+                Uri result = insertInTransaction(db, uri, values[i]);
                 if (result != null) {
                     notifyChange = true;
                 }
@@ -374,7 +384,7 @@ public class SeriesGuideProvider extends ContentProvider {
         return numValues;
     }
 
-    private Uri insertInTransaction(Uri uri, ContentValues values) {
+    private Uri insertInTransaction(SQLiteDatabase db, Uri uri, ContentValues values) {
         if (LOGV) {
             Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
         }
@@ -383,7 +393,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                long id = mDbHelper.insertShows(values);
+                long id = db.insertOrThrow(Tables.SHOWS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -391,7 +401,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case SEASONS: {
-                long id = mDbHelper.insertSeasons(values);
+                long id = db.insertOrThrow(Tables.SEASONS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -399,7 +409,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case EPISODES: {
-                long id = mDbHelper.insertEpisodes(values);
+                long id = db.insertOrThrow(Tables.EPISODES, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -407,7 +417,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = mDbHelper.insertLists(values);
+                long id = db.insertOrThrow(Tables.LISTS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -415,7 +425,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LIST_ITEMS: {
-                long id = mDbHelper.insertListItems(values);
+                long id = db.insertOrThrow(Tables.LIST_ITEMS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -423,11 +433,19 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id = mDbHelper.insertMovies(values);
+                long id = db.insertOrThrow(Tables.MOVIES, null, values);
                 if (id < 0) {
                     break;
                 }
                 notifyUri = Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
+                break;
+            }
+            case ACTIVITY: {
+                long id = db.insertOrThrow(Tables.ACTIVITY, null, values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_ID));
                 break;
             }
             default: {
@@ -513,7 +531,8 @@ public class SeriesGuideProvider extends ContentProvider {
      * SQLiteDatabase} transaction. All changes will be rolled back if any single one fails.
      */
     @Override
-    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
+    public ContentProviderResult[] applyBatch(
+            @NonNull ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
         final int numOperations = operations.size();
         if (numOperations == 0) {
@@ -656,6 +675,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case MOVIES_ID: {
                 final String movieId = Movies.getId(uri);
                 return builder.table(Tables.MOVIES).where(Movies.TMDB_ID + "=?", movieId);
+            }
+            case ACTIVITY: {
+                return builder.table(Tables.ACTIVITY);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

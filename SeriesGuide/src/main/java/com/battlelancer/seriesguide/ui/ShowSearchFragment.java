@@ -160,7 +160,7 @@ public class ShowSearchFragment extends ListFragment {
                     cursor.getString(SearchQuery.NETWORK)));
 
             // poster
-            Utils.loadPosterThumbnail(context, viewHolder.poster,
+            Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(SearchQuery.POSTER));
         }
 

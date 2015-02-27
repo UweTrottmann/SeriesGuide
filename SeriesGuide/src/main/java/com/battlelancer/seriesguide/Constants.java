@@ -26,7 +26,9 @@ import java.util.Map;
 
 public class Constants {
 
-    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    // Use non-application id-based type as beaming is meant to be cross-flavor compatible
+    public static final String ANDROID_BEAM_NDEF_MIME_TYPE = "application/vnd.com.uwetrottmann.seriesguide";
+    public static final int EPISODE_UNKNOWN_RELEASE = -1;
 
     public static enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
@@ -74,7 +76,7 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<String, EpisodeSorting>();
+        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<>();
 
         static {
             for (EpisodeSorting via : EpisodeSorting.values()) {

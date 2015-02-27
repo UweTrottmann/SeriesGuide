@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.tmdb.entities.Movie;
-import com.uwetrottmann.tmdb.entities.ResultsPage;
+import com.uwetrottmann.tmdb.entities.MovieResultsPage;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -46,7 +46,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         try {
-            ResultsPage page;
+            MovieResultsPage page;
 
             if (TextUtils.isEmpty(mQuery)) {
                 page = tmdb.moviesService().nowPlaying(null, languageCode);

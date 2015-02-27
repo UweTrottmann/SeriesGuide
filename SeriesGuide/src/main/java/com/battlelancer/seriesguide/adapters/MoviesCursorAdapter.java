@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -91,7 +90,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // release date
         long released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS);
-        if (released != 0) {
+        if (released != Long.MAX_VALUE) {
             holder.releaseDate.setText(dateFormatMovieReleaseDate.format(new Date(released)));
         } else {
             holder.releaseDate.setText("");
@@ -99,8 +98,8 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
-        ServiceUtils.getPicasso(context)
-                .load(TextUtils.isEmpty(posterPath) ? null : mImageBaseUrl + posterPath)
+        ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
+                ? null : mImageBaseUrl + posterPath)
                 .into(holder.poster);
 
         // context menu

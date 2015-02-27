@@ -135,7 +135,6 @@
   <string name="action_watched">Vizionat</string>
   <string name="action_unwatched">Marchează nevizionat</string>
   <string name="confirm_delete">Doriți să eliminați %s?</string>
-  <string name="delete_has_list_items">Nu putem fi deacord, întâi ștergeți %s din toate listele.</string>
   <string name="delete_error">Nu se poate șterge emisiunea. Încearcă mai tîrziu.</string>
   <string name="delete_show">Ștergeți</string>
   <string name="dontdelete_show">Nu ștergeți</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Actualizează (doar pe cele învechite)</string>
   <string name="context_updateshow">Actualizare</string>
   <string name="context_marknext">Episodul următor a fost vizionat</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Urmează</string>
   <string name="recent">Recente</string>
   <string name="friends">Prieteni</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Gestionați listele</string>
   <string name="list_item_remove">Șterge din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Adaugă emisiuni din biblioteca trakt:</string>
   <string name="show_library">Arată biblioteca dvs. trakt</string>
   <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
-  <string name="integration_trakt_items">-Adaugă seriale din biblioteca dvs. şi watchlist - vedeți recomandările dvs. şi activitatea prietenilor - steagurile privite şi colectate sunt sincronizate automat -emisiunile noi la care v-ați uitat sunt adăugate automat</string>
   <string name="action_rate">Evaluare</string>
   <string name="your_rating">Nota ta</string>
   <string name="love">Super tare!</string>

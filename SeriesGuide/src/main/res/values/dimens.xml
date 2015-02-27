@@ -30,11 +30,16 @@
     <dimen name="widget_text_large">13sp</dimen>
 
     <dimen name="showgrid_columnWidth">275dp</dimen>
-    <dimen name="grid_vertical_spacing">5dp</dimen>
-    <dimen name="grid_horizontal_spacing">8dp</dimen>
+    <!-- CardView adds padding on pre-v21 to draw shadows, reduce grid spacing accordingly -->
+    <dimen name="grid_topbottom_padding">5dp</dimen>
+    <dimen name="grid_leftright_padding">6dp</dimen>
+    <dimen name="grid_vertical_spacing">3dp</dimen>
+    <dimen name="grid_horizontal_spacing">4dp</dimen>
 
     <dimen name="show_poster_width">68dp</dimen>
     <dimen name="show_poster_height">100dp</dimen>
+    <dimen name="show_poster_small_width">68dp</dimen>
+    <dimen name="show_poster_small_height">100dp</dimen>
 
     <dimen name="imagecontainer_height">180dp</dimen>
 
@@ -73,5 +78,7 @@
 
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
+
+    <integer name="grid_column_count">1</integer>
 
 </resources>

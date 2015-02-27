@@ -18,9 +18,13 @@ package com.battlelancer.seriesguide.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.IntDef;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.ParserUtils;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class SeriesGuideContract {
 
@@ -376,13 +380,14 @@ public class SeriesGuideContract {
         String ITEM_REF_ID = "item_ref_id";
 
         /**
-         * Type of item: show, season or episode.
+         * One of {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes}.
          */
         String TYPE = "item_type";
     }
 
-    public interface ListItemTypes {
-
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ ListItemTypes.SHOW, ListItemTypes.SEASON, ListItemTypes.EPISODE })
+    public @interface ListItemTypes {
         int SHOW = 1;
         int SEASON = 2;
         int EPISODE = 3;
@@ -437,6 +442,15 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "movies_last_updated";
     }
 
+    interface ActivityColumns {
+
+        String TIMESTAMP = "activity_time";
+
+        String EPISODE_TVDB_ID = "activity_episode";
+
+        String SHOW_TVDB_ID = "activity_show";
+    }
+
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SeriesGuideApplication.CONTENT_AUTHORITY);
 
@@ -473,6 +487,8 @@ public class SeriesGuideContract {
     public static final String PATH_WITH_LAST_EPISODE = "with-last-episode";
 
     public static final String PATH_MOVIES = "movies";
+
+    public static final String PATH_ACTIVITY = "activity";
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
@@ -545,10 +561,17 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
-        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "=0";
+        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "="
+                + EpisodeFlags.UNWATCHED;
+
+        public static final String SELECTION_UNWATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
+                + EpisodeFlags.WATCHED;
 
         public static final String SELECTION_WATCHED = Episodes.WATCHED + "="
                 + EpisodeFlags.WATCHED;
+
+        public static final String SELECTION_WATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
+                + EpisodeFlags.UNWATCHED;
 
         public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
 
@@ -556,7 +579,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
 
-        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!=-1";
+        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!="
+                + Constants.EPISODE_UNKNOWN_RELEASE;
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
 
@@ -717,6 +741,26 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
+        public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
+        public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
+        public static final String SELECTION_EPISODES = ListItems.TYPE + "="
+                + ListItemTypes.EPISODE;
+
+        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC, "
+                + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_NEWEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
+        public static final String SORT_OLDEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " ASC,"
+                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
+                + " ASC";
+
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
@@ -782,6 +826,22 @@ public class SeriesGuideContract {
 
         public static String getId(Uri uri) {
             return uri.getPathSegments().get(1);
+        }
+    }
+
+    public static class Activity implements ActivityColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ACTIVITY)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
+
+        public static Uri buildActivityUri(String episodeTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
         }
     }
 

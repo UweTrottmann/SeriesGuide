@@ -136,7 +136,6 @@
   <string name="action_watched">Sett</string>
   <string name="action_unwatched">Markera som osedd</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
-  <string name="delete_has_list_items">Kan\kan inte följa, ta bort %s från alla listor först.</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Ta inte bort</string>
@@ -164,6 +163,11 @@
   <string name="menu_update_delta">Uppdatera (gamla)</string>
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_marknext">Sett nästa avsnitt</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Kommande</string>
   <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
@@ -205,6 +209,7 @@
   <string name="list_item_manage">Hantera listor</string>
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina program och filmer.</string>
@@ -248,7 +253,6 @@
   <string name="add_trakt_shows">Lägg till program från ditt bibliotek:</string>
   <string name="show_library">Visa ditt bibliotek</string>
   <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
-  <string name="integration_trakt_items">- lägg till serier från ditt bibliotek och din att-se-lista - se dina rekommendationer och dina vänners aktivitet - sedda och samlade avsnitt synkas automatiskt - nya serier du ser på läggs automatiskt till.</string>
   <string name="action_rate">Betygsätt</string>
   <string name="your_rating">Ditt betyg</string>
   <string name="love">Helt ninja!</string>

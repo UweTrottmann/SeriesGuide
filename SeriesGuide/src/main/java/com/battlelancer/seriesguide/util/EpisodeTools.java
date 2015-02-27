@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -56,6 +57,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -240,8 +242,7 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once the database ops are finished, sending to trakt may still be in progress or queued
-     * due to no available connection.
+     * Sent once sending to services and the database ops are finished.
      */
     public static class EpisodeActionCompletedEvent {
 
@@ -276,16 +277,6 @@ public class EpisodeTools {
          * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
          */
         public List<Episode> getEpisodesForHexagon() {
-            return buildEpisodeList();
-        }
-
-        public abstract List<SyncSeason> getEpisodesForTrakt();
-
-        public int getShowTvdbId() {
-            return mShowTvdbId;
-        }
-
-        private List<Episode> buildEpisodeList() {
             List<Episode> episodes = new ArrayList<>();
 
             // determine uri
@@ -313,6 +304,13 @@ public class EpisodeTools {
             return episodes;
         }
 
+        @Nullable
+        public abstract List<SyncSeason> getEpisodesForTrakt();
+
+        public int getShowTvdbId() {
+            return mShowTvdbId;
+        }
+
         /**
          * Set any additional properties besides show id, season or episode number.
          */
@@ -322,7 +320,7 @@ public class EpisodeTools {
          * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason} objects to submit
          * to trakt.
          */
-        protected List<SyncSeason> createEpisodeFlags() {
+        protected List<SyncSeason> buildTraktEpisodeList() {
             List<SyncSeason> seasons = new ArrayList<>();
 
             // determine uri
@@ -330,21 +328,21 @@ public class EpisodeTools {
             String selection = getSelection();
 
             // query and add episodes to list
-            // sort ascending by season for trakt
+            // sort ascending by season, then number for trakt
             final Cursor episodeCursor = mContext.getContentResolver().query(
                     uri,
                     new String[] {
                             SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
-                    }, selection, null, SeriesGuideContract.Episodes.SORT_SEASON_ASC
+                    },
+                    selection,
+                    null,
+                    SeriesGuideContract.Episodes.SORT_SEASON_ASC + ", "
+                            + SeriesGuideContract.Episodes.SORT_NUMBER_ASC
             );
             if (episodeCursor != null) {
                 SyncSeason currentSeason = null;
                 while (episodeCursor.moveToNext()) {
                     int seasonNumber = episodeCursor.getInt(0);
-                    if (currentSeason != null && seasonNumber < currentSeason.number) {
-                        // skip out of order flags
-                        continue;
-                    }
 
                     // start new season?
                     if (currentSeason == null || seasonNumber > currentSeason.number) {
@@ -411,6 +409,12 @@ public class EpisodeTools {
                         values, null, null);
             }
         }
+
+        /**
+         * Will be called after {@link #updateDatabase()} and {@link #storeLastEpisode()}. Do any
+         * additional operations here.
+         */
+        protected abstract void onPostExecute();
 
         /**
          * Returns the text which should be prepended to the submission status message. Tells e.g.
@@ -553,6 +557,18 @@ public class EpisodeTools {
         }
 
         @Override
+        protected void onPostExecute() {
+            if (isWatched(mEpisodeFlag)) {
+                // create activity entry for watched episode
+                ActivityTools.addActivity(mContext, mEpisodeTvdbId, mShowTvdbId);
+            } else if (isUnwatched(mEpisodeFlag)) {
+                // remove any previous activity entries for this episode
+                // use case: user accidentally toggled watched flag
+                ActivityTools.removeActivity(mContext, mEpisodeTvdbId);
+            }
+        }
+
+        @Override
         public String getNotificationText() {
             if (isSkipped(mEpisodeFlag)) {
                 // skipping is not sent to trakt, no need for a message
@@ -594,6 +610,11 @@ public class EpisodeTools {
         }
 
         @Override
+        protected void onPostExecute() {
+            // do nothing
+        }
+
+        @Override
         public String getNotificationText() {
             String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
@@ -629,11 +650,6 @@ public class EpisodeTools {
         }
 
         @Override
-        public String getSelection() {
-            return null;
-        }
-
-        @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
             values.put(getColumn(), mEpisodeFlag);
@@ -641,20 +657,36 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            // flag a single season
-            List<SyncSeason> seasons = new LinkedList<>();
-            seasons.add(new SyncSeason().number(mSeason));
-            return seasons;
+        protected void onPostExecute() {
+            // do nothing
         }
     }
 
     public static class SeasonWatchedType extends SeasonType {
 
+        private final long currentTime;
+
         public SeasonWatchedType(Context context, int showTvdbId, int seasonTvdbId, int season,
                 int episodeFlags) {
             super(context, showTvdbId, seasonTvdbId, season, episodeFlags);
             mAction = EpisodeAction.SEASON_WATCHED;
+            currentTime = TimeTools.getCurrentTime(context);
+        }
+
+        @Override
+        public String getSelection() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // set unwatched
+                // include watched or skipped episodes
+                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
+            } else {
+                // set watched or skipped
+                // do NOT mark watched episodes again to avoid trakt adding a new watch
+                // only mark episodes that have been released until within the hour
+                return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                        + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
+            }
         }
 
         @Override
@@ -681,7 +713,9 @@ public class EpisodeTools {
                 final Cursor seasonEpisodes = mContext.getContentResolver().query(
                         SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
                                 String.valueOf(mSeasonTvdbId)),
-                        PROJECTION_EPISODE, null, null,
+                        PROJECTION_EPISODE,
+                        SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                                + DateUtils.HOUR_IN_MILLIS), null,
                         SeriesGuideContract.Episodes.NUMBER + " DESC"
                 );
                 if (seasonEpisodes != null) {
@@ -694,6 +728,16 @@ public class EpisodeTools {
 
                 return lastWatchedId;
             }
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
+        }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -721,6 +765,12 @@ public class EpisodeTools {
         }
 
         @Override
+        public String getSelection() {
+            // include all episodes of season
+            return null;
+        }
+
+        @Override
         protected void setEpisodeProperties(Episode episode) {
             episode.setIsInCollection(isCollected(mEpisodeFlag));
         }
@@ -733,6 +783,14 @@ public class EpisodeTools {
         @Override
         protected int getLastWatchedEpisodeTvdbId() {
             return -1;
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            // flag the whole season
+            List<SyncSeason> seasons = new LinkedList<>();
+            seasons.add(new SyncSeason().number(mSeason));
+            return seasons;
         }
 
         @Override
@@ -756,11 +814,6 @@ public class EpisodeTools {
         }
 
         @Override
-        public String getSelection() {
-            return null;
-        }
-
-        @Override
         protected ContentValues getContentValues() {
             ContentValues values = new ContentValues();
             values.put(getColumn(), mEpisodeFlag);
@@ -768,8 +821,8 @@ public class EpisodeTools {
         }
 
         @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            return null;
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -780,9 +833,30 @@ public class EpisodeTools {
 
     public static class ShowWatchedType extends ShowType {
 
+        private final long currentTime;
+
         public ShowWatchedType(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId, episodeFlags);
             mAction = EpisodeAction.SHOW_WATCHED;
+            currentTime = TimeTools.getCurrentTime(context);
+        }
+
+        @Override
+        public String getSelection() {
+            if (isUnwatched(mEpisodeFlag)) {
+                // set unwatched
+                // include watched or skipped episodes
+                return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
+            } else {
+                // set watched or skipped
+                // do NOT mark watched episodes again to avoid trakt adding a new watch
+                // only mark episodes that have been released until within the hour
+                return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
+                        + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
+            }
         }
 
         @Override
@@ -805,6 +879,11 @@ public class EpisodeTools {
                 return -1;
             }
         }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
+        }
     }
 
     public static class ShowCollectedType extends ShowType {
@@ -812,6 +891,12 @@ public class EpisodeTools {
         public ShowCollectedType(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId, episodeFlags);
             mAction = EpisodeAction.SHOW_COLLECTED;
+        }
+
+        @Override
+        public String getSelection() {
+            // only exclude specials (here will only affect database + hexagon)
+            return SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
         }
 
         @Override
@@ -828,6 +913,12 @@ public class EpisodeTools {
         protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
+        }
+
+        @Override
+        public List<SyncSeason> getEpisodesForTrakt() {
+            // send whole show
+            return null;
         }
     }
 
@@ -848,8 +939,13 @@ public class EpisodeTools {
 
         @Override
         public String getSelection() {
-            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired + " AND "
-                    + SeriesGuideContract.Episodes.FIRSTAIREDMS + ">0";
+            // must
+            // - be released before current episode,
+            // - have a release date,
+            // - be unwatched or skipped
+            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + mEpisodeFirstAired
+                    + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
+                    + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
         }
 
         @Override
@@ -861,7 +957,7 @@ public class EpisodeTools {
 
         @Override
         public List<SyncSeason> getEpisodesForTrakt() {
-            return createEpisodeFlags();
+            return buildTraktEpisodeList();
         }
 
         @Override
@@ -879,6 +975,11 @@ public class EpisodeTools {
         protected int getLastWatchedEpisodeTvdbId() {
             // we don't care
             return -1;
+        }
+
+        @Override
+        protected void onPostExecute() {
+            // do nothing
         }
 
         @Override
@@ -953,11 +1054,13 @@ public class EpisodeTools {
             // update local database (if uploading went smoothly or not uploading at all)
             mType.updateDatabase();
             mType.storeLastEpisode();
+            mType.onPostExecute();
 
             return SUCCESS;
         }
 
-        private static int uploadToHexagon(Context context, int showTvdbId, List<Episode> batch) {
+        private static int uploadToHexagon(Context context, int showTvdbId,
+                @Nonnull List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
             uploadWrapper.setShowTvdbId(showTvdbId);
 
@@ -990,8 +1093,16 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
+        /**
+         * @param flags Send {@code null} to upload complete show.
+         */
         private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
-                List<SyncSeason> flags, boolean isAddNotDelete) {
+                @Nullable List<SyncSeason> flags, boolean isAddNotDelete) {
+            if (flags != null && flags.isEmpty()) {
+                // nothing to upload
+                return SUCCESS;
+            }
+
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
             if (trakt == null) {
                 return ERROR_TRAKT_AUTH;

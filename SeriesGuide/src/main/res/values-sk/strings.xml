@@ -135,7 +135,6 @@
   <string name="action_watched">Zhliadnute</string>
   <string name="action_unwatched">Nezhliadnute</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
-  <string name="delete_has_list_items">Spĺňa\Nespĺňa požiadavky, odstrániť %s zo všetkých zoznamov.</string>
   <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovať</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Aktualizácia (iba zastaralé)</string>
   <string name="context_updateshow">Aktualizovať</string>
   <string name="context_marknext">Ďalšia pozretá epizóda</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
   <string name="friends">Priatelia</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Spravovať zoznamy</string>
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť knižnicu</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="action_rate">Ohodnotiť</string>
   <string name="your_rating">Vaše hodnotenie</string>
   <string name="love">Totálna pecka!</string>

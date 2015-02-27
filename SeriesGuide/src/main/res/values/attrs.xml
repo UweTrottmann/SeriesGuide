@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="sgSelectableItemBackground" format="reference" />
+    <!-- Special drawables -->
     <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
 
     <!-- Text colors -->
-    <attr name="textColorPrimarySg" format="reference|color" />
-    <attr name="textColorSecondarySg" format="reference|color" />
-    <attr name="textColorSgGreen" format="reference|color" />
-    <attr name="textColorSgDim" format="reference|color" />
+    <attr name="sgTextColorGreen" format="reference|color" />
+    <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
-    <!-- Colors -->
+    <!-- Other colors -->
+    <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
+    <attr name="sgColorBackgroundFabPressed" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
-    <attr name="sgColorTabStripText" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
 
     <!-- Color Arrays -->
@@ -24,8 +23,8 @@
     <attr name="drawableAddIcon" format="reference" />
     <attr name="drawableAddShow" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
+    <attr name="drawableArrowRight" format="reference" />
     <attr name="drawableBackgroundGradient" format="reference" />
-    <attr name="drawableCardBackground" format="reference" />
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableCheckin" format="reference" />
     <attr name="drawableCollect" format="reference" />

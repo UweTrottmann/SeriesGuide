@@ -20,7 +20,6 @@ import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -43,6 +42,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -126,14 +126,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_34_TRAKT_V2 = 34;
 
-    public static final int DATABASE_VERSION = DBVER_34_TRAKT_V2;
+    /**
+     * Added activity table to store recently watched episodes.
+     */
+    public static final int DBVER_35_ACTIVITY_TABLE = 35;
 
-    private DatabaseUtils.InsertHelper mShowsInserter;
-    private DatabaseUtils.InsertHelper mSeasonsInserter;
-    private DatabaseUtils.InsertHelper mEpisodesInserter;
-    private DatabaseUtils.InsertHelper mListsInserter;
-    private DatabaseUtils.InsertHelper mListItemsInserter;
-    private DatabaseUtils.InsertHelper mMoviesInserter;
+    public static final int DATABASE_VERSION = DBVER_35_ACTIVITY_TABLE;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -145,7 +143,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String SHOWS_NEXT_EPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
         String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
         String EPISODES_SHOW_ID = Tables.EPISODES + "." + Shows.REF_SHOW_ID;
+        String SEASONS_ID = Tables.SEASONS + "." + Seasons._ID;
         String SEASONS_SHOW_ID = Tables.SEASONS + "." + Shows.REF_SHOW_ID;
+        String LIST_ITEMS_REF_ID = Tables.LIST_ITEMS + "." + ListItems.ITEM_REF_ID;
     }
 
     public interface Tables {
@@ -174,46 +174,52 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         String LIST_ITEMS = "listitems";
 
-        String LIST_ITEMS_WITH_DETAILS = "(SELECT "
-                + Selections.SHOWS_COLUMNS + " FROM "
-                + "((SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM listitems WHERE item_type=1) AS listitems "
-                + "LEFT OUTER JOIN (SELECT " + Selections.SHOWS_COLUMNS_INTERNAL
-                + " FROM series) as series ON item_ref_id=series_id) "
-
-                + "UNION SELECT " + Selections.SEASONS_COLUMNS + " FROM "
-                + "((SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM listitems WHERE item_type=2) AS listitems LEFT OUTER JOIN ("
-                + SEASONS_JOIN_SHOWS
-                + ") AS seasons ON listitems.item_ref_id=seasons._id) "
-
-                + "UNION SELECT " + Selections.EPISODES_COLUMNS + " FROM "
-                + "((SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
-                + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
+        String LIST_ITEMS_WITH_DETAILS = "("
+                // shows
+                + "SELECT " + Selections.SHOWS_COLUMNS + " FROM "
+                + "("
+                + Selections.LIST_ITEMS_SHOWS
+                + " LEFT OUTER JOIN " + Tables.SHOWS
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + Qualified.SHOWS_ID
+                + ")"
+                // seasons
+                + " UNION SELECT " + Selections.SEASONS_COLUMNS + " FROM "
+                + "("
+                + Selections.LIST_ITEMS_SEASONS
+                + " LEFT OUTER JOIN " + "(" + SEASONS_JOIN_SHOWS + ") AS " + Tables.SEASONS
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + Qualified.SEASONS_ID
+                + ")"
+                // episodes
+                + " UNION SELECT " + Selections.EPISODES_COLUMNS + " FROM "
+                + "("
+                + Selections.LIST_ITEMS_EPISODES
+                + " LEFT OUTER JOIN " + "(" + EPISODES_JOIN_SHOWS + ") AS " + Tables.EPISODES
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + Qualified.EPISODES_ID
+                + ")"
+                //
+                + ")";
 
         String MOVIES = "movies";
+
+        String ACTIVITY = "activity";
     }
 
     private interface Selections {
 
-        String COMMON_SHOW_COLUMNS =
-                Shows.REF_SHOW_ID + ","
-                        + Shows.TITLE + ","
-                        + Shows.POSTER + ","
-                        + Shows.NETWORK + ","
-                        + Shows.STATUS + ","
-                        + Shows.FAVORITE + ","
-                        + Shows.RELEASE_WEEKDAY + ","
-                        + Shows.RELEASE_TIMEZONE + ","
-                        + Shows.RELEASE_COUNTRY;
+        String LIST_ITEMS_SHOWS = "(SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
+                + " FROM " + Tables.LIST_ITEMS
+                + " WHERE " + ListItems.SELECTION_SHOWS + ")"
+                + " AS " + Tables.LIST_ITEMS;
 
-        String COMMON_LIST_ITEMS_COLUMNS =
-                "listitem_id as " + ListItems._ID + ","
-                        + ListItems.LIST_ITEM_ID + ","
-                        + Lists.LIST_ID + ","
-                        + ListItems.TYPE + ","
-                        + ListItems.ITEM_REF_ID;
+        String LIST_ITEMS_SEASONS = "(SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
+                + " FROM " + Tables.LIST_ITEMS
+                + " WHERE " + ListItems.SELECTION_SEASONS + ")"
+                + " AS " + Tables.LIST_ITEMS;
+
+        String LIST_ITEMS_EPISODES = "(SELECT " + Selections.LIST_ITEMS_COLUMNS_INTERNAL
+                + " FROM " + Tables.LIST_ITEMS
+                + " WHERE " + ListItems.SELECTION_EPISODES + ")"
+                + " AS " + Tables.LIST_ITEMS;
 
         String LIST_ITEMS_COLUMNS_INTERNAL =
                 ListItems._ID + " as listitem_id,"
@@ -222,36 +228,47 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + ListItems.TYPE + ","
                         + ListItems.ITEM_REF_ID;
 
-        String SHOWS_COLUMNS_INTERNAL =
-                Shows._ID + " as " + COMMON_SHOW_COLUMNS + ","
-                        + Shows.OVERVIEW + ","
-                        + Shows.RELEASE_TIME + ","
-                        + Shows.NEXTTEXT + ","
-                        + Shows.NEXTAIRDATETEXT;
+        String COMMON_LIST_ITEMS_COLUMNS =
+                // from list items table
+                "listitem_id as " + ListItems._ID + ","
+                        + ListItems.LIST_ITEM_ID + ","
+                        + Lists.LIST_ID + ","
+                        + ListItems.TYPE + ","
+                        + ListItems.ITEM_REF_ID + ","
+                        // from shows table
+                        + Shows.TITLE + ","
+                        + Shows.TITLE_NOARTICLE + ","
+                        + Shows.POSTER + ","
+                        + Shows.NETWORK + ","
+                        + Shows.STATUS + ","
+                        + Shows.FAVORITE + ","
+                        + Shows.RELEASE_WEEKDAY + ","
+                        + Shows.RELEASE_TIMEZONE + ","
+                        + Shows.RELEASE_COUNTRY;
 
-        String SHOWS_COLUMNS =
-                COMMON_LIST_ITEMS_COLUMNS + ","
-                        + COMMON_SHOW_COLUMNS + ","
-                        + Shows.OVERVIEW + ","
-                        + Shows.RELEASE_TIME + ","
-                        + Shows.NEXTTEXT + ","
-                        + Shows.NEXTAIRDATETEXT;
+        String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
+                + Qualified.SHOWS_ID + " as " + Shows.REF_SHOW_ID + ","
+                + Shows.OVERVIEW + ","
+                + Shows.RELEASE_TIME + ","
+                + Shows.NEXTTEXT + ","
+                + Shows.NEXTAIRDATETEXT + ","
+                + Shows.NEXTAIRDATEMS;
 
-        String SEASONS_COLUMNS =
-                COMMON_LIST_ITEMS_COLUMNS + ","
-                        + COMMON_SHOW_COLUMNS + ","
-                        + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
-                        + Shows.RELEASE_TIME + ","
-                        + Shows.NEXTTEXT + ","
-                        + Shows.NEXTAIRDATETEXT;
+        String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
+                + Shows.REF_SHOW_ID + ","
+                + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
+                + Shows.RELEASE_TIME + ","
+                + Shows.NEXTTEXT + ","
+                + Shows.NEXTAIRDATETEXT + ","
+                + Shows.NEXTAIRDATEMS;
 
-        String EPISODES_COLUMNS =
-                COMMON_LIST_ITEMS_COLUMNS + ","
-                        + COMMON_SHOW_COLUMNS + ","
-                        + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
-                        + Episodes.FIRSTAIREDMS + " as " + Shows.RELEASE_TIME + ","
-                        + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
-                        + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT;
+        String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
+                + Shows.REF_SHOW_ID + ","
+                + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
+                + Episodes.FIRSTAIREDMS + " as " + Shows.RELEASE_TIME + ","
+                + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
+                + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT + ","
+                + Episodes.FIRSTAIREDMS + " as " + Shows.NEXTAIRDATEMS;
     }
 
     interface References {
@@ -323,8 +340,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0,"
 
             + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.GETGLUEID + " TEXT DEFAULT '',"
 
             + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0"
 
@@ -490,32 +505,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
+            + " ("
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
+            + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
+            + ActivityColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public long insertShows(ContentValues values) {
-        return mShowsInserter.insert(values);
-    }
-
-    public long insertSeasons(ContentValues values) {
-        return mSeasonsInserter.insert(values);
-    }
-
-    public long insertEpisodes(ContentValues values) {
-        return mEpisodesInserter.insert(values);
-    }
-
-    public long insertLists(ContentValues values) {
-        return mListsInserter.insert(values);
-    }
-
-    public long insertListItems(ContentValues values) {
-        return mListItemsInserter.insert(values);
-    }
-
-    public long insertMovies(ContentValues values) {
-        return mMoviesInserter.insert(values);
     }
 
     @Override
@@ -533,16 +533,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_LIST_ITEMS_TABLE);
 
         db.execSQL(CREATE_MOVIES_TABLE);
-    }
 
-    @Override
-    public void onOpen(SQLiteDatabase db) {
-        mShowsInserter = new DatabaseUtils.InsertHelper(db, Tables.SHOWS);
-        mSeasonsInserter = new DatabaseUtils.InsertHelper(db, Tables.SEASONS);
-        mEpisodesInserter = new DatabaseUtils.InsertHelper(db, Tables.EPISODES);
-        mListsInserter = new DatabaseUtils.InsertHelper(db, Tables.LISTS);
-        mListItemsInserter = new DatabaseUtils.InsertHelper(db, Tables.LIST_ITEMS);
-        mMoviesInserter = new DatabaseUtils.InsertHelper(db, Tables.MOVIES);
+        db.execSQL(CREATE_ACTIVITY_TABLE);
     }
 
     @Override
@@ -594,7 +586,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyThree(db);
             case DBVER_33_IGNORE_ARTICLE_SORT:
                 upgradeToThirtyFour(db);
-                version = DBVER_34_TRAKT_V2;
+            case DBVER_34_TRAKT_V2:
+                upgradeToThirtyFive(db);
+                version = DBVER_35_ACTIVITY_TABLE;
         }
 
         // drop all tables if version is not right
@@ -615,10 +609,20 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.ACTIVITY);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_35_ACTIVITY_TABLE}.
+     */
+    private static void upgradeToThirtyFive(SQLiteDatabase db) {
+        if (!isTableExisting(db, Tables.ACTIVITY)) {
+            db.execSQL(CREATE_ACTIVITY_TABLE);
+        }
     }
 
     /**
@@ -902,12 +906,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // populate the new column from existing data
         final Cursor shows = db.query(Tables.SHOWS, new String[] {
-                Shows._ID, Shows.RELEASE_TIME
+                Shows._ID
         }, null, null, null, null, null);
 
         while (shows.moveToNext()) {
             final String showId = shows.getString(0);
-            final long airtime = shows.getLong(1);
 
             final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED

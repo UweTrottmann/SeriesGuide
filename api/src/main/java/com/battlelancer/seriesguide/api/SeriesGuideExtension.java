@@ -359,7 +359,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     private synchronized void loadSubscriptions() {
-        mSubscribers = new HashMap<ComponentName, String>();
+        mSubscribers = new HashMap<>();
         Set<String> serializedSubscriptions = mSharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions != null) {
             for (String serializedSubscription : serializedSubscriptions) {
@@ -372,7 +372,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     private synchronized void saveSubscriptions() {
-        Set<String> serializedSubscriptions = new HashSet<String>();
+        Set<String> serializedSubscriptions = new HashSet<>();
         for (ComponentName subscriber : mSubscribers.keySet()) {
             serializedSubscriptions.add(subscriber.flattenToShortString() + "|"
                     + mSubscribers.get(subscriber));

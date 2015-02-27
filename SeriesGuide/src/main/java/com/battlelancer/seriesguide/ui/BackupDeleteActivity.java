@@ -26,6 +26,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,20 +47,17 @@ import java.io.IOException;
 import timber.log.Timber;
 
 /**
- * Allows to back up or restore the show database to external storage.
+ * <b>DEPRECATED.</b> Just keeping this around for legacy users. Copying the database file for
+ * backup is dangerous and error prone.
+ *
+ * <p>Also the tasks in this class reference the activity, which in itself is badly designed (they
+ * should be static).
+ *
+ * <p>Allows to back up or restore the show database to external storage.
  */
 public class BackupDeleteActivity extends BaseActivity {
 
-    private static final int EXPORT_DIALOG = 0;
-
-    private static final int IMPORT_DIALOG = 1;
-
-    private static final int EXPORT_PROGRESS = 3;
-
-    private static final int IMPORT_PROGRESS = 4;
-
     private AsyncTask<Void, Void, String> mTask;
-
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -83,14 +82,14 @@ public class BackupDeleteActivity extends BaseActivity {
         Button exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
         exportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
-                showDialog(EXPORT_DIALOG);
+                showExportDialog();
             }
         });
 
         Button importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
         importDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
-                showDialog(IMPORT_DIALOG);
+                showImportDialog();
             }
         });
 
@@ -136,7 +135,7 @@ public class BackupDeleteActivity extends BaseActivity {
         // can use UI thread here
         @Override
         protected void onPreExecute() {
-            showDialog(EXPORT_PROGRESS);
+            showProgressDialog(R.string.backup_inprogress);
         }
 
         // automatically done on worker thread (separate from UI thread)
@@ -174,9 +173,7 @@ public class BackupDeleteActivity extends BaseActivity {
         // can use UI thread here
         @Override
         protected void onPostExecute(final String errorMsg) {
-            if (mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
+            hideProgressDialog();
             if (errorMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
@@ -194,7 +191,7 @@ public class BackupDeleteActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-            showDialog(IMPORT_PROGRESS);
+            showProgressDialog(R.string.import_inprogress);
         }
 
         // could pass the params used here in AsyncTask<String, Void, String> -
@@ -281,51 +278,20 @@ public class BackupDeleteActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case EXPORT_DIALOG:
-                return new AlertDialog.Builder(BackupDeleteActivity.this)
-                        .setMessage(getString(R.string.backup_question))
-                        .setPositiveButton(getString(R.string.backup_button),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        if (isExternalStorageAvailable(
-                                                R.string.backup_failed_nosd)) {
-                                            mTask = new ExportDatabaseTask();
-                                            Utils.executeInOrder(mTask);
-                                        }
-                                    }
-                                }
-                        ).setNegativeButton(getString(R.string.backup_no), null).create();
-            case IMPORT_DIALOG:
-                return new AlertDialog.Builder(BackupDeleteActivity.this)
-                        .setMessage(getString(R.string.import_question))
-                        .setPositiveButton(getString(R.string.import_button),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        if (isExternalStorageAvailable(
-                                                R.string.import_failed_nosd)) {
-                                            mTask = new ImportDatabaseTask();
-                                            Utils.executeInOrder(mTask);
-                                        }
-                                    }
-                                }
-                        ).setNegativeButton(getString(R.string.import_no), null).create();
-            case EXPORT_PROGRESS:
-                return getProgressDialog(R.string.backup_inprogress);
-            case IMPORT_PROGRESS:
-                return getProgressDialog(R.string.import_inprogress);
-        }
-        return null;
-    }
-
-    private ProgressDialog getProgressDialog(int messageId) {
+    private void showProgressDialog(int messageId) {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(BackupDeleteActivity.this);
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
         }
         mProgressDialog.setMessage(getString(messageId));
-        return mProgressDialog;
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
     }
 
     private boolean isExternalStorageAvailable(int errorMessageID) {
@@ -335,5 +301,65 @@ public class BackupDeleteActivity extends BaseActivity {
                     .show();
         }
         return extStorageAvailable;
+    }
+
+    private void showExportDialog() {
+        ExportDialogFragment f = new ExportDialogFragment();
+        f.show(getSupportFragmentManager(), "export-dialog");
+    }
+
+    private void showImportDialog() {
+        ImportDialogFragment f = new ImportDialogFragment();
+        f.show(getSupportFragmentManager(), "import-dialog");
+    }
+
+    public void exportDatabase() {
+        if (isExternalStorageAvailable(R.string.backup_failed_nosd)) {
+            mTask = new ExportDatabaseTask();
+            Utils.executeInOrder(mTask);
+        }
+    }
+
+    public void importDatabase() {
+        if (isExternalStorageAvailable(R.string.import_failed_nosd)) {
+            mTask = new ImportDatabaseTask();
+            Utils.executeInOrder(mTask);
+        }
+    }
+
+    public static class ExportDialogFragment extends DialogFragment {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(getString(R.string.backup_question))
+                    .setPositiveButton(getString(R.string.backup_button),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    ((BackupDeleteActivity) getActivity()).exportDatabase();
+                                }
+                            }
+                    )
+                    .setNegativeButton(getString(R.string.backup_no), null)
+                    .create();
+        }
+    }
+
+    public static class ImportDialogFragment extends DialogFragment {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(getString(R.string.import_question))
+                    .setPositiveButton(getString(R.string.import_button),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    ((BackupDeleteActivity) getActivity()).importDatabase();
+                                }
+                            }
+                    )
+                    .setNegativeButton(getString(R.string.import_no), null)
+                    .create();
+        }
     }
 }

@@ -135,7 +135,6 @@
   <string name="action_watched">Set watched</string>
   <string name="action_unwatched">Set not watched</string>
   <string name="confirm_delete">Ali res želiš odstraniti %s?</string>
-  <string name="delete_has_list_items">Ne morem izvesti zahteve. Prvo odstrani %s z vseh spiskov.</string>
   <string name="delete_error">Oddaje ni bilo mogoče odstraniti. Poskusite znova pozneje.</string>
   <string name="delete_show">odstrani</string>
   <string name="dontdelete_show">Ne odstrani</string>
@@ -163,6 +162,11 @@
   <string name="menu_update_delta">Posodobi (samo zastarele)</string>
   <string name="context_updateshow">Posodobi</string>
   <string name="context_marknext">Pogledana naslednja epizoda</string>
+  <string name="now_tab">Now</string>
+  <string name="recently_watched">Recently watched</string>
+  <string name="released_today">Released today</string>
+  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">Prihajajoče</string>
   <string name="recent">Nedavno</string>
   <string name="friends">Prijatelji</string>
@@ -204,6 +208,7 @@
   <string name="list_item_manage">Uredi spiske</string>
   <string name="list_item_remove">Odstrani s spiska</string>
   <string name="list_empty">Na ta spisek lahko dodaš oddaje, sezone ali epizode.</string>
+  <string name="action_lists_sort">Sort lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Nastavitev SeriesGuide oblaka</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -247,7 +252,6 @@
   <string name="add_trakt_shows">Dodaj oddaje iz svoje knjižnjice:</string>
   <string name="show_library">Prikaži knjižnjico</string>
   <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
-  <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
   <string name="action_rate">Rate</string>
   <string name="your_rating">Vaša ocena</string>
   <string name="love">Totalno nindža!</string>

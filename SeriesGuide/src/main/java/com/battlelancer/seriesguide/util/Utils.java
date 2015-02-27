@@ -27,11 +27,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.AnyRes;
+import android.support.annotation.AttrRes;
+import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -58,11 +60,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import timber.log.Timber;
 
 public class Utils {
@@ -162,27 +161,6 @@ public class Utils {
     }
 
     /**
-     * Creates a SHA1 hex encoded representation of the given String.
-     */
-    public static String toSHA1(String message) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] messageBytes = message.getBytes("UTF-8");
-            byte[] digest = md.digest(messageBytes);
-
-            String result = "";
-            for (int i = 0; i < digest.length; i++) {
-                result += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
-            }
-
-            return result;
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Timber.e(e, "Failed creating SHA1");
-        }
-        return null;
-    }
-
-    /**
      * Returns if the user should get access to paid features.
      */
     public static boolean hasAccessToX(Context context) {
@@ -198,6 +176,7 @@ public class Utils {
      */
     public static boolean hasXpass(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the Play store
+        //noinspection ConstantConditions,PointlessBooleanExpression
         return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
     }
 
@@ -255,8 +234,9 @@ public class Utils {
      * intrinsic bounds.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button, int left,
-            int top, int right, int bottom) {
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+            @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
+            @DrawableRes int bottom) {
         if (AndroidUtils.isJellyBeanMR1OrHigher()) {
             button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
             return;
@@ -353,6 +333,7 @@ public class Utils {
         final File[] files = path.listFiles();
         if (files != null) {
             for (File file : files) {
+                //noinspection ResultOfMethodCallIgnored
                 file.delete();
             }
         }
@@ -362,10 +343,8 @@ public class Utils {
      * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
      * without any resizing or cropping.
      */
-    public static void loadPoster(Context context, ImageView imageView,
-            String posterPath) {
-        ServiceUtils.getPicasso(context)
-                .load(TheTVDB.buildPosterUrl(posterPath))
+    public static void loadPoster(Context context, ImageView imageView, String posterPath) {
+        ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
                 .noFade()
                 .into(imageView);
     }
@@ -380,6 +359,7 @@ public class Utils {
         if (AndroidUtils.isJellyBeanOrHigher()) {
             imageView.setImageAlpha(30);
         } else {
+            //noinspection deprecation
             imageView.setAlpha(30);
         }
 
@@ -387,19 +367,46 @@ public class Utils {
     }
 
     /**
-     * Tries to load a down-sized, center cropped version of the given TVDb show poster into the
-     * given {@link android.widget.ImageView}.
+     * Builds a TheTVDB poster url, then tries to load a resized, center cropped version of the show
+     * poster into the given {@link android.widget.ImageView}. On failure displays an error drawable
+     * (ensure image view is set to center inside).
      *
-     * <p> The resize dimensions are those used for posters in the show list.
+     * <p>The resize dimensions are those used for posters in the show list and change depending on
+     * screen size.
      */
-    public static void loadPosterThumbnail(Context context, ImageView imageView,
-            String posterPath) {
-        ServiceUtils.getPicasso(context)
-                .load(TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+    public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
+        ServiceUtils.loadWithPicasso(context,
+                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
+    }
+
+    /**
+     * Tries to load a resized, center cropped version of the show/movie poster at the given URL
+     * into the given {@link android.widget.ImageView}. On failure displays an error drawable
+     * (ensure image view is set to center inside).
+     *
+     * <p>The resize dimensions are fixed for all screen sizes. E.g. for items using the show list
+     * layout, use {@link #loadTvdbShowPoster(android.content.Context, android.widget.ImageView,
+     * String)}.
+     */
+    public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
+        ServiceUtils.loadWithPicasso(context, posterUrl)
+                .centerCrop()
+                .resizeDimen(R.dimen.show_poster_small_width, R.dimen.show_poster_small_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
+    /**
+     * Builds a TheTVDB poster url, then calls {@link #loadSmallPoster}.
+     */
+    public static void loadSmallTvdbShowPoster(Context context, ImageView imageView,
+            String posterPath) {
+        loadSmallPoster(context, imageView,
+                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath));
     }
 
     /**
@@ -418,13 +425,6 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
                 break;
         }
-    }
-
-    /**
-     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
-     */
-    public static int setColorAlpha(int color, int alpha) {
-        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
     }
 
     /**
@@ -563,7 +563,9 @@ public class Utils {
     /**
      * Resolves the given attribute to the resource id for the given theme.
      */
-    public static int resolveAttributeToResourceId(Resources.Theme theme, int attributeResId) {
+    @AnyRes
+    public static int resolveAttributeToResourceId(Resources.Theme theme,
+            @AttrRes int attributeResId) {
         TypedValue outValue = new TypedValue();
         theme.resolveAttribute(attributeResId, outValue, true);
         return outValue.resourceId;
@@ -596,20 +598,6 @@ public class Utils {
     @SafeVarargs
     public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
-    }
-
-    /**
-     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect to
-     * the given URL. <p/> Responses are downloaded and cached using the default HTTP client
-     * instance (see {@link com.battlelancer.seriesguide.util.ServiceUtils}.
-     */
-    public static InputStream downloadUrl(String urlString) throws IOException {
-        URL url = new URL(urlString);
-
-        HttpURLConnection conn = ServiceUtils.getUrlFactory().open(url);
-        conn.connect();
-
-        return conn.getInputStream();
     }
 
     /**

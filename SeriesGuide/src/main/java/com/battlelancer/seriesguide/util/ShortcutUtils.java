@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
-import com.squareup.picasso.Picasso;
+import com.squareup.picasso.NetworkPolicy;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import timber.log.Timber;
@@ -56,11 +56,12 @@ public final class ShortcutUtils {
             @Override
             protected Intent doInBackground(Void... params) {
                 // try to get the show poster
-                Bitmap posterBitmap = null;
+                Bitmap posterBitmap;
 
                 try {
                     posterBitmap = ServiceUtils.getPicasso(context)
                             .load(TheTVDB.buildPosterUrl(posterPath))
+                            .networkPolicy(NetworkPolicy.NO_STORE)
                             .centerCrop()
                             .resizeDimen(R.dimen.shortcut_icon_size, R.dimen.shortcut_icon_size)
                             .get();

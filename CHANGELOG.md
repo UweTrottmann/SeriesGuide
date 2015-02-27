@@ -5,6 +5,85 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 22 *(2015-02-27)*
+-------------------------
+
+* New "Now" tab displays episodes released today, recently watched (device only or trakt history)
+  and watched by your trakt friends.
+* Further updates towards material design.
+* When setting a season or show watched, only already released episodes will be set watched.
+
+#### 22.0.0 *(2015-02-27)*
+
+* TWEAK Move "Add show" action to a floating action button.
+* TWEAK Remove "events and reminders" category from SeriesGuide episode notifications. To continue
+  receiving episode notifications while Priority mode is active, make SeriesGuide a priority app.
+  Only on Android Lollipop and up.
+* TWEAK Enable Samsung multi-window. However, layouts are not optimized for multi-window.
+* TWEAK Some minor design updates.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0-beta5 *(2015-02-24)*
+
+* TWEAK Use new CardView to replace old card drawables. Other design updates and fixes.
+* TWEAK Experimental change of the accent color to teal.
+* TWEAK Now tab has better error messages and feedback about loading data.
+* TWEAK Add "Web search" action to movie details menu.
+* FIX Now tab would not respect manual time offset.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0-beta4 *(2015-02-17)*
+
+* TWEAK On Now tab, added "More history" shortcut in "Recently watched" section. Removed history tab.
+* TWEAK Support trakt refresh tokens. trakt sign-ins are now permanent, unless you disconnect or
+  revoke SeriesGuide's permission on the trakt website.
+* NOTICE If you are connected to trakt, you will have to sign in again once at the latest in 90 days.
+* TWEAK Display search icon in shows section if there is room.
+* FIX Would not offer to add show from "Recently watched" if connected to trakt.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0-beta3 *(2015-02-12)*
+
+* TWEAK Recently watched in "Now" is replaced with trakt episode history if connected to trakt.
+* TWEAK The "Add show" screen now displays already added shows, but with an added indicator.
+  Add dialog also prevents adding shows already in the local database.
+* TWEAK When setting a season or show watched, only already released episodes will be set watched.
+* TWEAK When setting a show watched or collected, will now exclude specials. This lines the behavior
+  up with the indicators.
+* FIX When setting a season or show watched/not watched, will now only upload changed episodes to
+  trakt. This prevents new watch dates from being created on trakt.
+* FIX When adding a show from the add dialog, will now correctly display show title in status toast.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0-beta2 *(2015-02-05)*
+
+* FEATURE Experimental "Now" tab in shows section. Displays recently watched episodes,
+  episodes released today and recent episodes of trakt friends. Note: Recently watched are currently
+  local only, even if connected to trakt; friends activity loads any last episode, even if it
+  was watched a long time ago.
+* TWEAK After adding show from add dialog, add button will disappear in show lists. Thanks @migueljteixeira!
+* TWEAK Switch to new dedicated trakt v2 API endpoint.
+* TWEAK Update string related to hiding shows for clarity.
+* FIX When adding a show and connected to trakt, would add show even if loading watched or collected
+  episodes failed. Now fails with trakt error message.
+* NOTICE Changed Android Beam NDEF mime type. Beaming shows from their overview will only work
+  against this or a later version.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0-beta1 *(2015-01-28)*
+
+* FEATURE Sort lists by title or next episode. When sorted by next episode, seasons are treated
+  like shows (e.g. next episode of show determines order).
+* TWEAK Sort movies without release date as newest.
+* TWEAK Backup/Restore tool includes user ratings. Restore sets sensible defaults, skips broken data.
+* TWEAK Movie trakt links now immediately redirect to movie (could show multiple results before).
+* TWEAK Allow removing a show even if parts of it are added to lists. List items will disappear
+  until show is added again.
+* FIX "Manage Lists" dialog does not remember user choice when scrolling list item out of view.
+* FIX Movies could be rated even after removing them from watchlist and collection.
+* FIX Crash in "Unlock features".
+* NOTICE Latest translations from crowdin.
+
 Version 21.1 *(2015-01-19)*
 ---------------------------
 

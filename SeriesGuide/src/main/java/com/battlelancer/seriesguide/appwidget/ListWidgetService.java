@@ -188,8 +188,7 @@ public class ListWidgetService extends RemoteViewsService {
                     ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
             Bitmap poster;
             try {
-                poster = ServiceUtils.getPicasso(context)
-                        .load(TheTVDB.buildPosterUrl(posterPath))
+                poster = ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();

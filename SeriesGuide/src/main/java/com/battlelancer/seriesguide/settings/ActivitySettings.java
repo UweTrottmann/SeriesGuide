@@ -25,19 +25,11 @@ import android.preference.PreferenceManager;
  */
 public class ActivitySettings {
 
-    // Only applies to activity stream
-    public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
-
     public static final String KEY_INFINITE_ACTIVITY
             = "com.battlelancer.seriesguide.activity.infinite";
 
     public static final String KEY_ONLY_FAVORITE_SHOWS
             = "com.battlelancer.seriesguide.onlyfavorites";
-
-    public static int getDefaultActivityTabPosition(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_ACTIVITYTAB, 0);
-    }
 
     /**
      * Whether the activity stream should be infinite or limited to a number of days.
@@ -56,5 +48,4 @@ public class ActivitySettings {
                 KEY_ONLY_FAVORITE_SHOWS,
                 false);
     }
-
 }

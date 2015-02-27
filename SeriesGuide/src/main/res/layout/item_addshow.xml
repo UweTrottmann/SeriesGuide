@@ -1,59 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/drawableCardBackground"
-    android:orientation="horizontal">
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="88dp"
-        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="88dp">
+
+            <ImageView
+                android:id="@+id/imageViewAddPoster"
+                android:layout_width="60dp"
+                android:layout_height="88dp"
+                android:contentDescription="@string/description_poster"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/appwidget_bg" />
+
+            <TextView
+                android:id="@+id/textViewAddTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageViewAddPoster"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Cosmos: A Spacetime Odyssey"
+                android:textAppearance="@style/TextAppearance.Subhead" />
+
+            <TextView
+                android:id="@+id/textViewAddDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddTitle"
+                android:layout_toRightOf="@id/imageViewAddPoster"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/inline_padding"
+                android:paddingBottom="@dimen/default_padding"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="Some awesome\nthree-line\ndescription"
+                android:textAppearance="@style/TextAppearance.Body" />
+
+        </RelativeLayout>
 
         <ImageView
-            android:id="@+id/poster"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/appwidget_bg" />
+            android:id="@+id/viewAddButton"
+            android:layout_width="48dp"
+            android:layout_height="88dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_shows_add"
+            android:scaleType="centerInside"
+            android:src="?attr/drawableAddIcon" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/poster"
-            android:layout_marginTop="@dimen/inline_padding"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="Cosmos: A Spacetime Odyssey"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+        <ImageView
+            android:id="@+id/imageViewAddedIndicator"
+            android:layout_width="48dp"
+            android:layout_height="88dp"
+            android:scaleType="centerInside"
+            android:src="?attr/drawableWatched"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_toRightOf="@id/poster"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:ellipsize="end"
-            android:maxLines="3"
-            tools:text="Some awesome\nthree-line\ndescription"
-            android:textAppearance="@style/TextAppearance.Body" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/addbutton"
-        android:layout_width="48dp"
-        android:layout_height="88dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/action_shows_add"
-        android:scaleType="centerInside"
-        android:src="?attr/drawableAddIcon" />
-
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
