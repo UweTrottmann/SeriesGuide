@@ -132,8 +132,8 @@
   <string name="action_collection_remove">Usuń z kolekcji</string>
   <string name="action_collection_added">Dodano do kolekcji</string>
   <string name="action_collection_removed">Usunięto z kolekcji</string>
-  <string name="action_watched">Obejrzane</string>
-  <string name="action_unwatched">Nie obejrzane</string>
+  <string name="action_watched">Ust. obejrzane</string>
+  <string name="action_unwatched">Ust. nieobejrzane</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
   <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
   <string name="delete_show">Usuń</string>
