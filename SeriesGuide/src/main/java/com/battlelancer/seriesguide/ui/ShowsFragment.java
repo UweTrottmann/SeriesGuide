@@ -56,6 +56,7 @@ import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
@@ -154,8 +155,9 @@ public class ShowsFragment extends Fragment implements
         mGrid.setOnItemClickListener(this);
 
         // setup floating action button for adding shows
-        FloatingActionButton buttonAddShow = (FloatingActionButton) getView().findViewById(
+        final FloatingActionButton buttonAddShow = (FloatingActionButton) getView().findViewById(
                 R.id.buttonShowsAdd);
+        mGrid.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
         buttonAddShow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
