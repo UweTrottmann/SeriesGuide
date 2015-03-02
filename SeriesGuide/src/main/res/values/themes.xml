@@ -115,7 +115,7 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
 
         <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
 
     </style>
 
