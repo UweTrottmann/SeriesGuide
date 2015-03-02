@@ -393,7 +393,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                long id = db.insertOrThrow(Tables.SHOWS, null, values);
+                long id = db.insert(Tables.SHOWS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -401,7 +401,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case SEASONS: {
-                long id = db.insertOrThrow(Tables.SEASONS, null, values);
+                long id = db.insert(Tables.SEASONS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -409,7 +409,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case EPISODES: {
-                long id = db.insertOrThrow(Tables.EPISODES, null, values);
+                long id = db.insert(Tables.EPISODES, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -417,7 +417,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = db.insertOrThrow(Tables.LISTS, null, values);
+                long id = db.insert(Tables.LISTS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -425,7 +425,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LIST_ITEMS: {
-                long id = db.insertOrThrow(Tables.LIST_ITEMS, null, values);
+                long id = db.insert(Tables.LIST_ITEMS, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -433,7 +433,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id = db.insertOrThrow(Tables.MOVIES, null, values);
+                long id = db.insert(Tables.MOVIES, null, values);
                 if (id < 0) {
                     break;
                 }
@@ -441,7 +441,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case ACTIVITY: {
-                long id = db.insertOrThrow(Tables.ACTIVITY, null, values);
+                long id = db.insert(Tables.ACTIVITY, null, values);
                 if (id < 0) {
                     break;
                 }
