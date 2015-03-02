@@ -346,13 +346,7 @@
 
     <!-- ////////////////////////////////////////////// -->
 
-
     <!-- Dark styles -->
-
-    <!-- Progress bar -->
-    <style name="Widget.SeriesGuide.ProgressBar.Dark" parent="android:Widget.Holo.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_dark</item>
-    </style>
 
     <!-- ////////////////////////////////////////////// -->
 

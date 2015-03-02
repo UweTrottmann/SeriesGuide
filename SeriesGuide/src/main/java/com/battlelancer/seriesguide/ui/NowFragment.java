@@ -108,10 +108,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         // define layout
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
+                if (position >= adapter.getItemCount()) {
+                    return 1;
+                }
                 // make headers and more links span all columns
                 int type = adapter.getItem(position).type;
                 return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
