@@ -111,7 +111,8 @@
 
         <!-- System widgets -->
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
 
         <!-- Fast scroll thumb -->
