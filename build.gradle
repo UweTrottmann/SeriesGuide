@@ -24,7 +24,7 @@ ext {
     buildToolsVersion = '21.1.1'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15096
+    versionCode = 15097
     versionName = '22.0.1'
 }
 
