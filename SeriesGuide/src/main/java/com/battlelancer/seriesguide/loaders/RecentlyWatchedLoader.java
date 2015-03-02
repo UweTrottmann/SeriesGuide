@@ -75,12 +75,6 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
                 continue;
             }
 
-            // add header
-            if (episodeQuery.getCount() > 0) {
-                items.add(new NowAdapter.NowItem().header(
-                        getContext().getString(R.string.recently_watched)));
-            }
-
             // add items
             if (episodeQuery.moveToFirst()) {
                 NowAdapter.NowItem item = new NowAdapter.NowItem().displayData(
@@ -97,6 +91,12 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
         }
 
         query.close();
+
+        // add header
+        if (items.size() > 0) {
+            items.add(0, new NowAdapter.NowItem().header(
+                    getContext().getString(R.string.recently_watched)));
+        }
 
         return items;
     }

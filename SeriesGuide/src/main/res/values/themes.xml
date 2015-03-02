@@ -111,11 +111,12 @@
 
         <!-- System widgets -->
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Dark</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
 
         <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
 
     </style>
 
@@ -284,7 +285,7 @@
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorAccent">@color/teal_500</item>
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
 
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -300,7 +301,7 @@
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorAccent">@color/teal_500</item>
         <item name="selectableItemBackground">@drawable/list_selector_sg</item>
 
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>

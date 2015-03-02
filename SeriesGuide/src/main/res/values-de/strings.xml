@@ -17,7 +17,7 @@
   <string name="season">Staffel</string>
   <string name="season_number">Staffel %s</string>
   <string name="seasons">Staffeln</string>
-  <string name="specialseason">Special Episodes</string>
+  <string name="specialseason">Specials</string>
   <string name="description_overview">Übersicht</string>
   <string name="description_poster">Serien-Poster</string>
   <string name="description_image">Bild der Folge</string>
@@ -278,8 +278,8 @@
   <string name="prefs_category_about">Über</string>
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
-  <string name="pref_onlyseasoneps">Special Episodes verstecken</string>
-  <string name="pref_onlyseasonepssummary">Special Episodes verschwinden, außer in der Staffel-Liste</string>
+  <string name="pref_onlyseasoneps">Specials verstecken</string>
+  <string name="pref_onlyseasonepssummary">Specials verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
   <string name="pref_language">Sprache der Inhalte</string>

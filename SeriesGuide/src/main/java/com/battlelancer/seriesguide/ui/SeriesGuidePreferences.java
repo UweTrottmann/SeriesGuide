@@ -502,7 +502,10 @@ public class SeriesGuidePreferences extends ActionBarActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            new BackupManager(getActivity()).dataChanged();
+            Preference pref = findPreference(key);
+            if (pref != null) {
+                new BackupManager(pref.getContext()).dataChanged();
+            }
 
             if (AdvancedSettings.KEY_UPCOMING_LIMIT.equals(key)
                     || DisplaySettings.KEY_LANGUAGE.equals(key)
@@ -510,7 +513,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
                     || DisplaySettings.KEY_THEME.equals(key)
                     || NotificationSettings.KEY_THRESHOLD.equals(key)
                     ) {
-                Preference pref = findPreference(key);
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
                 }
@@ -529,7 +531,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
             }
 
             if (key.equals(KEY_OFFSET)) {
-                Preference pref = findPreference(key);
                 if (pref != null) {
                     ListPreference listPref = (ListPreference) pref;
                     // Set summary to be the user-description for the selected
@@ -542,7 +543,6 @@ public class SeriesGuidePreferences extends ActionBarActivity {
             }
 
             if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
-                Preference pref = findPreference(key);
                 if (pref != null) {
                     resetAndRunNotificationsService(getActivity());
                 }
@@ -550,9 +550,9 @@ public class SeriesGuidePreferences extends ActionBarActivity {
 
             // Toggle auto-update on SyncAdapter
             if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
-                CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
                 if (pref != null) {
-                    SgSyncAdapter.setSyncAutomatically(getActivity(), pref.isChecked());
+                    CheckBoxPreference checkBoxPref = (CheckBoxPreference) pref;
+                    SgSyncAdapter.setSyncAutomatically(getActivity(), checkBoxPref.isChecked());
                 }
             }
         }

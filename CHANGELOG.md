@@ -1,12 +1,34 @@
 <a name="top"></a>
 
-Changelog
-=========
+Release notes
+=============
 
 All dates are in the European Central timezone.
 
-Version 22 *(in development)*
------------------------------
+Version 22 *(2015-03-02)*
+-------------------------
+
+* New "Now" tab displays episodes released today, recently watched (device only or trakt history)
+  and watched by your trakt friends.
+* Further updates towards material design.
+* When setting a season or show watched, only already released episodes will be set watched.
+
+#### 22.0.1 *(2015-03-02)*
+
+* FIX "Now" tab would show multiple "Recently watched" headers for local history.
+* FIX Update scroll bars, text fields and progress bars on Android 4.4 and below with new accent color.
+* TWEAK Hide add-show-button when scrolling show list.
+* NOTICE Latest translations from crowdin.
+
+#### 22.0.0 *(2015-02-27)*
+
+* TWEAK Move "Add show" action to a floating action button.
+* TWEAK Remove "events and reminders" category from SeriesGuide episode notifications. To continue
+  receiving episode notifications while Priority mode is active, make SeriesGuide a priority app.
+  Only on Android Lollipop and up.
+* TWEAK Enable Samsung multi-window. However, layouts are not optimized for multi-window.
+* TWEAK Some minor design updates.
+* NOTICE Latest translations from crowdin.
 
 #### 22.0.0-beta5 *(2015-02-24)*
 
