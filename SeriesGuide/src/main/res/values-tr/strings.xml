@@ -35,7 +35,7 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Veri değiştirilemedi.</string>
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
@@ -102,7 +102,7 @@
   <string name="episode_firstaired_unknown">Yayın tarihi bilinmiyor</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
-  <string name="original_release">Original release</string>
+  <string name="original_release">Orjinal Yayınlanma</string>
   <string name="show_on_network">kanal %s</string>
   <string name="show_genres">Türler</string>
   <string name="show_runtime">Süresi</string>
@@ -166,7 +166,7 @@
   <string name="recently_watched">Yakın zamanda izlenen</string>
   <string name="released_today">Bugün yayınlanan</string>
   <string name="friends_recently">trakt arkadaşların</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_empty">Her şey yolunda. Bir şeyler izle!</string>
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>
@@ -223,7 +223,7 @@
   <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
   <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
+  <string name="hexagon_api_error">SeriesGuide Cloud\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="trakt_seen">%s görüldü.</string>
@@ -239,10 +239,10 @@
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_account">trakt hesabı</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_connect_instructions">Bir sonraki ekranda trakt\'e giriş yapabilir ya da hesap oluşturabilirsiniz. Sonrasında SeriesGuide erişimine izin verin.</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
   <string name="trakt_reconnect">SeriesGuide ile trakt\'a bağlan</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
   <string name="username">Kullanıcı Adı</string>
   <string name="waitplease">Bir dakika lütfen…</string>
   <string name="connect">Bağlan</string>
@@ -300,7 +300,7 @@
   <string name="sort_order_top_rated_first">En çok oy alanlar</string>
   <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
-  <string name="upcoming_upto_now">şimdi</string>
+  <string name="upcoming_upto_now">Şu anda</string>
   <string name="upcoming_upto_one_day">bir gün</string>
   <string name="upcoming_upto_three_days">3 gün</string>
   <string name="upcoming_upto_one_week">bir hafta</string>
@@ -396,7 +396,7 @@
   <string name="billing_action_pass">X Pass edinin</string>
   <string name="billing_price_subscribe">%s/yıl, 30 günlük deneme</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
-  <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
+  <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
   <string name="billing_learn_more">Neden ödeme yapasınız? Daha fazla bilgi edinin.</string>
   <string name="subscription_activated">Şimdi X özelliklerine abone oldunuz.</string>
