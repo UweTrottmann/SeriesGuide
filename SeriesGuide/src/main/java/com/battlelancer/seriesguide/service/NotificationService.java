@@ -21,7 +21,6 @@ import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +31,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -346,8 +346,7 @@ public class NotificationService extends IntentService {
     }
 
     /**
-     * Resets the air time of the last notified about episode. Afterwards notifications for
-     * episodes
+     * Resets the air time of the last notified about episode. Afterwards notifications for episodes
      * may appear, which were already notified about.
      */
     @SuppressLint("CommitPrefEdits")
@@ -536,8 +535,7 @@ public class NotificationService extends IntentService {
         Notification notification = nb.build();
 
         // use string resource id, always unique within app
-        final NotificationManager nm = (NotificationManager) getSystemService(
-                Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         nm.notify(SeriesGuideApplication.NOTIFICATION_EPISODE_ID, notification);
     }
 
@@ -549,6 +547,18 @@ public class NotificationService extends IntentService {
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();
             nb.setLargeIcon(poster);
+
+            // add special large resolution background for wearables
+            // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
+            Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
+                    TheTVDB.buildScreenshotUrl(posterPath))
+                    .centerCrop()
+                    .resize(400, 400)
+                    .get();
+            NotificationCompat.WearableExtender wearableExtender =
+                    new NotificationCompat.WearableExtender()
+                            .setBackground(posterSquare);
+            nb.extend(wearableExtender);
         } catch (IOException e) {
             Timber.e(e, "Failed to load poster for notification: " + posterPath);
         }
