@@ -1,7 +1,7 @@
 <a name="top"></a>
 
-Changelog
-=========
+Release notes
+=============
 
 All dates are in the European Central timezone.
 
