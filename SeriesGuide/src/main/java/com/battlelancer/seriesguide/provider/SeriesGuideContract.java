@@ -712,6 +712,9 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.list";
 
+        public static final String SORT_ORDER_THEN_NAME = Lists.ORDER + " ASC," + Lists.NAME
+                + " COLLATE NOCASE ASC";
+
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
