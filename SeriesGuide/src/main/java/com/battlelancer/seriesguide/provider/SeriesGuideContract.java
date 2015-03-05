@@ -365,6 +365,15 @@ public class SeriesGuideContract {
         String LIST_ID = "list_id";
 
         String NAME = "list_name";
+
+        /**
+         * Helps determine list order in addition to the list name. Integer.
+         * <pre>
+         * Range: 0 to MAX INT
+         * Default: 0
+         * </pre>
+         */
+        String ORDER = "list_order";
     }
 
     interface ListItemsColumns {

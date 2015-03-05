@@ -131,7 +131,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_35_ACTIVITY_TABLE = 35;
 
-    public static final int DATABASE_VERSION = DBVER_35_ACTIVITY_TABLE;
+    /**
+     * Support for re-ordering lists: added new column to lists table.
+     */
+    public static final int DBVER_36_ORDERABLE_LISTS = 36;
+
+    public static final int DATABASE_VERSION = DBVER_36_ORDERABLE_LISTS;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -433,6 +438,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ListsColumns.NAME + " TEXT NOT NULL,"
 
+            + ListsColumns.ORDER + " INTEGER DEFAULT 0,"
+
             + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE"
 
             + ");";
@@ -588,7 +595,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyFour(db);
             case DBVER_34_TRAKT_V2:
                 upgradeToThirtyFive(db);
-                version = DBVER_35_ACTIVITY_TABLE;
+            case DBVER_35_ACTIVITY_TABLE:
+                upgradeToThirtySix(db);
+                version = DBVER_36_ORDERABLE_LISTS;
         }
 
         // drop all tables if version is not right
@@ -614,6 +623,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_36_ORDERABLE_LISTS}.
+     */
+    private static void upgradeToThirtySix(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.LISTS, Lists.ORDER)) {
+            db.execSQL("ALTER TABLE " + Tables.LISTS + " ADD COLUMN "
+                    + Lists.ORDER + " INTEGER DEFAULT 0;");
+        }
     }
 
     /**
