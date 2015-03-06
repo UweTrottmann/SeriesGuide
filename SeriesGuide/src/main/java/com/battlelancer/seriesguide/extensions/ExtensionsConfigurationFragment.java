@@ -335,12 +335,8 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public View onCreateFloatView(int position) {
-            // short vibrate to signal drag has started
-            Vibrator v = (Vibrator) mListView.getContext()
-                    .getSystemService(Context.VIBRATOR_SERVICE);
-            v.vibrate(10);
             mFloatViewOriginPosition = position;
-            return mAdapter.getView(position, null, mListView);
+            return super.onCreateFloatView(position);
         }
 
         private int mFloatViewHeight = -1; // cache height
@@ -382,11 +378,6 @@ public class ExtensionsConfigurationFragment extends Fragment
                     }
                 }
             }
-        }
-
-        @Override
-        public void onDestroyFloatView(View floatView) {
-            //do nothing; block super from crashing
         }
     }
 }

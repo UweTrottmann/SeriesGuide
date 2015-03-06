@@ -1,88 +1,45 @@
 package com.mobeta.android.dslv;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Point;
-import android.graphics.Color;
-import android.widget.ListView;
-import android.widget.ImageView;
+import android.os.Vibrator;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ListView;
 
 /**
- * Simple implementation of the FloatViewManager class. Uses list
- * items as they appear in the ListView to create the floating View.
+ * Simple implementation of the FloatViewManager class. Uses list items as they appear in the
+ * ListView to create the floating View.
  */
 public class SimpleFloatViewManager implements DragSortListView.FloatViewManager {
 
-    private Bitmap mFloatBitmap;
+    private ListView listView;
 
-    private ImageView mImageView;
-
-    private int mFloatBGColor = Color.BLACK;
-
-    private ListView mListView;
-
-    public SimpleFloatViewManager(ListView lv) {
-        mListView = lv;
-    }
-
-    public void setBackgroundColor(int color) {
-        mFloatBGColor = color;
+    public SimpleFloatViewManager(ListView listView) {
+        this.listView = listView;
     }
 
     /**
-     * This simple implementation creates a Bitmap copy of the
-     * list item currently shown at ListView <code>position</code>.
+     * This simple implementation gets a new view of the list item currently shown at ListView
+     * <code>position</code> from the adapter and triggers a short vibration.
      */
     @Override
     public View onCreateFloatView(int position) {
-        // Guaranteed that this will not be null? I think so. Nope, got
-        // a NullPointerException once...
-        View v = mListView.getChildAt(position + mListView.getHeaderViewsCount() - mListView.getFirstVisiblePosition());
+        // short vibrate to signal drag has started
+        Vibrator v = (Vibrator) listView.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(10);
 
-        if (v == null) {
-            return null;
-        }
-
-        v.setPressed(false);
-
-        // Create a copy of the drawing cache so that it does not get
-        // recycled by the framework when the list tries to clean up memory
-        //v.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        v.setDrawingCacheEnabled(true);
-        mFloatBitmap = Bitmap.createBitmap(v.getDrawingCache());
-        v.setDrawingCacheEnabled(false);
-
-        if (mImageView == null) {
-            mImageView = new ImageView(mListView.getContext());
-        }
-        mImageView.setBackgroundColor(mFloatBGColor);
-        mImageView.setPadding(0, 0, 0, 0);
-        mImageView.setImageBitmap(mFloatBitmap);
-        mImageView.setLayoutParams(new ViewGroup.LayoutParams(v.getWidth(), v.getHeight()));
-
-        return mImageView;
+        // grab a new view for the item from the adapter
+        return listView.getAdapter().getView(position, null, listView);
     }
 
-    /**
-     * This does nothing
-     */
     @Override
     public void onDragFloatView(View floatView, Point position, Point touch) {
         // do nothing
     }
 
-    /**
-     * Removes the Bitmap from the ImageView created in
-     * onCreateFloatView() and tells the system to recycle it.
-     */
     @Override
     public void onDestroyFloatView(View floatView) {
-        ((ImageView) floatView).setImageDrawable(null);
-
-        mFloatBitmap.recycle();
-        mFloatBitmap = null;
+        // do nothing
     }
-
 }
 
