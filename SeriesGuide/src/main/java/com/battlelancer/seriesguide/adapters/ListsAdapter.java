@@ -17,40 +17,19 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
+import java.util.List;
 
 /**
  * Used with {@link com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment}.
  */
-public class ListsAdapter extends CursorAdapter {
-
-    public ListsAdapter(Context context) {
-        super(context, null, 0);
-    }
-
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_list, parent, false);
-
-        ListsViewHolder viewHolder = new ListsViewHolder(v);
-        v.setTag(viewHolder);
-
-        return v;
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        ListsViewHolder viewHolder = (ListsViewHolder) view.getTag();
-
-        viewHolder.name.setText(cursor.getString(ListsQuery.NAME));
-    }
+public class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
 
     static class ListsViewHolder {
         public TextView name;
@@ -60,13 +39,49 @@ public class ListsAdapter extends CursorAdapter {
         }
     }
 
-    public interface ListsQuery {
-        String[] PROJECTION = new String[] {
-                SeriesGuideContract.Lists._ID,
-                SeriesGuideContract.Lists.NAME
-        };
+    private List<OrderedListsLoader.OrderedList> dataset;
 
-        int ID = 0;
-        int NAME = 1;
+    public ListsAdapter(Context context) {
+        super(context, 0);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ListsViewHolder viewHolder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.item_list, parent, false);
+
+            viewHolder = new ListsViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ListsViewHolder) convertView.getTag();
+        }
+
+        OrderedListsLoader.OrderedList item = getItem(position);
+        viewHolder.name.setText(item.name);
+
+        return convertView;
+    }
+
+    public synchronized void setData(List<OrderedListsLoader.OrderedList> dataset) {
+        this.dataset = dataset;
+
+        clear();
+        if (dataset != null) {
+            addAll(dataset);
+        }
+    }
+
+    public synchronized void reorderList(int from, int to) {
+        if (dataset == null || from >= dataset.size()) {
+            return;
+        }
+        OrderedListsLoader.OrderedList list = dataset.remove(from);
+        dataset.add(to, list);
+
+        clear();
+        addAll(dataset);
     }
 }

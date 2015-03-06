@@ -16,13 +16,13 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.database.Cursor;
+import android.content.ContentProviderOperation;
+import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,10 +32,16 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsAdapter;
+import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
+import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
+import java.util.List;
+import timber.log.Timber;
 
 /**
  * Dialog to reorder lists using a vertical list with drag handles. Currently not accessibility or
@@ -55,7 +61,7 @@ public class ListsReorderDialogFragment extends DialogFragment {
     private ListsAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
         ButterKnife.inject(this, v);
@@ -66,6 +72,12 @@ public class ListsReorderDialogFragment extends DialogFragment {
         controller.setRemoveEnabled(false);
         dragSortListView.setFloatViewManager(controller);
         dragSortListView.setOnTouchListener(controller);
+        dragSortListView.setDropListener(new DragSortListView.DropListener() {
+            @Override
+            public void drop(int from, int to) {
+                reorderList(from, to);
+            }
+        });
 
         buttonNegative.setText(android.R.string.cancel);
         buttonNegative.setOnClickListener(new View.OnClickListener() {
@@ -105,31 +117,56 @@ public class ListsReorderDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
-    private void saveListsOrder() {
-        // TODO
+    private void reorderList(int from, int to) {
+        if (adapter == null) {
+            return;
+        }
+        adapter.reorderList(from, to);
     }
 
-    private LoaderManager.LoaderCallbacks<Cursor> listsLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<Cursor>() {
+    private void saveListsOrder() {
+        if (adapter == null) {
+            return;
+        }
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (int position = 0; position < adapter.getCount(); position++) {
+            OrderedListsLoader.OrderedList list = adapter.getItem(position);
+            batch.add(ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Lists.buildListUri(list.id))
+                    .withValue(SeriesGuideContract.Lists.ORDER, position)
+                    .build());
+        }
+
+        try {
+            DBUtils.applyInSmallBatches(getActivity(), batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "drop: failed to save reordered lists.");
+        }
+
+        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
+    }
+
+    private LoaderManager.LoaderCallbacks<List<OrderedListsLoader.OrderedList>> listsLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<List<OrderedListsLoader.OrderedList>>() {
         @Override
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getActivity(), SeriesGuideContract.Lists.CONTENT_URI,
-                    new String[] { SeriesGuideContract.Lists._ID, SeriesGuideContract.Lists.NAME },
-                    null, null, SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
+        public Loader<List<OrderedListsLoader.OrderedList>> onCreateLoader(int id, Bundle args) {
+            return new OrderedListsLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(Loader<List<OrderedListsLoader.OrderedList>> loader,
+                List<OrderedListsLoader.OrderedList> data) {
             if (!isAdded()) {
                 return;
             }
 
-            adapter.swapCursor(data);
+            adapter.setData(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
-            adapter.swapCursor(null);
+        public void onLoaderReset(Loader<List<OrderedListsLoader.OrderedList>> loader) {
+            adapter.setData(null);
         }
     };
 }

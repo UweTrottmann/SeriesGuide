@@ -43,6 +43,9 @@ import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.Li
  */
 public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
 
+    public static class ListsChangedEvent {
+    }
+
     public static final String TAG = "Lists";
     public static final int LISTS_REORDER_LOADER_ID = 1;
 
@@ -99,6 +102,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         mListsAdapter.onCleanUp();
     }
 
@@ -160,6 +164,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         mListsAdapter.onListsChanged();
         // update tabs
         mTabs.setViewPager(mPager);
+    }
+
+    public void onEventMainThread(ListsChangedEvent event) {
+        onListsChanged();
     }
 
     private void changeSortOrder(int sortOrderId) {
