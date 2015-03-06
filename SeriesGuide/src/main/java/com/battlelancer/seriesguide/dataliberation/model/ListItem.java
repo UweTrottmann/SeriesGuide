@@ -17,7 +17,7 @@
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
-import com.google.myjson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
 
 public class ListItem {
 

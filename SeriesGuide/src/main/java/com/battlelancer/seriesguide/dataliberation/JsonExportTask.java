@@ -42,9 +42,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
-import com.google.myjson.Gson;
-import com.google.myjson.JsonIOException;
-import com.google.myjson.stream.JsonWriter;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -219,7 +219,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (shows.moveToNext()) {
@@ -384,7 +383,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (lists.moveToNext()) {
@@ -481,7 +479,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (movies.moveToNext()) {
