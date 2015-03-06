@@ -219,7 +219,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (shows.moveToNext()) {
@@ -384,7 +383,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (lists.moveToNext()) {
@@ -481,7 +479,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (movies.moveToNext()) {
