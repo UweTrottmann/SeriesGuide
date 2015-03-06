@@ -27,8 +27,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
 
 /**
- * Returns {@link ListsFragment}s for every list in the database, makes sure
- * there is always at least one.
+ * Returns {@link ListsFragment}s for every list in the database, makes sure there is always at
+ * least one.
  */
 public class ListsPagerAdapter extends MultiPagerAdapter {
 
@@ -38,11 +38,12 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
 
     public ListsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        mContext = context;
+        mContext = context.getApplicationContext();
 
-        mLists = mContext.getContentResolver().query(Lists.CONTENT_URI, new String[] {
-                Lists.LIST_ID, Lists.NAME
-        }, null, null, null);
+        // load lists, order by order number, then name
+        mLists = mContext.getContentResolver()
+                .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
+                        Lists.SORT_ORDER_THEN_NAME);
 
         // precreate first list
         if (mLists != null && mLists.getCount() == 0) {
@@ -101,10 +102,9 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
 
     public void onListsChanged() {
         if (mLists != null && !mLists.isClosed()) {
-            Cursor newCursor = mContext.getContentResolver().query(Lists.CONTENT_URI,
-                    new String[] {
-                            Lists.LIST_ID, Lists.NAME
-                    }, null, null, null);
+            Cursor newCursor = mContext.getContentResolver()
+                    .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
+                            Lists.SORT_ORDER_THEN_NAME);
 
             Cursor oldCursor = mLists;
             mLists = newCursor;
@@ -122,5 +122,15 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
             mLists.close();
             mLists = null;
         }
+    }
+
+    interface ListsQuery {
+        String[] PROJECTION = new String[] {
+                Lists.LIST_ID,
+                Lists.NAME
+        };
+
+        int ID = 0;
+        int NAME = 1;
     }
 }

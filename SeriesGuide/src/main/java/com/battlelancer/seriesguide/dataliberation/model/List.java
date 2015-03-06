@@ -23,8 +23,8 @@ public class List {
 
     @SerializedName("list_id")
     public String listId;
-
     public String name;
+    public int order;
 
     public java.util.List<ListItem> items;
 

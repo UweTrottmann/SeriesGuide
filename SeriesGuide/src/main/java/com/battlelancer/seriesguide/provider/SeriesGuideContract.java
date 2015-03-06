@@ -365,6 +365,15 @@ public class SeriesGuideContract {
         String LIST_ID = "list_id";
 
         String NAME = "list_name";
+
+        /**
+         * Helps determine list order in addition to the list name. Integer.
+         * <pre>
+         * Range: 0 to MAX INT
+         * Default: 0
+         * </pre>
+         */
+        String ORDER = "list_order";
     }
 
     interface ListItemsColumns {
@@ -702,6 +711,9 @@ public class SeriesGuideContract {
          */
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.list";
+
+        public static final String SORT_ORDER_THEN_NAME = Lists.ORDER + " ASC," + Lists.NAME
+                + " COLLATE NOCASE ASC";
 
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
