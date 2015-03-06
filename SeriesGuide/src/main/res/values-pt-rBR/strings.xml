@@ -133,7 +133,7 @@
   <string name="action_collection_added">Adicionado à coleção</string>
   <string name="action_collection_removed">Removido da coleção</string>
   <string name="action_watched">Assistido</string>
-  <string name="action_unwatched">Não assistido</string>
+  <string name="action_unwatched">Marcar como não assistido</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>

@@ -163,7 +163,7 @@
   <string name="menu_update_delta">Uppdatera (gamla)</string>
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_marknext">Sett nästa avsnitt</string>
-  <string name="now_tab">Now</string>
+  <string name="now_tab">Nu</string>
   <string name="recently_watched">Recently watched</string>
   <string name="released_today">Released today</string>
   <string name="friends_recently">Your trakt friends</string>
@@ -172,7 +172,7 @@
   <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
   <string name="friends_empty">Ingen vänaktivitet på trakt.</string>
-  <string name="user_stream">History</string>
+  <string name="user_stream">Historik</string>
   <string name="user_stream_empty">Inga nya aktiviter på trakt. Bocka av några serier!</string>
   <string name="user_movie_stream_empty">Inga nya aktiviter på trakt. Bocka av några filmer!</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
@@ -239,7 +239,7 @@
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
-  <string name="trakt_account">trakt account</string>
+  <string name="trakt_account">trakt-konto</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Anslut till trakt</string>
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
