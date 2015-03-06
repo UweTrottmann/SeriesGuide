@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
@@ -43,11 +44,10 @@ import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.Li
 public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
 
     public static final String TAG = "Lists";
+    public static final int LISTS_REORDER_LOADER_ID = 1;
 
     private ListsPagerAdapter mListsAdapter;
-
     private ViewPager mPager;
-
     private SlidingTabLayout mTabs;
 
     @Override
@@ -145,6 +145,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         }
         if (itemId == R.id.menu_action_lists_sort_ignore_articles) {
             toggleSortIgnoreArticles();
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_reorder) {
+            ListsReorderDialogFragment.show(getSupportFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
