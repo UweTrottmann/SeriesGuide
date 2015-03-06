@@ -2420,23 +2420,22 @@ public class DragSortListView extends ListView {
         public void drag(int from, int to);
     }
 
-    /**
-     * Your implementation of this has to reorder your ListAdapter! Make sure to call {@link
-     * BaseAdapter#notifyDataSetChanged()} or something like it in your implementation.
-     *
-     * @author heycosmo
-     */
     public interface DropListener {
+        /**
+         * Your implementation of this has to reorder your ListAdapter! Make sure to call {@link
+         * BaseAdapter#notifyDataSetChanged()} or something like it in your implementation.
+         *
+         * @param from The current adapter position of the item.
+         * @param to The desired adapter position of the item.
+         */
         public void drop(int from, int to);
     }
 
-    /**
-     * Make sure to call {@link BaseAdapter#notifyDataSetChanged()} or something like it in your
-     * implementation.
-     *
-     * @author heycosmo
-     */
     public interface RemoveListener {
+        /**
+         * Make sure to call {@link BaseAdapter#notifyDataSetChanged()} or something like it in your
+         * implementation.
+         */
         public void remove(int which);
     }
 
