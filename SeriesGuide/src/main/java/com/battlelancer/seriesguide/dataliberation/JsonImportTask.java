@@ -393,6 +393,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         ContentValues values = new ContentValues();
         values.put(Lists.LIST_ID, list.listId);
         values.put(Lists.NAME, list.name);
+        values.put(Lists.ORDER, list.order);
         mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
 
         if (list.items == null || list.items.isEmpty()) {

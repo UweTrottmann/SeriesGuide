@@ -57,9 +57,8 @@ import timber.log.Timber;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
- * Export the show database to a human-readable JSON file on external storage.
- * By default meta-data like descriptions, ratings, actors, etc. will not be
- * included.
+ * Export the show database to a human-readable JSON file on external storage. By default meta-data
+ * like descriptions, ratings, actors, etc. will not be included.
  */
 public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
@@ -100,8 +99,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     /**
      * Same as {@link JsonExportTask} but allows to set parameters.
      *
-     * @param isFullDump   Whether to also export meta-data like descriptions,
-     *                     ratings, actors, etc. Increases file size about 2-4 times.
+     * @param isFullDump Whether to also export meta-data like descriptions, ratings, actors, etc.
+     * Increases file size about 2-4 times.
      * @param isSilentMode Whether to show result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
@@ -349,7 +348,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private int exportLists(File exportPath) {
         final Cursor lists = mContext.getContentResolver()
                 .query(SeriesGuideContract.Lists.CONTENT_URI,
-                        ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+                        ListsQuery.PROJECTION, null, null,
+                        SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
         if (lists == null) {
             return ERROR;
         }
@@ -395,6 +395,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             List list = new List();
             list.listId = lists.getString(ListsQuery.ID);
             list.name = lists.getString(ListsQuery.NAME);
+            list.order = lists.getInt(ListsQuery.ORDER);
 
             addListItems(list);
 
@@ -647,13 +648,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListsQuery {
         String[] PROJECTION = new String[] {
-                SeriesGuideContract.Lists.LIST_ID, SeriesGuideContract.Lists.NAME
+                SeriesGuideContract.Lists.LIST_ID,
+                SeriesGuideContract.Lists.NAME,
+                SeriesGuideContract.Lists.ORDER
         };
-
-        String SORT = SeriesGuideContract.Lists.NAME + " COLLATE NOCASE ASC";
 
         int ID = 0;
         int NAME = 1;
+        int ORDER = 2;
     }
 
     public interface ListItemsQuery {
