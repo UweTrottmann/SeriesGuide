@@ -209,6 +209,7 @@
   <string name="list_item_remove">Von Liste entfernen</string>
   <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
   <string name="action_lists_sort">Listen sortieren</string>
+  <string name="action_lists_reorder">Listen umsortieren</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">SeriesGuide cloud einrichten</string>
   <string name="hexagon_description">Stellen Sie eine Verbindung zur Cloud her um Ihre Serien und Filme zu sichern und zu synchronisieren.</string>

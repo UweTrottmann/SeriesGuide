@@ -209,6 +209,7 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="action_lists_sort">מיון רשימה</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">ניסיון!</string>
   <string name="hexagon_setup">הגדר ענן SeriesGuide</string>
   <string name="hexagon_description">התחבר לענן לגיבוי ולסנכרן את התוכניות והסרטים שלך.</string>

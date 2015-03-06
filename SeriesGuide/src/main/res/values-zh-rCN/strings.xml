@@ -209,6 +209,7 @@
   <string name="list_item_remove">移出列表</string>
   <string name="list_empty">请将节目或剧集添加到列表</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">这是一个实验性功能！</string>
   <string name="hexagon_setup">设置 SeriesGuide 云服务</string>
   <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>

@@ -210,6 +210,7 @@
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina program och filmer.</string>

@@ -209,6 +209,7 @@
   <string name="list_item_remove">Eltávolítás a listáról</string>
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is hozzá adhatsz ehhez a listához.</string>
   <string name="action_lists_sort">Listák rendezése</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>

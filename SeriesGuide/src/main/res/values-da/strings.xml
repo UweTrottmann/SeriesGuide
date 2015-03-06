@@ -209,6 +209,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Eksperimentel!</string>
   <string name="hexagon_setup">Opsæt SeriesGuide Cloud</string>
   <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>

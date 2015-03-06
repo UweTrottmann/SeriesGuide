@@ -209,6 +209,7 @@
   <string name="list_item_remove">Esborra de la llista</string>
   <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
   <string name="action_lists_sort">Ordena les llistes</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configureu el Cloud de SeriesGuide</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>

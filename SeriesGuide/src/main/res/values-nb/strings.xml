@@ -209,6 +209,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
   <string name="action_lists_sort">Sorter lister</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_setup">Sett opp SeriesGuide sky</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>

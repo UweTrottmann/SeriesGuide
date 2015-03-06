@@ -209,6 +209,7 @@
   <string name="list_item_remove">حذف از لیست</string>
   <string name="list_empty">شما می توانید برنامه ها ، فصل ها یا قسمت ها را به این لیست اضافه کنید.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">تجربی!</string>
   <string name="hexagon_setup">راه اندازی ذخیره ابری SeriesGuide</string>
   <string name="hexagon_description">اتصال به ابر برای پشتیبان گیری و همگام سازی رانمایش ها و فیلم هایتان.</string>

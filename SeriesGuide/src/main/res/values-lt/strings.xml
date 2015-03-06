@@ -209,6 +209,7 @@
   <string name="list_item_remove">Pašalinti iš sąrašo</string>
   <string name="list_empty">Į šį sąrašą galite įtraukti serialus, sezonus arba serijas.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>

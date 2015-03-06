@@ -209,6 +209,7 @@
   <string name="list_item_remove">Șterge din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>

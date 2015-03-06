@@ -209,6 +209,7 @@
   <string name="list_item_remove">Уклони са листе</string>
   <string name="list_empty">Можете да додате серије, сезоне или епизоде на ову листу.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Cloud сервис</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>

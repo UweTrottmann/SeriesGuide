@@ -209,6 +209,7 @@
   <string name="list_item_remove">Премахни от списъка</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
