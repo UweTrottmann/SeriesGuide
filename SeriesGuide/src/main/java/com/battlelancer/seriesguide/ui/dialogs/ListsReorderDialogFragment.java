@@ -79,7 +79,7 @@ public class ListsReorderDialogFragment extends DialogFragment {
             }
         });
 
-        buttonNegative.setText(android.R.string.cancel);
+        buttonNegative.setText(R.string.discard);
         buttonNegative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
