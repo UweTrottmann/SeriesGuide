@@ -80,9 +80,9 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             try {
                 history = traktUsers.historyEpisodes(friend.user.username, 1, 1, Extended.IMAGES);
             } catch (RetrofitError e) {
-                // well, then just skip this friend
+                // abort, either lost connection or server error or other error
                 Timber.e(e, "Failed to load friend history");
-                continue;
+                return null;
             } catch (OAuthUnauthorizedException ignored) {
                 // friend might have revoked friendship just now :(
                 continue;
