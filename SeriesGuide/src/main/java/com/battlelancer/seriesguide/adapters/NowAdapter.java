@@ -374,7 +374,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataset.get(position);
     }
 
-    public synchronized void setReleasedTodayData(List<NowItem> items) {
+    public void setReleasedTodayData(List<NowItem> items) {
         int oldCount = releasedToday == null ? 0 : releasedToday.size();
         int newCount = items == null ? 0 : items.size();
 
@@ -383,7 +383,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyAboutChanges(0, oldCount, newCount);
     }
 
-    public synchronized void setRecentlyWatched(List<NowItem> items) {
+    public void setRecentlyWatched(List<NowItem> items) {
         int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today (if any)
@@ -394,7 +394,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyAboutChanges(startPosition, oldCount, newCount);
     }
 
-    public synchronized void setFriendsRecentlyWatched(List<NowItem> items) {
+    public void setFriendsRecentlyWatched(List<NowItem> items) {
         int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today and recently watched (if any)
