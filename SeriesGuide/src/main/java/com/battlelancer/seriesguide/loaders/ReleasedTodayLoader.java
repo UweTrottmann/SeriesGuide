@@ -45,8 +45,10 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
 
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
-        long currentTime = TimeTools.getCurrentTime(getContext());
-        long timeAtStartOfDay = new DateTime(currentTime).withTimeAtStartOfDay().getMillis();
+        // go to start of current day
+        long timeAtStartOfDay = new DateTime().withTimeAtStartOfDay().getMillis();
+        // modify time to meet any user offset on episode release instants
+        timeAtStartOfDay = TimeTools.applyUserOffsetInverted(getContext(), timeAtStartOfDay);
 
         Cursor query = getContext().getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 new String[] {

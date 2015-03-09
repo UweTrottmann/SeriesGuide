@@ -547,6 +547,19 @@ public class TimeTools {
         }
     }
 
+    /**
+     * Used instead of {@link #applyUserOffset(android.content.Context, long)} if episode time can
+     * not be offset, so need to manipulate time instead.
+     */
+    public static long applyUserOffsetInverted(Context context, long instant) {
+        Calendar dateTime = Calendar.getInstance();
+        dateTime.setTimeInMillis(instant);
+
+        applyUserOffsetInverted(context, dateTime);
+
+        return dateTime.getTimeInMillis();
+    }
+
     private static int getUserOffset(Context context) {
         try {
             return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)

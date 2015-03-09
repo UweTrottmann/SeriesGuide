@@ -36,7 +36,8 @@ public class ExtensionSubscriberService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent.getAction() == null) {
+        // despite guarantees from IntentService, it may get passed a null intent, so check for it
+        if (intent == null || intent.getAction() == null) {
             return;
         }
 
