@@ -407,31 +407,40 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void reloadData() {
-        synchronized (lock) {
-            dataset.clear();
-            if (releasedToday != null) {
-                dataset.addAll(releasedToday);
-            }
-            if (recentlyWatched != null) {
-                dataset.addAll(recentlyWatched);
-            }
-            if (friendsRecently != null) {
-                dataset.addAll(friendsRecently);
-            }
+        dataset.clear();
+        if (releasedToday != null) {
+            dataset.addAll(releasedToday);
+        }
+        if (recentlyWatched != null) {
+            dataset.addAll(recentlyWatched);
+        }
+        if (friendsRecently != null) {
+            dataset.addAll(friendsRecently);
         }
     }
 
     private void notifyAboutChanges(int startPosition, int oldItemCount, int newItemCount) {
-        if (newItemCount == 0) {
+        if (newItemCount == 0 && oldItemCount == 0) {
+            return;
+        }
+
+        if (newItemCount == oldItemCount) {
+            // identical number of items
+            notifyItemRangeChanged(startPosition, oldItemCount);
+        } else if (newItemCount > oldItemCount) {
+            // more items than before
             if (oldItemCount > 0) {
-                notifyItemRangeRemoved(startPosition, oldItemCount);
+                notifyItemRangeChanged(startPosition, oldItemCount);
             }
+            notifyItemRangeInserted(startPosition + oldItemCount,
+                    newItemCount - oldItemCount);
         } else {
-            if (oldItemCount == 0) {
-                notifyItemRangeInserted(startPosition, newItemCount);
-            } else {
+            // less items than before
+            if (newItemCount > 0) {
                 notifyItemRangeChanged(startPosition, newItemCount);
             }
+            notifyItemRangeRemoved(startPosition + newItemCount,
+                    oldItemCount - newItemCount);
         }
     }
 }
