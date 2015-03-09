@@ -13,6 +13,12 @@ Version 22 *(2015-03-02)*
 * Further updates towards material design.
 * When setting a season or show watched, only already released episodes will be set watched.
 
+#### 22.0.2 *(2015-03-09)*
+
+* FIX When using manual time offset, episodes now correctly show up in "Released today".
+* FIX Potential fix for crash in "Now" tab.
+* FIX Abort loading friends early.
+
 #### 22.0.1 *(2015-03-02)*
 
 * FIX "Now" tab would show multiple "Recently watched" headers for local history.

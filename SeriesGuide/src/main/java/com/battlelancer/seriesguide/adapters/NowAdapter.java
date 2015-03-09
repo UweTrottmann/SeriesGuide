@@ -374,7 +374,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataset.get(position);
     }
 
-    public synchronized void setReleasedTodayData(List<NowItem> items) {
+    public void setReleasedTodayData(List<NowItem> items) {
         int oldCount = releasedToday == null ? 0 : releasedToday.size();
         int newCount = items == null ? 0 : items.size();
 
@@ -383,7 +383,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyAboutChanges(0, oldCount, newCount);
     }
 
-    public synchronized void setRecentlyWatched(List<NowItem> items) {
+    public void setRecentlyWatched(List<NowItem> items) {
         int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today (if any)
@@ -394,7 +394,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyAboutChanges(startPosition, oldCount, newCount);
     }
 
-    public synchronized void setFriendsRecentlyWatched(List<NowItem> items) {
+    public void setFriendsRecentlyWatched(List<NowItem> items) {
         int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
         int newCount = items == null ? 0 : items.size();
         // items start after released today and recently watched (if any)
@@ -407,31 +407,40 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void reloadData() {
-        synchronized (lock) {
-            dataset.clear();
-            if (releasedToday != null) {
-                dataset.addAll(releasedToday);
-            }
-            if (recentlyWatched != null) {
-                dataset.addAll(recentlyWatched);
-            }
-            if (friendsRecently != null) {
-                dataset.addAll(friendsRecently);
-            }
+        dataset.clear();
+        if (releasedToday != null) {
+            dataset.addAll(releasedToday);
+        }
+        if (recentlyWatched != null) {
+            dataset.addAll(recentlyWatched);
+        }
+        if (friendsRecently != null) {
+            dataset.addAll(friendsRecently);
         }
     }
 
     private void notifyAboutChanges(int startPosition, int oldItemCount, int newItemCount) {
-        if (newItemCount == 0) {
+        if (newItemCount == 0 && oldItemCount == 0) {
+            return;
+        }
+
+        if (newItemCount == oldItemCount) {
+            // identical number of items
+            notifyItemRangeChanged(startPosition, oldItemCount);
+        } else if (newItemCount > oldItemCount) {
+            // more items than before
             if (oldItemCount > 0) {
-                notifyItemRangeRemoved(startPosition, oldItemCount);
+                notifyItemRangeChanged(startPosition, oldItemCount);
             }
+            notifyItemRangeInserted(startPosition + oldItemCount,
+                    newItemCount - oldItemCount);
         } else {
-            if (oldItemCount == 0) {
-                notifyItemRangeInserted(startPosition, newItemCount);
-            } else {
+            // less items than before
+            if (newItemCount > 0) {
                 notifyItemRangeChanged(startPosition, newItemCount);
             }
+            notifyItemRangeRemoved(startPosition + newItemCount,
+                    oldItemCount - newItemCount);
         }
     }
 }

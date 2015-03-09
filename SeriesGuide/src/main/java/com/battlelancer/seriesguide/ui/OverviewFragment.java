@@ -295,11 +295,6 @@ public class OverviewFragment extends Fragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.overview_fragment_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
 
         // If no episode is visible, hide actions related to the episode
         boolean isEpisodeVisible = mCurrentEpisodeCursor != null
