@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
@@ -117,8 +118,9 @@ public class ShowSearchFragment extends ListFragment {
                         new String[] { customTimeInOneHour },
                         ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
             } else {
-                Uri uri = Uri.withAppendedPath(SeriesGuideContract.Shows.CONTENT_FILTER_URI,
-                        Uri.encode(query));
+                Uri uri = SeriesGuideContract.Shows.CONTENT_URI_FILTER.buildUpon()
+                        .appendPath(query)
+                        .build();
                 return new CursorLoader(getActivity(), uri, SearchQuery.PROJECTION, null, null,
                         null);
             }
@@ -137,8 +139,15 @@ public class ShowSearchFragment extends ListFragment {
 
     private static class ShowResultsAdapter extends BaseShowsAdapter {
 
+        private final int resIdStar;
+        private final int resIdStarZero;
+
         public ShowResultsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
+
+            resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.drawableStar);
+            resIdStarZero = Utils.resolveAttributeToResourceId(context.getTheme(),
+                    R.attr.drawableStar0);
         }
 
         @Override
@@ -147,9 +156,12 @@ public class ShowSearchFragment extends ListFragment {
 
             viewHolder.name.setText(cursor.getString(SearchQuery.TITLE));
 
+            viewHolder.showTvdbId = cursor.getInt(SearchQuery.ID);
+            viewHolder.isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
+
             // favorited label
-            boolean isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
-            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
+            viewHolder.favorited.setImageResource(
+                    viewHolder.isFavorited ? resIdStar : resIdStarZero);
 
             // network, day and time
             viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
@@ -168,8 +180,15 @@ public class ShowSearchFragment extends ListFragment {
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             View v = super.newView(context, cursor, parent);
 
-            ViewHolder viewHolder = (ViewHolder) v.getTag();
-            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
+            final ViewHolder viewHolder = (ViewHolder) v.getTag();
+            viewHolder.favorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowTools.get(v.getContext())
+                            .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
+                }
+            });
+
             viewHolder.contextMenu.setVisibility(View.GONE);
 
             return v;
