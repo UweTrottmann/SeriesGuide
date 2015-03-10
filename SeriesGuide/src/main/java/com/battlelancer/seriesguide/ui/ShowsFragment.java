@@ -528,8 +528,8 @@ public class ShowsFragment extends Fragment implements
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            final BaseShowsAdapter.ViewHolder viewHolder
-                    = (BaseShowsAdapter.ViewHolder) view.getTag();
+            final ViewHolder viewHolder
+                    = (ViewHolder) view.getTag();
 
             // set text properties immediately
             viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
@@ -566,30 +566,8 @@ public class ShowsFragment extends Fragment implements
                     cursor.getString(ShowsQuery.POSTER));
 
             // context menu
-            viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            final boolean isHidden = DBUtils.restoreBooleanFromInt(
-                    cursor.getInt(ShowsQuery.HIDDEN));
-            final int episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
-            viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.inflate(R.menu.shows_popup_menu);
-
-                    // show/hide some menu items depending on show properties
-                    Menu menu = popupMenu.getMenu();
-                    menu.findItem(R.id.menu_action_shows_favorites_add)
-                            .setVisible(!viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_favorites_remove)
-                            .setVisible(viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!isHidden);
-                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(isHidden);
-
-                    popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(viewHolder.showTvdbId, episodeTvdbId));
-                    popupMenu.show();
-                }
-            });
+            viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(ShowsQuery.HIDDEN));
+            viewHolder.episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
         }
 
         @Override
@@ -604,8 +582,27 @@ public class ShowsFragment extends Fragment implements
                             .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
                 }
             });
+            viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.shows_popup_menu);
 
-            viewHolder.contextMenu.setVisibility(View.GONE);
+                    // show/hide some menu items depending on show properties
+                    Menu menu = popupMenu.getMenu();
+                    menu.findItem(R.id.menu_action_shows_favorites_add)
+                            .setVisible(!viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_favorites_remove)
+                            .setVisible(viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
+
+                    popupMenu.setOnMenuItemClickListener(
+                            new PopupMenuItemClickListener(viewHolder.showTvdbId,
+                                    viewHolder.episodeTvdbId));
+                    popupMenu.show();
+                }
+            });
 
             return v;
         }

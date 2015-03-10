@@ -86,7 +86,9 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public ImageView contextMenu;
 
         public int showTvdbId;
+        public int episodeTvdbId;
         public boolean isFavorited;
+        public boolean isHidden;
 
         public ViewHolder(View v) {
             name = (TextView) v.findViewById(R.id.seriesname);
