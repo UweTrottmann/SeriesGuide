@@ -59,7 +59,7 @@ public class DBUtils {
      */
     public static final String UNKNOWN_NEXT_RELEASE_DATE = "9223372036854775807";
 
-    public static final int SMALL_BATCH_SIZE = 50;
+    private static final int SMALL_BATCH_SIZE = 50;
 
     /**
      * Maps a {@link java.lang.Boolean} object to an int value to store in the database.
