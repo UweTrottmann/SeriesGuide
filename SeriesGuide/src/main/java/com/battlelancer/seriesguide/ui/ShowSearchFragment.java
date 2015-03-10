@@ -31,13 +31,17 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -174,6 +178,9 @@ public class ShowSearchFragment extends ListFragment {
             // poster
             Utils.loadTvdbShowPoster(context, viewHolder.poster,
                     cursor.getString(SearchQuery.POSTER));
+
+            // context menu
+            viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(SearchQuery.HIDDEN));
         }
 
         @Override
@@ -188,34 +195,95 @@ public class ShowSearchFragment extends ListFragment {
                             .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
                 }
             });
+            viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.shows_popup_menu);
 
-            viewHolder.contextMenu.setVisibility(View.GONE);
+                    // show/hide some menu items depending on show properties
+                    Menu menu = popupMenu.getMenu();
+                    menu.findItem(R.id.menu_action_shows_favorites_add)
+                            .setVisible(!viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_favorites_remove)
+                            .setVisible(viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
+
+                    // hide non-relevant actions
+                    menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
+                    menu.findItem(R.id.menu_action_shows_manage_lists).setVisible(false);
+                    menu.findItem(R.id.menu_action_shows_update).setVisible(false);
+                    menu.findItem(R.id.menu_action_shows_remove).setVisible(false);
+
+                    popupMenu.setOnMenuItemClickListener(
+                            new PopupMenuItemClickListener(v.getContext(), viewHolder.showTvdbId));
+                    popupMenu.show();
+                }
+            });
 
             return v;
+        }
+
+        private static class PopupMenuItemClickListener
+                implements PopupMenu.OnMenuItemClickListener {
+
+            private final int showTvdbId;
+            private final Context context;
+
+            public PopupMenuItemClickListener(Context context, int showTvdbId) {
+                this.showTvdbId = showTvdbId;
+                this.context = context;
+            }
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_shows_favorites_add: {
+                        ShowTools.get(context).storeIsFavorite(showTvdbId, true);
+                        return true;
+                    }
+                    case R.id.menu_action_shows_favorites_remove: {
+                        ShowTools.get(context).storeIsFavorite(showTvdbId, false);
+                        return true;
+                    }
+                    case R.id.menu_action_shows_hide: {
+                        ShowTools.get(context).storeIsHidden(showTvdbId, true);
+                        return true;
+                    }
+                    case R.id.menu_action_shows_unhide: {
+                        ShowTools.get(context).storeIsHidden(showTvdbId, false);
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
     }
 
     private interface SearchQuery {
         String[] PROJECTION = new String[] {
-                SeriesGuideContract.Shows._ID,
+                SeriesGuideContract.Shows._ID, // 0
                 SeriesGuideContract.Shows.TITLE,
                 SeriesGuideContract.Shows.POSTER,
                 SeriesGuideContract.Shows.FAVORITE,
+                SeriesGuideContract.Shows.HIDDEN, // 4
                 SeriesGuideContract.Shows.RELEASE_TIME,
                 SeriesGuideContract.Shows.RELEASE_WEEKDAY,
                 SeriesGuideContract.Shows.RELEASE_TIMEZONE,
                 SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.NETWORK
+                SeriesGuideContract.Shows.NETWORK // 9
         };
 
         int ID = 0;
         int TITLE = 1;
         int POSTER = 2;
         int FAVORITE = 3;
-        int RELEASE_TIME = 4;
-        int RELEASE_WEEKDAY = 5;
-        int RELEASE_TIMEZONE = 6;
-        int RELEASE_COUNTRY = 7;
-        int NETWORK = 8;
+        int HIDDEN = 4;
+        int RELEASE_TIME = 5;
+        int RELEASE_WEEKDAY = 6;
+        int RELEASE_TIMEZONE = 7;
+        int RELEASE_COUNTRY = 8;
+        int NETWORK = 9;
     }
 }

@@ -185,7 +185,7 @@ public class ShowTools {
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
-        // also notify filter URI
+        // also notify filter URI used by search
         mContext.getContentResolver()
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
@@ -216,6 +216,10 @@ public class ShowTools {
         values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        // also notify filter URI used by search
+        mContext.getContentResolver()
+                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
         Toast.makeText(mContext, mContext.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
