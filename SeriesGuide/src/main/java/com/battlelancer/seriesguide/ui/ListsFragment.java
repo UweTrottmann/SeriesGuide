@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
@@ -224,18 +225,9 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                     // next episode info
                     String fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
                     if (TextUtils.isEmpty(fieldValue)) {
-                        // show show status if there are currently no more
-                        // episodes
-                        int status = cursor.getInt(ListItemsQuery.SHOW_STATUS);
-
-                        // Continuing == 1 and Ended == 0
-                        if (status == 1) {
-                            viewHolder.episodeTime.setText(getString(R.string.show_isalive));
-                        } else if (status == 0) {
-                            viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
-                        } else {
-                            viewHolder.episodeTime.setText("");
-                        }
+                        // display show status if there is no next episode
+                        viewHolder.episodeTime.setText(ShowTools.getStatus(context,
+                                cursor.getInt(ListItemsQuery.SHOW_STATUS)));
                         viewHolder.episode.setText("");
                     } else {
                         viewHolder.episode.setText(fieldValue);

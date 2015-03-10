@@ -548,18 +548,9 @@ public class ShowsFragment extends Fragment implements
             // next episode info
             String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
             if (TextUtils.isEmpty(fieldValue)) {
-                // show show status if there are currently no more
-                // episodes
-                int status = cursor.getInt(ShowsQuery.STATUS);
-
-                // Continuing == 1 and Ended == 0
-                if (status == 1) {
-                    viewHolder.episodeTime.setText(getString(R.string.show_isalive));
-                } else if (status == 0) {
-                    viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
-                } else {
-                    viewHolder.episodeTime.setText("");
-                }
+                // display show status if there is no next episode
+                viewHolder.episodeTime.setText(
+                        ShowTools.getStatus(context, cursor.getInt(ShowsQuery.STATUS)));
                 viewHolder.episode.setText("");
             } else {
                 viewHolder.episode.setText(fieldValue);

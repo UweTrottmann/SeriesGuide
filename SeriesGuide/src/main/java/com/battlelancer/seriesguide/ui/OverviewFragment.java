@@ -21,7 +21,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -822,15 +821,7 @@ public class OverviewFragment extends Fragment implements
 
         // status
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
-        int status = show.getInt(ShowQuery.SHOW_STATUS);
-        if (status == 1) {
-            statusText.setTextColor(getResources().getColor(Utils.resolveAttributeToResourceId(
-                    getActivity().getTheme(), R.attr.sgTextColorGreen)));
-            statusText.setText(getString(R.string.show_isalive));
-        } else if (status == 0) {
-            statusText.setTextColor(Color.GRAY);
-            statusText.setText(getString(R.string.show_isnotalive));
-        }
+        ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
         final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);

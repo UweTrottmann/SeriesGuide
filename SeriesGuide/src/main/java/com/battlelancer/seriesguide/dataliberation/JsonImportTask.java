@@ -22,7 +22,6 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
@@ -41,7 +40,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
@@ -216,15 +214,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             show.rating_user = 0;
         }
         showValues.put(Shows.RATING_USER, show.rating_user);
-        int status;
-        if (ShowStatusExport.CONTINUING.equals(show.status)) {
-            status = ShowStatus.CONTINUING;
-        } else if (ShowStatusExport.ENDED.equals(show.status)) {
-            status = ShowStatus.ENDED;
-        } else {
-            status = ShowStatus.UNKNOWN;
-        }
-        showValues.put(Shows.STATUS, status);
+        showValues.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
         // Full dump values
         showValues.put(Shows.OVERVIEW, show.overview);
         if (show.rating < 0 || show.rating > 10) {

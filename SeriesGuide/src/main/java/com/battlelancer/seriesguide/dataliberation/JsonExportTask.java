@@ -41,7 +41,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonWriter;
@@ -72,6 +71,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
 
+    /**
+     * Show status used when exporting data. Compare with {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     */
     public interface ShowStatusExport {
         String CONTINUING = "continuing";
         String ENDED = "ended";
@@ -238,17 +240,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
             show.poster = shows.getString(ShowsQuery.POSTER);
             show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);
-            switch (shows.getInt(ShowsQuery.STATUS)) {
-                case ShowStatus.CONTINUING:
-                    show.status = ShowStatusExport.CONTINUING;
-                    break;
-                case ShowStatus.ENDED:
-                    show.status = ShowStatusExport.ENDED;
-                    break;
-                default:
-                    show.status = ShowStatusExport.UNKNOWN;
-                    break;
-            }
+            show.status = DataLiberationTools.decodeShowStatus(shows.getInt(ShowsQuery.STATUS));
             show.runtime = shows.getInt(ShowsQuery.RUNTIME);
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);

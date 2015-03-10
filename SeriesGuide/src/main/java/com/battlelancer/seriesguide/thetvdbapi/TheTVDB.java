@@ -72,13 +72,6 @@ import timber.log.Timber;
  */
 public class TheTVDB {
 
-    public interface ShowStatus {
-
-        int CONTINUING = 1;
-        int ENDED = 0;
-        int UNKNOWN = -1;
-    }
-
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
 
     private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
