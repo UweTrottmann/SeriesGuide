@@ -1224,6 +1224,10 @@ public class EpisodeTools {
             // notify UI it may do relevant updates
             EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
 
+            // update latest episode for the changed show
+            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(mContext),
+                    mType.getShowTvdbId());
+
             // display success message
             if (mIsSendingToTrakt) {
                 int status = R.string.trakt_success;
