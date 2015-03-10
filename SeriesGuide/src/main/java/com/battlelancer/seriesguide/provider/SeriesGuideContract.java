@@ -48,6 +48,9 @@ public class SeriesGuideContract {
 
         String CONTENTRATING = "contentrating";
 
+        /**
+         * Show status. Encoded as integer. See {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+         */
         String STATUS = "status";
 
         String RUNTIME = "runtime";

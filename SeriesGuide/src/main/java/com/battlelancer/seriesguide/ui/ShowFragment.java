@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -281,15 +280,7 @@ public class ShowFragment extends Fragment {
         mShowPoster = mShowCursor.getString(ShowQuery.POSTER);
 
         // status
-        if (mShowCursor.getInt(ShowQuery.STATUS) == 1) {
-            mTextViewStatus.setTextColor(getResources().getColor(
-                    Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.sgTextColorGreen)));
-            mTextViewStatus.setText(getString(R.string.show_isalive));
-        } else {
-            mTextViewStatus.setTextColor(Color.GRAY);
-            mTextViewStatus.setText(getString(R.string.show_isnotalive));
-        }
+        ShowTools.setStatusAndColor(mTextViewStatus, mShowCursor.getInt(ShowQuery.STATUS));
 
         // next release day and time
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);

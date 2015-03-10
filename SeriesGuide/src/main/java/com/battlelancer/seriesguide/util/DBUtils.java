@@ -28,7 +28,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
 import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
 import java.util.ArrayList;
@@ -449,15 +448,7 @@ public class DBUtils {
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.POSTER, show.poster);
         values.put(Shows.CONTENTRATING, show.contentRating);
-        int status;
-        if (ShowStatusExport.CONTINUING.equals(show.status)) {
-            status = ShowStatus.CONTINUING;
-        } else if (ShowStatusExport.ENDED.equals(show.status)) {
-            status = ShowStatus.ENDED;
-        } else {
-            status = ShowStatus.UNKNOWN;
-        }
-        values.put(Shows.STATUS, status);
+        values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
         values.put(Shows.RUNTIME, show.runtime);
         values.put(Shows.RATING_GLOBAL, show.rating);
         values.put(Shows.NETWORK, show.network);
