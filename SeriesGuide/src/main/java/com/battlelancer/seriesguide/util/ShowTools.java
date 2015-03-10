@@ -547,7 +547,8 @@ public class ShowTools {
             view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
                     view.getContext().getTheme(), R.attr.sgTextColorGreen)));
         } else {
-            view.setTextColor(Color.GRAY);
+            view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
+                    view.getContext().getTheme(), android.R.attr.textColorSecondary)));
         }
     }
 }
