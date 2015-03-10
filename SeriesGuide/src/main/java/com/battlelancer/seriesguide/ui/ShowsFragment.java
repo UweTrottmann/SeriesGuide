@@ -56,15 +56,11 @@ import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
+import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -217,8 +213,6 @@ public class ShowsFragment extends Fragment implements
             // keep unwatched and upcoming shows from becoming stale
             getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
         }
-
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -227,7 +221,6 @@ public class ShowsFragment extends Fragment implements
 
         // avoid CPU activity
         schedulePeriodicDataRefresh(false);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -493,6 +486,13 @@ public class ShowsFragment extends Fragment implements
         mAdapter.swapCursor(null);
     }
 
+    /**
+     * Periodically restart the shows loader.
+     *
+     * <p>Some changes to the displayed data are not based on actual (detectable) changes to the
+     * underlying data, but because time has passed (e.g. relative time displays, release time has
+     * passed).
+     */
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
         if (mHandler == null) {
             mHandler = new Handler();
@@ -725,13 +725,6 @@ public class ShowsFragment extends Fragment implements
             }
         }
     };
-
-    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
-        if (isAdded()) {
-            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(getActivity()),
-                    event.mType.getShowTvdbId());
-        }
-    }
 
     private void fireTrackerEventAction(String label) {
         Utils.trackAction(getActivity(), TAG, label);
