@@ -35,8 +35,6 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     protected LayoutInflater mLayoutInflater;
 
-    private final int LAYOUT = R.layout.item_show;
-
     public BaseShowsAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
@@ -45,20 +43,9 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, parent, false);
+        View v = mLayoutInflater.inflate(R.layout.item_show, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.name = (TextView) v.findViewById(R.id.seriesname);
-        viewHolder.timeAndNetwork = (TextView) v.findViewById(
-                R.id.textViewShowsTimeAndNetwork);
-        viewHolder.episode = (TextView) v.findViewById(
-                R.id.TextViewShowListNextEpisode);
-        viewHolder.episodeTime = (TextView) v.findViewById(R.id.episodetime);
-        viewHolder.poster = (ImageView) v.findViewById(R.id.showposter);
-        viewHolder.favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
-        viewHolder.contextMenu = (ImageView) v.findViewById(
-                R.id.imageViewShowsContextMenu);
-
+        ShowViewHolder viewHolder = new ShowViewHolder(v);
         v.setTag(viewHolder);
 
         return v;
@@ -88,20 +75,29 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return networkAndTime.toString();
     }
 
-    public static class ViewHolder {
+    public static class ShowViewHolder {
 
         public TextView name;
-
         public TextView timeAndNetwork;
-
         public TextView episode;
-
         public TextView episodeTime;
-
         public ImageView poster;
-
         public ImageView favorited;
-
         public ImageView contextMenu;
+
+        public int showTvdbId;
+        public int episodeTvdbId;
+        public boolean isFavorited;
+        public boolean isHidden;
+
+        public ShowViewHolder(View v) {
+            name = (TextView) v.findViewById(R.id.seriesname);
+            timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
+            episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
+            episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            poster = (ImageView) v.findViewById(R.id.showposter);
+            favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
+            contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+        }
     }
 }

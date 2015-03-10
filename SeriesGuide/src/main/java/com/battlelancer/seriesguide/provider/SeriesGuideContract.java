@@ -504,20 +504,21 @@ public class SeriesGuideContract {
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SHOWS)
                 .build();
 
-        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_NEXT_EPISODE)
                 .build();
 
-        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_LAST_EPISODE)
                 .build();
 
-        public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, "filter");
+        public static final Uri CONTENT_URI_FILTER = CONTENT_URI.buildUpon()
+                .appendPath(PATH_FILTER)
+                .build();
 
         /**
          * Use if multiple items get returned

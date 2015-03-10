@@ -528,22 +528,16 @@ public class ShowsFragment extends Fragment implements
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
+            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
 
             // set text properties immediately
             viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
 
             // favorite toggle
-            final int showId = cursor.getInt(ShowsQuery._ID);
-            final boolean isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
-            viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
+            viewHolder.showTvdbId = cursor.getInt(ShowsQuery._ID);
+            viewHolder.isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
+            viewHolder.favorited.setImageResource(viewHolder.isFavorited ? mStarDrawableId
                     : mStarZeroDrawableId);
-            viewHolder.favorited.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onFavoriteShow(showId, !isFavorited);
-                }
-            });
 
             // next episode info
             String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
@@ -571,10 +565,22 @@ public class ShowsFragment extends Fragment implements
                     cursor.getString(ShowsQuery.POSTER));
 
             // context menu
-            viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            final boolean isHidden = DBUtils.restoreBooleanFromInt(
-                    cursor.getInt(ShowsQuery.HIDDEN));
-            final int episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
+            viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(ShowsQuery.HIDDEN));
+            viewHolder.episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            View v = super.newView(context, cursor, parent);
+
+            final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
+            viewHolder.favorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowTools.get(v.getContext())
+                            .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
+                }
+            });
             viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -583,16 +589,21 @@ public class ShowsFragment extends Fragment implements
 
                     // show/hide some menu items depending on show properties
                     Menu menu = popupMenu.getMenu();
-                    menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!isFavorited);
-                    menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(isFavorited);
-                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!isHidden);
-                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(isHidden);
+                    menu.findItem(R.id.menu_action_shows_favorites_add)
+                            .setVisible(!viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_favorites_remove)
+                            .setVisible(viewHolder.isFavorited);
+                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
                     popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(showId, episodeTvdbId));
+                            new PopupMenuItemClickListener(viewHolder.showTvdbId,
+                                    viewHolder.episodeTvdbId));
                     popupMenu.show();
                 }
             });
+
+            return v;
         }
 
         private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
