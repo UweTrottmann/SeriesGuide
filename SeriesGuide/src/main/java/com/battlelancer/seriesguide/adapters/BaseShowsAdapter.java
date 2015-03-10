@@ -45,7 +45,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = mLayoutInflater.inflate(R.layout.item_show, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(v);
+        ShowViewHolder viewHolder = new ShowViewHolder(v);
         v.setTag(viewHolder);
 
         return v;
@@ -75,7 +75,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return networkAndTime.toString();
     }
 
-    public static class ViewHolder {
+    public static class ShowViewHolder {
 
         public TextView name;
         public TextView timeAndNetwork;
@@ -90,7 +90,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public boolean isFavorited;
         public boolean isHidden;
 
-        public ViewHolder(View v) {
+        public ShowViewHolder(View v) {
             name = (TextView) v.findViewById(R.id.seriesname);
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);

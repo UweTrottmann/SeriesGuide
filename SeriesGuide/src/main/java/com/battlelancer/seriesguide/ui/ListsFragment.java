@@ -198,7 +198,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
+            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
 
             // show title
             viewHolder.name.setText(cursor.getString(ListItemsQuery.SHOW_TITLE));
@@ -284,7 +284,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             View v = super.newView(context, cursor, parent);
 
-            ViewHolder viewHolder = (ViewHolder) v.getTag();
+            ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
             viewHolder.favorited.setBackgroundResource(0); // remove selectable background
 
             return v;

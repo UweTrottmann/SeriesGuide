@@ -152,7 +152,7 @@ public class ShowSearchFragment extends ListFragment {
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
+            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
 
             viewHolder.name.setText(cursor.getString(SearchQuery.TITLE));
 
@@ -180,7 +180,7 @@ public class ShowSearchFragment extends ListFragment {
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             View v = super.newView(context, cursor, parent);
 
-            final ViewHolder viewHolder = (ViewHolder) v.getTag();
+            final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
             viewHolder.favorited.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
