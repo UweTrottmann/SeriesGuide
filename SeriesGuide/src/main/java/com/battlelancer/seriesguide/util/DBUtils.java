@@ -53,8 +53,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualifie
 
 public class DBUtils {
 
-    static final String TAG = "SeriesDatabase";
-
     /**
      * Use 9223372036854775807 (Long.MAX_VALUE) for unknown airtime/no next episode so they will get
      * sorted last.
