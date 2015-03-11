@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,12 +37,11 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.adapters.ShowResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -114,7 +112,7 @@ public class ShowSearchFragment extends ListFragment {
                 String customTimeInOneHour = String.valueOf(TimeTools.getCurrentTime(getActivity())
                         + DateUtils.HOUR_IN_MILLIS);
                 return new CursorLoader(getActivity(), SeriesGuideContract.Shows.CONTENT_URI,
-                        SearchQuery.PROJECTION,
+                        ShowResultsAdapter.Query.PROJECTION,
                         SeriesGuideContract.Shows.NEXTEPISODE + "!='' AND "
                                 + SeriesGuideContract.Shows.HIDDEN + "=0 AND "
                                 + SeriesGuideContract.Shows.NEXTAIRDATEMS + "<?",
@@ -124,8 +122,8 @@ public class ShowSearchFragment extends ListFragment {
                 Uri uri = SeriesGuideContract.Shows.CONTENT_URI_FILTER.buildUpon()
                         .appendPath(query)
                         .build();
-                return new CursorLoader(getActivity(), uri, SearchQuery.PROJECTION, null, null,
-                        null);
+                return new CursorLoader(getActivity(), uri,
+                        ShowResultsAdapter.Query.PROJECTION, null, null, null);
             }
         }
 
@@ -139,66 +137,6 @@ public class ShowSearchFragment extends ListFragment {
             adapter.swapCursor(null);
         }
     };
-
-    private static class ShowResultsAdapter extends BaseShowsAdapter {
-
-        public interface OnContextMenuClickListener {
-            public void onClick(View view, ShowViewHolder viewHolder);
-        }
-
-        private final OnContextMenuClickListener onContextMenuClickListener;
-
-        public ShowResultsAdapter(Context context, OnContextMenuClickListener listener) {
-            super(context);
-
-            onContextMenuClickListener = listener;
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
-
-            viewHolder.name.setText(cursor.getString(SearchQuery.TITLE));
-
-            viewHolder.showTvdbId = cursor.getInt(SearchQuery.ID);
-            viewHolder.isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
-
-            // favorited label
-            setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
-
-            // network, day and time
-            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getInt(SearchQuery.RELEASE_TIME),
-                    cursor.getInt(SearchQuery.RELEASE_WEEKDAY),
-                    cursor.getString(SearchQuery.RELEASE_TIMEZONE),
-                    cursor.getString(SearchQuery.RELEASE_COUNTRY),
-                    cursor.getString(SearchQuery.NETWORK)));
-
-            // poster
-            Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                    cursor.getString(SearchQuery.POSTER));
-
-            // context menu
-            viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(SearchQuery.HIDDEN));
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = super.newView(context, cursor, parent);
-
-            final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onContextMenuClickListener != null) {
-                        onContextMenuClickListener.onClick(v, viewHolder);
-                    }
-                }
-            });
-
-            return v;
-        }
-    }
 
     private ShowResultsAdapter.OnContextMenuClickListener onContextMenuClickListener
             = new ShowResultsAdapter.OnContextMenuClickListener() {
@@ -227,30 +165,4 @@ public class ShowSearchFragment extends ListFragment {
             popupMenu.show();
         }
     };
-
-    private interface SearchQuery {
-        String[] PROJECTION = new String[] {
-                SeriesGuideContract.Shows._ID, // 0
-                SeriesGuideContract.Shows.TITLE,
-                SeriesGuideContract.Shows.POSTER,
-                SeriesGuideContract.Shows.FAVORITE,
-                SeriesGuideContract.Shows.HIDDEN, // 4
-                SeriesGuideContract.Shows.RELEASE_TIME,
-                SeriesGuideContract.Shows.RELEASE_WEEKDAY,
-                SeriesGuideContract.Shows.RELEASE_TIMEZONE,
-                SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.NETWORK // 9
-        };
-
-        int ID = 0;
-        int TITLE = 1;
-        int POSTER = 2;
-        int FAVORITE = 3;
-        int HIDDEN = 4;
-        int RELEASE_TIME = 5;
-        int RELEASE_WEEKDAY = 6;
-        int RELEASE_TIMEZONE = 7;
-        int RELEASE_COUNTRY = 8;
-        int NETWORK = 9;
-    }
 }
