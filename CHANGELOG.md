@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 23 *(in development)*
+-------------------------
+
+#### 23-beta1 *(2015-03-11)*
+
+* FEATURE List tabs can be reordered (see Menu > Reorder lists). Order is preserved on backup/restore.
+* TWEAK Toggle favorite state of shows in lists.
+* TWEAK Add menu to show search result cards (Toggle favorite and hidden state, manage lists, remove).
+* TWEAK Slightly faster export and auto backup due to removal of indents in exported JSON files.
+* TWEAK Show higher resolution background on Android Wear notifications.
+* FIX Show status is now correctly not displayed if it is unknown (= not set on TheTVDB).
+* FIX Shows tab next episodes update correctly after setting watched episodes in Upcoming/Recent.
+
 Version 22 *(2015-03-02)*
 -------------------------
 
