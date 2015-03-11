@@ -47,16 +47,13 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
+import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
@@ -578,73 +575,13 @@ public class ShowsFragment extends Fragment implements
                     menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
                     popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(viewHolder.showTvdbId,
-                                    viewHolder.episodeTvdbId));
+                            new ShowMenuItemClickListener(getActivity(), getFragmentManager(),
+                                    viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
                     popupMenu.show();
                 }
             });
 
             return v;
-        }
-
-        private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-            private final int mShowTvdbId;
-            private final int mEpisodeTvdbId;
-
-            public PopupMenuItemClickListener(int showTvdbId, int episodeTvdbId) {
-                mShowTvdbId = showTvdbId;
-                mEpisodeTvdbId = episodeTvdbId;
-            }
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_shows_watched_next: {
-                        DBUtils.markNextEpisode(getActivity(), mShowTvdbId, mEpisodeTvdbId);
-                        fireTrackerEventContext("Mark next episode");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_favorites_add: {
-                        onFavoriteShow(mShowTvdbId, true);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_favorites_remove: {
-                        onFavoriteShow(mShowTvdbId, false);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_hide: {
-                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, true);
-                        fireTrackerEventContext("Hide show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_unhide: {
-                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, false);
-                        fireTrackerEventContext("Unhide show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_manage_lists: {
-                        ManageListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
-                                getFragmentManager());
-                        fireTrackerEventContext("Manage lists");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_update: {
-                        SgSyncAdapter.requestSyncImmediate(getActivity(),
-                                SgSyncAdapter.SyncType.SINGLE, mShowTvdbId, true);
-                        fireTrackerEventContext("Update show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_remove: {
-                        if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
-                            RemoveShowDialogFragment.show(getFragmentManager(), mShowTvdbId);
-                        }
-                        fireTrackerEventContext("Delete show");
-                        return true;
-                    }
-                }
-                return false;
-            }
         }
     }
 

@@ -31,7 +31,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**
- * Base adapter using the shows_row.xml layout with a ViewHolder.
+ * Base adapter for the show item layout.
  */
 public abstract class BaseShowsAdapter extends CursorAdapter {
 

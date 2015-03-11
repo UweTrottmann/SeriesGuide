@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -33,7 +32,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -42,11 +40,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
@@ -226,60 +221,12 @@ public class ShowSearchFragment extends ListFragment {
             menu.findItem(R.id.menu_action_shows_update).setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
-                    new SearchMenuItemClickListener(getActivity(), getFragmentManager(),
-                            viewHolder.showTvdbId));
+                    new ShowMenuItemClickListener(getActivity(),
+                            getFragmentManager(), viewHolder.showTvdbId, viewHolder.episodeTvdbId,
+                            ListsActivity.TAG));
             popupMenu.show();
         }
     };
-
-    private static class SearchMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        private final Context context;
-        private final FragmentManager fragmentManager;
-        private final int showTvdbId;
-
-        public SearchMenuItemClickListener(Context context, FragmentManager fm, int showTvdbId) {
-            this.context = context;
-            this.fragmentManager = fm;
-            this.showTvdbId = showTvdbId;
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_shows_favorites_add: {
-                    ShowTools.get(context).storeIsFavorite(showTvdbId, true);
-                    return true;
-                }
-                case R.id.menu_action_shows_favorites_remove: {
-                    ShowTools.get(context).storeIsFavorite(showTvdbId, false);
-                    return true;
-                }
-                case R.id.menu_action_shows_hide: {
-                    ShowTools.get(context).storeIsHidden(showTvdbId, true);
-                    return true;
-                }
-                case R.id.menu_action_shows_unhide: {
-                    ShowTools.get(context).storeIsHidden(showTvdbId, false);
-                    return true;
-                }
-                case R.id.menu_action_shows_manage_lists: {
-                    ManageListsDialogFragment.showListsDialog(showTvdbId,
-                            SeriesGuideContract.ListItemTypes.SHOW,
-                            fragmentManager);
-                    return true;
-                }
-                case R.id.menu_action_shows_remove: {
-                    if (!SgSyncAdapter.isSyncActive(context, true)) {
-                        RemoveShowDialogFragment.show(fragmentManager, showTvdbId);
-                    }
-                    return true;
-                }
-                default:
-                    return false;
-            }
-        }
-    }
 
     private interface SearchQuery {
         String[] PROJECTION = new String[] {
