@@ -42,6 +42,8 @@
 
 # joda-time has some annotations we don't care about.
 -dontwarn org.joda.convert.**
+# due to using joda-time-android tz data is included differently
+-dontwarn org.joda.time.tz.**
 
 # OkHttp has some internal stuff not available on Android.
 -dontwarn com.squareup.okhttp.internal.**
