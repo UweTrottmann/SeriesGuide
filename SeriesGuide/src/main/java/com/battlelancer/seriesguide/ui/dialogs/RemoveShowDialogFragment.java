@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Dialog asking if a show should be removed from the database.
  */
-public class ConfirmDeleteDialogFragment extends DialogFragment {
+public class RemoveShowDialogFragment extends DialogFragment {
 
     private static final String KEY_SHOW_TVDB_ID = "show_tvdb_id";
 
@@ -47,14 +48,14 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      *
      * @param showTvdbId The TVDb id of the show to remove.
      */
-    public static ConfirmDeleteDialogFragment newInstance(int showTvdbId) {
-        ConfirmDeleteDialogFragment f = new ConfirmDeleteDialogFragment();
+    public static void show(FragmentManager fm, int showTvdbId) {
+        RemoveShowDialogFragment f = new RemoveShowDialogFragment();
 
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDB_ID, showTvdbId);
         f.setArguments(args);
 
-        return f;
+        f.show(fm, "dialog-remove-show");
     }
 
     @InjectView(R.id.progressBarRemove) View progressBar;

@@ -23,10 +23,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,18 +36,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
-import java.util.Date;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
@@ -74,7 +70,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         String LIST_ID = "list_id";
     }
 
-    private ListItemAdapter mAdapter;
+    private ListItemsAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +82,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemAdapter(getActivity(), null, 0);
+        mAdapter = new ListItemsAdapter(getActivity(), onContextMenuClickListener);
 
         // setup grid view
         GridView list = (GridView) getView().findViewById(android.R.id.list);
@@ -121,8 +117,8 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Cursor listItem = (Cursor) mAdapter.getItem(position);
-        int itemType = listItem.getInt(ListItemsQuery.ITEM_TYPE);
-        String itemRefId = listItem.getString(ListItemsQuery.ITEM_REF_ID);
+        int itemType = listItem.getInt(ListItemsAdapter.Query.ITEM_TYPE);
+        String itemRefId = listItem.getString(ListItemsAdapter.Query.ITEM_REF_ID);
 
         Intent intent = null;
         switch (itemType) {
@@ -169,7 +165,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             String listId = args.getString(InitBundle.LIST_ID);
             return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
-                    ListItemsQuery.PROJECTION,
+                    ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
                     Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
@@ -190,180 +186,59 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         }
     };
 
-    private class ListItemAdapter extends BaseShowsAdapter {
+    private ListItemsAdapter.OnContextMenuClickListener onContextMenuClickListener
+            = new ListItemsAdapter.OnContextMenuClickListener() {
+        @Override
+        public void onClick(View view, ListItemsAdapter.ListItemViewHolder viewHolder) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.lists_popup_menu);
+            popupMenu.setOnMenuItemClickListener(
+                    new PopupMenuItemClickListener(view.getContext(), getFragmentManager(),
+                            viewHolder.itemId, viewHolder.itemTvdbId, viewHolder.itemType));
+            popupMenu.show();
+        }
+    };
 
-        public ListItemAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
+    private static class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        private final Context context;
+        private final FragmentManager fragmentManager;
+        private final String itemId;
+        private final int itemTvdbId;
+        private final int itemType;
+
+        public PopupMenuItemClickListener(Context context, FragmentManager fm, String itemId,
+                int itemTvdbId, int itemType) {
+            this.context = context;
+            this.fragmentManager = fm;
+            this.itemId = itemId;
+            this.itemTvdbId = itemTvdbId;
+            this.itemType = itemType;
         }
 
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
-
-            // show title
-            viewHolder.name.setText(cursor.getString(ListItemsQuery.SHOW_TITLE));
-
-            // favorited label
-            final boolean isFavorited = cursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
-            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
-
-            // item title
-            final int itemType = cursor.getInt(ListItemsQuery.ITEM_TYPE);
-            switch (itemType) {
-                default:
-                case 1:
-                    // shows
-
-                    // network, day and time
-                    viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                            cursor.getInt(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME),
-                            cursor.getInt(ListItemsQuery.SHOW_RELEASE_WEEKDAY),
-                            cursor.getString(ListItemsQuery.SHOW_RELEASE_TIMEZONE),
-                            cursor.getString(ListItemsQuery.SHOW_RELEASE_COUNTRY),
-                            cursor.getString(ListItemsQuery.SHOW_NETWORK)));
-
-                    // next episode info
-                    String fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
-                    if (TextUtils.isEmpty(fieldValue)) {
-                        // display show status if there is no next episode
-                        viewHolder.episodeTime.setText(ShowTools.getStatus(context,
-                                cursor.getInt(ListItemsQuery.SHOW_STATUS)));
-                        viewHolder.episode.setText("");
-                    } else {
-                        viewHolder.episode.setText(fieldValue);
-                        fieldValue = cursor.getString(ListItemsQuery.SHOW_NEXTAIRDATETEXT);
-                        viewHolder.episodeTime.setText(fieldValue);
-                    }
-                    break;
-                case 2:
-                    // seasons
-                    viewHolder.timeAndNetwork.setText(R.string.season);
-                    viewHolder.episode.setText(SeasonTools.getSeasonString(context,
-                            cursor.getInt(ListItemsQuery.ITEM_TITLE)));
-                    viewHolder.episodeTime.setText("");
-                    break;
-                case 3:
-                    // episodes
-                    viewHolder.timeAndNetwork.setText(R.string.episode);
-                    viewHolder.episode.setText(Utils.getNextEpisodeString(context,
-                            cursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
-                            cursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
-                            cursor.getString(ListItemsQuery.ITEM_TITLE)));
-                    long releaseTime = cursor.getLong(ListItemsQuery.SHOW_OR_EPISODE_RELEASE_TIME);
-                    if (releaseTime != -1) {
-                        // "in 15 mins (Fri)"
-                        Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
-                        viewHolder.episodeTime.setText(getString(R.string.release_date_and_day,
-                                TimeTools.formatToLocalRelativeTime(context, actualRelease),
-                                TimeTools.formatToLocalDay(actualRelease)));
-                    }
-                    break;
-            }
-
-            // poster
-            Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                    cursor.getString(ListItemsQuery.SHOW_POSTER));
-
-            // context menu
-            viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            final String itemId = cursor.getString(ListItemsQuery.LIST_ITEM_ID);
-            final int itemTvdbId = cursor.getInt(ListItemsQuery.ITEM_REF_ID);
-            viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.inflate(R.menu.lists_popup_menu);
-                    popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(itemId, itemTvdbId, itemType));
-                    popupMenu.show();
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_action_lists_manage: {
+                    ManageListsDialogFragment.showListsDialog(itemTvdbId, itemType,
+                            fragmentManager);
+                    fireTrackerEvent("Manage lists");
+                    return true;
                 }
-            });
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = super.newView(context, cursor, parent);
-
-            ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
-
-            return v;
-        }
-
-        private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-            private final String mItemId;
-            private final int mItemTvdbId;
-            private final int mItemType;
-
-            public PopupMenuItemClickListener(String itemId, int itemTvdbId, int itemType) {
-                mItemId = itemId;
-                mItemTvdbId = itemTvdbId;
-                mItemType = itemType;
-            }
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_lists_manage: {
-                        ManageListsDialogFragment.showListsDialog(mItemTvdbId, mItemType,
-                                getFragmentManager());
-                        fireTrackerEvent("Manage lists");
-                        return true;
-                    }
-                    case R.id.menu_action_lists_remove: {
-                        getActivity().getContentResolver()
-                                .delete(ListItems.buildListItemUri(mItemId), null, null);
-                        getActivity().getContentResolver()
-                                .notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
-                        fireTrackerEvent("Remove from mList");
-                        return true;
-                    }
+                case R.id.menu_action_lists_remove: {
+                    context.getContentResolver()
+                            .delete(ListItems.buildListItemUri(itemId), null, null);
+                    context.getContentResolver()
+                            .notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+                    fireTrackerEvent("Remove from mList");
+                    return true;
                 }
-                return false;
             }
+            return false;
         }
-    }
 
-    interface ListItemsQuery {
-
-        String[] PROJECTION = new String[] {
-                ListItems._ID,
-                ListItems.LIST_ITEM_ID, // 1
-                ListItems.ITEM_REF_ID,
-                ListItems.TYPE,
-                Shows.TITLE,
-                Shows.OVERVIEW, // 5
-                Shows.POSTER,
-                Shows.NETWORK,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE, // 10
-                Shows.RELEASE_COUNTRY,
-                Shows.STATUS,
-                Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE // 15
-        };
-
-        int LIST_ITEM_ID = 1;
-        int ITEM_REF_ID = 2;
-        int ITEM_TYPE = 3;
-        int SHOW_TITLE = 4;
-        int ITEM_TITLE = 5;
-        int SHOW_POSTER = 6;
-        int SHOW_NETWORK = 7;
-        int SHOW_OR_EPISODE_RELEASE_TIME = 8;
-        int SHOW_RELEASE_WEEKDAY = 9;
-        int SHOW_RELEASE_TIMEZONE = 10;
-        int SHOW_RELEASE_COUNTRY = 11;
-        int SHOW_STATUS = 12;
-        int SHOW_NEXTTEXT = 13;
-        int SHOW_NEXTAIRDATETEXT = 14;
-        int SHOW_FAVORITE = 15;
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackContextMenu(getActivity(), TAG, label);
+        private void fireTrackerEvent(String label) {
+            Utils.trackContextMenu(context, TAG, label);
+        }
     }
 }

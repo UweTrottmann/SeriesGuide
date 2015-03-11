@@ -144,9 +144,11 @@ public class ShowTools {
             return Result.ERROR;
         }
 
-        // make sure other loaders (activity, overview, details) are notified
+        // make sure other loaders (activity, overview, details, search) are notified
         mContext.getContentResolver().notifyChange(
                 SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
+        mContext.getContentResolver().notifyChange(
+                SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
         return Result.SUCCESS;
     }
@@ -185,9 +187,11 @@ public class ShowTools {
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
-        // also notify filter URI used by search
+        // also notify URIs used by search and lists
         mContext.getContentResolver()
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
+        mContext.getContentResolver()
+                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         // favorite status may determine eligibility for notifications
         Utils.runNotificationService(mContext);

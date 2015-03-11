@@ -25,30 +25,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**
- * Base adapter using the shows_row.xml layout with a ViewHolder.
+ * Base adapter for the show item layout.
  */
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
-    protected LayoutInflater mLayoutInflater;
+    public interface OnContextMenuClickListener {
+        public void onClick(View view, ShowViewHolder viewHolder);
+    }
 
-    public BaseShowsAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private OnContextMenuClickListener onContextMenuClickListener;
+    private final int resIdStar;
+    private final int resIdStarZero;
+
+    public BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
+        super(context, null, 0);
+        this.onContextMenuClickListener = listener;
+
+        resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableStar);
+        resIdStarZero = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableStar0);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(R.layout.item_show, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ShowViewHolder viewHolder = new ShowViewHolder(v);
+        ShowViewHolder viewHolder = new ShowViewHolder(v, onContextMenuClickListener);
         v.setTag(viewHolder);
 
         return v;
+    }
+
+    public void setFavoriteState(ImageView view, boolean isFavorite) {
+        view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
     }
 
     /**
@@ -90,7 +106,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public boolean isFavorited;
         public boolean isHidden;
 
-        public ShowViewHolder(View v) {
+        public ShowViewHolder(View v, final OnContextMenuClickListener listener) {
             name = (TextView) v.findViewById(R.id.seriesname);
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
@@ -98,6 +114,23 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             poster = (ImageView) v.findViewById(R.id.showposter);
             favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
             contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+
+            // favorite star
+            favorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowTools.get(v.getContext()).storeIsFavorite(showTvdbId, !isFavorited);
+                }
+            });
+            // context menu
+            contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(v, ShowViewHolder.this);
+                    }
+                }
+            });
         }
     }
 }
