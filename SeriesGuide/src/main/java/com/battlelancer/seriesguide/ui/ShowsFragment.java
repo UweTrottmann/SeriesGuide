@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -25,14 +24,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +44,7 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -54,7 +52,6 @@ import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
-import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -453,7 +450,7 @@ public class ShowsFragment extends Fragment implements
         // keep unwatched and upcoming shows from becoming stale
         schedulePeriodicDataRefresh(true);
 
-        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
+        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsAdapter.Query.PROJECTION,
                 selection.toString(), null,
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst,
                         mIsSortIgnoreArticles)
@@ -505,56 +502,6 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    private static class ShowsAdapter extends BaseShowsAdapter {
-
-        public ShowsAdapter(Context context, OnContextMenuClickListener listener) {
-            super(context, listener);
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
-
-            viewHolder.showTvdbId = cursor.getInt(ShowsQuery._ID);
-            viewHolder.isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
-
-            // set text properties immediately
-            viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
-
-            // favorite label
-            setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
-
-            // next episode info
-            String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
-            if (TextUtils.isEmpty(fieldValue)) {
-                // display show status if there is no next episode
-                viewHolder.episodeTime.setText(
-                        ShowTools.getStatus(context, cursor.getInt(ShowsQuery.STATUS)));
-                viewHolder.episode.setText("");
-            } else {
-                viewHolder.episode.setText(fieldValue);
-                fieldValue = cursor.getString(ShowsQuery.NEXTAIRDATETEXT);
-                viewHolder.episodeTime.setText(fieldValue);
-            }
-
-            // network, day and time
-            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getInt(ShowsQuery.RELEASE_TIME),
-                    cursor.getInt(ShowsQuery.RELEASE_WEEKDAY),
-                    cursor.getString(ShowsQuery.RELEASE_TIMEZONE),
-                    cursor.getString(ShowsQuery.RELEASE_COUNTRY),
-                    cursor.getString(ShowsQuery.NETWORK)));
-
-            // set poster
-            Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                    cursor.getString(ShowsQuery.POSTER));
-
-            // context menu
-            viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(ShowsQuery.HIDDEN));
-            viewHolder.episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
-        }
-    }
-
     private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
             = new BaseShowsAdapter.OnContextMenuClickListener() {
         @Override
@@ -577,41 +524,6 @@ public class ShowsFragment extends Fragment implements
             popupMenu.show();
         }
     };
-
-    private interface ShowsQuery {
-
-        String[] PROJECTION = {
-                BaseColumns._ID,
-                Shows.TITLE,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.NETWORK,
-                Shows.POSTER,
-                Shows.STATUS,
-                Shows.NEXTEPISODE,
-                Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE,
-                Shows.HIDDEN
-        };
-
-        int _ID = 0;
-        int TITLE = 1;
-        int RELEASE_TIME = 2;
-        int RELEASE_WEEKDAY = 3;
-        int RELEASE_TIMEZONE = 4;
-        int RELEASE_COUNTRY = 5;
-        int NETWORK = 6;
-        int POSTER = 7;
-        int STATUS = 8;
-        int NEXTEPISODE = 9;
-        int NEXTTEXT = 10;
-        int NEXTAIRDATETEXT = 11;
-        int FAVORITE = 12;
-        int HIDDEN = 13;
-    }
 
     private final OnSharedPreferenceChangeListener mPrefsListener
             = new OnSharedPreferenceChangeListener() {
