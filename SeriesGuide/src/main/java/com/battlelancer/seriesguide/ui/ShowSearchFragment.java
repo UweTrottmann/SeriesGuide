@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -41,6 +42,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -64,7 +66,7 @@ public class ShowSearchFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new ShowResultsAdapter(getActivity(), null, 0);
+        adapter = new ShowResultsAdapter(getActivity(), onContextMenuClickListener);
         setListAdapter(adapter);
 
         // initially display shows with recently released episodes
@@ -143,15 +145,22 @@ public class ShowSearchFragment extends ListFragment {
 
     private static class ShowResultsAdapter extends BaseShowsAdapter {
 
+        public interface OnContextMenuClickListener {
+            public void onClick(View view, ShowViewHolder viewHolder);
+        }
+
+        private final OnContextMenuClickListener onContextMenuClickListener;
         private final int resIdStar;
         private final int resIdStarZero;
 
-        public ShowResultsAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
+        public ShowResultsAdapter(Context context, OnContextMenuClickListener listener) {
+            super(context, null, 0);
 
             resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.drawableStar);
             resIdStarZero = Utils.resolveAttributeToResourceId(context.getTheme(),
                     R.attr.drawableStar0);
+
+            onContextMenuClickListener = listener;
         }
 
         @Override
@@ -198,65 +207,83 @@ public class ShowSearchFragment extends ListFragment {
             viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.inflate(R.menu.shows_popup_menu);
-
-                    // show/hide some menu items depending on show properties
-                    Menu menu = popupMenu.getMenu();
-                    menu.findItem(R.id.menu_action_shows_favorites_add)
-                            .setVisible(!viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_favorites_remove)
-                            .setVisible(viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
-                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
-
-                    // hide non-relevant actions
-                    menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
-                    menu.findItem(R.id.menu_action_shows_manage_lists).setVisible(false);
-                    menu.findItem(R.id.menu_action_shows_update).setVisible(false);
-                    menu.findItem(R.id.menu_action_shows_remove).setVisible(false);
-
-                    popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(v.getContext(), viewHolder.showTvdbId));
-                    popupMenu.show();
+                    if (onContextMenuClickListener != null) {
+                        onContextMenuClickListener.onClick(v, viewHolder);
+                    }
                 }
             });
 
             return v;
         }
+    }
 
-        private static class PopupMenuItemClickListener
-                implements PopupMenu.OnMenuItemClickListener {
+    private ShowResultsAdapter.OnContextMenuClickListener onContextMenuClickListener
+            = new ShowResultsAdapter.OnContextMenuClickListener() {
+        @Override
+        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.shows_popup_menu);
 
-            private final int showTvdbId;
-            private final Context context;
+            // show/hide some menu items depending on show properties
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_shows_favorites_add)
+                    .setVisible(!viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_favorites_remove)
+                    .setVisible(viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
-            public PopupMenuItemClickListener(Context context, int showTvdbId) {
-                this.showTvdbId = showTvdbId;
-                this.context = context;
-            }
+            // hide unused actions
+            menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
+            menu.findItem(R.id.menu_action_shows_update).setVisible(false);
+            menu.findItem(R.id.menu_action_shows_remove).setVisible(false);
 
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_shows_favorites_add: {
-                        ShowTools.get(context).storeIsFavorite(showTvdbId, true);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_favorites_remove: {
-                        ShowTools.get(context).storeIsFavorite(showTvdbId, false);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_hide: {
-                        ShowTools.get(context).storeIsHidden(showTvdbId, true);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_unhide: {
-                        ShowTools.get(context).storeIsHidden(showTvdbId, false);
-                        return true;
-                    }
+            popupMenu.setOnMenuItemClickListener(
+                    new SearchMenuItemClickListener(getActivity(), getFragmentManager(),
+                            viewHolder.showTvdbId));
+            popupMenu.show();
+        }
+    };
+
+    private static class SearchMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        private final Context context;
+        private final FragmentManager fragmentManager;
+        private final int showTvdbId;
+
+        public SearchMenuItemClickListener(Context context, FragmentManager fm, int showTvdbId) {
+            this.context = context;
+            this.fragmentManager = fm;
+            this.showTvdbId = showTvdbId;
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_action_shows_favorites_add: {
+                    ShowTools.get(context).storeIsFavorite(showTvdbId, true);
+                    return true;
                 }
-                return false;
+                case R.id.menu_action_shows_favorites_remove: {
+                    ShowTools.get(context).storeIsFavorite(showTvdbId, false);
+                    return true;
+                }
+                case R.id.menu_action_shows_hide: {
+                    ShowTools.get(context).storeIsHidden(showTvdbId, true);
+                    return true;
+                }
+                case R.id.menu_action_shows_unhide: {
+                    ShowTools.get(context).storeIsHidden(showTvdbId, false);
+                    return true;
+                }
+                case R.id.menu_action_shows_manage_lists: {
+                    ManageListsDialogFragment.showListsDialog(showTvdbId,
+                            SeriesGuideContract.ListItemTypes.SHOW,
+                            fragmentManager);
+                    return true;
+                }
+                default:
+                    return false;
             }
         }
     }
