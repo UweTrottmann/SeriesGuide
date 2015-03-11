@@ -139,7 +139,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             SearchResult result = new SearchResult();
             result.tvdbid = show.ids.tvdb;
             result.title = show.title;
-            result.overview = String.valueOf(show.year);
+            result.overview = show.year == null ? "" : String.valueOf(show.year);
             if (show.images != null && show.images.poster != null) {
                 result.poster = show.images.poster.thumb;
             }
