@@ -42,7 +42,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
     public OnContextMenuClickListener onContextMenuClickListener;
 
     public ListItemsAdapter(Context context, OnContextMenuClickListener listener) {
-        super(context);
+        super(context, null);
 
         this.onContextMenuClickListener = listener;
     }
@@ -141,7 +141,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         public int itemType;
 
         public ListItemViewHolder(View v, final OnContextMenuClickListener listener) {
-            super(v);
+            super(v, null);
 
             contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override

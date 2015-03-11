@@ -135,7 +135,7 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        mAdapter = new ShowsAdapter(getActivity());
+        mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
@@ -505,10 +505,10 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    private class ShowsAdapter extends BaseShowsAdapter {
+    private static class ShowsAdapter extends BaseShowsAdapter {
 
-        public ShowsAdapter(Context context) {
-            super(context);
+        public ShowsAdapter(Context context, OnContextMenuClickListener listener) {
+            super(context, listener);
         }
 
         @Override
@@ -553,37 +553,30 @@ public class ShowsFragment extends Fragment implements
             viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(ShowsQuery.HIDDEN));
             viewHolder.episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
         }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = super.newView(context, cursor, parent);
-
-            final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.inflate(R.menu.shows_popup_menu);
-
-                    // show/hide some menu items depending on show properties
-                    Menu menu = popupMenu.getMenu();
-                    menu.findItem(R.id.menu_action_shows_favorites_add)
-                            .setVisible(!viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_favorites_remove)
-                            .setVisible(viewHolder.isFavorited);
-                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
-                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
-
-                    popupMenu.setOnMenuItemClickListener(
-                            new ShowMenuItemClickListener(getActivity(), getFragmentManager(),
-                                    viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
-                    popupMenu.show();
-                }
-            });
-
-            return v;
-        }
     }
+
+    private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
+            = new BaseShowsAdapter.OnContextMenuClickListener() {
+        @Override
+        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.shows_popup_menu);
+
+            // show/hide some menu items depending on show properties
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_shows_favorites_add)
+                    .setVisible(!viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_favorites_remove)
+                    .setVisible(viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
+
+            popupMenu.setOnMenuItemClickListener(
+                    new ShowMenuItemClickListener(getActivity(), getFragmentManager(),
+                            viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
+            popupMenu.show();
+        }
+    };
 
     private interface ShowsQuery {
 
@@ -620,13 +613,6 @@ public class ShowsFragment extends Fragment implements
         int HIDDEN = 13;
     }
 
-    private void onFavoriteShow(int showTvdbId, boolean isFavorite) {
-        // store new value
-        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
-
-        fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
-    }
-
     private final OnSharedPreferenceChangeListener mPrefsListener
             = new OnSharedPreferenceChangeListener() {
 
@@ -641,9 +627,5 @@ public class ShowsFragment extends Fragment implements
 
     private void fireTrackerEventAction(String label) {
         Utils.trackAction(getActivity(), TAG, label);
-    }
-
-    private void fireTrackerEventContext(String label) {
-        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

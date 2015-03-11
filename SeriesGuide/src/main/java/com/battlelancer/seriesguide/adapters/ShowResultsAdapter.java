@@ -19,26 +19,17 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
-import android.view.ViewGroup;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
-* Adapter for show search result items.
-*/
+ * Adapter for show search result items.
+ */
 public class ShowResultsAdapter extends BaseShowsAdapter {
 
-    public interface OnContextMenuClickListener {
-        public void onClick(View view, ShowViewHolder viewHolder);
-    }
-
-    private final OnContextMenuClickListener onContextMenuClickListener;
-
     public ShowResultsAdapter(Context context, OnContextMenuClickListener listener) {
-        super(context);
-
-        onContextMenuClickListener = listener;
+        super(context, listener);
     }
 
     @Override
@@ -67,23 +58,6 @@ public class ShowResultsAdapter extends BaseShowsAdapter {
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));
-    }
-
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = super.newView(context, cursor, parent);
-
-        final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-        viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onContextMenuClickListener != null) {
-                    onContextMenuClickListener.onClick(v, viewHolder);
-                }
-            }
-        });
-
-        return v;
     }
 
     public interface Query {

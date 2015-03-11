@@ -35,11 +35,17 @@ import java.util.Date;
  */
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
+    public interface OnContextMenuClickListener {
+        public void onClick(View view, ShowViewHolder viewHolder);
+    }
+
+    private OnContextMenuClickListener onContextMenuClickListener;
     private final int resIdStar;
     private final int resIdStarZero;
 
-    public BaseShowsAdapter(Context context) {
+    public BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
         super(context, null, 0);
+        this.onContextMenuClickListener = listener;
 
         resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(),
                 R.attr.drawableStar);
@@ -51,7 +57,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ShowViewHolder viewHolder = new ShowViewHolder(v);
+        ShowViewHolder viewHolder = new ShowViewHolder(v, onContextMenuClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -100,7 +106,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public boolean isFavorited;
         public boolean isHidden;
 
-        public ShowViewHolder(View v) {
+        public ShowViewHolder(View v, final OnContextMenuClickListener listener) {
             name = (TextView) v.findViewById(R.id.seriesname);
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
@@ -114,6 +120,15 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
                 @Override
                 public void onClick(View v) {
                     ShowTools.get(v.getContext()).storeIsFavorite(showTvdbId, !isFavorited);
+                }
+            });
+            // context menu
+            contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(v, ShowViewHolder.this);
+                    }
                 }
             });
         }
