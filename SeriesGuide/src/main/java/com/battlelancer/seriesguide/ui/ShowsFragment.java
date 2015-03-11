@@ -138,11 +138,7 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        int resIdStar = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableStar);
-        int resIdStarZero = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableStar0);
-        mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero);
+        mAdapter = new ShowsAdapter(getActivity());
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
@@ -514,29 +510,22 @@ public class ShowsFragment extends Fragment implements
 
     private class ShowsAdapter extends BaseShowsAdapter {
 
-        private int mStarDrawableId;
-
-        private int mStarZeroDrawableId;
-
-        public ShowsAdapter(Context context, Cursor c, int flags, int starDrawableResId,
-                int starZeroDrawableId) {
-            super(context, c, flags);
-            mStarDrawableId = starDrawableResId;
-            mStarZeroDrawableId = starZeroDrawableId;
+        public ShowsAdapter(Context context) {
+            super(context);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
 
+            viewHolder.showTvdbId = cursor.getInt(ShowsQuery._ID);
+            viewHolder.isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
+
             // set text properties immediately
             viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
 
-            // favorite toggle
-            viewHolder.showTvdbId = cursor.getInt(ShowsQuery._ID);
-            viewHolder.isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
-            viewHolder.favorited.setImageResource(viewHolder.isFavorited ? mStarDrawableId
-                    : mStarZeroDrawableId);
+            // favorite label
+            setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
             // next episode info
             String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
@@ -573,13 +562,6 @@ public class ShowsFragment extends Fragment implements
             View v = super.newView(context, cursor, parent);
 
             final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.favorited.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShowTools.get(v.getContext())
-                            .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
-                }
-            });
             viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

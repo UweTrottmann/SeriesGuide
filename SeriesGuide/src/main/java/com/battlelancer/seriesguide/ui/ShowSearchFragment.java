@@ -152,15 +152,9 @@ public class ShowSearchFragment extends ListFragment {
         }
 
         private final OnContextMenuClickListener onContextMenuClickListener;
-        private final int resIdStar;
-        private final int resIdStarZero;
 
         public ShowResultsAdapter(Context context, OnContextMenuClickListener listener) {
-            super(context, null, 0);
-
-            resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.drawableStar);
-            resIdStarZero = Utils.resolveAttributeToResourceId(context.getTheme(),
-                    R.attr.drawableStar0);
+            super(context);
 
             onContextMenuClickListener = listener;
         }
@@ -175,8 +169,7 @@ public class ShowSearchFragment extends ListFragment {
             viewHolder.isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
 
             // favorited label
-            viewHolder.favorited.setImageResource(
-                    viewHolder.isFavorited ? resIdStar : resIdStarZero);
+            setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
             // network, day and time
             viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
@@ -199,13 +192,6 @@ public class ShowSearchFragment extends ListFragment {
             View v = super.newView(context, cursor, parent);
 
             final ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.favorited.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShowTools.get(v.getContext())
-                            .storeIsFavorite(viewHolder.showTvdbId, !viewHolder.isFavorited);
-                }
-            });
             viewHolder.contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

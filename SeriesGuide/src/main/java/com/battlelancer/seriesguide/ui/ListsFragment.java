@@ -86,7 +86,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemAdapter(getActivity(), null, 0);
+        mAdapter = new ListItemAdapter(getActivity());
 
         // setup grid view
         GridView list = (GridView) getView().findViewById(android.R.id.list);
@@ -192,20 +192,22 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
     private class ListItemAdapter extends BaseShowsAdapter {
 
-        public ListItemAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
+        public ListItemAdapter(Context context) {
+            super(context);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             ShowViewHolder viewHolder = (ShowViewHolder) view.getTag();
 
+            viewHolder.showTvdbId = cursor.getInt(ListItemsQuery.SHOW_ID);
+            viewHolder.isFavorited = cursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
+
             // show title
             viewHolder.name.setText(cursor.getString(ListItemsQuery.SHOW_TITLE));
 
-            // favorited label
-            final boolean isFavorited = cursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
-            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
+            // favorite label
+            setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
             // item title
             final int itemType = cursor.getInt(ListItemsQuery.ITEM_TYPE);
@@ -280,16 +282,6 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             });
         }
 
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = super.newView(context, cursor, parent);
-
-            ShowViewHolder viewHolder = (ShowViewHolder) v.getTag();
-            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
-
-            return v;
-        }
-
         private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
             private final String mItemId;
@@ -328,39 +320,41 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     interface ListItemsQuery {
 
         String[] PROJECTION = new String[] {
-                ListItems._ID,
-                ListItems.LIST_ITEM_ID, // 1
+                ListItems._ID, // 0
+                ListItems.LIST_ITEM_ID,
                 ListItems.ITEM_REF_ID,
                 ListItems.TYPE,
-                Shows.TITLE,
-                Shows.OVERVIEW, // 5
+                Shows.REF_SHOW_ID,
+                Shows.TITLE, // 5
+                Shows.OVERVIEW,
                 Shows.POSTER,
                 Shows.NETWORK,
                 Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE, // 10
+                Shows.RELEASE_WEEKDAY, // 10
+                Shows.RELEASE_TIMEZONE,
                 Shows.RELEASE_COUNTRY,
                 Shows.STATUS,
                 Shows.NEXTTEXT,
                 Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE // 15
+                Shows.FAVORITE // 16
         };
 
         int LIST_ITEM_ID = 1;
         int ITEM_REF_ID = 2;
         int ITEM_TYPE = 3;
-        int SHOW_TITLE = 4;
-        int ITEM_TITLE = 5;
-        int SHOW_POSTER = 6;
-        int SHOW_NETWORK = 7;
-        int SHOW_OR_EPISODE_RELEASE_TIME = 8;
-        int SHOW_RELEASE_WEEKDAY = 9;
-        int SHOW_RELEASE_TIMEZONE = 10;
-        int SHOW_RELEASE_COUNTRY = 11;
-        int SHOW_STATUS = 12;
-        int SHOW_NEXTTEXT = 13;
-        int SHOW_NEXTAIRDATETEXT = 14;
-        int SHOW_FAVORITE = 15;
+        int SHOW_ID = 4;
+        int SHOW_TITLE = 5;
+        int ITEM_TITLE = 6;
+        int SHOW_POSTER = 7;
+        int SHOW_NETWORK = 8;
+        int SHOW_OR_EPISODE_RELEASE_TIME = 9;
+        int SHOW_RELEASE_WEEKDAY = 10;
+        int SHOW_RELEASE_TIMEZONE = 11;
+        int SHOW_RELEASE_COUNTRY = 12;
+        int SHOW_STATUS = 13;
+        int SHOW_NEXTTEXT = 14;
+        int SHOW_NEXTAIRDATETEXT = 15;
+        int SHOW_FAVORITE = 16;
     }
 
     private void fireTrackerEvent(String label) {
