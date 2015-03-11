@@ -42,7 +42,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -236,7 +238,6 @@ public class ShowSearchFragment extends ListFragment {
             // hide unused actions
             menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
             menu.findItem(R.id.menu_action_shows_update).setVisible(false);
-            menu.findItem(R.id.menu_action_shows_remove).setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
                     new SearchMenuItemClickListener(getActivity(), getFragmentManager(),
@@ -280,6 +281,12 @@ public class ShowSearchFragment extends ListFragment {
                     ManageListsDialogFragment.showListsDialog(showTvdbId,
                             SeriesGuideContract.ListItemTypes.SHOW,
                             fragmentManager);
+                    return true;
+                }
+                case R.id.menu_action_shows_remove: {
+                    if (!SgSyncAdapter.isSyncActive(context, true)) {
+                        RemoveShowDialogFragment.show(fragmentManager, showTvdbId);
+                    }
                     return true;
                 }
                 default:

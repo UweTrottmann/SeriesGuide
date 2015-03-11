@@ -29,7 +29,6 @@ import android.provider.BaseColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -54,8 +53,8 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -656,7 +655,7 @@ public class ShowsFragment extends Fragment implements
                     }
                     case R.id.menu_action_shows_remove: {
                         if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
-                            showDeleteDialog(mShowTvdbId);
+                            RemoveShowDialogFragment.show(getFragmentManager(), mShowTvdbId);
                         }
                         fireTrackerEventContext("Delete show");
                         return true;
@@ -707,13 +706,6 @@ public class ShowsFragment extends Fragment implements
         ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
 
         fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
-    }
-
-    private void showDeleteDialog(long showId) {
-        FragmentManager fm = getFragmentManager();
-        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment
-                .newInstance((int) showId);
-        deleteDialog.show(fm, "fragment_delete");
     }
 
     private final OnSharedPreferenceChangeListener mPrefsListener
