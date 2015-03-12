@@ -107,10 +107,10 @@ dependencies {
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile "com.android.support:cardview-v7:21.0.3"
+    compile rootProject.ext.libraries.supportannotations
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile "com.android.support:cardview-v7:22.0.0"
     compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile 'com.android.support:support-annotations:21.0.3'
     compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true
     }
@@ -152,7 +152,7 @@ dependencies {
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.1.jar')
 
     // Android unit tests
-    androidTestCompile 'com.android.support:support-annotations:21.0.3'
+    androidTestCompile rootProject.ext.libraries.supportannotations
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
 
 }
