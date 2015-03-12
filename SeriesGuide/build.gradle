@@ -110,7 +110,7 @@ dependencies {
     compile rootProject.ext.libraries.supportannotations
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile "com.android.support:cardview-v7:22.0.0"
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true
     }
