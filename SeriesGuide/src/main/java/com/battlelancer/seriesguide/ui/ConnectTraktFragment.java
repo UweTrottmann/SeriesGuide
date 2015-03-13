@@ -27,16 +27,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * Tells about trakt and how it integrates with SeriesGuide, allows to proceed
- * to entering credentials step.
+ * Tells about trakt and how it integrates with SeriesGuide, allows to proceed to entering
+ * credentials step.
  */
 public class ConnectTraktFragment extends Fragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_connect_trakt_info, container, false);
     }
 
@@ -66,8 +68,12 @@ public class ConnectTraktFragment extends Fragment {
         // make learn more link clickable
         ((TextView) getView().findViewById(R.id.textViewAbout))
                 .setMovementMethod(LinkMovementMethod.getInstance());
+
+        // show hexagon + trakt conflict warning
+        getView().findViewById(R.id.textViewTraktInfoHexagonWarning)
+                .setVisibility(HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
