@@ -191,11 +191,11 @@ public class SeriesGuideContract {
         String NEXTAIRDATE = "nextairdate";
 
         /**
-         * Next episode release time instant.
+         * Next episode release time instant. See {@link Episodes#FIRSTAIREDMS}.
          *
          * <pre>
          * Range:   long
-         * Default: DBUtils.UNKNOWN_RELEASE_DATE (Long.MAX_VALUE)
+         * Default: {@link com.battlelancer.seriesguide.util.DBUtils#UNKNOWN_NEXT_RELEASE_DATE}
          * </pre>
          *
          * <p> Added in db version 25 to allow correct sorting by next air date.
@@ -332,6 +332,11 @@ public class SeriesGuideContract {
          * <p>This date time is based on the shows release time and time zone at the time this
          * episode was last updated. It includes country and time zone specific offsets (currently
          * only for US western time zones). It does NOT include the user-set offset.
+         *
+         * <pre>
+         * Range:   long
+         * Default: {@link Constants#EPISODE_UNKNOWN_RELEASE}
+         * </pre>
          */
         String FIRSTAIREDMS = "episode_firstairedms";
 

@@ -53,10 +53,10 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualifie
 public class DBUtils {
 
     /**
-     * Use 9223372036854775807 (Long.MAX_VALUE) for unknown airtime/no next episode so they will get
-     * sorted last.
+     * Use for unknown release time/no next episode so they will get sorted last in show list (value
+     * is {@link Long#MAX_VALUE}). See {@link Shows#NEXTAIRDATEMS}.
      */
-    public static final String UNKNOWN_NEXT_RELEASE_DATE = "9223372036854775807";
+    public static final String UNKNOWN_NEXT_RELEASE_DATE = String.valueOf(Long.MAX_VALUE);
 
     private static final int SMALL_BATCH_SIZE = 50;
 
