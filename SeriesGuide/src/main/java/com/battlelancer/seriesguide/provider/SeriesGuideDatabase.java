@@ -386,8 +386,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.DVDNUMBER + " REAL,"
 
-            + EpisodesColumns.FIRSTAIRED + " TEXT,"
-
             + SeasonsColumns.REF_SEASON_ID + " TEXT " + References.SEASON_ID + ","
 
             + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","

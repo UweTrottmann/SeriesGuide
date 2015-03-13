@@ -320,12 +320,17 @@ public class SeriesGuideContract {
         String RATING_USER = "episode_rating_user";
 
         /**
-         * First aired date in text as given by TVDb.com
+         * DEPRECATED. Previously first release date in text as given by TVDb.com. Not populated any
+         * longer.
          */
         String FIRSTAIRED = "epfirstaired";
 
         /**
          * First aired date in ms.
+         *
+         * <p>This date time is based on the shows release time and time zone at the time this
+         * episode was last updated. It includes country and time zone specific offsets (currently
+         * only for US western time zones). It does NOT include the user-set offset.
          */
         String FIRSTAIREDMS = "episode_firstairedms";
 
