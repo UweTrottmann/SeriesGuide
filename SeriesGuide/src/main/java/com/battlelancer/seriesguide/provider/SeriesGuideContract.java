@@ -186,7 +186,7 @@ public class SeriesGuideContract {
         String NEXTTEXT = "nexttext";
 
         /**
-         * DEPRECATED. Use {@link #NEXTAIRDATEMS} instead.
+         * @deprecated Use {@link #NEXTAIRDATEMS} instead. Not added on new installs.
          */
         String NEXTAIRDATE = "nextairdate";
 
@@ -223,9 +223,10 @@ public class SeriesGuideContract {
         String LASTEDIT = "series_lastedit";
 
         /**
-         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014.
-         *
          * GetGlue object id, added in version 29 to support checking into shows without IMDb id.
+         *
+         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014. Not added on new
+         * installs.
          */
         String GETGLUEID = "series_getglueid";
 
@@ -320,8 +321,8 @@ public class SeriesGuideContract {
         String RATING_USER = "episode_rating_user";
 
         /**
-         * DEPRECATED. Previously first release date in text as given by TVDb.com. Not populated any
-         * longer.
+         * @deprecated Previously first release date in text as given by TVDb.com. Not created on
+         * new installs.
          */
         String FIRSTAIRED = "epfirstaired";
 

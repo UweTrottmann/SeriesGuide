@@ -580,7 +580,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 27:
                 upgradeToTwentyEight(db);
             case 28:
-                upgradeToTwentyNine(db);
+                // GetGlue column not required any longer
             case 29:
                 upgradeToThirty(db);
             case 30:
@@ -860,16 +860,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         if (isTableColumnMissing(db, Tables.EPISODES, Episodes.ABSOLUTE_NUMBER)) {
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                     + Episodes.ABSOLUTE_NUMBER + " INTEGER;");
-        }
-    }
-
-    /**
-     * Add {@link Shows} column to store a GetGlue object id.
-     */
-    private static void upgradeToTwentyNine(SQLiteDatabase db) {
-        if (isTableColumnMissing(db, Tables.SHOWS, Shows.GETGLUEID)) {
-            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.GETGLUEID
-                    + " TEXT DEFAULT '';");
         }
     }
 
