@@ -55,7 +55,8 @@
 
     <!-- Shouts -->
     <string name="comments">Comments</string>
-    <string name="shout_hint">Type a shout (in English)</string>
+    <string name="shout_hint">Type a comment (English, 5+ words)</string>
+    <string name="shout_invalid">Your comment does not follow the rules!</string>
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to shout!</string>

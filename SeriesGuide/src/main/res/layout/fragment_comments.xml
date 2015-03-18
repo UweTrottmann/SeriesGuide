@@ -63,6 +63,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toLeftOf="@+id/imageButtonShouts"
             android:nextFocusUp="@+id/listViewShouts"
+            android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"
             android:maxLines="3" />

@@ -304,15 +304,26 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     private Response doCommentAction(Comments traktComments) throws OAuthUnauthorizedException {
-        // post comment
-        Comment postedComment = traktComments.post(buildComment());
-
         Response r = new Response();
-        if (postedComment != null && postedComment.id != null) {
-            r.status = TraktStatus.SUCCESS;
-        } else {
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
+
+        try {
+            // post comment
+            Comment postedComment = traktComments.post(buildComment());
+
+            if (postedComment != null && postedComment.id != null) {
+                r.status = TraktStatus.SUCCESS;
+            } else {
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.trakt_error_general);
+            }
+        } catch (RetrofitError e) {
+            // check if comment failed validation
+            if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 422) {
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.shout_invalid);
+            } else {
+                throw e;
+            }
         }
 
         return r;
