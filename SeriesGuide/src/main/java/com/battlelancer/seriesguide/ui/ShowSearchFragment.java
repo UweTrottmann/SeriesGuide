@@ -156,7 +156,6 @@ public class ShowSearchFragment extends ListFragment {
 
             // hide unused actions
             menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
-            menu.findItem(R.id.menu_action_shows_update).setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getActivity(),
