@@ -171,7 +171,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
             reader.endArray();
             reader.close();
-        } catch (JsonParseException | IOException e) {
+        } catch (JsonParseException | IOException | IllegalStateException e) {
             // the given Json might not be valid or unreadable
             Timber.e(e, "JSON show import failed");
             return ERROR;
@@ -369,7 +369,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
             reader.endArray();
             reader.close();
-        } catch (JsonParseException | IOException e) {
+        } catch (JsonParseException | IOException | IllegalStateException e) {
             // the given Json might not be valid or unreadable
             Timber.e(e, "JSON lists import failed");
             return ERROR;
@@ -441,7 +441,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
             reader.endArray();
             reader.close();
-        } catch (JsonParseException | IOException e) {
+        } catch (JsonParseException | IOException | IllegalStateException e) {
             // the given Json might not be valid or unreadable
             Timber.e(e, "JSON movies import failed");
             return ERROR;
