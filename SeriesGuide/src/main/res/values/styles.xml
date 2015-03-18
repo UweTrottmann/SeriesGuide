@@ -91,8 +91,8 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="TextAppearance.Body.Highlight.Blue">
-        <item name="android:textColor">@color/text_blue</item>
+    <style name="TextAppearance.Body.Highlight.Accent">
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
     <style name="TextAppearance.Body.Highlight.Red">
@@ -153,7 +153,7 @@
         <item name="android:textColor">@color/text_blue</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless.Purple">
+    <style name="Widget.SeriesGuide.Button.Borderless.Accent">
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
 

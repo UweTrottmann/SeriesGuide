@@ -32,14 +32,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:paddingBottom="@dimen/inline_padding"
                     android:text="@string/action_upgrade"
                     android:textAppearance="@style/TextAppearance.Headline" />
+
+                <TextView
+                    android:id="@+id/textViewBillingExisting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewBillingTitle"
+                    android:paddingBottom="@dimen/inline_padding"
+                    android:text="@string/upgrade_success"
+                    android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
 
                 <TextView
                     android:id="@+id/textViewBillingDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewBillingTitle"
+                    android:layout_below="@+id/textViewBillingExisting"
                     android:text="@string/upgrade_description"
                     android:textAppearance="@style/TextAppearance.Body" />
 
@@ -85,21 +95,14 @@
                     android:textAppearance="@style/TextAppearance.Body.Highlight"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/textViewBillingExisting"
+                <Button
+                    android:id="@+id/textViewBillingMoreInfo"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewBillingPricePass"
                     android:layout_marginTop="@dimen/large_padding"
-                    android:text="@string/upgrade_success"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight" />
-
-                <Button
-                    android:id="@+id/textViewBillingMoreInfo"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewBillingExisting"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/billing_learn_more" />
 
             </RelativeLayout>

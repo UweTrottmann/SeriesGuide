@@ -36,6 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/action_extensions_limit"
-        android:textAppearance="@style/TextAppearance.Body.Highlight.Blue" />
+        android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
 
 </FrameLayout>
