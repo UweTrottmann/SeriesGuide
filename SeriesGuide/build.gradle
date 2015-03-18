@@ -149,7 +149,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Amazon flavor specific
-    amazonCompile files('libs/amazon/in-app-purchasing-2.0.1.jar')
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.61.jar')
 
     // Android unit tests
     androidTestCompile rootProject.ext.libraries.supportannotations
