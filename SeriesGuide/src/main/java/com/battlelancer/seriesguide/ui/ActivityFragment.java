@@ -213,7 +213,7 @@ public class ActivityFragment extends Fragment implements
     public void checkInEpisode(int episodeTvdbId) {
         CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
         if (f != null) {
-	    f.show(getFragmentManager(), "checkin-dialog");
+            f.show(getFragmentManager(), "checkin-dialog");
         }
     }
 
