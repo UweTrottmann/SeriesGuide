@@ -56,8 +56,12 @@ public class QuickCheckInActivity extends FragmentActivity {
             return;
         }
 
-        // show check-in dialog
         mCheckInDialogFragment = CheckInDialogFragment.newInstance(this, episodeTvdbId);
+        if (mCheckInDialogFragment == null) {
+	    finish();
+	    return;
+        }
+        // show check-in dialog
         mCheckInDialogFragment.show(getSupportFragmentManager(), "checkin-dialog");
     }
 

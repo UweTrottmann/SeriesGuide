@@ -372,7 +372,9 @@ public class OverviewFragment extends Fragment implements
             // check in
             CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                     episodeTvdbId);
-            f.show(getFragmentManager(), "checkin-dialog");
+            if (f != null) {
+                f.show(getFragmentManager(), "checkin-dialog");
+            }
         }
     }
 
