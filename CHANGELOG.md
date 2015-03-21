@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 23 *(in development)*
 -------------------------
 
+#### 23-beta2 *(2015-03-21)*
+
+* TWEAK If a trakt comment fails due to breaking the new commenting rules, show an error message.
+* TWEAK If a trakt check-in fails due to the item not found on trakt, show an error message.
+* TWEAK Add "Update" action to search card menu.
+* FIX Use latest Amazon In-App billing, fixes crashes on Lollipop (Amazon version only).
+* FIX Toolbar icons use wrong color on Android KitKat and below in some circumstances.
+* FIX Using the "Add all" button in "Add show" now correctly marks all shows as added.
+* NOTICE Latest translations from crowdin.
+
 #### 23-beta1 *(2015-03-11)*
 
 * FEATURE List tabs can be reordered (see Menu > Reorder lists). Order is preserved on backup/restore.
