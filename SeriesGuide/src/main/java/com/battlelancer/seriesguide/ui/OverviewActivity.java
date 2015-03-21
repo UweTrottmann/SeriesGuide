@@ -240,14 +240,16 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private void launchSearch() {
         // refine search with the show's title
         final Series show = DBUtils.getShow(this, showTvdbId);
-        final String showTitle = show.getTitle();
+        if (show != null) {
+            final String showTitle = show.getTitle();
 
-        Bundle appSearchData = new Bundle();
-        appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
+            Bundle appSearchData = new Bundle();
+            appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
 
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(SearchManager.APP_DATA, appSearchData);
-        intent.setAction(Intent.ACTION_SEARCH);
-        startActivity(intent);
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra(SearchManager.APP_DATA, appSearchData);
+            intent.setAction(Intent.ACTION_SEARCH);
+            startActivity(intent);
+        }
     }
 }
