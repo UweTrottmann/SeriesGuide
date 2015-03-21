@@ -42,7 +42,8 @@
   <string name="share_movie">Condividi il film</string>
   <string name="share_checkout">Scopri %s</string>
   <string name="comments">Commenti</string>
-  <string name="shout_hint">Digitare un messaggio (in inglese)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Segnalato!</string>
   <string name="isspoiler">Attenzione Spoiler!</string>
   <string name="no_shouts">Sii il primo a segnalare!</string>
@@ -209,7 +210,7 @@
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
   <string name="action_lists_sort">Ordina le liste</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Riordina le liste</string>
   <string name="hexagon_warning">Sperimentale!</string>
   <string name="hexagon_setup">Configura SeriesGuide Cloud</string>
   <string name="hexagon_description">Connettiti alla cloud per eseguire il backup e la sincronizzazione delle tue serie TV e dei film.</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s non collezionato.</string>
   <string name="checkin_success_trakt">Check-in di %s su trakt riuscito.</string>
   <string name="checkin_canceled_success_trakt">Annullato il check-in su trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Sovrascrivi</string>
   <string name="traktcheckin_inprogress">Check-in già effettuato in un altro episodio o film. Sovrascrivere il precedente check-in o attendere %s e riprovare.</string>
   <string name="traktcheckin_wait">Aspetterò</string>

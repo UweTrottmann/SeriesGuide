@@ -42,7 +42,8 @@
   <string name="share_movie">Partager ce film</string>
   <string name="share_checkout">Jette un œil sur %s</string>
   <string name="comments">Commentaires</string>
-  <string name="shout_hint">Commenter (en anglais)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
   <string name="no_shouts">Soyez le premier à commenter !</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
   <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
   <string name="traktcheckin_wait">J\'attends</string>

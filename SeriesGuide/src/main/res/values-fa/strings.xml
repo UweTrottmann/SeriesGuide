@@ -42,7 +42,8 @@
   <string name="share_movie">اشتراک فیلم</string>
   <string name="share_checkout">اتمام %s</string>
   <string name="comments">نظرات</string>
-  <string name="shout_hint">یک فریاد بنویس (به زبان انگلیسی)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">فریاد!</string>
   <string name="isspoiler">طریقه هشدار!</string>
   <string name="no_shouts">اولین نفر باش.</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>

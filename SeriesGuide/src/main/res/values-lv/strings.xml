@@ -42,7 +42,8 @@
   <string name="share_movie">Dalīties ar filmu</string>
   <string name="share_checkout">Iečeko %s</string>
   <string name="comments">Komentāri</string>
-  <string name="shout_hint">Saraksti kliedzienu (angliski)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Kliedz!</string>
   <string name="isspoiler">Spoileru brīdinājums!</string>
   <string name="no_shouts">Esi pirmais, kas kliedz!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s nekolekcionētas.</string>
   <string name="checkin_success_trakt">Iečekojies %s ar trakt.</string>
   <string name="checkin_canceled_success_trakt">Atcelta trakt iečekošanās.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Pārraksti</string>
   <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
   <string name="traktcheckin_wait">Es gaidīšu</string>

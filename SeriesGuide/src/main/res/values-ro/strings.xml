@@ -42,7 +42,8 @@
   <string name="share_movie">Distribuie film</string>
   <string name="share_checkout">Verifica %s</string>
   <string name="comments">Comentarii</string>
-  <string name="shout_hint">Scrie o părere (în engleză)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Părere!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-și spune părerea!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s necolectat.</string>
   <string name="checkin_success_trakt">%s verificat pe trakt.</string>
   <string name="checkin_canceled_success_trakt">Verificare anulată pe trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Suprascrie</string>
   <string name="traktcheckin_inprogress">Deja ați înregistrat alt episod sau film. Ori suprascrieți precedenta înregistrare sau așteptați %s și încercați din nou.</string>
   <string name="traktcheckin_wait">Voi aștepta</string>

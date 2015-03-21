@@ -42,7 +42,8 @@
   <string name="share_movie">Podijelite film</string>
   <string name="share_checkout">Odjava %s</string>
   <string name="comments">Komentari</string>
-  <string name="shout_hint">Napiši povik (na engleskom)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Viči!</string>
   <string name="isspoiler">Pažnja! Spojler!</string>
   <string name="no_shouts">Budi prvi koji će povikati!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s neprikupljeno.</string>
   <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava na trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Zamijeni</string>
   <string name="traktcheckin_inprogress">Već si prijavljen u drugu epizodu ili film. Ili zamijeni prošlu prijavu ili pričekaj %s i pokušaj ponovno.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>

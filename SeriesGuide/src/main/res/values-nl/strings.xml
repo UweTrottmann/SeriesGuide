@@ -42,7 +42,8 @@
   <string name="share_movie">Film delen</string>
   <string name="share_checkout">Uitchecken %s</string>
   <string name="comments">Reacties</string>
-  <string name="shout_hint">Typ een shout (in het Engels)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>

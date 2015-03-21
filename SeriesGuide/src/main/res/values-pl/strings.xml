@@ -42,7 +42,8 @@
   <string name="share_movie">Współdziel film</string>
   <string name="share_checkout">Sprawdź %s</string>
   <string name="comments">Komentarze</string>
-  <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
@@ -209,7 +210,7 @@
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="action_lists_sort">Sortowanie list</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Zmień kolejność list</string>
   <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">Podłączony do %s na trakt.</string>
   <string name="checkin_canceled_success_trakt">Anulowano podpięcie na trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>

@@ -42,7 +42,8 @@
   <string name="share_movie">Film teilen</string>
   <string name="share_checkout">Empfehle %s</string>
   <string name="comments">Kommentare</string>
-  <string name="shout_hint">Shout eingeben (in Englisch)</string>
+  <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>
+  <string name="shout_invalid">Ihr Kommentar hält sich nicht an die Regeln!</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler-Warnung!</string>
   <string name="no_shouts">Schreibe den ersten Shout!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
+  <string name="checkin_error_not_exists">(Noch) Nicht auf trakt gefunden. Versuchen Sie es später erneut.</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>

@@ -42,7 +42,8 @@
   <string name="share_movie">Filmi paylaş</string>
   <string name="share_checkout">Şuna gözatın: %s</string>
   <string name="comments">Yorumlar</string>
-  <string name="shout_hint">Bir not yazın (İngilizce)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Not!</string>
   <string name="isspoiler">Spoiler Uyarısı!</string>
   <string name="no_shouts">İlk not yazan ol!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>

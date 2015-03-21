@@ -42,7 +42,8 @@
   <string name="share_movie">Поділитися фільмом</string>
   <string name="share_checkout">Погляньте %s</string>
   <string name="comments">Коментарі</string>
-  <string name="shout_hint">Написати відгук (англійською)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Відгук!</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>

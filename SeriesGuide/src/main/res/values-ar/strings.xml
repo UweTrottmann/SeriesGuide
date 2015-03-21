@@ -42,7 +42,8 @@
   <string name="share_movie">مشاركة فيلم</string>
   <string name="share_checkout">تتحق من %s</string>
   <string name="comments">التعليقات</string>
-  <string name="shout_hint">أكتب تعليق(بالإنجليزي)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">تعليق</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s لم يتم جمعها.</string>
   <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
   <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
   <string name="traktcheckin_wait">سأنتظر</string>

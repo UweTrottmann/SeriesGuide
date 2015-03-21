@@ -42,7 +42,8 @@
   <string name="share_movie">Del film</string>
   <string name="share_checkout">Tjek %s</string>
   <string name="comments">Kommentarer</string>
-  <string name="shout_hint">Skriv en kommentar (på engelsk)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Kommentar!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s ikke samlet.</string>
   <string name="checkin_success_trakt">Tjekket ind på %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Afbrudt indtjekning på trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>

@@ -42,7 +42,8 @@
   <string name="share_movie">Share movie</string>
   <string name="share_checkout">Check out %s</string>
   <string name="comments">評論</string>
-  <string name="shout_hint">輸入留言（需用英文）</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">留言</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s未收藏</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">等待</string>

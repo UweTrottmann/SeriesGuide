@@ -43,7 +43,8 @@
   <string name="share_movie">Dela film</string>
   <string name="share_checkout">Kolla in %s</string>
   <string name="comments">Kommentarer</string>
-  <string name="shout_hint">Skriv ett rop (på engelska)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
@@ -234,6 +235,7 @@
   <string name="trakt_notcollected">%s ej hämtade.</string>
   <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>

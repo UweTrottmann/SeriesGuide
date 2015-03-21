@@ -42,7 +42,8 @@
   <string name="share_movie">Comparteix la pel·lícula</string>
   <string name="share_checkout">Dóna un cop d\'ull a %s</string>
   <string name="comments">Comentaris</string>
-  <string name="shout_hint">Escriu una nota (en anglès)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Nota!</string>
   <string name="isspoiler">Revela parts de la trama!</string>
   <string name="no_shouts">Sigueu el primer a escriure!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s no recopilats.</string>
   <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
   <string name="checkin_canceled_success_trakt">S\'ha canceŀlat el registre a trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Substitueix</string>
   <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
   <string name="traktcheckin_wait">Esperaré</string>

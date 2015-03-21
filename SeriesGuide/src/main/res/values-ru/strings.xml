@@ -42,7 +42,8 @@
   <string name="share_movie">Поделиться сериалом</string>
   <string name="share_checkout">Проверить %s</string>
   <string name="comments">Комментарии</string>
-  <string name="shout_hint">Напишите отзыв (на английском)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Отзыв!</string>
   <string name="isspoiler">Внимание, спойлер!</string>
   <string name="no_shouts">Оставь первый отзыв!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s не собрано.</string>
   <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.tv.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Ожидаю</string>
@@ -391,7 +393,7 @@
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
   <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
-  <string name="onlyx">Только для сторонников</string>
+  <string name="onlyx">Только для пожертвовавших</string>
   <string name="action_upgrade">Разблокировать все возможности</string>
   <string name="billing_action_subscribe">Подписка</string>
   <string name="billing_action_pass">Получить X ключ</string>

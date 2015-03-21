@@ -42,7 +42,8 @@
   <string name="share_movie">分享电影</string>
   <string name="share_checkout">快来看看 %s</string>
   <string name="comments">评论</string>
-  <string name="shout_hint">输入一段吐槽（仅限英语）</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">提交</string>
   <string name="isspoiler">!!!! 剧透警告 !!!!</string>
   <string name="no_shouts">抢沙发！</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s 未收藏。</string>
   <string name="checkin_success_trakt">已在 trakt 上为 %s 签到。</string>
   <string name="checkin_canceled_success_trakt">已取消 trakt 上的签到。</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">替换</string>
   <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
   <string name="traktcheckin_wait">等待</string>

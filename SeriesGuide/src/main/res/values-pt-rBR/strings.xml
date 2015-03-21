@@ -42,7 +42,8 @@
   <string name="share_movie">Compartilhar filme</string>
   <string name="share_checkout">Confira %s</string>
   <string name="comments">Comentários</string>
-  <string name="shout_hint">Digite um grito (em inglês)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Grite!</string>
   <string name="isspoiler">Alerta de spoiler!</string>
   <string name="no_shouts">Seja o primeiro a gritar!</string>
@@ -132,7 +133,7 @@
   <string name="action_collection_remove">Remover da coleção</string>
   <string name="action_collection_added">Adicionado à coleção</string>
   <string name="action_collection_removed">Removido da coleção</string>
-  <string name="action_watched">Assistido</string>
+  <string name="action_watched">Marcar como assistido</string>
   <string name="action_unwatched">Marcar como não assistido</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
@@ -209,7 +210,7 @@
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Reordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar a nuvem SeriesGuide</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in no trakt cancelado.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>

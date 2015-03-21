@@ -42,7 +42,8 @@
   <string name="share_movie">Сподели филм</string>
   <string name="share_checkout">Виж %s</string>
   <string name="comments">Коментари</string>
-  <string name="shout_hint">Напишете мнение (in English)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Мнение!</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s не са в колекция.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>

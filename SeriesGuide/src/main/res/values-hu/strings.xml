@@ -42,7 +42,8 @@
   <string name="share_movie">Film megosztása</string>
   <string name="share_checkout">Nézd meg: %s</string>
   <string name="comments">Hozzászólások</string>
-  <string name="shout_hint">Közlemény beírása (angolul)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Szólj hozzá!</string>
   <string name="isspoiler">Spoiler veszély!</string>
   <string name="no_shouts">Szólj hozzá elsőként!</string>
@@ -209,7 +210,7 @@
   <string name="list_item_remove">Eltávolítás a listáról</string>
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is hozzá adhatsz ehhez a listához.</string>
   <string name="action_lists_sort">Listák rendezése</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Listák újrarendezése</string>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
   <string name="checkin_canceled_success_trakt">Bejelentkezés törölve a trakton.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
   <string name="traktcheckin_wait">Várok</string>
@@ -326,7 +328,7 @@
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
-  <string name="backup_description">A <b>mentés</b> funkcióval a sorozatait, évadjait, epizódjait egy JSON fájlba menti a megadott mappába.\nA <b>visszaállítás</b>hoz a JSON fájloknak ebben a mappában kell lennie.</string>
+  <string name="backup_description">A <b>mentés</b> funkció az évadjaidat, epizódjaidat és listáidat fogja egy JSON fájlba kimenteni a lent látható mappába.\n<b>Visszaállítás</b> előtt győződj meg arról, hogy a mentési művelet során létrejött-e a JSON fájl a lent látható mappában.</string>
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>

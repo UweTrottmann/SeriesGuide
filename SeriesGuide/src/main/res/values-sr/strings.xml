@@ -42,7 +42,8 @@
   <string name="share_movie">Подели филм</string>
   <string name="share_checkout">Погледај %s</string>
   <string name="comments">Коментари</string>
-  <string name="shout_hint">Напиши коментар (на енглеском)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Коментариши!</string>
   <string name="isspoiler">Пажња, Спојлер!</string>
   <string name="no_shouts">Буди први који ће коментарисати!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s није у колекцији.</string>
   <string name="checkin_success_trakt">Пријављено гледање %s на trakt.tv</string>
   <string name="checkin_canceled_success_trakt">Отказана пријава гледања на тракту.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>

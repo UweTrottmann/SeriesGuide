@@ -42,7 +42,8 @@
   <string name="share_movie">영화 공유하기</string>
   <string name="share_checkout">체크아웃 %s</string>
   <string name="comments">코멘트</string>
-  <string name="shout_hint">감상평쓰기 (영어로 쓰세요)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">외쳐! (이이)</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="checkin_success_trakt">%s을 trakt에 체크인하였습니다.</string>
   <string name="checkin_canceled_success_trakt">trakt 체크인을 취소하였습니다.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
   <string name="traktcheckin_wait">기다리겠소</string>

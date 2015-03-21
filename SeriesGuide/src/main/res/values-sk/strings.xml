@@ -42,7 +42,8 @@
   <string name="share_movie">Zdieľať film</string>
   <string name="share_checkout">Odhlásiť %s</string>
   <string name="comments">Komentáre</string>
-  <string name="shout_hint">Napíšte výkrik (v Angličtine)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Zakrič!</string>
   <string name="isspoiler">Prezradenie deja!</string>
   <string name="no_shouts">Buď prvý kto zakričí!</string>
@@ -233,6 +234,7 @@
   <string name="trakt_notcollected">%s nezozbieraných.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>
