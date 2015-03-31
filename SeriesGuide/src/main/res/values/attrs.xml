@@ -3,6 +3,7 @@
 
     <!-- Special drawables -->
     <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
+    <attr name="sgBorderlessButtonBackground" format="reference" />
 
     <!-- Text colors -->
     <attr name="sgTextColorGreen" format="reference|color" />

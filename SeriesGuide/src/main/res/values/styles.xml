@@ -122,28 +122,15 @@
 
     <!-- Buttons -->
     <!-- Always has a purple background, so can use non-theme text color -->
-    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
-        <item name="android:minWidth">88dp</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:background">@drawable/btn_default_sg</item>
-        <item name="android:textAppearance">@style/TextAppearance.Button</item>
-        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
-    </style>
+    <style name="Widget.SeriesGuide.Button" parent="Base.Widget.AppCompat.Button"/>
 
     <!-- Has no background, so use theme text color -->
-    <style name="Widget.SeriesGuide.Button.Borderless">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">?attr/sgBorderlessButtonBackground</item>
         <item name="android:maxLines">2</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
