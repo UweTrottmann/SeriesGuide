@@ -50,7 +50,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="@dimen/floating_action_button_margin_end"
         android:src="@drawable/ic_action_add"
         fab:fab_colorNormal="?attr/colorAccent"
         fab:fab_colorPressed="?attr/sgColorBackgroundFabPressed"
