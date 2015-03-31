@@ -104,7 +104,7 @@
 
         <!-- Special attributes -->
         <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg</item>
+        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_dark</item>
 
         <!-- Windows -->
         <item name="android:dialogTheme">@style/Theme.SeriesGuide.DarkBlue.Dialog</item>
@@ -300,7 +300,7 @@
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorAccent">@color/teal_500</item>
         <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg</item>
+        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_dark</item>
 
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
