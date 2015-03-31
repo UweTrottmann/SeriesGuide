@@ -61,20 +61,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_toLeftOf="@+id/imageButtonShouts"
+            android:layout_toLeftOf="@+id/buttonShouts"
             android:nextFocusUp="@+id/listViewShouts"
             android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"
             android:maxLines="3" />
 
-        <ImageButton
-            android:id="@+id/imageButtonShouts"
+        <Button
+            android:id="@+id/buttonShouts"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:contentDescription="@string/shout"
-            android:src="@drawable/ic_action_send" />
+            android:drawableLeft="@drawable/ic_action_send" />
 
         <CheckBox
             android:id="@+id/checkBoxShouts"

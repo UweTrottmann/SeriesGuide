@@ -121,9 +121,6 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <!-- Always has a purple background, so can use non-theme text color -->
-    <style name="Widget.SeriesGuide.Button" parent="Base.Widget.AppCompat.Button"/>
-
     <!-- Has no background, so use theme text color -->
     <style name="Widget.SeriesGuide.Button.Borderless" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">?attr/sgBorderlessButtonBackground</item>
@@ -160,10 +157,6 @@
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
-        <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
     <style name="Widget.SeriesGuide.ButtonBar">
