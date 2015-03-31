@@ -35,9 +35,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +70,7 @@ public class TraktCommentsFragment extends Fragment
     @InjectView(R.id.listViewShouts) ListView mList;
     @InjectView(R.id.textViewShoutsEmpty) TextView mEmptyView;
     @InjectView(R.id.swipeRefreshLayoutShouts) SwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.imageButtonShouts) ImageButton mButtonShout;
+    @InjectView(R.id.buttonShouts) Button mButtonShout;
     @InjectView(R.id.editTextShouts) EditText mEditTextShout;
     @InjectView(R.id.checkBoxShouts) CheckBox mCheckBoxIsSpoiler;
 

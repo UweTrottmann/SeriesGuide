@@ -44,6 +44,11 @@
         <item name="colorAccent">@color/teal_500</item>
     </style>
 
+    <style name="Theme.SeriesGuide.DarkBlue.Dialog" parent="Theme.AppCompat.Dialog">
+        <!-- Copy of attributes relevant for our dialogs -->
+        <item name="colorAccent">@color/teal_500</item>
+    </style>
+
     <style name="Theme.SeriesGuide.Light.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
