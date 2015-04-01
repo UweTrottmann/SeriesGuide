@@ -114,7 +114,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true
     }
-    compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
+    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.google.code.findbugs:jsr305:3.0.0'
