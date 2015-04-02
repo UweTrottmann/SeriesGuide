@@ -42,8 +42,8 @@
   <string name="share_movie">Partilhar filme</string>
   <string name="share_checkout">Tens mesmo de ver %s</string>
   <string name="comments">Comentários</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
+  <string name="shout_invalid">O teu comentário não está de acordo com as regras!</string>
   <string name="shout">Comente!</string>
   <string name="isspoiler">Alerta de "spoiler"!</string>
   <string name="no_shouts">Seja o primeiro a comentar!</string>
@@ -210,7 +210,7 @@
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Podes adicionar séries, temporadas ou episódios a esta lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Reordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar a SeriesGuide Cloud</string>
   <string name="hexagon_description">Conecta-te ao servidor para criar uma cópia de segurança e sincronizar as tuas séries e filmes.</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s não adquirido.</string>
   <string name="checkin_success_trakt">Deu entrada a %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Entrada cancelada no trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">O item não foi (ainda) encontrado no trakt. Tenta mais tarde.</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Já deu entrada noutro episódio ou filme. Ou substitui a entrada anterior ou espere %s e tente novamente.</string>
   <string name="traktcheckin_wait">Prefiro aguardar</string>

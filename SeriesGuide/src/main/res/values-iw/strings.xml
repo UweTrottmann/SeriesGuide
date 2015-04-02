@@ -42,8 +42,8 @@
   <string name="share_movie">שתף סרט</string>
   <string name="share_checkout">בדוק את %s</string>
   <string name="comments">תגובות</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">הקלד הערה (באנגלית, 5+ מילות)</string>
+  <string name="shout_invalid">ההערה שלך לא על פי הכללים!</string>
   <string name="shout">המלץ!</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
@@ -210,7 +210,7 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="action_lists_sort">מיון רשימה</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">סדר מחדש רשימה</string>
   <string name="hexagon_warning">ניסיון!</string>
   <string name="hexagon_setup">הגדר ענן SeriesGuide</string>
   <string name="hexagon_description">התחבר לענן לגיבוי ולסנכרן את התוכניות והסרטים שלך.</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s שטרם אספת.</string>
   <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
   <string name="checkin_canceled_success_trakt">הצ\'ק-אין ב-trakt בוטל.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">פריט לא (עדיין) נמצא ב-trakt. נסה שוב מאוחר יותר.</string>
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או לסרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>

@@ -42,8 +42,8 @@
   <string name="share_movie">Współdziel film</string>
   <string name="share_checkout">Sprawdź %s</string>
   <string name="comments">Komentarze</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
+  <string name="shout_invalid">Twój komentarz nie jest zgodny z zasadami!</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">Podłączony do %s na trakt.</string>
   <string name="checkin_canceled_success_trakt">Anulowano podpięcie na trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Nie znaleziono elementu na trakt. Spróbuj ponownie później.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>

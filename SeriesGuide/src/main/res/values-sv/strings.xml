@@ -165,10 +165,10 @@
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_marknext">Sett nästa avsnitt</string>
   <string name="now_tab">Nu</string>
-  <string name="recently_watched">Recently watched</string>
+  <string name="recently_watched">Nyligen sedda</string>
   <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="friends_recently">Dina trakt vänner</string>
+  <string name="now_empty">Inget att göra. Se några tv-serier!</string>
   <string name="upcoming">Kommande</string>
   <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
@@ -210,8 +210,8 @@
   <string name="list_item_manage">Hantera listor</string>
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
-  <string name="action_lists_sort">Sort lists</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_sort">Sortera listor</string>
+  <string name="action_lists_reorder">Sortera om listor</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina program och filmer.</string>
@@ -226,8 +226,8 @@
   <string name="hexagon_remove_account_success">Konto utplånat.</string>
   <string name="hexagon_remove_account_failure">Kunde inte ta bort konto.</string>
   <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_error">Kunde inte kommunicera med SeriesGuide Cloud. Försök igen senare.</string>
+  <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
   <string name="trakt_submitqueued">Skickar till trakt.</string>
   <string name="trakt_seen">%s sedda.</string>
   <string name="trakt_notseen">%s ej sedda.</string>
@@ -239,7 +239,7 @@
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Skickat till trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_account">trakt-konto</string>
@@ -393,7 +393,7 @@
   <string name="widget_background_opaque">Ogenkomskinlig</string>
   <string name="dashclock_extension_label">Kommande avsnitt</string>
   <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
-  <string name="dashclock_pref_upcoming_threshold">Visa nästa avsnitt</string>
+  <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom…</string>
   <string name="onlyx">Endast för supporters</string>
   <string name="action_upgrade">Lås upp alla funktioner</string>
   <string name="billing_action_subscribe">Prenumerera</string>

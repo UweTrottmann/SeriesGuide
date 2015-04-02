@@ -42,8 +42,8 @@
   <string name="share_movie">Jaa elokuva</string>
   <string name="share_checkout">Tsekkaa %s</string>
   <string name="comments">Kommentit</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
+  <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Kohde ei (vielä) löytynyt traktista. Yritä myöhemmin uudelleen.</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
