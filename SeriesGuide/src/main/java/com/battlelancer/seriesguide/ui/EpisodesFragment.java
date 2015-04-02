@@ -212,15 +212,19 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onPopupMenuClick(View v, final int episodeTvdbId, final int episodeNumber,
-            final long releaseTimeMs, final boolean isWatched, final boolean isCollected) {
+            final long releaseTimeMs, final int watchedFlag, final boolean isCollected) {
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         popupMenu.inflate(R.menu.episodes_popup_menu);
 
         Menu menu = popupMenu.getMenu();
-        menu.findItem(R.id.menu_action_episodes_watched).setVisible(!isWatched);
-        menu.findItem(R.id.menu_action_episodes_not_watched).setVisible(isWatched);
         menu.findItem(R.id.menu_action_episodes_collection_add).setVisible(!isCollected);
         menu.findItem(R.id.menu_action_episodes_collection_remove).setVisible(isCollected);
+        boolean isWatched = EpisodeTools.isWatched(watchedFlag);
+        menu.findItem(R.id.menu_action_episodes_watched).setVisible(!isWatched);
+        menu.findItem(R.id.menu_action_episodes_not_watched).setVisible(isWatched);
+        boolean isSkipped = EpisodeTools.isSkipped(watchedFlag);
+        menu.findItem(R.id.menu_action_episodes_skip).setVisible(!isWatched && !isSkipped);
+        menu.findItem(R.id.menu_action_episodes_dont_skip).setVisible(isSkipped);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -246,6 +250,16 @@ public class EpisodesFragment extends ListFragment
                         fireTrackerEventContextMenu("Flag uncollected");
                         return true;
                     }
+                    case R.id.menu_action_episodes_skip: {
+                        onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true);
+                        fireTrackerEventContextMenu("Flag skipped");
+                        return true;
+                    }
+                    case R.id.menu_action_episodes_dont_skip: {
+                        onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false);
+                        fireTrackerEvent("Flag not skipped");
+                        return true;
+                    }
                     case R.id.menu_action_episodes_watched_previous: {
                         onMarkUntilHere(releaseTimeMs);
                         fireTrackerEventContextMenu("Flag previously aired");
@@ -269,6 +283,11 @@ public class EpisodesFragment extends ListFragment
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
         EpisodeTools.episodeWatched(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
                 episode, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+    }
+
+    public void onFlagEpisodeSkipped(int episodeTvdbId, int episode, boolean isSkipped) {
+        EpisodeTools.episodeWatched(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
+                episode, isSkipped ? EpisodeFlags.SKIPPED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {

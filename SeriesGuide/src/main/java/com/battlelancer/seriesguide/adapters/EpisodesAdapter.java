@@ -50,7 +50,7 @@ public class EpisodesAdapter extends CursorAdapter {
 
     public interface PopupMenuClickListener {
         public void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
-                long releaseTimeMs, boolean isWatched, boolean isCollected);
+                long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
     public EpisodesAdapter(Context context, Cursor c, int flags, PopupMenuClickListener listener,
@@ -137,9 +137,9 @@ public class EpisodesAdapter extends CursorAdapter {
             }
         });
         viewHolder.watchedBox.setEnabled(true);
-        final boolean isWatched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
+        final int watchedFlag = viewHolder.watchedBox.getEpisodeFlag();
         CheatSheet.setup(viewHolder.watchedBox,
-                isWatched ? R.string.action_unwatched : R.string.action_watched
+                EpisodeTools.isWatched(watchedFlag) ? R.string.action_unwatched : R.string.action_watched
         );
 
         // collected tag
@@ -181,7 +181,7 @@ public class EpisodesAdapter extends CursorAdapter {
             public void onClick(View v) {
                 if (mPopupMenuClickListener != null) {
                     mPopupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
-                            releaseTime, isWatched, isCollected);
+                            releaseTime, watchedFlag, isCollected);
                 }
             }
         });
