@@ -8,6 +8,14 @@ All dates are in the European Central timezone.
 Version 23 *(in development)*
 -------------------------
 
+#### 23-beta3 *(2015-04-02)*
+
+* TWEAK Add skip options to episodes list menus.
+* FIX Buttons on Android 4.3 and below do not have enough padding.
+* FIX Use white instead of dark underline for transparent tabs for Android Dark theme.
+* FIX Improve padding for fast scrollbars and margin for add show button on Android 5.1.
+* NOTICE Latest translations from crowdin.
+
 #### 23-beta2 *(2015-03-21)*
 
 * TWEAK If a trakt comment fails due to breaking the new commenting rules, show an error message.
