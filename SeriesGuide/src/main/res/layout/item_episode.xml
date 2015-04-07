@@ -26,8 +26,8 @@
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingTop="16dp"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Episode Title" />
 
@@ -49,8 +49,8 @@
             android:layout_below="@id/textViewEpisodeTitle"
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingTop="@dimen/inline_padding"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Body.Dim"
             tools:text="in 2 days" />
 
@@ -63,8 +63,8 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingTop="@dimen/inline_padding"
             android:paddingBottom="@dimen/large_padding"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:singleLine="true"
             tools:text="ABSOLUTE 42"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 

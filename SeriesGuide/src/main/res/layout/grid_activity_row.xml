@@ -45,7 +45,7 @@
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:paddingTop="@dimen/default_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="Defiance"
             android:textAppearance="@style/TextAppearance.Body.Dim" />
 
@@ -58,7 +58,7 @@
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:paddingTop="@dimen/inline_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="2x08 Somewhere in the middle of the park"
             android:textAppearance="@style/TextAppearance.Subhead" />
 
@@ -71,7 +71,7 @@
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:paddingTop="@dimen/inline_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="8:00 PM / Showtime"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
@@ -83,7 +83,7 @@
             android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="in 7 hours"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 

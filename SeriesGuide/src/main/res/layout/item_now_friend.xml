@@ -52,7 +52,7 @@
             android:paddingTop="@dimen/default_padding"
             android:gravity="end"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="11 hours ago"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
@@ -76,7 +76,7 @@
             android:layout_toLeftOf="@+id/imageViewFriendActionType"
             android:layout_marginBottom="12dp"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="sgtest"
             android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
@@ -88,7 +88,7 @@
             android:layout_toRightOf="@+id/imageViewFriendPoster"
             android:paddingTop="@dimen/default_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="Somewhere in the middle of the park"
             android:textAppearance="@style/TextAppearance.Body.Dim" />
 
@@ -101,7 +101,7 @@
             android:paddingTop="@dimen/inline_padding"
             android:paddingRight="@dimen/default_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             tools:text="24x10 On a Troublesome Terribly Long Episode Name"
             android:textAppearance="@style/TextAppearance.Subhead" />
 

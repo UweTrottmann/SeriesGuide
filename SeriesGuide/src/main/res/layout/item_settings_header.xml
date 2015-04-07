@@ -28,8 +28,8 @@
         android:id="@+id/textViewSettingsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:singleLine="true"
-        android:ellipsize="marquee"
         tools:text="Setting"
         android:textAppearance="?attr/textAppearanceListItem" />
 

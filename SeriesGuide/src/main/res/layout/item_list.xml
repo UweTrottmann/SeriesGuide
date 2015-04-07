@@ -28,7 +28,7 @@
         android:paddingBottom="@dimen/large_padding"
         android:paddingLeft="40dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.Subhead"
         tools:text="Sample List Name" />
 
