@@ -98,6 +98,9 @@ android {
                 signingConfig signingConfigs.release
             }
         }
+        debug {
+            pseudoLocalesEnabled true
+        }
     }
 }
 
