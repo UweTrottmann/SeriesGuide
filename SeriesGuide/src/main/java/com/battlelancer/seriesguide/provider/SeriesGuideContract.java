@@ -443,13 +443,37 @@ public class SeriesGuideContract {
 
         String CERTIFICATION = "movies_certification";
 
+        /**
+         * Whether a movie is in the collection. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String IN_COLLECTION = "movies_incollection";
 
+        /**
+         * Whether a movie is in the watchlist. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String IN_WATCHLIST = "movies_inwatchlist";
 
-        String PLAYS = "movies_plays";
-
+        /**
+         * Whether a movie is watched. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String WATCHED = "movies_watched";
+
+        /**
+         * Currently unused.
+         */
+        String PLAYS = "movies_plays";
 
         String RATING_TMDB = "movies_rating_tmdb";
 
@@ -814,9 +838,13 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
+        public static final String SELECTION_NOT_COLLECTION = Movies.IN_COLLECTION + "=0";
+
         public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
-        public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
+        public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
+
+        public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         /** Default sort order. */
         public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";

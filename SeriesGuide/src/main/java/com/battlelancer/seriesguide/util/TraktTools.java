@@ -147,38 +147,65 @@ public class TraktTools {
             return UpdateResult.SUCCESS;
         }
 
-        // first, drop all watched flags from all local watched movies
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(ContentProviderOperation.newUpdate(SeriesGuideContract.Movies.CONTENT_URI)
-                .withSelection(SeriesGuideContract.Movies.SELECTION_WATCHED, null)
-                .withValue(SeriesGuideContract.Movies.WATCHED, false)
-                .build());
-
         // apply watched flags for all watched trakt movies that are in the local database
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         Set<Integer> localMovies = MovieTools.getMovieTmdbIdsAsSet(context);
+        Set<Integer> unwatchedMovies = new HashSet<>(localMovies);
         for (BaseMovie movie : watchedMovies) {
             if (movie.movie == null || movie.movie.ids == null || movie.movie.ids.tmdb == null) {
                 // required values are missing
                 continue;
             }
             if (!localMovies.contains(movie.movie.ids.tmdb)) {
-                // movie not in local database
-                continue;
+                // movie NOT in local database
+                // add a shell entry for storing watched state
+                batch.add(ContentProviderOperation.newInsert(
+                        SeriesGuideContract.Movies.CONTENT_URI)
+                        .withValue(SeriesGuideContract.Movies.TMDB_ID, movie.movie.ids.tmdb)
+                        .withValue(SeriesGuideContract.Movies.WATCHED, true)
+                        .withValue(SeriesGuideContract.Movies.IN_COLLECTION, false)
+                        .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, false)
+                        .build());
+            } else {
+                // movie IN local database
+                // set movie watched
+                batch.add(ContentProviderOperation.newUpdate(
+                        SeriesGuideContract.Movies.buildMovieUri(movie.movie.ids.tmdb))
+                        .withValue(SeriesGuideContract.Movies.WATCHED, true)
+                        .build());
+                unwatchedMovies.remove(movie.movie.ids.tmdb);
             }
+        }
 
-            // set movie watched
-            ContentProviderOperation op = ContentProviderOperation.newUpdate(
-                    SeriesGuideContract.Movies.buildMovieUri(movie.movie.ids.tmdb))
-                    .withValue(SeriesGuideContract.Movies.WATCHED, true)
-                    .build();
-            batch.add(op);
+        // remove watched flags from all remaining local movies
+        for (Integer tmdbId : unwatchedMovies) {
+            batch.add(ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Movies.buildMovieUri(tmdbId))
+                    .withValue(SeriesGuideContract.Movies.WATCHED, false)
+                    .build());
         }
 
         // apply database updates
         try {
             DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
-            Timber.e(e, "downloadWatchedMovies: database update failed");
+            Timber.e(e, "downloadWatchedMovies: updating watched flags failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // remove all movie shells that are now unwatched
+        batch.clear();
+        batch.add(ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
+                .withSelection(SeriesGuideContract.Movies.SELECTION_UNWATCHED
+                        + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
+                        + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST, null)
+                .build());
+
+        // apply database updates
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "downloadWatchedMovies: removing useless shells failed");
             return UpdateResult.INCOMPLETE;
         }
 
