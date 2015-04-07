@@ -35,7 +35,7 @@
                 android:paddingRight="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:singleLine="true"
                 tools:text="Cosmos: A Spacetime Odyssey"
                 android:textAppearance="@style/TextAppearance.Subhead" />
 
