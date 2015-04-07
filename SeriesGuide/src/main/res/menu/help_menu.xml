@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_feedback"
-        android:icon="@drawable/ic_action_send"
-        android:orderInCategory="99"
+        android:id="@+id/menu_action_help_open_browser"
+        android:orderInCategory="0"
         app:showAsAction="never"
-        android:title="@string/feedback"/>
+        android:title="@string/action_open_in_browser" />
+    <item
+        android:id="@+id/menu_action_help_send_feedback"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="@string/feedback" />
 
 </menu>

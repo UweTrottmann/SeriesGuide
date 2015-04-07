@@ -98,12 +98,20 @@ public class HelpActivity extends BaseActivity {
             onBackPressed();
             return true;
         }
-        if (itemId == R.id.menu_feedback) {
+        if (itemId == R.id.menu_action_help_open_browser) {
+            openInBrowser();
+            return true;
+        }
+        if (itemId == R.id.menu_action_help_send_feedback) {
             sendEmail();
             fireTrackerEvent("Feedback");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openInBrowser() {
+        Utils.launchWebsite(this, getString(R.string.help_url), TAG, "Open In Browser");
     }
 
     private void sendEmail() {
