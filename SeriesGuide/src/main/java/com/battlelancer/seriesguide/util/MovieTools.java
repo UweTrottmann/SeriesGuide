@@ -143,8 +143,10 @@ public class MovieTools {
     }
 
     /**
-     * If the movie exists in the local database: removes it from the given list or if it would not
-     * be on any list afterwards, deletes the movie from the local database.
+     * Removes the movie from the given list.
+     *
+     * <p>If it would not be on any list afterwards and is not watched, deletes the movie from the
+     * local database.
      *
      * @return If the database operation was successful.
      */
@@ -156,12 +158,13 @@ public class MovieTools {
             // query failed, or movie not in local database
             return false;
         }
-        if (isInOtherList) {
-            // just update list flag
-            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
+
+        // if movie will not be in any list and is not watched, remove it completely
+        if (!isInOtherList && deleteMovieIfUnwatched(context, movieTmdbId)) {
+            return true;
         } else {
-            // completely remove from database
-            return deleteMovie(context, movieTmdbId);
+            // otherwise, just update
+            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
         }
     }
 
@@ -384,10 +387,14 @@ public class MovieTools {
         return rowsUpdated > 0;
     }
 
-    private static boolean deleteMovie(Context context, int movieTmdbId) {
+    /**
+     * @return {@code true} if the movie was deleted (because it was not watched).
+     */
+    private static boolean deleteMovieIfUnwatched(Context context, int movieTmdbId) {
         int rowsDeleted = context.getContentResolver()
-                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), null, null);
-
+                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
+                        SeriesGuideContract.Movies.SELECTION_UNWATCHED, null);
+        Timber.d("deleteMovieIfUnwatched: deleted " + rowsDeleted + " movie");
         return rowsDeleted > 0;
     }
 
