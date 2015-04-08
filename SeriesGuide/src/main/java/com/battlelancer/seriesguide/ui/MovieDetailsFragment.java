@@ -352,8 +352,8 @@ public class MovieDetailsFragment extends Fragment {
         });
         CheatSheet.setup(mCheckinButton);
 
-        // watched button (only supported when connected to trakt and movie is in local database)
-        if (TraktCredentials.get(getActivity()).hasCredentials() && (inCollection || inWatchlist)) {
+        // watched button (only supported when connected to trakt)
+        if (TraktCredentials.get(getActivity()).hasCredentials()) {
             mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(mWatchedButton,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
