@@ -839,6 +839,12 @@ public class MovieTools {
 
     public static class Upload {
 
+        private static final String[] PROJECTION_MOVIES_IN_LISTS = {
+                SeriesGuideContract.Movies.TMDB_ID, // 0
+                SeriesGuideContract.Movies.IN_COLLECTION, // 1
+                SeriesGuideContract.Movies.IN_WATCHLIST // 2
+        };
+
         /**
          * Uploads all local movies to Hexagon.
          */
@@ -875,28 +881,24 @@ public class MovieTools {
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies
                     = new ArrayList<>();
 
-            Cursor query = context.getContentResolver()
-                    .query(SeriesGuideContract.Movies.CONTENT_URI,
-                            new String[] {
-                                    SeriesGuideContract.Movies.TMDB_ID,
-                                    SeriesGuideContract.Movies.IN_COLLECTION,
-                                    SeriesGuideContract.Movies.IN_WATCHLIST
-                            }, null, null, null
-                    );
-            if (query == null) {
+            // query for movies in lists (excluding movies that are only watched)
+            Cursor moviesInLists = context.getContentResolver().query(
+                    SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
+                    SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
+            if (moviesInLists == null) {
                 return null;
             }
 
-            while (query.moveToNext()) {
+            while (moviesInLists.moveToNext()) {
                 com.uwetrottmann.seriesguide.backend.movies.model.Movie movie
                         = new com.uwetrottmann.seriesguide.backend.movies.model.Movie();
-                movie.setTmdbId(query.getInt(0));
-                movie.setIsInCollection(query.getInt(1) == 1);
-                movie.setIsInWatchlist(query.getInt(2) == 1);
+                movie.setTmdbId(moviesInLists.getInt(0));
+                movie.setIsInCollection(moviesInLists.getInt(1) == 1);
+                movie.setIsInWatchlist(moviesInLists.getInt(2) == 1);
                 movies.add(movie);
             }
 
-            query.close();
+            moviesInLists.close();
 
             return movies;
         }
@@ -918,15 +920,11 @@ public class MovieTools {
                 return UpdateResult.INCOMPLETE;
             }
 
-            Cursor localMovies = context.getContentResolver()
-                    .query(SeriesGuideContract.Movies.CONTENT_URI,
-                            new String[] {
-                                    SeriesGuideContract.Movies.TMDB_ID, // 0
-                                    SeriesGuideContract.Movies.IN_COLLECTION,
-                                    SeriesGuideContract.Movies.IN_WATCHLIST // 2
-                            }, null, null, null
-                    );
-            if (localMovies == null) {
+            // query for movies in lists (excluding movies that are only watched)
+            Cursor moviesInLists = context.getContentResolver()
+                    .query(SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
+                            SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
+            if (moviesInLists == null) {
                 Timber.e("toTrakt: query failed");
                 return UpdateResult.INCOMPLETE;
             }
@@ -934,21 +932,21 @@ public class MovieTools {
             // build list of collected, watchlisted movies to upload
             List<SyncMovie> moviesToCollect = new LinkedList<>();
             List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-            while (localMovies.moveToNext()) {
-                int tmdbId = localMovies.getInt(0);
+            while (moviesInLists.moveToNext()) {
+                int tmdbId = moviesInLists.getInt(0);
 
                 // in local collection, but not on trakt?
-                if (localMovies.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
+                if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
                     moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
                 // in local watchlist, but not on trakt?
-                if (localMovies.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
+                if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
                     moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
             }
 
             // clean up
-            localMovies.close();
+            moviesInLists.close();
 
             // upload
             try {

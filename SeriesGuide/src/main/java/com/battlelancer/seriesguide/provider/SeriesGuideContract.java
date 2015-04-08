@@ -844,6 +844,10 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
 
+        public static final String SELECTION_IN_LIST =
+                SeriesGuideContract.Movies.SELECTION_COLLECTION + " OR "
+                        + SeriesGuideContract.Movies.SELECTION_WATCHLIST;
+
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         /** Default sort order. */
