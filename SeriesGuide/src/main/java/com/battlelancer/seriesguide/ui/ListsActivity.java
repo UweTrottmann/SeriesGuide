@@ -56,11 +56,12 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lists);
+        setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
         setupNavDrawer();
 
         setupViews();
+        setupSyncProgressBar(R.id.progressBarTabs);
     }
 
     @Override
@@ -73,10 +74,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     private void setupViews() {
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pagerLists);
+        mPager = (ViewPager) findViewById(R.id.viewPagerTabs);
         mPager.setAdapter(mListsAdapter);
 
-        mTabs = (SlidingTabLayout) findViewById(R.id.tabsLists);
+        mTabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
         mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {

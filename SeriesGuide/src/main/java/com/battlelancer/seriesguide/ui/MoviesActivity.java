@@ -46,11 +46,12 @@ public class MoviesActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
         setupNavDrawer();
 
         setupViews();
+        setupSyncProgressBar(R.id.progressBarTabs);
     }
 
     @Override
@@ -63,8 +64,8 @@ public class MoviesActivity extends BaseTopActivity {
     private void setupViews() {
         // tabs
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
-                (ViewPager) findViewById(R.id.pagerMovies),
-                (SlidingTabLayout) findViewById(R.id.tabsMovies));
+                (ViewPager) findViewById(R.id.viewPagerTabs),
+                (SlidingTabLayout) findViewById(R.id.tabLayoutTabs));
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         // watchlist
@@ -78,9 +79,6 @@ public class MoviesActivity extends BaseTopActivity {
         }
 
         tabsAdapter.notifyTabsChanged();
-
-        // sync progress bar
-        setupSyncProgressBar(R.id.progressBarMovies);
     }
 
     @Override

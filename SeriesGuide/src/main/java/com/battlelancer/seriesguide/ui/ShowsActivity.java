@@ -101,7 +101,7 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shows);
+        setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
         setupNavDrawer();
 
@@ -123,6 +123,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // setup all the views!
         setupViews();
+        setupSyncProgressBar(R.id.progressBarTabs);
         setInitialTab(getIntent().getExtras());
 
         // query for in-app purchases
@@ -196,10 +197,10 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     private void setupViews() {
-        mViewPager = (ViewPager) findViewById(R.id.pagerShows);
+        mViewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
 
         mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
-                this, mViewPager, (SlidingTabLayout) findViewById(R.id.tabsShows));
+                this, mViewPager, (SlidingTabLayout) findViewById(R.id.tabLayoutTabs));
 
         // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -231,9 +232,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
-
-        // sync progress bar
-        setupSyncProgressBar(R.id.progressBarShows);
     }
 
     /**
