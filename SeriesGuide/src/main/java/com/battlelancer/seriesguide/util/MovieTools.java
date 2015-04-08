@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -109,7 +110,7 @@ public class MovieTools {
      */
     public static boolean addToList(Context context, int movieTmdbId, Lists list) {
         // do we have this movie in the database already?
-        Boolean movieExists = isMovieExists(context, movieTmdbId);
+        Boolean movieExists = isMovieInDatabase(context, movieTmdbId);
         if (movieExists == null) {
             return false;
         }
@@ -160,12 +161,22 @@ public class MovieTools {
     }
 
     /**
-     * Set watched flag of movie in local database.
+     * Set watched flag of movie in local database. If setting watched, but not in database, creates
+     * a new movie watched shell.
      *
      * @return If the database operation was successful.
      */
     public static boolean setWatchedFlag(Context context, int movieTmdbId, boolean flag) {
-        return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
+        Boolean movieInDatabase = isMovieInDatabase(context, movieTmdbId);
+        if (movieInDatabase == null) {
+            return false;
+        }
+        if (!movieInDatabase && flag) {
+            // Only add, never remove shells. Next trakt watched movie sync will take care of that.
+            return addMovieWatchedShell(context, movieTmdbId);
+        } else {
+            return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
+        }
     }
 
     /**
@@ -291,7 +302,7 @@ public class MovieTools {
         return isInList;
     }
 
-    private static Boolean isMovieExists(Context context, int movieTmdbId) {
+    private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.CONTENT_URI, new String[] {
                                 SeriesGuideContract.Movies._ID },
@@ -331,6 +342,22 @@ public class MovieTools {
         TraktSettings.resetMoviesLastActivity(context);
 
         return true;
+    }
+
+    /**
+     * Inserts a movie shell into the database only holding TMDB id, list and watched states.
+     */
+    private static boolean addMovieWatchedShell(Context context, int movieTmdbId) {
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
+        values.put(SeriesGuideContract.Movies.IN_COLLECTION, false);
+        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, false);
+        values.put(SeriesGuideContract.Movies.WATCHED, true);
+
+        Uri insert = context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI,
+                values);
+
+        return insert != null;
     }
 
     private static boolean updateMovie(Context context, int movieTmdbId, String column,
