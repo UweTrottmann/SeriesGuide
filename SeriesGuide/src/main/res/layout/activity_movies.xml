@@ -4,26 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
-
-        <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-            android:id="@+id/tabsMovies"
-            style="@style/Widget.SeriesGuide.TabLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pagerMovies"
+            <include layout="@layout/toolbar" />
+
+            <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                android:id="@+id/tabsMovies"
+                style="@style/Widget.SeriesGuide.TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pagerMovies"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/progressBarMovies"
+            style="@style/Widget.SeriesGuide.SmoothProgressBar.Sync"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="2dp" />
 
-    </LinearLayout>
+    </FrameLayout>
 
     <include layout="@layout/drawer_left" />
 

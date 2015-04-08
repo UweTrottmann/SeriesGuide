@@ -61,6 +61,7 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     private void setupViews() {
+        // tabs
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 (ViewPager) findViewById(R.id.pagerMovies),
                 (SlidingTabLayout) findViewById(R.id.tabsMovies));
@@ -77,6 +78,9 @@ public class MoviesActivity extends BaseTopActivity {
         }
 
         tabsAdapter.notifyTabsChanged();
+
+        // sync progress bar
+        setupSyncProgressBar(R.id.progressBarMovies);
     }
 
     @Override

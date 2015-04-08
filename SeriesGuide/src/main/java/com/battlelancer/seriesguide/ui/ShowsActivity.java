@@ -16,16 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -36,8 +33,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -66,7 +61,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import timber.log.Timber;
 
 /**
@@ -87,10 +81,6 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
 
     private IabHelper mBillingHelper;
-
-    private SmoothProgressBar mProgressBar;
-
-    private Object mSyncObserverHandle;
 
     private ShowsTabPageAdapter mTabsAdapter;
 
@@ -242,9 +232,8 @@ public class ShowsActivity extends BaseTopActivity implements
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
 
-        // progress bar
-        mProgressBar = (SmoothProgressBar) findViewById(R.id.progressBarShows);
-        mProgressBar.setVisibility(View.GONE);
+        // sync progress bar
+        setupSyncProgressBar(R.id.progressBarShows);
     }
 
     /**
@@ -344,12 +333,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // update next episodes
         TaskManager.getInstance(this).tryNextEpisodeUpdateTask();
-
-        // watch for sync state changes
-        mSyncStatusObserver.onStatusChanged(0);
-        final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
-                ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
-        mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
     }
 
     @Override
@@ -359,12 +342,6 @@ public class ShowsActivity extends BaseTopActivity implements
         if (Utils.isAmazonVersion()) {
             // pause Amazon IAP
             AmazonIapManager.get().deactivate();
-        }
-
-        // stop listening to sync state changes
-        if (mSyncObserverHandle != null) {
-            ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
-            mSyncObserverHandle = null;
         }
     }
 
@@ -515,19 +492,6 @@ public class ShowsActivity extends BaseTopActivity implements
         Utils.trackAction(this, TAG, label);
     }
 
-    /**
-     * Shows or hides a custom indeterminate progress indicator inside this activity layout.
-     */
-    public void setProgressVisibility(boolean isVisible) {
-        if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
-            // already in desired state, avoid replaying animation
-            return;
-        }
-        mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
-                isVisible ? R.anim.fade_in : R.anim.fade_out));
-        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-    }
-
     // Listener that's called when we finish querying the items and
     // subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener
@@ -556,38 +520,6 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         mBillingHelper = null;
     }
-
-    /**
-     * Create a new anonymous SyncStatusObserver. It's attached to the app's ContentResolver in
-     * onResume(), and removed in onPause(). If a sync is active or pending, a progress bar is
-     * shown.
-     */
-    private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
-        /** Callback invoked with the sync adapter status changes. */
-        @Override
-        public void onStatusChanged(int which) {
-            runOnUiThread(new Runnable() {
-                /**
-                 * The SyncAdapter runs on a background thread. To update the
-                 * UI, onStatusChanged() runs on the UI thread.
-                 */
-                @Override
-                public void run() {
-                    Account account = AccountUtils.getAccount(ShowsActivity.this);
-                    if (account == null) {
-                        // no account setup
-                        setProgressVisibility(false);
-                        return;
-                    }
-
-                    // Test the ContentResolver to see if the sync adapter is active.
-                    boolean syncActive = ContentResolver.isSyncActive(
-                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
-                    setProgressVisibility(syncActive);
-                }
-            });
-        }
-    };
 
     /**
      * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
