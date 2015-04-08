@@ -94,6 +94,19 @@ public class MovieTools {
         }
     }
 
+    /**
+     * Deletes all movies which are not watched and not in any list.
+     */
+    public static void deleteUnusedMovies(Context context) {
+        int rowsDeleted = context.getContentResolver()
+                .delete(SeriesGuideContract.Movies.CONTENT_URI,
+                        SeriesGuideContract.Movies.SELECTION_UNWATCHED
+                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
+                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST,
+                        null);
+        Timber.d("deleteUnusedMovies: removed " + rowsDeleted + " movies");
+    }
+
     public static void addToCollection(Context context, int movieTmdbId) {
         AndroidUtils.executeOnPool(new AddMovieToCollectionTask(context, movieTmdbId));
     }
@@ -532,7 +545,8 @@ public class MovieTools {
          * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
          * thread.
          */
-        public static UpdateResult syncMoviesWithTrakt(Context context, LastActivityMore activity) {
+        public static UpdateResult syncMovieListsWithTrakt(Context context,
+                LastActivityMore activity) {
             if (activity.collected_at == null) {
                 Timber.e("syncMoviesWithTrakt: null collected_at");
                 return UpdateResult.INCOMPLETE;
@@ -610,18 +624,15 @@ public class MovieTools {
                         batch.add(builder.build());
                     }
                 } else {
-                    if (!inCollection && !inWatchlist) {
-                        // remove local movie if removed from collection and watchlist on trakt
-                        moviesNotOnTraktCollection.add(tmdbId);
-                    } else {
-                        // mirror trakt collection and watchlist flag
-                        ContentProviderOperation op = ContentProviderOperation
-                                .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
-                                .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
-                                .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
-                                .build();
-                        batch.add(op);
-                    }
+                    // mirror trakt collection and watchlist flag
+                    // will take care of removing unneeded (not watched or in any list) movies
+                    // in later sync step
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
+                            .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
+                            .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
+                            .build();
+                    batch.add(op);
                 }
             }
 
@@ -635,7 +646,7 @@ public class MovieTools {
             }
             batch.clear();
 
-            // merge on first run, delete on consequent runs
+            // merge on first run
             if (merging) {
                 // upload movies not in trakt collection or watchlist
                 if (Upload.toTrakt(context, sync, moviesNotOnTraktCollection,
@@ -648,16 +659,6 @@ public class MovieTools {
                             .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true)
                             .commit();
                 }
-            } else {
-                // remove movies not on trakt
-                buildMovieDeleteOps(moviesNotOnTraktCollection, batch);
-                try {
-                    DBUtils.applyInSmallBatches(context, batch);
-                } catch (OperationApplicationException e) {
-                    Timber.e(e, "syncMoviesWithTrakt: database deletes failed");
-                    return UpdateResult.INCOMPLETE;
-                }
-                Timber.d("syncMoviesWithTrakt: removed " + moviesNotOnTraktCollection.size());
             }
 
             // add movies from trakt missing locally

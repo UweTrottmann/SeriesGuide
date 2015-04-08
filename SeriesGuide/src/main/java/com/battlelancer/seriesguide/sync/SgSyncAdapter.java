@@ -510,7 +510,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
-        if (MovieTools.Download.syncMoviesWithTrakt(context, lastActivity.movies)
+        if (MovieTools.Download.syncMovieListsWithTrakt(context, lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }
@@ -524,6 +524,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }
+
+        // clean up any useless movies (not watched or not in any list)
+        MovieTools.deleteUnusedMovies(context);
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             return UpdateResult.INCOMPLETE;

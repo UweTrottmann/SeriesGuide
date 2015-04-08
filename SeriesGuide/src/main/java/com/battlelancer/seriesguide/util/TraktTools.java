@@ -193,22 +193,6 @@ public class TraktTools {
             return UpdateResult.INCOMPLETE;
         }
 
-        // remove all movie shells that are now unwatched
-        batch.clear();
-        batch.add(ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
-                .withSelection(SeriesGuideContract.Movies.SELECTION_UNWATCHED
-                        + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
-                        + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST, null)
-                .build());
-
-        // apply database updates
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "downloadWatchedMovies: removing useless shells failed");
-            return UpdateResult.INCOMPLETE;
-        }
-
         // save last watched instant
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
