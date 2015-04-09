@@ -17,6 +17,7 @@ Version 23 *(in development)*
 * TWEAK Add "Open in browser" action to help.
 * TWEAK Use different ellipsis algorithm for single line text, displaying as many characters as possible.
 * TWEAK Show scrollbar in Now tab.
+* NOTICE Latest translations from crowdin.
 
 #### 23-beta3 *(2015-04-02)*
 
