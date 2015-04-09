@@ -446,7 +446,7 @@ public class MovieDetailsFragment extends Fragment {
                     TraktTools.buildRatingString(traktRatings.rating));
         }
         // if movie is not in database, can't handle user ratings
-        if (!inCollection && !inWatchlist) {
+        if (!inCollection && !inWatchlist && !isWatched) {
             mRatingsTraktUserLabel.setVisibility(View.GONE);
             mRatingsTraktUserValue.setVisibility(View.GONE);
             mRatingsContainer.setClickable(false);
