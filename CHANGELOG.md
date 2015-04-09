@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 23 *(in development)*
 -------------------------
 
+#### 23-beta4 *(2015-04-09)*
+
+* TWEAK If connected to trakt, display and allow changing watched state of any movie. Requires trakt
+  sync to run at least once after updating so watched movies are downloaded.
+* TWEAK Display sync progress bar in Lists and Movies as well.
+* TWEAK Add option to hide "Released today" from Now tab.
+* TWEAK Add "Open in browser" action to help.
+* TWEAK Use different ellipsis algorithm for single line text, displaying as many characters as possible.
+* TWEAK Show scrollbar in Now tab.
+
 #### 23-beta3 *(2015-04-02)*
 
 * TWEAK Add skip options to episodes list menus.
