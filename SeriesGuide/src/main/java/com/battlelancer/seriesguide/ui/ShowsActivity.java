@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
@@ -462,6 +463,10 @@ public class ShowsActivity extends BaseTopActivity implements
                 scheduleAllShowsUpdate();
                 // force a sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+            }
+            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_23_BETA4) {
+                // make next trakt sync download watched movies
+                TraktSettings.resetMoviesLastActivity(this);
             }
 
             // set this as lastVersion

@@ -56,6 +56,10 @@ public class SeriesGuideApplication extends Application {
      * Requires full show update due to upgrade to trakt v2.
      */
     public static final int RELEASE_VERSION_21 = 15075;
+    /**
+     * Requires trakt watched movie (re-)download.
+     */
+    public static final int RELEASE_VERSION_23_BETA4 = 15113;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
