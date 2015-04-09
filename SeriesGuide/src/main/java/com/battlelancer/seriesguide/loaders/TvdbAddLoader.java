@@ -20,16 +20,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import java.util.HashSet;
+import com.uwetrottmann.trakt.v2.enums.Type;
 import java.util.LinkedList;
 import java.util.List;
 import retrofit.RetrofitError;
@@ -82,35 +79,30 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 return buildResultFailure(getContext(), R.string.trakt_error_general);
             }
         } else {
-            // have a query? search TheTVDB
+            // have a query? search trakt (has better search) for TheTVDB shows
             try {
-                results = TheTVDB.searchShow(getContext(), query, false);
-                if (results.size() == 0) {
-                    // query again, but allow all languages
-                    results = TheTVDB.searchShow(getContext(), query, true);
+                List<com.uwetrottmann.trakt.v2.entities.SearchResult> traktResults
+                        = ServiceUtils.getTraktV2(getContext()).search()
+                        .textQuery(query, Type.SHOW, null, 1, 30);
+
+                List<Show> shows = new LinkedList<>();
+                for (com.uwetrottmann.trakt.v2.entities.SearchResult result : traktResults) {
+                    if (result.show == null || result.show.ids == null
+                            || result.show.ids.tvdb == null) {
+                        // skip, TVDB id required
+                        continue;
+                    }
+                    shows.add(result.show);
                 }
-                markLocalShows(getContext(), results);
-            } catch (TvdbException e) {
+
+                results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows);
+            } catch (RetrofitError e) {
                 Timber.e(e, "Searching show failed");
                 return buildResultFailure(getContext(), R.string.search_error);
             }
         }
 
         return buildResultSuccess(results, R.string.no_results);
-    }
-
-    private static void markLocalShows(Context context, List<SearchResult> results) {
-        HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(context);
-        if (localShows == null) {
-            return;
-        }
-
-        for (SearchResult result : results) {
-            if (localShows.contains(result.tvdbid)) {
-                // is already in local database
-                result.isAdded = true;
-            }
-        }
     }
 
     private static Result buildResultSuccess(List<SearchResult> results, int emptyTextResId) {
