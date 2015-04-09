@@ -42,8 +42,8 @@
   <string name="share_movie">Film megosztása</string>
   <string name="share_checkout">Nézd meg: %s</string>
   <string name="comments">Hozzászólások</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
+  <string name="shout_invalid">A megjegyzésed nem szabályszerű!</string>
   <string name="shout">Szólj hozzá!</string>
   <string name="isspoiler">Spoiler veszély!</string>
   <string name="no_shouts">Szólj hozzá elsőként!</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
   <string name="checkin_canceled_success_trakt">Bejelentkezés törölve a trakton.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">(Még) nem szerepel a trakt adatbázisban. Próbálkozz később.</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
   <string name="traktcheckin_wait">Várok</string>
@@ -275,6 +275,8 @@
     <item quantity="many">%d szavazat</item>
     <item quantity="other">%d szavazat</item>
   </plurals>
+  <string name="feedback">Visszajelzés küldése</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Alap beállítások</string>
   <string name="prefs_category_sharing">Szolgáltatások</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>
@@ -291,7 +293,6 @@
   <string name="about">A SeriesGuide-ról</string>
   <string name="pref_credits">Készítők listája</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
-  <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitásod és adataid alapján sorozataid bekerülnek az adatbázisba</string>
   <string name="sort">Rendezés</string>

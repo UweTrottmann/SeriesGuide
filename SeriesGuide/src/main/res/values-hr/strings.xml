@@ -275,6 +275,8 @@
     <item quantity="many">%d glasova</item>
     <item quantity="other">%d glasova</item>
   </plurals>
+  <string name="feedback">Pošalji povratnu informaciju</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Usluge</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -291,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Zasluge</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
-  <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
   <string name="sort">Sortiraj po</string>

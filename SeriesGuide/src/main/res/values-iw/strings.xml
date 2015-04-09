@@ -275,6 +275,8 @@
     <item quantity="many">הצבעות %d</item>
     <item quantity="other">הצבעות %d</item>
   </plurals>
+  <string name="feedback">שלח משוב</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">בסיסי</string>
   <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>
@@ -291,7 +293,6 @@
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_credits">קרדיטים</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
-  <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
   <string name="sort">מיין לפי</string>

@@ -275,6 +275,8 @@
     <item quantity="many">%d أصوات</item>
     <item quantity="other">%d أصوات</item>
   </plurals>
+  <string name="feedback">أرسل ملاحظاتك</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">أساسي</string>
   <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">متقدم</string>
@@ -291,7 +293,6 @@
   <string name="about">حول دليل المسلسلات</string>
   <string name="pref_credits">الاعتمادات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
-  <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
   <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>
   <string name="sort">ترتيب حسب</string>

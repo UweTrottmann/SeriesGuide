@@ -275,6 +275,8 @@
     <item quantity="many">%d ψήφοι</item>
     <item quantity="other">%d ψήφοι</item>
   </plurals>
+  <string name="feedback">Αποστολή σχολίων</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Βασικά</string>
   <string name="prefs_category_sharing">Υπηρεσίες</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
@@ -291,7 +293,6 @@
   <string name="about">Σχετικά με το SeriesGuide</string>
   <string name="pref_credits">Εύσημα</string>
   <string name="pref_traktsummary">Προσθέστε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
-  <string name="feedback">Αποστολή σχολίων</string>
   <string name="pref_autoaddshows">Προσθήκη νέων σειρών από το trakt</string>
   <string name="pref_autoaddshowssummary">Αυτόματη προσθήκη σειρών από το trakt activity stream</string>
   <string name="sort">Ταξινόμηση κατά</string>

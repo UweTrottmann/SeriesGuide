@@ -276,6 +276,8 @@
     <item quantity="many">%d röster</item>
     <item quantity="other">%d röster</item>
   </plurals>
+  <string name="feedback">Skicka feedback</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Grunder</string>
   <string name="prefs_category_sharing">Tjänster</string>
   <string name="prefs_category_advanced">Avancerat</string>
@@ -292,7 +294,6 @@
   <string name="about">Om SeriesGuide</string>
   <string name="pref_credits">Bidragsgivare</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
-  <string name="feedback">Skicka feedback</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
   <string name="sort">Sortera efter</string>

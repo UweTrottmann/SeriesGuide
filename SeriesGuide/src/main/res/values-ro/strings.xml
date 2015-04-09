@@ -275,6 +275,8 @@
     <item quantity="many">%d voturi</item>
     <item quantity="other">%d voturi</item>
   </plurals>
+  <string name="feedback">Trimiteţi feedback</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Elemente de bază</string>
   <string name="prefs_category_sharing">Servicii</string>
   <string name="prefs_category_advanced">Avansate</string>
@@ -291,7 +293,6 @@
   <string name="about">Despre SeriesGuide</string>
   <string name="pref_credits">Contribuţii</string>
   <string name="pref_traktsummary">Adăugaţi sau editaţi acreditările trakt</string>
-  <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Adăugați emisiuni trakt</string>
   <string name="pref_autoaddshowssummary">Adăugați automat emisiunile după activitatea dvs. de pe trakt</string>
   <string name="sort">Sortați după</string>

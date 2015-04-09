@@ -275,6 +275,8 @@
     <item quantity="many">%d balsis</item>
     <item quantity="other">%d balsis</item>
   </plurals>
+  <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Pamati</string>
   <string name="prefs_category_sharing">Servisi</string>
   <string name="prefs_category_advanced">Pārākie uzstādijumi</string>
@@ -291,7 +293,6 @@
   <string name="about">Par SeriesGuide</string>
   <string name="pref_credits">Pateicības</string>
   <string name="pref_traktsummary">Pievieno vai rediģē savu trakt informāciju</string>
-  <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
   <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
   <string name="pref_autoaddshowssummary">Automātiski pievienot šovus no tavas trakt aktivitāšu straumes</string>
   <string name="sort">Kārtot pēc</string>

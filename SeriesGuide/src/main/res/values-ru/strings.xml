@@ -275,6 +275,8 @@
     <item quantity="many">%d голосов</item>
     <item quantity="other">%d голосов</item>
   </plurals>
+  <string name="feedback">Отправить отзыв</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основные</string>
   <string name="prefs_category_sharing">Сервисы</string>
   <string name="prefs_category_advanced">Дополнительно</string>
@@ -291,7 +293,6 @@
   <string name="about">О SeriesGuide</string>
   <string name="pref_credits">Создатели</string>
   <string name="pref_traktsummary">Добавить или изменить учетные данные trakt</string>
-  <string name="feedback">Отправить отзыв</string>
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
   <string name="sort">Сортировать по</string>

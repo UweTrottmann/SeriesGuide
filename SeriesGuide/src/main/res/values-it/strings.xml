@@ -275,6 +275,8 @@
     <item quantity="many">%d voti</item>
     <item quantity="other">%d voti</item>
   </plurals>
+  <string name="feedback">Invia feedback</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Base</string>
   <string name="prefs_category_sharing">Servizi</string>
   <string name="prefs_category_advanced">Avanzate</string>
@@ -291,7 +293,6 @@
   <string name="about">Info su SeriesGuide</string>
   <string name="pref_credits">Crediti</string>
   <string name="pref_traktsummary">Aggiungi o modifica le tue credenziali trakt</string>
-  <string name="feedback">Invia feedback</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
   <string name="sort">Ordina per</string>

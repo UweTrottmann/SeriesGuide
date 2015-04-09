@@ -42,8 +42,8 @@
   <string name="share_movie">Del filmen</string>
   <string name="share_checkout">Sjekk ut %s</string>
   <string name="comments">Kommentarer</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Skriv en kommentar på engelsk. (5 ord +)</string>
+  <string name="shout_invalid">Trakt godtok ikke kommentaren, grunnen er regelbrudd.</string>
   <string name="shout">Rope!</string>
   <string name="isspoiler">Spoileradvarsel!</string>
   <string name="no_shouts">Vær den første til å rope!</string>
@@ -210,7 +210,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
   <string name="action_lists_sort">Sorter lister</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Sortere listen</string>
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_setup">Sett opp SeriesGuide sky</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
@@ -234,7 +234,7 @@
   <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="checkin_success_trakt">Sjekket inn %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Kansellerte innsjekking på trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Ikke funnet på Trakt. Prøv igjen senere. </string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
@@ -275,6 +275,8 @@
     <item quantity="many">%d stemmer</item>
     <item quantity="other">%d stemmer</item>
   </plurals>
+  <string name="feedback">Gi tilbakemelding</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Grunnleggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avansert</string>
@@ -291,7 +293,6 @@
   <string name="about">Om SeriesGuide</string>
   <string name="pref_credits">Krediteringer</string>
   <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
-  <string name="feedback">Gi tilbakemelding</string>
   <string name="pref_autoaddshows">Legg til nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
   <string name="sort">Sorter etter</string>

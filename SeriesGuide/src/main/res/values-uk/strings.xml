@@ -275,6 +275,8 @@
     <item quantity="many">%d голосів</item>
     <item quantity="other">%d голосів</item>
   </plurals>
+  <string name="feedback">Відправити відгук</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -291,7 +293,6 @@
   <string name="about">Про SeriesGuide</string>
   <string name="pref_credits">Подяки</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис на trakt.tv</string>
-  <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
   <string name="sort">Сортувати за</string>

@@ -275,6 +275,8 @@
     <item quantity="many">رای %d</item>
     <item quantity="other">رای ها %d</item>
   </plurals>
+  <string name="feedback">ارسال بازخورد</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">اصول اولیه</string>
   <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">پیشرفته</string>
@@ -291,7 +293,6 @@
   <string name="about">درباره SeriesGuide</string>
   <string name="pref_credits">پدیدآورندگان</string>
   <string name="pref_traktsummary">افزودن یا ویرایش اطلاعات کاربری trakt</string>
-  <string name="feedback">ارسال بازخورد</string>
   <string name="pref_autoaddshows">اضافه کردن برنامه های  trakt</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="sort">مرتب کردن بر اساس</string>

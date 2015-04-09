@@ -275,6 +275,8 @@
     <item quantity="many">%d oy</item>
     <item quantity="other">%d oylar</item>
   </plurals>
+  <string name="feedback">Geribildirim Gönder</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
   <string name="prefs_category_sharing">Servisler</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
@@ -291,7 +293,6 @@
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
-  <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
   <string name="sort">Sırala</string>

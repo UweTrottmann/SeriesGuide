@@ -275,6 +275,8 @@
     <item quantity="many">%d votos</item>
     <item quantity="other">%d votos</item>
   </plurals>
+  <string name="feedback">Enviar comentários</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Básico</string>
   <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>
@@ -291,7 +293,6 @@
   <string name="about">Sobre SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="pref_traktsummary">Adicionar ou editar as tuas credenciais do trakt.tv</string>
-  <string name="feedback">Enviar comentários</string>
   <string name="pref_autoaddshows">Adicionar novas séries trakt</string>
   <string name="pref_autoaddshowssummary">Adicionar séries automaticamente da tua actividade trakt</string>
   <string name="sort">Ordenar por</string>

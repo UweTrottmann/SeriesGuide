@@ -275,6 +275,8 @@
     <item quantity="many">%d hlasů</item>
     <item quantity="other">%d hlasů</item>
   </plurals>
+  <string name="feedback">Poslat reakci</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Základní</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -291,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Poděkování</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
-  <string name="feedback">Poslat reakci</string>
   <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
   <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
   <string name="sort">Řadit dle</string>

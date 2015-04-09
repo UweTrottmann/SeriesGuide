@@ -275,6 +275,8 @@
     <item quantity="many">%d ääntä</item>
     <item quantity="other">%d ääntä</item>
   </plurals>
+  <string name="feedback">Lähetä palautetta</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -291,7 +293,6 @@
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_credits">Tekijät</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt-käyttäjätietojasi</string>
-  <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
   <string name="sort">Lajittele</string>

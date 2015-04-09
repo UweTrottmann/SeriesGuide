@@ -275,6 +275,8 @@
     <item quantity="many">%d명이 투표</item>
     <item quantity="other">%d명이 투표</item>
   </plurals>
+  <string name="feedback">사용자 의견 보내기</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">기본</string>
   <string name="prefs_category_sharing">서비스</string>
   <string name="prefs_category_advanced">고급</string>
@@ -291,7 +293,6 @@
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_credits">만든이</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
-  <string name="feedback">사용자 의견 보내기</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
   <string name="sort">정렬 기준</string>

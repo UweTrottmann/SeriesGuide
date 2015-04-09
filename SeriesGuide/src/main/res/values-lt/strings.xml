@@ -275,6 +275,8 @@
     <item quantity="many">%d balsų</item>
     <item quantity="other">%d balsų</item>
   </plurals>
+  <string name="feedback">Siųsti atsiliepimą</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Pagrindai</string>
   <string name="prefs_category_sharing">Paslaugos</string>
   <string name="prefs_category_advanced">Išplėstinė</string>
@@ -291,7 +293,6 @@
   <string name="about">Apie SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Add or edit your trakt credentials</string>
-  <string name="feedback">Siųsti atsiliepimą</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="sort">Rūšiuoti pagal</string>

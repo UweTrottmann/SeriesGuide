@@ -35,7 +35,7 @@
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="add_empty">Keine Serien hier.</string>
   <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
-  <string name="database_error">Daten können nicht geändert werden.</string>
+  <string name="database_error">Daten konnten nicht geändert werden.</string>
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
@@ -137,8 +137,8 @@
   <string name="action_unwatched">Nicht gesehen markieren</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
-  <string name="delete_show">Löschen</string>
-  <string name="dontdelete_show">Nicht löschen</string>
+  <string name="delete_show">Entfernen</string>
+  <string name="dontdelete_show">Nicht entfernen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
   <string name="context_favorite">Zu Favoriten hinzufügen</string>
   <string name="context_unfavorite">Von Favoriten entfernen</string>
@@ -275,6 +275,8 @@
     <item quantity="many">%d Stimmen</item>
     <item quantity="other">%d Stimmen</item>
   </plurals>
+  <string name="feedback">Feedback senden</string>
+  <string name="action_open_in_browser">Im Browser öffnen</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -291,7 +293,6 @@
   <string name="about">Über SeriesGuide</string>
   <string name="pref_credits">Anerkennungen</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt Anmeldeinformationen</string>
-  <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
   <string name="sort">Sortieren nach</string>
@@ -416,7 +417,7 @@
   <string name="action_extensions_add">Erweiterung hinzufügen</string>
   <string name="action_extensions_limit">Erwerben Sie X um mehr Erweiterungen hinzuzufügen</string>
   <string name="action_extensions_search">Mehr Erweiterungen</string>
-  <string name="action_extension_remove">Löschen</string>
+  <string name="action_extension_remove">Entfernen</string>
   <string name="extension_amazon">Amazon-Suche</string>
   <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
   <string name="pref_amazon_domain">Amazon-Seite</string>

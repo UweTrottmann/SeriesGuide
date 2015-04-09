@@ -275,6 +275,8 @@
     <item quantity="many">%d гласове</item>
     <item quantity="other">%d оценки</item>
   </plurals>
+  <string name="feedback">Обратна връзка</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основни</string>
   <string name="prefs_category_sharing">Услуги</string>
   <string name="prefs_category_advanced">Разширени</string>
@@ -291,7 +293,6 @@
   <string name="about">Относно SeriesGuide</string>
   <string name="pref_credits">Заслуги</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt</string>
-  <string name="feedback">Обратна връзка</string>
   <string name="pref_autoaddshows">Добавяне на нови trakt сериали</string>
   <string name="pref_autoaddshowssummary">Автоматично добавяне на сериали от дейността ви в trakt</string>
   <string name="sort">Подреди по</string>

@@ -275,6 +275,8 @@
     <item quantity="many">%d гласова</item>
     <item quantity="other">%d гласова</item>
   </plurals>
+  <string name="feedback">Пошаљи повратне информације</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основно</string>
   <string name="prefs_category_sharing">Услуге</string>
   <string name="prefs_category_advanced">Напредно</string>
@@ -291,7 +293,6 @@
   <string name="about">О SeriesGuide-у</string>
   <string name="pref_credits">Заслуге</string>
   <string name="pref_traktsummary">Додај или измени своје trakt.tv податке</string>
-  <string name="feedback">Пошаљи повратне информације</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
   <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
   <string name="sort">Поређај по</string>

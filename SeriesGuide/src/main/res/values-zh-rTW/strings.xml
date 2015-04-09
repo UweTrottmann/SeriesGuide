@@ -275,6 +275,8 @@
     <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
+  <string name="feedback">傳送反饋意見</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -291,7 +293,6 @@
   <string name="about">關於 SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
-  <string name="feedback">傳送反饋意見</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="sort">排序方式</string>
