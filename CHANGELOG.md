@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 23 *(in development)*
 -------------------------
 
+#### 23-beta5 *(2015-04-09)*
+
+* TWEAK Use trakt for search in "Add show". Please report any issues, or if the results are better or worse.
+
 #### 23-beta4 *(2015-04-09)*
 
 * TWEAK If connected to trakt, display and allow changing watched state of any movie. Requires trakt
