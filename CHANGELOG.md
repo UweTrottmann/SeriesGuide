@@ -5,8 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 23 *(in development)*
+Version 23 *(2015-04-14)*
 -------------------------
+
+* List tabs can be reordered (see Menu > Reorder lists). Order is preserved on backup/restore.
+* If connected to trakt, any movie can be set watched and any watched movie can be rated.
+* In search, show cards now have all expected menu options (e.g. manage lists, remove).
+* trakt search replaces TheTVDB search in "Add show". Please report any issues, or if the results are better or worse.
+
+#### 23.0.0 *(2015-04-14)*
+
+* NOTICE Latest translations from crowdin.
 
 #### 23-beta5 *(2015-04-09)*
 
