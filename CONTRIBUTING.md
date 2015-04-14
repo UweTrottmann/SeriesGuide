@@ -50,7 +50,7 @@ Now build any variant of the free flavor (flavor + build type, see [instructions
  [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
  [3]: http://tools.android.com/tech-docs/new-build-system/user-guide
- [4]: https://crowdin.net/project/seriesguide-translations
+ [4]: https://crowdin.com/project/seriesguide-translations
  [5]: http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors
  [6]: https://github.com/UweTrottmann/SeriesGuide/compare
  [7]: https://github.com/UweTrottmann/SeriesGuide/issues
