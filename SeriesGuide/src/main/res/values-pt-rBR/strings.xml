@@ -276,7 +276,7 @@
     <item quantity="other">%d Votos</item>
   </plurals>
   <string name="feedback">Enviar comentários</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Abrir no navegador</string>
   <string name="prefs_category_basic">Básico</string>
   <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>

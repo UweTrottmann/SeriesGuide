@@ -276,7 +276,7 @@
     <item quantity="other">%d 个评价</item>
   </plurals>
   <string name="feedback">发送反馈报告</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">在浏览器中打开</string>
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">服务</string>
   <string name="prefs_category_advanced">高级</string>

@@ -276,7 +276,7 @@
     <item quantity="other">%d ääntä</item>
   </plurals>
   <string name="feedback">Lähetä palautetta</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Avaa selaimessa</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>

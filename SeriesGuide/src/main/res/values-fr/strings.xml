@@ -276,7 +276,7 @@
     <item quantity="other">%d votes</item>
   </plurals>
   <string name="feedback">Envoyez vos commentaires</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Ouvrir dans le navigateur</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>

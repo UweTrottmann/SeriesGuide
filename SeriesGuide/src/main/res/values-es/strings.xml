@@ -42,8 +42,8 @@
   <string name="share_movie">Compartir película</string>
   <string name="share_checkout">Échale un vistazo a %s</string>
   <string name="comments">Comentarios</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Escribe un comentario (Inglés, 5 + palabras)</string>
+  <string name="shout_invalid">Su comentario no sigue las reglas!</string>
   <string name="shout">¡Gritar!</string>
   <string name="isspoiler">¡Alerta de spoiler!</string>
   <string name="no_shouts">¡Sé el primero en gritar!</string>
@@ -235,7 +235,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="trakt_notcollected">%s no recopilados.</string>
   <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Artículo no encontrado (todavía) en trakt. Inténtalo de nuevo más tarde.</string>
   <string name="traktcheckin_cancel">Reemplazar</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
@@ -277,7 +277,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <item quantity="other">%d votos</item>
   </plurals>
   <string name="feedback">Enviar comentarios</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Abrir en el navegador</string>
   <string name="prefs_category_basic">Básicos</string>
   <string name="prefs_category_sharing">Servicios</string>
   <string name="prefs_category_advanced">Avanzado</string>
