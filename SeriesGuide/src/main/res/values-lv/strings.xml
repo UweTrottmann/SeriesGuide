@@ -404,7 +404,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Kāpēc maksāt? Uzziņu vairāk.</string>
-  <string name="subscription_activated">Tu pašlaik abonē X funkcijas.</string>
   <string name="subscription_expired">Abonements ir beidzies</string>
   <string name="subscription_expired_details">Tavs X funkciju abonements ir beidzies.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

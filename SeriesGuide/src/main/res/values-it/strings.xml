@@ -403,7 +403,6 @@
   <string name="upgrade_description">Sblocca tutte le funzionalità, incluse le notifiche, i temi e maggiori opzioni per i widget delle liste. Aiutami a rendere possibile i futuri aggiornamenti.</string>
   <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>
   <string name="billing_learn_more">Perché pagare? Scopri di più.</string>
-  <string name="subscription_activated">Ora sei abbonato alle funzioni X.</string>
   <string name="subscription_expired">Abbonamento scaduto</string>
   <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
   <string name="subscription_not_signed_in">Accedi al tuo account di Amazon!</string>

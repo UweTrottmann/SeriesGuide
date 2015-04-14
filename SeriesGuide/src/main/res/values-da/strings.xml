@@ -403,7 +403,6 @@
   <string name="upgrade_description">Oplås alle funktioner, herunder: underretninger, temaer og flere widget indstillinger. Hjælp mig skabe fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte! Du har adgang til alle funktioner.</string>
   <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
-  <string name="subscription_activated">Du abonnerer nu på X funktioner.</string>
   <string name="subscription_expired">Abonnement udløbet</string>
   <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
   <string name="subscription_not_signed_in">Log ind på din Amazon konto!</string>

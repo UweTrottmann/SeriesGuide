@@ -403,7 +403,6 @@
   <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
   <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
   <string name="billing_learn_more">De ce să plătiți? Află mai multe.</string>
-  <string name="subscription_activated">Acum sunteţi înscris la opțiunile X.</string>
   <string name="subscription_expired">Abonament expirat</string>
   <string name="subscription_expired_details">Abonamentul la opțiunile X a expirat.</string>
   <string name="subscription_not_signed_in">Conectează-te în contul Amazon!</string>

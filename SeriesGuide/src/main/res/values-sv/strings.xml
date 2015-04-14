@@ -36,15 +36,15 @@
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="add_empty">Det finns inga program här.</string>
   <string name="people_empty">Ingen här? Tryck för att försöka igen.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">Kunde inte modifiera data.</string>
   <string name="share">Dela</string>
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_movie">Dela film</string>
   <string name="share_checkout">Kolla in %s</string>
   <string name="comments">Kommentarer</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
+  <string name="shout_invalid">Din kommentar följer inte reglerna!</string>
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
@@ -166,7 +166,7 @@
   <string name="context_marknext">Sett nästa avsnitt</string>
   <string name="now_tab">Nu</string>
   <string name="recently_watched">Nyligen sedda</string>
-  <string name="released_today">Released today</string>
+  <string name="released_today">Release idag</string>
   <string name="friends_recently">Dina trakt vänner</string>
   <string name="now_empty">Inget att göra. Se några tv-serier!</string>
   <string name="upcoming">Kommande</string>
@@ -235,7 +235,7 @@
   <string name="trakt_notcollected">%s ej hämtade.</string>
   <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Objektet hittades inte (än) på trakt. Försök igen senare.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>
@@ -243,10 +243,10 @@
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_account">trakt-konto</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
+  <string name="trakt_connect_instructions">På nästa skärm loggar du in på trakt eller skapar ett nytt konto. Ge sedan SeriesGuide åtkomst till ditt trakt-konto.</string>
   <string name="connect_trakt">Anslut till trakt</string>
-  <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
+  <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
+  <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
   <string name="username">Användarnamn</string>
   <string name="waitplease">Ett ögonblick…</string>
   <string name="connect">Anslut</string>
@@ -277,7 +277,7 @@
     <item quantity="other">%d röster</item>
   </plurals>
   <string name="feedback">Skicka feedback</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Öppna i webbläsare</string>
   <string name="prefs_category_basic">Grunder</string>
   <string name="prefs_category_sharing">Tjänster</string>
   <string name="prefs_category_advanced">Avancerat</string>
@@ -318,10 +318,10 @@
   <string name="pref_theme">Tema</string>
   <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
-  <string name="pref_autoupdatesummary">Periodvis uppdatering av dina program</string>
+  <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet</string>
   <string name="pref_autobackup">Sätt på Automatisk Säkerhetskopiering</string>
   <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av din show databas till Nerladdnings mappen</string>
-  <string name="backup">Säkerhetskopiera/Återställ</string>
+  <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_upcominglimit">Kommande serier inom…</string>
   <string name="pref_number">Nummerformat</string>
@@ -401,10 +401,9 @@
   <string name="billing_action_pass">Skaffa X Pass</string>
   <string name="billing_price_subscribe">%s/år, 30 dagars testversion</string>
   <string name="billing_price_pass">engångsköp</string>
-  <string name="upgrade_description">Lås upp alla funktioner, inklusive meddelanden, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
+  <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
   <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
   <string name="billing_learn_more">Varför betala? Få mer information.</string>
-  <string name="subscription_activated">Du prenumerar nu på X-funktioner.</string>
   <string name="subscription_expired">Prenumerationen har gått ut</string>
   <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
   <string name="subscription_not_signed_in">Logga in med ditt Amazon-konto!</string>

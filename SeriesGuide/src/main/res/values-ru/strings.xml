@@ -403,7 +403,6 @@
   <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
   <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
   <string name="billing_learn_more">Зачем платить?</string>
-  <string name="subscription_activated">Теперь вы подписаны на X функции.</string>
   <string name="subscription_expired">Срок действия подписки истек</string>
   <string name="subscription_expired_details">Подписка X функции истекла.</string>
   <string name="subscription_not_signed_in">Войдите в свой аккаунт Amazon!</string>

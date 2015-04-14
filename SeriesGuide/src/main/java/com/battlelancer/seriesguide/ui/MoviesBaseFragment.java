@@ -100,12 +100,13 @@ public abstract class MoviesBaseFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.movies_menu, menu);
 
         // guard against not attached to activity
         if (!isAdded()) {
             return;
         }
+
+        inflater.inflate(R.menu.movies_menu, menu);
 
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
                 .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getActivity()));

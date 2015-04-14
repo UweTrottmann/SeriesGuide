@@ -403,7 +403,6 @@
   <string name="upgrade_description">Lås opp alle funksjoner inkludert, varslinger, temaer og flere alternativer for modulen. Hjelp meg lage fremtidlige oppdateringer.</string>
   <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
   <string name="billing_learn_more">Hvorfor betale? Lær mer.</string>
-  <string name="subscription_activated">Du abonnerer nå på X-funksjoner.</string>
   <string name="subscription_expired">Abonnement utløpt</string>
   <string name="subscription_expired_details">Abonnementet på X-funksjoner har utløpt.</string>
   <string name="subscription_not_signed_in">Logg deg på din Amazon konto!</string>

@@ -35,7 +35,7 @@
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
-  <string name="database_error">Could not modify data.</string>
+  <string name="database_error">لا يمكن تعديل البيانات.</string>
   <string name="share">المشاركة</string>
   <string name="share_show">مشاركة العرض</string>
   <string name="share_episode">مشاركة الحلقة</string>
@@ -43,7 +43,7 @@
   <string name="share_checkout">تتحق من %s</string>
   <string name="comments">التعليقات</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
   <string name="shout">تعليق</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
@@ -163,10 +163,10 @@
   <string name="menu_update_delta">تحديث (الغير محدثة فقط)</string>
   <string name="context_updateshow">تحديث</string>
   <string name="context_marknext">شاهد الحلقة التالية</string>
-  <string name="now_tab">Now</string>
-  <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
-  <string name="friends_recently">Your trakt friends</string>
+  <string name="now_tab">الآن</string>
+  <string name="recently_watched">تم مشاهدته مؤخراً</string>
+  <string name="released_today">صدر اليوم</string>
+  <string name="friends_recently">أصدقائك على موقع Trakt</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="upcoming">القادم</string>
   <string name="recent">مؤخراً</string>
@@ -209,8 +209,8 @@
   <string name="list_item_manage">إدارة القوائم</string>
   <string name="list_item_remove">إزالة من القائمة</string>
   <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
-  <string name="action_lists_sort">Sort lists</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_sort">ترتيب القوائم</string>
+  <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
   <string name="hexagon_warning">تجريبي</string>
   <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>
@@ -226,7 +226,7 @@
   <string name="hexagon_remove_account_failure">لم نستطع إزالة حسابك</string>
   <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
   <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
-  <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
   <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
   <string name="trakt_seen">%s تمت  المشاهدة.</string>
   <string name="trakt_notseen">%s لم تتم المشاهدة.</string>
@@ -238,7 +238,7 @@
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
   <string name="traktcheckin_wait">سأنتظر</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">تم إرسالها إلى Trakt.</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
   <string name="trakt_account">حساب Trak</string>
@@ -276,7 +276,7 @@
     <item quantity="other">%d أصوات</item>
   </plurals>
   <string name="feedback">أرسل ملاحظاتك</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">فتح في المتصفح</string>
   <string name="prefs_category_basic">أساسي</string>
   <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">متقدم</string>
@@ -403,7 +403,6 @@
   <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
   <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
   <string name="billing_learn_more">لماذا تدفع؟ إعرف أكثر.</string>
-  <string name="subscription_activated">أنت الآن مشترك في النسخة المدفوعة.</string>
   <string name="subscription_expired">انتهت مدة الإشتراك</string>
   <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
   <string name="subscription_not_signed_in">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>
