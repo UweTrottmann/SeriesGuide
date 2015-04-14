@@ -16,10 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -31,6 +33,7 @@ import android.widget.EditText;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
@@ -61,6 +64,7 @@ public class SearchActivity extends BaseNavDrawerActivity {
     private EditText searchBar;
     private View clearButton;
     private ViewPager viewPager;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -192,6 +196,32 @@ public class SearchActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        // check for running show removal worker
+        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
+        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
+            showProgressDialog();
+        }
+        // now listen to events
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void registerEventBus() {
+        // do nothing, we handle that ourselves in onStart
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // now prevent dialog from restoring itself (we would loose ref to it)
+        hideProgressDialog();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -207,6 +237,35 @@ public class SearchActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
+        showProgressDialog();
+    }
+
+    /**
+     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
+     */
+    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+        hideProgressDialog();
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        progressDialog = null;
     }
 
     protected void fireTrackerEvent(String label) {

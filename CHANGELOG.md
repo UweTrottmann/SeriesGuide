@@ -5,6 +5,61 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 23 *(2015-04-14)*
+-------------------------
+
+* List tabs can be reordered (see Menu > Reorder lists). Order is preserved on backup/restore.
+* If connected to trakt, any movie can be set watched and any watched movie can be rated.
+* In search, show cards now have all expected menu options (e.g. manage lists, remove).
+* trakt search replaces TheTVDB search in "Add show". Please report any issues, or if the results are better or worse.
+
+#### 23.0.0 *(2015-04-14)*
+
+* NOTICE Latest translations from crowdin.
+
+#### 23-beta5 *(2015-04-09)*
+
+* TWEAK Use trakt for search in "Add show". Please report any issues, or if the results are better or worse.
+
+#### 23-beta4 *(2015-04-09)*
+
+* TWEAK If connected to trakt, display and allow changing watched state of any movie. Requires trakt
+  sync to run at least once after updating so watched movies are downloaded.
+* TWEAK Display sync progress bar in Lists and Movies as well.
+* TWEAK Add option to hide "Released today" from Now tab.
+* TWEAK Add "Open in browser" action to help.
+* TWEAK Use different ellipsis algorithm for single line text, displaying as many characters as possible.
+* TWEAK Show scrollbar in Now tab.
+* NOTICE Latest translations from crowdin.
+
+#### 23-beta3 *(2015-04-02)*
+
+* TWEAK Add skip options to episodes list menus.
+* FIX Buttons on Android 4.3 and below do not have enough padding.
+* FIX Use white instead of dark underline for transparent tabs for Android Dark theme.
+* FIX Improve padding for fast scrollbars and margin for add show button on Android 5.1.
+* NOTICE Latest translations from crowdin.
+
+#### 23-beta2 *(2015-03-21)*
+
+* TWEAK If a trakt comment fails due to breaking the new commenting rules, show an error message.
+* TWEAK If a trakt check-in fails due to the item not found on trakt, show an error message.
+* TWEAK Add "Update" action to search card menu.
+* FIX Use latest Amazon In-App billing, fixes crashes on Lollipop (Amazon version only).
+* FIX Toolbar icons use wrong color on Android KitKat and below in some circumstances.
+* FIX Using the "Add all" button in "Add show" now correctly marks all shows as added.
+* NOTICE Latest translations from crowdin.
+
+#### 23-beta1 *(2015-03-11)*
+
+* FEATURE List tabs can be reordered (see Menu > Reorder lists). Order is preserved on backup/restore.
+* TWEAK Toggle favorite state of shows in lists.
+* TWEAK Add menu to show search result cards (Toggle favorite and hidden state, manage lists, remove).
+* TWEAK Slightly faster export and auto backup due to removal of indents in exported JSON files.
+* TWEAK Show higher resolution background on Android Wear notifications.
+* FIX Show status is now correctly not displayed if it is unknown (= not set on TheTVDB).
+* FIX Shows tab next episodes update correctly after setting watched episodes in Upcoming/Recent.
+
 Version 22 *(2015-03-02)*
 -------------------------
 

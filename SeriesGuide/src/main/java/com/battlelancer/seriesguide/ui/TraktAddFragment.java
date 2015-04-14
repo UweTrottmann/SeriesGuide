@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -99,9 +100,11 @@ public class TraktAddFragment extends AddFragment {
                 for (SearchResult result : searchResults) {
                     if (!result.isAdded) {
                         showsToAdd.add(result);
+                        result.isAdded = true;
                     }
                 }
                 TaskManager.getInstance(getActivity()).performAddTask(showsToAdd, false, false);
+                EventBus.getDefault().post(new AddShowEvent());
             }
             // disable the item so the user has to come back
             item.setEnabled(false);

@@ -42,7 +42,8 @@
   <string name="share_movie">Поділитися фільмом</string>
   <string name="share_checkout">Погляньте %s</string>
   <string name="comments">Коментарі</string>
-  <string name="shout_hint">Написати відгук (англійською)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Відгук!</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
   <string name="action_lists_sort">Сортувати списки</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d голосів</item>
     <item quantity="other">%d голосів</item>
   </plurals>
+  <string name="feedback">Відправити відгук</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -288,7 +293,6 @@
   <string name="about">Про SeriesGuide</string>
   <string name="pref_credits">Подяки</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис на trakt.tv</string>
-  <string name="feedback">Відправити відгук</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
   <string name="sort">Сортувати за</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
   <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
   <string name="billing_learn_more">Навіщо платити? Дізнатися більше.</string>
-  <string name="subscription_activated">Відтепер ви підписані на X функції.</string>
   <string name="subscription_expired">Закінчився термін дії підписки</string>
   <string name="subscription_expired_details">Підписка функцій X минула.</string>
   <string name="subscription_not_signed_in">Увійдіть у ваш Amazon аккаунт!</string>

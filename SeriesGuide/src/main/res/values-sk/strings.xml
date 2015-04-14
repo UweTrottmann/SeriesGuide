@@ -42,7 +42,8 @@
   <string name="share_movie">Zdieľať film</string>
   <string name="share_checkout">Odhlásiť %s</string>
   <string name="comments">Komentáre</string>
-  <string name="shout_hint">Napíšte výkrik (v Angličtine)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Zakrič!</string>
   <string name="isspoiler">Prezradenie deja!</string>
   <string name="no_shouts">Buď prvý kto zakričí!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, sezóny alebo epizódy.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s nezozbieraných.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d hlasov</item>
     <item quantity="other">%d hlasov</item>
   </plurals>
+  <string name="feedback">Poslať reakciu</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -288,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Pridať/Upraviť prihlasovacie údaje</string>
-  <string name="feedback">Poslať reakciu</string>
   <string name="pref_autoaddshows">Pridávať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridávať seriály z vašej aktivity na trakt.tv</string>
   <string name="sort">Zoradiť podľa</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Why pay? Learn more.</string>
-  <string name="subscription_activated">You are now subscribed, all are features unlocked.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your SeriesGuide subscription has expired.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

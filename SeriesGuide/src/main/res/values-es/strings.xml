@@ -42,7 +42,8 @@
   <string name="share_movie">Compartir película</string>
   <string name="share_checkout">Échale un vistazo a %s</string>
   <string name="comments">Comentarios</string>
-  <string name="shout_hint">Escriba un grito (en inglés)</string>
+  <string name="shout_hint">Escribe un comentario (Inglés, 5 + palabras)</string>
+  <string name="shout_invalid">Su comentario no sigue las reglas!</string>
   <string name="shout">¡Gritar!</string>
   <string name="isspoiler">¡Alerta de spoiler!</string>
   <string name="no_shouts">¡Sé el primero en gritar!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Eliminar de la lista</string>
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
+  <string name="action_lists_reorder">Reordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
@@ -233,6 +235,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="trakt_notcollected">%s no recopilados.</string>
   <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado.</string>
+  <string name="checkin_error_not_exists">Artículo no encontrado (todavía) en trakt. Inténtalo de nuevo más tarde.</string>
   <string name="traktcheckin_cancel">Reemplazar</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
@@ -273,6 +276,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <item quantity="many">%d votos</item>
     <item quantity="other">%d votos</item>
   </plurals>
+  <string name="feedback">Enviar comentarios</string>
+  <string name="action_open_in_browser">Abrir en el navegador</string>
   <string name="prefs_category_basic">Básicos</string>
   <string name="prefs_category_sharing">Servicios</string>
   <string name="prefs_category_advanced">Avanzado</string>
@@ -289,7 +294,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="about">Acerca de SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
-  <string name="feedback">Enviar comentarios</string>
   <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
   <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
   <string name="sort">Ordenar por</string>
@@ -400,7 +404,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
   <string name="billing_learn_more">¿Por qué deberías pagar? Lee más.</string>
-  <string name="subscription_activated">Ahora estás suscrito a las características X.</string>
   <string name="subscription_expired">Suscripción caducada</string>
   <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
   <string name="subscription_not_signed_in">Inicia sesión en tu cuenta de Amazon!</string>

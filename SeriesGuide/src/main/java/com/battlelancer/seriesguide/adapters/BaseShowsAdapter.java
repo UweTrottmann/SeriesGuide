@@ -25,43 +25,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**
- * Base adapter using the shows_row.xml layout with a ViewHolder.
+ * Base adapter for the show item layout.
  */
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
-    protected LayoutInflater mLayoutInflater;
+    public interface OnContextMenuClickListener {
+        public void onClick(View view, ShowViewHolder viewHolder);
+    }
 
-    private final int LAYOUT = R.layout.item_show;
+    private OnContextMenuClickListener onContextMenuClickListener;
+    private final int resIdStar;
+    private final int resIdStarZero;
 
-    public BaseShowsAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
+        super(context, null, 0);
+        this.onContextMenuClickListener = listener;
+
+        resIdStar = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableStar);
+        resIdStarZero = Utils.resolveAttributeToResourceId(context.getTheme(),
+                R.attr.drawableStar0);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.name = (TextView) v.findViewById(R.id.seriesname);
-        viewHolder.timeAndNetwork = (TextView) v.findViewById(
-                R.id.textViewShowsTimeAndNetwork);
-        viewHolder.episode = (TextView) v.findViewById(
-                R.id.TextViewShowListNextEpisode);
-        viewHolder.episodeTime = (TextView) v.findViewById(R.id.episodetime);
-        viewHolder.poster = (ImageView) v.findViewById(R.id.showposter);
-        viewHolder.favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
-        viewHolder.contextMenu = (ImageView) v.findViewById(
-                R.id.imageViewShowsContextMenu);
-
+        ShowViewHolder viewHolder = new ShowViewHolder(v, onContextMenuClickListener);
         v.setTag(viewHolder);
 
         return v;
+    }
+
+    public void setFavoriteState(ImageView view, boolean isFavorite) {
+        view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
     }
 
     /**
@@ -88,20 +91,46 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return networkAndTime.toString();
     }
 
-    public static class ViewHolder {
+    public static class ShowViewHolder {
 
         public TextView name;
-
         public TextView timeAndNetwork;
-
         public TextView episode;
-
         public TextView episodeTime;
-
         public ImageView poster;
-
         public ImageView favorited;
-
         public ImageView contextMenu;
+
+        public int showTvdbId;
+        public int episodeTvdbId;
+        public boolean isFavorited;
+        public boolean isHidden;
+
+        public ShowViewHolder(View v, final OnContextMenuClickListener listener) {
+            name = (TextView) v.findViewById(R.id.seriesname);
+            timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
+            episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
+            episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            poster = (ImageView) v.findViewById(R.id.showposter);
+            favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
+            contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+
+            // favorite star
+            favorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowTools.get(v.getContext()).storeIsFavorite(showTvdbId, !isFavorited);
+                }
+            });
+            // context menu
+            contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(v, ShowViewHolder.this);
+                    }
+                }
+            });
+        }
     }
 }

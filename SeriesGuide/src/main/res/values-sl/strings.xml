@@ -22,7 +22,7 @@
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
   <string name="clear">Zbriši</string>
-  <string name="clear_search_history">Clear search history</string>
+  <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="discard">Zavrzi</string>
   <string name="save_selection">Shrani izbiro</string>
   <string name="search_hint">Iskanje epizode</string>
@@ -42,7 +42,8 @@
   <string name="share_movie">Share movie</string>
   <string name="share_checkout">Check out %s</string>
   <string name="comments">Komentarji</string>
-  <string name="shout_hint">Vpiši vzklik (v angleščini)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Zakliči!</string>
   <string name="isspoiler">Pozor! Razkrita vsebina!</string>
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Odstrani s spiska</string>
   <string name="list_empty">Na ta spisek lahko dodaš oddaje, sezone ali epizode.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Nastavitev SeriesGuide oblaka</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s ne nabrana.</string>
   <string name="checkin_success_trakt">Prijavljen v %s v trakt.</string>
   <string name="checkin_canceled_success_trakt">Preklical prijavo v trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d glasov</item>
     <item quantity="other">%d glasov</item>
   </plurals>
+  <string name="feedback">Pošlji povratno informacijo</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Storitve</string>
   <string name="prefs_category_advanced">Napredno</string>
@@ -288,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Ekipa in igralci</string>
   <string name="pref_traktsummary">Dodajanje ali urejanje prijavnih podatkov trakt.tv</string>
-  <string name="feedback">Pošlji povratno informacijo</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
   <string name="sort">Razvrsti po</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Why pay? Learn more.</string>
-  <string name="subscription_activated">You are now subscribed, all are features unlocked.</string>
   <string name="subscription_expired">Naročnina potekla</string>
   <string name="subscription_expired_details">Naročnina na X funkcije je potekla.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

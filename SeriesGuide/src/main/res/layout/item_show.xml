@@ -55,10 +55,10 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            android:maxLines="1"
             android:ellipsize="end"
-            tools:text="@string/show" />
+            android:singleLine="true"
+            tools:text="@string/show"
+            android:textAppearance="@style/TextAppearance.Subhead" />
 
         <TextView
             android:id="@+id/TextViewShowListNextEpisode"
@@ -68,10 +68,10 @@
             android:layout_toRightOf="@id/showposter"
             android:paddingTop="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
+            android:ellipsize="end"
+            android:singleLine="true"
             tools:text="10x456 Some Very Cool Episode Title Therefore"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <TextView
             android:id="@+id/episodetime"
@@ -80,10 +80,10 @@
             android:layout_below="@id/TextViewShowListNextEpisode"
             android:layout_toRightOf="@id/showposter"
             android:paddingRight="@dimen/inline_padding"
+            android:ellipsize="end"
+            android:singleLine="true"
             tools:text="Jan 8, 2009 (Thur)"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim" />
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
@@ -95,11 +95,11 @@
             android:paddingBottom="8dp"
             android:layout_marginRight="24dp"
             android:layout_toRightOf="@+id/showposter"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@string/norating"
             tools:text="Tue 08:00 PM | Showtime Network"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:gravity="bottom|right" />
 
     </RelativeLayout>

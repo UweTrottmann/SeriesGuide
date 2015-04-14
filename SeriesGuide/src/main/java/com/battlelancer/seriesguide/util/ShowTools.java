@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -45,6 +46,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import timber.log.Timber;
 
@@ -52,6 +54,15 @@ import timber.log.Timber;
  * Common activities and tools useful when interacting with shows.
  */
 public class ShowTools {
+
+    /**
+     * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
+     */
+    public interface Status {
+        int CONTINUING = 1;
+        int ENDED = 0;
+        int UNKNOWN = -1;
+    }
 
     private static final int SHOWS_MAX_BATCH_SIZE = 100;
 
@@ -133,9 +144,11 @@ public class ShowTools {
             return Result.ERROR;
         }
 
-        // make sure other loaders (activity, overview, details) are notified
+        // make sure other loaders (activity, overview, details, search) are notified
         mContext.getContentResolver().notifyChange(
                 SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
+        mContext.getContentResolver().notifyChange(
+                SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
         return Result.SUCCESS;
     }
@@ -174,6 +187,12 @@ public class ShowTools {
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
+        // also notify URIs used by search and lists
+        mContext.getContentResolver()
+                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
+        mContext.getContentResolver()
+                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
+
         // favorite status may determine eligibility for notifications
         Utils.runNotificationService(mContext);
 
@@ -201,6 +220,10 @@ public class ShowTools {
         values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
         mContext.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        // also notify filter URI used by search
+        mContext.getContentResolver()
+                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
         Toast.makeText(mContext, mContext.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
@@ -485,7 +508,9 @@ public class ShowTools {
      *
      * @return null if there was an error, empty list if there are no shows.
      */
-    public static @Nullable HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
+    public static
+    @Nullable
+    HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
@@ -501,5 +526,40 @@ public class ShowTools {
         shows.close();
 
         return existingShows;
+    }
+
+    /**
+     * Decodes the show status and returns the localized text representation. May be {@code null} if
+     * status is unknown.
+     *
+     * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     */
+    @Nullable
+    public static String getStatus(@Nonnull Context context, int encodedStatus) {
+        if (encodedStatus == Status.CONTINUING) {
+            return context.getString(R.string.show_isalive);
+        } else if (encodedStatus == Status.ENDED) {
+            return context.getString(R.string.show_isnotalive);
+        } else {
+            // status unknown, display nothing
+            return null;
+        }
+    }
+
+    /**
+     * Gets the show status from {@link #getStatus} and sets a status dependant text color on the
+     * given view.
+     *
+     * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     */
+    public static void setStatusAndColor(@Nonnull TextView view, int encodedStatus) {
+        view.setText(getStatus(view.getContext(), encodedStatus));
+        if (encodedStatus == Status.CONTINUING) {
+            view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
+                    view.getContext().getTheme(), R.attr.sgTextColorGreen)));
+        } else {
+            view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
+                    view.getContext().getTheme(), android.R.attr.textColorSecondary)));
+        }
     }
 }

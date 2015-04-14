@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,15 +30,18 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.adapters.ShowResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -59,7 +61,7 @@ public class ShowSearchFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new ShowResultsAdapter(getActivity(), null, 0);
+        adapter = new ShowResultsAdapter(getActivity(), onContextMenuClickListener);
         setListAdapter(adapter);
 
         // initially display shows with recently released episodes
@@ -110,17 +112,18 @@ public class ShowSearchFragment extends ListFragment {
                 String customTimeInOneHour = String.valueOf(TimeTools.getCurrentTime(getActivity())
                         + DateUtils.HOUR_IN_MILLIS);
                 return new CursorLoader(getActivity(), SeriesGuideContract.Shows.CONTENT_URI,
-                        SearchQuery.PROJECTION,
+                        ShowResultsAdapter.Query.PROJECTION,
                         SeriesGuideContract.Shows.NEXTEPISODE + "!='' AND "
                                 + SeriesGuideContract.Shows.HIDDEN + "=0 AND "
                                 + SeriesGuideContract.Shows.NEXTAIRDATEMS + "<?",
                         new String[] { customTimeInOneHour },
                         ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
             } else {
-                Uri uri = Uri.withAppendedPath(SeriesGuideContract.Shows.CONTENT_FILTER_URI,
-                        Uri.encode(query));
-                return new CursorLoader(getActivity(), uri, SearchQuery.PROJECTION, null, null,
-                        null);
+                Uri uri = SeriesGuideContract.Shows.CONTENT_URI_FILTER.buildUpon()
+                        .appendPath(query)
+                        .build();
+                return new CursorLoader(getActivity(), uri,
+                        ShowResultsAdapter.Query.PROJECTION, null, null, null);
             }
         }
 
@@ -135,68 +138,30 @@ public class ShowSearchFragment extends ListFragment {
         }
     };
 
-    private static class ShowResultsAdapter extends BaseShowsAdapter {
-
-        public ShowResultsAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
-        }
-
+    private ShowResultsAdapter.OnContextMenuClickListener onContextMenuClickListener
+            = new ShowResultsAdapter.OnContextMenuClickListener() {
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
+        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.shows_popup_menu);
 
-            viewHolder.name.setText(cursor.getString(SearchQuery.TITLE));
+            // show/hide some menu items depending on show properties
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_shows_favorites_add)
+                    .setVisible(!viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_favorites_remove)
+                    .setVisible(viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
-            // favorited label
-            boolean isFavorited = cursor.getInt(SearchQuery.FAVORITE) == 1;
-            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
+            // hide unused actions
+            menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
 
-            // network, day and time
-            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getInt(SearchQuery.RELEASE_TIME),
-                    cursor.getInt(SearchQuery.RELEASE_WEEKDAY),
-                    cursor.getString(SearchQuery.RELEASE_TIMEZONE),
-                    cursor.getString(SearchQuery.RELEASE_COUNTRY),
-                    cursor.getString(SearchQuery.NETWORK)));
-
-            // poster
-            Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                    cursor.getString(SearchQuery.POSTER));
+            popupMenu.setOnMenuItemClickListener(
+                    new ShowMenuItemClickListener(getActivity(),
+                            getFragmentManager(), viewHolder.showTvdbId, viewHolder.episodeTvdbId,
+                            ListsActivity.TAG));
+            popupMenu.show();
         }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = super.newView(context, cursor, parent);
-
-            ViewHolder viewHolder = (ViewHolder) v.getTag();
-            viewHolder.favorited.setBackgroundResource(0); // remove selectable background
-            viewHolder.contextMenu.setVisibility(View.GONE);
-
-            return v;
-        }
-    }
-
-    private interface SearchQuery {
-        String[] PROJECTION = new String[] {
-                SeriesGuideContract.Shows._ID,
-                SeriesGuideContract.Shows.TITLE,
-                SeriesGuideContract.Shows.POSTER,
-                SeriesGuideContract.Shows.FAVORITE,
-                SeriesGuideContract.Shows.RELEASE_TIME,
-                SeriesGuideContract.Shows.RELEASE_WEEKDAY,
-                SeriesGuideContract.Shows.RELEASE_TIMEZONE,
-                SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.NETWORK
-        };
-
-        int ID = 0;
-        int TITLE = 1;
-        int POSTER = 2;
-        int FAVORITE = 3;
-        int RELEASE_TIME = 4;
-        int RELEASE_WEEKDAY = 5;
-        int RELEASE_TIMEZONE = 6;
-        int RELEASE_COUNTRY = 7;
-        int NETWORK = 8;
-    }
+    };
 }

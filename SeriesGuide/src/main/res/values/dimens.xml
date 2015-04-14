@@ -10,6 +10,7 @@
 
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>
+    <dimen name="floating_action_button_margin_end">40dp</dimen>
 
     <!-- Material text sizes -->
     <dimen name="text_size_default_sg">14sp</dimen>

@@ -42,7 +42,8 @@
   <string name="share_movie">שתף סרט</string>
   <string name="share_checkout">בדוק את %s</string>
   <string name="comments">תגובות</string>
-  <string name="shout_hint">הקלד המלצה (באנגלית)</string>
+  <string name="shout_hint">הקלד הערה (באנגלית, 5+ מילות)</string>
+  <string name="shout_invalid">ההערה שלך לא על פי הכללים!</string>
   <string name="shout">המלץ!</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="action_lists_sort">מיון רשימה</string>
+  <string name="action_lists_reorder">סדר מחדש רשימה</string>
   <string name="hexagon_warning">ניסיון!</string>
   <string name="hexagon_setup">הגדר ענן SeriesGuide</string>
   <string name="hexagon_description">התחבר לענן לגיבוי ולסנכרן את התוכניות והסרטים שלך.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s שטרם אספת.</string>
   <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
   <string name="checkin_canceled_success_trakt">הצ\'ק-אין ב-trakt בוטל.</string>
+  <string name="checkin_error_not_exists">פריט לא (עדיין) נמצא ב-trakt. נסה שוב מאוחר יותר.</string>
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או לסרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
@@ -272,6 +275,8 @@
     <item quantity="many">הצבעות %d</item>
     <item quantity="other">הצבעות %d</item>
   </plurals>
+  <string name="feedback">שלח משוב</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">בסיסי</string>
   <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>
@@ -288,7 +293,6 @@
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_credits">קרדיטים</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
-  <string name="feedback">שלח משוב</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
   <string name="sort">מיין לפי</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
   <string name="upgrade_success">תודה על תמיכתך ב-SerieaGuide! יש לך גישה לכל האפשרויות.</string>
   <string name="billing_learn_more">למה לשלם? למד עוד.</string>
-  <string name="subscription_activated">כעת אתה מנוי על תכונות של X.</string>
   <string name="subscription_expired">פג תוקף המנוי</string>
   <string name="subscription_expired_details">פג מנוי תכונות X שלך.</string>
   <string name="subscription_not_signed_in">התחבר לחשבון האמזון שלך!</string>

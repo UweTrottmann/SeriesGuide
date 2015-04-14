@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -25,15 +24,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,23 +44,16 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
+import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -143,11 +132,7 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        int resIdStar = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableStar);
-        int resIdStarZero = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableStar0);
-        mAdapter = new ShowsAdapter(getActivity(), null, 0, resIdStar, resIdStarZero);
+        mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
@@ -217,8 +202,6 @@ public class ShowsFragment extends Fragment implements
             // keep unwatched and upcoming shows from becoming stale
             getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
         }
-
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -227,7 +210,6 @@ public class ShowsFragment extends Fragment implements
 
         // avoid CPU activity
         schedulePeriodicDataRefresh(false);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -468,7 +450,7 @@ public class ShowsFragment extends Fragment implements
         // keep unwatched and upcoming shows from becoming stale
         schedulePeriodicDataRefresh(true);
 
-        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsQuery.PROJECTION,
+        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsAdapter.Query.PROJECTION,
                 selection.toString(), null,
                 ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst,
                         mIsSortIgnoreArticles)
@@ -493,6 +475,13 @@ public class ShowsFragment extends Fragment implements
         mAdapter.swapCursor(null);
     }
 
+    /**
+     * Periodically restart the shows loader.
+     *
+     * <p>Some changes to the displayed data are not based on actual (detectable) changes to the
+     * underlying data, but because time has passed (e.g. relative time displays, release time has
+     * passed).
+     */
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
         if (mHandler == null) {
             mHandler = new Handler();
@@ -513,206 +502,28 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    private class ShowsAdapter extends BaseShowsAdapter {
-
-        private int mStarDrawableId;
-
-        private int mStarZeroDrawableId;
-
-        public ShowsAdapter(Context context, Cursor c, int flags, int starDrawableResId,
-                int starZeroDrawableId) {
-            super(context, c, flags);
-            mStarDrawableId = starDrawableResId;
-            mStarZeroDrawableId = starZeroDrawableId;
-        }
-
+    private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
+            = new BaseShowsAdapter.OnContextMenuClickListener() {
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-            BaseShowsAdapter.ViewHolder viewHolder = (BaseShowsAdapter.ViewHolder) view.getTag();
+        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.shows_popup_menu);
 
-            // set text properties immediately
-            viewHolder.name.setText(cursor.getString(ShowsQuery.TITLE));
+            // show/hide some menu items depending on show properties
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_shows_favorites_add)
+                    .setVisible(!viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_favorites_remove)
+                    .setVisible(viewHolder.isFavorited);
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
-            // favorite toggle
-            final int showId = cursor.getInt(ShowsQuery._ID);
-            final boolean isFavorited = cursor.getInt(ShowsQuery.FAVORITE) == 1;
-            viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
-                    : mStarZeroDrawableId);
-            viewHolder.favorited.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onFavoriteShow(showId, !isFavorited);
-                }
-            });
-
-            // next episode info
-            String fieldValue = cursor.getString(ShowsQuery.NEXTTEXT);
-            if (TextUtils.isEmpty(fieldValue)) {
-                // show show status if there are currently no more
-                // episodes
-                int status = cursor.getInt(ShowsQuery.STATUS);
-
-                // Continuing == 1 and Ended == 0
-                if (status == 1) {
-                    viewHolder.episodeTime.setText(getString(R.string.show_isalive));
-                } else if (status == 0) {
-                    viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
-                } else {
-                    viewHolder.episodeTime.setText("");
-                }
-                viewHolder.episode.setText("");
-            } else {
-                viewHolder.episode.setText(fieldValue);
-                fieldValue = cursor.getString(ShowsQuery.NEXTAIRDATETEXT);
-                viewHolder.episodeTime.setText(fieldValue);
-            }
-
-            // network, day and time
-            viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                    cursor.getInt(ShowsQuery.RELEASE_TIME),
-                    cursor.getInt(ShowsQuery.RELEASE_WEEKDAY),
-                    cursor.getString(ShowsQuery.RELEASE_TIMEZONE),
-                    cursor.getString(ShowsQuery.RELEASE_COUNTRY),
-                    cursor.getString(ShowsQuery.NETWORK)));
-
-            // set poster
-            Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                    cursor.getString(ShowsQuery.POSTER));
-
-            // context menu
-            viewHolder.contextMenu.setVisibility(View.VISIBLE);
-            final boolean isHidden = DBUtils.restoreBooleanFromInt(
-                    cursor.getInt(ShowsQuery.HIDDEN));
-            final int episodeTvdbId = cursor.getInt(ShowsQuery.NEXTEPISODE);
-            viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                    popupMenu.inflate(R.menu.shows_popup_menu);
-
-                    // show/hide some menu items depending on show properties
-                    Menu menu = popupMenu.getMenu();
-                    menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!isFavorited);
-                    menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(isFavorited);
-                    menu.findItem(R.id.menu_action_shows_hide).setVisible(!isHidden);
-                    menu.findItem(R.id.menu_action_shows_unhide).setVisible(isHidden);
-
-                    popupMenu.setOnMenuItemClickListener(
-                            new PopupMenuItemClickListener(showId, episodeTvdbId));
-                    popupMenu.show();
-                }
-            });
+            popupMenu.setOnMenuItemClickListener(
+                    new ShowMenuItemClickListener(getActivity(), getFragmentManager(),
+                            viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
+            popupMenu.show();
         }
-
-        private class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-            private final int mShowTvdbId;
-            private final int mEpisodeTvdbId;
-
-            public PopupMenuItemClickListener(int showTvdbId, int episodeTvdbId) {
-                mShowTvdbId = showTvdbId;
-                mEpisodeTvdbId = episodeTvdbId;
-            }
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_shows_watched_next: {
-                        DBUtils.markNextEpisode(getActivity(), mShowTvdbId, mEpisodeTvdbId);
-                        fireTrackerEventContext("Mark next episode");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_favorites_add: {
-                        onFavoriteShow(mShowTvdbId, true);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_favorites_remove: {
-                        onFavoriteShow(mShowTvdbId, false);
-                        return true;
-                    }
-                    case R.id.menu_action_shows_hide: {
-                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, true);
-                        fireTrackerEventContext("Hide show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_unhide: {
-                        ShowTools.get(getActivity()).storeIsHidden(mShowTvdbId, false);
-                        fireTrackerEventContext("Unhide show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_manage_lists: {
-                        ManageListsDialogFragment.showListsDialog(mShowTvdbId, ListItemTypes.SHOW,
-                                getFragmentManager());
-                        fireTrackerEventContext("Manage lists");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_update: {
-                        SgSyncAdapter.requestSyncImmediate(getActivity(),
-                                SgSyncAdapter.SyncType.SINGLE, mShowTvdbId, true);
-                        fireTrackerEventContext("Update show");
-                        return true;
-                    }
-                    case R.id.menu_action_shows_remove: {
-                        if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
-                            showDeleteDialog(mShowTvdbId);
-                        }
-                        fireTrackerEventContext("Delete show");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
-    }
-
-    private interface ShowsQuery {
-
-        String[] PROJECTION = {
-                BaseColumns._ID,
-                Shows.TITLE,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.NETWORK,
-                Shows.POSTER,
-                Shows.STATUS,
-                Shows.NEXTEPISODE,
-                Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE,
-                Shows.HIDDEN
-        };
-
-        int _ID = 0;
-        int TITLE = 1;
-        int RELEASE_TIME = 2;
-        int RELEASE_WEEKDAY = 3;
-        int RELEASE_TIMEZONE = 4;
-        int RELEASE_COUNTRY = 5;
-        int NETWORK = 6;
-        int POSTER = 7;
-        int STATUS = 8;
-        int NEXTEPISODE = 9;
-        int NEXTTEXT = 10;
-        int NEXTAIRDATETEXT = 11;
-        int FAVORITE = 12;
-        int HIDDEN = 13;
-    }
-
-    private void onFavoriteShow(int showTvdbId, boolean isFavorite) {
-        // store new value
-        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, isFavorite);
-
-        fireTrackerEventContext(isFavorite ? "Favorite show" : "Unfavorite show");
-    }
-
-    private void showDeleteDialog(long showId) {
-        FragmentManager fm = getFragmentManager();
-        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment
-                .newInstance((int) showId);
-        deleteDialog.show(fm, "fragment_delete");
-    }
+    };
 
     private final OnSharedPreferenceChangeListener mPrefsListener
             = new OnSharedPreferenceChangeListener() {
@@ -726,18 +537,7 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
-        if (isAdded()) {
-            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(getActivity()),
-                    event.mType.getShowTvdbId());
-        }
-    }
-
     private void fireTrackerEventAction(String label) {
         Utils.trackAction(getActivity(), TAG, label);
-    }
-
-    private void fireTrackerEventContext(String label) {
-        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

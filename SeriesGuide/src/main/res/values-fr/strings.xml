@@ -42,7 +42,8 @@
   <string name="share_movie">Partager ce film</string>
   <string name="share_checkout">Jette un œil sur %s</string>
   <string name="comments">Commentaires</string>
-  <string name="shout_hint">Commenter (en anglais)</string>
+  <string name="shout_hint">Entrez un commentaire (en anglais, plus de 5 mots)</string>
+  <string name="shout_invalid">Votre commentaire ne respecte pas les règles !</string>
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
   <string name="no_shouts">Soyez le premier à commenter !</string>
@@ -139,8 +140,8 @@
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>
   <string name="no_nextepisode">pas de prochain épisode trouvé</string>
-  <string name="context_favorite">Favori</string>
-  <string name="context_unfavorite">Non favori</string>
+  <string name="context_favorite">Ajouter aux favoris</string>
+  <string name="context_unfavorite">Retirer des favoris</string>
   <string name="favorited">Ajouté aux favoris</string>
   <string name="unfavorited">Supprimé des favoris</string>
   <string name="context_hide">Cacher</string>
@@ -172,7 +173,7 @@
   <string name="friends">Amis</string>
   <string name="friends_empty">Pas d\'activité d\'amis sur Trakt.</string>
   <string name="user_stream">historique</string>
-  <string name="user_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
+  <string name="user_stream_empty">Aucun historique sur trakt. Visionner et faites des check-ins !</string>
   <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="action_lists_sort">Trier les listes</string>
+  <string name="action_lists_reorder">Réorganiser les listes</string>
   <string name="hexagon_warning">Expérimental !</string>
   <string name="hexagon_setup">Configurer le cloud SeriesGuide</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
   <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
+  <string name="checkin_error_not_exists">Article pas (encore) trouvé sur trakt. Réessayez plus tard.</string>
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
   <string name="traktcheckin_wait">J\'attends</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
+  <string name="feedback">Envoyez vos commentaires</string>
+  <string name="action_open_in_browser">Ouvrir dans le navigateur</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>
@@ -288,7 +293,6 @@
   <string name="about">A propos de SeriesGuide</string>
   <string name="pref_credits">Crédits</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
-  <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
   <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
   <string name="sort">Trier par</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
   <string name="billing_learn_more">Pourquoi payer ? En savoir plus.</string>
-  <string name="subscription_activated">Vous avez dès à présent accès aux fonctionnalités X.</string>
   <string name="subscription_expired">Abonnement expiré</string>
   <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
   <string name="subscription_not_signed_in">Connectez-vous à votre compte Amazon !</string>

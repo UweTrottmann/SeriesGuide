@@ -42,7 +42,8 @@
   <string name="share_movie">Подели филм</string>
   <string name="share_checkout">Погледај %s</string>
   <string name="comments">Коментари</string>
-  <string name="shout_hint">Напиши коментар (на енглеском)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Коментариши!</string>
   <string name="isspoiler">Пажња, Спојлер!</string>
   <string name="no_shouts">Буди први који ће коментарисати!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Уклони са листе</string>
   <string name="list_empty">Можете да додате серије, сезоне или епизоде на ову листу.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Cloud сервис</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s није у колекцији.</string>
   <string name="checkin_success_trakt">Пријављено гледање %s на trakt.tv</string>
   <string name="checkin_canceled_success_trakt">Отказана пријава гледања на тракту.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d гласова</item>
     <item quantity="other">%d гласова</item>
   </plurals>
+  <string name="feedback">Пошаљи повратне информације</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основно</string>
   <string name="prefs_category_sharing">Услуге</string>
   <string name="prefs_category_advanced">Напредно</string>
@@ -288,7 +293,6 @@
   <string name="about">О SeriesGuide-у</string>
   <string name="pref_credits">Заслуге</string>
   <string name="pref_traktsummary">Додај или измени своје trakt.tv податке</string>
-  <string name="feedback">Пошаљи повратне информације</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
   <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
   <string name="sort">Поређај по</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
   <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
   <string name="billing_learn_more">Зашто се претплатити? Сазнај више.</string>
-  <string name="subscription_activated">Прерплатили сте се на Х опције.</string>
   <string name="subscription_expired">Претплата је истекла</string>
   <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
   <string name="subscription_not_signed_in">Пријави се на свој Amazon налог!</string>

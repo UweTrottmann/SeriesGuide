@@ -40,9 +40,10 @@
   <string name="share_show">Sdílet seriál</string>
   <string name="share_episode">Sdílet epizodu</string>
   <string name="share_movie">Sdílet film</string>
-  <string name="share_checkout">Ohlášeno %s</string>
+  <string name="share_checkout">Čekuj %s</string>
   <string name="comments">Komentáře</string>
-  <string name="shout_hint">Napište výkřik (v angl.)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Zakřičet!</string>
   <string name="isspoiler">Vyzrazení děje!</string>
   <string name="no_shouts">Buďte první, kdo zakřičí!</string>
@@ -163,8 +164,8 @@
   <string name="context_updateshow">Aktualizovat</string>
   <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
   <string name="now_tab">Nyní</string>
-  <string name="recently_watched">Poslední viděl</string>
-  <string name="released_today">Viděno dnes</string>
+  <string name="recently_watched">Nedávno viděno</string>
+  <string name="released_today">Vysíláno dnes</string>
   <string name="friends_recently">Zaznamenáno přítelem</string>
   <string name="now_empty">Nic se děje. Podívejte se na pořady!</string>
   <string name="upcoming">Nadcházející</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Odebrat ze seznamu</string>
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
   <string name="action_lists_sort">Třídit seznamy</string>
+  <string name="action_lists_reorder">Uspořádat seznamy</string>
   <string name="hexagon_warning">Experimentální!</string>
   <string name="hexagon_setup">Nastavit SeriesGuide cloud</string>
   <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s chybí ve sbírce.</string>
   <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
   <string name="traktcheckin_wait">Já počkám</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d hlasů</item>
     <item quantity="other">%d hlasů</item>
   </plurals>
+  <string name="feedback">Poslat reakci</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Základní</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -288,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Poděkování</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
-  <string name="feedback">Poslat reakci</string>
   <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
   <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
   <string name="sort">Řadit dle</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
   <string name="billing_learn_more">Proč platit? Zjistěte víc.</string>
-  <string name="subscription_activated">Nyní máte zpřístupněny rozšířené funkce.</string>
   <string name="subscription_expired">Vypršela platnost</string>
   <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
   <string name="subscription_not_signed_in">Přihlaste se pomocí účtu Amazon!</string>

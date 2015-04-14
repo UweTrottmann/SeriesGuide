@@ -272,47 +272,70 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     private Response doCheckInAction(Checkin traktCheckin)
             throws CheckinInProgressException, OAuthUnauthorizedException {
-        String message = mArgs.getString(InitBundle.MESSAGE);
-        switch (mAction) {
-            case CHECKIN_EPISODE: {
-                int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
-                EpisodeCheckin checkin = new EpisodeCheckin.Builder(
-                        new SyncEpisode().id(EpisodeIds.tvdb(episodeTvdbId)), APP_VERSION, null)
-                        .message(message)
-                        .build();
+        Response r = new Response();
 
-                traktCheckin.checkin(checkin);
-                break;
+        try {
+            String message = mArgs.getString(InitBundle.MESSAGE);
+            switch (mAction) {
+                case CHECKIN_EPISODE: {
+                    int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+                    EpisodeCheckin checkin = new EpisodeCheckin.Builder(
+                            new SyncEpisode().id(EpisodeIds.tvdb(episodeTvdbId)), APP_VERSION, null)
+                            .message(message)
+                            .build();
+
+                    traktCheckin.checkin(checkin);
+                    break;
+                }
+                case CHECKIN_MOVIE: {
+                    int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                    MovieCheckin checkin = new MovieCheckin.Builder(
+                            new SyncMovie().id(MovieIds.tmdb(movieTmdbId)), APP_VERSION, null)
+                            .message(message)
+                            .build();
+
+                    traktCheckin.checkin(checkin);
+                    break;
+                }
             }
-            case CHECKIN_MOVIE: {
-                int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
-                MovieCheckin checkin = new MovieCheckin.Builder(
-                        new SyncMovie().id(MovieIds.tmdb(movieTmdbId)), APP_VERSION, null)
-                        .message(message)
-                        .build();
 
-                traktCheckin.checkin(checkin);
-                break;
+            r.status = TraktStatus.SUCCESS;
+            r.message = mContext.getString(R.string.checkin_success_trakt,
+                    mArgs.getString(InitBundle.TITLE));
+        } catch (RetrofitError e) {
+            // check if item user wants to check into does exist on trakt
+            if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 404) {
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.checkin_error_not_exists);
+            } else {
+                throw e;
             }
         }
 
-        Response r = new Response();
-        r.status = TraktStatus.SUCCESS;
-        r.message = mContext.getString(R.string.checkin_success_trakt,
-                mArgs.getString(InitBundle.TITLE));
         return r;
     }
 
     private Response doCommentAction(Comments traktComments) throws OAuthUnauthorizedException {
-        // post comment
-        Comment postedComment = traktComments.post(buildComment());
-
         Response r = new Response();
-        if (postedComment != null && postedComment.id != null) {
-            r.status = TraktStatus.SUCCESS;
-        } else {
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
+
+        try {
+            // post comment
+            Comment postedComment = traktComments.post(buildComment());
+
+            if (postedComment != null && postedComment.id != null) {
+                r.status = TraktStatus.SUCCESS;
+            } else {
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.trakt_error_general);
+            }
+        } catch (RetrofitError e) {
+            // check if comment failed validation
+            if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 422) {
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.shout_invalid);
+            } else {
+                throw e;
+            }
         }
 
         return r;

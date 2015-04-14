@@ -249,7 +249,7 @@ public class ManageListsDialogFragment extends DialogFragment implements
 
         return new CursorLoader(getActivity(), Lists.buildListsWithListItemUri(ListItems
                 .generateListItemIdWildcard(itemTvdbId, itemType)),
-                ListsQuery.PROJECTION, null, null, null);
+                ListsQuery.PROJECTION, null, null, Lists.SORT_ORDER_THEN_NAME);
     }
 
     @Override

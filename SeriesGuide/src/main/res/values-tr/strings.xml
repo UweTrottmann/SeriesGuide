@@ -42,7 +42,8 @@
   <string name="share_movie">Filmi paylaş</string>
   <string name="share_checkout">Şuna gözatın: %s</string>
   <string name="comments">Yorumlar</string>
-  <string name="shout_hint">Bir not yazın (İngilizce)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Not!</string>
   <string name="isspoiler">Spoiler Uyarısı!</string>
   <string name="no_shouts">İlk not yazan ol!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Listeden kaldır</string>
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
   <string name="action_lists_sort">Listeyi sırala</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d oy</item>
     <item quantity="other">%d oylar</item>
   </plurals>
+  <string name="feedback">Geribildirim Gönder</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
   <string name="prefs_category_sharing">Servisler</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
@@ -288,7 +293,6 @@
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
-  <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
   <string name="sort">Sırala</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
   <string name="billing_learn_more">Neden ödeme yapasınız? Daha fazla bilgi edinin.</string>
-  <string name="subscription_activated">Şimdi X özelliklerine abone oldunuz.</string>
   <string name="subscription_expired">Abonelik sona erdi</string>
   <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
   <string name="subscription_not_signed_in">Amazon hesabınızda oturum açın!</string>

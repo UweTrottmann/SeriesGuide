@@ -27,7 +27,7 @@
   <string name="save_selection">Selectie bewaren</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="action_display_all">Toon alles</string>
-  <string name="updated">Nieuwste versie is geïnstaleerd.</string>
+  <string name="updated">Nieuwste versie is geïnstalleerd.</string>
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
   <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
@@ -42,7 +42,8 @@
   <string name="share_movie">Film delen</string>
   <string name="share_checkout">Uitchecken %s</string>
   <string name="comments">Reacties</string>
-  <string name="shout_hint">Typ een shout (in het Engels)</string>
+  <string name="shout_hint">Vul een opmerking in (in het Engels, meer dan 5 woorden)</string>
+  <string name="shout_invalid">Uw opmerking is niet conform de regels!</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
   <string name="action_lists_sort">Sorteer lijst</string>
+  <string name="action_lists_reorder">Lijst opnieuw ordenen</string>
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
+  <string name="checkin_error_not_exists">(Nog) niet gevonden op trakt. Probeer het later opnieuw.</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d stemmen</item>
     <item quantity="other">%d stemmen</item>
   </plurals>
+  <string name="feedback">Reactie verzenden</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Basis</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
@@ -288,7 +293,6 @@
   <string name="about">Over SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
-  <string name="feedback">Reactie verzenden</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <string name="sort">Sorteren op</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
   <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>
   <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
-  <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
   <string name="subscription_not_signed_in">Log in op je Amazon account!</string>

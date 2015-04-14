@@ -131,7 +131,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_35_ACTIVITY_TABLE = 35;
 
-    public static final int DATABASE_VERSION = DBVER_35_ACTIVITY_TABLE;
+    /**
+     * Support for re-ordering lists: added new column to lists table.
+     */
+    public static final int DBVER_36_ORDERABLE_LISTS = 36;
+
+    public static final int DATABASE_VERSION = DBVER_36_ORDERABLE_LISTS;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -381,8 +386,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.DVDNUMBER + " REAL,"
 
-            + EpisodesColumns.FIRSTAIRED + " TEXT,"
-
             + SeasonsColumns.REF_SEASON_ID + " TEXT " + References.SEASON_ID + ","
 
             + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
@@ -432,6 +435,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ListsColumns.LIST_ID + " TEXT NOT NULL,"
 
             + ListsColumns.NAME + " TEXT NOT NULL,"
+
+            + ListsColumns.ORDER + " INTEGER DEFAULT 0,"
 
             + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE"
 
@@ -575,7 +580,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 27:
                 upgradeToTwentyEight(db);
             case 28:
-                upgradeToTwentyNine(db);
+                // GetGlue column not required any longer
             case 29:
                 upgradeToThirty(db);
             case 30:
@@ -588,7 +593,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyFour(db);
             case DBVER_34_TRAKT_V2:
                 upgradeToThirtyFive(db);
-                version = DBVER_35_ACTIVITY_TABLE;
+            case DBVER_35_ACTIVITY_TABLE:
+                upgradeToThirtySix(db);
+                version = DBVER_36_ORDERABLE_LISTS;
         }
 
         // drop all tables if version is not right
@@ -614,6 +621,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_36_ORDERABLE_LISTS}.
+     */
+    private static void upgradeToThirtySix(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.LISTS, Lists.ORDER)) {
+            db.execSQL("ALTER TABLE " + Tables.LISTS + " ADD COLUMN "
+                    + Lists.ORDER + " INTEGER DEFAULT 0;");
+        }
     }
 
     /**
@@ -843,16 +860,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         if (isTableColumnMissing(db, Tables.EPISODES, Episodes.ABSOLUTE_NUMBER)) {
             db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
                     + Episodes.ABSOLUTE_NUMBER + " INTEGER;");
-        }
-    }
-
-    /**
-     * Add {@link Shows} column to store a GetGlue object id.
-     */
-    private static void upgradeToTwentyNine(SQLiteDatabase db) {
-        if (isTableColumnMissing(db, Tables.SHOWS, Shows.GETGLUEID)) {
-            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + Shows.GETGLUEID
-                    + " TEXT DEFAULT '';");
         }
     }
 

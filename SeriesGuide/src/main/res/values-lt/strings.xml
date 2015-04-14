@@ -42,7 +42,8 @@
   <string name="share_movie">Share movie</string>
   <string name="share_checkout">Check out %s</string>
   <string name="comments">Komentarai</string>
-  <string name="shout_hint">Type a shout (in English)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Galimas turinio atskleidimas!</string>
   <string name="no_shouts">Be the first to shout!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Pašalinti iš sąrašo</string>
   <string name="list_empty">Į šį sąrašą galite įtraukti serialus, sezonus arba serijas.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d balsų</item>
     <item quantity="other">%d balsų</item>
   </plurals>
+  <string name="feedback">Siųsti atsiliepimą</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Pagrindai</string>
   <string name="prefs_category_sharing">Paslaugos</string>
   <string name="prefs_category_advanced">Išplėstinė</string>
@@ -288,7 +293,6 @@
   <string name="about">Apie SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Add or edit your trakt credentials</string>
-  <string name="feedback">Siųsti atsiliepimą</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="sort">Rūšiuoti pagal</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Why pay? Learn more.</string>
-  <string name="subscription_activated">You are now subscribed, all are features unlocked.</string>
   <string name="subscription_expired">Subscription expired</string>
   <string name="subscription_expired_details">Your SeriesGuide subscription has expired.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

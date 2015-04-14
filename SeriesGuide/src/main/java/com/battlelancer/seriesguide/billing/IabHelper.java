@@ -632,6 +632,7 @@ public class IabHelper {
                     inv = queryInventory(mService, mContext.getPackageName(),
                             mSubscriptionsSupported, querySkuDetails, moreSkus);
                 } catch (IabException e) {
+                    Timber.e(e, "queryInventoryAsync: failed.");
                     result = e.getResult();
                 }
 

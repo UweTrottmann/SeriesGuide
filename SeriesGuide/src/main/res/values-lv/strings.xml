@@ -42,7 +42,8 @@
   <string name="share_movie">Dalīties ar filmu</string>
   <string name="share_checkout">Iečeko %s</string>
   <string name="comments">Komentāri</string>
-  <string name="shout_hint">Saraksti kliedzienu (angliski)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Kliedz!</string>
   <string name="isspoiler">Spoileru brīdinājums!</string>
   <string name="no_shouts">Esi pirmais, kas kliedz!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Noņemt no saraksta</string>
   <string name="list_empty">Tu vari pievienot šovus, sezonas vai epizodes šim sarakstam.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s nekolekcionētas.</string>
   <string name="checkin_success_trakt">Iečekojies %s ar trakt.</string>
   <string name="checkin_canceled_success_trakt">Atcelta trakt iečekošanās.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Pārraksti</string>
   <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
   <string name="traktcheckin_wait">Es gaidīšu</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d balsis</item>
     <item quantity="other">%d balsis</item>
   </plurals>
+  <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Pamati</string>
   <string name="prefs_category_sharing">Servisi</string>
   <string name="prefs_category_advanced">Pārākie uzstādijumi</string>
@@ -288,7 +293,6 @@
   <string name="about">Par SeriesGuide</string>
   <string name="pref_credits">Pateicības</string>
   <string name="pref_traktsummary">Pievieno vai rediģē savu trakt informāciju</string>
-  <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
   <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
   <string name="pref_autoaddshowssummary">Automātiski pievienot šovus no tavas trakt aktivitāšu straumes</string>
   <string name="sort">Kārtot pēc</string>
@@ -400,7 +404,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Kāpēc maksāt? Uzziņu vairāk.</string>
-  <string name="subscription_activated">Tu pašlaik abonē X funkcijas.</string>
   <string name="subscription_expired">Abonements ir beidzies</string>
   <string name="subscription_expired_details">Tavs X funkciju abonements ir beidzies.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

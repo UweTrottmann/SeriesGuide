@@ -30,6 +30,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import io.fabric.sdk.android.Fabric;
+import net.danlew.android.joda.JodaTimeAndroid;
 import timber.log.Timber;
 
 /**
@@ -55,6 +56,10 @@ public class SeriesGuideApplication extends Application {
      * Requires full show update due to upgrade to trakt v2.
      */
     public static final int RELEASE_VERSION_21 = 15075;
+    /**
+     * Requires trakt watched movie (re-)download.
+     */
+    public static final int RELEASE_VERSION_23_BETA4 = 15113;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
@@ -76,6 +81,9 @@ public class SeriesGuideApplication extends Application {
                 Fabric.with(this, new Crashlytics());
             }
         }
+
+        // initialize joda-time-android
+        JodaTimeAndroid.init(this);
 
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));

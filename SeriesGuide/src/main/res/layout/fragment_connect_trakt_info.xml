@@ -35,6 +35,14 @@
                 android:textAppearance="@style/TextAppearance.Body" />
 
             <TextView
+                android:id="@+id/textViewTraktSyncWarnings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/hexagon_warning_lists"
+                android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
+
+            <TextView
                 android:id="@+id/textViewTraktInfoHexagonWarning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

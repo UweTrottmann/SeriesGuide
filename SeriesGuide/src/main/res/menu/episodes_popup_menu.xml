@@ -31,6 +31,12 @@
         android:id="@+id/menu_action_episodes_collection_remove"
         android:title="@string/action_collection_remove" />
     <item
+        android:id="@+id/menu_action_episodes_skip"
+        android:title="@string/action_skip" />
+    <item
+        android:id="@+id/menu_action_episodes_dont_skip"
+        android:title="@string/action_dont_skip" />
+    <item
         android:id="@+id/menu_action_episodes_watched_previous"
         android:title="@string/mark_untilhere" />
     <item

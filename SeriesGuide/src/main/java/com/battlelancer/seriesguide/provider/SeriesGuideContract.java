@@ -48,6 +48,9 @@ public class SeriesGuideContract {
 
         String CONTENTRATING = "contentrating";
 
+        /**
+         * Show status. Encoded as integer. See {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+         */
         String STATUS = "status";
 
         String RUNTIME = "runtime";
@@ -183,16 +186,16 @@ public class SeriesGuideContract {
         String NEXTTEXT = "nexttext";
 
         /**
-         * DEPRECATED. Use {@link #NEXTAIRDATEMS} instead.
+         * @deprecated Use {@link #NEXTAIRDATEMS} instead. Not added on new installs.
          */
         String NEXTAIRDATE = "nextairdate";
 
         /**
-         * Next episode release time instant.
+         * Next episode release time instant. See {@link Episodes#FIRSTAIREDMS}.
          *
          * <pre>
          * Range:   long
-         * Default: DBUtils.UNKNOWN_RELEASE_DATE (Long.MAX_VALUE)
+         * Default: {@link com.battlelancer.seriesguide.util.DBUtils#UNKNOWN_NEXT_RELEASE_DATE}
          * </pre>
          *
          * <p> Added in db version 25 to allow correct sorting by next air date.
@@ -220,9 +223,10 @@ public class SeriesGuideContract {
         String LASTEDIT = "series_lastedit";
 
         /**
-         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014.
-         *
          * GetGlue object id, added in version 29 to support checking into shows without IMDb id.
+         *
+         * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014. Not added on new
+         * installs.
          */
         String GETGLUEID = "series_getglueid";
 
@@ -317,12 +321,22 @@ public class SeriesGuideContract {
         String RATING_USER = "episode_rating_user";
 
         /**
-         * First aired date in text as given by TVDb.com
+         * @deprecated Previously first release date in text as given by TVDb.com. Not created on
+         * new installs.
          */
         String FIRSTAIRED = "epfirstaired";
 
         /**
          * First aired date in ms.
+         *
+         * <p>This date time is based on the shows release time and time zone at the time this
+         * episode was last updated. It includes country and time zone specific offsets (currently
+         * only for US western time zones). It does NOT include the user-set offset.
+         *
+         * <pre>
+         * Range:   long
+         * Default: {@link Constants#EPISODE_UNKNOWN_RELEASE}
+         * </pre>
          */
         String FIRSTAIREDMS = "episode_firstairedms";
 
@@ -365,6 +379,15 @@ public class SeriesGuideContract {
         String LIST_ID = "list_id";
 
         String NAME = "list_name";
+
+        /**
+         * Helps determine list order in addition to the list name. Integer.
+         * <pre>
+         * Range: 0 to MAX INT
+         * Default: 0
+         * </pre>
+         */
+        String ORDER = "list_order";
     }
 
     interface ListItemsColumns {
@@ -420,13 +443,37 @@ public class SeriesGuideContract {
 
         String CERTIFICATION = "movies_certification";
 
+        /**
+         * Whether a movie is in the collection. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String IN_COLLECTION = "movies_incollection";
 
+        /**
+         * Whether a movie is in the watchlist. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String IN_WATCHLIST = "movies_inwatchlist";
 
-        String PLAYS = "movies_plays";
-
+        /**
+         * Whether a movie is watched. Encoded as integer.
+         * <pre>
+         * Range: 0-1
+         * Default: 0
+         * </pre>
+         */
         String WATCHED = "movies_watched";
+
+        /**
+         * Currently unused.
+         */
+        String PLAYS = "movies_plays";
 
         String RATING_TMDB = "movies_rating_tmdb";
 
@@ -492,20 +539,21 @@ public class SeriesGuideContract {
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SHOWS)
                 .build();
 
-        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_NEXT_EPISODE)
                 .build();
 
-        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SHOWS)
+        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_LAST_EPISODE)
                 .build();
 
-        public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, "filter");
+        public static final Uri CONTENT_URI_FILTER = CONTENT_URI.buildUpon()
+                .appendPath(PATH_FILTER)
+                .build();
 
         /**
          * Use if multiple items get returned
@@ -703,6 +751,9 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.list";
 
+        public static final String SORT_ORDER_THEN_NAME = Lists.ORDER + " ASC," + Lists.NAME
+                + " COLLATE NOCASE ASC";
+
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
@@ -787,9 +838,17 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
+        public static final String SELECTION_NOT_COLLECTION = Movies.IN_COLLECTION + "=0";
+
         public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
-        public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
+        public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
+
+        public static final String SELECTION_IN_LIST =
+                SeriesGuideContract.Movies.SELECTION_COLLECTION + " OR "
+                        + SeriesGuideContract.Movies.SELECTION_WATCHLIST;
+
+        public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         /** Default sort order. */
         public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";

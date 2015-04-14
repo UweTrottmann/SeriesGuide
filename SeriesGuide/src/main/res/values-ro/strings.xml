@@ -42,7 +42,8 @@
   <string name="share_movie">Distribuie film</string>
   <string name="share_checkout">Verifica %s</string>
   <string name="comments">Comentarii</string>
-  <string name="shout_hint">Scrie o părere (în engleză)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Părere!</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-și spune părerea!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Șterge din listă</string>
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s necolectat.</string>
   <string name="checkin_success_trakt">%s verificat pe trakt.</string>
   <string name="checkin_canceled_success_trakt">Verificare anulată pe trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Suprascrie</string>
   <string name="traktcheckin_inprogress">Deja ați înregistrat alt episod sau film. Ori suprascrieți precedenta înregistrare sau așteptați %s și încercați din nou.</string>
   <string name="traktcheckin_wait">Voi aștepta</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d voturi</item>
     <item quantity="other">%d voturi</item>
   </plurals>
+  <string name="feedback">Trimiteţi feedback</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Elemente de bază</string>
   <string name="prefs_category_sharing">Servicii</string>
   <string name="prefs_category_advanced">Avansate</string>
@@ -288,7 +293,6 @@
   <string name="about">Despre SeriesGuide</string>
   <string name="pref_credits">Contribuţii</string>
   <string name="pref_traktsummary">Adăugaţi sau editaţi acreditările trakt</string>
-  <string name="feedback">Trimiteţi feedback</string>
   <string name="pref_autoaddshows">Adăugați emisiuni trakt</string>
   <string name="pref_autoaddshowssummary">Adăugați automat emisiunile după activitatea dvs. de pe trakt</string>
   <string name="sort">Sortați după</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
   <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
   <string name="billing_learn_more">De ce să plătiți? Află mai multe.</string>
-  <string name="subscription_activated">Acum sunteţi înscris la opțiunile X.</string>
   <string name="subscription_expired">Abonament expirat</string>
   <string name="subscription_expired_details">Abonamentul la opțiunile X a expirat.</string>
   <string name="subscription_not_signed_in">Conectează-te în contul Amazon!</string>

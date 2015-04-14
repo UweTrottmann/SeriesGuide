@@ -108,11 +108,7 @@ public final class ServiceUtils {
             cachingHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             cachingHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             File cacheDir = createApiCacheDir(context);
-            try {
-                cachingHttpClient.setCache(
-                        new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
-            } catch (IOException ignored) {
-            }
+            cachingHttpClient.setCache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
         }
         return cachingHttpClient;
     }

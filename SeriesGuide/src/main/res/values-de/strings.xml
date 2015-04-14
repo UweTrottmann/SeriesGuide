@@ -35,14 +35,15 @@
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="add_empty">Keine Serien hier.</string>
   <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
-  <string name="database_error">Daten können nicht geändert werden.</string>
+  <string name="database_error">Daten konnten nicht geändert werden.</string>
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
   <string name="share_movie">Film teilen</string>
   <string name="share_checkout">Empfehle %s</string>
   <string name="comments">Kommentare</string>
-  <string name="shout_hint">Shout eingeben (in Englisch)</string>
+  <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>
+  <string name="shout_invalid">Ihr Kommentar hält sich nicht an die Regeln!</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler-Warnung!</string>
   <string name="no_shouts">Schreibe den ersten Shout!</string>
@@ -136,8 +137,8 @@
   <string name="action_unwatched">Nicht gesehen markieren</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
-  <string name="delete_show">Löschen</string>
-  <string name="dontdelete_show">Nicht löschen</string>
+  <string name="delete_show">Entfernen</string>
+  <string name="dontdelete_show">Nicht entfernen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
   <string name="context_favorite">Zu Favoriten hinzufügen</string>
   <string name="context_unfavorite">Von Favoriten entfernen</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Von Liste entfernen</string>
   <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
   <string name="action_lists_sort">Listen sortieren</string>
+  <string name="action_lists_reorder">Listen umsortieren</string>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">SeriesGuide cloud einrichten</string>
   <string name="hexagon_description">Stellen Sie eine Verbindung zur Cloud her um Ihre Serien und Filme zu sichern und zu synchronisieren.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
+  <string name="checkin_error_not_exists">(Noch) Nicht auf trakt gefunden. Versuchen Sie es später erneut.</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d Stimmen</item>
     <item quantity="other">%d Stimmen</item>
   </plurals>
+  <string name="feedback">Feedback senden</string>
+  <string name="action_open_in_browser">Im Browser öffnen</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -288,7 +293,6 @@
   <string name="about">Über SeriesGuide</string>
   <string name="pref_credits">Anerkennungen</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt Anmeldeinformationen</string>
-  <string name="feedback">Feedback senden</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
   <string name="sort">Sortieren nach</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
   <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
   <string name="billing_learn_more">Warum bezahlen? Mehr Infos.</string>
-  <string name="subscription_activated">Ihr Abonnement ist aktiv, alle Funktionen sind freigeschaltet.</string>
   <string name="subscription_expired">Abonnement abgelaufen</string>
   <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen.</string>
   <string name="subscription_not_signed_in">Melden Sie sich mit Ihrem Amazon-Konto an!</string>
@@ -413,7 +416,7 @@
   <string name="action_extensions_add">Erweiterung hinzufügen</string>
   <string name="action_extensions_limit">Erwerben Sie X um mehr Erweiterungen hinzuzufügen</string>
   <string name="action_extensions_search">Mehr Erweiterungen</string>
-  <string name="action_extension_remove">Löschen</string>
+  <string name="action_extension_remove">Entfernen</string>
   <string name="extension_amazon">Amazon-Suche</string>
   <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
   <string name="pref_amazon_domain">Amazon-Seite</string>

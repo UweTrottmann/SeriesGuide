@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -93,6 +94,19 @@ public class MovieTools {
         }
     }
 
+    /**
+     * Deletes all movies which are not watched and not in any list.
+     */
+    public static void deleteUnusedMovies(Context context) {
+        int rowsDeleted = context.getContentResolver()
+                .delete(SeriesGuideContract.Movies.CONTENT_URI,
+                        SeriesGuideContract.Movies.SELECTION_UNWATCHED
+                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
+                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST,
+                        null);
+        Timber.d("deleteUnusedMovies: removed " + rowsDeleted + " movies");
+    }
+
     public static void addToCollection(Context context, int movieTmdbId) {
         AndroidUtils.executeOnPool(new AddMovieToCollectionTask(context, movieTmdbId));
     }
@@ -109,7 +123,7 @@ public class MovieTools {
      */
     public static boolean addToList(Context context, int movieTmdbId, Lists list) {
         // do we have this movie in the database already?
-        Boolean movieExists = isMovieExists(context, movieTmdbId);
+        Boolean movieExists = isMovieInDatabase(context, movieTmdbId);
         if (movieExists == null) {
             return false;
         }
@@ -129,8 +143,10 @@ public class MovieTools {
     }
 
     /**
-     * If the movie exists in the local database: removes it from the given list or if it would not
-     * be on any list afterwards, deletes the movie from the local database.
+     * Removes the movie from the given list.
+     *
+     * <p>If it would not be on any list afterwards and is not watched, deletes the movie from the
+     * local database.
      *
      * @return If the database operation was successful.
      */
@@ -142,12 +158,13 @@ public class MovieTools {
             // query failed, or movie not in local database
             return false;
         }
-        if (isInOtherList) {
-            // just update list flag
-            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
+
+        // if movie will not be in any list and is not watched, remove it completely
+        if (!isInOtherList && deleteMovieIfUnwatched(context, movieTmdbId)) {
+            return true;
         } else {
-            // completely remove from database
-            return deleteMovie(context, movieTmdbId);
+            // otherwise, just update
+            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
         }
     }
 
@@ -160,12 +177,22 @@ public class MovieTools {
     }
 
     /**
-     * Set watched flag of movie in local database.
+     * Set watched flag of movie in local database. If setting watched, but not in database, creates
+     * a new movie watched shell.
      *
      * @return If the database operation was successful.
      */
     public static boolean setWatchedFlag(Context context, int movieTmdbId, boolean flag) {
-        return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
+        Boolean movieInDatabase = isMovieInDatabase(context, movieTmdbId);
+        if (movieInDatabase == null) {
+            return false;
+        }
+        if (!movieInDatabase && flag) {
+            // Only add, never remove shells. Next trakt watched movie sync will take care of that.
+            return addMovieWatchedShell(context, movieTmdbId);
+        } else {
+            return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
+        }
     }
 
     /**
@@ -291,7 +318,7 @@ public class MovieTools {
         return isInList;
     }
 
-    private static Boolean isMovieExists(Context context, int movieTmdbId) {
+    private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.CONTENT_URI, new String[] {
                                 SeriesGuideContract.Movies._ID },
@@ -333,6 +360,22 @@ public class MovieTools {
         return true;
     }
 
+    /**
+     * Inserts a movie shell into the database only holding TMDB id, list and watched states.
+     */
+    private static boolean addMovieWatchedShell(Context context, int movieTmdbId) {
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
+        values.put(SeriesGuideContract.Movies.IN_COLLECTION, false);
+        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, false);
+        values.put(SeriesGuideContract.Movies.WATCHED, true);
+
+        Uri insert = context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI,
+                values);
+
+        return insert != null;
+    }
+
     private static boolean updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
@@ -344,10 +387,14 @@ public class MovieTools {
         return rowsUpdated > 0;
     }
 
-    private static boolean deleteMovie(Context context, int movieTmdbId) {
+    /**
+     * @return {@code true} if the movie was deleted (because it was not watched).
+     */
+    private static boolean deleteMovieIfUnwatched(Context context, int movieTmdbId) {
         int rowsDeleted = context.getContentResolver()
-                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), null, null);
-
+                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
+                        SeriesGuideContract.Movies.SELECTION_UNWATCHED, null);
+        Timber.d("deleteMovieIfUnwatched: deleted " + rowsDeleted + " movie");
         return rowsDeleted > 0;
     }
 
@@ -505,7 +552,8 @@ public class MovieTools {
          * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
          * thread.
          */
-        public static UpdateResult syncMoviesWithTrakt(Context context, LastActivityMore activity) {
+        public static UpdateResult syncMovieListsWithTrakt(Context context,
+                LastActivityMore activity) {
             if (activity.collected_at == null) {
                 Timber.e("syncMoviesWithTrakt: null collected_at");
                 return UpdateResult.INCOMPLETE;
@@ -583,18 +631,15 @@ public class MovieTools {
                         batch.add(builder.build());
                     }
                 } else {
-                    if (!inCollection && !inWatchlist) {
-                        // remove local movie if removed from collection and watchlist on trakt
-                        moviesNotOnTraktCollection.add(tmdbId);
-                    } else {
-                        // mirror trakt collection and watchlist flag
-                        ContentProviderOperation op = ContentProviderOperation
-                                .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
-                                .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
-                                .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
-                                .build();
-                        batch.add(op);
-                    }
+                    // mirror trakt collection and watchlist flag
+                    // will take care of removing unneeded (not watched or in any list) movies
+                    // in later sync step
+                    ContentProviderOperation op = ContentProviderOperation
+                            .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
+                            .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
+                            .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
+                            .build();
+                    batch.add(op);
                 }
             }
 
@@ -608,7 +653,7 @@ public class MovieTools {
             }
             batch.clear();
 
-            // merge on first run, delete on consequent runs
+            // merge on first run
             if (merging) {
                 // upload movies not in trakt collection or watchlist
                 if (Upload.toTrakt(context, sync, moviesNotOnTraktCollection,
@@ -621,16 +666,6 @@ public class MovieTools {
                             .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true)
                             .commit();
                 }
-            } else {
-                // remove movies not on trakt
-                buildMovieDeleteOps(moviesNotOnTraktCollection, batch);
-                try {
-                    DBUtils.applyInSmallBatches(context, batch);
-                } catch (OperationApplicationException e) {
-                    Timber.e(e, "syncMoviesWithTrakt: database deletes failed");
-                    return UpdateResult.INCOMPLETE;
-                }
-                Timber.d("syncMoviesWithTrakt: removed " + moviesNotOnTraktCollection.size());
             }
 
             // add movies from trakt missing locally
@@ -811,6 +846,12 @@ public class MovieTools {
 
     public static class Upload {
 
+        private static final String[] PROJECTION_MOVIES_IN_LISTS = {
+                SeriesGuideContract.Movies.TMDB_ID, // 0
+                SeriesGuideContract.Movies.IN_COLLECTION, // 1
+                SeriesGuideContract.Movies.IN_WATCHLIST // 2
+        };
+
         /**
          * Uploads all local movies to Hexagon.
          */
@@ -847,28 +888,24 @@ public class MovieTools {
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies
                     = new ArrayList<>();
 
-            Cursor query = context.getContentResolver()
-                    .query(SeriesGuideContract.Movies.CONTENT_URI,
-                            new String[] {
-                                    SeriesGuideContract.Movies.TMDB_ID,
-                                    SeriesGuideContract.Movies.IN_COLLECTION,
-                                    SeriesGuideContract.Movies.IN_WATCHLIST
-                            }, null, null, null
-                    );
-            if (query == null) {
+            // query for movies in lists (excluding movies that are only watched)
+            Cursor moviesInLists = context.getContentResolver().query(
+                    SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
+                    SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
+            if (moviesInLists == null) {
                 return null;
             }
 
-            while (query.moveToNext()) {
+            while (moviesInLists.moveToNext()) {
                 com.uwetrottmann.seriesguide.backend.movies.model.Movie movie
                         = new com.uwetrottmann.seriesguide.backend.movies.model.Movie();
-                movie.setTmdbId(query.getInt(0));
-                movie.setIsInCollection(query.getInt(1) == 1);
-                movie.setIsInWatchlist(query.getInt(2) == 1);
+                movie.setTmdbId(moviesInLists.getInt(0));
+                movie.setIsInCollection(moviesInLists.getInt(1) == 1);
+                movie.setIsInWatchlist(moviesInLists.getInt(2) == 1);
                 movies.add(movie);
             }
 
-            query.close();
+            moviesInLists.close();
 
             return movies;
         }
@@ -890,15 +927,11 @@ public class MovieTools {
                 return UpdateResult.INCOMPLETE;
             }
 
-            Cursor localMovies = context.getContentResolver()
-                    .query(SeriesGuideContract.Movies.CONTENT_URI,
-                            new String[] {
-                                    SeriesGuideContract.Movies.TMDB_ID, // 0
-                                    SeriesGuideContract.Movies.IN_COLLECTION,
-                                    SeriesGuideContract.Movies.IN_WATCHLIST // 2
-                            }, null, null, null
-                    );
-            if (localMovies == null) {
+            // query for movies in lists (excluding movies that are only watched)
+            Cursor moviesInLists = context.getContentResolver()
+                    .query(SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
+                            SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
+            if (moviesInLists == null) {
                 Timber.e("toTrakt: query failed");
                 return UpdateResult.INCOMPLETE;
             }
@@ -906,21 +939,21 @@ public class MovieTools {
             // build list of collected, watchlisted movies to upload
             List<SyncMovie> moviesToCollect = new LinkedList<>();
             List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-            while (localMovies.moveToNext()) {
-                int tmdbId = localMovies.getInt(0);
+            while (moviesInLists.moveToNext()) {
+                int tmdbId = moviesInLists.getInt(0);
 
                 // in local collection, but not on trakt?
-                if (localMovies.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
+                if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
                     moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
                 // in local watchlist, but not on trakt?
-                if (localMovies.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
+                if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
                     moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
                 }
             }
 
             // clean up
-            localMovies.close();
+            moviesInLists.close();
 
             // upload
             try {

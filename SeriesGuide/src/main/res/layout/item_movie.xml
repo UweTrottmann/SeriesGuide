@@ -52,7 +52,7 @@
             android:layout_marginRight="@dimen/inline_padding"
             android:layout_marginLeft="@dimen/inline_padding"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="November 13, 2013" />
 

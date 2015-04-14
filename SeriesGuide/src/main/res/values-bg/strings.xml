@@ -42,7 +42,8 @@
   <string name="share_movie">Сподели филм</string>
   <string name="share_checkout">Виж %s</string>
   <string name="comments">Коментари</string>
-  <string name="shout_hint">Напишете мнение (in English)</string>
+  <string name="shout_hint">Type a comment (English, 5+ words)</string>
+  <string name="shout_invalid">Your comment does not follow the rules!</string>
   <string name="shout">Мнение!</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Премахни от списъка</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
   <string name="action_lists_sort">Sort lists</string>
+  <string name="action_lists_reorder">Reorder lists</string>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s не са в колекция.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
+  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d гласове</item>
     <item quantity="other">%d оценки</item>
   </plurals>
+  <string name="feedback">Обратна връзка</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Основни</string>
   <string name="prefs_category_sharing">Услуги</string>
   <string name="prefs_category_advanced">Разширени</string>
@@ -288,7 +293,6 @@
   <string name="about">Относно SeriesGuide</string>
   <string name="pref_credits">Заслуги</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt</string>
-  <string name="feedback">Обратна връзка</string>
   <string name="pref_autoaddshows">Добавяне на нови trakt сериали</string>
   <string name="pref_autoaddshowssummary">Автоматично добавяне на сериали от дейността ви в trakt</string>
   <string name="sort">Подреди по</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
   <string name="billing_learn_more">Защо да плащате? Научете повече.</string>
-  <string name="subscription_activated">Вече сте абонирани за X функциите.</string>
   <string name="subscription_expired">Абонаментът е изтекъл</string>
   <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
   <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>

@@ -265,8 +265,7 @@ public class BillingActivity extends BaseActivity {
         boolean isSubscribedOld = AdvancedSettings.getLastSubscriptionState(context);
         boolean isSubscribed = hasXUpgrade || isSubscribedToX;
         if (!isSubscribedOld && isSubscribed) {
-            Toast.makeText(context, R.string.subscription_activated, Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(context, R.string.upgrade_success, Toast.LENGTH_SHORT).show();
         } else if (isSubscribedOld && !isSubscribed) {
             onExpiredNotification(context);
         }

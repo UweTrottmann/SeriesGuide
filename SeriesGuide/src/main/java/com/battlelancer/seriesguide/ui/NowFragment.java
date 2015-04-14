@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -46,6 +47,7 @@ import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.battlelancer.seriesguide.loaders.TraktFriendsHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktUserHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.NowSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -170,8 +172,10 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
          * So we can restart them if they already exist to ensure up to date data (the loaders do
          * not react to database changes themselves) and avoid loading data twice in a row.
          */
-        isLoadingReleasedToday = true;
-        initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
+        if (NowSettings.isDisplayingReleasedToday(getActivity())) {
+            isLoadingReleasedToday = true;
+            initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
+        }
         if (!TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyLocalCallbacks);
@@ -207,14 +211,34 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.stream_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // guard against not attached to activity
+        if (!isAdded()) {
+            return;
+        }
+
+        inflater.inflate(R.menu.now_menu, menu);
+
+        menu.findItem(R.id.menu_action_now_filter_released_today)
+                .setChecked(NowSettings.isDisplayingReleasedToday(getActivity()));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_stream_refresh) {
+        if (itemId == R.id.menu_action_now_refresh) {
             refreshStream();
+            return true;
+        }
+        if (itemId == R.id.menu_action_now_filter_released_today) {
+            PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    .edit()
+                    .putBoolean(NowSettings.KEY_DISPLAY_RELEASED_TODAY,
+                            !NowSettings.isDisplayingReleasedToday(getActivity()))
+                    .apply();
+            refreshStream();
+            getActivity().supportInvalidateOptionsMenu();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -229,10 +253,14 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         showProgressBar(true);
         showError(false, 0);
 
-        // load released today
-        isLoadingReleasedToday = true;
-        getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
-                releasedTodayCallbacks);
+        // reload released today, if enabled
+        if (NowSettings.isDisplayingReleasedToday(getActivity())) {
+            isLoadingReleasedToday = true;
+            getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
+                    releasedTodayCallbacks);
+        } else {
+            destroyLoaderIfExists(ShowsActivity.NOW_TODAY_LOADER_ID);
+        }
 
         // if connected to trakt, replace local history with trakt history, show friends history
         // user might get disconnected during our life-time,
@@ -383,7 +411,11 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         @Override
         public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
-            // do nothing
+            if (!isVisible()) {
+                return;
+            }
+            // clear existing data
+            adapter.setReleasedTodayData(null);
         }
     };
 
@@ -407,7 +439,11 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         @Override
         public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
-            // do nothing
+            if (!isVisible()) {
+                return;
+            }
+            // clear existing data
+            adapter.setRecentlyWatched(null);
         }
     };
 
@@ -432,7 +468,11 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         @Override
         public void onLoaderReset(Loader<TraktUserHistoryLoader.Result> loader) {
-            // do nothing
+            if (!isVisible()) {
+                return;
+            }
+            // clear existing data
+            adapter.setRecentlyWatched(null);
         }
     };
 
@@ -456,7 +496,11 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         @Override
         public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
-            // do nothing
+            if (!isVisible()) {
+                return;
+            }
+            // clear existing data
+            adapter.setFriendsRecentlyWatched(null);
         }
     };
 }

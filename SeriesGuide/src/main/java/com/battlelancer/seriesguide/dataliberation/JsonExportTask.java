@@ -41,10 +41,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB.ShowStatus;
-import com.google.myjson.Gson;
-import com.google.myjson.JsonIOException;
-import com.google.myjson.stream.JsonWriter;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,9 +56,8 @@ import timber.log.Timber;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
- * Export the show database to a human-readable JSON file on external storage.
- * By default meta-data like descriptions, ratings, actors, etc. will not be
- * included.
+ * Export the show database to a human-readable JSON file on external storage. By default meta-data
+ * like descriptions, ratings, actors, etc. will not be included.
  */
 public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
@@ -73,6 +71,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
 
+    /**
+     * Show status used when exporting data. Compare with {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     */
     public interface ShowStatusExport {
         String CONTINUING = "continuing";
         String ENDED = "ended";
@@ -100,8 +101,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     /**
      * Same as {@link JsonExportTask} but allows to set parameters.
      *
-     * @param isFullDump   Whether to also export meta-data like descriptions,
-     *                     ratings, actors, etc. Increases file size about 2-4 times.
+     * @param isFullDump Whether to also export meta-data like descriptions, ratings, actors, etc.
+     * Increases file size about 2-4 times.
      * @param isSilentMode Whether to show result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
@@ -220,7 +221,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (shows.moveToNext()) {
@@ -240,17 +240,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
             show.poster = shows.getString(ShowsQuery.POSTER);
             show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);
-            switch (shows.getInt(ShowsQuery.STATUS)) {
-                case ShowStatus.CONTINUING:
-                    show.status = ShowStatusExport.CONTINUING;
-                    break;
-                case ShowStatus.ENDED:
-                    show.status = ShowStatusExport.ENDED;
-                    break;
-                default:
-                    show.status = ShowStatusExport.UNKNOWN;
-                    break;
-            }
+            show.status = DataLiberationTools.decodeShowStatus(shows.getInt(ShowsQuery.STATUS));
             show.runtime = shows.getInt(ShowsQuery.RUNTIME);
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
@@ -349,7 +339,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private int exportLists(File exportPath) {
         final Cursor lists = mContext.getContentResolver()
                 .query(SeriesGuideContract.Lists.CONTENT_URI,
-                        ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+                        ListsQuery.PROJECTION, null, null,
+                        SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
         if (lists == null) {
             return ERROR;
         }
@@ -384,7 +375,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (lists.moveToNext()) {
@@ -395,6 +385,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             List list = new List();
             list.listId = lists.getString(ListsQuery.ID);
             list.name = lists.getString(ListsQuery.NAME);
+            list.order = lists.getInt(ListsQuery.ORDER);
 
             addListItems(list);
 
@@ -480,7 +471,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
         writer.beginArray();
 
         while (movies.moveToNext()) {
@@ -647,13 +637,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListsQuery {
         String[] PROJECTION = new String[] {
-                SeriesGuideContract.Lists.LIST_ID, SeriesGuideContract.Lists.NAME
+                SeriesGuideContract.Lists.LIST_ID,
+                SeriesGuideContract.Lists.NAME,
+                SeriesGuideContract.Lists.ORDER
         };
-
-        String SORT = SeriesGuideContract.Lists.NAME + " COLLATE NOCASE ASC";
 
         int ID = 0;
         int NAME = 1;
+        int ORDER = 2;
     }
 
     public interface ListItemsQuery {

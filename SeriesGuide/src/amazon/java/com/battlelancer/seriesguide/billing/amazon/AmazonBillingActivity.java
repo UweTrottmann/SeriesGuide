@@ -33,7 +33,6 @@ import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
 
-    @InjectView(R.id.textViewAmazonBillingTitle) TextView title;
     @InjectView(R.id.progressBarAmazonBilling) View progressBar;
     @InjectView(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
     @InjectView(R.id.textViewAmazonBillingPrice) TextView textViewSubPrice;
@@ -143,13 +142,10 @@ public class AmazonBillingActivity extends BaseActivity {
         // subscribe button
         buttonSubscribe.setEnabled(event.productAvailable && event.userCanSubscribe);
 
-        // title and status text
+        // status text
         if (!event.productAvailable) {
-            title.setText(R.string.action_upgrade);
             textViewSubscribed.setText(R.string.subscription_not_signed_in);
         } else {
-            title.setText(
-                    isSubscribed ? R.string.upgrade_success : R.string.action_upgrade);
             textViewSubscribed.setText(
                     isSubscribed ? R.string.upgrade_success : R.string.subscription_expired);
         }

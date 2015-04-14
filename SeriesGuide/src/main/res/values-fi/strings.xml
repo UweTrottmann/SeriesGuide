@@ -42,7 +42,8 @@
   <string name="share_movie">Jaa elokuva</string>
   <string name="share_checkout">Tsekkaa %s</string>
   <string name="comments">Kommentit</string>
-  <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
+  <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
+  <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="action_lists_sort">Lajittele listat</string>
+  <string name="action_lists_reorder">Järjestä listat uudelleen</string>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
+  <string name="checkin_error_not_exists">Kohde ei (vielä) löytynyt traktista. Yritä myöhemmin uudelleen.</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d ääntä</item>
     <item quantity="other">%d ääntä</item>
   </plurals>
+  <string name="feedback">Lähetä palautetta</string>
+  <string name="action_open_in_browser">Avaa selaimessa</string>
   <string name="prefs_category_basic">Yleiset</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -288,7 +293,6 @@
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_credits">Tekijät</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt-käyttäjätietojasi</string>
-  <string name="feedback">Lähetä palautetta</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
   <string name="sort">Lajittele</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
   <string name="billing_learn_more">Miksi maksaa? Opi lisää.</string>
-  <string name="subscription_activated">Sinulla on nyt tilaus X-ominaisuuksiin.</string>
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
   <string name="subscription_not_signed_in">Kirjaudu Amazon-tilillesi!</string>

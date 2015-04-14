@@ -42,7 +42,8 @@
   <string name="share_movie">Compartilhar filme</string>
   <string name="share_checkout">Confira %s</string>
   <string name="comments">Comentários</string>
-  <string name="shout_hint">Digite um grito (em inglês)</string>
+  <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
+  <string name="shout_invalid">Seu comentário não segue as regras!</string>
   <string name="shout">Grite!</string>
   <string name="isspoiler">Alerta de spoiler!</string>
   <string name="no_shouts">Seja o primeiro a gritar!</string>
@@ -132,8 +133,8 @@
   <string name="action_collection_remove">Remover da coleção</string>
   <string name="action_collection_added">Adicionado à coleção</string>
   <string name="action_collection_removed">Removido da coleção</string>
-  <string name="action_watched">Assistido</string>
-  <string name="action_unwatched">Não assistido</string>
+  <string name="action_watched">Marcar como assistido</string>
+  <string name="action_unwatched">Marcar como não assistido</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
+  <string name="action_lists_reorder">Reordenar listas</string>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar a nuvem SeriesGuide</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in no trakt cancelado.</string>
+  <string name="checkin_error_not_exists">O item não foi (ainda) encontrado no trakt. Tente de novo mais tarde.</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d votos</item>
     <item quantity="other">%d Votos</item>
   </plurals>
+  <string name="feedback">Enviar comentários</string>
+  <string name="action_open_in_browser">Abrir no navegador</string>
   <string name="prefs_category_basic">Básico</string>
   <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>
@@ -288,7 +293,6 @@
   <string name="about">Sobre o SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
-  <string name="feedback">Enviar comentários</string>
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
   <string name="pref_autoaddshowssummary">Adiciona automaticamente séries do seu fluxo de atividades do trakt</string>
   <string name="sort">Ordenar por</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Desbloqueie todas os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
   <string name="upgrade_success">Obrigado por apoiar SeriesGuide! Você agora tem acesso a todos os recursos.</string>
   <string name="billing_learn_more">Por que pagar? Saiba Mais.</string>
-  <string name="subscription_activated">Você agora tem as funcionalidades X.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
   <string name="subscription_not_signed_in">Entre com sua conta da Amazon!</string>

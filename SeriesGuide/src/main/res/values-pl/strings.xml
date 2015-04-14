@@ -42,7 +42,8 @@
   <string name="share_movie">Współdziel film</string>
   <string name="share_checkout">Sprawdź %s</string>
   <string name="comments">Komentarze</string>
-  <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
+  <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
+  <string name="shout_invalid">Twój komentarz nie jest zgodny z zasadami!</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
@@ -209,6 +210,7 @@
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="action_lists_sort">Sortowanie list</string>
+  <string name="action_lists_reorder">Zmień kolejność list</string>
   <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
@@ -232,6 +234,7 @@
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">Podłączony do %s na trakt.</string>
   <string name="checkin_canceled_success_trakt">Anulowano podpięcie na trakt.</string>
+  <string name="checkin_error_not_exists">Nie znaleziono elementu na trakt. Spróbuj ponownie później.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>
@@ -272,6 +275,8 @@
     <item quantity="many">%d głosów</item>
     <item quantity="other">głosów: %d</item>
   </plurals>
+  <string name="feedback">Wyślij opinię</string>
+  <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -288,7 +293,6 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Autorzy</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
-  <string name="feedback">Wyślij opinię</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
   <string name="sort">Sortuj wg</string>
@@ -399,7 +403,6 @@
   <string name="upgrade_description">Odblokowuje pełną funkcjonalność: powiadomienia, skórki oraz więcej opcji widżetu. Dzięki temu wspomagasz przyszłe aktualizacje.</string>
   <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
   <string name="billing_learn_more">Po co płacić? Dowiedz się więcej.</string>
-  <string name="subscription_activated">Subskrybujesz teraz funkcję X.</string>
   <string name="subscription_expired">Subskrypcja wygasła</string>
   <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
   <string name="subscription_not_signed_in">Zaloguj się do konta Amazon!</string>

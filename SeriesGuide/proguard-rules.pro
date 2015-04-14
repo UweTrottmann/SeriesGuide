@@ -21,6 +21,24 @@
 # see https://code.google.com/p/android/issues/detail?id=78377
 -keep class !android.support.v7.internal.view.menu.** { *; }
 
+# Google Play Services
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
 # Amazon IAP library has some missing stuff
 -dontwarn com.amazon.**
 
@@ -42,6 +60,8 @@
 
 # joda-time has some annotations we don't care about.
 -dontwarn org.joda.convert.**
+# due to using joda-time-android tz data is included differently
+-dontwarn org.joda.time.tz.**
 
 # OkHttp has some internal stuff not available on Android.
 -dontwarn com.squareup.okhttp.internal.**

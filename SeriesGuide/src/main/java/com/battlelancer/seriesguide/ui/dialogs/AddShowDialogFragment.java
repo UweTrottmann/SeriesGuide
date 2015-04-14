@@ -38,12 +38,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -277,15 +278,20 @@ public class AddShowDialogFragment extends DialogFragment {
         SpannableStringBuilder meta = new SpannableStringBuilder();
 
         // status
-        boolean isContinuing = JsonExportTask.ShowStatusExport.CONTINUING.equals(show.status);
-        meta.append(getString(isContinuing ? R.string.show_isalive : R.string.show_isnotalive));
-        // if continuing, paint status green
-        meta.setSpan(
-                new TextAppearanceSpan(getActivity(),
-                        isContinuing ? R.style.TextAppearance_Subhead_Green
-                                : R.style.TextAppearance_Subhead_Dim), 0,
-                meta.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        meta.append("\n");
+        int encodedStatus = DataLiberationTools.encodeShowStatus(show.status);
+        if (encodedStatus != ShowTools.Status.UNKNOWN) {
+            String statusText = ShowTools.getStatus(getActivity(), encodedStatus);
+            if (statusText != null) {
+                meta.append(statusText);
+                // if continuing, paint status green
+                meta.setSpan(new TextAppearanceSpan(getActivity(),
+                                encodedStatus == ShowTools.Status.CONTINUING
+                                        ? R.style.TextAppearance_Subhead_Green
+                                        : R.style.TextAppearance_Subhead_Dim), 0, meta.length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                meta.append("\n");
+            }
+        }
 
         // next release day and time
         if (show.release_time != -1) {

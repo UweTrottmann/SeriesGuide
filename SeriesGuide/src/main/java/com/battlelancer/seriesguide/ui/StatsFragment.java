@@ -126,12 +126,13 @@ public class StatsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.stats_menu, menu);
 
         // guard against not attached to activity
         if (!isAdded()) {
             return;
         }
+
+        inflater.inflate(R.menu.stats_menu, menu);
 
         menu.findItem(R.id.menu_action_stats_filter_specials)
                 .setChecked(DisplaySettings.isHidingSpecials(getActivity()));

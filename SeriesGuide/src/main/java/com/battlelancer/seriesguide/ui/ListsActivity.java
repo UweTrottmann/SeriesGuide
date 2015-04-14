@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
@@ -42,22 +43,25 @@ import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.Li
  */
 public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
 
+    public static class ListsChangedEvent {
+    }
+
     public static final String TAG = "Lists";
+    public static final int LISTS_REORDER_LOADER_ID = 1;
 
     private ListsPagerAdapter mListsAdapter;
-
     private ViewPager mPager;
-
     private SlidingTabLayout mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lists);
+        setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
         setupNavDrawer();
 
         setupViews();
+        setupSyncProgressBar(R.id.progressBarTabs);
     }
 
     @Override
@@ -70,10 +74,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     private void setupViews() {
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        mPager = (ViewPager) findViewById(R.id.pagerLists);
+        mPager = (ViewPager) findViewById(R.id.viewPagerTabs);
         mPager.setAdapter(mListsAdapter);
 
-        mTabs = (SlidingTabLayout) findViewById(R.id.tabsLists);
+        mTabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
         mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
@@ -99,6 +103,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         mListsAdapter.onCleanUp();
     }
 
@@ -147,6 +152,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
             toggleSortIgnoreArticles();
             return true;
         }
+        if (itemId == R.id.menu_action_lists_reorder) {
+            ListsReorderDialogFragment.show(getSupportFragmentManager());
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -156,6 +165,10 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         mListsAdapter.onListsChanged();
         // update tabs
         mTabs.setViewPager(mPager);
+    }
+
+    public void onEventMainThread(ListsChangedEvent event) {
+        onListsChanged();
     }
 
     private void changeSortOrder(int sortOrderId) {

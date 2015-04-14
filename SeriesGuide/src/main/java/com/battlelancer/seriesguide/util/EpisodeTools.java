@@ -685,6 +685,7 @@ public class EpisodeTools {
                 // only mark episodes that have been released until within the hour
                 return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
                         + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                         + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
             }
         }
@@ -854,6 +855,7 @@ public class EpisodeTools {
                 // only mark episodes that have been released until within the hour
                 return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
                         + DateUtils.HOUR_IN_MILLIS)
+                        + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                         + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED
                         + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
             }
@@ -1223,6 +1225,10 @@ public class EpisodeTools {
             // success!
             // notify UI it may do relevant updates
             EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
+
+            // update latest episode for the changed show
+            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(mContext),
+                    mType.getShowTvdbId());
 
             // display success message
             if (mIsSendingToTrakt) {
