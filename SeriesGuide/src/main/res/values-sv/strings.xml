@@ -404,7 +404,6 @@
   <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
   <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
   <string name="billing_learn_more">Varför betala? Få mer information.</string>
-  <string name="subscription_activated">Du prenumerar nu på X-funktioner.</string>
   <string name="subscription_expired">Prenumerationen har gått ut</string>
   <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
   <string name="subscription_not_signed_in">Logga in med ditt Amazon-konto!</string>

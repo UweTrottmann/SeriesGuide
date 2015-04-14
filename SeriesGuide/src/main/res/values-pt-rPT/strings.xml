@@ -403,7 +403,6 @@
   <string name="upgrade_description">Desbloquear todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. Ajude-me a fazer updates futuros.</string>
   <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você tem acesso a todas as funcionalidades.</string>
   <string name="billing_learn_more">Porquê pagar? Saiba mais.</string>
-  <string name="subscription_activated">Obrigado pela subscrição, todas as funcionalidades encontram-se desbloqueadas e ao teu dispor.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
   <string name="subscription_not_signed_in">Entra na tua conta Amazon!</string>

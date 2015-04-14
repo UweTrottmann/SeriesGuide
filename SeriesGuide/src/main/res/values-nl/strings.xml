@@ -403,7 +403,6 @@
   <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
   <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>
   <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
-  <string name="subscription_activated">U bent nu geabonneerd op X-functies.</string>
   <string name="subscription_expired">Abonnement verlopen</string>
   <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
   <string name="subscription_not_signed_in">Log in op je Amazon account!</string>

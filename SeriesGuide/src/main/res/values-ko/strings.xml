@@ -403,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">유료 결제를 하면 어떤점이 좋아지는지 확인하세요.</string>
-  <string name="subscription_activated">이제 X의 모든 기능을 활용하실 수 있습니다.</string>
   <string name="subscription_expired">구독 만료되었습니다</string>
   <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

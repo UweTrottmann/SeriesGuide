@@ -403,7 +403,6 @@
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
   <string name="billing_learn_more">Miksi maksaa? Opi lisää.</string>
-  <string name="subscription_activated">Sinulla on nyt tilaus X-ominaisuuksiin.</string>
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
   <string name="subscription_not_signed_in">Kirjaudu Amazon-tilillesi!</string>

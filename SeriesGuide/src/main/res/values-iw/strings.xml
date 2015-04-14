@@ -403,7 +403,6 @@
   <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
   <string name="upgrade_success">תודה על תמיכתך ב-SerieaGuide! יש לך גישה לכל האפשרויות.</string>
   <string name="billing_learn_more">למה לשלם? למד עוד.</string>
-  <string name="subscription_activated">כעת אתה מנוי על תכונות של X.</string>
   <string name="subscription_expired">פג תוקף המנוי</string>
   <string name="subscription_expired_details">פג מנוי תכונות X שלך.</string>
   <string name="subscription_not_signed_in">התחבר לחשבון האמזון שלך!</string>

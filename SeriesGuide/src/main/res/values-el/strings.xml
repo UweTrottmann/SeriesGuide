@@ -403,7 +403,6 @@
   <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
   <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
   <string name="billing_learn_more">Γιατί πληρώνετε; Μάθετε περισσότερα.</string>
-  <string name="subscription_activated">Έχετε τώρα εγγραφεί στα Χ χαρακτηριστικά.</string>
   <string name="subscription_expired">Εγγραφή έληξε</string>
   <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
   <string name="subscription_not_signed_in">Συνδεθείτε στο λογαριασμό σας Amazon!</string>

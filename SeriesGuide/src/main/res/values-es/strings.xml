@@ -404,7 +404,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
   <string name="billing_learn_more">¿Por qué deberías pagar? Lee más.</string>
-  <string name="subscription_activated">Ahora estás suscrito a las características X.</string>
   <string name="subscription_expired">Suscripción caducada</string>
   <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
   <string name="subscription_not_signed_in">Inicia sesión en tu cuenta de Amazon!</string>

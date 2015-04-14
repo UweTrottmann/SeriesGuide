@@ -403,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
   <string name="billing_learn_more">Proč platit? Zjistěte víc.</string>
-  <string name="subscription_activated">Nyní máte zpřístupněny rozšířené funkce.</string>
   <string name="subscription_expired">Vypršela platnost</string>
   <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
   <string name="subscription_not_signed_in">Přihlaste se pomocí účtu Amazon!</string>

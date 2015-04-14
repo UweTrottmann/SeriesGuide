@@ -403,7 +403,6 @@
   <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
   <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
   <string name="billing_learn_more">Warum bezahlen? Mehr Infos.</string>
-  <string name="subscription_activated">Ihr Abonnement ist aktiv, alle Funktionen sind freigeschaltet.</string>
   <string name="subscription_expired">Abonnement abgelaufen</string>
   <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen.</string>
   <string name="subscription_not_signed_in">Melden Sie sich mit Ihrem Amazon-Konto an!</string>

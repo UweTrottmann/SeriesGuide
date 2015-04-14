@@ -403,7 +403,6 @@
   <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts hozzá a program a jövőbeni frissítéseihez.</string>
   <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
   <string name="billing_learn_more">Miért fizessek? Tudj meg többet.</string>
-  <string name="subscription_activated">Most már elő vagy fizetve, az összes funkció feloldásra került.</string>
   <string name="subscription_expired">Lejárt az előfizetés</string>
   <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
   <string name="subscription_not_signed_in">Jelentkezz be az Amazon fiókodba!</string>

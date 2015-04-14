@@ -403,7 +403,6 @@
   <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
   <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
   <string name="billing_learn_more">لماذا تدفع؟ إعرف أكثر.</string>
-  <string name="subscription_activated">أنت الآن مشترك في النسخة المدفوعة.</string>
   <string name="subscription_expired">انتهت مدة الإشتراك</string>
   <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
   <string name="subscription_not_signed_in">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>

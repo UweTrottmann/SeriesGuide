@@ -403,7 +403,6 @@
   <string name="upgrade_description">Odblokowuje pełną funkcjonalność: powiadomienia, skórki oraz więcej opcji widżetu. Dzięki temu wspomagasz przyszłe aktualizacje.</string>
   <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
   <string name="billing_learn_more">Po co płacić? Dowiedz się więcej.</string>
-  <string name="subscription_activated">Subskrybujesz teraz funkcję X.</string>
   <string name="subscription_expired">Subskrypcja wygasła</string>
   <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
   <string name="subscription_not_signed_in">Zaloguj się do konta Amazon!</string>

@@ -403,7 +403,6 @@
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
   <string name="billing_learn_more">Защо да плащате? Научете повече.</string>
-  <string name="subscription_activated">Вече сте абонирани за X функциите.</string>
   <string name="subscription_expired">Абонаментът е изтекъл</string>
   <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
   <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>

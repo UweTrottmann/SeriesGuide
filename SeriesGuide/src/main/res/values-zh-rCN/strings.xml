@@ -403,7 +403,6 @@
   <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
   <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
   <string name="billing_learn_more">升级为专业版有哪些优势？</string>
-  <string name="subscription_activated">您已升级为专业版。</string>
   <string name="subscription_expired">订阅已过期</string>
   <string name="subscription_expired_details">您的专业版订阅已过期。</string>
   <string name="subscription_not_signed_in">请登录您的 Amazon 帐户！</string>

@@ -403,7 +403,6 @@
   <string name="upgrade_description">Desbloqueie todas os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
   <string name="upgrade_success">Obrigado por apoiar SeriesGuide! Você agora tem acesso a todos os recursos.</string>
   <string name="billing_learn_more">Por que pagar? Saiba Mais.</string>
-  <string name="subscription_activated">Você agora tem as funcionalidades X.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
   <string name="subscription_not_signed_in">Entre com sua conta da Amazon!</string>

@@ -403,7 +403,6 @@
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Per què pagar? Vegeu més informació.</string>
-  <string name="subscription_activated">Ara esteu subscrit a les característiques X.</string>
   <string name="subscription_expired">La subscripció ha caducat</string>
   <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>

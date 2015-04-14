@@ -403,7 +403,6 @@
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
   <string name="billing_learn_more">Neden ödeme yapasınız? Daha fazla bilgi edinin.</string>
-  <string name="subscription_activated">Şimdi X özelliklerine abone oldunuz.</string>
   <string name="subscription_expired">Abonelik sona erdi</string>
   <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
   <string name="subscription_not_signed_in">Amazon hesabınızda oturum açın!</string>

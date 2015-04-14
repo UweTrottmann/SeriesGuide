@@ -403,7 +403,6 @@
   <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
   <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
   <string name="billing_learn_more">Зашто се претплатити? Сазнај више.</string>
-  <string name="subscription_activated">Прерплатили сте се на Х опције.</string>
   <string name="subscription_expired">Претплата је истекла</string>
   <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
   <string name="subscription_not_signed_in">Пријави се на свој Amazon налог!</string>

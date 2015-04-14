@@ -403,7 +403,6 @@
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
   <string name="billing_learn_more">Pourquoi payer ? En savoir plus.</string>
-  <string name="subscription_activated">Vous avez dès à présent accès aux fonctionnalités X.</string>
   <string name="subscription_expired">Abonnement expiré</string>
   <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
   <string name="subscription_not_signed_in">Connectez-vous à votre compte Amazon !</string>
