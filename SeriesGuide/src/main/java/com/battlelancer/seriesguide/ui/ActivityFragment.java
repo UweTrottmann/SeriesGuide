@@ -168,12 +168,13 @@ public class ActivityFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.activity_menu, menu);
 
         // guard against not attached to activity
         if (!isAdded()) {
             return;
         }
+
+        inflater.inflate(R.menu.activity_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)

@@ -211,6 +211,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // guard against not attached to activity
+        if (!isAdded()) {
+            return;
+        }
+
         inflater.inflate(R.menu.now_menu, menu);
 
         menu.findItem(R.id.menu_action_now_filter_released_today)
