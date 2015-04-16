@@ -94,7 +94,12 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
+
+        // use special animation when navigating away from a top activity
+        // but not when exiting the app (use the default system animations)
+        if (!isTaskRoot()) {
+            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
+        }
     }
 
     @Override
