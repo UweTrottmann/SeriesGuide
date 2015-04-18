@@ -132,17 +132,6 @@ public class FullscreenImageActivity extends BaseActivity {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDetachedFromWindow() {
-        // Release any references to the ImageView
-        mContentView.setImageDrawable(null);
-        mContentView = null;
-        super.onDetachedFromWindow();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

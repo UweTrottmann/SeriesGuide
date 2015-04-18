@@ -276,7 +276,7 @@
     <item quantity="other">הצבעות %d</item>
   </plurals>
   <string name="feedback">שלח משוב</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">פתח בדפדפן</string>
   <string name="prefs_category_basic">בסיסי</string>
   <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>

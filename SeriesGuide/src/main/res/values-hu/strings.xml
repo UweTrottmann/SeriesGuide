@@ -276,7 +276,7 @@
     <item quantity="other">%d szavazat</item>
   </plurals>
   <string name="feedback">Visszajelzés küldése</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Megnyitás böngészőben</string>
   <string name="prefs_category_basic">Alap beállítások</string>
   <string name="prefs_category_sharing">Szolgáltatások</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>

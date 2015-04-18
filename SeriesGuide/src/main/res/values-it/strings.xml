@@ -276,7 +276,7 @@
     <item quantity="other">%d voti</item>
   </plurals>
   <string name="feedback">Invia feedback</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Apri nel browser</string>
   <string name="prefs_category_basic">Base</string>
   <string name="prefs_category_sharing">Servizi</string>
   <string name="prefs_category_advanced">Avanzate</string>
@@ -305,7 +305,7 @@
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
   <string name="upcoming_upto_now">adesso</string>
-  <string name="upcoming_upto_one_day">entri 1 giorno</string>
+  <string name="upcoming_upto_one_day">entro un giorno</string>
   <string name="upcoming_upto_three_days">entro 3 giorni</string>
   <string name="upcoming_upto_one_week">entro 1 settimana</string>
   <string name="upcoming_upto_two_weeks">entro 2 settimane</string>
