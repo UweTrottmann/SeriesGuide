@@ -72,7 +72,7 @@
   <string name="episodes_watched">%s vistos</string>
   <string name="runtime_all_episodes">Duração de todos os episódios vistos</string>
   <string name="movies_on_watchlist">%s por ver</string>
-  <string name="runtime_movies_watchlist">Duração de todos os filmes vistos</string>
+  <string name="runtime_movies_watchlist">Duração de todos os filmes que desejas ver</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="zero">%d dias</item>
@@ -200,7 +200,7 @@
   <string name="add_already_exists">A série %s já se encontra na sua lista.</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
-  <string name="watchlist">A Minha Lista</string>
+  <string name="watchlist">Desejo Ver</string>
   <string name="first_list">Primeira lista</string>
   <string name="list_add">Adicionar lista</string>
   <string name="list_title_hint">Renomeia a tua lista</string>

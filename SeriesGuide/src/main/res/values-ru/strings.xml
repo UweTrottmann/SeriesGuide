@@ -276,7 +276,7 @@
     <item quantity="other">%d голосов</item>
   </plurals>
   <string name="feedback">Отправить отзыв</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Открыть в браузере</string>
   <string name="prefs_category_basic">Основные</string>
   <string name="prefs_category_sharing">Сервисы</string>
   <string name="prefs_category_advanced">Дополнительно</string>
