@@ -63,7 +63,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
+                    int position = getPosition();
                     if (position != RecyclerView.NO_POSITION && listener != null) {
                         listener.onItemClick(v, position);
                     }

@@ -13,6 +13,11 @@ Version 23 *(2015-04-14)*
 * In search, show cards now have all expected menu options (e.g. manage lists, remove).
 * trakt search replaces TheTVDB search in "Add show". Please report any issues, or if the results are better or worse.
 
+#### 23.0.1 *(2015-04-18)*
+
+* FIX Crash when using accessibility tools (like TalkBack) in shows section.
+* NOTICE Latest translations from crowdin.
+
 #### 23.0.0 *(2015-04-14)*
 
 * NOTICE Latest translations from crowdin.
