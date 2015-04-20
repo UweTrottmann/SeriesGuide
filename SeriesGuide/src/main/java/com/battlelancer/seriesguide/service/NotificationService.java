@@ -451,6 +451,8 @@ public class NotificationService extends IntentService {
                         checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
                         checkInIntent);
+
+                nb.setNumber(1);
             } else {
                 // multiple episodes
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -489,7 +491,7 @@ public class NotificationService extends IntentService {
                 }
 
                 nb.setStyle(inboxStyle);
-                nb.setContentInfo(String.valueOf(count));
+                nb.setNumber(count);
             }
         } else {
             // ICS and below
