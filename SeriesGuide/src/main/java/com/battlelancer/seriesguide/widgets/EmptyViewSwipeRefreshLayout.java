@@ -21,15 +21,15 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 /**
- * A {@link android.support.v4.widget.SwipeRefreshLayout} hosting a {@link android.view.ViewGroup}
- * with an empty view wrapped in a {@link android.widget.ScrollView} as its first and an {@link
- * android.widget.AdapterView} second child.
+ * A {@link android.support.v4.widget.SwipeRefreshLayout} which only checks the (scrollable!) views
+ * set through {@link #setSwipeableChildren(int...)} if they can scroll up to determine whether to
+ * trigger the refresh gesture.
  */
 public class EmptyViewSwipeRefreshLayout extends SwipeRefreshLayout {
+
+    private View[] swipeableChildren;
 
     public EmptyViewSwipeRefreshLayout(Context context) {
         super(context);
@@ -39,29 +39,38 @@ public class EmptyViewSwipeRefreshLayout extends SwipeRefreshLayout {
         super(context, attrs);
     }
 
+    /**
+     * Set the children to be checked if they can scroll up and hence should prevent the refresh
+     * gesture from being triggered.
+     */
+    public void setSwipeableChildren(final int... ids) {
+        if (ids == null) {
+            return;
+        }
+
+        // find child views
+        swipeableChildren = new View[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            View view = findViewById(ids[i]);
+            if (view == null) {
+                throw new IllegalArgumentException(
+                        "Supplied view ids need to exist in this layout.");
+            }
+            swipeableChildren[i] = view;
+        }
+    }
+
     @Override
     public boolean canChildScrollUp() {
-        // find content view
-        ViewGroup target = null;
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof ImageView) {
-                continue;
+        if (swipeableChildren != null) {
+            // check if any supplied swipeable children can scroll up
+            for (View view : swipeableChildren) {
+                if (view.isShown() && ViewCompat.canScrollVertically(view, -1)) {
+                    // prevent refresh gesture
+                    return true;
+                }
             }
-            target = (ViewGroup) child;
         }
-
-        if (target == null) {
-            return false;
-        }
-
-        // check if adapter view is visible
-        View scrollableView = target.getChildAt(1);
-        if (scrollableView.getVisibility() == GONE) {
-            // use empty view layout instead
-            scrollableView = target.getChildAt(0);
-        }
-
-        return ViewCompat.canScrollVertically(scrollableView, -1);
+        return false;
     }
 }

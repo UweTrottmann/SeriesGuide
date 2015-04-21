@@ -49,6 +49,7 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.entities.Comment;
@@ -58,8 +59,7 @@ import timber.log.Timber;
 /**
  * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
  */
-public class TraktCommentsFragment extends Fragment
-        implements SwipeRefreshLayout.OnRefreshListener {
+public class TraktCommentsFragment extends Fragment {
 
     public interface InitBundle {
         String MOVIE_TMDB_ID = "movie";
@@ -69,7 +69,7 @@ public class TraktCommentsFragment extends Fragment
 
     @InjectView(R.id.listViewShouts) ListView mList;
     @InjectView(R.id.textViewShoutsEmpty) TextView mEmptyView;
-    @InjectView(R.id.swipeRefreshLayoutShouts) SwipeRefreshLayout mSwipeRefreshLayout;
+    @InjectView(R.id.swipeRefreshLayoutShouts) EmptyViewSwipeRefreshLayout mSwipeRefreshLayout;
     @InjectView(R.id.buttonShouts) Button mButtonShout;
     @InjectView(R.id.editTextShouts) EditText mEditTextShout;
     @InjectView(R.id.checkBoxShouts) CheckBox mCheckBoxIsSpoiler;
@@ -82,7 +82,13 @@ public class TraktCommentsFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_comments, container, false);
         ButterKnife.inject(this, v);
 
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setSwipeableChildren(R.id.scrollViewComments, R.id.listViewShouts);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshCommentsWithNetworkCheck();
+            }
+        });
         mSwipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
@@ -276,11 +282,6 @@ public class TraktCommentsFragment extends Fragment
             // keep existing data
         }
     };
-
-    @Override
-    public void onRefresh() {
-        refreshCommentsWithNetworkCheck();
-    }
 
     private void refreshCommentsWithNetworkCheck() {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
