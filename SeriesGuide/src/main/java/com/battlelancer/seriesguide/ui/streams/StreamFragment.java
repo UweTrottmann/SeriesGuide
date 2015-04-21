@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -46,9 +47,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * action item).
  */
 public abstract class StreamFragment extends Fragment implements
-        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+        AdapterView.OnItemClickListener {
 
-    @InjectView(R.id.swipeRefreshLayoutStream) SwipeRefreshLayout mContentContainer;
+    @InjectView(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout mContentContainer;
 
     @InjectView(R.id.gridViewStream) StickyGridHeadersGridView mGridView;
     @InjectView(R.id.emptyViewStream) TextView mEmptyView;
@@ -61,7 +62,13 @@ public abstract class StreamFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_stream, container, false);
         ButterKnife.inject(this, v);
 
-        mContentContainer.setOnRefreshListener(this);
+        mContentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
+        mContentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshStreamWithNetworkCheck();
+            }
+        });
         mContentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
@@ -115,11 +122,6 @@ public abstract class StreamFragment extends Fragment implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRefresh() {
-        refreshStreamWithNetworkCheck();
     }
 
     private void refreshStreamWithNetworkCheck() {
