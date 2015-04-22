@@ -25,6 +25,7 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Menu"
+        android:textColor="?attr/sgColorNavDrawerText"
         tools:text="Movies" />
 
 </RelativeLayout>
