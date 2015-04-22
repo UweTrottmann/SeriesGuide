@@ -20,6 +20,6 @@
     android:id="@+id/sgToolbar"
     android:layout_height="?attr/actionBarSize"
     android:layout_width="match_parent"
-    app:theme="?attr/actionBarTheme"
+    android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
     android:background="@drawable/background_actionbar_gradient" />

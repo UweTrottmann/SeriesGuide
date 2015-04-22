@@ -21,7 +21,7 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:minHeight="?attr/actionBarSize"
-    app:theme="?attr/actionBarTheme"
+    android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
     android:fitsSystemWindows="true"
     android:background="@drawable/background_actionbar_gradient" />
