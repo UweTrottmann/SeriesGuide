@@ -340,7 +340,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                 }
                             }
                     )
-                    .setNegativeButton(getString(R.string.backup_no), null)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .create();
         }
     }
@@ -358,7 +358,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                 }
                             }
                     )
-                    .setNegativeButton(getString(R.string.import_no), null)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .create();
         }
     }
