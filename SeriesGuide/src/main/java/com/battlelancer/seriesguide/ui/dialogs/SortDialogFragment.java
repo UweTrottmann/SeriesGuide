@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -24,6 +23,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
