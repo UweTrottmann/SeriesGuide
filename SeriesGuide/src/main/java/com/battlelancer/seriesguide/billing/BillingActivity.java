@@ -404,7 +404,7 @@ public class BillingActivity extends BaseActivity {
 
         new AlertDialog.Builder(this)
                 .setMessage(getString(errorResId) + "\n\n" + message)
-                .setNeutralButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, null)
                 .create()
                 .show();
     }
