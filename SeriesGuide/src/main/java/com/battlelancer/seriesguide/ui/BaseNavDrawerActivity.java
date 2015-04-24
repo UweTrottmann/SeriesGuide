@@ -18,8 +18,11 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -290,10 +293,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         private static final int VIEW_TYPE_DIVIDER = 1;
         private static final int VIEW_TYPE_ACCOUNT = 2;
 
+        private final ColorStateList colorStateListIcon;
+
         private boolean isSubscribeVisible;
 
         public DrawerAdapter(Context context) {
             super(context, 0);
+
+            colorStateListIcon = getContext().getResources()
+                    .getColorStateList(Utils.resolveAttributeToResourceId(context.getTheme(),
+                            R.attr.sgColorNavDrawerIcon));
         }
 
         public void setSubscribeVisible(boolean visible) {
@@ -379,8 +388,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.icon.setImageResource(item.mIconRes);
+            // title
             holder.title.setText(item.mTitle);
+
+            // compat tintable drawable for the icon
+            Drawable icon = DrawableCompat.wrap(
+                    getContext().getResources().getDrawable(item.mIconRes));
+            DrawableCompat.setTintList(icon, colorStateListIcon);
+            holder.icon.setImageDrawable(icon);
 
             return convertView;
         }

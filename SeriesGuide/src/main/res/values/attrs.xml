@@ -16,6 +16,8 @@
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
+    <attr name="sgColorNavDrawerIcon" format="reference" />
+    <attr name="sgColorNavDrawerText" format="reference" />
 
     <!-- Color Arrays -->
     <attr name="colorsProgressBar" format="reference" />
