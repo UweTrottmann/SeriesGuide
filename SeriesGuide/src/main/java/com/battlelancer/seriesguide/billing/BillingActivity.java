@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.billing;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -27,6 +26,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -404,7 +404,7 @@ public class BillingActivity extends BaseActivity {
 
         new AlertDialog.Builder(this)
                 .setMessage(getString(errorResId) + "\n\n" + message)
-                .setNeutralButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, null)
                 .create()
                 .show();
     }
