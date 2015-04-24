@@ -43,6 +43,7 @@ import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+import jp.wasabeef.picasso.transformations.gpu.PixelationFilterTransformation;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -163,6 +164,7 @@ public final class ServiceUtils {
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
         RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
+        requestCreator.transform(new PixelationFilterTransformation(context, 400));
         if (!Utils.isAllowedLargeDataConnection(context)) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
