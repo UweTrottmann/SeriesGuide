@@ -27,7 +27,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.RingtonePreference;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 /**
  * Allows setting the threshold for upcoming episodes to appear in DashClock.
  */
-public class UpcomingEpisodeSettingsActivity extends ActionBarActivity {
+public class UpcomingEpisodeSettingsActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         // set a theme based on user preference

@@ -20,7 +20,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.MenuItem;
@@ -39,7 +39,7 @@ import de.greenrobot.event.EventBus;
  * de.greenrobot.event.EventBus#getDefault()} by default to handle various common events, see {@link
  * #registerEventBus()} and {@link #unregisterEventBus()} to prevent that.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private Runnable mUpdateShowRunnable;
