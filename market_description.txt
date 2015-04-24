@@ -15,6 +15,8 @@ http://seriesgui.de/whypay
 
 NOTE: Dates and times are limited to the first release in the country of origin. You can't watch episodes.
 
-This app uses data and images by TheTVDB (https://thetvdb.com/?tab=tos) licensed under CC BY-NC 4.0 (http://creativecommons.org/licenses/by-nc/4.0/). This product uses the TMDb API (https://www.themoviedb.org/documentation/api/terms-of-use) but is not endorsed or certified by TMDb (https://www.themoviedb.org/terms-of-use). This app uses data and images by trakt.tv (https://trakt.tv/terms).
+This app uses data and images by TheTVDB licensed under CC BY-NC 4.0. https://thetvdb.com/?tab=tos http://creativecommons.org/licenses/by-nc/4.0/
+This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
+This app uses data and images by trakt. https://trakt.tv/terms
 
 Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.
