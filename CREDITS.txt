@@ -33,8 +33,8 @@ SeriesGuide uses the following libraries or projects:
 TheTVDB.com (https://www.thetvdb.com)
 -------------------------------------
 
-This work is licensed under a Creative Commons Attribution-
-NonCommercial 4.0 International License.
+This app uses data and images from TheTVDB licensed under a
+Creative Commons Attribution-NonCommercial 4.0 International License.
 http://creativecommons.org/licenses/by-nc/4.0/
 
 https://www.thetvdb.com/?tab=tos
@@ -43,22 +43,27 @@ https://www.thetvdb.com/?tab=tos
 TMDb - The Movie Database (https://www.themoviedb.org)
 ------------------------------------------------------
 
+This product uses the TMDb API but is not endorsed or certified by TMDb.
+
+https://www.themoviedb.org/terms-of-use
+https://www.themoviedb.org/documentation/api/terms-of-use
+
 themoviedb.org is a free and community maintained movie database.
 It's completely user built by people like you. TMDb is currently used
 by millions of people every month and with our and powerful API, also
 used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
 
-https://www.themoviedb.org/terms-of-use
-
 
 trakt (https://trakt.tv)
 ------------------------
 
+This app uses data and images from trakt.tv.
+
+https://trakt.tv/terms
+
 trakt helps keep a record of what TV shows and movies you are
 watching. Based on your favorites, trakt recommends additional
 shows and movies you'll enjoy!
-
-https://trakt.tv/terms
 
 
 trakt-java (https://github.com/UweTrottmann/trakt-java)
