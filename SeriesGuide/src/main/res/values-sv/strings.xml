@@ -67,7 +67,7 @@
   <string name="action_movies_sort_release">Releasedatum</string>
   <string name="statistics_shows">serier</string>
   <string name="statistics_episodes">avsnitt</string>
-  <string name="statistics_movies">Filmer</string>
+  <string name="statistics_movies">filmer</string>
   <string name="shows_with_next">%s med kommande avsnitt</string>
   <string name="shows_continuing">%s fortsätter</string>
   <string name="episodes_watched">%s sedda</string>
@@ -139,7 +139,6 @@
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
   <string name="delete_show">Ta bort</string>
-  <string name="dontdelete_show">Ta inte bort</string>
   <string name="no_nextepisode">Inga ytterligare avsnitt hittade</string>
   <string name="context_favorite">Favorit</string>
   <string name="context_unfavorite">Ta bort från favoriter</string>
@@ -149,7 +148,7 @@
   <string name="context_unhide">Visa</string>
   <string name="hidden">Dold serie</string>
   <string name="unhidden">Visar serie</string>
-  <string name="action_shows_add">Lägg till serier</string>
+  <string name="action_shows_add">Lägg till serie</string>
   <string name="action_shows_filter">Filtrera serier</string>
   <string name="empty_filter">Ta bort alla filter</string>
   <string name="action_shows_filter_favorites">Favoriter</string>
@@ -194,7 +193,6 @@
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
-  <string name="dont_add_show">Lägg inte till</string>
   <string name="add_multiple">Alla serier kommer att visas i din serielista snart.</string>
   <string name="add_started">%s kommer snart att visas i din serielista.</string>
   <string name="add_error">Kunde inte lägga till %s.</string>
@@ -309,7 +307,7 @@
   <string name="upcoming_upto_one_day">1 dag</string>
   <string name="upcoming_upto_three_days">3 dagar</string>
   <string name="upcoming_upto_one_week">1 vecka</string>
-  <string name="upcoming_upto_two_weeks">två veckor</string>
+  <string name="upcoming_upto_two_weeks">2 veckor</string>
   <string name="upcoming_upto_one_month">1 månad</string>
   <string name="upcoming_upto_one_hour">timme</string>
   <string name="upcoming_upto_six_hours">6 timmar</string>
@@ -346,11 +344,9 @@
   <string name="import_success">Säkerhetskopian återställdes.</string>
   <string name="import_failed">Återställning av säkerhetskopian misslyckades.</string>
   <string name="backup_button">Säkerhetskopiera</string>
-  <string name="import_button">Återställ</string>
+  <string name="import_button">Återställ säkerhetskopia</string>
   <string name="backup_question">Det här skriver över den nuvarande säkerhetskopian i mappen!</string>
-  <string name="backup_no">Säkerhetskopiera inte</string>
   <string name="import_question">Den nuvarande serielistan försvinner! Se till så att säkerhetskopian finns i mappen för säkerhetskopior.</string>
-  <string name="import_no">Återställ inte</string>
   <string name="import_warning">Jag förstår att mina nuvarande serier och listor kommer att försvinna!</string>
   <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>

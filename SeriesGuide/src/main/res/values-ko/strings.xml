@@ -138,7 +138,6 @@
   <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
   <string name="delete_error">쇼를 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
   <string name="delete_show">삭제</string>
-  <string name="dontdelete_show">취소</string>
   <string name="no_nextepisode">다음 에피소드가 없습니다</string>
   <string name="context_favorite">즐겨찾기</string>
   <string name="context_unfavorite">즐겨찾기가 없음</string>
@@ -193,7 +192,6 @@
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_all">모두 추가</string>
-  <string name="dont_add_show">취소</string>
   <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
   <string name="add_started">%s는 당신의 쇼 리스트에 곧 나타날 것입니다.</string>
   <string name="add_error">%s를 추가할 수 없음</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">백업</string>
   <string name="import_button">복원</string>
   <string name="backup_question">이 백업 폴더에 현재 백업 파일을 덮어쓰게 됩니다!</string>
-  <string name="backup_no">백업 취소</string>
   <string name="import_question">현재의 쇼 목록 손실 될 것입니다! 백업 폴더 안에 백업 파일이 있는지 확인하세요.</string>
-  <string name="import_no">복원 취소</string>
   <string name="import_warning">현재 앱에 저장한 쇼 목록이 삭제될 수 있습니다!</string>
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>

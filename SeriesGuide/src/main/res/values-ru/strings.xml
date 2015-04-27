@@ -138,7 +138,6 @@
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
   <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
   <string name="delete_show">Удалить</string>
-  <string name="dontdelete_show">Не удалять</string>
   <string name="no_nextepisode">следующий эпизод не найден</string>
   <string name="context_favorite">Добавить в избранное</string>
   <string name="context_unfavorite">Удалить из избранного </string>
@@ -193,7 +192,6 @@
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
   <string name="search_error">Найти не удалось, повторите попытку позже.</string>
   <string name="add_all">Добавить все</string>
-  <string name="dont_add_show">Не добавлять</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
   <string name="add_started">%s скоро появится в вашем списке.</string>
   <string name="add_error">Не удалось добавить %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Резервное копирование</string>
   <string name="import_button">Восстановление</string>
   <string name="backup_question">Текущий файл резервной копии будет перезаписан!</string>
-  <string name="backup_no">Не резервировать</string>
   <string name="import_question">Текущий список сериалов будет утерян! Убедитесь, что резервная копия находится в папке резервного копирования.</string>
-  <string name="import_no">Не восстанавливать</string>
   <string name="import_warning">Я понимаю, что мои текущие сериалы и списки будут потеряны!</string>
   <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
   <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>

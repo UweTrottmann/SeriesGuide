@@ -42,8 +42,8 @@
   <string name="share_movie">Sdílet film</string>
   <string name="share_checkout">Čekuj %s</string>
   <string name="comments">Komentáře</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Napište komentář (andlicky,5 a více slov)</string>
+  <string name="shout_invalid">Váš komentář porušuje pravidla!</string>
   <string name="shout">Zakřičet!</string>
   <string name="isspoiler">Vyzrazení děje!</string>
   <string name="no_shouts">Buďte první, kdo zakřičí!</string>
@@ -138,7 +138,6 @@
   <string name="confirm_delete">Opravdu chcete odstranit %s?</string>
   <string name="delete_error">Seriál nelze odstranit. Opakujte akci později.</string>
   <string name="delete_show">Odstranit</string>
-  <string name="dontdelete_show">Neodstraňovat</string>
   <string name="no_nextepisode">Žádné následujicí epizody</string>
   <string name="context_favorite">Oblíbit</string>
   <string name="context_unfavorite">Znelíbit</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_all">Přidat vše</string>
-  <string name="dont_add_show">Nepřidávat</string>
   <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_error">Nelze přidat %s.</string>
@@ -234,7 +232,7 @@
   <string name="trakt_notcollected">%s chybí ve sbírce.</string>
   <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">(Zatím) nenalezeno na tract.tv Zkuste to později.</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
   <string name="traktcheckin_wait">Já počkám</string>
@@ -276,7 +274,7 @@
     <item quantity="other">%d hlasů</item>
   </plurals>
   <string name="feedback">Poslat reakci</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Otevřít v prohlížečí</string>
   <string name="prefs_category_basic">Základní</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Zálohovat</string>
   <string name="import_button">Obnovit</string>
   <string name="backup_question">To ale přepíše stávající zálohu v adresáři záloh!</string>
-  <string name="backup_no">Nezálohovat</string>
   <string name="import_question">Stávající seznam pořadů bude ztracen! Ujistěte se, že máte zálohu databáze.</string>
-  <string name="import_no">Neobnovovat</string>
   <string name="import_warning">Jsem si vědom toho, že všechny mé současné seriály a seznamy zmizí!</string>
   <string name="last_auto_backup">Poslední automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnovení automatické zálohy</string>

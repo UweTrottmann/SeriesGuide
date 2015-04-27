@@ -138,7 +138,6 @@
   <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
   <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
   <string name="delete_show">Törlés</string>
-  <string name="dontdelete_show">Mégse</string>
   <string name="no_nextepisode">nem található köv. rész</string>
   <string name="context_favorite">Kedvencek közé</string>
   <string name="context_unfavorite">Eltávolítás a kedvencekből</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
   <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
   <string name="add_all">Add hozzá mindet</string>
-  <string name="dont_add_show">Mégse</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Biztonsági Mentés</string>
   <string name="import_button">Visszaállítás</string>
   <string name="backup_question">Ez felülírja a jelenlegi biztonsági másolatot!</string>
-  <string name="backup_no">Mégse</string>
   <string name="import_question">A jelenlegi sorozatlista törlődik. Győződj meg róla, hogy van biztonsági másolatod a mentési mappában!</string>
-  <string name="import_no">Mégse</string>
   <string name="import_warning">Megértettem, hogy az összes jelenlegi műsorom és listám törlésre kerül!</string>
   <string name="last_auto_backup">Utolsó automata mentés: %s</string>
   <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>

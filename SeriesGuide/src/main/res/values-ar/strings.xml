@@ -138,7 +138,6 @@
   <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
   <string name="delete_error">لم يتم إزالة المسلسل، حاول مرة أخرى.</string>
   <string name="delete_show">إزالة</string>
-  <string name="dontdelete_show">لا تقم بالإزالة</string>
   <string name="no_nextepisode">لا توجد حلقة قادمة</string>
   <string name="context_favorite">أضف إلى المفضلة</string>
   <string name="context_unfavorite">إزالة من المفضلة</string>
@@ -193,7 +192,6 @@
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
   <string name="add_all">إضافة الكل </string>
-  <string name="dont_add_show">لا تقم بالإضافة</string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
   <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
   <string name="add_error">تعذر إضافة %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">نسخ احتياطي</string>
   <string name="import_button">استعادة</string>
   <string name="backup_question">سوف يتم الكتابة فوق ملف النسخ الإحتياطي الحالي الموجود في مجلد النسخ الإحتياطي!</string>
-  <string name="backup_no">لا تقم بالنسخ الإحتياطي</string>
   <string name="import_question">سيتم فقدان قائمة المعرض الحالي! تأكد من أن ملف النسخة الاحتياطية داخل مجلد النسخ الاحتياطي.</string>
-  <string name="import_no">لا تقم بالإستعادة</string>
   <string name="import_warning">أنا أفهم ما أقوم به حاليا وأعلم أنه قد تضيع العروض والقوائم!</string>
   <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
   <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>

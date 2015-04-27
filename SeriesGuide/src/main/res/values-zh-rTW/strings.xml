@@ -138,7 +138,6 @@
   <string name="confirm_delete">確定要移除%s嗎？</string>
   <string name="delete_error">無法移除節目。請稍後再試。</string>
   <string name="delete_show">刪除</string>
-  <string name="dontdelete_show">請勿移除</string>
   <string name="no_nextepisode">找無下一集</string>
   <string name="context_favorite">加入最愛</string>
   <string name="context_unfavorite">自最愛移除</string>
@@ -193,7 +192,6 @@
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="search_error">查詢失敗，請稍候再試。</string>
   <string name="add_all">全部加入</string>
-  <string name="dont_add_show">請勿新增</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">%s will appear in your show list shortly.</string>
   <string name="add_error">Could not add %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">備份</string>
   <string name="import_button">還原</string>
   <string name="backup_question">這將覆蓋目前在備份夾中的備份檔!</string>
-  <string name="backup_no">不要備份</string>
   <string name="import_question">目前的影集清單將被清空!請確認備份檔已存在備份夾中。</string>
-  <string name="import_no">不要還原</string>
   <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>

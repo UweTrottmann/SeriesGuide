@@ -138,7 +138,6 @@
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
   <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
-  <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">nenhum próximo episódio encontrado</string>
   <string name="context_favorite">Favorito</string>
   <string name="context_unfavorite">Não favorito</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
   <string name="add_all">Adicionar tudo</string>
-  <string name="dont_add_show">Não Adicionar</string>
   <string name="add_multiple">Todas as séries aparecerão na sua lista em breve.</string>
   <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
   <string name="add_error">Não foi possível adicionar %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Backup</string>
   <string name="import_button">Restaurar</string>
   <string name="backup_question">Isso substituirá o arquivo de backup atual na pasta de backup!</string>
-  <string name="backup_no">Não Criar Backup</string>
   <string name="import_question">A lista atual de séries será perdida! Esteja certo que o arquivo backup está dentro da pasta de backup.</string>
-  <string name="import_no">Não Restaurar</string>
   <string name="import_warning">Eu entendo que minhas séries e listas atuais serão perdidas!</string>
   <string name="last_auto_backup">Último backup automático: %s</string>
   <string name="restore_auto_backup">Restaurar backup automático</string>

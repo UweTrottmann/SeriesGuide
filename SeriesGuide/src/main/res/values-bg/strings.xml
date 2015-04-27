@@ -138,7 +138,6 @@
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
   <string name="delete_show">Премахни</string>
-  <string name="dontdelete_show">Не премахвай</string>
   <string name="no_nextepisode">няма намерен следващ епизод</string>
   <string name="context_favorite">Добави към Любими</string>
   <string name="context_unfavorite">Премахни от Любими</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
   <string name="add_all">Добави всички</string>
-  <string name="dont_add_show">Не добавяй</string>
   <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
   <string name="add_started">Всеки момент %s ще се появи в списъка със сериали.</string>
   <string name="add_error">Неуспешно добавяне на %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Създаване на архив</string>
   <string name="import_button">Възстанови архив</string>
   <string name="backup_question">Това ще замени текущия архивен файл в папката за архивиране!</string>
-  <string name="backup_no">Не архивирай</string>
   <string name="import_question">Текущият списък със сериали ще бъде загубен! Уверете се, че архивния файл е в папката за архиви.</string>
-  <string name="import_no">Не възстановявай</string>
   <string name="import_warning">Разбирам, че моите текущи сериали и списъци ще бъдат загубени!</string>
   <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
   <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
