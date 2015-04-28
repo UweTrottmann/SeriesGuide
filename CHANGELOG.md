@@ -5,6 +5,15 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 24 *(in development)*
+-----------------------------
+
+#### 24-beta1 *(2015-04-27)*
+
+* TWEAK Better material design on older versions of Android, especially in dialogs.
+* TWEAK Nav drawer highlight now colors text and icon.
+* NOTICE Latest translations from crowdin.
+
 Version 23 *(2015-04-14)*
 -------------------------
 
