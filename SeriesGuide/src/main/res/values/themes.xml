@@ -17,7 +17,6 @@
         <!-- System widgets -->
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
         <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
 
@@ -39,12 +38,15 @@
         <item name="colorAccent">@color/teal_500</item>
 
         <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
+        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="windowActionModeOverlay">true</item>
+
+        <!-- System widgets -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
 
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -131,12 +133,15 @@
         <item name="colorAccent">@color/teal_500</item>
 
         <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg</item>
+        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="windowActionModeOverlay">true</item>
+
+        <!-- System widgets -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/teal_500</item>
@@ -197,7 +202,6 @@
         <!-- System widgets -->
         <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
         <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
 
@@ -219,7 +223,7 @@
         <item name="colorAccent">@color/teal_500</item>
 
         <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundNeutral">@drawable/activated_background_sg_light</item>
+        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
 
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
@@ -229,6 +233,9 @@
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
+
+        <!-- System widgets -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg_light</item>
 
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>

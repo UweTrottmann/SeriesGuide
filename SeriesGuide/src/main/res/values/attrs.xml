@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Special drawables -->
-    <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
+    <attr name="sgActivatedItemBackgroundDrawer" format="reference" />
     <attr name="sgBorderlessButtonBackground" format="reference" />
 
     <!-- Text colors -->

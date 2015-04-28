@@ -38,8 +38,10 @@
     <color name="background_card_light">#ffffffff</color>
     <color name="background_snackbar">#ff323232</color>
 
-    <color name="activated_dark">#ff303030</color>
-    <color name="activated_light">#ffeeeeee</color>
+    <color name="activated_dark">#ff333333</color>
+    <color name="activated_light">#ffe0e0e0</color>
+    <color name="activated_drawer_dark">#ff303030</color>
+    <color name="activated_drawer_light">#ffeeeeee</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
     <color name="divider">#26ffffff</color>
