@@ -26,6 +26,7 @@ import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -85,6 +86,7 @@ public final class ServiceUtils {
     private static OkHttpClient cachingHttpClient;
 
     private static Picasso sPicasso;
+    private static PixelationFilterTransformation pixelTransform;
 
     private static TraktV2 traktV2;
 
@@ -149,6 +151,11 @@ public final class ServiceUtils {
                     .downloader(new OkHttp3Downloader(context))
                     .build();
         }
+        if (pixelTransform == null) {
+            pixelTransform = new PixelationFilterTransformation(context,
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24,
+                            context.getResources().getDisplayMetrics()));
+        }
         return sPicasso;
     }
 
@@ -164,7 +171,7 @@ public final class ServiceUtils {
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
         RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
-        requestCreator.transform(new PixelationFilterTransformation(context, 400));
+        requestCreator.transform(pixelTransform);
         if (!Utils.isAllowedLargeDataConnection(context)) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
