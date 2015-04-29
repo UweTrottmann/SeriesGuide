@@ -40,6 +40,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
     private LayoutInflater mLayoutInflater;
 
     private final String mImageBaseUrl;
+    private final int moviePosterHeight;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -63,6 +64,8 @@ public class MoviesCursorAdapter extends CursorAdapter {
             mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W154;
         }
+        moviePosterHeight = context.getResources()
+                .getDimensionPixelSize(R.dimen.movie_item_poster_height);
     }
 
     @Override
@@ -100,6 +103,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         String posterPath = cursor.getString(MoviesQuery.POSTER);
         ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
                 ? null : mImageBaseUrl + posterPath)
+                .resize(0, moviePosterHeight)
                 .into(holder.poster);
 
         // context menu

@@ -210,7 +210,7 @@ public abstract class AddFragment extends Fragment {
                 holder.poster.setVisibility(View.VISIBLE);
                 ServiceUtils.loadWithPicasso(getContext(), item.poster)
                         .centerCrop()
-                        .resizeDimen(R.dimen.show_poster_add_width, R.dimen.show_poster_add_height)
+                        .resizeDimen(R.dimen.show_poster_large_width, R.dimen.show_poster_large_height)
                         .error(R.drawable.ic_image_missing)
                         .into(holder.poster);
             } else {

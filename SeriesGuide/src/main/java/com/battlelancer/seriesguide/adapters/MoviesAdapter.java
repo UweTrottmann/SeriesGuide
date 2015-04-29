@@ -41,6 +41,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     private LayoutInflater mInflater;
 
     private String mImageBaseUrl;
+    private final int moviePosterHeight;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -63,6 +64,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W154;
         }
+        moviePosterHeight = getContext().getResources()
+                .getDimensionPixelSize(R.dimen.movie_item_poster_height);
     }
 
     @SuppressLint("InflateParams")
@@ -100,6 +103,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         // poster
         ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
+                .resize(0, moviePosterHeight)
                 .into(holder.poster);
 
         // context menu

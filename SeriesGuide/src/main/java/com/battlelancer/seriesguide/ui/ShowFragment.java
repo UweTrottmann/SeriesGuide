@@ -457,7 +457,11 @@ public class ShowFragment extends Fragment {
         final View posterContainer = getView().findViewById(R.id.containerShowPoster);
         final ImageView posterView = (ImageView) posterContainer
                 .findViewById(R.id.imageViewShowPoster);
-        Utils.loadPoster(getActivity(), posterView, mShowPoster);
+        ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildPosterUrl(mShowPoster))
+                .noFade()
+                .resizeDimen(R.dimen.show_poster_large_width, R.dimen.show_poster_large_height)
+                .into(posterView);
+
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
