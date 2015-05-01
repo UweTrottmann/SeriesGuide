@@ -273,7 +273,7 @@ public class TimeTools {
      * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
      */
     private static LocalDateTime handleHourPastMidnight(LocalDateTime localDateTime) {
-        if (localDateTime.getHourOfDay() == 0) {
+        if (localDateTime.getHourOfDay() == 0 && ISO3166_1_UNITED_STATES.equals(country) {
             return localDateTime.plusDays(1);
         }
         return localDateTime;
