@@ -188,7 +188,7 @@ public class TimeTools {
         // set time
         LocalDateTime localDateTime = localDate.toLocalDateTime(showReleaseTime);
 
-        localDateTime = handleHourPastMidnight(localDateTime);
+        localDateTime = handleHourPastMidnight(showCountry, localDateTime);
         localDateTime = handleDstGap(showTimeZone, localDateTime);
 
         // finally get a valid datetime in the show time zone
@@ -249,7 +249,7 @@ public class TimeTools {
             localDateTime = localDateTime.withDayOfWeek(weekDay);
         }
 
-        localDateTime = handleHourPastMidnight(localDateTime);
+        localDateTime = handleHourPastMidnight(country, localDateTime);
         localDateTime = handleDstGap(showTimeZone, localDateTime);
 
         DateTime dateTime = localDateTime.toDateTime(showTimeZone);
@@ -267,13 +267,19 @@ public class TimeTools {
 
     /**
      * If the release time is within the hour past midnight (0:00 until 0:59) moves the date one day
-     * into the future.
+     * into the future (currently US shows only).
      *
      * <p> This is based on late night shows being commonly listed as releasing the day before if
      * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
+     *
+     * <p>Example: https://thetvdb.com/?tab=series&id=292421
+     *
+     * <p>See also: https://forums.thetvdb.com/viewtopic.php?t=22791
      */
-    private static LocalDateTime handleHourPastMidnight(LocalDateTime localDateTime) {
-        if (localDateTime.getHourOfDay() == 0) {
+    private static LocalDateTime handleHourPastMidnight(@Nullable String country,
+            LocalDateTime localDateTime) {
+        // Example:
+        if (ISO3166_1_UNITED_STATES.equals(country) && localDateTime.getHourOfDay() == 0) {
             return localDateTime.plusDays(1);
         }
         return localDateTime;
