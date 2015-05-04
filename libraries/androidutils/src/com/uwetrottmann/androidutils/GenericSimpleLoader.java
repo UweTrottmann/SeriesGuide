@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * A generic {@link AsyncTaskLoader} loading any {@link List} or single object
  * of things (beware for e.g. Cursors you need to override onReleaseResources in
- * a meaningful way). It takes care of delivering and reseting results, so you
+ * a meaningful way). It takes care of delivering and resetting results, so you
  * only have to implement <code>loadInBackground()</code>.
  */
 public abstract class GenericSimpleLoader<T> extends AsyncTaskLoader<T> {
