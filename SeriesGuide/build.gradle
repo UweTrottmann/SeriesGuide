@@ -106,7 +106,6 @@ android {
 
 dependencies {
     compile project(':api')
-    compile project(':libraries:androidutils')
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
@@ -130,6 +129,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.uwetrottmann:androidutils:2.0.0'
     compile 'com.uwetrottmann:tmdb-java:0.8.0'
     compile ('com.uwetrottmann:trakt-java:4.3.1') {
         exclude group: 'org.json', module: 'json'

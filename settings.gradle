@@ -1,5 +1,4 @@
 include ':api'
-include ':libraries:androidutils'
 include ':libraries:drag-sort-listview'
 include ':libraries:stickygridheaders'
 include ':SeriesGuide'
