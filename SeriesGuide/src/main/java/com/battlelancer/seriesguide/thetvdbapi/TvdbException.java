@@ -21,18 +21,25 @@ package com.battlelancer.seriesguide.thetvdbapi;
  */
 public class TvdbException extends Exception {
 
-    public TvdbException() {
+    private final boolean itemDoesNotExist;
+
+    public TvdbException(String message) {
+        this(message, false, null);
     }
 
-    public TvdbException(String detailMessage) {
-        super(detailMessage);
+    public TvdbException(String message, Throwable throwable) {
+        this(message, false, throwable);
     }
 
-    public TvdbException(String detailMessage, Throwable throwable) {
-        super(detailMessage, throwable);
+    public TvdbException(String message, boolean itemDoesNotExist, Throwable throwable) {
+        super(message, throwable);
+        this.itemDoesNotExist = itemDoesNotExist;
     }
 
-    public TvdbException(Throwable throwable) {
-        super(throwable);
+    /**
+     * If the TheTVDB item does not exist (a HTTP 404 response was returned).
+     */
+    public boolean getItemDoesNotExist() {
+        return itemDoesNotExist;
     }
 }

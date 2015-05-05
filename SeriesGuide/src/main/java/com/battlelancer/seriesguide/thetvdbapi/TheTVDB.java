@@ -44,6 +44,8 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -696,9 +698,30 @@ public class TheTVDB {
      */
     private static void downloadAndParse(Context context, ContentHandler handler, String urlString,
             boolean isZipFile) throws TvdbException {
-        try {
-            final InputStream input = Utils.downloadAndCacheUrl(context, urlString);
+        Request request = new Request.Builder().url(urlString).build();
 
+        Response response;
+        try {
+            response = ServiceUtils.getCachingOkHttpClient(context)
+                    .newCall(request)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage() + " " + urlString, e);
+        }
+
+        int statusCode = response.code();
+        if (statusCode == 404) {
+            // special case: item does not exist (any longer)
+            throw new TvdbException(response.code() + " " + response.message() + " " + urlString,
+                    true, null);
+        }
+        if (!response.isSuccessful()) {
+            // other non-2xx response
+            throw new TvdbException(response.code() + " " + response.message() + " " + urlString);
+        }
+
+        try {
+            final InputStream input = response.body().byteStream();
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB
                 final ZipInputStream zipin = new ZipInputStream(input);
@@ -706,9 +729,7 @@ public class TheTVDB {
                 try {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
                 } finally {
-                    if (zipin != null) {
-                        zipin.close();
-                    }
+                    zipin.close();
                 }
             } else {
                 try {
@@ -719,15 +740,8 @@ public class TheTVDB {
                     }
                 }
             }
-        } catch (SAXException e) {
-            throw new TvdbException("Problem parsing " + urlString, e);
-        } catch (IOException e) {
-            throw new TvdbException("Problem downloading " + urlString, e);
-        } catch (AssertionError ae) {
-            // looks like Xml.parse is throwing AssertionErrors instead of IOExceptions
-            throw new TvdbException("Problem parsing " + urlString);
-        } catch (Exception e) {
-            throw new TvdbException("Problem downloading and parsing " + urlString, e);
+        } catch (SAXException | IOException | AssertionError e) {
+            throw new TvdbException(e.getMessage() + " " + urlString, e);
         }
     }
 }
