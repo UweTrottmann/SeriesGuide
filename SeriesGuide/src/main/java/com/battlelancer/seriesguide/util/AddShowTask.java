@@ -150,7 +150,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         int result;
         boolean addedAtLeastOneShow = false;
-        boolean failedToAddShow = false;
+        boolean failedMergingShows = false;
         while (!addQueue.isEmpty()) {
             Timber.d("Starting to add next show...");
             if (isCancelled()) {
@@ -163,7 +163,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
                 publishProgress(ADD_OFFLINE);
-                failedToAddShow = true;
+                failedMergingShows = true;
                 break;
             }
 
@@ -175,8 +175,12 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
             } catch (TvdbException e) {
+                // prevent a hexagon merge from failing if a show can not be added
+                // because it does not exist (any longer)
+                if (!(isMergingShows && e.getItemDoesNotExist())) {
+                    failedMergingShows = true;
+                }
                 result = ADD_ERROR;
-                failedToAddShow = true;
                 Timber.e(e, "Adding show failed");
             }
 
@@ -188,7 +192,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         isFinishedAddingShows = true;
 
         // when merging shows down from Hexagon, set success flag
-        if (isMergingShows && !failedToAddShow) {
+        if (isMergingShows && !failedMergingShows) {
             HexagonSettings.setHasMergedShows(context, true);
         }
 
