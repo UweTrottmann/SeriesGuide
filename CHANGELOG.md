@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 24 *(in development)*
 -----------------------------
 
+#### 24-beta2 *(2015-05-11)*
+
+* TWEAK SG pushes the release time by a day if a show releases between 12AM and 1AM now only or US
+  shows. E.g. US late-night shows are typically listed in TheTVDB like "airing Monday night, 12:30AM",
+  which is actually Tuesday when looking at the date. This is not common for e.g. Japanese anime,
+  hence the limiting to US shows.
+* FIX Do not fail merging shows with SeriesGuide Cloud if a show does not exist any longer on TheTVDB.
+  This would cause a full show merge running repeatedly.
+* NOTICE Latest translations from crowdin.
+
 #### 24-beta1 *(2015-04-27)*
 
 * TWEAK Better material design on older versions of Android, especially in dialogs.
