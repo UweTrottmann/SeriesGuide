@@ -14,6 +14,7 @@ Version 24 *(in development)*
   shows. E.g. US late-night shows are typically listed in TheTVDB like "airing Monday night, 12:30AM",
   which is actually Tuesday when looking at the date. This is not common for e.g. Japanese anime,
   hence the limiting to US shows.
+* TWEAK Display TMDb rating vote count for movies.
 * FIX Do not fail merging shows with SeriesGuide Cloud if a show does not exist any longer on TheTVDB.
   This would cause a full show merge running repeatedly.
 * NOTICE Latest translations from crowdin.
