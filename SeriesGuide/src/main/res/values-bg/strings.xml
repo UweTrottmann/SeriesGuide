@@ -97,7 +97,7 @@
     <item quantity="many">%d минути</item>
     <item quantity="other">%d минути</item>
   </plurals>
-  <string name="episode_number_absolute">АБСОЛЮТНО</string>
+  <string name="episode_number_absolute">ПОРЕДЕН</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата на издаване</string>
   <string name="episode_firstaired_unknown">Неизвестна дата на издаване</string>

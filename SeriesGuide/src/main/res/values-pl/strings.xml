@@ -274,7 +274,7 @@
     <item quantity="other">głosów: %d</item>
   </plurals>
   <string name="feedback">Wyślij opinię</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Otwórz w przeglądarce</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
