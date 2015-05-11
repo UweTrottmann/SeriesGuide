@@ -49,12 +49,6 @@ public class TmdbTools {
     private static final String PATH_MOVIES = "movie/";
     private static final String PATH_PERSON = "person/";
 
-    private static DecimalFormat RATING_FORMAT = new DecimalFormat("0.0");
-
-    public static String buildRatingValue(Double value) {
-        return value == null ? "-.-" : RATING_FORMAT.format(value);
-    }
-
     /**
      * Tries to display the TMDb website of the given movie through a view intent.
      */

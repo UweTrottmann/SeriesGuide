@@ -260,6 +260,7 @@ public class MovieTools {
             values.put(SeriesGuideContract.Movies.POSTER, details.tmdbMovie().poster_path);
             values.put(SeriesGuideContract.Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
             values.put(SeriesGuideContract.Movies.RATING_TMDB, details.tmdbMovie().vote_average);
+            values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, details.tmdbMovie().vote_count);
             // if there is no release date, store Long.MAX as it is likely in the future
             // also helps correctly sorting movies by release date
             Date releaseDate = details.tmdbMovie().release_date;

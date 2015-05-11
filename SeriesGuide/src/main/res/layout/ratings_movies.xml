@@ -13,18 +13,20 @@
         android:id="@+id/textViewRatingsTmdbValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_rating"
         tools:text="9.6"
         android:textAppearance="@style/TextAppearance.Display1" />
 
     <TextView
-        android:id="@+id/textViewRatingsTmdbRange"
+        android:id="@+id/textViewRatingsTmdbVotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxEms="6"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_alignBaseline="@+id/textViewRatingsTmdbValue"
         android:layout_toRightOf="@+id/textViewRatingsTmdbValue"
-        android:text="@string/tvdb_range"
+        tools:text="12340 votes"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Caption" />
 
     <TextView
@@ -40,14 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/large_padding"
-        android:layout_toRightOf="@id/textViewRatingsTmdbRange">
+        android:layout_toRightOf="@id/textViewRatingsTmdbVotes">
 
         <TextView
             android:id="@+id/textViewRatingsTraktValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/inline_padding"
-            android:text="@string/placeholder_rating"
             tools:text="8.4"
             android:textAppearance="@style/TextAppearance.Display1" />
 
@@ -55,10 +56,10 @@
             android:id="@+id/textViewRatingsTraktVotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxEms="6"
             android:layout_alignBaseline="@+id/textViewRatingsTraktValue"
             android:layout_toRightOf="@+id/textViewRatingsTraktValue"
-            android:text="@string/norating"
-            tools:text="1234 votes"
+            tools:text="12340 votes"
             android:maxLines="2"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Caption" />
