@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.dataliberation;
 
 import com.battlelancer.seriesguide.util.ShowTools;
 import java.io.File;
+import javax.annotation.Nullable;
 
 public class DataLiberationTools {
 
@@ -39,7 +40,10 @@ public class DataLiberationTools {
      *
      * <p>If neither continuing or ended will default to {@link com.battlelancer.seriesguide.util.ShowTools.Status#UNKNOWN}.
      */
-    public static int encodeShowStatus(String status) {
+    public static int encodeShowStatus(@Nullable String status) {
+        if (status == null) {
+            return ShowTools.Status.UNKNOWN;
+        }
         switch (status) {
             case JsonExportTask.ShowStatusExport.CONTINUING:
                 return ShowTools.Status.CONTINUING;

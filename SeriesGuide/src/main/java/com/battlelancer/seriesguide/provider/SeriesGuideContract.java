@@ -35,6 +35,9 @@ public class SeriesGuideContract {
          */
         String REF_SHOW_ID = "series_id";
 
+        /**
+         * Ensure this is NOT null (enforced through database constraint).
+         */
         String TITLE = "seriestitle";
 
         /**
