@@ -42,8 +42,8 @@
   <string name="share_movie">Поділитися фільмом</string>
   <string name="share_checkout">Погляньте %s</string>
   <string name="comments">Коментарі</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Введіть свій коментар (англійською, більше 5 слів)</string>
+  <string name="shout_invalid">Ваш коментар не дотримуються вимог!</string>
   <string name="shout">Відгук!</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
@@ -138,7 +138,6 @@
   <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
   <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
   <string name="delete_show">Видалити</string>
-  <string name="dontdelete_show">Не видаляти</string>
   <string name="no_nextepisode">наступну серію не знайдено</string>
   <string name="context_favorite">Улюблене</string>
   <string name="context_unfavorite">Видалити з улюблених</string>
@@ -163,7 +162,7 @@
   <string name="menu_update_delta">Оновити (лише ті, що вже вийшли)</string>
   <string name="context_updateshow">Оновити</string>
   <string name="context_marknext">Переглянута наступна серія</string>
-  <string name="now_tab">Сьогодні</string>
+  <string name="now_tab">Зараз</string>
   <string name="recently_watched">Недавно переглянуті</string>
   <string name="released_today">Вийшли сьогодні</string>
   <string name="friends_recently">Ваші друзі на trakt</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
   <string name="search_error">Пошук не вдався, спробуйте пізніше.</string>
   <string name="add_all">Додати усі</string>
-  <string name="dont_add_show">Не додавати</string>
   <string name="add_multiple">Усі серіали з\'являться у вашому списку найближчим часом.</string>
   <string name="add_started">%s з\'явиться у вашому списку серіалів  найближчим часом.</string>
   <string name="add_error">Не вдалося додати %s.</string>
@@ -210,7 +208,7 @@
   <string name="list_item_remove">Видалити зі списку</string>
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
   <string name="action_lists_sort">Сортувати списки</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Впорядкувати список</string>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -234,7 +232,7 @@
   <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Елемент (тимчасово) не знайдено на trakt. Повторіть спробу пізніше.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
@@ -276,7 +274,7 @@
     <item quantity="other">%d голосів</item>
   </plurals>
   <string name="feedback">Відправити відгук</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Відкрити в браузері</string>
   <string name="prefs_category_basic">Основні</string>
   <string name="prefs_category_sharing">Послуги</string>
   <string name="prefs_category_advanced">Додатково</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Бекап</string>
   <string name="import_button">Відновити</string>
   <string name="backup_question">Це призведе до перезаписування поточного файлу резервної копії в папці Бекапу!</string>
-  <string name="backup_no">Не робити Бекап</string>
   <string name="import_question">Поточний список серіалів буде втрачено! Переконайтеся, що файл резервної копії знаходиться всередині папки Бекапу.</string>
-  <string name="import_no">Не відновлювати</string>
   <string name="import_warning">Я розумію, що мої поточні серіали та списки будуть втрачені!</string>
   <string name="last_auto_backup">Останній авто Бекап: %s</string>
   <string name="restore_auto_backup">Відновити з авто Бекапу</string>

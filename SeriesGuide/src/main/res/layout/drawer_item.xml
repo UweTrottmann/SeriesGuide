@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_item_height"
-    android:background="?attr/sgActivatedItemBackgroundNeutral">
+    android:background="?attr/sgActivatedItemBackgroundDrawer">
 
     <ImageView
         android:id="@+id/menu_icon"
@@ -25,6 +25,7 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Menu"
+        android:textColor="?attr/sgColorNavDrawerText"
         tools:text="Movies" />
 
 </RelativeLayout>

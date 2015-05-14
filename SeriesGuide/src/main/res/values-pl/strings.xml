@@ -138,7 +138,6 @@
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
   <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
   <string name="delete_show">Usuń</string>
-  <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
   <string name="context_favorite">Ulubione</string>
   <string name="context_unfavorite">Nieulubione</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_all">Dodaj wszystkie</string>
-  <string name="dont_add_show">Nie dodawaj</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
   <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
   <string name="add_error">Nie można dodać %s.</string>
@@ -276,7 +274,7 @@
     <item quantity="other">głosów: %d</item>
   </plurals>
   <string name="feedback">Wyślij opinię</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Otwórz w przeglądarce</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Kontynuuj</string>
   <string name="import_button">Przywróć</string>
   <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
-  <string name="backup_no">Nie archiwizuj</string>
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
-  <string name="import_no">Nie przywracaj</string>
   <string name="import_warning">Rozumiem, że bieżące seriale oraz listy zostaną utracone!</string>
   <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
   <string name="restore_auto_backup">Przywróć kopię zapasową</string>

@@ -138,7 +138,6 @@
   <string name="confirm_delete">Haluatko varmasti poistaa ohjelman: %s?</string>
   <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
   <string name="delete_show">Poista</string>
-  <string name="dontdelete_show">Älä poista</string>
   <string name="no_nextepisode">seuraavaa jaksoa ei löytynyt</string>
   <string name="context_favorite">Suosikki</string>
   <string name="context_unfavorite">Ei suosikki</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="add_all">Lisää kaikki</string>
-  <string name="dont_add_show">Älä lisää</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
   <string name="add_started">%s ilmestyy pian ohjelmalistaasi.</string>
   <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Varmuuskopioi</string>
   <string name="import_button">Palauta</string>
   <string name="backup_question">Tämä korvaa nykyisen varmuuskopion varmuuskopiokansiossa!</string>
-  <string name="backup_no">Älä varmuuskopioi</string>
   <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
-  <string name="import_no">Älä palauta</string>
   <string name="import_warning">Ymmärrän, että nykyiset ohjelmani ja listani kadotetaan!</string>
   <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
   <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>

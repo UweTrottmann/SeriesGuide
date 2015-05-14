@@ -175,7 +175,7 @@ public class AddShowDialogFragment extends DialogFragment {
         ButterKnife.inject(this, v);
 
         // buttons
-        mButtonNegative.setText(R.string.dont_add_show);
+        mButtonNegative.setText(R.string.dismiss);
         mButtonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,7 +263,6 @@ public class AddShowDialogFragment extends DialogFragment {
         if (result.isAdded) {
             // already added, prevent adding
             mButtonPositive.setVisibility(View.GONE);
-            mButtonNegative.setText(R.string.dismiss);
         } else {
             mButtonPositive.setEnabled(true);
         }

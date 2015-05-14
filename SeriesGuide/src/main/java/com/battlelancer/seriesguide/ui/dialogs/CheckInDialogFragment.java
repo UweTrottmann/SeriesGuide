@@ -55,7 +55,6 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                         episode.getInt(CheckInQuery.NUMBER),
                         episode.getString(CheckInQuery.EPISODE_TITLE));
                 args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
-                args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
 
                 f.setArguments(args);
             }

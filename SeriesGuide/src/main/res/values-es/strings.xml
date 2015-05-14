@@ -138,7 +138,6 @@
   <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
   <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>
   <string name="delete_show">Eliminar</string>
-  <string name="dontdelete_show">No eliminar</string>
   <string name="no_nextepisode">ningún próximo episodio encontrado</string>
   <string name="context_favorite">Favoritos</string>
   <string name="context_unfavorite">No favorito</string>
@@ -193,7 +192,6 @@
   <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
   <string name="search_error">La búsqueda ha fallado, inténtalo más tarde.</string>
   <string name="add_all">Añadir todo</string>
-  <string name="dont_add_show">No agregar</string>
   <string name="add_multiple">Todos los programas aparecerán en su lista de programas en breve.</string>
   <string name="add_started">%s aparecerá en tu lista dentro de poco.</string>
   <string name="add_error">No se pudo añadir %s.</string>
@@ -348,9 +346,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="backup_button">Respaldo</string>
   <string name="import_button">Restaurar</string>
   <string name="backup_question">¡Esta acción sobrescribirá el archivo de copia de seguridad actual en la carpeta de copia de seguridad!</string>
-  <string name="backup_no">No Respaldar</string>
   <string name="import_question">¡La lista actual de series se perderá! Asegúrese de que el archivo de copia de seguridad está dentro de la carpeta de copia de seguridad.</string>
-  <string name="import_no">No Restaurar</string>
   <string name="import_warning">Entiendo que mis series y listas se perderán!</string>
   <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
   <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>

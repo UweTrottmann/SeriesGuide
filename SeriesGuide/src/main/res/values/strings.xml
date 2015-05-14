@@ -164,7 +164,6 @@
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_error">Could not remove show. Try again later.</string>
     <string name="delete_show">Remove</string>
-    <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
     <string name="context_favorite">Add to favorites</string>
     <string name="context_unfavorite">Remove from favorites</string>
@@ -229,7 +228,6 @@
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_all">Add all</string>
-    <string name="dont_add_show">Don\'t Add</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>
     <string name="add_started">%s will appear in your show list shortly.</string>
     <string name="add_error">Could not add %s.</string>
@@ -411,9 +409,7 @@
     <string name="backup_button">Create backup</string>
     <string name="import_button">Restore backup</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
-    <string name="backup_no">Don\'t Backup</string>
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-    <string name="import_no">Don\'t Restore</string>
     <string name="import_warning">I understand my current shows and lists will be lost!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>

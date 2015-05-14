@@ -39,7 +39,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -69,7 +69,7 @@ import java.util.List;
  * com.battlelancer.seriesguide.ui.BaseActivity} to avoid handling actions which might be confusing
  * while adjusting settings.
  */
-public class SeriesGuidePreferences extends ActionBarActivity {
+public class SeriesGuidePreferences extends AppCompatActivity {
 
     private static final String TAG = "Settings";
 

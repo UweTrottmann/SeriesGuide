@@ -138,7 +138,6 @@
   <string name="confirm_delete">Vai tu tiešām vēlies noņemt %s?</string>
   <string name="delete_error">Nebija iespējams noņemt šo šovu. Mēģini vēlreiz.</string>
   <string name="delete_show">Noņemt</string>
-  <string name="dontdelete_show">Nenoņemt</string>
   <string name="no_nextepisode">nākamā epizode netika atrasta</string>
   <string name="context_favorite">Add to favorites</string>
   <string name="context_unfavorite">Remove from favorites</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
   <string name="search_error">Meklēšana neizdevās, mēģiniet vēlreiz vēlāk.</string>
   <string name="add_all">Pievienot visas</string>
-  <string name="dont_add_show">Nepievienojiet</string>
   <string name="add_multiple">Visi seriāli tuvākajā laikā parādīsies jūsu seriālu sarakstā.</string>
   <string name="add_started">%s drīz parādīsies tavā šovu sarakstā.</string>
   <string name="add_error">%s pievienošana bija neveiksmīga.</string>
@@ -348,9 +346,7 @@
   <string name="backup_button">Dublēt</string>
   <string name="import_button">Atjaunot</string>
   <string name="backup_question">Tādējādi tiks pārrakstīts mapes pašreizējais dublējums!</string>
-  <string name="backup_no">Nedublēt</string>
   <string name="import_question">Pašreizējais seriālu saraksts pazudīs! Pārliecinieties, ka dublējuma fails atrodas dublējuma mapē.</string>
-  <string name="import_no">Don\'t atjaunot</string>
   <string name="import_warning">Es saprotu, ka mani pašreizēji seriāli un saraksti pazudīs!</string>
   <string name="last_auto_backup">Pēdējais automātiskais dublējums: %s</string>
   <string name="restore_auto_backup">Atjaunot no automātiskā dublējuma</string>

@@ -93,6 +93,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
             details.tmdbMovie().runtime = movieQuery.getInt(MovieQuery.RUNTIME_MIN);
             details.tmdbMovie().vote_average = movieQuery.getDouble(MovieQuery.RATING_TMDB);
+            details.tmdbMovie().vote_count = movieQuery.getInt(MovieQuery.RATING_VOTES_TMDB);
             // if stored release date is Long.MAX, movie has no release date
             long releaseDateMs = movieQuery.getLong(MovieQuery.RELEASED_UTC_MS);
             details.tmdbMovie().release_date = releaseDateMs == Long.MAX_VALUE ? null
@@ -120,19 +121,20 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
     private interface MovieQuery {
 
         public String[] PROJECTION = {
-                Movies.TITLE,
+                Movies.TITLE, // 0
                 Movies.OVERVIEW,
                 Movies.RELEASED_UTC_MS,
                 Movies.POSTER,
-                Movies.WATCHED,
+                Movies.WATCHED, // 4
                 Movies.IN_COLLECTION,
                 Movies.IN_WATCHLIST,
                 Movies.IMDB_ID,
                 Movies.RUNTIME_MIN,
-                Movies.RATING_TMDB,
+                Movies.RATING_TMDB, // 9
+                Movies.RATING_VOTES_TMDB,
                 Movies.RATING_TRAKT,
                 Movies.RATING_VOTES_TRAKT,
-                Movies.RATING_USER
+                Movies.RATING_USER // 13
         };
 
         int TITLE = 0;
@@ -145,8 +147,9 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         int IMDB_ID = 7;
         int RUNTIME_MIN = 8;
         int RATING_TMDB = 9;
-        int RATING_TRAKT = 10;
-        int RATING_VOTES_TRAKT = 11;
-        int RATING_USER = 12;
+        int RATING_VOTES_TMDB = 10;
+        int RATING_TRAKT = 11;
+        int RATING_VOTES_TRAKT = 12;
+        int RATING_USER = 13;
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
-  ~ Copyright 2014 Uwe Trottmann
+  ~ Copyright 2015 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,9 +15,10 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sgToolbar"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_width="match_parent"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    android:background="@color/transparent" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_activated="true" android:drawable="@color/activated_drawer_light" />
+
+    <item android:drawable="@color/transparent" />
+
+</selector>

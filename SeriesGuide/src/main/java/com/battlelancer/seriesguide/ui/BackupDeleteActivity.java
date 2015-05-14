@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -29,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -340,7 +340,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                 }
                             }
                     )
-                    .setNegativeButton(getString(R.string.backup_no), null)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .create();
         }
     }
@@ -358,7 +358,7 @@ public class BackupDeleteActivity extends BaseActivity {
                                 }
                             }
                     )
-                    .setNegativeButton(getString(R.string.import_no), null)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .create();
         }
     }

@@ -138,7 +138,6 @@
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
   <string name="delete_error">Impossible de retirer la série. Réessayez plus tard.</string>
   <string name="delete_show">Supprimer</string>
-  <string name="dontdelete_show">Ne pas supprimer</string>
   <string name="no_nextepisode">pas de prochain épisode trouvé</string>
   <string name="context_favorite">Ajouter aux favoris</string>
   <string name="context_unfavorite">Retirer des favoris</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="search_error">Recherche échouée, réessayez plus tard.</string>
   <string name="add_all">Tout ajouter</string>
-  <string name="dont_add_show">Ne pas ajouter</string>
   <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
   <string name="add_started">%s apparaîtra dans votre liste de séries sous peu.</string>
   <string name="add_error">Impossible d\'ajouter %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Sauvegarder</string>
   <string name="import_button">Restaurer</string>
   <string name="backup_question">Ceci va écraser les fichiers de sauvegarde déjà présent dans le répertoire!</string>
-  <string name="backup_no">Ne pas sauvegarder</string>
   <string name="import_question">La liste de séries actuelles sera perdue! Assurez-vous que le fichier de sauvegarde est bien dans le répertoire.</string>
-  <string name="import_no">Ne pas restaurer</string>
   <string name="import_warning">Je comprends que mes séries et listes actuelles vont être supprimées !</string>
   <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
   <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>

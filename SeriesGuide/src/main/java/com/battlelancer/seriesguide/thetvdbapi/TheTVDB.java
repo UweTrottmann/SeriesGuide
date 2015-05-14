@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -44,21 +43,20 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
-import javax.annotation.Nonnull;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
@@ -78,13 +76,10 @@ public class TheTVDB {
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
-    private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
-
     private static final String TVDB_API_SERIES = TVDB_API_URL + BuildConfig.TVDB_API_KEY
             + "/series/";
 
     private static final String TVDB_PATH_ALL = "all/";
-    private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
@@ -226,78 +221,10 @@ public class TheTVDB {
         getEpisodesAndUpdateDatabase(context, show, language, batch);
     }
 
-    /**
-     * Search TheTVDB for shows which include a certain keyword in their title.
-     *
-     * @param allLanguages If set, will query for results in all languages instead of the user
-     * preferred language.
-     * @return At most 100 results (limited by TheTVDB API).
-     */
-    @Nonnull
-    public static List<SearchResult> searchShow(Context context, String query, boolean allLanguages)
-            throws TvdbException {
-        final List<SearchResult> series = new ArrayList<>();
-        final SearchResult currentShow = new SearchResult();
-
-        RootElement root = new RootElement("Data");
-        Element item = root.getChild("Series");
-        // set handlers for elements we want to react to
-        item.setEndElementListener(new EndElementListener() {
-            public void end() {
-                series.add(currentShow.copy());
-            }
-        });
-        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.tvdbid = Integer.valueOf(body);
-            }
-        });
-        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.title = body.trim();
-            }
-        });
-        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.overview = body.trim();
-            }
-        });
-
-        // build search URL: encode query...
-        String url;
-        try {
-            url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new TvdbException("Encoding show title failed", e);
-        }
-        // ...and set language filter
-        if (allLanguages) {
-            url += TVDB_PARAM_LANGUAGE + "all";
-        } else {
-            url += TVDB_PARAM_LANGUAGE + DisplaySettings.getContentLanguage(context);
-        }
-
-        try {
-            InputStream in = null;
-            try {
-                in = Utils.downloadAndCacheUrl(context, url);
-                Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
-            } finally {
-                if (in != null) {
-                    in.close();
-                }
-            }
-        } catch (IOException | SAXException e) {
-            throw new TvdbException("Downloading or parsing search results failed", e);
-        }
-
-        return series;
-    }
-
     // Values based on the assumption that sync runs about every 24 hours
     private static final long UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
             12 * DateUtils.HOUR_IN_MILLIS;
-    private static final long UPDATE_THRESHOLD_DAILYS_MS = 1 * DateUtils.DAY_IN_MILLIS
+    private static final long UPDATE_THRESHOLD_DAILYS_MS = DateUtils.DAY_IN_MILLIS
             + 12 * DateUtils.HOUR_IN_MILLIS;
 
     /**
@@ -696,9 +623,30 @@ public class TheTVDB {
      */
     private static void downloadAndParse(Context context, ContentHandler handler, String urlString,
             boolean isZipFile) throws TvdbException {
-        try {
-            final InputStream input = Utils.downloadAndCacheUrl(context, urlString);
+        Request request = new Request.Builder().url(urlString).build();
 
+        Response response;
+        try {
+            response = ServiceUtils.getCachingOkHttpClient(context)
+                    .newCall(request)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage() + " " + urlString, e);
+        }
+
+        int statusCode = response.code();
+        if (statusCode == 404) {
+            // special case: item does not exist (any longer)
+            throw new TvdbException(response.code() + " " + response.message() + " " + urlString,
+                    true, null);
+        }
+        if (!response.isSuccessful()) {
+            // other non-2xx response
+            throw new TvdbException(response.code() + " " + response.message() + " " + urlString);
+        }
+
+        try {
+            final InputStream input = response.body().byteStream();
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB
                 final ZipInputStream zipin = new ZipInputStream(input);
@@ -706,9 +654,7 @@ public class TheTVDB {
                 try {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
                 } finally {
-                    if (zipin != null) {
-                        zipin.close();
-                    }
+                    zipin.close();
                 }
             } else {
                 try {
@@ -719,15 +665,8 @@ public class TheTVDB {
                     }
                 }
             }
-        } catch (SAXException e) {
-            throw new TvdbException("Problem parsing " + urlString, e);
-        } catch (IOException e) {
-            throw new TvdbException("Problem downloading " + urlString, e);
-        } catch (AssertionError ae) {
-            // looks like Xml.parse is throwing AssertionErrors instead of IOExceptions
-            throw new TvdbException("Problem parsing " + urlString);
-        } catch (Exception e) {
-            throw new TvdbException("Problem downloading and parsing " + urlString, e);
+        } catch (SAXException | IOException | AssertionError e) {
+            throw new TvdbException(e.getMessage() + " " + urlString, e);
         }
     }
 }

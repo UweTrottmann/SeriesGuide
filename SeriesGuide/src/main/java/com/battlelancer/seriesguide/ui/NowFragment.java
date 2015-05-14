@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import de.greenrobot.event.EventBus;
 import java.util.List;
 
@@ -60,9 +61,9 @@ import java.util.List;
  * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
  * to trakt).
  */
-public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class NowFragment extends Fragment {
 
-    @InjectView(R.id.swipeRefreshLayoutNow) SwipeRefreshLayout swipeRefreshLayout;
+    @InjectView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
 
     @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
     @InjectView(R.id.emptyViewNow) TextView emptyView;
@@ -81,7 +82,13 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         View v = inflater.inflate(R.layout.fragment_now, container, false);
         ButterKnife.inject(this, v);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshStream();
+            }
+        });
         swipeRefreshLayout.setProgressViewOffset(false,
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
@@ -242,11 +249,6 @@ public class NowFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRefresh() {
-        refreshStream();
     }
 
     private void refreshStream() {

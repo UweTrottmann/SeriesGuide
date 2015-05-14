@@ -45,11 +45,6 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         String ITEM_TITLE = "itemtitle";
 
         /**
-         * Default check-in message.
-         */
-        String DEFAULT_MESSAGE = "message";
-
-        /**
          * Movie TMDb id. <b>Required for movies.</b>
          */
         String MOVIE_TMDB_ID = "movietmdbid";
@@ -89,16 +84,8 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
         ButterKnife.inject(this, v);
 
-        // some required values
-        final String defaultMessage = getArguments().getString(InitBundle.DEFAULT_MESSAGE);
-        final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
-
-        // Message box, set title as default comment
-        if (!TextUtils.isEmpty(defaultMessage)) {
-            mEditTextMessage.setText(defaultMessage);
-        }
-
         // Paste episode button
+        final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
         if (!TextUtils.isEmpty(itemTitle)) {
             mButtonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override

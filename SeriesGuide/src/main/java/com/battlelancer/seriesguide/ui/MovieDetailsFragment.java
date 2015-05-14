@@ -112,6 +112,7 @@ public class MovieDetailsFragment extends Fragment {
 
     @InjectView(R.id.containerRatings) View mRatingsContainer;
     @InjectView(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
+    @InjectView(R.id.textViewRatingsTmdbVotes) TextView mRatingsTmdbVotes;
     @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
     @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
     @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
@@ -438,7 +439,9 @@ public class MovieDetailsFragment extends Fragment {
         mButtonContainer.setVisibility(View.VISIBLE);
 
         // ratings
-        mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
+        mRatingsTmdbValue.setText(TraktTools.buildRatingString(tmdbMovie.vote_average));
+        mRatingsTmdbVotes.setText(
+                TraktTools.buildRatingVotesString(getActivity(), tmdbMovie.vote_count));
         if (traktRatings != null) {
             mRatingsTraktVotes.setText(
                     TraktTools.buildRatingVotesString(getActivity(), traktRatings.votes));

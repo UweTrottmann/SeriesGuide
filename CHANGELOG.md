@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 23.1 *(2015-05-14)*
+-------------------------
+
+* Improved material design on older versions of Android.
+* Bugfixes (crash when opening Now tab; midnight offset now only applies to US shows).
+* Display TMDb rating vote count for movies.
+* Note: SG pushes the release time by a day if a show releases between 12AM and 1AM now only or US
+  shows. E.g. US late-night shows are typically listed in TheTVDB like "airing Monday night, 12:30AM",
+  which is actually Tuesday when looking at the date. This is not common for e.g. Japanese anime,
+  hence this is now limited to US shows.
+
 Version 23 *(2015-04-14)*
 -------------------------
 

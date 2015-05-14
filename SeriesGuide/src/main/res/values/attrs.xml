@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Special drawables -->
-    <attr name="sgActivatedItemBackgroundNeutral" format="reference" />
+    <attr name="sgActivatedItemBackgroundDrawer" format="reference" />
     <attr name="sgBorderlessButtonBackground" format="reference" />
 
     <!-- Text colors -->
@@ -16,6 +16,8 @@
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
+    <attr name="sgColorNavDrawerIcon" format="reference" />
+    <attr name="sgColorNavDrawerText" format="reference" />
 
     <!-- Color Arrays -->
     <attr name="colorsProgressBar" format="reference" />

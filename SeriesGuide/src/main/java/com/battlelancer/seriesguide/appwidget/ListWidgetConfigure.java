@@ -20,7 +20,7 @@ import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
  * triggering update and backup mechanisms.
  * <p> The list widget is only available on API level 11 and above.
  */
-public class ListWidgetConfigure extends ActionBarActivity {
+public class ListWidgetConfigure extends AppCompatActivity {
 
     private int mAppWidgetId;
 

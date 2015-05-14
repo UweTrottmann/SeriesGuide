@@ -22,6 +22,6 @@
     style="@style/Widget.SeriesGuide.ActionBar"
     android:layout_height="?attr/actionBarSize"
     android:layout_width="match_parent"
-    app:theme="?attr/actionBarTheme"
+    android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
     android:background="?attr/colorPrimary" />

@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -60,7 +60,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
      * {@link SystemUiHider#getInstance} to obtain an instance.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected SystemUiHiderHoneycomb(ActionBarActivity activity, View anchorView, int flags) {
+    protected SystemUiHiderHoneycomb(AppCompatActivity activity, View anchorView, int flags) {
         super(activity, anchorView, flags);
 
         mShowFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;

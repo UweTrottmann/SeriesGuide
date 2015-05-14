@@ -138,7 +138,6 @@
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
   <string name="delete_show">Odstrániť</string>
-  <string name="dontdelete_show">Neodstraňovať</string>
   <string name="no_nextepisode">žiadne ďalšie epizódy sa nenašli</string>
   <string name="context_favorite">Obľúbené</string>
   <string name="context_unfavorite">Odstrániť z obľúbených položiek</string>
@@ -193,7 +192,6 @@
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
   <string name="add_all">Pridaj všetky</string>
-  <string name="dont_add_show">Nepridať</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
   <string name="add_error">Nemožno pridať %s.</string>
@@ -347,9 +345,7 @@
   <string name="backup_button">Zálohovať</string>
   <string name="import_button">Obnoviť</string>
   <string name="backup_question">Prepíše aktuálnu zálohu v adresáry novou!</string>
-  <string name="backup_no">Nezálohovať</string>
   <string name="import_question">Aktuálny zoznam seriálov sa stratí! Presvedčte sa, či máte spravenú zálohu.</string>
-  <string name="import_no">Neobnoviť</string>
   <string name="import_warning">Som si vedomí že moje všetky súčasné a zoznamy budú zmazané!</string>
   <string name="last_auto_backup">Posledná automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
