@@ -104,23 +104,15 @@ public class NowFragment extends Fragment {
             }
         });
 
-        return v;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
-
-        // define layout
+        // recycler view layout manager
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
+                if (adapter == null) {
+                    return 1;
+                }
                 if (position >= adapter.getItemCount()) {
                     return 1;
                 }
@@ -131,8 +123,19 @@ public class NowFragment extends Fragment {
             }
         });
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new GridInsetDecoration(getActivity()));
+        recyclerView.addItemDecoration(new GridInsetDecoration(getResources()));
         recyclerView.setHasFixedSize(true);
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                R.attr.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);

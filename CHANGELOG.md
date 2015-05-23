@@ -16,6 +16,13 @@ Version 23.1 *(2015-05-14)*
   which is actually Tuesday when looking at the date. This is not common for e.g. Japanese anime,
   hence this is now limited to US shows.
 
+#### 23.1.1 *(2015-05-23)*
+
+* FIX Crash in Now tab on certain devices (on app start).
+* FIX Crash when importing shows without status.
+* TWEAK Allow importing shows without a title.
+* NOTICE Latest translations from crowdin.
+
 Version 23 *(2015-04-14)*
 -------------------------
 

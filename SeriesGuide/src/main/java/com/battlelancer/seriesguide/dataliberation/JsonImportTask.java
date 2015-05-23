@@ -189,7 +189,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // Insert the show
         ContentValues showValues = new ContentValues();
         showValues.put(Shows._ID, show.tvdbId);
-        showValues.put(Shows.TITLE, show.title);
+        showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
