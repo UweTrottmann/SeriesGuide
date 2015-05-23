@@ -102,7 +102,8 @@ public class MoviesSearchFragment extends Fragment implements
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                        || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     search();
                     return true;
                 }
