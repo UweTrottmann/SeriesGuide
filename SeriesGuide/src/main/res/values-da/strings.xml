@@ -166,7 +166,7 @@
   <string name="recently_watched">Set for nyligt</string>
   <string name="released_today">Udgivet i dag</string>
   <string name="friends_recently">Dine trakt venner</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_empty">Intet sker. Se nogle shows!</string>
   <string name="upcoming">Kommende</string>
   <string name="recent">Nylige</string>
   <string name="friends">Venner</string>
@@ -208,7 +208,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
   <string name="action_lists_sort">Sorter lister</string>
-  <string name="action_lists_reorder">Reorder lists</string>
+  <string name="action_lists_reorder">Omarrangér lister</string>
   <string name="hexagon_warning">Eksperimentel!</string>
   <string name="hexagon_setup">Opsæt SeriesGuide Cloud</string>
   <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
@@ -232,7 +232,7 @@
   <string name="trakt_notcollected">%s ikke samlet.</string>
   <string name="checkin_success_trakt">Tjekket ind på %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Afbrudt indtjekning på trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Element (endnu) ikke fundet på trakt. Prøv igen senere.</string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
@@ -274,7 +274,7 @@
     <item quantity="other">%d stemmer</item>
   </plurals>
   <string name="feedback">Send feedback</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Åben i browser</string>
   <string name="prefs_category_basic">Grundlæggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avanceret</string>
