@@ -21,6 +21,7 @@ import android.os.Bundle;
 public class Episode {
     private static final String KEY_TITLE = "title";
     private static final String KEY_NUMBER = "number";
+    private static final String KEY_NUMBER_ABSOLUTE = "numberAbsolute";
     private static final String KEY_SEASON = "season";
     private static final String KEY_IMDBID = "imdbid";
     private static final String KEY_TVDBID = "tvdbid";
@@ -31,6 +32,7 @@ public class Episode {
 
     private String mTitle;
     private Integer mNumber;
+    private Integer mNumberAbsolute;
     private Integer mSeason;
     private Integer mTvdbId;
     private String mImdbId;
@@ -48,6 +50,10 @@ public class Episode {
 
     public Integer getNumber() {
         return mNumber;
+    }
+
+    public Integer getNumberAbsolute() {
+        return mNumberAbsolute;
     }
 
     public Integer getSeason() {
@@ -88,6 +94,11 @@ public class Episode {
 
         public Builder number(Integer episodeNumber) {
             mEpisode.mNumber = episodeNumber;
+            return this;
+        }
+
+        public Builder numberAbsolute(Integer absoluteNumber) {
+            mEpisode.mNumberAbsolute = absoluteNumber;
             return this;
         }
 
@@ -133,6 +144,7 @@ public class Episode {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, mTitle);
         bundle.putInt(KEY_NUMBER, mNumber);
+        bundle.putInt(KEY_NUMBER_ABSOLUTE, mNumberAbsolute);
         bundle.putInt(KEY_SEASON, mSeason);
         bundle.putInt(KEY_TVDBID, mTvdbId);
         bundle.putString(KEY_IMDBID, mImdbId);
@@ -149,6 +161,7 @@ public class Episode {
         Builder builder = new Builder()
                 .title(bundle.getString(KEY_TITLE))
                 .number(bundle.getInt(KEY_NUMBER))
+                .numberAbsolute(bundle.getInt(KEY_NUMBER_ABSOLUTE))
                 .season(bundle.getInt(KEY_SEASON))
                 .tvdbId(bundle.getInt(KEY_TVDBID))
                 .imdbId(bundle.getString(KEY_IMDBID))
