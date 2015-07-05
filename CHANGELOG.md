@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 24 *(in development)*
 -----------------------------
 
+#### 24-beta3 *(2015-07-05)*
+
+* TWEAK Do not load images over metered connections if "Images only over Wi-Fi" is enabled. Update
+  setting description.
+* FIX Do only search once when pressing enter in show/movie search.
+* FIX Fixes from release 23.1.1.
+* NOTICE Updated SeriesGuide Cloud connector libraries. Let me know of any issues.
+* NOTICE Updated Extension API: now sending absolute episode number.
+* NOTICE Latest translations from crowdin.
+
 #### 24-beta2 *(2015-05-11)*
 
 * TWEAK SG pushes the release time by a day if a show releases between 12AM and 1AM now only or US
