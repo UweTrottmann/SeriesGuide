@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">necunoscut</string>
   <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
-  <string name="offline_no_wifi">Conectaţi-vă la Wi-Fi sau permiteţi toate conexiunile, apoi încercaţi din nou.</string>
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou. </string>

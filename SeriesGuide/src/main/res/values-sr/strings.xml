@@ -31,7 +31,6 @@
   <string name="norating">непознато</string>
   <string name="unknown">непознато</string>
   <string name="offline">Спојите се на мрежу и покушајте поново.</string>
-  <string name="offline_no_wifi">Повежи се на бежичну мрежу или означи ДОЗВОЛИ СВЕ КОНЕКЦИЈЕ (у подешавањима), затим покушај поново.</string>
   <string name="app_not_available">Немате потребну апликацију за ово.</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="people_empty">Нема никога?! Поновите претрагу.</string>

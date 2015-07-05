@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
   <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
-  <string name="offline_no_wifi">Csatlakozz Wifi hálózathoz vagy engedélyezd az összes kapcsolatot, és próbáld újra.</string>
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>

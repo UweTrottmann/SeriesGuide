@@ -31,7 +31,6 @@
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>
   <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
-  <string name="offline_no_wifi">Свържете с Wi-Fi или позволете всички връзки и опитайте отново.</string>
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>

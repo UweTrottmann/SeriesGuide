@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">ukjent</string>
   <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
-  <string name="offline_no_wifi">Koble til WI-FI eller tillat alle tilkoblinger, og prøv igjen.</string>
   <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>

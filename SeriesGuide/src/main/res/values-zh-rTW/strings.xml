@@ -31,7 +31,6 @@
   <string name="norating">無</string>
   <string name="unknown">不明</string>
   <string name="offline">Connect to a network, then try again.</string>
-  <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
   <string name="app_not_available">沒有 app 可以處理這個需求</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
@@ -287,7 +286,7 @@
   <string name="pref_episodesorting">Sort episodes by…</string>
   <string name="pref_language">內容語言</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">關於 SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>

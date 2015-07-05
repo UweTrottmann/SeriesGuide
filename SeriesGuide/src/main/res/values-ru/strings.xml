@@ -31,7 +31,6 @@
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
   <string name="offline">Подключитесь к сети и повторите попытку.</string>
-  <string name="offline_no_wifi">Подключитесь к Wi-Fi или разрешите все типы соединений, затем повторите попытку.</string>
   <string name="app_not_available">Нет доступного приложения для обработки.</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>

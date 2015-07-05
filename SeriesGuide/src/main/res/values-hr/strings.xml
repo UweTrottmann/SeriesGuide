@@ -31,7 +31,6 @@
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>
   <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
-  <string name="offline_no_wifi">Spojite se pomoću Wi-Fi ili omogućite sve veze i pokušajte ponovno.</string>
   <string name="app_not_available">Ne postoji aplikacija koja moze ovo otvoriti.</string>
   <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>

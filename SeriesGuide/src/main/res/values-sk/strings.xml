@@ -31,7 +31,6 @@
   <string name="norating">Nedostupné</string>
   <string name="unknown">neznámy</string>
   <string name="offline">Pripojte sa k sieti a skúste to znovu.</string>
-  <string name="offline_no_wifi">Pripojte sa k Wi-Fi alebo povoľte všetky pripojenia a skúste to znova.</string>
   <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
   <string name="add_empty">Niesú tu žiadne seriály.</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>

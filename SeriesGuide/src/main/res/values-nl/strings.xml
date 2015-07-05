@@ -31,7 +31,6 @@
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
   <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
-  <string name="offline_no_wifi">Maak verbinding met Wi-Fi of sta alle verbindingen toe, en probeer het dan opnieuw.</string>
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="people_empty">Niemand?! Probeer opnieuw.</string>

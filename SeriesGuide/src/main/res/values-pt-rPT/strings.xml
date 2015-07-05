@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
   <string name="offline">Liga-te a uma rede e tenta novamente.</string>
-  <string name="offline_no_wifi">Ligar o Wi-Fi ou permitir todas as ligações, e voltar a tentar.</string>
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="add_empty">Não existe nenhuma série.</string>
   <string name="people_empty">Ninguém aqui?! Toque no ecrã para actualizar.</string>

@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">Nežinomas</string>
   <string name="offline">Prisijunkite prie tinklo ir bandykite dar kartą.</string>
-  <string name="offline_no_wifi">Prisijungti prie Wi-Fi arba leisti visus prisijungimo metodus ir bandykite iš naujo.</string>
   <string name="app_not_available">No app available to handle this.</string>
   <string name="add_empty">There are no shows here.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
@@ -287,7 +286,7 @@
   <string name="pref_episodesorting">Rūšiuoti serijas pagal…</string>
   <string name="pref_language">Turinio kalba</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Apie SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Add or edit your trakt credentials</string>

@@ -31,7 +31,6 @@
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
   <string name="offline">إتصل بالشبكة، ثم حاول مرة أخرى.</string>
-  <string name="offline_no_wifi">إتصل بالواي فاي أو إسمح لجميع الإتصالات، ثم حاول مرة أخرى.</string>
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>

@@ -31,7 +31,6 @@
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>
   <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>
-  <string name="offline_no_wifi">Wi-Fi\'a bağlanın ya da tüm bağlantılara izin verin, ardından tekrar deneyin.</string>
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>

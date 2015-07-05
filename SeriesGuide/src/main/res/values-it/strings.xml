@@ -31,7 +31,6 @@
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
   <string name="offline">Collegati ad una rete, in seguito riprova.</string>
-  <string name="offline_no_wifi">Connettersi al Wi-Fi o permettere tutte le connessioni, quindi riprovare.</string>
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>

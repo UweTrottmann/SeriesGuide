@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">neznano</string>
   <string name="offline">Vzpostavite povezavo z omrežjem in nato poskusite znova.</string>
-  <string name="offline_no_wifi">Povežite se z Wi-Fi ali dovolite vse povezave, nato poskusite znova.</string>
   <string name="app_not_available">Za obravnavo tega ni na voljo nobene aplikacije.</string>
   <string name="add_empty">Tukaj ni nobene oddaje.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
@@ -287,7 +286,7 @@
   <string name="pref_episodesorting">Epizode razporedi po…</string>
   <string name="pref_language">Jezik vsebine</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Ekipa in igralci</string>
   <string name="pref_traktsummary">Dodajanje ali urejanje prijavnih podatkov trakt.tv</string>

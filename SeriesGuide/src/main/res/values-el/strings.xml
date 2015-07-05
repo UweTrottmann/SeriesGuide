@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
   <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
-  <string name="offline_no_wifi">Συνδεθείτε με το Wi-Fi ή επιτρέψτε όλες τις συνδέσεις, στη συνέχεια, προσπαθήστε ξανά.</string>
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί αυτό.</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>

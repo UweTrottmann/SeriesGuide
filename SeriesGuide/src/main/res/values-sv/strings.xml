@@ -32,7 +32,6 @@
   <string name="norating">saknas</string>
   <string name="unknown">okänd</string>
   <string name="offline">Ansluta till ett nätverk och försök igen.</string>
-  <string name="offline_no_wifi">Anslut till Wi-Fi eller tillåt alla anslutningar, försök sedan igen.</string>
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="add_empty">Det finns inga serier här.</string>
   <string name="people_empty">Ingen här? Tryck för att försöka igen.</string>

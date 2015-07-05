@@ -31,7 +31,6 @@
   <string name="norating">s/o</string>
   <string name="unknown">inconnu</string>
   <string name="offline">Connectez-vous à un réseau, puis réessayez.</string>
-  <string name="offline_no_wifi">Connectez-vous au Wi-Fi ou autorisez toutes les connexions, puis réessayez.</string>
   <string name="app_not_available">Aucune application n\'est disponible pour gérer ceci.</string>
   <string name="add_empty">Il n\'y a aucune série ici.</string>
   <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>

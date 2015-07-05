@@ -31,7 +31,6 @@
   <string name="norating">无评分</string>
   <string name="unknown">未知</string>
   <string name="offline">请连接到可用网络后重试。</string>
-  <string name="offline_no_wifi">请连接到 Wi-Fi 或允许应用使用所有网络后重试。</string>
   <string name="app_not_available">没有相关程序可用。</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>

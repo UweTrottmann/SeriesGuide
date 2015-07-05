@@ -31,7 +31,6 @@
   <string name="norating">Немає даних</string>
   <string name="unknown">Невідомо</string>
   <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
-  <string name="offline_no_wifi">Підключіться до Wi-Fi або дозвольте всі підключення, а потім повторіть спробу.</string>
   <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>

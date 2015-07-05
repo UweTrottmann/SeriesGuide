@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">알 수 없음</string>
   <string name="offline">데이터 네트워크에 접속 후 다시 시도해주세요.</string>
-  <string name="offline_no_wifi">와이파이 또는 모든 데이터 연결을 확인한 후 다시 시도해주세요.</string>
   <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="people_empty">다시 시도해보세요.</string>

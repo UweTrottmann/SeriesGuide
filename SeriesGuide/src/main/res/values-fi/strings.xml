@@ -31,7 +31,6 @@
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
   <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
-  <string name="offline_no_wifi">Yhdistä Wi-Fiin tai salli kaikki yhteydet ja yritä uudelleen.</string>
   <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="add_empty">Täällä ei ole ohjelman ohjelmaa.</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>

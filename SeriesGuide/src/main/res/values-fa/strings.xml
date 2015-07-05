@@ -31,7 +31,6 @@
   <string name="norating">N\a</string>
   <string name="unknown">نامعلوم</string>
   <string name="offline">اتصال به شبکه و سپس دوباره امتحان کنید.</string>
-  <string name="offline_no_wifi">اتصال به Wi-Fi یا اجازه می دهد همه اتصالات و سپس دوباره امتحان کنید.</string>
   <string name="app_not_available">هیچ برنامه ای در دسترس نمیباشد.</string>
   <string name="add_empty">هیچ سریالی در اینجا موجود نمیباشد.</string>
   <string name="people_empty">کسی نیست ؟ لمس صفحه برای تلاش دوباره.</string>

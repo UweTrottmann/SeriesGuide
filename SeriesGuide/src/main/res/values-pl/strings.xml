@@ -31,7 +31,6 @@
   <string name="norating">brak danych</string>
   <string name="unknown">nieznana</string>
   <string name="offline">Spróbuj ponownie po podłączeniu do sieci.</string>
-  <string name="offline_no_wifi">Połącz z Wi-Fi lub zezwól na połączenia i spróbuj ponownie.</string>
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>

@@ -31,7 +31,6 @@
   <string name="norating">n/a</string>
   <string name="unknown">unbekannt</string>
   <string name="offline">Stellen Sie eine Netzwerkverbindung her, versuchen Sie es dann erneut.</string>
-  <string name="offline_no_wifi">Stellen Sie eine WLAN-Verbindung her oder erlauben Sie alle Verbindungen, versuchen Sie es dann erneut.</string>
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="add_empty">Keine Serien hier.</string>
   <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
