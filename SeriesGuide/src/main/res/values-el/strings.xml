@@ -274,7 +274,7 @@
     <item quantity="other">%d ψήφοι</item>
   </plurals>
   <string name="feedback">Αποστολή σχολίων</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
   <string name="prefs_category_basic">Βασικά</string>
   <string name="prefs_category_sharing">Υπηρεσίες</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
