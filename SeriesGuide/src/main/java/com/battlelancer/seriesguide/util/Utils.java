@@ -487,13 +487,11 @@ public class Utils {
     }
 
     /**
-     * Returns true if there is an active connection which is approved by the user for large data
-     * downloads (e.g. images).
-     *
-     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
+     * the user did not approve it for large data downloads (e.g. images).
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
+    public static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
@@ -511,13 +509,6 @@ public class Utils {
             }
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
-        }
-
-        // display optional offline toast
-        if (showOfflineToast && !isConnected) {
-            Toast.makeText(context,
-                    largeDataOverWifiOnly ? R.string.offline_no_wifi : R.string.offline,
-                    Toast.LENGTH_LONG).show();
         }
 
         return isConnected;

@@ -42,7 +42,6 @@ import com.squareup.picasso.RequestCreator;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -169,7 +168,7 @@ public final class ServiceUtils {
     @Nonnull
     public static RequestCreator loadWithPicasso(Context context, String path) {
         RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
-        if (!Utils.isAllowedLargeDataConnection(context, false)) {
+        if (!Utils.isAllowedLargeDataConnection(context)) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
         }
