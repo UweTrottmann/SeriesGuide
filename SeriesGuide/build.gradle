@@ -136,7 +136,7 @@ dependencies {
         exclude group: 'joda-time', module: 'joda-time'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'net.danlew:android.joda:2.7.1'
+    compile 'net.danlew:android.joda:2.8.1'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:7.3.0'
