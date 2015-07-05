@@ -28,6 +28,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -491,13 +492,23 @@ public class Utils {
      *
      * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            isConnected = AndroidUtils.isWifiConnected(context);
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                // better: only allow large data downloads on non-metered connections
+                ConnectivityManager connectivityManager
+                        = (ConnectivityManager) context.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+                isConnected = !connectivityManager.isActiveNetworkMetered();
+            } else {
+                // only allow large data downloads on WiFi
+                isConnected = AndroidUtils.isWifiConnected(context);
+            }
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
         }

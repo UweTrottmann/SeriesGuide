@@ -337,7 +337,7 @@
     <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="pref_language">Content language</string>
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-    <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+    <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
     <string name="pref_traktsummary">Add or edit your trakt credentials</string>
