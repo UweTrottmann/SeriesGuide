@@ -33,8 +33,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -49,11 +49,11 @@ public class PersonFragment extends Fragment {
 
     private static final String TAG = "Person Details";
 
-    @InjectView(R.id.progressBarPerson) ProgressBar mProgressBar;
+    @Bind(R.id.progressBarPerson) ProgressBar mProgressBar;
 
-    @InjectView(R.id.imageViewPersonHeadshot) ImageView mImageHeadshot;
-    @InjectView(R.id.textViewPersonName) TextView mTextName;
-    @InjectView(R.id.textViewPersonBiography) TextView mTextBiography;
+    @Bind(R.id.imageViewPersonHeadshot) ImageView mImageHeadshot;
+    @Bind(R.id.textViewPersonName) TextView mTextName;
+    @Bind(R.id.textViewPersonBiography) TextView mTextBiography;
 
     private Person mPerson;
 
@@ -79,7 +79,7 @@ public class PersonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_person, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         return rootView;
     }
@@ -98,7 +98,7 @@ public class PersonFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

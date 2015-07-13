@@ -34,9 +34,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.InjectViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -115,15 +114,15 @@ public class AddShowDialogFragment extends DialogFragment {
 
     private OnAddShowListener mListener;
 
-    @InjectView(R.id.textViewAddTitle) TextView title;
-    @InjectView(R.id.textViewAddShowMeta) TextView showmeta;
-    @InjectView(R.id.textViewAddDescription) TextView overview;
-    @InjectView(R.id.textViewAddRatingValue) TextView rating;
-    @InjectView(R.id.textViewAddGenres) TextView genres;
-    @InjectView(R.id.textViewAddReleased) TextView released;
-    @InjectView(R.id.imageViewAddPoster) ImageView poster;
+    @Bind(R.id.textViewAddTitle) TextView title;
+    @Bind(R.id.textViewAddShowMeta) TextView showmeta;
+    @Bind(R.id.textViewAddDescription) TextView overview;
+    @Bind(R.id.textViewAddRatingValue) TextView rating;
+    @Bind(R.id.textViewAddGenres) TextView genres;
+    @Bind(R.id.textViewAddReleased) TextView released;
+    @Bind(R.id.imageViewAddPoster) ImageView poster;
 
-    @InjectViews({
+    @Bind({
             R.id.textViewAddRatingValue,
             R.id.textViewAddRatingLabel,
             R.id.textViewAddRatingRange,
@@ -139,9 +138,9 @@ public class AddShowDialogFragment extends DialogFragment {
         }
     };
 
-    @InjectView(R.id.buttonPositive) Button mButtonPositive;
-    @InjectView(R.id.buttonNegative) Button mButtonNegative;
-    @InjectView(R.id.progressBarAdd) View mProgressBar;
+    @Bind(R.id.buttonPositive) Button mButtonPositive;
+    @Bind(R.id.buttonNegative) Button mButtonNegative;
+    @Bind(R.id.progressBarAdd) View mProgressBar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -172,7 +171,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // buttons
         mButtonNegative.setText(R.string.dismiss);
@@ -224,7 +223,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks

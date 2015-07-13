@@ -42,10 +42,16 @@
 # Amazon IAP library has some missing stuff
 -dontwarn com.amazon.**
 
-# ButterKnife uses some annotations not available on Android.
+# ButterKnife
+-keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
-# Prevent ButterKnife annotations from getting renamed.
--keepnames class * { @butterknife.InjectView *;}
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
 
 # Eventbus methods can not be renamed.
 -keepclassmembers class ** {

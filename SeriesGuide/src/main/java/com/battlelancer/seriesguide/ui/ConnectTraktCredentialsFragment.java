@@ -27,8 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -46,12 +46,12 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
 
     private ConnectTraktTask mTask;
 
-    @InjectView(R.id.buttonConnectTraktConnect) Button buttonConnect;
-    @InjectView(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
-    @InjectView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
-    @InjectView(R.id.textViewConnectTraktUsername) TextView username;
-    @InjectView(R.id.progressBarConnectTrakt) View progressBar;
-    @InjectView(R.id.textViewConnectTraktStatus) TextView status;
+    @Bind(R.id.buttonConnectTraktConnect) Button buttonConnect;
+    @Bind(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
+    @Bind(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
+    @Bind(R.id.textViewConnectTraktUsername) TextView username;
+    @Bind(R.id.progressBarConnectTrakt) View progressBar;
+    @Bind(R.id.textViewConnectTraktStatus) TextView status;
 
     public static ConnectTraktCredentialsFragment newInstance() {
         return new ConnectTraktCredentialsFragment();
@@ -72,7 +72,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // connect button
         buttonConnect.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +145,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     private void connect() {

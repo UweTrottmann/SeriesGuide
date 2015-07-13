@@ -26,8 +26,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -58,11 +58,11 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public class CheckInDialogDismissedEvent {
     }
 
-    @InjectView(R.id.editTextCheckInMessage) EditText mEditTextMessage;
-    @InjectView(R.id.buttonCheckIn) View mButtonCheckIn;
-    @InjectView(R.id.buttonCheckInPasteTitle) View mButtonPasteTitle;
-    @InjectView(R.id.buttonCheckInClear) View mButtonClear;
-    @InjectView(R.id.progressBarCheckIn) View mProgressBar;
+    @Bind(R.id.editTextCheckInMessage) EditText mEditTextMessage;
+    @Bind(R.id.buttonCheckIn) View mButtonCheckIn;
+    @Bind(R.id.buttonCheckInPasteTitle) View mButtonPasteTitle;
+    @Bind(R.id.buttonCheckInClear) View mButtonClear;
+    @Bind(R.id.progressBarCheckIn) View mProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // Paste episode button
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
@@ -144,7 +144,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {

@@ -22,8 +22,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
@@ -33,12 +33,12 @@ import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
 
-    @InjectView(R.id.progressBarAmazonBilling) View progressBar;
-    @InjectView(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
-    @InjectView(R.id.textViewAmazonBillingPrice) TextView textViewSubPrice;
-    @InjectView(R.id.textViewAmazonBillingExisting) TextView textViewSubscribed;
-    @InjectView(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
-    @InjectView(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
+    @Bind(R.id.progressBarAmazonBilling) View progressBar;
+    @Bind(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
+    @Bind(R.id.textViewAmazonBillingPrice) TextView textViewSubPrice;
+    @Bind(R.id.textViewAmazonBillingExisting) TextView textViewSubscribed;
+    @Bind(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
+    @Bind(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class AmazonBillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         buttonSubscribe.setEnabled(false);
         buttonSubscribe.setOnClickListener(new View.OnClickListener() {

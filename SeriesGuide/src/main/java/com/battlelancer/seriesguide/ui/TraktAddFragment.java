@@ -57,7 +57,7 @@ public class TraktAddFragment extends AddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // set initial view states
         setProgressVisible(true, false);

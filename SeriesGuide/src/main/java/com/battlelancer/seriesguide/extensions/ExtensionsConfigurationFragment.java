@@ -17,10 +17,8 @@
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -35,8 +33,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
@@ -65,7 +63,7 @@ public class ExtensionsConfigurationFragment extends Fragment
 
     private static final String TAG = "Extension Configuration";
 
-    @InjectView(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
+    @Bind(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
 
     private ExtensionsAdapter mAdapter;
     private PopupMenu mAddExtensionPopupMenu;
@@ -77,7 +75,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
         mListView.setFloatViewManager(dragSortController);
@@ -176,7 +174,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>

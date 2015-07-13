@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.net.Uri;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.uwetrottmann.tmdb.entities.Genre;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class TmdbTools {

@@ -41,8 +41,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
@@ -67,12 +67,12 @@ public class TraktCommentsFragment extends Fragment {
         String EPISODE_TVDB_ID = "episode";
     }
 
-    @InjectView(R.id.listViewShouts) ListView mList;
-    @InjectView(R.id.textViewShoutsEmpty) TextView mEmptyView;
-    @InjectView(R.id.swipeRefreshLayoutShouts) EmptyViewSwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.buttonShouts) Button mButtonShout;
-    @InjectView(R.id.editTextShouts) EditText mEditTextShout;
-    @InjectView(R.id.checkBoxShouts) CheckBox mCheckBoxIsSpoiler;
+    @Bind(R.id.listViewShouts) ListView mList;
+    @Bind(R.id.textViewShoutsEmpty) TextView mEmptyView;
+    @Bind(R.id.swipeRefreshLayoutShouts) EmptyViewSwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.buttonShouts) Button mButtonShout;
+    @Bind(R.id.editTextShouts) EditText mEditTextShout;
+    @Bind(R.id.checkBoxShouts) CheckBox mCheckBoxIsSpoiler;
 
     private TraktCommentsAdapter mAdapter;
 
@@ -80,7 +80,7 @@ public class TraktCommentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_comments, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         mSwipeRefreshLayout.setSwipeableChildren(R.id.scrollViewComments, R.id.listViewShouts);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -211,7 +211,7 @@ public class TraktCommentsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

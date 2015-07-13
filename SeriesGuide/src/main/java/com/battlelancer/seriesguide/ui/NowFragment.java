@@ -38,8 +38,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
@@ -63,13 +63,13 @@ import java.util.List;
  */
 public class NowFragment extends Fragment {
 
-    @InjectView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
 
-    @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
-    @InjectView(R.id.emptyViewNow) TextView emptyView;
-    @InjectView(R.id.containerSnackbar) View snackbar;
-    @InjectView(R.id.textViewSnackbar) TextView snackbarText;
-    @InjectView(R.id.buttonSnackbar) Button snackbarButton;
+    @Bind(R.id.recyclerViewNow) RecyclerView recyclerView;
+    @Bind(R.id.emptyViewNow) TextView emptyView;
+    @Bind(R.id.containerSnackbar) View snackbar;
+    @Bind(R.id.textViewSnackbar) TextView snackbarText;
+    @Bind(R.id.buttonSnackbar) Button snackbarButton;
 
     private NowAdapter adapter;
     private boolean isLoadingReleasedToday;
@@ -80,7 +80,7 @@ public class NowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -216,7 +216,7 @@ public class NowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override
