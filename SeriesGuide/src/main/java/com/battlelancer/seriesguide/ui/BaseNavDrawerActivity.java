@@ -74,8 +74,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // set a theme based on user preference
-        setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
 
         mHandler = new Handler();
