@@ -53,7 +53,8 @@
         <!-- Launch activity -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.SeriesGuide.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
