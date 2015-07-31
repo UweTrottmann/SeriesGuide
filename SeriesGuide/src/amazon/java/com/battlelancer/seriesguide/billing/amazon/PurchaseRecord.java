@@ -19,7 +19,7 @@ package com.battlelancer.seriesguide.billing.amazon;
 /**
  * Holds the InAppPurchase Subscription details.
  */
-public class SubscriptionRecord {
+public class PurchaseRecord {
     public static int TO_DATE_NOT_SET = -1;
     private String amazonReceiptId;
     private long from;
