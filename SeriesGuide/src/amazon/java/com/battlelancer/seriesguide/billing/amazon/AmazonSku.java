@@ -17,11 +17,18 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
 /**
- * Contains all In App Purchase products definition.
+ * Contains all Amazon in-app purchase products definitions.
  */
 public enum AmazonSku {
 
-    SERIESGUIDE_SUB("seriesguide-sub");
+    /**
+     * The yearly subscription with a trial month. Unlocks access to everything.
+     */
+    SERIESGUIDE_SUB("seriesguide-sub"),
+    /**
+     * The one-time purchase. Unlocks access to everything.
+     */
+    SERIESGUIDE_PASS("x-pass-2014-10");
 
     private final String sku;
 
@@ -29,13 +36,16 @@ public enum AmazonSku {
         return this.sku;
     }
 
-    private AmazonSku(final String sku) {
+    AmazonSku(final String sku) {
         this.sku = sku;
     }
 
     public static AmazonSku fromSku(final String sku) {
         if (SERIESGUIDE_SUB.getSku().equals(sku)) {
             return SERIESGUIDE_SUB;
+        }
+        if (SERIESGUIDE_PASS.getSku().equals(sku)) {
+            return SERIESGUIDE_PASS;
         }
         return null;
     }
