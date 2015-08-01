@@ -80,9 +80,11 @@
                 android:id="@+id/textViewAmazonBillingSubPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="250dp"
                 android:layout_below="@+id/buttonAmazonBillingSubscribe"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
+                android:gravity="center_horizontal"
                 tools:text="1.99 €/year, 30 day trial"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
@@ -101,9 +103,11 @@
                 android:id="@+id/textViewAmazonBillingPricePass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="250dp"
                 android:layout_below="@+id/buttonAmazonBillingGetPass"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
+                android:gravity="center_horizontal"
                 android:text="@string/billing_price_pass"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
