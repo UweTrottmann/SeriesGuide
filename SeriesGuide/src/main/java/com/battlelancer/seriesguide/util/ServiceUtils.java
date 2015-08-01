@@ -23,6 +23,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.StatFs;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,8 +45,6 @@ import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -100,7 +100,7 @@ public final class ServiceUtils {
      * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
      * Should be used with API calls.
      */
-    @Nonnull
+    @NonNull
     public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
         if (cachingHttpClient == null) {
             cachingHttpClient = new OkHttpClient();
@@ -140,7 +140,7 @@ public final class ServiceUtils {
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
     }
 
-    @Nonnull
+    @NonNull
     public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
         if (cachingUrlFactory == null) {
             cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
@@ -148,7 +148,7 @@ public final class ServiceUtils {
         return cachingUrlFactory;
     }
 
-    @Nonnull
+    @NonNull
     public static synchronized Picasso getPicasso(Context context) {
         if (sPicasso == null) {
             sPicasso = new Picasso.Builder(context).build();
@@ -165,7 +165,7 @@ public final class ServiceUtils {
      * com.squareup.okhttp.CacheControl#FORCE_CACHE} on requests) to skip the network and accept
      * stale images.
      */
-    @Nonnull
+    @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
         RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
         if (!Utils.isAllowedLargeDataConnection(context)) {
@@ -178,7 +178,7 @@ public final class ServiceUtils {
     /**
      * Get a tmdb-java instance with our API key set.
      */
-    @Nonnull
+    @NonNull
     public static synchronized Tmdb getTmdb(Context context) {
         if (tmdb == null) {
             tmdb = new SgTmdb(context).setApiKey(BuildConfig.TMDB_API_KEY);
@@ -192,7 +192,7 @@ public final class ServiceUtils {
      *
      * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
      */
-    @Nonnull
+    @NonNull
     public static synchronized TraktV2 getTraktV2(Context context) {
         if (traktV2 == null) {
             traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);

@@ -16,9 +16,9 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.util.ShowTools;
 import java.io.File;
-import javax.annotation.Nullable;
 
 public class DataLiberationTools {
 

@@ -18,6 +18,8 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.Constants;
@@ -28,8 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
@@ -168,9 +168,9 @@ public class TimeTools {
      * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
-    public static long parseEpisodeReleaseDate(@Nonnull DateTimeZone showTimeZone,
-            @Nullable String releaseDate, @Nonnull LocalTime showReleaseTime,
-            @Nullable String showCountry, @Nonnull String deviceTimeZone) {
+    public static long parseEpisodeReleaseDate(@NonNull DateTimeZone showTimeZone,
+            @Nullable String releaseDate, @NonNull LocalTime showReleaseTime,
+            @Nullable String showCountry, @NonNull String deviceTimeZone) {
         if (releaseDate == null || releaseDate.length() == 0) {
             return Constants.EPISODE_UNKNOWN_RELEASE;
         }
@@ -230,7 +230,7 @@ public class TimeTools {
      * @param time See {@link #getShowReleaseTime(int)}.
      * @return The date is today or on the next day matching the given week day.
      */
-    public static Date getShowReleaseDateTime(@Nonnull Context context, @Nonnull LocalTime time,
+    public static Date getShowReleaseDateTime(@NonNull Context context, @NonNull LocalTime time,
             int weekDay, @Nullable String timeZone, @Nullable String country) {
         // determine show time zone (falls back to America/New_York)
         DateTimeZone showTimeZone = getDateTimeZone(timeZone);
@@ -314,7 +314,7 @@ public class TimeTools {
     }
 
     private static DateTime applyUnitedStatesCorrections(@Nullable String country,
-            @Nonnull String localTimeZone, @Nonnull DateTime dateTime) {
+            @NonNull String localTimeZone, @NonNull DateTime dateTime) {
         // assumed base time zone for US shows by trakt is America/New_York
         // EST UTC−5:00, EDT UTC−4:00
 

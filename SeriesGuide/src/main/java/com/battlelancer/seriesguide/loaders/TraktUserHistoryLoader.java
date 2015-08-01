@@ -32,7 +32,7 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.Nonnull;
+import android.support.annotation.NonNull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -58,7 +58,7 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistory
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public Result loadInBackground() {
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
         if (trakt == null) {

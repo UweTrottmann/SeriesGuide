@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -25,7 +26,6 @@ import com.battlelancer.seriesguide.ui.ConnectTraktCredentialsFragment;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import javax.annotation.Nullable;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;

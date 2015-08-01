@@ -23,6 +23,8 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +48,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -535,7 +535,7 @@ public class ShowTools {
      * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
      */
     @Nullable
-    public static String getStatus(@Nonnull Context context, int encodedStatus) {
+    public static String getStatus(@NonNull Context context, int encodedStatus) {
         if (encodedStatus == Status.CONTINUING) {
             return context.getString(R.string.show_isalive);
         } else if (encodedStatus == Status.ENDED) {
@@ -552,7 +552,7 @@ public class ShowTools {
      *
      * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
      */
-    public static void setStatusAndColor(@Nonnull TextView view, int encodedStatus) {
+    public static void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
         view.setText(getStatus(view.getContext(), encodedStatus));
         if (encodedStatus == Status.CONTINUING) {
             view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(

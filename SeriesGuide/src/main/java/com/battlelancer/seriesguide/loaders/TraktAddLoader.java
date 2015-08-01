@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -34,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.Nonnull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -126,7 +126,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
      * in the local database.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @Nonnull List<Show> traktShows) {
+            @NonNull List<Show> traktShows) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
