@@ -42,29 +42,30 @@
                 android:textAppearance="@style/TextAppearance.Headline" />
 
             <TextView
-                android:id="@+id/textViewAmazonBillingExisting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingTitle"
-                android:paddingBottom="@dimen/inline_padding"
-                tools:text="@string/upgrade_success"
-                android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
-
-            <TextView
                 android:id="@+id/textViewAmazonBillingDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingExisting"
+                android:layout_below="@+id/textViewAmazonBillingTitle"
                 android:text="@string/upgrade_description"
                 android:textAppearance="@style/TextAppearance.Body" />
+
+            <TextView
+                android:id="@+id/textViewAmazonBillingExisting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAmazonBillingDescription"
+                android:paddingTop="@dimen/large_padding"
+                tools:text="@string/upgrade_success"
+                android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/buttonAmazonBillingSubscribe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingDescription"
+                android:layout_below="@+id/textViewAmazonBillingExisting"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginTop="@dimen/default_padding"
                 android:enabled="false"
                 android:text="@string/billing_action_subscribe" />
 
