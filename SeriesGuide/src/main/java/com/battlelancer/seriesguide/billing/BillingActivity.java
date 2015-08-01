@@ -233,7 +233,7 @@ public class BillingActivity extends BaseActivity {
     /**
      * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
      * the subscription for life). Also sets the current state through {@link
-     * AdvancedSettings#setSubscriptionState(Context, boolean)}.
+     * AdvancedSettings#setSupporterState(Context, boolean)}.
      */
     public static boolean checkForSubscription(Context context, Inventory inventory) {
         /*
@@ -262,7 +262,7 @@ public class BillingActivity extends BaseActivity {
         }
 
         // notify the user about a change in subscription state
-        boolean isSubscribedOld = AdvancedSettings.getLastSubscriptionState(context);
+        boolean isSubscribedOld = AdvancedSettings.getLastSupporterState(context);
         boolean isSubscribed = hasXUpgrade || isSubscribedToX;
         if (!isSubscribedOld && isSubscribed) {
             Toast.makeText(context, R.string.upgrade_success, Toast.LENGTH_SHORT).show();
@@ -271,7 +271,7 @@ public class BillingActivity extends BaseActivity {
         }
 
         // Save current state until we query again
-        AdvancedSettings.setSubscriptionState(context, isSubscribed);
+        AdvancedSettings.setSupporterState(context, isSubscribed);
 
         return isSubscribed;
     }
@@ -369,7 +369,7 @@ public class BillingActivity extends BaseActivity {
             if (purchase.getSku().equals(SKU_X_SUB)) {
                 Timber.d("Purchased X subscription. Congratulating user.");
                 // Save current state until we query again
-                AdvancedSettings.setSubscriptionState(BillingActivity.this, true);
+                AdvancedSettings.setSupporterState(BillingActivity.this, true);
                 updateViewStates(true);
                 setWaitMode(false);
             }

@@ -17,38 +17,44 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
 /**
- * Holds the InAppPurchase Subscription details.
+ * Holds the in-app purchase details, may be an entitlement or a subscription.
+ *
+ * <p>If this is a subscription (check via the SKU), the valid from date is the beginning and the
+ * valid to date the end date of the subscription.
+ *
+ * <p>If this is an entitlement (check via the SKU), the valid from date is the purchase date and
+ * the to valid to date is the optional cancel date of the purchase.
  */
 public class PurchaseRecord {
-    public static int TO_DATE_NOT_SET = -1;
+    public static int VALID_TO_DATE_NOT_SET = -1;
     private String amazonReceiptId;
-    private long from;
-    private long to = TO_DATE_NOT_SET;
+    private long validFrom;
+    private long validTo = VALID_TO_DATE_NOT_SET;
     private String amazonUserId;
     private String sku;
 
-    public long getFrom() {
-        return from;
+    public long getValidFrom() {
+        return validFrom;
     }
 
-    public void setFrom(final long subscriptionFrom) {
-        this.from = subscriptionFrom;
+    public void setValidFrom(final long validFrom) {
+        this.validFrom = validFrom;
     }
 
-    public long getTo() {
-        return to;
+    public long getValidTo() {
+        return validTo;
     }
 
-    public void setTo(final long subscriptionTo) {
-        this.to = subscriptionTo;
+    public void setValidTo(final long subscriptionTo) {
+        this.validTo = subscriptionTo;
     }
 
     public boolean isActiveNow() {
-        return TO_DATE_NOT_SET == to;
+        return VALID_TO_DATE_NOT_SET == validTo;
     }
 
     public boolean isActiveForDate(final long date) {
-        return date >= from && (isActiveNow() || date <= to);
+        return date >= validFrom && (isActiveNow() || date <= validTo);
     }
 
     public String getAmazonReceiptId() {

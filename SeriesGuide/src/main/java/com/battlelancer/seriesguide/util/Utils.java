@@ -168,7 +168,7 @@ public class Utils {
         // debug builds, installed X Pass or subscription unlock all features
         // Amazon version only supports X pass as in-app purchase, so skip check
         return (!isAmazonVersion() && hasXpass(context))
-                || AdvancedSettings.getLastSubscriptionState(context);
+                || AdvancedSettings.getLastSupporterState(context);
     }
 
     /**
