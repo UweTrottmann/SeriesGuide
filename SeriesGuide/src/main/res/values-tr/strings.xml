@@ -393,7 +393,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass edinin</string>
-  <string name="billing_price_subscribe">%s/yıl, 30 günlük deneme</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Amazon hesabınızda oturum açın!</string>
   <string name="subscription_unavailable">Abonelik şu anda kullanılabilir değil.</string>
   <string name="subscription_failed">Satın alma tamamlanmadı.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Kısayol</string>
   <string name="search_within_show">İçinde ara %s</string>
   <string name="web_search">Web araması</string>

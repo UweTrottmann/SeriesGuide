@@ -393,7 +393,7 @@
   <string name="action_upgrade">Alle Funktionen freischalten</string>
   <string name="billing_action_subscribe">Abonnieren</string>
   <string name="billing_action_pass">X Pass holen</string>
-  <string name="billing_price_subscribe">%s/Jahr, 30-Tage-Testversion</string>
+  <string name="billing_price_subscribe">%s/Jahr, kostenlos testen</string>
   <string name="billing_price_pass">einmaliger Kauf</string>
   <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
   <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Melden Sie sich mit Ihrem Amazon-Konto an!</string>
   <string name="subscription_unavailable">Das Abonnement ist derzeit nicht verfügbar.</string>
   <string name="subscription_failed">Kauf nicht abgeschlossen.</string>
+  <string name="pass_unavailable">X Pass ist derzeit nicht verfügbar.</string>
   <string name="add_to_homescreen">Verknüpfung</string>
   <string name="search_within_show">Durchsuche %s</string>
   <string name="web_search">Web-Suche</string>

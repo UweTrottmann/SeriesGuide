@@ -393,7 +393,7 @@
   <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
   <string name="billing_action_subscribe">Παρακολούθηση</string>
   <string name="billing_action_pass">Αποκτήστε X Pass</string>
-  <string name="billing_price_subscribe">%s/έτος, δοκιμή 30 ημερών</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">εφάπαξ αγοράς</string>
   <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
   <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
   <string name="subscription_unavailable">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>
   <string name="subscription_failed">Η αγορά δεν έχει ολοκληρωθεί.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Συντόμευση</string>
   <string name="search_within_show">Αναζήτηση μέσα σε %s</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>

@@ -393,7 +393,7 @@
   <string name="action_upgrade">فتح كافة الميزات</string>
   <string name="billing_action_subscribe">إشتراك</string>
   <string name="billing_action_pass">أحصل على مفتاح التفعيل</string>
-  <string name="billing_price_subscribe">%s/سنة، تجريبي لمدة 30 يوم</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
   <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
   <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>
   <string name="subscription_unavailable">الإشتراك غير متوفر حاليا .</string>
   <string name="subscription_failed">الشراء لم يكتمل.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">إختصار</string>
   <string name="search_within_show">البحث في %s</string>
   <string name="web_search">البحث في الويب</string>

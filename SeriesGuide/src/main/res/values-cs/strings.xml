@@ -393,7 +393,7 @@
   <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
   <string name="billing_action_pass">Získejte Rozšířenou verzi</string>
-  <string name="billing_price_subscribe">%s ročně, 30 denní trial verze</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">jednorázový nákup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Přihlaste se pomocí účtu Amazon!</string>
   <string name="subscription_unavailable">Odběr momentálně není k dispozici.</string>
   <string name="subscription_failed">Nákup nebyl dokončen.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Odkaz</string>
   <string name="search_within_show">Hledat v %s</string>
   <string name="web_search">Webové vyhledávání</string>

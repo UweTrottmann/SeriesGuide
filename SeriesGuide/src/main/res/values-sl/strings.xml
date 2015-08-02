@@ -393,7 +393,7 @@
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Naroči se</string>
   <string name="billing_action_pass">Get X Pass</string>
-  <string name="billing_price_subscribe">%s/leto, 30 dnevni preizkus</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">enkratni nakup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
   <string name="subscription_unavailable">The subscription is currently not available.</string>
   <string name="subscription_failed">Purchase not completed.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="search_within_show">Išči v %s</string>
   <string name="web_search">Spletno iskanje</string>

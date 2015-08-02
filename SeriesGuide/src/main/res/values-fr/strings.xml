@@ -393,7 +393,7 @@
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
   <string name="billing_action_subscribe">Souscrire</string>
   <string name="billing_action_pass">Obtenir le X Pass</string>
-  <string name="billing_price_subscribe">%s/an, 30 jours d\'essai</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">Achat à vie</string>
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Connectez-vous à votre compte Amazon !</string>
   <string name="subscription_unavailable">L\'abonnement n\'est actuellement pas disponible.</string>
   <string name="subscription_failed">Achat non terminé.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Raccourci</string>
   <string name="search_within_show">Chercher dans %s</string>
   <string name="web_search">Recherche Web</string>

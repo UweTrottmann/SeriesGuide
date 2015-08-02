@@ -393,7 +393,7 @@
   <string name="action_upgrade">모든 기능 사용하기</string>
   <string name="billing_action_subscribe">구독</string>
   <string name="billing_action_pass">X 패스 얻기</string>
-  <string name="billing_price_subscribe">1년에 %s, 30일 트라이얼</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">1회 구매로 계속 사용</string>
   <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
   <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Amazon 계정으로 로그인</string>
   <string name="subscription_unavailable">구독을 현재 사용할 수 없습니다.</string>
   <string name="subscription_failed">구매가 완료되지 않았습니다.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">바로가기</string>
   <string name="search_within_show">%s 에서 검색</string>
   <string name="web_search">웹 검색</string>

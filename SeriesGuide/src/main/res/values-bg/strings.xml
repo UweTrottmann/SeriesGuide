@@ -393,7 +393,7 @@
   <string name="action_upgrade">Отключване на всички функции</string>
   <string name="billing_action_subscribe">Абониране</string>
   <string name="billing_action_pass">Вземете X Pass</string>
-  <string name="billing_price_subscribe">%s/година, 30 дни безплатно</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">еднократно закупуване</string>
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>
   <string name="subscription_unavailable">Абонаментът не е наличен.</string>
   <string name="subscription_failed">Покупката не завърши.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Пряк път</string>
   <string name="search_within_show">Търси в %s</string>
   <string name="web_search">Търсене в мрежата</string>

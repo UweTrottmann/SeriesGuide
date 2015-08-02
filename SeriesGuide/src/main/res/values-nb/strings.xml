@@ -393,7 +393,7 @@
   <string name="action_upgrade">Lås opp alle funksjoner</string>
   <string name="billing_action_subscribe">Abonner</string>
   <string name="billing_action_pass">Få X pass</string>
-  <string name="billing_price_subscribe">%s/år, 30 dagers prøveversjon</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">engangskjøp</string>
   <string name="upgrade_description">Lås opp alle funksjoner inkludert, varslinger, temaer og flere alternativer for modulen. Hjelp meg lage fremtidlige oppdateringer.</string>
   <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Logg deg på din Amazon konto!</string>
   <string name="subscription_unavailable">Abonnementet er for øyeblikket ikke tilgjengelig.</string>
   <string name="subscription_failed">Kjøp ikke fullført.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Snarvei</string>
   <string name="search_within_show">Søk innenfor %s</string>
   <string name="web_search">Websøk</string>

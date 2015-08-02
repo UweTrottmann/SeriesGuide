@@ -393,7 +393,7 @@
   <string name="action_upgrade">Összes beállítás feloldása</string>
   <string name="billing_action_subscribe">Előfizetés</string>
   <string name="billing_action_pass">X Pass beszerzése</string>
-  <string name="billing_price_subscribe">%s/év, 30 napos próba verzió</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">Egyszeri fizetés</string>
   <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts hozzá a program a jövőbeni frissítéseihez.</string>
   <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Jelentkezz be az Amazon fiókodba!</string>
   <string name="subscription_unavailable">Az előfizetés jelenleg nem érhető el.</string>
   <string name="subscription_failed">A vásárlás nem fejeződött be.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Parancsikon</string>
   <string name="search_within_show">Keresés itt %s</string>
   <string name="web_search">Internetes keresés</string>

@@ -393,7 +393,7 @@
   <string name="action_upgrade">Avaa kaikki ominaisuudet</string>
   <string name="billing_action_subscribe">Tilaa</string>
   <string name="billing_action_pass">Hanki X-passi</string>
-  <string name="billing_price_subscribe">%s/vuosi, 30 päivän kokeilu</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Kirjaudu Amazon-tilillesi!</string>
   <string name="subscription_unavailable">Tilaus ei ole tällä hetkellä käytettävissä.</string>
   <string name="subscription_failed">Ostos epäonnistui.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Pikakuvake</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
   <string name="web_search">Verkkohaku</string>

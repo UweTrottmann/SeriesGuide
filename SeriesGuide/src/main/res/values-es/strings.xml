@@ -394,7 +394,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="action_upgrade">Desbloquea todas las funciones</string>
   <string name="billing_action_subscribe">Suscríbete</string>
   <string name="billing_action_pass">Obtener X Pass</string>
-  <string name="billing_price_subscribe">%s/año, 30 días de prueba</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">Compra por única vez</string>
   <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
@@ -404,6 +404,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="subscription_not_signed_in">Inicia sesión en tu cuenta de Amazon!</string>
   <string name="subscription_unavailable">La suscripción no está disponible actualmente.</string>
   <string name="subscription_failed">Compra no completada.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Acceso directo</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
   <string name="web_search">Búsqueda en la web</string>

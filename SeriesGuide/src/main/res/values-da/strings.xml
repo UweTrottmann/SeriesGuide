@@ -393,7 +393,7 @@
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
-  <string name="billing_price_subscribe">%s/år, 30 dages prøveversion</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Oplås alle funktioner, herunder: underretninger, temaer og flere widget indstillinger. Hjælp mig skabe fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte! Du har adgang til alle funktioner.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Log ind på din Amazon konto!</string>
   <string name="subscription_unavailable">Abonnementet er i øjeblikket ikke tilgængeligt.</string>
   <string name="subscription_failed">Køb ikke afsluttet.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Genvej</string>
   <string name="search_within_show">Søg indenfor %s</string>
   <string name="web_search">Websøgning</string>

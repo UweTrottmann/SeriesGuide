@@ -393,7 +393,7 @@
   <string name="action_upgrade">Deblocați toate opțiunile</string>
   <string name="billing_action_subscribe">Abonează-te</string>
   <string name="billing_action_pass">Obțineți abonamentul X</string>
-  <string name="billing_price_subscribe">%s/an, 30 de zile de testare</string>
+  <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">plată unică</string>
   <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
   <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
@@ -403,6 +403,7 @@
   <string name="subscription_not_signed_in">Conectează-te în contul Amazon!</string>
   <string name="subscription_unavailable">Abonamentul nu este disponibil momentan.</string>
   <string name="subscription_failed">Plata nu a fost făcută.</string>
+  <string name="pass_unavailable">X Pass is currently not available.</string>
   <string name="add_to_homescreen">Scurtătură</string>
   <string name="search_within_show">Căutaţi în cadrul %s</string>
   <string name="web_search">Căutare pe web</string>
