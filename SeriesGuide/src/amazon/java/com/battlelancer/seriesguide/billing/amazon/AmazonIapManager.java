@@ -22,6 +22,7 @@ import android.content.Intent;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.FulfillmentResult;
 import com.amazon.device.iap.model.Product;
+import com.amazon.device.iap.model.ProductType;
 import com.amazon.device.iap.model.Receipt;
 import com.amazon.device.iap.model.UserData;
 import com.battlelancer.seriesguide.R;
@@ -43,21 +44,33 @@ public class AmazonIapManager {
         }
     }
 
-    public static class AmazonIapPriceEvent {
+    /**
+     * Posted if the contained product/SKU is available on the current store, contains pricing
+     * information. This does not yet mean that the user can or still needs to purchase the
+     * product.
+     */
+    public static class AmazonIapProductEvent {
         public final Product product;
 
-        public AmazonIapPriceEvent(Product product) {
+        public AmazonIapProductEvent(Product product) {
             this.product = product;
         }
     }
 
+    /**
+     * Posted once it can be determined if the user could purchase a SKU and if she has already an
+     * active purchase to support the app.
+     */
     public static class AmazonIapAvailabilityEvent {
-        public final boolean productAvailable;
-        public final boolean userCanSubscribe;
+        public final boolean subscriptionAvailable;
+        public final boolean passAvailable;
+        public final boolean userHasActivePurchase;
 
-        public AmazonIapAvailabilityEvent(boolean productAvailable, boolean userCanSubscribe) {
-            this.productAvailable = productAvailable;
-            this.userCanSubscribe = userCanSubscribe;
+        public AmazonIapAvailabilityEvent(boolean subscriptionAvailable, boolean passAvailable,
+                boolean userHasActivePurchase) {
+            this.subscriptionAvailable = subscriptionAvailable;
+            this.passAvailable = passAvailable;
+            this.userHasActivePurchase = userHasActivePurchase;
         }
     }
 
@@ -89,25 +102,25 @@ public class AmazonIapManager {
     }
 
     private final Context context;
-    private final SubscriptionDataSource dataSource;
+    private final PurchaseDataSource dataSource;
 
     private boolean userDataAvailable;
-    private boolean subAvailable;
+    private boolean subscriptionAvailable;
+    private boolean passAvailable;
     private UserIapData userIapData;
 
     public AmazonIapManager(Context context) {
         this.context = context.getApplicationContext();
-        this.dataSource = new SubscriptionDataSource(context);
+        this.dataSource = new PurchaseDataSource(context);
         this.userDataAvailable = false;
-        this.subAvailable = false;
+        this.subscriptionAvailable = false;
         this.userIapData = null;
     }
 
     /**
      * Call this in e.g. {@code onStart} to request data about all available products.
      *
-     * <p> If successful, a {@link com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapPriceEvent}
-     * will be posted.
+     * <p> If successful, a {@link AmazonIapProductEvent} will be posted.
      */
     public void requestProductData() {
         // get product availability
@@ -152,32 +165,33 @@ public class AmazonIapManager {
     }
 
     /**
-     * Checks if the current user has an active subscription. If the user was subscribed, but now is
-     * not {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} is launched.
+     * Checks if the current user has an active subscription or pass purchase. If the purchase of
+     * the user is not valid any longer {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity}
+     * is launched.
      *
-     * <p> If user or sub data could not be fetched, keeps the last subscription state.
+     * <p>If user or purchase data could not be fetched, keeps the last subscription state.
      */
-    public void validateSubscription(Activity activity) {
+    public void validateSupporterState(Activity activity) {
         Timber.d("validateSubscription");
-        boolean isSubscribed;
+        boolean isSupporter;
         if (userIapData != null) {
-            loadSubscriptionRecords();
+            loadPurchaseRecords();
 
-            isSubscribed = userIapData.isSubsActiveCurrently();
+            isSupporter = userIapData.hasActivePurchase();
         } else if (userDataAvailable) {
             // user is not logged in
-            isSubscribed = false;
+            isSupporter = false;
         } else {
             // data could not be fetched, keep last sub state
             return;
         }
 
         // update state
-        boolean isSubscribedOld = AdvancedSettings.getLastSubscriptionState(activity);
-        AdvancedSettings.setSubscriptionState(activity, isSubscribed);
+        boolean isSupporterOld = AdvancedSettings.getLastSupporterState(activity);
+        AdvancedSettings.setSupporterState(activity, isSupporter);
 
-        // notify if subscription has expired
-        if (isSubscribedOld && !isSubscribed) {
+        // notify if purchase has expired
+        if (isSupporterOld && !isSupporter) {
             activity.startActivity(new Intent(activity, AmazonBillingActivity.class));
             activity.finish();
         }
@@ -195,7 +209,7 @@ public class AmazonIapManager {
             // A null user id typically means there is no registered Amazon account.
             if (userIapData != null) {
                 userIapData = null;
-                refreshSubsAvailability();
+                refreshPurchasesAvailability();
             }
         } else if (userIapData == null || !newAmazonUserId.equals(userIapData.getAmazonUserId())) {
             // If there was no existing Amazon user then either no customer was
@@ -203,34 +217,69 @@ public class AmazonIapManager {
 
             // If the user id does not match then another Amazon user has registered.
             userIapData = new UserIapData(newAmazonUserId, newAmazonMarketplace);
-            refreshSubsAvailability();
+            refreshPurchasesAvailability();
         }
     }
 
     protected void enablePurchaseForSkus(final Map<String, Product> productData) {
-        // currently only one sku (try-then-buy subscription)
         Product product = productData.get(AmazonSku.SERIESGUIDE_SUB.getSku());
         if (product != null) {
-            subAvailable = true;
-            EventBus.getDefault().post(new AmazonIapPriceEvent(product));
+            subscriptionAvailable = true;
+            EventBus.getDefault().post(new AmazonIapProductEvent(product));
+        }
+        product = productData.get(AmazonSku.SERIESGUIDE_PASS.getSku());
+        if (product != null) {
+            passAvailable = true;
+            EventBus.getDefault().post(new AmazonIapProductEvent(product));
         }
     }
 
     protected void disablePurchaseForSkus(final Set<String> unavailableSkus) {
+        // reasons for product not available can be:
+        // * Item not available for this country
+        // * Item pulled off from Appstore by developer
+        // * Item pulled off from Appstore by Amazon
         if (unavailableSkus.contains(AmazonSku.SERIESGUIDE_SUB.toString())) {
-            subAvailable = false;
-            // reasons for product not available can be:
-            // * Item not available for this country
-            // * Item pulled off from Appstore by developer
-            // * Item pulled off from Appstore by Amazon
+            subscriptionAvailable = false;
             EventBus.getDefault()
                     .post(new AmazonIapMessageEvent(R.string.subscription_unavailable));
+        }
+        if (unavailableSkus.contains(AmazonSku.SERIESGUIDE_PASS.toString())) {
+            passAvailable = false;
+            EventBus.getDefault().post(new AmazonIapMessageEvent(R.string.pass_unavailable));
         }
     }
 
     protected void disableAllPurchases() {
-        this.subAvailable = false;
-        refreshSubsAvailability();
+        subscriptionAvailable = false;
+        passAvailable = false;
+        refreshPurchasesAvailability();
+    }
+
+    /**
+     * Method to handle Entitlement Purchase
+     */
+    private void handleEntitlementPurchase(final Receipt receipt, final UserData userData) {
+        try {
+            if (receipt.isCanceled()) {
+                // Check whether this receipt is to revoke a entitlement
+                // purchase
+                revokeEntitlement(receipt, userData.getUserId());
+            } else {
+                // We strongly recommend that you verify the receipt
+                // server-side.
+
+                // don't care for now
+//                if (!verifyReceiptFromYourService(receipt.getReceiptId(), userData)) {
+//                    // if the purchase cannot be verified,
+//                    // show relevant error message to the customer.
+//                    return;
+//                }
+                grantPurchase(receipt, userData);
+            }
+        } catch (final Throwable e) {
+            EventBus.getDefault().post(new AmazonIapMessageEvent(R.string.subscription_failed));
+        }
     }
 
     /**
@@ -253,17 +302,17 @@ public class AmazonIapManager {
                 //    return;
                 //}
 
-                grantSubscriptionPurchase(receipt, userData);
+                grantPurchase(receipt, userData);
             }
         } catch (Throwable e) {
             EventBus.getDefault().post(new AmazonIapMessageEvent(R.string.subscription_failed));
         }
     }
 
-    private void grantSubscriptionPurchase(final Receipt receipt, final UserData userData) {
+    private void grantPurchase(final Receipt receipt, final UserData userData) {
         final AmazonSku amazonSku = AmazonSku.fromSku(receipt.getSku());
         // Verify that the SKU is still applicable.
-        if (amazonSku != AmazonSku.SERIESGUIDE_SUB) {
+        if (amazonSku != AmazonSku.SERIESGUIDE_SUB && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
             Timber.w("The SKU [" + receipt.getSku() + "] in the receipt is not valid anymore ");
             // if the sku is not applicable anymore, call
             // PurchasingService.notifyFulfillment with status "UNAVAILABLE"
@@ -273,28 +322,29 @@ public class AmazonIapManager {
         }
         try {
             // Set the purchase status to fulfilled for your application
-            saveSubscriptionRecord(receipt, userData.getUserId());
-            AdvancedSettings.setSubscriptionState(context, true);
+            savePurchaseRecord(receipt, userData.getUserId());
+            AdvancedSettings.setSupporterState(context, true);
             PurchasingService.notifyFulfillment(receipt.getReceiptId(),
                     FulfillmentResult.FULFILLED);
         } catch (final Throwable e) {
             // If for any reason the app is not able to fulfill the purchase,
             // add your own error handling code here.
-            Timber.e("Failed to grant entitlement purchase, with error " + e.getMessage());
+            Timber.e("Failed to grant purchase, with error " + e.getMessage());
         }
     }
 
     protected void handleReceipt(final Receipt receipt, final UserData userData) {
-        switch (receipt.getProductType()) {
-            case CONSUMABLE:
-                // check consumable sample for how to handle consumable purchases
-                break;
-            case ENTITLED:
-                // check entitlement sample for how to handle consumable purchases
-                break;
-            case SUBSCRIPTION:
-                handleSubscriptionPurchase(receipt, userData);
-                break;
+        ProductType productType = receipt.getProductType();
+        if (productType == ProductType.CONSUMABLE) {
+            // check consumable sample for how to handle consumable purchases
+            return;
+        }
+        if (productType == ProductType.ENTITLED) {
+            handleEntitlementPurchase(receipt, userData);
+            return;
+        }
+        if (productType == ProductType.SUBSCRIPTION) {
+            handleSubscriptionPurchase(receipt, userData);
         }
     }
 
@@ -302,38 +352,72 @@ public class AmazonIapManager {
         EventBus.getDefault().post(new AmazonIapMessageEvent(R.string.subscription_failed));
     }
 
-    protected void refreshSubsAvailability() {
-        final boolean available = subAvailable && userIapData != null
-                && userIapData.getAmazonUserId() != null;
-        EventBus.getDefault().post(new AmazonIapAvailabilityEvent(available,
-                userIapData != null && !userIapData.isSubsActiveCurrently()));
+    /**
+     * Sends a {@link com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapAvailabilityEvent}
+     * with info about if a user could purchase a product and if they already purchased it.
+     */
+    protected void refreshPurchasesAvailability() {
+        boolean userDataAvailable = userIapData != null && userIapData.getAmazonUserId() != null;
+        EventBus.getDefault().post(new AmazonIapAvailabilityEvent(
+                subscriptionAvailable && userDataAvailable,
+                passAvailable && userDataAvailable,
+                userIapData != null && userIapData.hasActivePurchase()
+        ));
     }
 
     /**
-     * Reload the subscription history from database
+     * Reload the purchase history from the database and update if the user is a supporter.
      */
-    protected void reloadSubscriptionStatus() {
-        loadSubscriptionRecords();
-        refreshSubsAvailability();
+    protected void reloadPurchaseStatus() {
+        loadPurchaseRecords();
+        refreshPurchasesAvailability();
     }
 
-    private void loadSubscriptionRecords() {
-        final List<SubscriptionRecord> subsRecords = dataSource.getSubscriptionRecords(
+    private void loadPurchaseRecords() {
+        final List<PurchaseRecord> purchaseRecords = dataSource.getPurchaseRecords(
                 userIapData.getAmazonUserId());
-        userIapData.setSubscriptionRecords(subsRecords);
+        userIapData.setPurchaseRecords(purchaseRecords);
     }
 
     /**
-     * Save subscription purchase detail locally.
+     * Save purchase details locally.
      */
-    private void saveSubscriptionRecord(final Receipt receipt, final String userId) {
+    private void savePurchaseRecord(final Receipt receipt, final String userId) {
         dataSource
                 .insertOrUpdateSubscriptionRecord(receipt.getReceiptId(),
                         userId,
                         receipt.getPurchaseDate().getTime(),
-                        receipt.getCancelDate() == null ? SubscriptionRecord.TO_DATE_NOT_SET
+                        receipt.getCancelDate() == null ? PurchaseRecord.VALID_TO_DATE_NOT_SET
                                 : receipt.getCancelDate().getTime(),
                         receipt.getSku());
+    }
+
+    /**
+     * Revokes an entitlement purchase from the customer.
+     */
+    private void revokeEntitlement(final Receipt receipt, final String userId) {
+        String receiptId = receipt.getReceiptId();
+        final PurchaseRecord record;
+        if (receiptId == null) {
+            // The revoked receipt's receipt id may be null on older devices.
+            record = dataSource.getLatestEntitlementRecordBySku(userId, receipt.getSku());
+            if (record == null) {
+                return;
+            }
+            receiptId = record.getAmazonReceiptId();
+        } else {
+            record = dataSource.getEntitlementRecordByReceiptId(receiptId);
+        }
+        if (record == null) {
+            // No purchase record for the entitlement before, do nothing.
+            return;
+        }
+        if (record.getValidTo() == PurchaseRecord.VALID_TO_DATE_NOT_SET
+                || record.getValidTo() > System.currentTimeMillis()) {
+            final long cancelDate = receipt.getCancelDate() != null ? receipt.getCancelDate()
+                    .getTime() : System.currentTimeMillis();
+            dataSource.cancelEntitlement(receiptId, cancelDate);
+        }
     }
 
     private void revokeSubscription(final Receipt receipt) {

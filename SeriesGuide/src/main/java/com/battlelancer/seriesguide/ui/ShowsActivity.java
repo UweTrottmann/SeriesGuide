@@ -327,7 +327,7 @@ public class ShowsActivity extends BaseTopActivity implements
             // update Amazon IAP
             AmazonIapManager.get().activate();
             AmazonIapManager.get().requestUserDataAndPurchaseUpdates();
-            AmazonIapManager.get().validateSubscription(this);
+            AmazonIapManager.get().validateSupporterState(this);
         }
 
         // update next episodes

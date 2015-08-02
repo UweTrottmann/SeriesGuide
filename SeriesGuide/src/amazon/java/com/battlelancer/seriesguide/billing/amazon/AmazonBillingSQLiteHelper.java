@@ -23,26 +23,29 @@ import android.util.Log;
 
 /**
  * SQLiteHelper holding purchase records.
+ *
+ * <p><b>Note:</b> Did previously only hold subscriptions, now also entitlements (one-time
+ * purchases).
  */
 public class AmazonBillingSQLiteHelper extends SQLiteOpenHelper {
-    //table name
-    public static final String TABLE_SUBSCRIPTIONS = "subscriptions";
-    //receipt id
+    // table name
+    public static final String TABLE_PURCHASES = "subscriptions";
+    // receipt id
     public static final String COLUMN_RECEIPT_ID = "receipt_id";
-    //amazon user id
+    // amazon user id
     public static final String COLUMN_USER_ID = "user_id";
-    //subscription valid from date
+    // purchase valid from date
     public static final String COLUMN_DATE_FROM = "date_from";
-    //subscription valid to date
+    // purchase valid to date
     public static final String COLUMN_DATE_TO = "date_to";
-    //subscription sku
+    // sku
     public static final String COLUMN_SKU = "sku";
 
     private static final String DATABASE_NAME = "subscriptions.db";
     private static final int DATABASE_VERSION = 1;
 
     // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table " + TABLE_SUBSCRIPTIONS
+    private static final String DATABASE_CREATE = "create table " + TABLE_PURCHASES
             + "("
             + COLUMN_RECEIPT_ID
             + " text primary key not null, "

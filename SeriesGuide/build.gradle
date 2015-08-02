@@ -99,6 +99,11 @@ android {
             }
         }
         debug {
+            // might have to enable to test e.g. amazon flavor
+            // will have to use multi-dex in the future, but hold off as long as possible
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             pseudoLocalesEnabled true
         }
     }

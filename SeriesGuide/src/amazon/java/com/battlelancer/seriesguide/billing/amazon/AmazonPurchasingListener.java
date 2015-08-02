@@ -82,7 +82,7 @@ public class AmazonPurchasingListener implements PurchasingListener {
                 Timber.d("onProductDataResponse: " + unavailableSkus.size() + " unavailable skus");
                 iapManager.enablePurchaseForSkus(response.getProductData());
                 iapManager.disablePurchaseForSkus(response.getUnavailableSkus());
-                iapManager.refreshSubsAvailability();
+                iapManager.refreshPurchasesAvailability();
 
                 break;
             case FAILED:
@@ -96,7 +96,7 @@ public class AmazonPurchasingListener implements PurchasingListener {
     /**
      * Callback for {@link PurchasingService#getPurchaseUpdates}.
      *
-     * You will receive receipts for all possible subscription history from this callback.
+     * You will receive receipts for all possible purchase history from this callback.
      */
     @Override
     public void onPurchaseUpdatesResponse(final PurchaseUpdatesResponse response) {
@@ -117,7 +117,7 @@ public class AmazonPurchasingListener implements PurchasingListener {
                 if (response.hasMore()) {
                     PurchasingService.getPurchaseUpdates(false);
                 }
-                iapManager.reloadSubscriptionStatus();
+                iapManager.reloadPurchaseStatus();
                 break;
             case FAILED:
             case NOT_SUPPORTED:
@@ -153,12 +153,12 @@ public class AmazonPurchasingListener implements PurchasingListener {
                 final Receipt receipt = response.getReceipt();
                 Timber.d("onPurchaseResponse: receipt json:" + receipt.toJSON());
                 iapManager.handleReceipt(receipt, response.getUserData());
-                iapManager.reloadSubscriptionStatus();
+                iapManager.reloadPurchaseStatus();
                 break;
             case ALREADY_PURCHASED:
                 Timber.i("onPurchaseResponse: already purchased, "
                         + "verify subscription purchase again");
-                iapManager.reloadSubscriptionStatus();
+                iapManager.reloadPurchaseStatus();
                 break;
             case INVALID_SKU:
                 Timber.d("onPurchaseResponse: invalid SKU!"

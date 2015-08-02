@@ -31,7 +31,7 @@ public class AdvancedSettings {
 
     public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
 
-    public static final String KEY_LAST_UPGRADE_STATE
+    private static final String KEY_LAST_SUPPORTER_STATE
             = "com.battlelancer.seriesguide.lastupgradestate";
 
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
@@ -57,19 +57,19 @@ public class AdvancedSettings {
     }
 
     /**
-     * Returns if the user was subscribed the last time we checked.
+     * Returns if the user was a supporter through an in-app purchase the last time we checked.
      */
-    public static boolean getLastSubscriptionState(Context context) {
+    public static boolean getLastSupporterState(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_LAST_UPGRADE_STATE, false);
+                KEY_LAST_SUPPORTER_STATE, false);
     }
 
     /**
-     * Set if the user currently has an active subscription.
+     * Set if the user currently has an active purchase to support the app.
      */
-    public static void setSubscriptionState(Context context, boolean isSubscribedToX) {
+    public static void setSupporterState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
-                KEY_LAST_UPGRADE_STATE, isSubscribedToX).commit();
+                KEY_LAST_SUPPORTER_STATE, isSubscribedToX).commit();
     }
 
     /**
