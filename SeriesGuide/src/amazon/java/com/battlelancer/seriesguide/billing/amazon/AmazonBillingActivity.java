@@ -174,17 +174,21 @@ public class AmazonBillingActivity extends BaseActivity {
     public void onEventMainThread(AmazonIapManager.AmazonIapProductEvent event) {
         Product product = event.product;
         // display the actual price like "1.23 C"
+        String price = product.getPrice();
+        if (price == null) {
+            price = "--";
+        }
         if (AmazonSku.SERIESGUIDE_SUB.getSku().equals(product.getSku())) {
             if (textViewPriceSub != null) {
                 textViewPriceSub.setText(
-                        getString(R.string.billing_price_subscribe, product.getPrice()));
+                        getString(R.string.billing_price_subscribe, price));
             }
             return;
         }
         if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
             if (textViewPricePass != null) {
                 textViewPricePass.setText(
-                        product.getPrice() + "\n" + getString(R.string.billing_price_pass));
+                        price + "\n" + getString(R.string.billing_price_pass));
             }
         }
     }
