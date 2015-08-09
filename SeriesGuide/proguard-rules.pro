@@ -7,8 +7,8 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Only obfuscate
--dontshrink
+# Output unused code so we may optimize it
+-printusage unused.txt
 
 # Keep source file and line numbers for better crash logs
 -keepattributes SourceFile,LineNumberTable
@@ -16,47 +16,22 @@
 # Avoid throws declarations getting removed from retrofit service definitions
 -keepattributes Exceptions
 
-# Allow obfuscation of android.support.v7.internal.view.menu.**
+# Only shrink specific packages
+# Guava, added through google-api-client-android
+# Google Play services (also brings its own proguard config)
+-keep,allowobfuscation class !com.google.common.**, !com.google.android.gms.** { *; }
+
+# Only obfuscate android.support.v7.internal.view.menu.**
 # to avoid problem on Samsung 4.2.2 devices with appcompat v21
 # see https://code.google.com/p/android/issues/detail?id=78377
--keep class !android.support.v7.internal.view.menu.** { *; }
+-keep,allowshrinking class !android.support.v7.internal.view.menu.** { *; }
 
-# Google Play Services
--keep class * extends java.util.ListResourceBundle {
-    protected Object[][] getContents();
-}
-
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
--keepnames @com.google.android.gms.common.annotation.KeepName class *
--keepclassmembernames class * {
-    @com.google.android.gms.common.annotation.KeepName *;
-}
-
--keepnames class * implements android.os.Parcelable {
-    public static final ** CREATOR;
-}
-
-# Amazon IAP library has some missing stuff
+# Ignore some warnings
+# Amazon IAP library
 -dontwarn com.amazon.**
 
 # ButterKnife
--keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
-
-# Eventbus methods can not be renamed.
--keepclassmembers class ** {
-    public void onEvent*(**);
-}
 
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
