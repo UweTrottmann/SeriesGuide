@@ -14,55 +14,52 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayoutNow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context="com.battlelancer.seriesguide.ui.NowFragment">
 
-    <com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutNow"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:context="com.battlelancer.seriesguide.ui.NowFragment">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <ScrollView
+            android:id="@+id/scrollViewNow"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView
-                android:id="@+id/scrollViewNow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/emptyViewNow"
+                android:layout_width="@dimen/empty_view_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/now_empty"
+                android:textAppearance="@style/TextAppearance.Light" />
 
-                <TextView
-                    android:id="@+id/emptyViewNow"
-                    android:layout_width="@dimen/empty_view_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/now_empty"
-                    android:textAppearance="@style/TextAppearance.Light" />
+        </ScrollView>
 
-            </ScrollView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewNow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/grid_topbottom_padding"
+            android:paddingLeft="@dimen/grid_leftright_padding"
+            android:paddingRight="@dimen/grid_leftright_padding" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewNow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
-                android:scrollbarStyle="outsideOverlay"
-                android:paddingTop="@dimen/default_padding"
-                android:paddingBottom="@dimen/grid_topbottom_padding"
-                android:paddingLeft="@dimen/grid_leftright_padding"
-                android:paddingRight="@dimen/grid_leftright_padding" />
+        <include
+            layout="@layout/layout_snackbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
 
-        </FrameLayout>
+    </FrameLayout>
 
-    </com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
+</com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
 
-    <include layout="@layout/layout_snackbar" />
-
-</LinearLayout>
