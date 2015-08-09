@@ -102,8 +102,6 @@
 
     </style>
 
-
-
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
@@ -339,10 +337,6 @@
 
     <style name="Theme.SeriesGuide.Light.Dialog.CheckIn">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Launcher">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
     <style name="ImmersiveTheme" parent="Theme.SeriesGuide"/>
