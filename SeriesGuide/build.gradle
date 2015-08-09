@@ -99,10 +99,10 @@ android {
             }
         }
         debug {
-            // might have to enable to test e.g. amazon flavor
-            // will have to use multi-dex in the future, but hold off as long as possible
-//            minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // currently only obfuscating a small portion for compatibility reasons
+            // enable for shrinking to stay well below the 65k method limit
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             pseudoLocalesEnabled true
         }
