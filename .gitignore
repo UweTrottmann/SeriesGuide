@@ -39,3 +39,6 @@ $RECYCLE.BIN/
 ### Gradle
 .gradle/
 build/
+
+## Proguard
+unused.txt
