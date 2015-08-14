@@ -166,6 +166,7 @@
   <string name="released_today">Released today</string>
   <string name="friends_recently">Your trakt friends</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Предстојеће</string>
   <string name="recent">Скорашње</string>
   <string name="friends">Пријатељи</string>

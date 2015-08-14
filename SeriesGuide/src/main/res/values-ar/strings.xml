@@ -166,6 +166,7 @@
   <string name="released_today">صدر اليوم</string>
   <string name="friends_recently">أصدقائك على موقع Trakt</string>
   <string name="now_empty">لا شيء يحدث. مشاهدة بعض البرامج!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">القادم</string>
   <string name="recent">مؤخراً</string>
   <string name="friends">الأصدقاء</string>

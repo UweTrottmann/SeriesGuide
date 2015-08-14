@@ -166,13 +166,14 @@
   <string name="released_today">今日播出</string>
   <string name="friends_recently">trakt好友</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">即將播出</string>
   <string name="recent">最近</string>
   <string name="friends">好友</string>
   <string name="friends_empty">trakt中無朋友活動。</string>
   <string name="user_stream">History</string>
   <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
-  <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+  <string name="user_movie_stream_empty">No history on trakt. Watch and check into some movies!</string>
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
   <string name="only_favorites">僅顯示喜愛影集</string>
@@ -236,7 +237,7 @@
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">等待</string>
   <string name="trakt_success">Sent to trakt.</string>
-  <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
+  <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>

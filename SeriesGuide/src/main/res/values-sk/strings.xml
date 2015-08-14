@@ -166,6 +166,7 @@
   <string name="released_today">Vydané Dnes</string>
   <string name="friends_recently">Vaši trakt priatelia</string>
   <string name="now_empty">Nič nebeží. Pozri nejaké seriály!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
   <string name="friends">Priatelia</string>
@@ -236,7 +237,7 @@
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>
   <string name="trakt_success">Sent to trakt.</string>
-  <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
+  <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>

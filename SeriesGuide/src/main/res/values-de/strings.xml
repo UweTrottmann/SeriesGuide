@@ -166,6 +166,7 @@
   <string name="released_today">Heute veröffentlicht</string>
   <string name="friends_recently">Ihre trakt Freunde</string>
   <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
+  <string name="now_movies_empty">Nichts los. Sehen Sie sich ein paar Filme an!</string>
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>
@@ -236,7 +237,7 @@
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>
   <string name="trakt_success">An trakt übermittelt.</string>
-  <string name="trakt_error_credentials">Es gab einen Fehler. Bitte prüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
+  <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre trakt-Anmeldeinformationen und versuchen Sie es erneut.</string>
   <string name="trakt_error_general">Konnte trakt nicht erreichen. Versuchen Sie es später erneut.</string>
   <string name="trakt_account">trakt Konto</string>
   <string name="trakt_connect_instructions">Melden Sie sich auf dem nächsten Bildschirm bei trakt an, oder erstellen Sie ein neues Konto. Erlauben Sie dann SeriesGuide Zugriff auf Ihr trakt Konto.</string>

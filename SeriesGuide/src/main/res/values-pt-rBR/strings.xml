@@ -166,6 +166,7 @@
   <string name="released_today">Lançado hoje</string>
   <string name="friends_recently">Seus amigos do trakt</string>
   <string name="now_empty">Nada passando. Assista alguma coisa!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recente</string>
   <string name="friends">Amigos</string>
@@ -393,7 +394,7 @@
   <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
   <string name="billing_action_pass">Pegue o X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/ano, teste grátis</string>
   <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Desbloqueie todas os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
   <string name="upgrade_success">Obrigado por apoiar SeriesGuide! Você agora tem acesso a todos os recursos.</string>
@@ -403,7 +404,7 @@
   <string name="subscription_not_signed_in">Entre com sua conta da Amazon!</string>
   <string name="subscription_unavailable">A descrição não está disponível no momento.</string>
   <string name="subscription_failed">Compra não concluída.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass não está disponível no momento.</string>
   <string name="add_to_homescreen">Atalho</string>
   <string name="search_within_show">Procurar dentro de %s</string>
   <string name="web_search">Pesquisa na Web</string>

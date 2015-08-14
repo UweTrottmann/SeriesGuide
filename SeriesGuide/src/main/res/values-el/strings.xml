@@ -166,6 +166,7 @@
   <string name="released_today">Κυκλοφόρησαν σήμερα</string>
   <string name="friends_recently">Φίλοι από το trakt</string>
   <string name="now_empty">Τίποτα δεν γίνεται. Παρακολούθήστε μερικές σειρές!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Επερχόμενα</string>
   <string name="recent">Πρόσφατο</string>
   <string name="friends">Φίλοι</string>

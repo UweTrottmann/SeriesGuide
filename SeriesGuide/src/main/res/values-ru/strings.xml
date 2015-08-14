@@ -166,6 +166,7 @@
   <string name="released_today">Вышедшие сегодня</string>
   <string name="friends_recently">Ваши Trakt друзья</string>
   <string name="now_empty">Ничего нового. Посмотрите другие сериалы!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Следующие эпизоды</string>
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
@@ -393,7 +394,7 @@
   <string name="action_upgrade">Разблокировать все возможности</string>
   <string name="billing_action_subscribe">Подписка</string>
   <string name="billing_action_pass">Получить X ключ</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/год, попробуйте бесплатно</string>
   <string name="billing_price_pass">Единоразовая покупка</string>
   <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
   <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
@@ -403,7 +404,7 @@
   <string name="subscription_not_signed_in">Войдите в свой аккаунт Amazon!</string>
   <string name="subscription_unavailable">Подписка в настоящее время не доступна.</string>
   <string name="subscription_failed">Покупка не завершена.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass в данный момент не доступен.</string>
   <string name="add_to_homescreen">Ярлык</string>
   <string name="search_within_show">Поиск в %s</string>
   <string name="web_search">Веб-поиск</string>

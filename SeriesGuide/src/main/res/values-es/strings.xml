@@ -166,6 +166,7 @@
   <string name="released_today">Estrenadas hoy</string>
   <string name="friends_recently">Tus amigos de trakt</string>
   <string name="now_empty">No pasa nada. ¡Mira algunas series!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recientes</string>
   <string name="friends">Amigos</string>
@@ -306,9 +307,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="upcoming_upto_one_day">un día</string>
   <string name="upcoming_upto_three_days">3 días</string>
   <string name="upcoming_upto_one_week">una semana</string>
-  <string name="upcoming_upto_two_weeks">dos semanas</string>
+  <string name="upcoming_upto_two_weeks">2 semanas</string>
   <string name="upcoming_upto_one_month">un mes</string>
-  <string name="upcoming_upto_one_hour">hora</string>
+  <string name="upcoming_upto_one_hour">1 hora</string>
   <string name="upcoming_upto_six_hours">6 horas</string>
   <string name="upcoming_upto_half_day">12 horas</string>
   <string name="pref_appearance">Apariencia</string>
@@ -394,7 +395,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="action_upgrade">Desbloquea todas las funciones</string>
   <string name="billing_action_subscribe">Suscríbete</string>
   <string name="billing_action_pass">Obtener X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/año, pruebalo gratis</string>
   <string name="billing_price_pass">Compra por única vez</string>
   <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
@@ -404,7 +405,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="subscription_not_signed_in">Inicia sesión en tu cuenta de Amazon!</string>
   <string name="subscription_unavailable">La suscripción no está disponible actualmente.</string>
   <string name="subscription_failed">Compra no completada.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">El X Pass no esta disponible actualmente.</string>
   <string name="add_to_homescreen">Acceso directo</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
   <string name="web_search">Búsqueda en la web</string>

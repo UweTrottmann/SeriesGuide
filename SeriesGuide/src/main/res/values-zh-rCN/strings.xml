@@ -166,6 +166,7 @@
   <string name="released_today">今天播出</string>
   <string name="friends_recently">好友动态</string>
   <string name="now_empty">没有新鲜事</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">即将播出</string>
   <string name="recent">已播剧集</string>
   <string name="friends">朋友动态</string>

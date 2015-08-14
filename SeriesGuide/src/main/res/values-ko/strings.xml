@@ -166,6 +166,7 @@
   <string name="released_today">오늘 방영됨</string>
   <string name="friends_recently">trakt 친구</string>
   <string name="now_empty">아무것도 없습니다. TV프로 좀 보세요!</string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">방영예정</string>
   <string name="recent">최근방영됨</string>
   <string name="friends">친구</string>

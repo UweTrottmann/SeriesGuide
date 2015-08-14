@@ -166,6 +166,7 @@
   <string name="released_today">Dodane dziś</string>
   <string name="friends_recently">Twoi znajomi z trakt</string>
   <string name="now_empty">Nic się nie dzieje. Obejrzyj coś! </string>
+  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
   <string name="upcoming">Nadchodzące</string>
   <string name="recent">Ostatnie</string>
   <string name="friends">Znajomi</string>
@@ -393,7 +394,7 @@
   <string name="action_upgrade">Odblokuj wszystkie funkcje</string>
   <string name="billing_action_subscribe">Subskrybuj</string>
   <string name="billing_action_pass">Kup X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s na rok, spróbuj za darmo</string>
   <string name="billing_price_pass">jednorazowy zakup</string>
   <string name="upgrade_description">Odblokowuje pełną funkcjonalność: powiadomienia, skórki oraz więcej opcji widżetu. Dzięki temu wspomagasz przyszłe aktualizacje.</string>
   <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
@@ -403,7 +404,7 @@
   <string name="subscription_not_signed_in">Zaloguj się do konta Amazon!</string>
   <string name="subscription_unavailable">Subskrypcja jest czasowo niedostępna.</string>
   <string name="subscription_failed">Nie ukończono zakupu.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass nie jest obecnie dostępne.</string>
   <string name="add_to_homescreen">Skrót</string>
   <string name="search_within_show">Szukaj w %s</string>
   <string name="web_search">Wyszukiwarka</string>
