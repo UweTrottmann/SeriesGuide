@@ -492,13 +492,20 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "movies_last_updated";
     }
 
-    interface ActivityColumns {
+    interface EpisodeHistoryColumns {
 
         String TIMESTAMP = "activity_time";
 
         String EPISODE_TVDB_ID = "activity_episode";
 
         String SHOW_TVDB_ID = "activity_show";
+    }
+
+    interface MovieHistoryColumns {
+
+        String TIMESTAMP = "activity_time";
+
+        String MOVIE_TMDB_ID = "activity_movie";
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
@@ -538,7 +545,9 @@ public class SeriesGuideContract {
 
     public static final String PATH_MOVIES = "movies";
 
-    public static final String PATH_ACTIVITY = "activity";
+    public static final String PATH_EPISODE_HISTORY = "episode-history";
+
+    public static final String PATH_MOVIE_HISTORY = "movie-history";
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
@@ -891,19 +900,37 @@ public class SeriesGuideContract {
         }
     }
 
-    public static class Activity implements ActivityColumns, BaseColumns {
+    public static class EpisodeHistory implements EpisodeHistoryColumns, BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_ACTIVITY)
+                .appendPath(PATH_EPISODE_HISTORY)
                 .build();
 
         /**
          * Use if multiple items get returned
          */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
+        public static final String CONTENT_TYPE
+                = "vnd.android.cursor.dir/vnd.seriesguide.history.episodes";
 
         public static Uri buildActivityUri(String episodeTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
+        }
+    }
+
+    public static class MovieHistory implements MovieHistoryColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_MOVIE_HISTORY)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        public static final String CONTENT_TYPE
+                = "vnd.android.cursor.dir/vnd.seriesguide.history.movies";
+
+        public static Uri buildActivityUri(String movieTmdbId) {
+            return CONTENT_URI.buildUpon().appendPath(movieTmdbId).build();
         }
     }
 

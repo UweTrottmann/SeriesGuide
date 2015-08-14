@@ -39,11 +39,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import timber.log.Timber;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeHistory;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.MovieHistory;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -105,17 +106,19 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int MOVIES_ID = 701;
 
-    private static final int ACTIVITY = 800;
+    private static final int EPISODE_HISTORY = 800;
 
-    private static final int SEARCH_SUGGEST = 900;
+    private static final int MOVIE_HISTORY = 900;
 
-    private static final int RENEW_FTSTABLE = 1000;
+    private static final int SEARCH_SUGGEST = 1000;
+
+    private static final int RENEW_FTSTABLE = 1100;
 
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
      * this {@link ContentProvider}.
      */
-    private static UriMatcher buildUriMatcher(Context context) {
+    private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SeriesGuideApplication.CONTENT_AUTHORITY;
 
@@ -173,8 +176,11 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES, MOVIES);
         matcher.addURI(authority, SeriesGuideContract.PATH_MOVIES + "/*", MOVIES_ID);
 
-        // Activity
-        matcher.addURI(authority, SeriesGuideContract.PATH_ACTIVITY, ACTIVITY);
+        // Episode history
+        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODE_HISTORY, EPISODE_HISTORY);
+
+        // Movie history
+        matcher.addURI(authority, SeriesGuideContract.PATH_MOVIE_HISTORY, MOVIE_HISTORY);
 
         // Search
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
@@ -213,7 +219,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public boolean onCreate() {
         Context context = getContext();
 
-        sUriMatcher = buildUriMatcher(context);
+        sUriMatcher = buildUriMatcher();
 
         mDbHelper = new SeriesGuideDatabase(context);
 
@@ -321,8 +327,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Movies.CONTENT_TYPE;
             case MOVIES_ID:
                 return Movies.CONTENT_ITEM_TYPE;
-            case ACTIVITY:
-                return Activity.CONTENT_TYPE;
+            case EPISODE_HISTORY:
+                return EpisodeHistory.CONTENT_TYPE;
+            case MOVIE_HISTORY:
+                return MovieHistory.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -440,12 +448,22 @@ public class SeriesGuideProvider extends ContentProvider {
                 notifyUri = Movies.buildMovieUri(values.getAsInteger(Movies.TMDB_ID));
                 break;
             }
-            case ACTIVITY: {
-                long id = db.insert(Tables.ACTIVITY, null, values);
+            case EPISODE_HISTORY: {
+                long id = db.insert(Tables.EPISODE_HISTORY, null, values);
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_ID));
+                notifyUri = EpisodeHistory.buildActivityUri(
+                        values.getAsString(EpisodeHistory.EPISODE_TVDB_ID));
+                break;
+            }
+            case MOVIE_HISTORY: {
+                long id = db.insert(Tables.MOVIE_HISTORY, null, values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = MovieHistory.buildActivityUri(
+                        values.getAsString(MovieHistory.MOVIE_TMDB_ID));
                 break;
             }
             default: {
@@ -676,8 +694,11 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String movieId = Movies.getId(uri);
                 return builder.table(Tables.MOVIES).where(Movies.TMDB_ID + "=?", movieId);
             }
-            case ACTIVITY: {
-                return builder.table(Tables.ACTIVITY);
+            case EPISODE_HISTORY: {
+                return builder.table(Tables.EPISODE_HISTORY);
+            }
+            case MOVIE_HISTORY: {
+                return builder.table(Tables.MOVIE_HISTORY);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

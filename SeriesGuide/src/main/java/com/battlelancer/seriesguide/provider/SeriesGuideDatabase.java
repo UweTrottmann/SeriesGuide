@@ -23,14 +23,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeHistoryColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.MovieHistoryColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
@@ -41,11 +46,6 @@ import java.util.TimeZone;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 
 public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
@@ -136,7 +136,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_36_ORDERABLE_LISTS = 36;
 
-    public static final int DATABASE_VERSION = DBVER_36_ORDERABLE_LISTS;
+    /**
+     * Add activity table to store recently watched movies.
+     */
+    public static final int DBVER_37_MOVIE_HISTORY = 37;
+
+    public static final int DATABASE_VERSION = DBVER_37_MOVIE_HISTORY;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -206,7 +211,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         String MOVIES = "movies";
 
-        String ACTIVITY = "activity";
+        String EPISODE_HISTORY = "activity";
+
+        String MOVIE_HISTORY = "activity_movies";
     }
 
     private interface Selections {
@@ -510,13 +517,23 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
+    private static final String CREATE_EPISODE_HISTORY_TABLE = "CREATE TABLE "
+            + Tables.EPISODE_HISTORY
             + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.TIMESTAMP + " INTEGER NOT NULL,"
-            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
+            + EpisodeHistoryColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
+            + EpisodeHistoryColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
+            + EpisodeHistoryColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + "UNIQUE (" + EpisodeHistoryColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
+            + ");";
+
+    private static final String CREATE_MOVIE_HISTORY_TABLE = "CREATE TABLE "
+            + Tables.MOVIE_HISTORY
+            + " ("
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + MovieHistoryColumns.MOVIE_TMDB_ID + " TEXT NOT NULL,"
+            + MovieHistoryColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + "UNIQUE (" + MovieHistoryColumns.MOVIE_TMDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
     public SeriesGuideDatabase(Context context) {
@@ -539,7 +556,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_MOVIES_TABLE);
 
-        db.execSQL(CREATE_ACTIVITY_TABLE);
+        db.execSQL(CREATE_EPISODE_HISTORY_TABLE);
+
+        db.execSQL(CREATE_MOVIE_HISTORY_TABLE);
     }
 
     @Override
@@ -595,7 +614,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyFive(db);
             case DBVER_35_ACTIVITY_TABLE:
                 upgradeToThirtySix(db);
-                version = DBVER_36_ORDERABLE_LISTS;
+            case DBVER_36_ORDERABLE_LISTS:
+                upgradeToThirtySeven(db);
+                version = DBVER_37_MOVIE_HISTORY;
         }
 
         // drop all tables if version is not right
@@ -616,11 +637,21 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.ACTIVITY);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODE_HISTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIE_HISTORY);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_37_MOVIE_HISTORY}.
+     */
+    private static void upgradeToThirtySeven(SQLiteDatabase db) {
+        if (!isTableExisting(db, Tables.MOVIE_HISTORY)) {
+            db.execSQL(CREATE_MOVIE_HISTORY_TABLE);
+        }
     }
 
     /**
@@ -637,8 +668,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * See {@link #DBVER_35_ACTIVITY_TABLE}.
      */
     private static void upgradeToThirtyFive(SQLiteDatabase db) {
-        if (!isTableExisting(db, Tables.ACTIVITY)) {
-            db.execSQL(CREATE_ACTIVITY_TABLE);
+        if (!isTableExisting(db, Tables.EPISODE_HISTORY)) {
+            db.execSQL(CREATE_EPISODE_HISTORY_TABLE);
         }
     }
 

@@ -43,11 +43,11 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
 
         // get activity of the last 24 hours with the latest one first
         Cursor query = getContext().getContentResolver()
-                .query(SeriesGuideContract.Activity.CONTENT_URI,
-                        new String[] { SeriesGuideContract.Activity.TIMESTAMP,
-                                SeriesGuideContract.Activity.EPISODE_TVDB_ID },
-                        SeriesGuideContract.Activity.TIMESTAMP + ">" + timeDayAgo, null,
-                        SeriesGuideContract.Activity.TIMESTAMP + " DESC");
+                .query(SeriesGuideContract.EpisodeHistory.CONTENT_URI,
+                        new String[] { SeriesGuideContract.EpisodeHistory.TIMESTAMP,
+                                SeriesGuideContract.EpisodeHistory.EPISODE_TVDB_ID },
+                        SeriesGuideContract.EpisodeHistory.TIMESTAMP + ">" + timeDayAgo, null,
+                        SeriesGuideContract.EpisodeHistory.TIMESTAMP + " DESC");
         if (query == null) {
             return null;
         }
