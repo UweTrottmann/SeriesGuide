@@ -34,7 +34,9 @@ $RECYCLE.BIN/
 *.iml
 *.ipr
 *.iws
-.idea/
+!.idea/
+.idea/*
+!.idea/codeStyleSettings.xml
 
 ### Gradle
 .gradle/
