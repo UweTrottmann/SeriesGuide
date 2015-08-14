@@ -29,9 +29,9 @@ import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.HistoryActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
-import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -60,13 +60,13 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(MoviesActivity.USER_LOADER_ID, null,
+        getLoaderManager().initLoader(HistoryActivity.MOVIES_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(MoviesActivity.USER_LOADER_ID, null,
+        getLoaderManager().restartLoader(HistoryActivity.MOVIES_LOADER_ID, null,
                 mActivityLoaderCallbacks);
     }
 

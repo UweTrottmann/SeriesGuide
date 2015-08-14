@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Friend;
@@ -36,11 +35,11 @@ import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
- * Loads trakt friends, then returns the most recently watched episode for each friend.
+ * Loads trakt friends, then returns the most recently watched movie for each friend.
  */
-public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public TraktFriendsHistoryLoader(Context context) {
+    public TraktFriendsMovieHistoryLoader(Context context) {
         super(context);
     }
 
@@ -69,7 +68,9 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
         }
 
         List<NowAdapter.NowItem> items = new ArrayList<>();
-        for (Friend friend : friends) {
+        for (int i = 0; i < friends.size(); i++) {
+            Friend friend = friends.get(i);
+
             if (friend.user == null || TextUtils.isEmpty(friend.user.username)) {
                 // at least need a username
                 continue;
@@ -78,10 +79,10 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             // get last watched episode
             List<HistoryEntry> history;
             try {
-                history = traktUsers.historyEpisodes(friend.user.username, 1, 1, Extended.IMAGES);
+                history = traktUsers.historyMovies(friend.user.username, 1, 1, Extended.IMAGES);
             } catch (RetrofitError e) {
                 // abort, either lost connection or server error or other error
-                Timber.e(e, "Failed to load friend history");
+                Timber.e(e, "Failed to load friend movie history");
                 return null;
             } catch (OAuthUnauthorizedException ignored) {
                 // friend might have revoked friendship just now :(
@@ -94,27 +95,23 @@ public class TraktFriendsHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             }
 
             HistoryEntry entry = history.get(0);
-            if (entry.watched_at == null || entry.episode == null
-                    || entry.episode.season == null || entry.episode.number == null
-                    || entry.show == null) {
+            if (entry.watched_at == null || entry.movie == null) {
                 // missing required values
                 continue;
             }
 
-            String poster = (entry.show.images == null || entry.show.images.poster == null)
-                    ? null : entry.show.images.poster.thumb;
+            String poster = (entry.movie.images == null || entry.movie.images.poster == null) ? null
+                    : entry.movie.images.poster.thumb;
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.getMillis(),
-                            entry.show.title,
-                            Utils.getNextEpisodeString(getContext(), entry.episode.season,
-                                    entry.episode.number, entry.episode.title),
+                            "",
+                            entry.movie.title,
                             poster
                     )
-                    .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb,
-                            entry.show.ids == null ? null : entry.show.ids.tvdb)
+                    .tmdbId(entry.movie.ids == null ? null : entry.movie.ids.tmdb)
                     .friend(friend.user.username, avatar, entry.action);
             items.add(nowItem);
         }

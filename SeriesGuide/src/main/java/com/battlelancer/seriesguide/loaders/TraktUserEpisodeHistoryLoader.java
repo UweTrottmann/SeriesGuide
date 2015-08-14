@@ -39,7 +39,8 @@ import timber.log.Timber;
 /**
  * Loads last 24 hours of trakt watched episodes, or at least one older episode.
  */
-public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistoryLoader.Result> {
+public class TraktUserEpisodeHistoryLoader
+        extends GenericSimpleLoader<TraktUserEpisodeHistoryLoader.Result> {
 
     public static class Result {
         public List<NowAdapter.NowItem> items;
@@ -51,9 +52,9 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistory
         }
     }
 
-    public static final int MAX_HISTORY_SIZE = 25;
+    private static final int MAX_HISTORY_SIZE = 25;
 
-    public TraktUserHistoryLoader(Context context) {
+    public TraktUserEpisodeHistoryLoader(Context context) {
         super(context);
     }
 
@@ -78,8 +79,11 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistory
             return buildResultFailure(R.string.trakt_error_credentials);
         }
 
-        if (history == null || history.isEmpty()) {
+        if (history == null) {
             return buildResultFailure(R.string.trakt_error_general);
+        } else if (history.isEmpty()) {
+            // no history available (yet)
+            return new Result(null, 0);
         }
 
         // add header
@@ -89,7 +93,9 @@ public class TraktUserHistoryLoader extends GenericSimpleLoader<TraktUserHistory
 
         // add episodes
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
-        for (HistoryEntry entry : history) {
+        for (int i = 0; i < history.size(); i++) {
+            HistoryEntry entry = history.get(i);
+
             if (entry.episode == null || entry.episode.ids == null || entry.episode.ids.tvdb == null
                     || entry.show == null || entry.watched_at == null) {
                 // missing required values
