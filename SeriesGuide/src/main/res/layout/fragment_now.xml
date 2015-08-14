@@ -18,8 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayoutNow"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.battlelancer.seriesguide.ui.NowFragment">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -36,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/now_empty"
+                tools:text="@string/now_empty"
                 android:textAppearance="@style/TextAppearance.Light" />
 
         </ScrollView>
