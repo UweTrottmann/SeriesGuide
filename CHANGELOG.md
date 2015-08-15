@@ -8,6 +8,14 @@ All dates are in the European Central timezone.
 Version 24 *(in development)*
 -----------------------------
 
+#### 24-beta4 *(2015-08-15)*
+
+* FEATURE Now tab for movies. Displays your recently watched movies on trakt, as well as the last
+  watched movie of your trakt friends.
+* FIX Now tab correctly shows content while refreshing.
+* NOTICE Reduction of app size by removing more unused code from libraries. Let me know if anything breaks!
+* NOTICE Latest translations from crowdin.
+
 #### 24-beta3 *(2015-07-05)*
 
 * TWEAK Do not load images over metered connections if "Images only over Wi-Fi" is enabled. Update
