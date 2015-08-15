@@ -21,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
@@ -36,6 +37,9 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int COLLECTION_LOADER_ID = 104;
 
     private static final String TAG = "Movies";
+    private static final int TAB_COUNT_WITH_TRAKT = 4;
+
+    private TabStripAdapter tabsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +56,23 @@ public class MoviesActivity extends BaseTopActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.movies));
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.movies));
+        }
     }
 
     private void setupViews() {
         // tabs
-        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 (ViewPager) findViewById(R.id.viewPagerTabs),
                 (SlidingTabLayout) findViewById(R.id.tabLayoutTabs));
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
-        // (what to watch) now
-        tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
+        // trakt-only tabs should only be visible if connected
+        if (TraktCredentials.get(this).hasCredentials()) {
+            // (what to watch) now
+            tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
+        }
         // watchlist
         tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         // collection
@@ -77,6 +86,9 @@ public class MoviesActivity extends BaseTopActivity {
         super.onStart();
 
         setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
+
+        // add trakt-only tab if user just signed in
+        maybeAddNowTab();
     }
 
     @Override
@@ -84,6 +96,16 @@ public class MoviesActivity extends BaseTopActivity {
         super.onResume();
 
         supportInvalidateOptionsMenu();
+    }
+
+    private void maybeAddNowTab() {
+        int currentTabCount = tabsAdapter.getCount();
+        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
+        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+            tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
+            // update tabs
+            tabsAdapter.notifyTabsChanged();
+        }
     }
 
     @Override
