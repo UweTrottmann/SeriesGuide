@@ -10,7 +10,7 @@
         android:title="@string/search" />
     <item
         android:id="@+id/menu_action_shows_advanced"
-        android:orderInCategory="5"
+        android:orderInCategory="6"
         app:showAsAction="never"
         android:title="@string/prefs_category_advanced">
         <menu>
