@@ -22,8 +22,8 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -53,13 +53,13 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
 
                 // Ensure those episodes are within the user set time frame
                 long releaseTime = upcomingEpisodes
-                        .getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
+                        .getLong(CalendarAdapter.Query.RELEASE_TIME_MS);
                 if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
 
                     // title of first show
                     String expandedTitle = upcomingEpisodes.getString(
-                            ActivityFragment.ActivityQuery.SHOW_TITLE);
+                            CalendarAdapter.Query.SHOW_TITLE);
 
                     // get the actual release time
                     Date actualRelease = TimeTools.applyUserOffset(this, releaseTime);
@@ -73,7 +73,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     }
                     expandedBody.append(absoluteTime);
                     String network = upcomingEpisodes
-                            .getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                            .getString(CalendarAdapter.Query.SHOW_NETWORK);
                     if (!TextUtils.isEmpty(network)) {
                         expandedBody.append(" — ").append(network);
                     }
@@ -82,7 +82,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     int additionalEpisodes = 0;
                     while (upcomingEpisodes.moveToNext()
                             && releaseTime == upcomingEpisodes
-                            .getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS)) {
+                            .getLong(CalendarAdapter.Query.RELEASE_TIME_MS)) {
                         additionalEpisodes++;
                     }
                     if (additionalEpisodes > 0) {

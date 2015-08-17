@@ -28,7 +28,9 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -43,10 +45,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Adapter for {@link com.battlelancer.seriesguide.ui.ActivityFragment} with optimizations for image
- * loading for smoother scrolling.
+ * Adapter for {@link CalendarFragment} with optimizations for image loading for smoother
+ * scrolling.
  */
-public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
+public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
     private LayoutInflater mLayoutInflater;
 
@@ -55,7 +57,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
     private Calendar mCalendar;
 
-    public ActivitySlowAdapter(Context context, Cursor c, int flags) {
+    public CalendarAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -76,10 +78,10 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         // watched box
         // save rowid to hand over to OnClick event listener
-        final int showTvdbId = cursor.getInt(ActivityFragment.ActivityQuery.SHOW_ID);
-        final int season = cursor.getInt(ActivityFragment.ActivityQuery.SEASON);
-        final int episodeTvdbId = cursor.getInt(ActivityFragment.ActivityQuery._ID);
-        final int episode = cursor.getInt(ActivityFragment.ActivityQuery.NUMBER);
+        final int showTvdbId = cursor.getInt(Query.SHOW_ID);
+        final int season = cursor.getInt(Query.SEASON);
+        final int episodeTvdbId = cursor.getInt(Query._ID);
+        final int episode = cursor.getInt(Query.NUMBER);
         viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WatchedBox box = (WatchedBox) v;
@@ -91,7 +93,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
                 );
             }
         });
-        viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(ActivityFragment.ActivityQuery.WATCHED));
+        viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(Query.WATCHED));
         viewHolder.watchedBox.setEnabled(true);
         CheatSheet.setup(viewHolder.watchedBox,
                 EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
@@ -99,15 +101,15 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         );
 
         // show title
-        viewHolder.show.setText(cursor.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+        viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
 
         // episode number and title
         viewHolder.episode.setText(Utils.getNextEpisodeString(context, season, episode,
-                cursor.getString(ActivityFragment.ActivityQuery.TITLE)));
+                cursor.getString(Query.TITLE)));
 
         // timestamp, absolute time and network
         StringBuilder releaseInfo = new StringBuilder();
-        long releaseTime = cursor.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
+        long releaseTime = cursor.getLong(Query.RELEASE_TIME_MS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
             // timestamp
@@ -119,7 +121,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         } else {
             viewHolder.timestamp.setText(null);
         }
-        final String network = cursor.getString(ActivityFragment.ActivityQuery.SHOW_NETWORK);
+        final String network = cursor.getString(Query.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
             releaseInfo.append(" / ").append(network);
         }
@@ -127,12 +129,12 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
 
         // collected indicator
         boolean isCollected = EpisodeTools.isCollected(
-                cursor.getInt(ActivityFragment.ActivityQuery.COLLECTED));
+                cursor.getInt(Query.COLLECTED));
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
 
         // set poster
         Utils.loadSmallTvdbShowPoster(context, viewHolder.poster,
-                cursor.getString(ActivityFragment.ActivityQuery.SHOW_POSTER));
+                cursor.getString(Query.SHOW_POSTER));
     }
 
     @Override
@@ -160,7 +162,7 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
     }
 
     private long getHeaderTime(Cursor item) {
-        long releaseTime = item.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS);
+        long releaseTime = item.getLong(Query.RELEASE_TIME_MS);
         Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
 
         mCalendar.setTime(actualRelease);
@@ -256,6 +258,51 @@ public class ActivitySlowAdapter extends CursorAdapter implements StickyGridHead
         }
 
         return headers;
+    }
+
+    public interface Query {
+
+        String[] PROJECTION = new String[] {
+                SeriesGuideDatabase.Tables.EPISODES + "." + SeriesGuideContract.Episodes._ID,
+                SeriesGuideContract.Episodes.TITLE,
+                SeriesGuideContract.Episodes.NUMBER,
+                SeriesGuideContract.Episodes.SEASON,
+                SeriesGuideContract.Episodes.FIRSTAIREDMS,
+                SeriesGuideContract.Episodes.WATCHED,
+                SeriesGuideContract.Episodes.COLLECTED,
+                SeriesGuideContract.Shows.REF_SHOW_ID,
+                SeriesGuideContract.Shows.TITLE,
+                SeriesGuideContract.Shows.NETWORK,
+                SeriesGuideContract.Shows.POSTER
+        };
+
+        String QUERY_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + ">=? AND "
+                + SeriesGuideContract.Episodes.FIRSTAIREDMS
+                + "<? AND " + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
+
+        String QUERY_RECENT = SeriesGuideContract.Episodes.FIRSTAIREDMS + "<? AND "
+                + SeriesGuideContract.Episodes.FIRSTAIREDMS + ">? AND "
+                + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
+
+        String SORTING_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + " ASC,"
+                + SeriesGuideContract.Shows.TITLE + " ASC,"
+                + SeriesGuideContract.Episodes.NUMBER + " ASC";
+
+        String SORTING_RECENT = SeriesGuideContract.Episodes.FIRSTAIREDMS + " DESC,"
+                + SeriesGuideContract.Shows.TITLE + " ASC,"
+                + SeriesGuideContract.Episodes.NUMBER + " DESC";
+
+        int _ID = 0;
+        int TITLE = 1;
+        int NUMBER = 2;
+        int SEASON = 3;
+        int RELEASE_TIME_MS = 4;
+        int WATCHED = 5;
+        int COLLECTED = 6;
+        int SHOW_ID = 7;
+        int SHOW_TITLE = 8;
+        int SHOW_NETWORK = 9;
+        int SHOW_POSTER = 10;
     }
 
     static class ViewHolder {

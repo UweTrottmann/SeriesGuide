@@ -26,12 +26,12 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -146,18 +146,18 @@ public class ListWidgetService extends RemoteViewsService {
             Bundle extras = new Bundle();
             extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     dataCursor.getInt(isShowQuery ?
-                            ShowsQuery.SHOW_NEXT_EPISODE_ID : ActivityFragment.ActivityQuery._ID));
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarAdapter.Query._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
 
             // episode description
             int seasonNumber = dataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_SEASON : ActivityFragment.ActivityQuery.SEASON);
+                    ShowsQuery.EPISODE_SEASON : CalendarAdapter.Query.SEASON);
             int episodeNumber = dataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_NUMBER : ActivityFragment.ActivityQuery.NUMBER);
+                    ShowsQuery.EPISODE_NUMBER : CalendarAdapter.Query.NUMBER);
             String title = dataCursor.getString(isShowQuery ?
-                    ShowsQuery.EPISODE_TITLE : ActivityFragment.ActivityQuery.TITLE);
+                    ShowsQuery.EPISODE_TITLE : CalendarAdapter.Query.TITLE);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
                     Utils.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
 
@@ -165,7 +165,7 @@ public class ListWidgetService extends RemoteViewsService {
             Date actualRelease = TimeTools.applyUserOffset(context,
                     dataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
-                            : ActivityFragment.ActivityQuery.RELEASE_TIME_MS));
+                            : CalendarAdapter.Query.RELEASE_TIME_MS));
             // "Fri 2 days ago"
             rv.setTextViewText(R.id.widgetAirtime,
                     TimeTools.formatToLocalDayAndRelativeTime(context, actualRelease));
@@ -173,7 +173,7 @@ public class ListWidgetService extends RemoteViewsService {
             // absolute release time and network (if any)
             String absoluteTime = TimeTools.formatToLocalTime(context, actualRelease);
             String network = dataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_NETWORK : ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                    ShowsQuery.SHOW_NETWORK : CalendarAdapter.Query.SHOW_NETWORK);
             if (!TextUtils.isEmpty(network)) {
                 absoluteTime += " " + network;
             }
@@ -181,11 +181,11 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show name
             rv.setTextViewText(R.id.textViewWidgetShow, dataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_TITLE : ActivityFragment.ActivityQuery.SHOW_TITLE));
+                    ShowsQuery.SHOW_TITLE : CalendarAdapter.Query.SHOW_TITLE));
 
             // show poster
             String posterPath = dataCursor.getString(isShowQuery
-                    ? ShowsQuery.SHOW_POSTER : ActivityFragment.ActivityQuery.SHOW_POSTER);
+                    ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER);
             Bitmap poster;
             try {
                 poster = ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))

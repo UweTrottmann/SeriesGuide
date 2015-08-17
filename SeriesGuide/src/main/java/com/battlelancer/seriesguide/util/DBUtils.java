@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -37,10 +38,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
-import com.battlelancer.seriesguide.ui.ActivityFragment.ActivityType;
+import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -239,15 +239,15 @@ public class DBUtils {
      *
      * <p> Filters by watched episodes or favorite shows if enabled.
      *
-     * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
+     * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
     public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyFavorites,
             boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyFavorites,
+        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, isOnlyFavorites,
                 isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
+                CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
@@ -255,28 +255,28 @@ public class DBUtils {
      *
      * <p> Filters by watched episodes or favorite shows if enabled.
      *
-     * @return Cursor using the projection of {@link com.battlelancer.seriesguide.ui.ActivityFragment.ActivityQuery}.
+     * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
     public static Cursor getRecentEpisodes(Context context, boolean isOnlyFavorites,
             boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyFavorites,
+        String[][] args = buildActivityQuery(context, CalendarType.RECENT, isOnlyFavorites,
                 isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                ActivityFragment.ActivityQuery.PROJECTION, args[0][0], args[1], args[2][0]);
+                CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
      * Returns an array of size 3. The built query is stored in {@code [0][0]}, the built selection
      * args in {@code [1]} and the sort order in {@code [2][0]}.
      *
-     * @param type A {@link ActivityType}, defaults to UPCOMING.
+     * @param type A {@link CalendarType}, defaults to UPCOMING.
      * @param numberOfDaysToInclude Limits the time range of returned episodes to a number of days
      * from today. If lower then 1 defaults to infinity.
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
-        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
+        boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
         boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
 
         return buildActivityQuery(context, type, isOnlyFavorites, isNoWatched,
@@ -293,9 +293,9 @@ public class DBUtils {
         String sortOrder;
         long timeThreshold;
 
-        if (ActivityType.RECENT.equals(type)) {
-            query = new StringBuilder(ActivityFragment.ActivityQuery.QUERY_RECENT);
-            sortOrder = ActivityFragment.ActivityQuery.SORTING_RECENT;
+        if (CalendarType.RECENT.equals(type)) {
+            query = new StringBuilder(CalendarAdapter.Query.QUERY_RECENT);
+            sortOrder = CalendarAdapter.Query.SORTING_RECENT;
             if (numberOfDaysToInclude < 1) {
                 // at least has an air date
                 timeThreshold = 0;
@@ -305,8 +305,8 @@ public class DBUtils {
                         * numberOfDaysToInclude;
             }
         } else {
-            query = new StringBuilder(ActivityFragment.ActivityQuery.QUERY_UPCOMING);
-            sortOrder = ActivityFragment.ActivityQuery.SORTING_UPCOMING;
+            query = new StringBuilder(CalendarAdapter.Query.QUERY_UPCOMING);
+            sortOrder = CalendarAdapter.Query.SORTING_UPCOMING;
             if (numberOfDaysToInclude < 1) {
                 // to infinity!
                 timeThreshold = Long.MAX_VALUE;

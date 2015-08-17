@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
-        android:id="@+id/gridViewUpcoming"
+        android:id="@+id/gridViewCalendar"
         style="@style/Widget.SeriesGuide.CardGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +12,7 @@
         android:numColumns="auto_fit" />
 
     <TextView
-        android:id="@+id/emptyViewUpcoming"
+        android:id="@+id/emptyViewCalendar"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
