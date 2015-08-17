@@ -175,7 +175,7 @@ public class CalendarFragment extends Fragment implements
             return;
         }
 
-        inflater.inflate(R.menu.activity_menu, menu);
+        inflater.inflate(R.menu.calendar_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
