@@ -21,18 +21,24 @@
     <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 

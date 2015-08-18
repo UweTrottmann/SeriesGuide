@@ -285,7 +285,7 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_SHOWS_POSITION);
+        setDrawerSelectedItem(R.id.navigation_item_shows);
         if (!AppSettings.hasSeenNavDrawer(this)) {
             // introduce the nav drawer
             openNavDrawer();

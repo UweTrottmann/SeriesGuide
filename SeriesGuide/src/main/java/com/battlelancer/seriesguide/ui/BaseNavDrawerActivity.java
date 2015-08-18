@@ -22,6 +22,9 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
+import android.support.annotation.MenuRes;
+import android.support.design.widget.NavigationView;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -47,8 +50,7 @@ import com.battlelancer.seriesguide.util.Utils;
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
  */
-public abstract class BaseNavDrawerActivity extends BaseActivity
-        implements AdapterView.OnItemClickListener {
+public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
@@ -67,8 +69,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     private Handler mHandler;
     private Toolbar mActionBarToolbar;
     private DrawerLayout mDrawerLayout;
-    private View mDrawerView;
-    private ListView mDrawerList;
+    private NavigationView mNavigationView;
     private DrawerAdapter mDrawerAdapter;
 
     @Override
@@ -82,7 +83,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
     protected void onStart() {
         super.onStart();
 
-        mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
+        MenuItem menuItem = mNavigationView.getMenu().findItem(R.id.navigation_sub_item_unlock);
+        menuItem.setEnabled(!Utils.hasAccessToX(this));
+        menuItem.setVisible(!Utils.hasAccessToX(this));
     }
 
     /**
@@ -94,37 +97,23 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawerView = findViewById(R.id.drawer_view);
-
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation);
 
         // setup menu adapter
-        mDrawerAdapter = new DrawerAdapter(this);
-        mDrawerAdapter.add(new DrawerItemAccount());
-
-        mDrawerAdapter.add(new DrawerItemDivider());
-
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableTv)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-
-        mDrawerAdapter.add(new DrawerItemDivider());
-
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.preferences),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.help),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.action_upgrade),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStar)));
-
-        mDrawerList.setAdapter(mDrawerAdapter);
-        mDrawerList.setOnItemClickListener(this);
+        mNavigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
+                ? R.menu.menu_drawer_light : R.menu.menu_drawer);
+        mNavigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
     }
+
+    private NavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener
+            = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            onItemClick(menuItem);
+            return true;
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -135,12 +124,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         super.onBackPressed();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    private void onItemClick(MenuItem menuItem) {
         Intent launchIntent = null;
 
-        mDrawerAdapter.getItem(position);
-        switch (position) {
+        int itemId = menuItem.getItemId();
+        switch (itemId) {
             case MENU_ITEM_ACCOUNT: {
                 // SG Cloud connection overrides trakt
                 if (HexagonTools.isSignedIn(this)) {
@@ -151,7 +139,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
                 break;
             }
-            case MENU_ITEM_SHOWS_POSITION:
+            case R.id.navigation_item_shows:
                 if (this instanceof ShowsActivity) {
                     break;
                 }
@@ -160,7 +148,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
-            case MENU_ITEM_LISTS_POSITION:
+            case R.id.navigation_item_lists:
                 if (this instanceof ListsActivity) {
                     break;
                 }
@@ -168,7 +156,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
-            case MENU_ITEM_MOVIES_POSITION:
+            case R.id.navigation_item_movies:
                 if (this instanceof MoviesActivity) {
                     break;
                 }
@@ -176,7 +164,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
-            case MENU_ITEM_STATS_POSITION:
+            case R.id.navigation_item_stats:
                 if (this instanceof StatsActivity) {
                     break;
                 }
@@ -184,15 +172,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
-            case MENU_ITEM_SETTINGS_POSITION:
+            case R.id.navigation_sub_item_settings:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
-            case MENU_ITEM_HELP_POSITION:
+            case R.id.navigation_sub_item_help:
                 launchIntent = new Intent(this, HelpActivity.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
-            case MENU_ITEM_SUBSCRIBE_POSITION:
+            case R.id.navigation_sub_item_unlock:
                 if (Utils.isAmazonVersion()) {
                     launchIntent = new Intent(this, AmazonBillingActivity.class);
                 } else {
@@ -225,7 +213,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * Returns true if the navigation drawer is open.
      */
     public boolean isNavDrawerOpen() {
-        return mDrawerLayout.isDrawerOpen(mDrawerView);
+        return mDrawerLayout.isDrawerOpen(mNavigationView);
     }
 
     public void setDrawerIndicatorEnabled() {
@@ -237,8 +225,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * Highlights the given position in the drawer menu. Activities listed in the drawer should call
      * this in {@link #onStart()}.
      */
-    public void setDrawerSelectedItem(int menuItemPosition) {
-        mDrawerList.setItemChecked(menuItemPosition, true);
+    public void setDrawerSelectedItem(@IdRes int menuItemId) {
+        mNavigationView.getMenu().findItem(menuItemId).setChecked(true);
     }
 
     public void openNavDrawer() {

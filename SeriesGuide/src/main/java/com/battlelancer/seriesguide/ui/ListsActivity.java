@@ -97,7 +97,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_LISTS_POSITION);
+        setDrawerSelectedItem(R.id.navigation_item_lists);
     }
 
     @Override
