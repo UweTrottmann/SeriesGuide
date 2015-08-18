@@ -251,12 +251,6 @@
         <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
     </style>
 
-    <style name="Widget.SeriesGuide.CardGrid.FastScroll">
-        <item name="android:paddingRight">0dp</item>
-        <item name="android:fastScrollAlwaysVisible">true</item>
-        <item name="android:scrollbarStyle">outsideInset</item>
-    </style>
-
     <!-- Easy layouting -->
     <style name="DefaultPadding" />
 

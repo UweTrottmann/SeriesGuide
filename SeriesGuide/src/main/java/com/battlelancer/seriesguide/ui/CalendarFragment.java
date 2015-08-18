@@ -42,12 +42,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.ActivitySlowAdapter;
+import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -55,11 +53,14 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
-public class ActivityFragment extends Fragment implements
+/**
+ * Displays upcoming or recent episodes in a scrollable grid, by default grouped by day.
+ */
+public class CalendarFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
         OnSharedPreferenceChangeListener, AdapterView.OnItemLongClickListener {
 
-    private static final String TAG = "Activity";
+    private static final String TAG = "Calendar";
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -73,12 +74,12 @@ public class ActivityFragment extends Fragment implements
 
     private StickyGridHeadersGridView mGridView;
 
-    private ActivitySlowAdapter mAdapter;
+    private CalendarAdapter mAdapter;
 
     private Handler mHandler;
 
     /**
-     * Data which has to be passed when creating {@link ActivityFragment}. All Bundle extras are
+     * Data which has to be passed when creating {@link CalendarFragment}. All Bundle extras are
      * strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
@@ -92,21 +93,21 @@ public class ActivityFragment extends Fragment implements
         String EMPTY_STRING_ID = "emptyid";
     }
 
-    public interface ActivityType {
+    public interface CalendarType {
 
-        public String UPCOMING = "upcoming";
-        public String RECENT = "recent";
+        String UPCOMING = "upcoming";
+        String RECENT = "recent";
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_activity, container, false);
+        View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        TextView emptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
+        TextView emptyView = (TextView) v.findViewById(R.id.emptyViewCalendar);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
-        mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewUpcoming);
+        mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
         mGridView.setEmptyView(emptyView);
         mGridView.setAreHeadersSticky(false);
 
@@ -118,13 +119,15 @@ public class ActivityFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        mAdapter = new ActivitySlowAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
+        mAdapter = new CalendarAdapter(getActivity(), null, 0);
+        boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+        mAdapter.setIsShowingHeaders(!infiniteScrolling);
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
         mGridView.setOnItemLongClickListener(this);
+        mGridView.setFastScrollEnabled(infiniteScrolling);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
@@ -174,24 +177,24 @@ public class ActivityFragment extends Fragment implements
             return;
         }
 
-        inflater.inflate(R.menu.activity_menu, menu);
+        inflater.inflate(R.menu.calendar_menu, menu);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
-                .setChecked(ActivitySettings.isOnlyFavorites(getActivity()));
+                .setChecked(CalendarSettings.isOnlyFavorites(getActivity()));
         menu.findItem(R.id.menu_nospecials)
                 .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
         menu.findItem(R.id.menu_nowatched)
                 .setChecked(DisplaySettings.isNoWatchedEpisodes(getActivity()));
         menu.findItem(R.id.menu_infinite_scrolling)
-                .setChecked(ActivitySettings.isInfiniteActivity(getActivity()));
+                .setChecked(CalendarSettings.isInfiniteScrolling(getActivity()));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
-            toggleFilterSetting(item, ActivitySettings.KEY_ONLY_FAVORITE_SHOWS);
+            toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS);
             fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
@@ -203,7 +206,7 @@ public class ActivityFragment extends Fragment implements
             fireTrackerEvent("Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_infinite_scrolling) {
-            toggleFilterSetting(item, ActivitySettings.KEY_INFINITE_ACTIVITY);
+            toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING);
             fireTrackerEvent("Infinite Scrolling Toggle");
             return true;
         } else {
@@ -258,21 +261,21 @@ public class ActivityFragment extends Fragment implements
 
         // only display the action appropriate for the items current state
         menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
-        if (EpisodeTools.isWatched(episode.getInt(ActivityQuery.WATCHED))) {
+        if (EpisodeTools.isWatched(episode.getInt(CalendarAdapter.Query.WATCHED))) {
             menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.action_unwatched);
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.action_watched);
         }
-        if (EpisodeTools.isCollected(episode.getInt(ActivityQuery.COLLECTED))) {
+        if (EpisodeTools.isCollected(episode.getInt(CalendarAdapter.Query.COLLECTED))) {
             menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);
         } else {
             menu.add(0, CONTEXT_COLLECTION_ADD_ID, 2, R.string.action_collection_add);
         }
 
-        final int showTvdbId = episode.getInt(ActivityQuery.SHOW_ID);
-        final int episodeTvdbId = episode.getInt(ActivityQuery._ID);
-        final int seasonNumber = episode.getInt(ActivityQuery.SEASON);
-        final int episodeNumber = episode.getInt(ActivityQuery.NUMBER);
+        final int showTvdbId = episode.getInt(CalendarAdapter.Query.SHOW_ID);
+        final int episodeTvdbId = episode.getInt(CalendarAdapter.Query._ID);
+        final int seasonNumber = episode.getInt(CalendarAdapter.Query.SEASON);
+        final int episodeNumber = episode.getInt(CalendarAdapter.Query.NUMBER);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -321,7 +324,7 @@ public class ActivityFragment extends Fragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        boolean isInfiniteScrolling = ActivitySettings.isInfiniteActivity(getActivity());
+        boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
 
         // infinite or 30 days activity stream
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
@@ -331,7 +334,7 @@ public class ActivityFragment extends Fragment implements
         schedulePeriodicDataRefresh(true);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                ActivityQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
+                CalendarAdapter.Query.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -356,20 +359,22 @@ public class ActivityFragment extends Fragment implements
         @Override
         public void run() {
             if (isAdded()) {
-                getLoaderManager().restartLoader(getLoaderId(), null, ActivityFragment.this);
+                getLoaderManager().restartLoader(getLoaderId(), null, CalendarFragment.this);
             }
         }
     };
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
-            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteActivity(getActivity()));
+        if (CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
+            boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+            mAdapter.setIsShowingHeaders(!infiniteScrolling);
+            mGridView.setFastScrollEnabled(infiniteScrolling);
         }
-        if (ActivitySettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
+        if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
                 || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
-                || ActivitySettings.KEY_INFINITE_ACTIVITY.equals(key)) {
+                || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             onRequery();
         }
     }
@@ -385,46 +390,5 @@ public class ActivityFragment extends Fragment implements
 
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
-    }
-
-    public interface ActivityQuery {
-
-        String[] PROJECTION = new String[] {
-                Tables.EPISODES + "." + Episodes._ID,
-                Episodes.TITLE,
-                Episodes.NUMBER,
-                Episodes.SEASON,
-                Episodes.FIRSTAIREDMS,
-                Episodes.WATCHED,
-                Episodes.COLLECTED,
-                Shows.REF_SHOW_ID,
-                Shows.TITLE,
-                Shows.NETWORK,
-                Shows.POSTER
-        };
-
-        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
-                + "<? AND " + Shows.SELECTION_NO_HIDDEN;
-
-        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
-                + Shows.SELECTION_NO_HIDDEN;
-
-        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
-                + Episodes.NUMBER + " ASC";
-
-        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC,"
-                + Episodes.NUMBER + " DESC";
-
-        int _ID = 0;
-        int TITLE = 1;
-        int NUMBER = 2;
-        int SEASON = 3;
-        int RELEASE_TIME_MS = 4;
-        int WATCHED = 5;
-        int COLLECTED = 6;
-        int SHOW_ID = 7;
-        int SHOW_TITLE = 8;
-        int SHOW_NETWORK = 9;
-        int SHOW_POSTER = 10;
     }
 }

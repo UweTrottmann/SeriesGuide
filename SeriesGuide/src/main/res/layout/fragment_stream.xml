@@ -27,7 +27,7 @@
 
         <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
             android:id="@+id/gridViewStream"
-            style="@style/Widget.SeriesGuide.CardGrid.FastScroll"
+            style="@style/Widget.SeriesGuide.CardGrid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="@dimen/showgrid_columnWidth"
