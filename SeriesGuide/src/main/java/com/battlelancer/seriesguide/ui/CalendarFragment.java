@@ -120,12 +120,14 @@ public class CalendarFragment extends Fragment implements
 
         // setup adapter
         mAdapter = new CalendarAdapter(getActivity(), null, 0);
-        mAdapter.setIsShowingHeaders(!CalendarSettings.isInfiniteScrolling(getActivity()));
+        boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+        mAdapter.setIsShowingHeaders(!infiniteScrolling);
 
         // setup grid view
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
         mGridView.setOnItemLongClickListener(this);
+        mGridView.setFastScrollEnabled(infiniteScrolling);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
@@ -365,7 +367,9 @@ public class CalendarFragment extends Fragment implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
-            mAdapter.setIsShowingHeaders(!CalendarSettings.isInfiniteScrolling(getActivity()));
+            boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+            mAdapter.setIsShowingHeaders(!infiniteScrolling);
+            mGridView.setFastScrollEnabled(infiniteScrolling);
         }
         if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
