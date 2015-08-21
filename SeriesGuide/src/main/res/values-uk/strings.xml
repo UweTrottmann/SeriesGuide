@@ -166,7 +166,7 @@
   <string name="released_today">Вийшли сьогодні</string>
   <string name="friends_recently">Ваші друзі на trakt</string>
   <string name="now_empty">Немає подій. Перегляньте наступні серіали!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Ніщо не йде. Подивись фільми!</string>
   <string name="upcoming">Незабаром</string>
   <string name="recent">Нещодавно</string>
   <string name="friends">Друзі</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Розблокувати усі можливості</string>
   <string name="billing_action_subscribe">Підписатись</string>
   <string name="billing_action_pass">Отримати X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/рік, спробуй безкоштовно</string>
   <string name="billing_price_pass">Одноразове замовлення</string>
   <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
   <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Увійдіть у ваш Amazon аккаунт!</string>
   <string name="subscription_unavailable">Підписка тимчасово не доступна.</string>
   <string name="subscription_failed">Купівля не завершена.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass наразі недоступний.</string>
   <string name="add_to_homescreen">Ярлик</string>
   <string name="search_within_show">Пошук у %s</string>
   <string name="web_search">Веб пошук</string>
