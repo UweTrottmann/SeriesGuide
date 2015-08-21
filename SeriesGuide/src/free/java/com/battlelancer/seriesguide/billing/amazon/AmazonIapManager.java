@@ -24,7 +24,7 @@ import android.content.Context;
  */
 public class AmazonIapManager {
 
-    public static void setup(Context context) {
+    public static void setup(@SuppressWarnings("UnusedParameters") Context context) {
         // no op
     }
 
@@ -44,7 +44,7 @@ public class AmazonIapManager {
         // no op
     }
 
-    public void validateSubscription(Activity activity) {
+    public void validateSupporterState(@SuppressWarnings("UnusedParameters") Activity activity) {
         // no op
     }
 }

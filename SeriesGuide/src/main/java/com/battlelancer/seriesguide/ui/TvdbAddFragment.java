@@ -33,8 +33,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
@@ -50,8 +50,8 @@ public class TvdbAddFragment extends AddFragment {
 
     private static final String KEY_QUERY = "search-query";
 
-    @InjectView(R.id.buttonAddTvdbClear) ImageButton clearButton;
-    @InjectView(R.id.editTextAddTvdbSearch) AutoCompleteTextView searchBox;
+    @Bind(R.id.buttonAddTvdbClear) ImageButton clearButton;
+    @Bind(R.id.editTextAddTvdbSearch) AutoCompleteTextView searchBox;
 
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
@@ -60,7 +60,7 @@ public class TvdbAddFragment extends AddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         clearButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -73,7 +73,8 @@ public class TvdbAddFragment extends AddFragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                        || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     search();
                     return true;
                 }

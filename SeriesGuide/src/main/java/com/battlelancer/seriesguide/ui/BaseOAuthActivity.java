@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -27,7 +28,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import javax.annotation.Nullable;
 import timber.log.Timber;
 
 /**

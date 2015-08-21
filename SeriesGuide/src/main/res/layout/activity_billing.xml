@@ -43,7 +43,8 @@
                     android:layout_below="@+id/textViewBillingTitle"
                     android:paddingBottom="@dimen/inline_padding"
                     android:text="@string/upgrade_success"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
+                    android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewBillingDescription"

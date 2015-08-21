@@ -5,6 +5,54 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 24 *(2015-08-21)*
+-----------------------------
+
+* Now tab for movies. Displays your recently watched movies on trakt, as well as the last watched
+  movie of your trakt friends.
+* Do not load images over metered connections if "Images only over Wi-Fi" is enabled.
+
+#### 24 *(2015-08-21)*
+
+* TWEAK More readable color for default theme navigation items.
+* TWEAK Get rid of fast scrollers in most places.
+* NOTICE Latest translations from crowdin.
+
+#### 24-beta4 *(2015-08-15)*
+
+* FEATURE Now tab for movies. Displays your recently watched movies on trakt, as well as the last
+  watched movie of your trakt friends.
+* FIX Now tab correctly shows content while refreshing.
+* NOTICE Reduction of app size by removing more unused code from libraries. Let me know if anything breaks!
+* NOTICE Latest translations from crowdin.
+
+#### 24-beta3 *(2015-07-05)*
+
+* TWEAK Do not load images over metered connections if "Images only over Wi-Fi" is enabled. Update
+  setting description.
+* FIX Do only search once when pressing enter in show/movie search.
+* FIX Fixes from release 23.1.1.
+* NOTICE Updated SeriesGuide Cloud connector libraries. Let me know of any issues.
+* NOTICE Updated Extension API: now sending absolute episode number.
+* NOTICE Latest translations from crowdin.
+
+#### 24-beta2 *(2015-05-11)*
+
+* TWEAK SG pushes the release time by a day if a show releases between 12AM and 1AM now only or US
+  shows. E.g. US late-night shows are typically listed in TheTVDB like "airing Monday night, 12:30AM",
+  which is actually Tuesday when looking at the date. This is not common for e.g. Japanese anime,
+  hence the limiting to US shows.
+* TWEAK Display TMDb rating vote count for movies.
+* FIX Do not fail merging shows with SeriesGuide Cloud if a show does not exist any longer on TheTVDB.
+  This would cause a full show merge running repeatedly.
+* NOTICE Latest translations from crowdin.
+
+#### 24-beta1 *(2015-04-27)*
+
+* TWEAK Better material design on older versions of Android, especially in dialogs.
+* TWEAK Nav drawer highlight now colors text and icon.
+* NOTICE Latest translations from crowdin.
+
 Version 23.1 *(2015-05-14)*
 -------------------------
 

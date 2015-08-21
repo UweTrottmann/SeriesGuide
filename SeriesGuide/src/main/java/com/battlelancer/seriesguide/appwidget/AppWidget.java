@@ -30,9 +30,9 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.adapters.CalendarAdapter;
+import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.battlelancer.seriesguide.ui.ActivityFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -99,7 +99,7 @@ public class AppWidget extends AppWidgetProvider {
 
             // get upcoming shows (name and next episode text)
             final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context,
-                    ActivitySettings.isOnlyFavorites(context), false);
+                    CalendarSettings.isOnlyFavorites(context), false);
 
             if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
                 // no next episodes exist
@@ -118,15 +118,15 @@ public class AppWidget extends AppWidgetProvider {
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
                     int seasonNumber = upcomingEpisodes.getInt(
-                            ActivityFragment.ActivityQuery.SEASON);
+                            CalendarAdapter.Query.SEASON);
                     int episodeNumber = upcomingEpisodes.getInt(
-                            ActivityFragment.ActivityQuery.NUMBER);
-                    String title = upcomingEpisodes.getString(ActivityFragment.ActivityQuery.TITLE);
+                            CalendarAdapter.Query.NUMBER);
+                    String title = upcomingEpisodes.getString(CalendarAdapter.Query.TITLE);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     Date actualRelease = TimeTools.applyUserOffset(context,
-                            upcomingEpisodes.getLong(ActivityFragment.ActivityQuery.RELEASE_TIME_MS)
+                            upcomingEpisodes.getLong(CalendarAdapter.Query.RELEASE_TIME_MS)
                     );
 
                     // "in 13 mins (Fri)"
@@ -139,7 +139,7 @@ public class AppWidget extends AppWidgetProvider {
                     // absolute release time and network (if any)
                     String releaseTime = TimeTools.formatToLocalTime(context, actualRelease);
                     String network = upcomingEpisodes.getString(
-                            ActivityFragment.ActivityQuery.SHOW_NETWORK);
+                            CalendarAdapter.Query.SHOW_NETWORK);
                     if (!TextUtils.isEmpty(network)) {
                         releaseTime += " " + network;
                     }
@@ -147,11 +147,11 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show title
                     item.setTextViewText(R.id.textViewWidgetShow,
-                            upcomingEpisodes.getString(ActivityFragment.ActivityQuery.SHOW_TITLE));
+                            upcomingEpisodes.getString(CalendarAdapter.Query.SHOW_TITLE));
 
                     // show poster
                     String posterPath = upcomingEpisodes.getString(
-                            ActivityFragment.ActivityQuery.SHOW_POSTER);
+                            CalendarAdapter.Query.SHOW_POSTER);
                     try {
                         Bitmap poster = ServiceUtils.loadWithPicasso(this,
                                 TheTVDB.buildPosterUrl(posterPath))

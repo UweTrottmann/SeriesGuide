@@ -22,35 +22,45 @@ import java.util.List;
  * Holder object for the customer's InAppPurchase data.
  */
 public class UserIapData {
-    private List<SubscriptionRecord> subscriptionRecords;
+    private List<PurchaseRecord> purchaseRecords;
 
-    private boolean subsActive;
-    private long subsFrom;
+    private boolean onePurchaseActive;
+    private long currentPurchaseValidFrom;
     private final String amazonUserId;
     private final String amazonMarketplace;
 
     /**
-     * Replaces the current subscriptions and updates the current subscription status.
+     * Replaces the current purchases and updates the current supporter status.
      */
-    public void setSubscriptionRecords(final List<SubscriptionRecord> subscriptionRecords) {
-        this.subscriptionRecords = subscriptionRecords;
-        reloadSubscriptionStatus();
+    public void setPurchaseRecords(final List<PurchaseRecord> purchaseRecords) {
+        this.purchaseRecords = purchaseRecords;
+        reloadSupporterStatus();
     }
 
     public String getAmazonUserId() {
         return amazonUserId;
     }
 
+    /**
+     * Get the Amazon market place the current user is signed into.
+     */
     public String getAmazonMarketplace() {
         return amazonMarketplace;
     }
 
-    public boolean isSubsActiveCurrently() {
-        return subsActive;
+    /**
+     * If there is an active purchase, returns the date that purchase is valid from.
+     */
+    public long getActivePurchaseValidFrom() {
+        return currentPurchaseValidFrom;
     }
 
-    public long getCurrentSubsFrom() {
-        return subsFrom;
+    /**
+     * Returns if the user has a valid purchase (either active subscription or entitlement) and
+     * should get access to all features of the app.
+     */
+    public boolean hasActivePurchase() {
+        return onePurchaseActive;
     }
 
     public UserIapData(final String amazonUserId, final String amazonMarketplace) {
@@ -58,13 +68,12 @@ public class UserIapData {
         this.amazonMarketplace = amazonMarketplace;
     }
 
-    private void reloadSubscriptionStatus() {
-        this.subsActive = false;
-        this.subsFrom = 0;
-        for (final SubscriptionRecord record : subscriptionRecords) {
+    private void reloadSupporterStatus() {
+        this.onePurchaseActive = false;
+        for (final PurchaseRecord record : purchaseRecords) {
             if (record.isActiveNow()) {
-                this.subsActive = true;
-                this.subsFrom = record.getFrom();
+                onePurchaseActive = true;
+                currentPurchaseValidFrom = record.getValidFrom();
                 return;
             }
         }

@@ -18,9 +18,9 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TraktOAuthSettings {
 
@@ -52,7 +52,7 @@ public class TraktOAuthSettings {
      * @param expiresIn The trakt access token expires duration in seconds.
      * @return Returns true if the new values were successfully written to persistent storage.
      */
-    public static boolean storeRefreshData(Context context, @Nonnull String refreshToken,
+    public static boolean storeRefreshData(Context context, @NonNull String refreshToken,
             long expiresIn) {
         return getSettings(context).edit()
                 .putString(KEY_REFRESH_TOKEN, refreshToken)

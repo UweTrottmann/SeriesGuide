@@ -46,8 +46,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -105,33 +105,33 @@ public class OverviewFragment extends Fragment implements
     private ImageView mBackgroundImage;
     private ImageView mEpisodeImage;
 
-    @InjectView(R.id.episodeTitle) TextView textEpisodeTitle;
-    @InjectView(R.id.episodeTime) TextView textEpisodeTime;
-    @InjectView(R.id.episodeInfo) TextView textEpisodeNumbers;
-    @InjectView(R.id.episode_primary_container) View containerEpisodePrimary;
-    @InjectView(R.id.episode_meta_container) View containerEpisodeMeta;
-    @InjectView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
-    @InjectView(R.id.progress_container) View containerProgress;
-    @InjectView(R.id.containerRatings) View containerRatings;
-    @InjectView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @InjectView(R.id.buttonEpisodeWatched) Button buttonWatch;
-    @InjectView(R.id.buttonEpisodeCollected) Button buttonCollect;
-    @InjectView(R.id.buttonEpisodeSkip) Button buttonSkip;
+    @Bind(R.id.episodeTitle) TextView textEpisodeTitle;
+    @Bind(R.id.episodeTime) TextView textEpisodeTime;
+    @Bind(R.id.episodeInfo) TextView textEpisodeNumbers;
+    @Bind(R.id.episode_primary_container) View containerEpisodePrimary;
+    @Bind(R.id.episode_meta_container) View containerEpisodeMeta;
+    @Bind(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
+    @Bind(R.id.progress_container) View containerProgress;
+    @Bind(R.id.containerRatings) View containerRatings;
+    @Bind(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @Bind(R.id.buttonEpisodeWatched) Button buttonWatch;
+    @Bind(R.id.buttonEpisodeCollected) Button buttonCollect;
+    @Bind(R.id.buttonEpisodeSkip) Button buttonSkip;
 
-    @InjectView(R.id.TextViewEpisodeDescription) TextView textDescription;
-    @InjectView(R.id.labelDvd) View labelDvdNumber;
-    @InjectView(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
-    @InjectView(R.id.labelGuestStars) View labelGuestStars;
-    @InjectView(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
-    @InjectView(R.id.textViewRatingsValue) TextView textRating;
-    @InjectView(R.id.textViewRatingsVotes) TextView textRatingVotes;
-    @InjectView(R.id.textViewRatingsUser) TextView textUserRating;
+    @Bind(R.id.TextViewEpisodeDescription) TextView textDescription;
+    @Bind(R.id.labelDvd) View labelDvdNumber;
+    @Bind(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
+    @Bind(R.id.labelGuestStars) View labelGuestStars;
+    @Bind(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
+    @Bind(R.id.textViewRatingsValue) TextView textRating;
+    @Bind(R.id.textViewRatingsVotes) TextView textRatingVotes;
+    @Bind(R.id.textViewRatingsUser) TextView textUserRating;
 
-    @InjectView(R.id.buttonShowInfoIMDB) View buttonImdb;
-    @InjectView(R.id.buttonTVDB) View buttonTvdb;
-    @InjectView(R.id.buttonTrakt) View buttonTrakt;
-    @InjectView(R.id.buttonWebSearch) View buttonWebSearch;
-    @InjectView(R.id.buttonShouts) View buttonComments;
+    @Bind(R.id.buttonShowInfoIMDB) View buttonImdb;
+    @Bind(R.id.buttonTVDB) View buttonTvdb;
+    @Bind(R.id.buttonTrakt) View buttonTrakt;
+    @Bind(R.id.buttonWebSearch) View buttonWebSearch;
+    @Bind(R.id.buttonShouts) View buttonComments;
 
     /**
      * All values have to be integer.
@@ -156,7 +156,7 @@ public class OverviewFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
@@ -275,7 +275,7 @@ public class OverviewFragment extends Fragment implements
         // fragment is destroyed.
         ServiceUtils.getPicasso(getActivity()).cancelRequest(mEpisodeImage);
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

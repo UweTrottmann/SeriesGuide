@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -56,8 +58,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -219,7 +219,7 @@ public class EpisodeTools {
     /**
      * Run the task on the thread pool.
      */
-    private static void execute(@Nonnull Context context, @Nonnull FlagType type) {
+    private static void execute(@NonNull Context context, @NonNull FlagType type) {
         AndroidUtils.executeOnPool(
                 new EpisodeFlagTask(context.getApplicationContext(), type)
         );
@@ -1062,7 +1062,7 @@ public class EpisodeTools {
         }
 
         private static int uploadToHexagon(Context context, int showTvdbId,
-                @Nonnull List<Episode> batch) {
+                @NonNull List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
             uploadWrapper.setShowTvdbId(showTvdbId);
 

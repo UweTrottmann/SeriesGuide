@@ -38,8 +38,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -89,33 +89,33 @@ public class ShowFragment extends Fragment {
 
     private TraktRatingsTask mTraktTask;
 
-    @InjectView(R.id.textViewShowStatus) TextView mTextViewStatus;
-    @InjectView(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
-    @InjectView(R.id.textViewShowRuntime) TextView mTextViewRuntime;
-    @InjectView(R.id.textViewShowNetwork) TextView mTextViewNetwork;
-    @InjectView(R.id.textViewShowOverview) TextView mTextViewOverview;
-    @InjectView(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
-    @InjectView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
-    @InjectView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
-    @InjectView(R.id.textViewShowGenres) TextView mTextViewGenres;
-    @InjectView(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
-    @InjectView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
-    @InjectView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
-    @InjectView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
+    @Bind(R.id.textViewShowStatus) TextView mTextViewStatus;
+    @Bind(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
+    @Bind(R.id.textViewShowRuntime) TextView mTextViewRuntime;
+    @Bind(R.id.textViewShowNetwork) TextView mTextViewNetwork;
+    @Bind(R.id.textViewShowOverview) TextView mTextViewOverview;
+    @Bind(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
+    @Bind(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
+    @Bind(R.id.textViewShowContentRating) TextView mTextViewContentRating;
+    @Bind(R.id.textViewShowGenres) TextView mTextViewGenres;
+    @Bind(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
+    @Bind(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
+    @Bind(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
+    @Bind(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @InjectView(R.id.buttonShowInfoIMDB) View mButtonImdb;
-    @InjectView(R.id.buttonShowFavorite) Button mButtonFavorite;
-    @InjectView(R.id.buttonShowShare) Button mButtonShare;
-    @InjectView(R.id.buttonShowShortcut) Button mButtonShortcut;
-    @InjectView(R.id.containerRatings) View mButtonRate;
-    @InjectView(R.id.buttonTVDB) View mButtonTvdb;
-    @InjectView(R.id.buttonTrakt) View mButtonTrakt;
-    @InjectView(R.id.buttonWebSearch) View mButtonWebSearch;
-    @InjectView(R.id.buttonShouts) View mButtonComments;
+    @Bind(R.id.buttonShowInfoIMDB) View mButtonImdb;
+    @Bind(R.id.buttonShowFavorite) Button mButtonFavorite;
+    @Bind(R.id.buttonShowShare) Button mButtonShare;
+    @Bind(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @Bind(R.id.containerRatings) View mButtonRate;
+    @Bind(R.id.buttonTVDB) View mButtonTvdb;
+    @Bind(R.id.buttonTrakt) View mButtonTrakt;
+    @Bind(R.id.buttonWebSearch) View mButtonWebSearch;
+    @Bind(R.id.buttonShouts) View mButtonComments;
 
-    @InjectView(R.id.containerShowCast) View mCastView;
+    @Bind(R.id.containerShowCast) View mCastView;
     private LinearLayout mCastContainer;
-    @InjectView(R.id.containerShowCrew) View mCrewView;
+    @Bind(R.id.containerShowCrew) View mCrewView;
     private LinearLayout mCrewContainer;
 
     private String mShowTitle;
@@ -125,7 +125,7 @@ public class ShowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // share button
         mButtonShare.setOnClickListener(new OnClickListener() {
@@ -180,7 +180,7 @@ public class ShowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

@@ -62,6 +62,7 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
                     .tvdbId(mEpisodeTvdbId)
                     .title(mQuery.getString(Query.TITLE))
                     .number(mQuery.getInt(Query.NUMBER))
+                    .numberAbsolute(mQuery.getInt(Query.NUMBER_ABSOLUTE))
                     .season(mQuery.getInt(Query.SEASON))
                     .imdbId(mQuery.getString(Query.IMDB_ID))
                     .showTvdbId(mQuery.getInt(Query.SHOW_TVDB_ID))
@@ -86,15 +87,24 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
     }
 
     private interface Query {
-        String[] PROJECTION = { Episodes.TITLE, Episodes.NUMBER, Episodes.SEASON, Episodes.IMDBID,
-                Shows.REF_SHOW_ID, Shows.TITLE, Shows.IMDBID };
+        String[] PROJECTION = {
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.SEASON,
+                Episodes.IMDBID,
+                Shows.REF_SHOW_ID,
+                Shows.TITLE,
+                Shows.IMDBID
+        };
 
         int TITLE = 0;
         int NUMBER = 1;
-        int SEASON = 2;
-        int IMDB_ID = 3;
-        int SHOW_TVDB_ID = 4;
-        int SHOW_TITLE = 5;
-        int SHOW_IMDB_ID = 6;
+        int NUMBER_ABSOLUTE = 2;
+        int SEASON = 3;
+        int IMDB_ID = 4;
+        int SHOW_TVDB_ID = 5;
+        int SHOW_TITLE = 6;
+        int SHOW_IMDB_ID = 7;
     }
 }

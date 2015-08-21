@@ -28,6 +28,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -167,7 +168,7 @@ public class Utils {
         // debug builds, installed X Pass or subscription unlock all features
         // Amazon version only supports X pass as in-app purchase, so skip check
         return (!isAmazonVersion() && hasXpass(context))
-                || AdvancedSettings.getLastSubscriptionState(context);
+                || AdvancedSettings.getLastSupporterState(context);
     }
 
     /**
@@ -486,27 +487,28 @@ public class Utils {
     }
 
     /**
-     * Returns true if there is an active connection which is approved by the user for large data
-     * downloads (e.g. images).
-     *
-     * @param showOfflineToast If true, displays a toast asking the user to connect to a network.
+     * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
+     * the user did not approve it for large data downloads (e.g. images).
      */
-    public static boolean isAllowedLargeDataConnection(Context context, boolean showOfflineToast) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            isConnected = AndroidUtils.isWifiConnected(context);
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                // better: only allow large data downloads on non-metered connections
+                ConnectivityManager connectivityManager
+                        = (ConnectivityManager) context.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+                isConnected = !connectivityManager.isActiveNetworkMetered();
+            } else {
+                // only allow large data downloads on WiFi
+                isConnected = AndroidUtils.isWifiConnected(context);
+            }
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
-        }
-
-        // display optional offline toast
-        if (showOfflineToast && !isConnected) {
-            Toast.makeText(context,
-                    largeDataOverWifiOnly ? R.string.offline_no_wifi : R.string.offline,
-                    Toast.LENGTH_LONG).show();
         }
 
         return isConnected;

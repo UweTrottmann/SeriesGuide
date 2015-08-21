@@ -65,7 +65,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.Nonnull;
+import android.support.annotation.NonNull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -431,7 +431,7 @@ public class MovieTools {
          * <p> Adds movie tmdb ids to the respective collection or watchlist set.
          */
         public static boolean fromHexagon(Context context,
-                @Nonnull Set<Integer> newCollectionMovies, @Nonnull Set<Integer> newWatchlistMovies,
+                @NonNull Set<Integer> newCollectionMovies, @NonNull Set<Integer> newWatchlistMovies,
                 boolean hasMergedMovies) {
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies;
             boolean hasMoreMovies = true;
@@ -710,9 +710,9 @@ public class MovieTools {
          * @param newCollectionMovies Movie TMDB ids to add to the collection.
          * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
          */
-        public static UpdateResult addMovies(@Nonnull Context context,
-                @Nonnull Set<Integer> newCollectionMovies,
-                @Nonnull Set<Integer> newWatchlistMovies) {
+        public static UpdateResult addMovies(@NonNull Context context,
+                @NonNull Set<Integer> newCollectionMovies,
+                @NonNull Set<Integer> newWatchlistMovies) {
             Timber.d("addMovies: " + newCollectionMovies.size() + " to collection, "
                     + newWatchlistMovies.size() + " to watchlist");
 

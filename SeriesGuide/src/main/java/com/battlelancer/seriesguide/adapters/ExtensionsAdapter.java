@@ -26,8 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
@@ -171,13 +171,13 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     }
 
     static class ViewHolder {
-        @InjectView(R.id.imageViewItemExtensionIcon) ImageView icon;
-        @InjectView(R.id.textViewItemExtensionTitle) TextView title;
-        @InjectView(R.id.textViewItemExtensionDescription) TextView description;
-        @InjectView(R.id.imageViewItemExtensionSettings) ImageView settings;
+        @Bind(R.id.imageViewItemExtensionIcon) ImageView icon;
+        @Bind(R.id.textViewItemExtensionTitle) TextView title;
+        @Bind(R.id.textViewItemExtensionDescription) TextView description;
+        @Bind(R.id.imageViewItemExtensionSettings) ImageView settings;
 
         public ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 }

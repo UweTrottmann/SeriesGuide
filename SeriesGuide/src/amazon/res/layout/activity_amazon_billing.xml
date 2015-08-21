@@ -42,29 +42,30 @@
                 android:textAppearance="@style/TextAppearance.Headline" />
 
             <TextView
-                android:id="@+id/textViewAmazonBillingExisting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingTitle"
-                android:paddingBottom="@dimen/inline_padding"
-                tools:text="@string/upgrade_success"
-                android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
-
-            <TextView
                 android:id="@+id/textViewAmazonBillingDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingExisting"
+                android:layout_below="@+id/textViewAmazonBillingTitle"
                 android:text="@string/upgrade_description"
                 android:textAppearance="@style/TextAppearance.Body" />
+
+            <TextView
+                android:id="@+id/textViewAmazonBillingExisting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAmazonBillingDescription"
+                android:paddingTop="@dimen/large_padding"
+                tools:text="@string/upgrade_success"
+                android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/buttonAmazonBillingSubscribe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingDescription"
+                android:layout_below="@+id/textViewAmazonBillingExisting"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginTop="@dimen/default_padding"
                 android:enabled="false"
                 android:text="@string/billing_action_subscribe" />
 
@@ -77,13 +78,38 @@
                 android:layout_alignBottom="@+id/buttonAmazonBillingSubscribe" />
 
             <TextView
-                android:id="@+id/textViewAmazonBillingPrice"
+                android:id="@+id/textViewAmazonBillingSubPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="250dp"
                 android:layout_below="@+id/buttonAmazonBillingSubscribe"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
+                android:gravity="center_horizontal"
                 tools:text="1.99 €/year, 30 day trial"
+                android:textAppearance="@style/TextAppearance.Body.Highlight"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/buttonAmazonBillingGetPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAmazonBillingSubPrice"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/large_padding"
+                android:enabled="false"
+                android:text="@string/billing_action_pass" />
+
+            <TextView
+                android:id="@+id/textViewAmazonBillingPricePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:layout_below="@+id/buttonAmazonBillingGetPass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/inline_padding"
+                android:gravity="center_horizontal"
+                android:text="@string/billing_price_pass"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
 
@@ -92,7 +118,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingPrice"
+                android:layout_below="@+id/textViewAmazonBillingPricePass"
                 android:layout_marginTop="@dimen/large_padding"
                 android:layout_centerHorizontal="true"
                 android:text="@string/billing_learn_more" />

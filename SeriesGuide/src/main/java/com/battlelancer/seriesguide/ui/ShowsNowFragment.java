@@ -38,14 +38,14 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
-import com.battlelancer.seriesguide.loaders.TraktFriendsHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktUserHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktUserEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.NowSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -58,18 +58,18 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
- * Shows recently watched episodes, today's releases and recent episodes from friends (if connected
- * to trakt).
+ * Displays recently watched episodes, today's releases and recent episodes from friends (if
+ * connected to trakt).
  */
-public class NowFragment extends Fragment {
+public class ShowsNowFragment extends Fragment {
 
-    @InjectView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
 
-    @InjectView(R.id.recyclerViewNow) RecyclerView recyclerView;
-    @InjectView(R.id.emptyViewNow) TextView emptyView;
-    @InjectView(R.id.containerSnackbar) View snackbar;
-    @InjectView(R.id.textViewSnackbar) TextView snackbarText;
-    @InjectView(R.id.buttonSnackbar) Button snackbarButton;
+    @Bind(R.id.recyclerViewNow) RecyclerView recyclerView;
+    @Bind(R.id.emptyViewNow) TextView emptyView;
+    @Bind(R.id.containerSnackbar) View snackbar;
+    @Bind(R.id.textViewSnackbar) TextView snackbarText;
+    @Bind(R.id.buttonSnackbar) Button snackbarButton;
 
     private NowAdapter adapter;
     private boolean isLoadingReleasedToday;
@@ -80,7 +80,7 @@ public class NowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -94,6 +94,8 @@ public class NowFragment extends Fragment {
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
+
+        emptyView.setText(R.string.now_empty);
 
         showError(false, 0);
         snackbarButton.setText(R.string.refresh);
@@ -216,7 +218,7 @@ public class NowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -368,7 +370,9 @@ public class NowFragment extends Fragment {
 
             // more history link?
             if (item.type == NowAdapter.ItemType.MORE_LINK) {
-                startActivity(new Intent(getActivity(), HistoryActivity.class));
+                startActivity(new Intent(getActivity(), HistoryActivity.class).putExtra(
+                        HistoryActivity.InitBundle.HISTORY_TYPE,
+                        HistoryActivity.DISPLAY_EPISODE_HISTORY));
                 return;
             }
 
@@ -452,16 +456,17 @@ public class NowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktUserHistoryLoader.Result> recentlyTraktCallbacks
-            = new LoaderManager.LoaderCallbacks<TraktUserHistoryLoader.Result>() {
+    private LoaderManager.LoaderCallbacks<TraktUserEpisodeHistoryLoader.Result>
+            recentlyTraktCallbacks
+            = new LoaderManager.LoaderCallbacks<TraktUserEpisodeHistoryLoader.Result>() {
         @Override
-        public Loader<TraktUserHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktUserHistoryLoader(getActivity());
+        public Loader<TraktUserEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new TraktUserEpisodeHistoryLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktUserHistoryLoader.Result> loader,
-                TraktUserHistoryLoader.Result data) {
+        public void onLoadFinished(Loader<TraktUserEpisodeHistoryLoader.Result> loader,
+                TraktUserEpisodeHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -472,7 +477,7 @@ public class NowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktUserHistoryLoader.Result> loader) {
+        public void onLoaderReset(Loader<TraktUserEpisodeHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }
@@ -485,7 +490,7 @@ public class NowFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new TraktFriendsHistoryLoader(getActivity());
+            return new TraktFriendsEpisodeHistoryLoader(getActivity());
         }
 
         @Override

@@ -211,25 +211,25 @@ public class ShowsActivity extends BaseTopActivity implements
         }
 
         // now tab
-        mTabsAdapter.addTab(R.string.now_tab, NowFragment.class, null);
+        mTabsAdapter.addTab(R.string.now_tab, ShowsNowFragment.class, null);
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(ActivityFragment.InitBundle.TYPE,
-                ActivityFragment.ActivityType.UPCOMING);
-        argsUpcoming.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
-        argsUpcoming.putInt(ActivityFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
-        argsUpcoming.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
-        mTabsAdapter.addTab(R.string.upcoming, ActivityFragment.class, argsUpcoming);
+        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE,
+                CalendarFragment.CalendarType.UPCOMING);
+        argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
+        argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
+        argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
+        mTabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
         argsRecent
-                .putString(ActivityFragment.InitBundle.TYPE, ActivityFragment.ActivityType.RECENT);
-        argsRecent.putString(ActivityFragment.InitBundle.ANALYTICS_TAG, "Recent");
-        argsRecent.putInt(ActivityFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
-        argsRecent.putInt(ActivityFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
-        mTabsAdapter.addTab(R.string.recent, ActivityFragment.class, argsRecent);
+                .putString(CalendarFragment.InitBundle.TYPE, CalendarFragment.CalendarType.RECENT);
+        argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
+        argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
+        argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
+        mTabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
 
         // display new tabs
         mTabsAdapter.notifyTabsChanged();
@@ -327,7 +327,7 @@ public class ShowsActivity extends BaseTopActivity implements
             // update Amazon IAP
             AmazonIapManager.get().activate();
             AmazonIapManager.get().requestUserDataAndPurchaseUpdates();
-            AmazonIapManager.get().validateSubscription(this);
+            AmazonIapManager.get().validateSupporterState(this);
         }
 
         // update next episodes

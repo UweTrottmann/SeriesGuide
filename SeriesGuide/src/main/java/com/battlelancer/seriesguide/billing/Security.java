@@ -16,7 +16,6 @@
 package com.battlelancer.seriesguide.billing;
 
 import android.text.TextUtils;
-
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;

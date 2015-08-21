@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -38,9 +39,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
@@ -95,46 +95,46 @@ public class MovieDetailsFragment extends Fragment {
 
     private String mImageBaseUrl;
 
-    @InjectView(R.id.contentContainerMovie) ViewGroup mContentContainer;
-    @Optional @InjectView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
+    @Bind(R.id.contentContainerMovie) ViewGroup mContentContainer;
+    @Nullable @Bind(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
 
-    @InjectView(R.id.textViewMovieTitle) TextView mMovieTitle;
-    @InjectView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
-    @InjectView(R.id.textViewMovieDescription) TextView mMovieDescription;
-    @InjectView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
-    @InjectView(R.id.textViewMovieGenres) TextView mMovieGenres;
+    @Bind(R.id.textViewMovieTitle) TextView mMovieTitle;
+    @Bind(R.id.textViewMovieDate) TextView mMovieReleaseDate;
+    @Bind(R.id.textViewMovieDescription) TextView mMovieDescription;
+    @Bind(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+    @Bind(R.id.textViewMovieGenres) TextView mMovieGenres;
 
-    @InjectView(R.id.containerMovieButtons) View mButtonContainer;
-    @InjectView(R.id.buttonMovieCheckIn) Button mCheckinButton;
-    @InjectView(R.id.buttonMovieWatched) Button mWatchedButton;
-    @InjectView(R.id.buttonMovieCollected) Button mCollectedButton;
-    @InjectView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
+    @Bind(R.id.containerMovieButtons) View mButtonContainer;
+    @Bind(R.id.buttonMovieCheckIn) Button mCheckinButton;
+    @Bind(R.id.buttonMovieWatched) Button mWatchedButton;
+    @Bind(R.id.buttonMovieCollected) Button mCollectedButton;
+    @Bind(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
-    @InjectView(R.id.containerRatings) View mRatingsContainer;
-    @InjectView(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
-    @InjectView(R.id.textViewRatingsTmdbVotes) TextView mRatingsTmdbVotes;
-    @InjectView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
-    @InjectView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
-    @InjectView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
-    @InjectView(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
+    @Bind(R.id.containerRatings) View mRatingsContainer;
+    @Bind(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
+    @Bind(R.id.textViewRatingsTmdbVotes) TextView mRatingsTmdbVotes;
+    @Bind(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
+    @Bind(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
+    @Bind(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
+    @Bind(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
 
-    @InjectView(R.id.containerMovieCast) View mCastView;
+    @Bind(R.id.containerMovieCast) View mCastView;
     TextView mCastLabel;
     LinearLayout mCastContainer;
 
-    @InjectView(R.id.containerMovieCrew) View mCrewView;
+    @Bind(R.id.containerMovieCrew) View mCrewView;
     TextView mCrewLabel;
     LinearLayout mCrewContainer;
 
-    @InjectView(R.id.buttonMovieComments) Button mCommentsButton;
-    @InjectView(R.id.progressBar) View mProgressBar;
+    @Bind(R.id.buttonMovieComments) Button mCommentsButton;
+    @Bind(R.id.progressBar) View mProgressBar;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movie, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -232,7 +232,7 @@ public class MovieDetailsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

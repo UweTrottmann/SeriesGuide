@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
-import javax.annotation.Nonnull;
+import android.support.annotation.NonNull;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -160,7 +160,7 @@ public class TraktCredentials {
      * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
      * an exception.
      */
-    public synchronized void setCredentials(@Nonnull String username, @Nonnull String accessToken) {
+    public synchronized void setCredentials(@NonNull String username, @NonNull String accessToken) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(accessToken)) {
             throw new IllegalArgumentException("Username or access token is null or empty.");
         }

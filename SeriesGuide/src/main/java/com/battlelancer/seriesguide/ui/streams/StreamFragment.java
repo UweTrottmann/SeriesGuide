@@ -32,8 +32,8 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
@@ -49,10 +49,10 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 public abstract class StreamFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
-    @InjectView(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout mContentContainer;
+    @Bind(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout mContentContainer;
 
-    @InjectView(R.id.gridViewStream) StickyGridHeadersGridView mGridView;
-    @InjectView(R.id.emptyViewStream) TextView mEmptyView;
+    @Bind(R.id.gridViewStream) StickyGridHeadersGridView mGridView;
+    @Bind(R.id.emptyViewStream) TextView mEmptyView;
 
     private ListAdapter mAdapter;
 
@@ -60,7 +60,7 @@ public abstract class StreamFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stream, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         mContentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
         mContentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -106,7 +106,7 @@ public abstract class StreamFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

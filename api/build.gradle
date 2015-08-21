@@ -20,7 +20,7 @@ apply plugin: "signing"
 
 jar.baseName = "seriesguide-api"
 group = "com.uwetrottmann.seriesguide"
-version = "1.1.1"
+version = "1.2.0"
 
 // load properties file
 def Properties props = new Properties()
@@ -28,7 +28,7 @@ props.load(new FileInputStream(file("../local.properties")))
 // extract Android SDK dir
 def android = [
         sdk: props["sdk.dir"],
-        target: "android-19"
+        target: "android-22"
 ]
 
 compileJava {
@@ -38,7 +38,7 @@ compileJava {
 
 task generateJavadoc(type: Javadoc) {
     source = sourceSets.main.allJava
-    exclude "**/internal/**"
+    exclude "**/constants/**"
     title = "SeriesGuide API"
     options.windowTitle = "SeriesGuide API"
     options.linksOffline("http://developer.android.com/reference", "${android.sdk}/docs/reference")

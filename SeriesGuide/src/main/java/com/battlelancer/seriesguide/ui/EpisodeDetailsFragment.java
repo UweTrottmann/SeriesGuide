@@ -43,8 +43,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -98,38 +98,38 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     private int mShowRunTime;
     private long mEpisodeReleaseTime;
 
-    @InjectView(R.id.containerEpisode) View mEpisodeContainer;
-    @InjectView(R.id.containerRatings) View mRatingsContainer;
-    @InjectView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
+    @Bind(R.id.containerEpisode) View mEpisodeContainer;
+    @Bind(R.id.containerRatings) View mRatingsContainer;
+    @Bind(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
 
-    @InjectView(R.id.containerEpisodeImage) View mImageContainer;
-    @InjectView(R.id.imageViewEpisode) ImageView mEpisodeImage;
+    @Bind(R.id.containerEpisodeImage) View mImageContainer;
+    @Bind(R.id.imageViewEpisode) ImageView mEpisodeImage;
 
-    @InjectView(R.id.textViewEpisodeTitle) TextView mTitle;
-    @InjectView(R.id.textViewEpisodeDescription) TextView mDescription;
-    @InjectView(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
-    @InjectView(R.id.textViewEpisodeReleaseDay) TextView mReleaseDay;
-    @InjectView(R.id.textViewEpisodeLastEdit) TextView mLastEdit;
-    @InjectView(R.id.labelEpisodeGuestStars) View mLabelGuestStars;
-    @InjectView(R.id.textViewEpisodeGuestStars) TextView mGuestStars;
-    @InjectView(R.id.textViewEpisodeDirectors) TextView mDirectors;
-    @InjectView(R.id.textViewEpisodeWriters) TextView mWriters;
-    @InjectView(R.id.labelEpisodeDvd) View mLabelDvd;
-    @InjectView(R.id.textViewEpisodeDvd) TextView mDvd;
-    @InjectView(R.id.textViewRatingsValue) TextView mTextRating;
-    @InjectView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
-    @InjectView(R.id.textViewRatingsUser) TextView mTextUserRating;
+    @Bind(R.id.textViewEpisodeTitle) TextView mTitle;
+    @Bind(R.id.textViewEpisodeDescription) TextView mDescription;
+    @Bind(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
+    @Bind(R.id.textViewEpisodeReleaseDay) TextView mReleaseDay;
+    @Bind(R.id.textViewEpisodeLastEdit) TextView mLastEdit;
+    @Bind(R.id.labelEpisodeGuestStars) View mLabelGuestStars;
+    @Bind(R.id.textViewEpisodeGuestStars) TextView mGuestStars;
+    @Bind(R.id.textViewEpisodeDirectors) TextView mDirectors;
+    @Bind(R.id.textViewEpisodeWriters) TextView mWriters;
+    @Bind(R.id.labelEpisodeDvd) View mLabelDvd;
+    @Bind(R.id.textViewEpisodeDvd) TextView mDvd;
+    @Bind(R.id.textViewRatingsValue) TextView mTextRating;
+    @Bind(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
+    @Bind(R.id.textViewRatingsUser) TextView mTextUserRating;
 
-    @InjectView(R.id.buttonEpisodeCheckin) Button mCheckinButton;
-    @InjectView(R.id.buttonEpisodeWatched) Button mWatchedButton;
-    @InjectView(R.id.buttonEpisodeCollected) Button mCollectedButton;
-    @InjectView(R.id.buttonEpisodeSkip) Button mSkipButton;
+    @Bind(R.id.buttonEpisodeCheckin) Button mCheckinButton;
+    @Bind(R.id.buttonEpisodeWatched) Button mWatchedButton;
+    @Bind(R.id.buttonEpisodeCollected) Button mCollectedButton;
+    @Bind(R.id.buttonEpisodeSkip) Button mSkipButton;
 
-    @InjectView(R.id.buttonShowInfoIMDB) View mImdbButton;
-    @InjectView(R.id.buttonTVDB) View mTvdbButton;
-    @InjectView(R.id.buttonTrakt) View mTraktButton;
-    @InjectView(R.id.buttonWebSearch) View mWebSearchButton;
-    @InjectView(R.id.buttonShouts) View mCommentsButton;
+    @Bind(R.id.buttonShowInfoIMDB) View mImdbButton;
+    @Bind(R.id.buttonTVDB) View mTvdbButton;
+    @Bind(R.id.buttonTrakt) View mTraktButton;
+    @Bind(R.id.buttonWebSearch) View mWebSearchButton;
+    @Bind(R.id.buttonShouts) View mCommentsButton;
 
     /**
      * Data which has to be passed when creating this fragment.
@@ -163,7 +163,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_episode, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
 
@@ -210,7 +210,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
         ServiceUtils.getPicasso(getActivity()).cancelRequest(mEpisodeImage);
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

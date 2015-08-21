@@ -99,6 +99,11 @@ android {
             }
         }
         debug {
+            // currently only obfuscating a small portion for compatibility reasons
+            // enable for shrinking to stay well below the 65k method limit
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             pseudoLocalesEnabled true
         }
     }
@@ -110,23 +115,22 @@ dependencies {
     compile project(':libraries:stickygridheaders')
     compile rootProject.ext.libraries.supportv4
     compile rootProject.ext.libraries.supportannotations
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile "com.android.support:cardview-v7:22.1.1"
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.2.3@aar') {
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile "com.android.support:cardview-v7:22.2.1"
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile 'com.google.code.findbugs:jsr305:3.0.0'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.jakewharton:butterknife:6.1.0'
-    compile 'com.jakewharton.timber:timber:2.5.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'com.melnykov:floatingactionbutton:1.2.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    compile 'com.squareup.okhttp:okhttp:2.3.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.uwetrottmann:androidutils:2.0.0'
@@ -136,7 +140,7 @@ dependencies {
         exclude group: 'joda-time', module: 'joda-time'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'net.danlew:android.joda:2.7.1'
+    compile 'net.danlew:android.joda:2.8.1'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:7.3.0'
@@ -144,7 +148,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:7.3.0'
 
     // App Engine
-    compile('com.google.api-client:google-api-client-android:1.19.0') {
+    compile('com.google.api-client:google-api-client-android:1.20.0') {
         exclude group: 'com.google.android.google-play-services'
         exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
     }

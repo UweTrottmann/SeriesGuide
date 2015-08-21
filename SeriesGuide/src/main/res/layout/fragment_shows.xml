@@ -34,7 +34,7 @@
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
     <GridView
         android:id="@+android:id/list"
-        style="@style/Widget.SeriesGuide.CardGrid.FastScroll"
+        style="@style/Widget.SeriesGuide.CardGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/showgrid_columnWidth"

@@ -32,8 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -50,22 +50,22 @@ import java.util.Locale;
  */
 public class StatsFragment extends Fragment {
 
-    @InjectView(R.id.textViewStatsShows) TextView mShowCount;
-    @InjectView(R.id.textViewStatsShowsWithNext) TextView mShowsWithNextEpisode;
-    @InjectView(R.id.progressBarStatsShowsWithNext) ProgressBar mProgressShowsWithNextEpisode;
-    @InjectView(R.id.textViewStatsShowsContinuing) TextView mShowsContinuing;
-    @InjectView(R.id.progressBarStatsShowsContinuing) ProgressBar mProgressShowsContinuing;
+    @Bind(R.id.textViewStatsShows) TextView mShowCount;
+    @Bind(R.id.textViewStatsShowsWithNext) TextView mShowsWithNextEpisode;
+    @Bind(R.id.progressBarStatsShowsWithNext) ProgressBar mProgressShowsWithNextEpisode;
+    @Bind(R.id.textViewStatsShowsContinuing) TextView mShowsContinuing;
+    @Bind(R.id.progressBarStatsShowsContinuing) ProgressBar mProgressShowsContinuing;
 
-    @InjectView(R.id.textViewStatsEpisodes) TextView mEpisodeCount;
-    @InjectView(R.id.textViewStatsEpisodesWatched) TextView mEpisodesWatched;
-    @InjectView(R.id.progressBarStatsEpisodesWatched) ProgressBar mProgressEpisodesWatched;
-    @InjectView(R.id.textViewStatsEpisodesRuntime) TextView mEpisodesRuntime;
-    @InjectView(R.id.progressBarStatsEpisodesRuntime) ProgressBar mProgressEpisodesRuntime;
+    @Bind(R.id.textViewStatsEpisodes) TextView mEpisodeCount;
+    @Bind(R.id.textViewStatsEpisodesWatched) TextView mEpisodesWatched;
+    @Bind(R.id.progressBarStatsEpisodesWatched) ProgressBar mProgressEpisodesWatched;
+    @Bind(R.id.textViewStatsEpisodesRuntime) TextView mEpisodesRuntime;
+    @Bind(R.id.progressBarStatsEpisodesRuntime) ProgressBar mProgressEpisodesRuntime;
 
-    @InjectView(R.id.textViewStatsMovies) TextView mMovieCount;
-    @InjectView(R.id.textViewStatsMoviesWatchlist) TextView mMoviesWatchlist;
-    @InjectView(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
-    @InjectView(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
+    @Bind(R.id.textViewStatsMovies) TextView mMovieCount;
+    @Bind(R.id.textViewStatsMoviesWatchlist) TextView mMoviesWatchlist;
+    @Bind(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
+    @Bind(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
 
     private AsyncTask<Void, Stats, Stats> statsTask;
     private Stats currentStats;
@@ -74,7 +74,7 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stats, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // set some views invisible so they can be animated in once stats are computed
         mShowsWithNextEpisode.setVisibility(View.INVISIBLE);
@@ -120,7 +120,7 @@ public class StatsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

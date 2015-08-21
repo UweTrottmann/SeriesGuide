@@ -29,20 +29,23 @@
 
     <!-- Actions -->
     <string name="clear">Clear</string>
-    <string name="clear_search_history">Clear search history</string>
     <string name="discard">Discard</string>
     <string name="save_selection">Save selection</string>
-    <string name="search_hint">Search episodes</string>
     <string name="action_display_all">Show all</string>
+    <string name="web_search">Web search</string>
+    <string name="add_to_homescreen">Shortcut</string>
+
+    <!-- Search -->
+    <string name="clear_search_history">Clear search history</string>
+    <string name="search_hint">Search episodes</string>
+    <string name="search_within_show">Search within %s</string>
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version.</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
     <string name="offline">Connect to a network, then try again.</string>
-    <string name="offline_no_wifi">Connect to Wi-Fi or allow all connections, then try again.</string>
     <string name="app_not_available">No app available to handle this.</string>
-    <string name="add_empty">There are no shows here.</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data.</string>
 
@@ -52,8 +55,10 @@
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
     <string name="share_checkout">Check out %s</string>
+    <string name="addtocalendar">Add to calendar</string>
+    <string name="addtocalendar_failed">Can not create a calendar event.</string>
 
-    <!-- Shouts -->
+    <!-- Comments -->
     <string name="comments">Comments</string>
     <string name="shout_hint">Type a comment (English, 5+ words)</string>
     <string name="shout_invalid">Your comment does not follow the rules!</string>
@@ -61,60 +66,6 @@
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to shout!</string>
     <string name="refresh">Refresh</string>
-
-    <!-- Movies -->
-    <string name="movies_collection">Collection</string>
-    <string name="movies_watchlist">Watchlist</string>
-    <string name="watchlist_add">Add to watchlist</string>
-    <string name="watchlist_remove">Remove from watchlist</string>
-    <string name="watchlist_added">Added to watchlist</string>
-    <string name="watchlist_removed">Removed from watchlist</string>
-    <string name="movies_search_hint">Type a movie title</string>
-    <string name="movies_empty">Search for a movie above.</string>
-    <string name="movies_collection_empty">You have not added movies to your collection.</string>
-    <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
-    <string name="trailer">Trailer</string>
-    <string name="movie_cast">Cast</string>
-    <string name="movie_crew">Crew</string>
-    <string name="action_movies_sort">Sort movies</string>
-    <string name="action_movies_sort_title">Title</string>
-    <string name="action_movies_sort_release">Release date</string>
-
-    <!-- Statistics -->
-    <string name="statistics_shows">shows</string>
-    <string name="statistics_episodes">episodes</string>
-    <string name="statistics_movies">movies</string>
-    <string name="shows_with_next">%s with next episodes</string>
-    <string name="shows_continuing">%s continuing</string>
-    <string name="episodes_watched">%s watched</string>
-    <string name="runtime_all_episodes">runtime of all watched episodes</string>
-    <string name="movies_on_watchlist">%s on watchlist</string>
-    <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
-
-    <plurals name="days_plural">
-        <item quantity="one">%d day</item>
-        <item quantity="zero">%d days</item>
-        <item quantity="two">%d days</item>
-        <item quantity="few">%d days</item>
-        <item quantity="many">%d days</item>
-        <item quantity="other">%d days</item>
-    </plurals>
-    <plurals name="hours_plural">
-        <item quantity="zero">%d hours</item>
-        <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
-        <item quantity="other">%d hours</item>
-    </plurals>
-    <plurals name="minutes_plural">
-        <item quantity="zero">%d minutes</item>
-        <item quantity="one">%d minute</item>
-        <item quantity="two">%d minutes</item>
-        <item quantity="few">%d minutes</item>
-        <item quantity="many">%d minutes</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
@@ -195,20 +146,20 @@
     <string name="released_today">Released today</string>
     <string name="friends_recently">Your trakt friends</string>
     <string name="now_empty">Nothing going on. Watch some shows!</string>
+    <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
 
-    <!-- Activity -->
-    <string name="upcoming">Upcoming</string>
-    <string name="recent">Recent</string>
-    <string name="friends">Friends</string>
-    <string name="friends_empty">No friend activity on trakt.</string>
+    <!-- History -->
     <string name="user_stream">History</string>
     <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
-    <string name="user_movie_stream_empty">No recent activity on trakt. Check into some movies!</string>
+    <string name="user_movie_stream_empty">No history on trakt. Watch and check into some movies!</string>
+
+    <!-- Calendar -->
+    <string name="upcoming">Upcoming</string>
+    <string name="recent">Recent</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
     <string name="only_favorites">Only favorite shows</string>
-    <string name="pref_infinite_scrolling">Infinite activity</string>
-    <string name="action_activity_filter">Filter activity</string>
+    <string name="pref_infinite_scrolling">Infinite calendar</string>
 
     <!-- Updating -->
     <string name="update_scheduled">Updating…</string>
@@ -225,6 +176,8 @@
     <string name="remaining">%s remaining</string>
 
     <!-- Add show -->
+    <string name="checkin_searchhint">Type a show name</string>
+    <string name="add_empty">There are no shows here.</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_all">Add all</string>
@@ -247,6 +200,60 @@
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
+
+    <!-- Movies -->
+    <string name="movies_collection">Collection</string>
+    <string name="movies_watchlist">Watchlist</string>
+    <string name="watchlist_add">Add to watchlist</string>
+    <string name="watchlist_remove">Remove from watchlist</string>
+    <string name="watchlist_added">Added to watchlist</string>
+    <string name="watchlist_removed">Removed from watchlist</string>
+    <string name="movies_search_hint">Type a movie title</string>
+    <string name="movies_empty">Search for a movie above.</string>
+    <string name="movies_collection_empty">You have not added movies to your collection.</string>
+    <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+    <string name="trailer">Trailer</string>
+    <string name="movie_cast">Cast</string>
+    <string name="movie_crew">Crew</string>
+    <string name="action_movies_sort">Sort movies</string>
+    <string name="action_movies_sort_title">Title</string>
+    <string name="action_movies_sort_release">Release date</string>
+
+    <!-- Statistics -->
+    <string name="statistics_shows">shows</string>
+    <string name="statistics_episodes">episodes</string>
+    <string name="statistics_movies">movies</string>
+    <string name="shows_with_next">%s with next episodes</string>
+    <string name="shows_continuing">%s continuing</string>
+    <string name="episodes_watched">%s watched</string>
+    <string name="runtime_all_episodes">runtime of all watched episodes</string>
+    <string name="movies_on_watchlist">%s on watchlist</string>
+    <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
+
+    <plurals name="days_plural">
+        <item quantity="one">%d day</item>
+        <item quantity="zero">%d days</item>
+        <item quantity="two">%d days</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="hours_plural">
+        <item quantity="zero">%d hours</item>
+        <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes_plural">
+        <item quantity="zero">%d minutes</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental!</string>
@@ -279,7 +286,7 @@
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="trakt_success">Sent to trakt.</string>
-    <string name="trakt_error_credentials">Something went wrong. Check your credentials and try again.</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
 
     <!-- Connect trakt -->
@@ -320,6 +327,11 @@
         <item quantity="other">%d votes</item>
     </plurals>
 
+    <!-- Check Ins -->
+    <string name="checkin">Check in</string>
+    <string name="checkin_hint">Type a message (optional)</string>
+    <string name="paste_title">Paste title</string>
+
     <!-- Help -->
     <string name="feedback">Send feedback</string>
     <string name="action_open_in_browser">Open in browser</string>
@@ -337,7 +349,7 @@
     <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="pref_language">Content language</string>
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-    <string name="pref_updatewifionlysummary">To reduce carrier data charges, don\'t download over mobile networks</string>
+    <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
     <string name="pref_traktsummary">Add or edit your trakt credentials</string>
@@ -414,16 +426,6 @@
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
 
-    <!-- Check Ins -->
-    <string name="checkin">Check in</string>
-    <string name="checkin_searchhint">Type a show name</string>
-    <string name="checkin_hint">Type a message (optional)</string>
-    <string name="paste_title">Paste title</string>
-
-    <!-- Share methods -->
-    <string name="addtocalendar">Add to calendar</string>
-    <string name="addtocalendar_failed">Can not create a calendar event.</string>
-
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
@@ -478,7 +480,7 @@
     <string name="action_upgrade">Unlock all features</string>
     <string name="billing_action_subscribe">Subscribe</string>
     <string name="billing_action_pass">Get X Pass</string>
-    <string name="billing_price_subscribe">%s/year, 30 day trial</string>
+    <string name="billing_price_subscribe">%s/year, try for free</string>
     <string name="billing_price_pass">one-time purchase</string>
     <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
     <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
@@ -490,13 +492,7 @@
     <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
     <string name="subscription_unavailable">The subscription is currently not available.</string>
     <string name="subscription_failed">Purchase not completed.</string>
-
-    <!-- Add to Homescreen -->
-    <string name="add_to_homescreen">Shortcut</string>
-
-    <!-- Search -->
-    <string name="search_within_show">Search within %s</string>
-    <string name="web_search">Web search</string>
+    <string name="pass_unavailable">X Pass is currently not available.</string>
 
     <!-- Extensions -->
     <string name="extensions">Extensions</string>

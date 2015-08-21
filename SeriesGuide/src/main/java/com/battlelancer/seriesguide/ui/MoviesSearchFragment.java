@@ -43,8 +43,8 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
@@ -72,12 +72,12 @@ public class MoviesSearchFragment extends Fragment implements
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
 
-    @InjectView(R.id.containerMoviesSearchContent) View resultsContainer;
-    @InjectView(R.id.progressBarMoviesSearch) View progressBar;
-    @InjectView(R.id.gridViewMoviesSearch) GridView resultsGridView;
-    @InjectView(R.id.emptyViewMoviesSearch) TextView emptyView;
-    @InjectView(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
-    @InjectView(R.id.buttonMoviesSearchClear) View clearButton;
+    @Bind(R.id.containerMoviesSearchContent) View resultsContainer;
+    @Bind(R.id.progressBarMoviesSearch) View progressBar;
+    @Bind(R.id.gridViewMoviesSearch) GridView resultsGridView;
+    @Bind(R.id.emptyViewMoviesSearch) TextView emptyView;
+    @Bind(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
+    @Bind(R.id.buttonMoviesSearchClear) View clearButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class MoviesSearchFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         // setup grid view
         resultsGridView.setEmptyView(emptyView);
@@ -102,7 +102,8 @@ public class MoviesSearchFragment extends Fragment implements
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                        || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     search();
                     return true;
                 }
@@ -164,7 +165,7 @@ public class MoviesSearchFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

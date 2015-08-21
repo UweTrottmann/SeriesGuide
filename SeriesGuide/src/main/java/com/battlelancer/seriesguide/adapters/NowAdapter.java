@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ import java.util.List;
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface ItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     static class ReleasedViewHolder extends RecyclerView.ViewHolder {
@@ -135,20 +136,20 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @IntDef({ ItemType.RELEASED, ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK,
             ItemType.HEADER })
     public @interface ItemType {
-        static final int RELEASED = 0;
-        static final int HISTORY = 1;
-        static final int FRIEND = 2;
-        static final int MORE_LINK = 3;
-        static final int HEADER = 4;
+        int RELEASED = 0;
+        int HISTORY = 1;
+        int FRIEND = 2;
+        int MORE_LINK = 3;
+        int HEADER = 4;
     }
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ ViewType.RELEASED, ViewType.FRIEND, ViewType.MORE_LINK, ViewType.HEADER })
     public @interface ViewType {
-        static final int RELEASED = 0;
-        static final int FRIEND = 1;
-        static final int MORE_LINK = 2;
-        static final int HEADER = 3;
+        int RELEASED = 0;
+        int FRIEND = 1;
+        int MORE_LINK = 2;
+        int HEADER = 3;
     }
 
     private final Context context;
@@ -161,15 +162,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<NowItem> releasedToday;
     private List<NowItem> friendsRecently;
 
-    /**
-     * Lock used to modify the content of {@link #dataset}. Any write operation performed on the
-     * array should be synchronized on this lock.
-     */
-    private final Object lock = new Object();
-
     public static class NowItem {
         public Integer episodeTvdbId;
         public Integer showTvdbId;
+        public Integer movieTmdbId;
         public long timestamp;
         public String title;
         public String description;
@@ -191,7 +187,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        public NowItem recentlyWatchedTrakt(String action) {
+        public NowItem recentlyWatchedTrakt(@Nullable String action) {
             this.action = action;
             this.type = ItemType.HISTORY;
             return this;
@@ -211,10 +207,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        public NowItem displayData(long timestamp, String show, String episode, String poster) {
+        public NowItem tmdbId(Integer movieTmdbId) {
+            this.movieTmdbId = movieTmdbId;
+            return this;
+        }
+
+        public NowItem displayData(long timestamp, String title, String description,
+                String poster) {
             this.timestamp = timestamp;
-            this.title = show;
-            this.description = episode;
+            this.title = title;
+            this.description = description;
             this.poster = poster;
             return this;
         }
