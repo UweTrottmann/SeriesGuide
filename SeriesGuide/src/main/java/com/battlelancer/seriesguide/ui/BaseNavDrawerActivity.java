@@ -26,7 +26,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -214,7 +213,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             }, NAVDRAWER_CLOSE_DELAY);
         }
 
-        mDrawerLayout.closeDrawer(Gravity.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private void goToNavDrawerItem(Intent intent) {

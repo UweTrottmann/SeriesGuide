@@ -5,8 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 24 *(in development)*
+Version 24 *(2015-08-21)*
 -----------------------------
+
+* Now tab for movies. Displays your recently watched movies on trakt, as well as the last watched
+  movie of your trakt friends.
+* Do not load images over metered connections if "Images only over Wi-Fi" is enabled.
+
+#### 24 *(2015-08-21)*
+
+* TWEAK More readable color for default theme navigation items.
+* TWEAK Get rid of fast scrollers in most places.
+* NOTICE Latest translations from crowdin.
 
 #### 24-beta4 *(2015-08-15)*
 
