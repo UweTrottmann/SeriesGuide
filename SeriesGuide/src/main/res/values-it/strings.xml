@@ -130,7 +130,7 @@
   <string name="noupcoming">Non c\'è nessun episodio prossimo.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
   <string name="only_favorites">Solo le serie preferite</string>
-  <string name="pref_infinite_scrolling">Attività infinita</string>
+  <string name="pref_infinite_scrolling">Calendario perpetuo</string>
   <string name="update_scheduled">Aggiornamento…</string>
   <string name="update_no_connection">Per aggiornare, connettiti ad internet.</string>
   <string name="update_inprogress">Un aggiornamento è in corso, riprova più tardi.</string>

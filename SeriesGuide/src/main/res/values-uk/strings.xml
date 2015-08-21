@@ -130,7 +130,7 @@
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
-  <string name="pref_infinite_scrolling">Безкінечна активність</string>
+  <string name="pref_infinite_scrolling">Вічний календар</string>
   <string name="update_scheduled">Оновлюється…</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>

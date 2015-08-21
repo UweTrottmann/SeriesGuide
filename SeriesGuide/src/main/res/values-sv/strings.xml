@@ -122,7 +122,7 @@
   <string name="released_today">Release idag</string>
   <string name="friends_recently">Dina trakt vänner</string>
   <string name="now_empty">Inget att göra. Se några tv-serier!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Ingenting händer. Titta på några filmer!</string>
   <string name="user_stream">Historik</string>
   <string name="user_stream_empty">Inga nya aktiviter på trakt. Bocka av några serier!</string>
   <string name="user_movie_stream_empty">Inga nya aktiviter på trakt. Bocka av några filmer!</string>
@@ -131,7 +131,7 @@
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
   <string name="norecent">Det finns inga aktuella avsnitt.</string>
   <string name="only_favorites">Endast favoritserier</string>
-  <string name="pref_infinite_scrolling">Oändlig aktivitet</string>
+  <string name="pref_infinite_scrolling">Oändlig kalender</string>
   <string name="update_scheduled">Uppdaterar…</string>
   <string name="update_no_connection">För att uppdatera anslut till internet.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
@@ -395,7 +395,7 @@
   <string name="action_upgrade">Lås upp alla funktioner</string>
   <string name="billing_action_subscribe">Prenumerera</string>
   <string name="billing_action_pass">Skaffa X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s per år. Prova gratis</string>
   <string name="billing_price_pass">engångsköp</string>
   <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
   <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
@@ -405,7 +405,7 @@
   <string name="subscription_not_signed_in">Logga in med ditt Amazon-konto!</string>
   <string name="subscription_unavailable">Prenumerationen är för tillfället otillgänglig.</string>
   <string name="subscription_failed">Köp ej slutfört.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass är för tillfället otillgängligt.</string>
   <string name="extensions">Tillägg</string>
   <string name="action_extensions_configure">Anpassa tillägg</string>
   <string name="action_extensions_add">Lägg till tillägg</string>

@@ -121,7 +121,7 @@
   <string name="released_today">Lansert i dag</string>
   <string name="friends_recently">Trakt venner</string>
   <string name="now_empty">Ingenting skjer. Se noen serier!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Ingenting skjer. Se noen filmer!</string>
   <string name="user_stream">Historikk</string>
   <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Sjekk inn på noen serier!</string>
   <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Sjekk inn på noen filmer!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Det er ingen kommende episoder.</string>
   <string name="norecent">Det er ingen nylige episoder.</string>
   <string name="only_favorites">Bare favoritter</string>
-  <string name="pref_infinite_scrolling">Uendelig aktivitet</string>
+  <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <string name="update_scheduled">Oppdaterer…</string>
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
@@ -280,7 +280,7 @@
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>
   <string name="paste_title">Lim inn tittel</string>
   <string name="feedback">Gi tilbakemelding</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Åpne i nettleser</string>
   <string name="prefs_category_basic">Grunnleggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
   <string name="prefs_category_advanced">Avansert</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Lås opp alle funksjoner</string>
   <string name="billing_action_subscribe">Abonner</string>
   <string name="billing_action_pass">Få X pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/per år, prøv gratis</string>
   <string name="billing_price_pass">engangskjøp</string>
   <string name="upgrade_description">Lås opp alle funksjoner inkludert, varslinger, temaer og flere alternativer for modulen. Hjelp meg lage fremtidlige oppdateringer.</string>
   <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Logg deg på din Amazon konto!</string>
   <string name="subscription_unavailable">Abonnementet er for øyeblikket ikke tilgjengelig.</string>
   <string name="subscription_failed">Kjøp ikke fullført.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass er for øyeblikket ikke tilgjengelig.</string>
   <string name="extensions">Utvidelser</string>
   <string name="action_extensions_configure">Tilpass utvidelser</string>
   <string name="action_extensions_add">Legg til utvidelse</string>

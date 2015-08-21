@@ -121,7 +121,7 @@
   <string name="released_today">今天播出</string>
   <string name="friends_recently">好友动态</string>
   <string name="now_empty">没有新鲜事</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">什么也没有。看一些电影吧！</string>
   <string name="user_stream">历史记录</string>
   <string name="user_stream_empty">近期没有 trakt 动态\n观看剧集时的签到会显示在这里</string>
   <string name="user_movie_stream_empty">近期没有 trakt 动态\n观看电影时的签到会显示在这里</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="only_favorites">仅显示喜爱节目</string>
-  <string name="pref_infinite_scrolling">紧凑的无限列表</string>
+  <string name="pref_infinite_scrolling">无限的日历</string>
   <string name="update_scheduled">正在更新…</string>
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">解锁高级功能</string>
   <string name="billing_action_subscribe">订阅</string>
   <string name="billing_action_pass">购买 SeriesGuide X</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s /年，免费试用</string>
   <string name="billing_price_pass">一次性支付</string>
   <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
   <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">请登录您的 Amazon 帐户！</string>
   <string name="subscription_unavailable">订阅服务目前不可用。</string>
   <string name="subscription_failed">支付过程中断，购买无效。</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass 当前不可用。</string>
   <string name="extensions">扩展组件</string>
   <string name="action_extensions_configure">自定义扩展</string>
   <string name="action_extensions_add">添加扩展组件</string>

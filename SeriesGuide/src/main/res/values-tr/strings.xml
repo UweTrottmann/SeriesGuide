@@ -120,8 +120,8 @@
   <string name="recently_watched">Yakın zamanda izlenen</string>
   <string name="released_today">Bugün yayınlanan</string>
   <string name="friends_recently">trakt arkadaşların</string>
-  <string name="now_empty">Her şey yolunda. Bir şeyler izle!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_empty">Buralar boş. Biraz dizi izle!</string>
+  <string name="now_movies_empty">Buralar boş. Biraz film izle!</string>
   <string name="user_stream">Geçmiş</string>
   <string name="user_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç diziye check-in yapın!</string>
   <string name="user_movie_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç filme check-in yapın!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
-  <string name="pref_infinite_scrolling">Bütün etkinlikleri göster</string>
+  <string name="pref_infinite_scrolling">Sonsuz takvim</string>
   <string name="update_scheduled">Güncelleniyor…</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass edinin</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/yıl, ücretsiz deneyin</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Amazon hesabınızda oturum açın!</string>
   <string name="subscription_unavailable">Abonelik şu anda kullanılabilir değil.</string>
   <string name="subscription_failed">Satın alma tamamlanmadı.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass şu an mevcut değil.</string>
   <string name="extensions">Eklentiler</string>
   <string name="action_extensions_configure">Eklentileri özelleştir</string>
   <string name="action_extensions_add">Eklenti ekle</string>

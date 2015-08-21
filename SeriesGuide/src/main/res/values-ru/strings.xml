@@ -130,7 +130,7 @@
   <string name="noupcoming">Предстоящих эпизодов нет.</string>
   <string name="norecent">Недавних эпизодов нет.</string>
   <string name="only_favorites">Только избранные сериалы</string>
-  <string name="pref_infinite_scrolling">Непрерывная активность</string>
+  <string name="pref_infinite_scrolling">Бесконечный календарь</string>
   <string name="update_scheduled">Обновление...</string>
   <string name="update_no_connection">Для обновления подключитесь к Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>

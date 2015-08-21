@@ -117,10 +117,10 @@
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
   <string name="now_tab">Agora</string>
-  <string name="recently_watched">Recentemente assistidos</string>
+  <string name="recently_watched">Recentemente assistido</string>
   <string name="released_today">Lançado hoje</string>
   <string name="friends_recently">Seus amigos do trakt</string>
-  <string name="now_empty">Nada passando. Assista alguma coisa!</string>
+  <string name="now_empty">Nada passando. Assista algumas séries!</string>
   <string name="now_movies_empty">Nada acontecendo. Assista alguns filmes!</string>
   <string name="user_stream">Histórico</string>
   <string name="user_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em algumas séries!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Não há próximos episódios.</string>
   <string name="norecent">Não há episódios recentes.</string>
   <string name="only_favorites">Somente séries favoritas</string>
-  <string name="pref_infinite_scrolling">Atividade infinita</string>
+  <string name="pref_infinite_scrolling">Calendário infinito</string>
   <string name="update_scheduled">Atualizando…</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>

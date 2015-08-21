@@ -130,7 +130,7 @@
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
-  <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
+  <string name="pref_infinite_scrolling">Päättymätön kalenteri</string>
   <string name="update_scheduled">Päivitetään…</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>

@@ -121,7 +121,7 @@
   <string name="released_today">Vysíláno dnes</string>
   <string name="friends_recently">Zaznamenáno přítelem</string>
   <string name="now_empty">Nic se děje. Podívejte se na pořady!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Zatím tu nic není. Podívejte se na některé filmy!</string>
   <string name="user_stream">Historie</string>
   <string name="user_stream_empty">Žádná poslední aktivita na Traktu. Podívej se na některé seriály!</string>
   <string name="user_movie_stream_empty">Žádná poslední aktivita na Traktu. Podívej se na některé filmy!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Žádné nadcházející epizody.</string>
   <string name="norecent">Žádné nedávné epizody.</string>
   <string name="only_favorites">Pouze oblíbené seriály</string>
-  <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
+  <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
   <string name="billing_action_pass">Získejte Rozšířenou verzi</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/rok, vyzkoušejte zdarma</string>
   <string name="billing_price_pass">jednorázový nákup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Přihlaste se pomocí účtu Amazon!</string>
   <string name="subscription_unavailable">Odběr momentálně není k dispozici.</string>
   <string name="subscription_failed">Nákup nebyl dokončen.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>
   <string name="extensions">Rozšíření</string>
   <string name="action_extensions_configure">Přispůsobení rozšířeních</string>
   <string name="action_extensions_add">Přidat rozšíření</string>

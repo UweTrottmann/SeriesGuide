@@ -121,7 +121,7 @@
   <string name="released_today">Publié aujourd\'hui</string>
   <string name="friends_recently">Vos amis trakt</string>
   <string name="now_empty">Rien ici. Regardez des épisodes !</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Rien ne se passe. Regarder des films !</string>
   <string name="user_stream">historique</string>
   <string name="user_stream_empty">Aucun historique sur trakt. Visionner et faites des check-ins !</string>
   <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Il n\'y a pas d\'épisodes à venir.</string>
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
-  <string name="pref_infinite_scrolling">Activité infinie</string>
+  <string name="pref_infinite_scrolling">Calendrier infini</string>
   <string name="update_scheduled">Mise à jour…</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
   <string name="billing_action_subscribe">Souscrire</string>
   <string name="billing_action_pass">Obtenir le X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/an, essai gratuit</string>
   <string name="billing_price_pass">Achat à vie</string>
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Connectez-vous à votre compte Amazon !</string>
   <string name="subscription_unavailable">L\'abonnement n\'est actuellement pas disponible.</string>
   <string name="subscription_failed">Achat non terminé.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass n\'est actuellement pas disponible.</string>
   <string name="extensions">Extensions</string>
   <string name="action_extensions_configure">Personnaliser les extensions</string>
   <string name="action_extensions_add">Ajouter une extension</string>

@@ -130,7 +130,7 @@
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak kedvenc sorozatok</string>
-  <string name="pref_infinite_scrolling">Végtelen tevékenység</string>
+  <string name="pref_infinite_scrolling">Végtelen naptár</string>
   <string name="update_scheduled">Frissítés…</string>
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés van folyamatban, próbáld meg később.</string>
