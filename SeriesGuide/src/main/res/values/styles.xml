@@ -83,10 +83,6 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="TextAppearance.Body.White">
-        <item name="android:textColor">@color/black_11</item>
-    </style>
-
     <style name="TextAppearance.Body.Highlight">
         <item name="android:textStyle">italic</item>
     </style>
