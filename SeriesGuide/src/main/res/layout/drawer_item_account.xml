@@ -16,16 +16,21 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerDrawerAccount"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="192dp"
+    android:background="?attr/colorPrimaryDark"
+    android:paddingLeft="@dimen/keyline"
+    android:paddingRight="@dimen/keyline"
+    android:paddingTop="@dimen/large_padding"
+    android:paddingBottom="@dimen/default_padding"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
         android:id="@+id/textViewDrawerItemUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="@dimen/keyline"
-        android:paddingRight="@dimen/keyline"
         android:paddingBottom="@dimen/inline_padding"
         android:singleLine="true"
         android:ellipsize="end"
@@ -37,8 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewDrawerItemUsername"
-        android:paddingLeft="@dimen/keyline"
-        android:paddingRight="@dimen/keyline"
         android:singleLine="true"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Body.Bold"
