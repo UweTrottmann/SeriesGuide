@@ -53,7 +53,7 @@
             android:paddingRight="@dimen/grid_leftright_padding" />
 
         <include
-            layout="@layout/layout_snackbar"
+            layout="@layout/layout_snackbar_sg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />
