@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import java.util.LinkedList;
@@ -200,7 +201,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                        Utils.updateTheme((String) newValue);
+                        ThemeUtils.updateTheme((String) newValue);
 
                         // restart to apply new theme (actually build an entirely new task stack)
                         TaskStackBuilder.create(activity)

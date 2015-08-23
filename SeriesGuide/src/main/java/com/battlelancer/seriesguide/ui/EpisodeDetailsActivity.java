@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -81,13 +82,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
-            setTheme(R.style.ImmersiveTheme);
-        } else {
-            setTheme(R.style.ImmersiveTheme_Stock);
-        }
+        ThemeUtils.setImmersiveTheme(this);
     }
 
     private void setupViews() {

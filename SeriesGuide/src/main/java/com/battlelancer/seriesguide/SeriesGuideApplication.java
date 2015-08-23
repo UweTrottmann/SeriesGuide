@@ -24,7 +24,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -86,7 +86,7 @@ public class SeriesGuideApplication extends Application {
         JodaTimeAndroid.init(this);
 
         // Load the current theme into a global variable
-        Utils.updateTheme(DisplaySettings.getThemeIndex(this));
+        ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
 
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));

@@ -411,24 +411,6 @@ public class Utils {
     }
 
     /**
-     * Sets the global app theme variable. Applied by all activities once they are created.
-     */
-    public static synchronized void updateTheme(String themeIndex) {
-        int theme = Integer.valueOf(themeIndex);
-        switch (theme) {
-            case 1:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_DarkBlue;
-                break;
-            case 2:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
-                break;
-            default:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
-                break;
-        }
-    }
-
-    /**
      * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
      */
     public static void trackView(Context context, String screenName) {
