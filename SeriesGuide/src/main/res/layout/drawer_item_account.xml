@@ -18,7 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerDrawerAccount"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="144dp"
     android:background="?attr/colorPrimaryDark"
     android:paddingLeft="@dimen/keyline"
     android:paddingRight="@dimen/keyline"
