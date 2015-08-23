@@ -115,6 +115,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
         navigationView.setItemTextColor(getResources().getColorStateList(
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerText)));
+        navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
+                R.attr.sgActivatedItemBackgroundDrawer));
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
