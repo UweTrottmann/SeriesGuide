@@ -339,6 +339,12 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
+    <style name="Theme.SeriesGuide.Drawer" />
+
+    <style name="Theme.SeriesGuide.DarkBlue.Drawer" />
+
+    <style name="Theme.SeriesGuide.Light.Drawer" />
+
     <style name="Theme.SeriesGuide.Immersive" />
 
     <style name="Theme.SeriesGuide.DarkBlue.Immersive" />

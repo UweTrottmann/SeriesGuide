@@ -60,6 +60,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     }
 
     @Override
+    protected void setCustomTheme() {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
+            setTheme(R.style.Theme_SeriesGuide_Light_Drawer);
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
+            setTheme(R.style.Theme_SeriesGuide_DarkBlue_Drawer);
+        } else {
+            setTheme(R.style.Theme_SeriesGuide_Drawer);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
