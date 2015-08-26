@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
@@ -28,11 +29,12 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.Username;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import android.support.annotation.NonNull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -68,7 +70,8 @@ public class TraktUserEpisodeHistoryLoader
 
         List<HistoryEntry> history;
         try {
-            history = trakt.users().historyEpisodes("me", 1, MAX_HISTORY_SIZE, Extended.IMAGES);
+            history = trakt.users().history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+                    Extended.IMAGES);
         } catch (RetrofitError e) {
             Timber.e(e, "Loading user episode history failed");
             return buildResultFailure(
@@ -87,13 +90,13 @@ public class TraktUserEpisodeHistoryLoader
         }
 
         // add header
-        List<NowAdapter.NowItem> items = new LinkedList<>();
+        List<NowAdapter.NowItem> items = new ArrayList<>();
         items.add(new NowAdapter.NowItem().header(
                 getContext().getString(R.string.recently_watched)));
 
         // add episodes
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
-        for (int i = 0; i < history.size(); i++) {
+        for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
 
             if (entry.episode == null || entry.episode.ids == null || entry.episode.ids.tvdb == null

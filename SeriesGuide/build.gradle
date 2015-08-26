@@ -135,7 +135,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.uwetrottmann:androidutils:2.0.0'
     compile 'com.uwetrottmann:tmdb-java:0.8.0'
-    compile ('com.uwetrottmann:trakt-java:4.3.1') {
+    compile ('com.uwetrottmann:trakt-java:4.5.0') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
     }
