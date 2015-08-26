@@ -37,6 +37,6 @@
 
     </FrameLayout>
 
-    <include layout="@layout/drawer_left" />
+    <include layout="@layout/drawer_left_nofitssystemwindows" />
 
 </android.support.v4.widget.DrawerLayout>

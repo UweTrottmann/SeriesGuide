@@ -85,7 +85,7 @@ public class MoviesActivity extends BaseTopActivity {
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_MOVIES_POSITION);
+        setDrawerSelectedItem(R.id.navigation_item_movies);
 
         // add trakt-only tab if user just signed in
         maybeAddNowTab();

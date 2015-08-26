@@ -16,24 +16,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.annotation.IdRes;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -47,42 +39,60 @@ import com.battlelancer.seriesguide.util.Utils;
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
  */
-public abstract class BaseNavDrawerActivity extends BaseActivity
-        implements AdapterView.OnItemClickListener {
+public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
+    private static final int NAV_ITEM_ACCOUNT_ID = 0;
 
-    public static final int MENU_ITEM_ACCOUNT = 0;
-    // DIVIDER IN BETWEEN HERE                  1
-    public static final int MENU_ITEM_SHOWS_POSITION = 2;
-    public static final int MENU_ITEM_LISTS_POSITION = 3;
-    public static final int MENU_ITEM_MOVIES_POSITION = 4;
-    public static final int MENU_ITEM_STATS_POSITION = 5;
-    // DIVIDER IN BETWEEN HERE                         6
-    public static final int MENU_ITEM_SETTINGS_POSITION = 7;
-    public static final int MENU_ITEM_HELP_POSITION = 8;
-    public static final int MENU_ITEM_SUBSCRIBE_POSITION = 9; // not always shown
-
-    private Handler mHandler;
-    private Toolbar mActionBarToolbar;
-    private DrawerLayout mDrawerLayout;
-    private View mDrawerView;
-    private ListView mDrawerList;
-    private DrawerAdapter mDrawerAdapter;
+    private Handler handler;
+    private Toolbar actionBarToolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private TextView textViewHeaderAccountType;
+    private TextView textViewHeaderUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mHandler = new Handler();
+        handler = new Handler();
+    }
+
+    @Override
+    protected void setCustomTheme() {
+        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
+            setTheme(R.style.Theme_SeriesGuide_Light_Drawer);
+        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
+            setTheme(R.style.Theme_SeriesGuide_DarkBlue_Drawer);
+        } else {
+            setTheme(R.style.Theme_SeriesGuide_Drawer);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        mDrawerAdapter.setSubscribeVisible(!Utils.hasAccessToX(this));
+        // update account type and signed in user
+        if (HexagonTools.isSignedIn(this)) {
+            // connected to SG Cloud
+            textViewHeaderAccountType.setText(R.string.hexagon);
+            textViewHeaderUser.setText(HexagonSettings.getAccountName(this));
+        } else if (TraktCredentials.get(this).hasCredentials()) {
+            // connected to trakt
+            textViewHeaderAccountType.setText(R.string.trakt);
+            textViewHeaderUser.setText(TraktCredentials.get(this).getUsername());
+        } else {
+            // connected to nothing
+            textViewHeaderAccountType.setText(R.string.trakt);
+            textViewHeaderUser.setText(R.string.connect_trakt);
+        }
+
+        // if user is already a supporter, hide unlock action
+        MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_sub_item_unlock);
+        menuItem.setEnabled(!Utils.hasAccessToX(this));
+        menuItem.setVisible(!Utils.hasAccessToX(this));
     }
 
     /**
@@ -90,40 +100,43 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
-        mActionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        actionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawerView = findViewById(R.id.drawer_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        navigationView = (NavigationView) findViewById(R.id.navigation);
 
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        // setup nav drawer account header
+        navigationView.findViewById(R.id.containerDrawerAccount).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onNavItemClick(NAV_ITEM_ACCOUNT_ID);
+                    }
+                });
+        textViewHeaderAccountType = (TextView) navigationView.findViewById(
+                R.id.textViewDrawerItemAccount);
+        textViewHeaderUser = (TextView) navigationView.findViewById(
+                R.id.textViewDrawerItemUsername);
 
-        // setup menu adapter
-        mDrawerAdapter = new DrawerAdapter(this);
-        mDrawerAdapter.add(new DrawerItemAccount());
-
-        mDrawerAdapter.add(new DrawerItemDivider());
-
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.shows),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableTv)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.lists),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableList)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.movies),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableMovie)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.statistics),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStats)));
-
-        mDrawerAdapter.add(new DrawerItemDivider());
-
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.preferences),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableSettings)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.help),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableHelp)));
-        mDrawerAdapter.add(new DrawerItem(getString(R.string.action_upgrade),
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.drawableStar)));
-
-        mDrawerList.setAdapter(mDrawerAdapter);
-        mDrawerList.setOnItemClickListener(this);
+        // setup nav drawer items
+        navigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
+                ? R.menu.menu_drawer_light : R.menu.menu_drawer);
+        navigationView.setItemIconTintList(getResources().getColorStateList(
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
+        navigationView.setItemTextColor(getResources().getColorStateList(
+                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerText)));
+        navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
+                R.attr.sgActivatedItemBackgroundDrawer));
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        onNavItemClick(menuItem.getItemId());
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -135,13 +148,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         super.onBackPressed();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    private void onNavItemClick(int itemId) {
         Intent launchIntent = null;
 
-        mDrawerAdapter.getItem(position);
-        switch (position) {
-            case MENU_ITEM_ACCOUNT: {
+        switch (itemId) {
+            case NAV_ITEM_ACCOUNT_ID: {
                 // SG Cloud connection overrides trakt
                 if (HexagonTools.isSignedIn(this)) {
                     launchIntent = new Intent(this, CloudSetupActivity.class);
@@ -151,7 +162,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
                 break;
             }
-            case MENU_ITEM_SHOWS_POSITION:
+            case R.id.navigation_item_shows:
                 if (this instanceof ShowsActivity) {
                     break;
                 }
@@ -160,7 +171,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
-            case MENU_ITEM_LISTS_POSITION:
+            case R.id.navigation_item_lists:
                 if (this instanceof ListsActivity) {
                     break;
                 }
@@ -168,7 +179,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
-            case MENU_ITEM_MOVIES_POSITION:
+            case R.id.navigation_item_movies:
                 if (this instanceof MoviesActivity) {
                     break;
                 }
@@ -176,7 +187,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
-            case MENU_ITEM_STATS_POSITION:
+            case R.id.navigation_item_stats:
                 if (this instanceof StatsActivity) {
                     break;
                 }
@@ -184,15 +195,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
-            case MENU_ITEM_SETTINGS_POSITION:
+            case R.id.navigation_sub_item_settings:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
-            case MENU_ITEM_HELP_POSITION:
+            case R.id.navigation_sub_item_help:
                 launchIntent = new Intent(this, HelpActivity.class);
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
-            case MENU_ITEM_SUBSCRIBE_POSITION:
+            case R.id.navigation_sub_item_unlock:
                 if (Utils.isAmazonVersion()) {
                     launchIntent = new Intent(this, AmazonBillingActivity.class);
                 } else {
@@ -205,7 +216,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
         // already displaying correct screen
         if (launchIntent != null) {
             final Intent finalLaunchIntent = launchIntent;
-            mHandler.postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     goToNavDrawerItem(finalLaunchIntent);
@@ -213,7 +224,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
             }, NAVDRAWER_CLOSE_DELAY);
         }
 
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private void goToNavDrawerItem(Intent intent) {
@@ -225,188 +236,39 @@ public abstract class BaseNavDrawerActivity extends BaseActivity
      * Returns true if the navigation drawer is open.
      */
     public boolean isNavDrawerOpen() {
-        return mDrawerLayout.isDrawerOpen(mDrawerView);
+        return drawerLayout.isDrawerOpen(navigationView);
     }
 
     public void setDrawerIndicatorEnabled() {
-        mActionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
-        mActionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
+        actionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
+        actionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
     }
 
     /**
      * Highlights the given position in the drawer menu. Activities listed in the drawer should call
      * this in {@link #onStart()}.
      */
-    public void setDrawerSelectedItem(int menuItemPosition) {
-        mDrawerList.setItemChecked(menuItemPosition, true);
+    public void setDrawerSelectedItem(@IdRes int menuItemId) {
+        navigationView.getMenu().findItem(menuItemId).setChecked(true);
     }
 
     public void openNavDrawer() {
-        mDrawerLayout.openDrawer(GravityCompat.START);
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     public void closeNavDrawer() {
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public boolean toggleDrawer(MenuItem item) {
         if (item != null && item.getItemId() == android.R.id.home) {
-            if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+            if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);
             }
             return true;
         }
         return false;
-    }
-
-    public static class DrawerItem {
-
-        String mTitle;
-        int mIconRes;
-
-        public DrawerItem(String title, int iconRes) {
-            mTitle = title;
-            mIconRes = iconRes;
-        }
-    }
-
-    public static class DrawerItemDivider extends DrawerItem {
-        public DrawerItemDivider() {
-            super(null, 0);
-        }
-    }
-
-    private static class DrawerItemAccount extends DrawerItem {
-        public DrawerItemAccount() {
-            super(null, 0);
-        }
-    }
-
-    public static class DrawerAdapter extends ArrayAdapter<DrawerItem> {
-
-        private static final int VIEW_TYPE_ITEM = 0;
-        private static final int VIEW_TYPE_DIVIDER = 1;
-        private static final int VIEW_TYPE_ACCOUNT = 2;
-
-        private final ColorStateList colorStateListIcon;
-
-        private boolean isSubscribeVisible;
-
-        public DrawerAdapter(Context context) {
-            super(context, 0);
-
-            colorStateListIcon = getContext().getResources()
-                    .getColorStateList(Utils.resolveAttributeToResourceId(context.getTheme(),
-                            R.attr.sgColorNavDrawerIcon));
-        }
-
-        public void setSubscribeVisible(boolean visible) {
-            isSubscribeVisible = visible;
-        }
-
-        @Override
-        public int getCount() {
-            // assumes that subscribe is last item
-            return isSubscribeVisible ? super.getCount() : super.getCount() - 1;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            DrawerItem item = getItem(position);
-            if (item instanceof DrawerItemDivider) {
-                return VIEW_TYPE_DIVIDER;
-            }
-            if (item instanceof DrawerItemAccount) {
-                return VIEW_TYPE_ACCOUNT;
-            }
-            return VIEW_TYPE_ITEM;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 3;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            DrawerItem item = getItem(position);
-            return !(item instanceof DrawerItemDivider);
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            DrawerItem item = getItem(position);
-
-            int type = getItemViewType(position);
-            // divider and account only appear once, so don't use a view holder
-            if (type == VIEW_TYPE_DIVIDER) {
-                convertView = LayoutInflater.from(getContext()).inflate(
-                        R.layout.drawer_item_divider, parent, false);
-                return convertView;
-            }
-            if (type == VIEW_TYPE_ACCOUNT) {
-                convertView = LayoutInflater.from(getContext()).inflate(
-                        R.layout.drawer_item_account, parent, false);
-                TextView account = (TextView) convertView.findViewById(
-                        R.id.textViewDrawerItemAccount);
-                TextView user = (TextView) convertView.findViewById(
-                        R.id.textViewDrawerItemUsername);
-
-                if (HexagonTools.isSignedIn(getContext())) {
-                    // connected to SG Cloud
-                    account.setText(R.string.hexagon);
-                    user.setText(HexagonSettings.getAccountName(getContext()));
-                } else if (TraktCredentials.get(getContext()).hasCredentials()) {
-                    // connected to trakt
-                    account.setText(R.string.trakt);
-                    user.setText(TraktCredentials.get(getContext()).getUsername());
-                } else {
-                    // connected to nothing
-                    account.setText(R.string.trakt);
-                    user.setText(R.string.connect_trakt);
-                }
-                return convertView;
-            }
-
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(
-                        R.layout.drawer_item, parent, false);
-                holder = new ViewHolder();
-                holder.attach(convertView);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            // title
-            holder.title.setText(item.mTitle);
-
-            // compat tintable drawable for the icon
-            Drawable icon = DrawableCompat.wrap(
-                    getContext().getResources().getDrawable(item.mIconRes));
-            DrawableCompat.setTintList(icon, colorStateListIcon);
-            holder.icon.setImageDrawable(icon);
-
-            return convertView;
-        }
-    }
-
-    private static class ViewHolder {
-
-        public TextView title;
-
-        public ImageView icon;
-
-        public void attach(View v) {
-            icon = (ImageView) v.findViewById(R.id.menu_icon);
-            title = (TextView) v.findViewById(R.id.menu_title);
-        }
     }
 }

@@ -16,29 +16,15 @@
   ~ limitations under the License.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- The navigation drawer -->
-    <LinearLayout
-        android:id="@+id/drawer_view"
-        android:layout_width="@dimen/drawer_width"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="?attr/sgColorBackgroundDrawer"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/drawer_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:choiceMode="singleChoice"
-            android:divider="@color/transparent"
-            android:dividerHeight="0dp"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/default_padding"
-            android:paddingBottom="@dimen/default_padding" />
-
-    </LinearLayout>
+        app:headerLayout="@layout/drawer_item_account" />
 
 </merge>

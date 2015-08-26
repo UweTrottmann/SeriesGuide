@@ -56,4 +56,22 @@
         <item name="colorAccent">@color/teal_500</item>
     </style>
 
+    <style name="Theme.SeriesGuide.Drawer">
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.DarkBlue.Drawer">
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.Light.Drawer">
+        <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>
