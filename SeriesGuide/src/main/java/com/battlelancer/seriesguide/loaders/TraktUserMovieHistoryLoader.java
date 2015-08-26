@@ -27,7 +27,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.Username;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +67,8 @@ public class TraktUserMovieHistoryLoader
 
         List<HistoryEntry> history;
         try {
-            history = trakt.users().historyMovies("me", 1, MAX_HISTORY_SIZE, Extended.IMAGES);
+            history = trakt.users()
+                    .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.IMAGES);
         } catch (RetrofitError e) {
             Timber.e(e, "Loading user movie history failed");
             return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())

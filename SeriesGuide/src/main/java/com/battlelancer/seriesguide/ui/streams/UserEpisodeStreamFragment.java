@@ -35,7 +35,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.Username;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.util.List;
 import retrofit.RetrofitError;
@@ -162,7 +164,8 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
             List<HistoryEntry> history;
             try {
-                history = trakt.users().historyEpisodes("me", 1, 25, Extended.IMAGES);
+                history = trakt.users()
+                        .history(Username.ME, HistoryType.EPISODES, 1, 25, Extended.IMAGES);
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading user episode history failed");
                 return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())

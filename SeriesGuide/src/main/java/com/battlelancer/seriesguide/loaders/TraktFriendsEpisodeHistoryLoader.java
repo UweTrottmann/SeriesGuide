@@ -27,7 +27,9 @@ import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.Username;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Users;
 import java.util.ArrayList;
@@ -38,7 +40,8 @@ import timber.log.Timber;
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
  */
-public class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+public class TraktFriendsEpisodeHistoryLoader
+        extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
     public TraktFriendsEpisodeHistoryLoader(Context context) {
         super(context);
@@ -55,7 +58,7 @@ public class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<N
         // get all trakt friends
         List<Friend> friends;
         try {
-            friends = traktUsers.friends("me", Extended.IMAGES);
+            friends = traktUsers.friends(Username.ME, Extended.IMAGES);
         } catch (RetrofitError e) {
             Timber.e(e, "Failed to load trakt friends");
             return null;
@@ -80,7 +83,8 @@ public class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<N
             // get last watched episode
             List<HistoryEntry> history;
             try {
-                history = traktUsers.historyEpisodes(friend.user.username, 1, 1, Extended.IMAGES);
+                history = traktUsers.history(new Username(friend.user.username),
+                        HistoryType.EPISODES, 1, 1, Extended.IMAGES);
             } catch (RetrofitError e) {
                 // abort, either lost connection or server error or other error
                 Timber.e(e, "Failed to load friend episode history");
