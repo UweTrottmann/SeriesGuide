@@ -14,37 +14,43 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerDrawerAccount"
     android:layout_width="match_parent"
     android:layout_height="144dp"
-    android:background="?attr/colorPrimaryDark"
-    android:paddingLeft="@dimen/keyline"
-    android:paddingRight="@dimen/keyline"
-    android:paddingTop="@dimen/large_padding"
-    android:paddingBottom="@dimen/default_padding"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:background="?attr/colorPrimaryDark">
 
-    <TextView
-        android:id="@+id/textViewDrawerItemUsername"
+    <RelativeLayout
+        android:id="@+id/containerDrawerAccount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="@dimen/inline_padding"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.Body"
-        tools:text="uwe" />
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:paddingLeft="@dimen/keyline"
+        android:paddingRight="@dimen/keyline"
+        android:paddingTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/default_padding"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/textViewDrawerItemAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewDrawerItemUsername"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.Body.Bold"
-        tools:text="trakt" />
+        <TextView
+            android:id="@+id/textViewDrawerItemUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="@dimen/inline_padding"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.Body"
+            tools:text="uwe" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewDrawerItemAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewDrawerItemUsername"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.Body.Bold"
+            tools:text="trakt" />
+
+    </RelativeLayout>
+</FrameLayout>
