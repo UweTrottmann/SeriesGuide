@@ -31,7 +31,7 @@ import com.uwetrottmann.trakt.v2.entities.Username;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -86,13 +86,13 @@ public class TraktUserMovieHistoryLoader
             return new Result(null, 0);
         }
 
-        List<NowAdapter.NowItem> items = new LinkedList<>();
+        List<NowAdapter.NowItem> items = new ArrayList<>();
         items.add(
                 new NowAdapter.NowItem().header(getContext().getString(R.string.recently_watched)));
 
         // add movies
         long threeDaysAgo = System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS;
-        for (int i = 0; i < history.size(); i++) {
+        for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
 
             if (entry.movie == null || entry.movie.ids == null || entry.movie.ids.tmdb == null

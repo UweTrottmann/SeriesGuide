@@ -32,6 +32,7 @@ import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Users;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import retrofit.RetrofitError;
 import timber.log.Timber;
@@ -65,23 +66,39 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
             return null;
         }
 
-        if (friends == null || friends.size() == 0) {
+        if (friends == null) {
             return null;
         }
 
-        List<NowAdapter.NowItem> items = new ArrayList<>();
-        for (int i = 0; i < friends.size(); i++) {
+        int size = friends.size();
+        if (size == 0) {
+            return null;
+        }
+
+        // estimate list size
+        List<NowAdapter.NowItem> items = new ArrayList<>(size + 1);
+
+        // add header
+        items.add(
+                new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
+
+        // add last watched movie for each friend
+        for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
 
-            if (friend.user == null || TextUtils.isEmpty(friend.user.username)) {
-                // at least need a username
+            // at least need a username
+            if (friend.user == null) {
+                continue;
+            }
+            String username = friend.user.username;
+            if (TextUtils.isEmpty(username)) {
                 continue;
             }
 
             // get last watched episode
             List<HistoryEntry> history;
             try {
-                history = traktUsers.history(new Username(friend.user.username), HistoryType.MOVIES,
+                history = traktUsers.history(new Username(username), HistoryType.MOVIES,
                         1, 1, Extended.IMAGES);
             } catch (RetrofitError e) {
                 // abort, either lost connection or server error or other error
@@ -115,14 +132,13 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
                             poster
                     )
                     .tmdbId(entry.movie.ids == null ? null : entry.movie.ids.tmdb)
-                    .friend(friend.user.username, avatar, entry.action);
+                    .friend(username, avatar, entry.action);
             items.add(nowItem);
         }
 
-        // add header
-        if (items.size() > 0) {
-            items.add(0, new NowAdapter.NowItem().header(
-                    getContext().getString(R.string.friends_recently)));
+        // only have a header? return nothing
+        if (items.size() == 1) {
+            return Collections.emptyList();
         }
 
         return items;
