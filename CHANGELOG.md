@@ -5,6 +5,14 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 25 *(in development)*
+-----------------------------
+
+#### 25-beta1 *(2015-08-26)*
+
+* TWEAK Full height nav drawer on Android 5 Lollipop and up.
+* FIX trakt friend activity was not displayed if one friend had a username with a period in it.
+
 Version 24 *(2015-08-21)*
 -----------------------------
 
