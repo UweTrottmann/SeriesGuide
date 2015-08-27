@@ -81,8 +81,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
 
-    private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
-
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
@@ -144,10 +142,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             );
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_services);
-            setupSharingSettings(
-                    this,
-                    findPreference(KEY_GETGLUE_DISCONNECT)
-            );
         } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
             addPreferencesFromResource(R.xml.settings_advanced);
             setupAdvancedSettings(
@@ -175,21 +169,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_actionbar);
-    }
-
-    protected static void setupSharingSettings(final Context context, Preference getGluePref) {
-        // Disconnect GetGlue
-        getGluePref.setEnabled(GetGlueSettings.isAuthenticated(context));
-        getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent(context, "Disonnect GetGlue");
-
-                GetGlueSettings.clearTokens(context);
-                preference.setEnabled(false);
-                return true;
-            }
-        });
     }
 
     protected static void setupBasicSettings(final Activity activity, final Intent startIntent,
@@ -514,10 +493,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     break;
                 case "sharing":
                     addPreferencesFromResource(R.xml.settings_services);
-                    setupSharingSettings(
-                            getActivity(),
-                            findPreference(KEY_GETGLUE_DISCONNECT)
-                    );
                     break;
                 case "advanced":
                     addPreferencesFromResource(R.xml.settings_advanced);

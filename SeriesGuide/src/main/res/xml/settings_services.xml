@@ -18,28 +18,4 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/getglue">
-        <Preference
-            android:key="clearGetGlueCredentials"
-            android:summary="@string/clearGetGlueCredentialssummary"
-            android:title="@string/clearGetGlueCredentials" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/trakt">
-        <Preference
-            android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:summary="@string/pref_traktsummary"
-            android:title="@string/connect_trakt">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
-
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.autoaddtraktshows"
-            android:summary="@string/pref_autoaddshowssummary"
-            android:title="@string/pref_autoaddshows" />
-    </PreferenceCategory>
-
 </PreferenceScreen>
