@@ -44,7 +44,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
  */
 public class FirstRunFragment extends SherlockFragment {
 
-    private static final String PREF_KEY_FIRSTRUN = "accepted_eula";
+    private static final String PREF_KEY_FIRSTRUN = "seen_first_run";
 
     protected static final String TAG = "First Run";
 
@@ -55,7 +55,7 @@ public class FirstRunFragment extends SherlockFragment {
     }
 
     public interface OnFirstRunDismissedListener {
-        public void onFirstRunDismissed();
+        void onFirstRunDismissed();
     }
 
     public static boolean hasSeenFirstRunFragment(final Context context) {
