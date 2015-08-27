@@ -43,17 +43,6 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // library button
-        getView().findViewById(R.id.buttonShowLibrary).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open library tab
-                Intent i = new Intent(getActivity(), AddActivity.class);
-                i.putExtra(AddActivity.InitBundle.DEFAULT_TAB, AddPagerAdapter.LIBRARY_TAB_POSITION);
-                startActivity(i);
-            }
-        });
-
         // close button
         getView().findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
             @Override
