@@ -87,6 +87,7 @@ public class SeriesGuideApplication extends Application {
 
     @Override
     public void onLowMemory() {
+        super.onLowMemory();
         if (!AndroidUtils.isICSOrHigher()) {
             // Clear the whole cache as Honeycomb and below don't support
             // onTrimMemory (used directly in our ImageProvider)
