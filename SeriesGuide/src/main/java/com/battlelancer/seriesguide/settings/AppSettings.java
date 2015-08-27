@@ -26,8 +26,6 @@ public class AppSettings {
 
     public static final String KEY_VERSION = "oldversioncode";
 
-    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
-
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
     /**
@@ -46,11 +44,6 @@ public class AppSettings {
         }
 
         return lastVersionCode;
-    }
-
-    public static boolean isGaAppOptOut(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_GOOGLEANALYTICS, false);
     }
 
     /**

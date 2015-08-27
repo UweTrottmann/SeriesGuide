@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -73,7 +72,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         if (!onAutoBackup()) {
             SgSyncAdapter.requestSyncIfTime(this);
         }
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
         registerEventBus();
     }
 
@@ -95,7 +93,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
             mHandler.removeCallbacks(mUpdateShowRunnable);
         }
 
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
         unregisterEventBus();
     }
 

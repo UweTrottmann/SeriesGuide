@@ -72,9 +72,6 @@ dependencies {
     compile 'com.uwetrottmann:trakt-java:3.2.+'
     compile 'de.greenrobot:eventbus:2.2.0'
 
-    // Google Play Services
-    compile 'com.google.android.gms:play-services:4.4.52'
-
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 

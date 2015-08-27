@@ -23,13 +23,10 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import android.preference.PreferenceManager;
-import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
@@ -71,15 +68,6 @@ public class SeriesGuideApplication extends Application {
 
         // Load the current theme into a global variable
         Utils.updateTheme(DisplaySettings.getThemeIndex(this));
-
-        // Ensure GA opt-out
-        GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
-        if (BuildConfig.DEBUG) {
-            GoogleAnalytics.getInstance(this).setDryRun(true);
-            GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-        }
-        // Initialize tracker
-        Analytics.getTracker(this);
 
         // Enable StrictMode
         enableStrictMode();

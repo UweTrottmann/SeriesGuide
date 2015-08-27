@@ -45,15 +45,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.GetGlueSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 
@@ -148,7 +145,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     this,
                     findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                     findPreference(KEY_OFFSET),
-                    findPreference(AppSettings.KEY_GOOGLEANALYTICS),
                     findPreference(KEY_CLEAR_CACHE)
             );
         } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
@@ -283,7 +279,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     protected static void setupAdvancedSettings(final Context context,
-            Preference upcomingPref, Preference offsetPref, Preference analyticsPref,
+            Preference upcomingPref, Preference offsetPref,
             Preference clearCachePref) {
 
         // Clear image cache
@@ -297,19 +293,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 Toast.makeText(context, context.getString(R.string.done), Toast.LENGTH_SHORT)
                         .show();
                 return true;
-            }
-        });
-
-        // GA opt-out
-        analyticsPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                    boolean isEnabled = (Boolean) newValue;
-                    GoogleAnalytics.getInstance(context).setAppOptOut(isEnabled);
-                    return true;
-                }
-                return false;
             }
         });
 
@@ -346,7 +329,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
     }
 
     @Override
@@ -355,7 +337,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
@@ -500,7 +481,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                             getActivity(),
                             findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
                             findPreference(KEY_OFFSET),
-                            findPreference(AppSettings.KEY_GOOGLEANALYTICS),
                             findPreference(KEY_CLEAR_CACHE)
                     );
                     break;

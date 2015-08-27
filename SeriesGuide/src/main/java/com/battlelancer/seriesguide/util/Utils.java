@@ -34,7 +34,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
@@ -44,8 +43,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -282,9 +279,6 @@ public class Utils {
      * android.support.v4.app.Fragment#onStart()}.
      */
     public static void trackView(Context context, String screenName) {
-        Tracker tracker = Analytics.getTracker(context);
-        tracker.setScreenName(screenName);
-        tracker.send(new HitBuilders.AppViewBuilder().build());
     }
 
     /**
@@ -295,33 +289,18 @@ public class Utils {
      */
     public static void trackCustomEvent(Context context, String tag, String action,
             String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
-                .setAction(action)
-                .setLabel(label)
-                .build());
     }
 
     /**
      * Track an action event, e.g. when an action item is clicked.
      */
     public static void trackAction(Context context, String tag, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
-                .setAction("Action Item")
-                .setLabel(label)
-                .build());
     }
 
     /**
      * Track a context menu event, e.g. when a context item is clicked.
      */
     public static void trackContextMenu(Context context, String tag, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
-                .setAction("Context Item")
-                .setLabel(label)
-                .build());
     }
 
     /**
@@ -329,11 +308,6 @@ public class Utils {
      * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
      */
     public static void trackClick(Context context, String tag, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
-                .setAction("Click")
-                .setLabel(label)
-                .build());
     }
 
     /**
