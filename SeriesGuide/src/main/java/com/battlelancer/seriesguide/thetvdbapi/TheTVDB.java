@@ -314,24 +314,7 @@ public class TheTVDB {
             throws TvdbException {
         // get show details from TVDb
         Show show = downloadAndParseShow(context, showTvdbId, language);
-
-        // get some more details from trakt
-        TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTrakt(context);
-        if (manager != null) {
-            try {
-                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Downloading summary failed");
-            }
-        }
-        if (traktShow == null) {
-            throw new TvdbException("Could not load show from trakt: " + showTvdbId);
-        }
-
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
-        show.country = traktShow.country;
-
+        
         // try to download the show poster
         if (Utils.isAllowedLargeDataConnection(context, false)) {
             fetchArt(show.poster, true, context);
@@ -374,6 +357,11 @@ public class TheTVDB {
         show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.airday = body.trim();
+            }
+        });
+        show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.airtime = TimeTools.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {

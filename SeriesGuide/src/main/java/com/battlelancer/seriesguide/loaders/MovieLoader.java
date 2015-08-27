@@ -22,8 +22,6 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.jakewharton.trakt.entities.Movie;
-import com.jakewharton.trakt.entities.Ratings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.Date;
@@ -62,33 +60,22 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             if (movieQuery != null) {
                 movieQuery.close();
             }
-            // ensure list flags are false on failure
-            // (assumption: movie is not in db, it has the truth, so can't be in any lists)
-            if (details.traktMovie() != null) {
-                details.traktMovie().inCollection = false;
-                details.traktMovie().inWatchlist = false;
-            }
+            // ensure list flags and watched flag are false on failure
+            // (assumption: movie not in db, it has the truth, so can't be in any lists or watched)
+            details.inCollection = false;
+            details.inWatchlist = false;
+            details.isWatched = false;
             return details;
         }
 
-        // only overwrite other info if there is no remote data
-        if (details.traktMovie() == null) {
-            details.traktMovie(new Movie());
-            details.traktMovie().released = new Date(
-                    movieQuery.getLong(MovieQuery.RELEASED_UTC_MS));
-            details.traktMovie().ratings = new Ratings();
-            details.traktMovie().ratings.percentage = movieQuery.getInt(MovieQuery.RATING_TRAKT);
-            details.traktMovie().ratings.votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
-        }
-        // prefer local state for watched, collected and watchlist status
+        // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
-        details.traktMovie().watched = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.WATCHED));
-        details.traktMovie().inCollection = DBUtils.restoreBooleanFromInt(
+        details.inCollection = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_COLLECTION));
-        details.traktMovie().inWatchlist = DBUtils.restoreBooleanFromInt(
+        details.inWatchlist = DBUtils.restoreBooleanFromInt(
                 movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-        
+        details.isWatched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
+
         if (details.tmdbMovie() == null) {
             details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
             details.tmdbMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
@@ -97,6 +84,11 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.tmdbMovie().poster_path = movieQuery.getString(MovieQuery.POSTER);
             details.tmdbMovie().runtime = movieQuery.getInt(MovieQuery.RUNTIME_MIN);
             details.tmdbMovie().vote_average = movieQuery.getDouble(MovieQuery.RATING_TMDB);
+            details.tmdbMovie().vote_count = movieQuery.getInt(MovieQuery.RATING_VOTES_TMDB);
+            // if stored release date is Long.MAX, movie has no release date
+            long releaseDateMs = movieQuery.getLong(MovieQuery.RELEASED_UTC_MS);
+            details.tmdbMovie().release_date = releaseDateMs == Long.MAX_VALUE ? null
+                    : new Date(releaseDateMs);
         }
 
         // clean up
@@ -130,8 +122,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
                 Movies.IMDB_ID,
                 Movies.RUNTIME_MIN,
                 Movies.RATING_TMDB,
-                Movies.RATING_TRAKT,
-                Movies.RATING_VOTES_TRAKT
+                Movies.RATING_VOTES_TMDB
         };
 
         int TITLE = 0;
@@ -144,7 +135,6 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         int IMDB_ID = 7;
         int RUNTIME_MIN = 8;
         int RATING_TMDB = 9;
-        int RATING_TRAKT = 10;
-        int RATING_VOTES_TRAKT = 11;
+        int RATING_VOTES_TMDB = 10;
     }
 }

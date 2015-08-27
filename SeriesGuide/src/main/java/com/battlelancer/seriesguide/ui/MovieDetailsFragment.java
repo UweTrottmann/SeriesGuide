@@ -45,7 +45,6 @@ import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -54,11 +53,11 @@ import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.trakt.entities.Movie;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb.entities.Movie;
 import com.uwetrottmann.tmdb.entities.Trailers;
 import de.greenrobot.event.EventBus;
 
@@ -271,8 +270,8 @@ public class MovieDetailsFragment extends SherlockFragment {
             playStoreItem.setEnabled(isEnableShare);
             playStoreItem.setVisible(isEnableShare);
 
-            boolean isEnableImdb = mMovieDetails.traktMovie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.traktMovie().imdb_id);
+            boolean isEnableImdb = mMovieDetails.tmdbMovie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.tmdbMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
@@ -295,7 +294,7 @@ public class MovieDetailsFragment extends SherlockFragment {
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.traktMovie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(mMovieDetails.tmdbMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
@@ -323,17 +322,19 @@ public class MovieDetailsFragment extends SherlockFragment {
          * Take title, overview and poster from TMDb as they are localized.
          * Everything else from trakt.
          */
-        Movie traktMovie = mMovieDetails.traktMovie();
-        com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        final boolean inCollection = mMovieDetails.inCollection;
+        final boolean inWatchlist = mMovieDetails.inWatchlist;
+        final boolean isWatched = mMovieDetails.isWatched;
 
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
-        if (traktMovie.released != null && traktMovie.released.getTime() != 0) {
+        if (tmdbMovie.release_date != null) {
             releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
-                    traktMovie.released.getTime(), DateUtils.FORMAT_SHOW_DATE));
+                    tmdbMovie.release_date.getTime(), DateUtils.FORMAT_SHOW_DATE));
             releaseAndRuntime.append(" | ");
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
@@ -357,42 +358,19 @@ public class MovieDetailsFragment extends SherlockFragment {
         });
 
         // watched button (only supported when connected to trakt)
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
-            final boolean isWatched = traktMovie.watched != null && traktMovie.watched;
-            mWatchedButton.setImageResource(isWatched
-                    ? R.drawable.ic_ticked
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatch));
-            CheatSheet.setup(mWatchedButton,
-                    isWatched ? R.string.action_unwatched : R.string.action_watched);
-            mWatchedButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isWatched) {
-                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Unwatched movie");
-                    } else {
-                        MovieTools.watchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Watched movie");
-                    }
-                }
-            });
-        } else {
-            mWatchedButton.setVisibility(View.GONE);
-        }
+        mWatchedButton.setVisibility(View.GONE);
 
         // collected button
-        final boolean isInCollection = traktMovie.inCollection != null && traktMovie.inCollection;
-        mCollectedButton.setImageResource(isInCollection
+        mCollectedButton.setImageResource(inCollection
                 ? R.drawable.ic_collected
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableCollect));
-        CheatSheet.setup(mCollectedButton, isInCollection ? R.string.action_collection_remove
+        CheatSheet.setup(mCollectedButton, inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         mCollectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isInCollection) {
+                if (inCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
                     fireTrackerEvent("Uncollected movie");
                 } else {
@@ -403,17 +381,16 @@ public class MovieDetailsFragment extends SherlockFragment {
         });
 
         // watchlist button
-        final boolean isInWatchlist = traktMovie.inWatchlist != null && traktMovie.inWatchlist;
-        mWatchlistedButton.setImageResource(isInWatchlist
+        mWatchlistedButton.setImageResource(inWatchlist
                 ? R.drawable.ic_action_list_highlight
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableList));
         CheatSheet.setup(mWatchlistedButton,
-                isInWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
+                inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         mWatchlistedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isInWatchlist) {
+                if (inWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
                     fireTrackerEvent("Unwatchlist movie");
                 } else {
@@ -428,14 +405,6 @@ public class MovieDetailsFragment extends SherlockFragment {
 
         // ratings
         mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
-        mRatingsTraktUserValue.setText(
-                TraktTools.buildUserRatingString(getActivity(), traktMovie.rating_advanced));
-        if (traktMovie.ratings != null) {
-            mRatingsTraktVotes.setText(
-                    TraktTools.buildRatingVotesString(getActivity(), traktMovie.ratings.votes));
-            mRatingsTraktValue.setText(
-                    TraktTools.buildRatingPercentageString(traktMovie.ratings.percentage));
-        }
         mRatingsContainer.setVisibility(View.VISIBLE);
 
         // trakt comments link
@@ -539,7 +508,7 @@ public class MovieDetailsFragment extends SherlockFragment {
             mMovieDetails = movieDetails;
             mProgressBar.setVisibility(View.GONE);
 
-            if (movieDetails.traktMovie() != null && movieDetails.tmdbMovie() != null) {
+            if (movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
                 getSherlockActivity().supportInvalidateOptionsMenu();
             } else {
