@@ -45,22 +45,6 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/large_padding" />
 
-            <Button
-                android:id="@+id/buttonFirstRunMigrate"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/action_migrate" />
-
-            <include
-                android:id="@+id/divider2"
-                layout="@layout/divider_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
             <LinearLayout
                 android:id="@+id/layoutBottom"
                 android:layout_width="match_parent"
@@ -85,24 +69,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/default_padding"
                     android:prompt="@string/welcome_setuplanguage" />
-
-                <TextView
-                    android:id="@+id/trakt_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:text="@string/welcome_traktmessage"
-                    android:textAppearance="@style/TextAppearance" />
-
-                <Button
-                    android:id="@+id/welcome_setuptrakt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:drawablePadding="8dp"
-                    android:drawableLeft="@drawable/ic_trakt"
-                    android:text="@string/connect_trakt" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

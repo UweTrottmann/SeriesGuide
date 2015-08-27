@@ -59,7 +59,7 @@ public class FirstRunFragment extends SherlockFragment {
     }
 
     public interface OnFirstRunDismissedListener {
-        public void onFirstRunDismissed();
+        void onFirstRunDismissed();
     }
 
     public static boolean hasSeenFirstRunFragment(final Context context) {
@@ -98,15 +98,6 @@ public class FirstRunFragment extends SherlockFragment {
             }
         });
 
-        // migrate button
-        getView().findViewById(R.id.buttonFirstRunMigrate).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MigrationActivity.class));
-                setFirstRunDismissed();
-            }
-        });
-
         // language chooser
         Spinner spinner = (Spinner) getView().findViewById(R.id.welcome_setuplanguage);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -114,17 +105,6 @@ public class FirstRunFragment extends SherlockFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
-
-        // trakt connect button
-        getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fireTrackerEvent("Connect trakt");
-
-                Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
-                startActivity(i);
-            }
-        });
 
         // dismiss button
         View buttonDismiss = getView().findViewById(R.id.buttonFirstRunDismiss);
