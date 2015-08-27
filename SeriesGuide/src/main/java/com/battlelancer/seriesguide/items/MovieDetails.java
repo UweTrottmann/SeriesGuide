@@ -23,18 +23,11 @@ import com.jakewharton.trakt.entities.Movie;
  */
 public class MovieDetails {
 
-    private Movie mTraktMovie;
-
     private com.uwetrottmann.tmdb.entities.Movie mTmdbMovie;
 
-    public Movie traktMovie() {
-        return mTraktMovie;
-    }
-
-    public MovieDetails traktMovie(Movie traktMovie) {
-        mTraktMovie = traktMovie;
-        return this;
-    }
+    public boolean inCollection;
+    public boolean inWatchlist;
+    public boolean isWatched;
 
     public com.uwetrottmann.tmdb.entities.Movie tmdbMovie() {
         return mTmdbMovie;

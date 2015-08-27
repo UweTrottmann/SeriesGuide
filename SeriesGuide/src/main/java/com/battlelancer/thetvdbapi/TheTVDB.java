@@ -309,26 +309,7 @@ public class TheTVDB {
         // get localized content from TVDb
         String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
                 + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
-        Show show = parseShow(url, context);
-
-        // get some more details from trakt
-        TvShow traktShow = null;
-        Trakt manager = ServiceUtils.getTrakt(context);
-        if (manager != null) {
-            try {
-                traktShow = manager.showService().summary(showTvdbId, Extended.DEFAULT);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Downloading summary failed");
-            }
-        }
-        if (traktShow == null) {
-            throw new TvdbException("Could not load show from trakt: " + showTvdbId);
-        }
-
-        show.airtime = TimeTools.parseShowReleaseTime(traktShow.airTime);
-        show.country = traktShow.country;
-
-        return show;
+        return parseShow(url, context);
     }
 
     /**
@@ -367,6 +348,11 @@ public class TheTVDB {
         show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.airday = body.trim();
+            }
+        });
+        show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.airtime = TimeTools.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
