@@ -323,6 +323,7 @@
   <string name="welcome_traktmessage">Zugriff auf Ihre trakt-Bibliothek und Aktivität von Freunden</string>
   <string name="dismiss">Schließen</string>
   <string name="welcome_add_part1">Um loszulegen tippen Sie</string>
+  <string name="deprecation_warning">SeriesGuide wird offiziell nur noch für Android 4.0 und höher unterstützt. Dinge können derzeit oder in der Zukunft nicht mehr funktionieren!</string>
   <string name="upcoming_show">In Kürze läuft %s</string>
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
   <string name="upcoming_episodes_number">%s neue Folgen</string>
