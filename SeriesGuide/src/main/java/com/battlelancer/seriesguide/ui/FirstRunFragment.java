@@ -16,13 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.migration.MigrationActivity;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.battlelancer.seriesguide.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -37,10 +30,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.CheatSheet;
 
 /**
- * Helps the user to get familiar with the basic functions of SeriesGuide. Shown
- * only on first start up.
+ * Helps the user to get familiar with the basic functions of SeriesGuide. Shown only on first start
+ * up.
  *
  * @author Uwe Trottmann
  */
@@ -66,7 +64,8 @@ public class FirstRunFragment extends SherlockFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.firstrun_fragment, container, false);
     }
 
@@ -87,23 +86,15 @@ public class FirstRunFragment extends SherlockFragment {
         super.onActivityCreated(savedInstanceState);
 
         // add button
-        getView().findViewById(R.id.buttonFirstRunAddShow).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fireTrackerEvent("Add show");
-                startActivity(new Intent(getActivity(), AddActivity.class));
-                setFirstRunDismissed();
-            }
-        });
-
-        // migrate button
-        getView().findViewById(R.id.buttonFirstRunMigrate).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MigrationActivity.class));
-                setFirstRunDismissed();
-            }
-        });
+        getView().findViewById(R.id.buttonFirstRunAddShow)
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fireTrackerEvent("Add show");
+                        startActivity(new Intent(getActivity(), AddActivity.class));
+                        setFirstRunDismissed();
+                    }
+                });
 
         // language chooser
         Spinner spinner = (Spinner) getView().findViewById(R.id.welcome_setuplanguage);
@@ -112,17 +103,6 @@ public class FirstRunFragment extends SherlockFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
-
-        // trakt connect button
-        getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fireTrackerEvent("Connect trakt");
-
-                Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
-                startActivity(i);
-            }
-        });
 
         // dismiss button
         View buttonDismiss = getView().findViewById(R.id.buttonFirstRunDismiss);
