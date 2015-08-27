@@ -73,7 +73,7 @@ import timber.log.Timber;
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
-public class ShowsActivity extends BaseTopShowsActivity implements
+public class ShowsActivity extends BaseTopActivity implements
         AddDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
 
     protected static final String TAG = "Shows";
