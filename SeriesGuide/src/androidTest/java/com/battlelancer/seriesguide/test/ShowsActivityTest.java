@@ -52,12 +52,6 @@ public class ShowsActivityTest extends ActivityInstrumentationTestCase2<ShowsAct
         pressBack();
     }
 
-    public void testNavigateToCheckinAndBack() throws InterruptedException {
-        onView(withId(R.id.menu_checkin)).perform(click());
-
-        pressBack();
-    }
-
     public void testTabSwitching() {
         // go through tabs by tapping tab
         onView(withText("UPCOMING")).perform(click());
