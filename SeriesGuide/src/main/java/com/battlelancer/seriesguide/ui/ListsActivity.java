@@ -34,7 +34,7 @@ import com.battlelancer.seriesguide.util.Utils;
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
  */
-public class ListsActivity extends BaseTopShowsActivity implements OnListsChangedListener {
+public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
 
     public static final String TAG = "Lists";
 
