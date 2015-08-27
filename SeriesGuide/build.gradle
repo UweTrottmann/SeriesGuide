@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -90,7 +90,9 @@ dependencies {
     }
 
     // Crashlytics
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
+        transitive = true
+    }
 }
 
 // get signing config from gradle.properties file

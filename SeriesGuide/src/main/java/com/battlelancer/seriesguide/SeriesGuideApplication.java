@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -52,11 +53,12 @@ public class SeriesGuideApplication extends Application {
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-        }
-        if (!BuildConfig.DEBUG || FLAVOR_INTERNAL.equals(BuildConfig.FLAVOR)) {
+        } else {
             // crash and error reporting
             Timber.plant(new AnalyticsTree());
-            Crashlytics.start(this);
+            if (!Fabric.isInitialized()) {
+                Fabric.with(this, new Crashlytics());
+            }
         }
 
         // Set provider authority
