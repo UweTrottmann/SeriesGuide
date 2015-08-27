@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -45,7 +44,6 @@ import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -102,8 +100,6 @@ public class MovieDetailsFragment extends SherlockFragment {
     @InjectView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
 
     @InjectView(R.id.containerMovieButtons) View mButtonContainer;
-
-    @InjectView(R.id.buttonMovieCheckIn) ImageButton mCheckinButton;
 
     @InjectView(R.id.buttonMovieWatched) ImageButton mWatchedButton;
 
@@ -341,21 +337,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         mMovieReleaseDate.setText(releaseAndRuntime.toString());
 
         // check-in button
-        CheatSheet.setup(mCheckinButton);
-        final String title = tmdbMovie.title;
-        // fall back to local title for tvtag check-in if we currently don't have the original one
-        final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
-                ? title : tmdbMovie.original_title;
-        mCheckinButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // display a check-in dialog
-                MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title, originalTitle);
-                f.show(getFragmentManager(), "checkin-dialog");
-                fireTrackerEvent("Check-In");
-            }
-        });
 
         // watched button (only supported when connected to trakt)
         mWatchedButton.setVisibility(View.GONE);
@@ -406,20 +387,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         // ratings
         mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
         mRatingsContainer.setVisibility(View.VISIBLE);
-
-        // trakt comments link
-        mDivider.setVisibility(View.VISIBLE);
-        mCommentsButton.setVisibility(View.VISIBLE);
-        mCommentsButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
-                startActivity(i);
-                fireTrackerEvent("Comments");
-            }
-        });
 
         // poster
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {

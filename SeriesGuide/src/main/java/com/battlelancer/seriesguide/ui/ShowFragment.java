@@ -243,18 +243,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         View webSearch = getView().findViewById(R.id.buttonWebSearch);
         ServiceUtils.setUpWebSearchButton(mShow.getTitle(), webSearch, TAG);
 
-        // Shout button
-        getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
-                        getShowTvdbId()));
-                startActivity(i);
-                fireTrackerEvent("Shouts");
-            }
-        });
-
         // Poster
         final View posterContainer = getView().findViewById(R.id.containerShowPoster);
         final ImageView posterView = (ImageView) posterContainer

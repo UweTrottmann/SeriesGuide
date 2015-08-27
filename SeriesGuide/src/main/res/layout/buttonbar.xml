@@ -8,16 +8,6 @@
     tools:ignore="Overdraw">
 
     <ImageButton
-        android:id="@+id/imageButtonBarCheckin"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-        android:layout_width="@dimen/buttonbar_button_width"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/checkin"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:src="?attr/drawableCheckin" />
-
-    <ImageButton
         android:id="@+id/imageButtonBarWatched"
         style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="@dimen/buttonbar_button_width"

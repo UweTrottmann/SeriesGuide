@@ -53,7 +53,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -90,8 +89,6 @@ public class ShowsFragment extends SherlockFragment implements
     private static final int CONTEXT_UNHIDE_ID = 206;
 
     private static final int CONTEXT_MANAGE_LISTS_ID = 207;
-
-    private static final int CONTEXT_CHECKIN_ID = 208;
 
     private ShowsAdapter mAdapter;
 
@@ -278,7 +275,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         show.close();
 
-        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         menu.add(0, CONTEXT_FLAG_NEXT_ID, 1, R.string.context_marknext);
         menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
         menu.add(0, CONTEXT_UPDATE_ID, 5, R.string.context_updateshow);
@@ -290,22 +286,6 @@ public class ShowsFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case CONTEXT_CHECKIN_ID: {
-                fireTrackerEventContext("Check in");
-
-                Cursor show = (Cursor) mAdapter.getItem(info.position);
-                int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
-                if (episodeTvdbId <= 0) {
-                    return true;
-                }
-
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                        episodeTvdbId);
-                f.show(getFragmentManager(), "checkin-dialog");
-
-                return true;
-            }
             case CONTEXT_FAVORITE_ID: {
                 onFavoriteShow((int) info.id, true);
                 return true;

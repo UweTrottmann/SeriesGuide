@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
@@ -252,18 +251,6 @@ public class OverviewFragment extends SherlockFragment implements
                     mCurrentEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                     mShowCursor.getInt(ShowQuery.SHOW_RUNTIME)
             );
-        }
-    }
-
-    private void onCheckIn() {
-        fireTrackerEvent("Check-In");
-
-        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-            int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
-            // check in
-            CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                    episodeTvdbId);
-            f.show(getFragmentManager(), "checkin-dialog");
         }
     }
 
@@ -537,16 +524,6 @@ public class OverviewFragment extends SherlockFragment implements
             episodePrimaryContainer.setFocusable(true);
 
             // Button bar
-            // check-in button
-            View checkinButton = buttons.findViewById(R.id.imageButtonBarCheckin);
-            checkinButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onCheckIn();
-                }
-            });
-            CheatSheet.setup(checkinButton);
-
             // watched button
             View watchedButton = buttons.findViewById(R.id.imageButtonBarWatched);
             watchedButton.setOnClickListener(new OnClickListener() {
@@ -727,20 +704,6 @@ public class OverviewFragment extends SherlockFragment implements
 
         // Web search button
         getView().findViewById(R.id.buttonWebSearch).setVisibility(View.GONE);
-
-        // trakt shouts button
-        getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
-                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                    i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
-                            seasonNumber, episodeNumber, episodeTitle));
-                    startActivity(i);
-                    fireTrackerEvent("Comments");
-                }
-            }
-        });
     }
 
     private void onLoadImage(String imagePath) {

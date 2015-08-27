@@ -58,7 +58,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FetchArtTask;
@@ -116,7 +115,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.textViewEpisodeDvd) TextView mDvd;
     @InjectView(R.id.textViewRatingsTvdbValue) TextView mTvdbRating;
 
-    @InjectView(R.id.imageButtonBarCheckin) ImageButton mCheckinButton;
     @InjectView(R.id.imageButtonBarWatched) ImageButton mWatchedButton;
     @InjectView(R.id.imageButtonBarCollected) ImageButton mCollectedButton;
     @InjectView(R.id.imageButtonBarSkip) ImageButton mSkipButton;
@@ -126,7 +124,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     @InjectView(R.id.buttonTVDB) View mTvdbButton;
     @InjectView(R.id.buttonTrakt) View mTraktButton;
     @InjectView(R.id.buttonWebSearch) View mWebSearchButton;
-    @InjectView(R.id.buttonShouts) View mCommentsButton;
 
     /**
      * Data which has to be passed when creating this fragment.
@@ -355,7 +352,8 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             // "in 15 mins (Fri)"
             timeAndNumbersText
                     .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(), actualRelease),
+                            TimeTools.formatToRelativeLocalReleaseTime(getActivity(),
+                                    actualRelease),
                             TimeTools.formatToLocalReleaseDay(actualRelease))
                             .toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
@@ -433,20 +431,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             }
         });
         loadImage(imagePath);
-
-        // check in button
-        final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-        mCheckinButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                        episodeTvdbId);
-                f.show(getFragmentManager(), "checkin-dialog");
-                fireTrackerEvent("Check-In");
-            }
-        });
-        CheatSheet.setup(mCheckinButton);
 
         // watched button
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
@@ -531,17 +515,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         final int seasonTvdbId = cursor.getInt(DetailsQuery.REF_SEASON_ID);
         ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(), mTvdbButton,
                 TAG);
-        // trakt comments
-        mCommentsButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowTvdbId,
-                        mSeasonNumber, mEpisodeNumber, mEpisodeTitle));
-                startActivity(intent);
-                fireTrackerEvent("Comments");
-            }
-        });
 
         mEpisodeContainer.setVisibility(View.VISIBLE);
     }
