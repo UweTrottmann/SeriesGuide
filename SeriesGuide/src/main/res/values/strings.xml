@@ -443,6 +443,7 @@
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
+    <string name="deprecation_warning">SeriesGuide is only officially supported on Android 4.0 and up. Things might be broken or break in the future!</string>
 
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>

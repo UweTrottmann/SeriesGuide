@@ -320,7 +320,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
         // About
         aboutPref.setSummary("v" + versionFinal + " (Database v"
-                + SeriesGuideDatabase.DATABASE_VERSION + ")");
+                + SeriesGuideDatabase.DATABASE_VERSION + ")\n" + context.getString(
+                R.string.deprecation_warning));
     }
 
     @Override
