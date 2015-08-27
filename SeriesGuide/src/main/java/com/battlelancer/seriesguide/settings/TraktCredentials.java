@@ -66,7 +66,8 @@ public class TraktCredentials {
      * If there is a username and password.
      */
     public boolean hasCredentials() {
-        return mHasCredentials;
+        // trakt is not supported for this version anymore
+        return false;
     }
 
     /**
