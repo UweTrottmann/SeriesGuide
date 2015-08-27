@@ -16,41 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FetchArtTask;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
-import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -67,10 +38,31 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TraktTools;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.Date;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Displays general information about a show and its next episode.
@@ -87,8 +79,6 @@ public class OverviewFragment extends SherlockFragment implements
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 201;
 
     private FetchArtTask mArtTask;
-
-    private TraktSummaryTask mTraktTask;
 
     private Cursor mEpisodeCursor;
 
@@ -164,27 +154,11 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mArtTask != null) {
             mArtTask.cancel(true);
             mArtTask = null;
-        }
-        if (mTraktTask != null) {
-            mTraktTask.cancel(true);
-            mTraktTask = null;
         }
     }
 
@@ -383,17 +357,15 @@ public class OverviewFragment extends SherlockFragment implements
 
             return super.loadInBackground();
         }
-
     }
 
     interface EpisodeQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED,
                 Episodes.FIRSTAIREDMS, Episodes.GUESTSTARS, Episodes.RATING, Episodes.IMAGE,
                 Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
                 Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
-
         };
 
         int _ID = 0;
@@ -425,12 +397,11 @@ public class OverviewFragment extends SherlockFragment implements
         int IMDBID = 13;
 
         int ABSOLUTE_NUMBER = 14;
-
     }
 
     interface ShowQuery {
 
-        String[] PROJECTION = new String[]{
+        String[] PROJECTION = new String[] {
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
                 Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE,
                 Shows.RELEASE_COUNTRY
@@ -485,12 +456,6 @@ public class OverviewFragment extends SherlockFragment implements
             case SHOW_LOADER_ID:
                 mShowCursor = null;
                 break;
-        }
-    }
-
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
-            onLoadTraktRatings(false);
         }
     }
 
@@ -634,7 +599,6 @@ public class OverviewFragment extends SherlockFragment implements
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
             episodemeta.setVisibility(View.VISIBLE);
-
         } else {
             // no next episode: display single line info text, remove other
             // views
@@ -667,7 +631,6 @@ public class OverviewFragment extends SherlockFragment implements
                     .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
             contentContainer.setVisibility(View.VISIBLE);
         }
-
     }
 
     private void onLoadEpisodeDetails(final Cursor episode) {
@@ -683,7 +646,7 @@ public class OverviewFragment extends SherlockFragment implements
                 .getDouble(EpisodeQuery.DVDNUMBER));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
-                .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+                        .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
@@ -739,21 +702,6 @@ public class OverviewFragment extends SherlockFragment implements
                 }
             }
         });
-
-        // trakt ratings
-        onLoadTraktRatings(true);
-    }
-
-    private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()
-                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            int episodeTvdbId = mEpisodeCursor.getInt(EpisodeQuery._ID);
-            int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
-                    .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
-        }
     }
 
     private void onLoadImage(String imagePath) {
@@ -765,7 +713,7 @@ public class OverviewFragment extends SherlockFragment implements
             mArtTask = null;
         }
         mArtTask = new FetchArtTask(imagePath, container, getActivity());
-        AndroidUtils.executeAsyncTask(mArtTask, new Void[]{
+        AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                 null
         });
     }

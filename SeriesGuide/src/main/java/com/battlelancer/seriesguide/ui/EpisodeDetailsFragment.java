@@ -48,7 +48,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -62,14 +61,11 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import de.greenrobot.event.EventBus;
 import java.util.Date;
 import java.util.Locale;
 
@@ -86,8 +82,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private static final int CONTEXT_CREATE_CALENDAR_EVENT_ID = 101;
 
     private FetchArtTask mArtTask;
-
-    private TraktSummaryTask mTraktTask;
 
     private DetailsAdapter mAdapter;
 
@@ -176,27 +170,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mArtTask != null) {
             mArtTask.cancel(true);
             mArtTask = null;
-        }
-        if (mTraktTask != null) {
-            mTraktTask.cancel(true);
-            mTraktTask = null;
         }
     }
 
@@ -566,9 +544,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             ratings.setFocusable(true);
             CheatSheet.setup(ratings, R.string.menu_rate_episode);
 
-            // fetch trakt ratings
-            onLoadTraktRatings(ratings, true);
-
             // Google Play button
             View playButton = view.findViewById(R.id.buttonGooglePlay);
             ServiceUtils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
@@ -707,23 +682,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
-            onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
-        }
-    }
-
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
-    }
-
-    private void onLoadTraktRatings(View ratingBar, boolean isUseCachedValues) {
-        if (mAdapter.getCursor() != null
-                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
-                    .episode(
-                            mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
-        }
     }
 }
