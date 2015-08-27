@@ -53,7 +53,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.FetchArtTask;
@@ -61,7 +60,6 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -230,12 +228,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void rateOnTrakt() {
-        TraktTools.rateEpisode(getActivity(), getFragmentManager(), mShowTvdbId, mSeasonNumber,
-                mEpisodeNumber);
-        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onAddCalendarEvent() {
@@ -535,14 +527,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .findViewById(R.id.textViewRatingsTvdbValue);
                 ratingValue.setText(ratingText);
             }
-            ratings.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rateOnTrakt();
-                }
-            });
-            ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_episode);
 
             // Google Play button
             View playButton = view.findViewById(R.id.buttonGooglePlay);
@@ -577,33 +561,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // Web search button
             View webSearch = view.findViewById(R.id.buttonWebSearch);
             ServiceUtils.setUpWebSearchButton(showTitle + " " + episodeTitle, webSearch, TAG);
-
-            // trakt shouts button
-            view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                    intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowTvdbId,
-                            mSeasonNumber, mEpisodeNumber, episodeTitle));
-                    startActivity(intent);
-                    fireTrackerEvent("Comments");
-                }
-            });
-
-            // Check in button
-            final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-            View checkinButton = view.findViewById(R.id.imageButtonBarCheckin);
-            checkinButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // display a check-in dialog
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                            episodeTvdbId);
-                    f.show(getFragmentManager(), "checkin-dialog");
-                    fireTrackerEvent("Check-In");
-                }
-            });
-            CheatSheet.setup(checkinButton);
         }
     }
 

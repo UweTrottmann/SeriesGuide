@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -45,13 +44,11 @@ import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -103,8 +100,6 @@ public class MovieDetailsFragment extends SherlockFragment {
 
     @InjectView(R.id.containerMovieButtons) View mButtonContainer;
 
-    @InjectView(R.id.buttonMovieCheckIn) ImageButton mCheckinButton;
-
     @InjectView(R.id.buttonMovieWatched) ImageButton mWatchedButton;
 
     @InjectView(R.id.buttonMovieCollected) ImageButton mCollectedButton;
@@ -149,12 +144,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         // important action buttons
         mButtonContainer.setVisibility(View.GONE);
         mRatingsContainer.setVisibility(View.GONE);
-        mRatingsContainer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateOnTrakt();
-            }
-        });
         mRatingsTmdbLabel.setText(R.string.tmdb);
 
         // cast and crew labels
@@ -325,7 +314,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         Movie tmdbMovie = mMovieDetails.tmdbMovie();
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
-        final boolean isWatched = mMovieDetails.isWatched;
 
         mMovieTitle.setText(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
@@ -339,23 +327,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
         mMovieReleaseDate.setText(releaseAndRuntime.toString());
-
-        // check-in button
-        CheatSheet.setup(mCheckinButton);
-        final String title = tmdbMovie.title;
-        // fall back to local title for tvtag check-in if we currently don't have the original one
-        final String originalTitle = TextUtils.isEmpty(tmdbMovie.original_title)
-                ? title : tmdbMovie.original_title;
-        mCheckinButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // display a check-in dialog
-                MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title, originalTitle);
-                f.show(getFragmentManager(), "checkin-dialog");
-                fireTrackerEvent("Check-In");
-            }
-        });
 
         // watched button (only supported when connected to trakt)
         mWatchedButton.setVisibility(View.GONE);
@@ -406,20 +377,6 @@ public class MovieDetailsFragment extends SherlockFragment {
         // ratings
         mRatingsTmdbValue.setText(TmdbTools.buildRatingValue(tmdbMovie.vote_average));
         mRatingsContainer.setVisibility(View.VISIBLE);
-
-        // trakt comments link
-        mDivider.setVisibility(View.VISIBLE);
-        mCommentsButton.setVisibility(View.VISIBLE);
-        mCommentsButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundleMovie(title, mTmdbId));
-                startActivity(i);
-                fireTrackerEvent("Comments");
-            }
-        });
 
         // poster
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
@@ -478,11 +435,6 @@ public class MovieDetailsFragment extends SherlockFragment {
                         || event.mTraktAction == TraktAction.RATE_MOVIE)) {
             restartMovieLoader();
         }
-    }
-
-    private void rateOnTrakt() {
-        TraktTools.rateMovie(getActivity(), getFragmentManager(), mTmdbId);
-        fireTrackerEvent("Rate (trakt)");
     }
 
     private void restartMovieLoader() {

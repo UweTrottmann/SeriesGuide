@@ -45,15 +45,4 @@
         android:text="@string/web_search"
         android:textAlignment="viewStart" />
 
-    <Button
-        android:id="@+id/buttonShouts"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical|start"
-        android:paddingStart="@dimen/default_padding"
-        android:paddingEnd="@dimen/default_padding"
-        android:text="@string/comments"
-        android:textAlignment="viewStart" />
-
 </merge>

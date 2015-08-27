@@ -16,28 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
-import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.R;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -62,7 +40,26 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateService;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -235,9 +232,9 @@ public class ShowsFragment extends SherlockFragment implements
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(info.id)), new String[]{
-                Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
-        }, null, null, null);
+                Shows.buildShowUri(String.valueOf(info.id)), new String[] {
+                        Shows.FAVORITE, Shows.HIDDEN, Shows.TITLE
+                }, null, null, null);
         if (show == null || !show.moveToFirst()) {
             // abort
             return;
@@ -261,7 +258,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         show.close();
 
-        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         menu.add(0, CONTEXT_FLAG_NEXT_ID, 1, R.string.context_marknext);
         menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
         menu.add(0, CONTEXT_UPDATE_ID, 5, R.string.context_updateshow);
@@ -273,22 +269,6 @@ public class ShowsFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case CONTEXT_CHECKIN_ID: {
-                fireTrackerEventContext("Check in");
-
-                Cursor show = (Cursor) mAdapter.getItem(info.position);
-                int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
-                if (episodeTvdbId <= 0) {
-                    return true;
-                }
-
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                        episodeTvdbId);
-                f.show(getFragmentManager(), "checkin-dialog");
-
-                return true;
-            }
             case CONTEXT_FAVORITE_ID: {
                 onFavoriteShow((int) info.id, true);
                 return true;
@@ -735,5 +715,4 @@ public class ShowsFragment extends SherlockFragment implements
     private void fireTrackerEventContext(String label) {
         Utils.trackContextMenu(getActivity(), TAG, label);
     }
-
 }
