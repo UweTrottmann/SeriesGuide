@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +48,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
@@ -67,8 +65,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -95,7 +91,6 @@ public class OverviewFragment extends SherlockFragment implements
     private Handler mHandler = new Handler();
 
     private FetchArtTask mArtTask;
-    private TraktSummaryTask mTraktTask;
 
     private Cursor mCurrentEpisodeCursor;
     private int mCurrentEpisodeTvdbId;
@@ -182,10 +177,6 @@ public class OverviewFragment extends SherlockFragment implements
         if (mArtTask != null) {
             mArtTask.cancel(true);
             mArtTask = null;
-        }
-        if (mTraktTask != null) {
-            mTraktTask.cancel(true);
-            mTraktTask = null;
         }
         if (mHandler != null) {
             mHandler.removeCallbacks(mEpisodeActionsRunnable);
@@ -477,12 +468,6 @@ public class OverviewFragment extends SherlockFragment implements
         }
     }
 
-    public void onEventMainThread(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
-            onLoadTraktRatings(false);
-        }
-    }
-
     private void fireTrackerEvent(String label) {
         Utils.trackAction(getActivity(), TAG, label);
     }
@@ -756,21 +741,6 @@ public class OverviewFragment extends SherlockFragment implements
                 }
             }
         });
-
-        // trakt ratings
-        onLoadTraktRatings(true);
-    }
-
-    private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()
-                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
-            int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            int episodeNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
-                    .episode(getShowId(), episodeTvdbId, seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
-        }
     }
 
     private void onLoadImage(String imagePath) {

@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -37,24 +36,19 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import de.greenrobot.event.EventBus;
 import java.util.Date;
 
 /**
@@ -83,8 +77,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     private Series mShow;
 
-    private TraktSummaryTask mTraktTask;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -98,18 +90,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         getLoaderManager().initLoader(LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -158,12 +138,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
 
     @Override
     public void onLoaderReset(Loader<Series> loader) {
-    }
-
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_SHOW) {
-            onLoadTraktRatings(false);
-        }
     }
 
     private void onPopulateShowData() {
@@ -306,9 +280,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
         ImageView background = (ImageView) getView()
                 .findViewById(R.id.imageViewShowPosterBackground);
         Utils.setPosterBackground(background, imagePath, getActivity());
-
-        // trakt ratings
-        onLoadTraktRatings(true);
     }
 
     private void fireTrackerEvent(String label) {
@@ -326,15 +297,6 @@ public class ShowFragment extends SherlockFragment implements LoaderCallbacks<Se
             rateShow.show(getFragmentManager(), "traktratedialog");
         }
         fireTrackerEvent("Rate (trakt)");
-    }
-
-    private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mShow != null
-                && (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
-                    R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
-            AndroidUtils.executeAsyncTask(mTraktTask);
-        }
     }
 
     private void shareShow() {

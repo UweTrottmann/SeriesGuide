@@ -49,7 +49,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
@@ -67,8 +66,6 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -91,7 +88,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
 
     private Handler mHandler = new Handler();
     private FetchArtTask mArtTask;
-    private TraktSummaryTask mTraktTask;
 
     protected int mEpisodeFlag;
     protected boolean mCollected;
@@ -223,10 +219,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
             mArtTask.cancel(true);
             mArtTask = null;
         }
-        if (mTraktTask != null) {
-            mTraktTask.cancel(true);
-            mTraktTask = null;
-        }
         super.onDestroy();
     }
 
@@ -311,12 +303,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (getEpisodeTvdbId() == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
-        }
-    }
-
-    public void onEvent(TraktActionCompleteEvent event) {
-        if (event.mTraktAction == TraktAction.RATE_EPISODE) {
-            loadTraktRatings(false);
         }
     }
 
@@ -428,8 +414,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
         if (!TextUtils.isEmpty(tvdbRating)) {
             mTvdbRating.setText(tvdbRating);
         }
-        // trakt ratings
-        loadTraktRatings(true);
 
         // episode image
         final String imagePath = cursor.getString(DetailsQuery.IMAGE);
@@ -587,15 +571,6 @@ public class EpisodeDetailsFragment extends SherlockFragment implements ActionsF
                     return true;
             }
             return false;
-        }
-    }
-
-    private void loadTraktRatings(boolean isUseCachedValues) {
-        if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), mRatingsContainer,
-                    isUseCachedValues).episode(mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
-                    mEpisodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask);
         }
     }
 
