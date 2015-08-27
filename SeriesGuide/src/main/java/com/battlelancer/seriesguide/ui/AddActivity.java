@@ -134,84 +134,29 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {
 
-        private static final int DEFAULT_TABCOUNT = 2;
-
-        private static final int TRAKT_CONNECTED_TABCOUNT = 5;
-
-        public static final int TRENDING_TAB_POSITION = 0;
-
-        public static final int RECOMMENDED_TAB_POSITION = 2;
-
-        public static final int LIBRARY_TAB_POSITION = 3;
-
-        public static final int WATCHLIST_TAB_POSITION = 4;
-
-        public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
-
-        public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
-
-        private final boolean mIsConnectedToTrakt;
+        public static final int SEARCH_TAB_DEFAULT_POSITION = 0;
 
         private Context mContext;
 
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
-            mIsConnectedToTrakt = TraktCredentials.get(mContext).hasCredentials();
         }
 
         @Override
         public Fragment getItem(int position) {
-            int count = getCount();
-            if ((count == DEFAULT_TABCOUNT && position == SEARCH_TAB_DEFAULT_POSITION)
-                    || (count == TRAKT_CONNECTED_TABCOUNT
-                    && position == SEARCH_TAB_CONNECTED_POSITION)) {
-                return TvdbAddFragment.newInstance();
-            } else {
-                return TraktAddFragment.newInstance(position);
-            }
+            return TvdbAddFragment.newInstance();
         }
 
         @Override
         public int getCount() {
-            if (mIsConnectedToTrakt) {
-                // show trakt recommended and libraried shows, too
-                return TRAKT_CONNECTED_TABCOUNT;
-            } else {
-                // show search results and trakt trending shows
-                return DEFAULT_TABCOUNT;
-            }
+            return 1;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (getCount() == TRAKT_CONNECTED_TABCOUNT) {
-                switch (position) {
-                    case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase(
-                                Locale.getDefault());
-                    case RECOMMENDED_TAB_POSITION:
-                        return mContext.getString(R.string.recommended).toUpperCase(
-                                Locale.getDefault());
-                    case LIBRARY_TAB_POSITION:
-                        return mContext.getString(R.string.library)
-                                .toUpperCase(Locale.getDefault());
-                    case WATCHLIST_TAB_POSITION:
-                        return mContext.getString(R.string.watchlist).toUpperCase(
-                                Locale.getDefault());
-                    case SEARCH_TAB_CONNECTED_POSITION:
-                        return mContext.getString(R.string.search).toUpperCase(
-                                Locale.getDefault());
-                }
-            } else {
-                switch (position) {
-                    case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase(
-                                Locale.getDefault());
-                    case SEARCH_TAB_DEFAULT_POSITION:
-                        return mContext.getString(R.string.search).toUpperCase(
-                                Locale.getDefault());
-                }
+            if (position == SEARCH_TAB_DEFAULT_POSITION) {
+                return mContext.getString(R.string.search).toUpperCase(Locale.getDefault());
             }
             return "";
         }
