@@ -17,17 +17,14 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import com.battlelancer.seriesguide.BuildConfig;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.battlelancer.seriesguide.BuildConfig;
 
 public class AppSettings {
 
     public static final String KEY_VERSION = "oldversioncode";
-
-    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
@@ -44,10 +41,5 @@ public class AppSettings {
         }
 
         return lastVersionCode;
-    }
-
-    public static boolean isGaAppOptOut(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_GOOGLEANALYTICS, false);
     }
 }

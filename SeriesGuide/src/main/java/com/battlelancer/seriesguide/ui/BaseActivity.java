@@ -16,21 +16,19 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
-import com.google.android.gms.analytics.GoogleAnalytics;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlueCheckin;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktTask;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
@@ -56,14 +54,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         if (!onAutoBackup()) {
             SgSyncAdapter.requestSyncIfTime(this);
         }
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override

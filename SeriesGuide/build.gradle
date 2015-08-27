@@ -72,9 +72,6 @@ dependencies {
     // OAuth 2.0
     compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31'
 
-    // Google Play Services
-    compile 'com.google.android.gms:play-services:4.4.52'
-
     // libs folder
     compile fileTree(dir: 'libs', include: '*.jar')
 
