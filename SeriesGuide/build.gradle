@@ -123,7 +123,6 @@ dependencies {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
-    compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -135,6 +134,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.uwetrottmann:androidutils:2.0.0'
+    compile 'com.uwetrottmann.photoview:library:1.2.4'
     compile 'com.uwetrottmann:tmdb-java:0.8.0'
     compile ('com.uwetrottmann:trakt-java:4.5.0') {
         exclude group: 'org.json', module: 'json'
