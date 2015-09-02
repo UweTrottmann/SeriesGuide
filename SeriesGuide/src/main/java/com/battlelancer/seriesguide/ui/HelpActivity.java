@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -27,7 +28,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
-import org.apache.http.protocol.HTTP;
 
 /**
  * Displays the SeriesGuide online help page.
@@ -115,14 +115,13 @@ public class HelpActivity extends BaseActivity {
     }
 
     private void sendEmail() {
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        intent.setType(HTTP.PLAIN_TEXT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
         intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
                 SeriesGuidePreferences.SUPPORT_MAIL
         });
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
                 "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
 
         Intent chooser = Intent.createChooser(intent, getString(R.string.feedback));
         Utils.tryStartActivity(this, chooser, true);
