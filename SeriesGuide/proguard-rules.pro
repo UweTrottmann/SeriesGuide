@@ -68,3 +68,4 @@
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
 -dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.google.api.client.http.apache.**
