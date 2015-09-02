@@ -61,3 +61,10 @@
 # Retrofit has some optional dependencies we don't use.
 -dontwarn rx.**
 -dontwarn retrofit.appengine.**
+-dontwarn retrofit.client.ApacheClient$GenericEntityHttpRequest
+-dontwarn retrofit.client.ApacheClient$GenericHttpRequest
+-dontwarn retrofit.client.ApacheClient$TypedOutputEntity
+
+# Apache HTTP was removed as of Android M
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
