@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -39,6 +40,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.TwoStatePreference;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
@@ -48,6 +50,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -439,7 +442,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
-        private static final int REQUEST_CODE_AUTO_BACKUP = 0;
+        private static final int REQUEST_CODE_RINGTONE = 0;
+        private static final int REQUEST_CODE_AUTO_BACKUP = 1;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -495,9 +499,44 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         @Override
+        public void onStart() {
+            super.onStart();
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            prefs.registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
                 @NonNull Preference preference) {
-            if (preference.getKey().equals(AdvancedSettings.KEY_AUTOBACKUP)) {
+            String key = preference.getKey();
+            if (NotificationSettings.KEY_RINGTONE.equals(key)) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
+                        RingtoneManager.TYPE_NOTIFICATION);
+                // show silent and default options
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                        Settings.System.DEFAULT_NOTIFICATION_URI);
+
+                // restore selected sound or silent (null)
+                String existingValue = NotificationSettings.getNotificationsRingtone(getContext());
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
+                        TextUtils.isEmpty(existingValue) ? null : Uri.parse(existingValue));
+
+                startActivityForResult(intent, REQUEST_CODE_RINGTONE);
+                return true;
+            }
+            if (AdvancedSettings.KEY_AUTOBACKUP.equals(key)) {
                 TwoStatePreference autoBackupPref = (TwoStatePreference) preference;
                 boolean isEnabled = autoBackupPref.isChecked();
                 if (isEnabled) {
@@ -506,6 +545,22 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 return true;
             }
             return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (REQUEST_CODE_RINGTONE == requestCode) {
+                if (data != null) {
+                    Uri ringtone = data.getParcelableExtra(
+                            RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                            .putString(NotificationSettings.KEY_RINGTONE,
+                                    ringtone == null ? "" : ringtone.toString())
+                            .apply();
+                }
+                return;
+            }
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
         private void ensureAutoBackupPermission() {
@@ -535,22 +590,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     }
                 }
             }
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity());
-            prefs.registerOnSharedPreferenceChangeListener(this);
-        }
-
-        @Override
-        public void onStop() {
-            super.onStop();
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity());
-            prefs.unregisterOnSharedPreferenceChangeListener(this);
         }
 
         @Override
