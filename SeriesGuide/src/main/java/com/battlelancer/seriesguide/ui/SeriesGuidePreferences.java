@@ -51,14 +51,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -72,8 +65,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit from {@link
@@ -109,7 +100,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            Fragment f = new SettingsHeadersFragment();
+            Fragment f = new SettingsFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(R.id.content_frame, f);
             ft.commit();
@@ -177,8 +168,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     };
 
     protected static void setupBasicSettings(final Activity activity, final Intent startIntent,
-            Preference noAiredPref, Preference noSpecialsPref, Preference languagePref,
-            Preference themePref, Preference numberFormatPref, Preference updatePref) {
+            Preference noAiredPref, Preference noSpecialsPref,
+            Preference themePref, Preference numberFormatPref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -228,11 +219,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             themePref.setSummary(R.string.onlyx);
         }
 
-        // set current value of auto-update pref
-        ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
-
         // show currently set values for list prefs
-        setListPreferenceSummary((ListPreference) languagePref);
         setListPreferenceSummary((ListPreference) numberFormatPref);
     }
 
@@ -353,92 +340,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         listPref.setSummary(listPref.getEntry().toString().replaceAll("%", "%%"));
     }
 
-    public static class SettingsHeadersFragment extends Fragment {
-        private HeaderAdapter adapter;
-        private ListView listView;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                @Nullable Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.fragment_settings_headers, container, false);
-
-            listView = (ListView) v.findViewById(R.id.listViewSettingsHeaders);
-
-            return v;
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            adapter = new HeaderAdapter(getActivity(), buildHeaders());
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Header item = adapter.getItem(position);
-                    ((SeriesGuidePreferences) getActivity()).switchToSettings(item.settingsId);
-                }
-            });
-        }
-
-        private List<Header> buildHeaders() {
-            List<Header> headers = new LinkedList<>();
-
-            headers.add(new Header(R.string.prefs_category_basic, "basic"));
-            headers.add(new Header(R.string.pref_notifications, "notifications"));
-            headers.add(new Header(R.string.prefs_category_sharing, "sharing"));
-            headers.add(new Header(R.string.prefs_category_advanced, "advanced"));
-            headers.add(new Header(R.string.prefs_category_about, "about"));
-
-            return headers;
-        }
-
-        private static class HeaderAdapter extends ArrayAdapter<Header> {
-            private final LayoutInflater mInflater;
-
-            private static class HeaderViewHolder {
-                TextView title;
-
-                public HeaderViewHolder(View view) {
-                    title = (TextView) view.findViewById(R.id.textViewSettingsHeader);
-                }
-            }
-
-            public HeaderAdapter(Context context, List<Header> headers) {
-                super(context, 0, headers);
-                mInflater = (LayoutInflater) context.getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE);
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                HeaderViewHolder viewHolder;
-                if (convertView == null) {
-                    convertView = mInflater.inflate(R.layout.item_settings_header, parent, false);
-                    viewHolder = new HeaderViewHolder(convertView);
-                    convertView.setTag(viewHolder);
-                } else {
-                    viewHolder = (HeaderViewHolder) convertView.getTag();
-                }
-
-                viewHolder.title.setText(getContext().getString(getItem(position).titleRes));
-
-                return convertView;
-            }
-        }
-
-        public static final class Header {
-            public int titleRes;
-            public String settingsId;
-
-            public Header(int titleResId, String settingsId) {
-                this.titleRes = titleResId;
-                this.settingsId = settingsId;
-            }
-        }
-    }
-
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
@@ -448,54 +349,58 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
-            String settings = getArguments().getString("settings");
-            switch (settings) {
-                case "basic":
-                    addPreferencesFromResource(R.xml.settings_basic);
-                    setupBasicSettings(
-                            getActivity(),
-                            getActivity().getIntent(),
-                            findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES),
-                            findPreference(DisplaySettings.KEY_HIDE_SPECIALS),
-                            findPreference(DisplaySettings.KEY_LANGUAGE),
-                            findPreference(DisplaySettings.KEY_THEME),
-                            findPreference(DisplaySettings.KEY_NUMBERFORMAT),
-                            findPreference(UpdateSettings.KEY_AUTOUPDATE)
-                    );
-                    break;
-                case "notifications":
-                    addPreferencesFromResource(R.xml.settings_notifications);
-                    setupNotifiationSettings(
-                            getActivity(),
-                            findPreference(NotificationSettings.KEY_ENABLED),
-                            findPreference(NotificationSettings.KEY_FAVONLY),
-                            findPreference(NotificationSettings.KEY_VIBRATE),
-                            findPreference(NotificationSettings.KEY_RINGTONE),
-                            findPreference(NotificationSettings.KEY_THRESHOLD)
-                    );
-                    break;
-                case "sharing":
-                    addPreferencesFromResource(R.xml.settings_services);
-                    break;
-                case "advanced":
-                    addPreferencesFromResource(R.xml.settings_advanced);
-                    setupAdvancedSettings(
-                            getActivity(),
-                            findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
-                            findPreference(KEY_OFFSET),
-                            findPreference(AppSettings.KEY_GOOGLEANALYTICS),
-                            findPreference(KEY_CLEAR_CACHE)
-                    );
-                    break;
-                case "about":
-                    addPreferencesFromResource(R.xml.settings_about);
-                    setupAboutSettings(
-                            getActivity(),
-                            findPreference(KEY_ABOUT)
-                    );
-                    break;
+            
+            String settings = getArguments() == null ? null : getArguments().getString("settings");
+            if (settings == null) {
+                addPreferencesFromResource(R.xml.settings_root);
+                setupRootSettings();
+            } else if (settings.equals("screen_basic")) {
+                addPreferencesFromResource(R.xml.settings_basic);
+                setupBasicSettings(
+                        getActivity(),
+                        getActivity().getIntent(),
+                        findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES),
+                        findPreference(DisplaySettings.KEY_HIDE_SPECIALS),
+                        findPreference(DisplaySettings.KEY_THEME),
+                        findPreference(DisplaySettings.KEY_NUMBERFORMAT)
+                );
+            } else if (settings.equals("screen_notifications")) {
+                addPreferencesFromResource(R.xml.settings_notifications);
+                setupNotifiationSettings(
+                        getActivity(),
+                        findPreference(NotificationSettings.KEY_ENABLED),
+                        findPreference(NotificationSettings.KEY_FAVONLY),
+                        findPreference(NotificationSettings.KEY_VIBRATE),
+                        findPreference(NotificationSettings.KEY_RINGTONE),
+                        findPreference(NotificationSettings.KEY_THRESHOLD)
+                );
+            } else if (settings.equals("screen_sharing")) {
+                addPreferencesFromResource(R.xml.settings_services);
+            } else if (settings.equals("screen_advanced")) {
+                addPreferencesFromResource(R.xml.settings_advanced);
+                setupAdvancedSettings(
+                        getActivity(),
+                        findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT),
+                        findPreference(KEY_OFFSET),
+                        findPreference(AppSettings.KEY_GOOGLEANALYTICS),
+                        findPreference(KEY_CLEAR_CACHE)
+                );
+            } else if (settings.equals("screen_about")) {
+                addPreferencesFromResource(R.xml.settings_about);
+                setupAboutSettings(
+                        getActivity(),
+                        findPreference(KEY_ABOUT)
+                );
             }
+        }
+
+        private void setupRootSettings() {
+            // show currently set values for list prefs
+            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
+
+            // set current value of auto-update pref
+            ((CheckBoxPreference) findPreference(UpdateSettings.KEY_AUTOUPDATE)).setChecked(
+                    SgSyncAdapter.isSyncAutomatically(getActivity()));
         }
 
         @Override
@@ -518,6 +423,10 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
                 @NonNull Preference preference) {
             String key = preference.getKey();
+            if (key.startsWith("screen_")) {
+                ((SeriesGuidePreferences) getActivity()).switchToSettings(key);
+                return true;
+            }
             if (NotificationSettings.KEY_RINGTONE.equals(key)) {
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
@@ -529,7 +438,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         Settings.System.DEFAULT_NOTIFICATION_URI);
 
                 // restore selected sound or silent (null)
-                String existingValue = NotificationSettings.getNotificationsRingtone(getContext());
+                String existingValue = NotificationSettings.getNotificationsRingtone(getActivity());
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                         TextUtils.isEmpty(existingValue) ? null : Uri.parse(existingValue));
 
@@ -553,7 +462,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 if (data != null) {
                     Uri ringtone = data.getParcelableExtra(
                             RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                    PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                             .putString(NotificationSettings.KEY_RINGTONE,
                                     ringtone == null ? "" : ringtone.toString())
                             .apply();

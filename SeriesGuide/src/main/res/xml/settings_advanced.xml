@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:defaultValue="True"
-        android:key="com.battlelancer.seriesguide.autobackup"
-        android:summary="@string/pref_autobackupsummary"
-        android:title="@string/pref_autobackup" />
-
-    <Preference
-        android:key="dataliberation"
-        android:summary="@string/backup_summary"
-        android:title="@string/backup">
-        <intent
-            android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
-            android:targetPackage="@string/package_name" />
-    </Preference>
-
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/upcominglimit"
