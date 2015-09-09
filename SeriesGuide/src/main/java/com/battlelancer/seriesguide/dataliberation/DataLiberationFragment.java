@@ -16,10 +16,13 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.content.Context;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
@@ -40,11 +44,14 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
- * One button export or import of the show database using a JSON file on
- * external storage.
+ * One button export or import of the show database using a JSON file on external storage.
  */
 public class DataLiberationFragment extends Fragment implements OnTaskFinishedListener,
         OnTaskProgressListener {
+
+    private static final int REQUEST_CODE_EXPORT = 1;
+    private static final int REQUEST_CODE_IMPORT = 2;
+    private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
 
     private Button mButtonExport;
     private Button mButtonImport;
@@ -98,23 +105,11 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                                         lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
                                         DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
-        return v;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        final Context context = getActivity().getApplicationContext();
+        // setup listeners
         mButtonExport.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setProgressLock(true);
-
-                mTask = new JsonExportTask(context, DataLiberationFragment.this,
-                        DataLiberationFragment.this,
-                        mCheckBoxFullDump.isChecked(), false);
-                AndroidUtils.executeOnPool(mTask);
+                tryDataLiberationAction(REQUEST_CODE_EXPORT);
             }
         });
         mCheckBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -127,21 +122,22 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         mButtonImport.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setProgressLock(true);
-
-                mTask = new JsonImportTask(context, DataLiberationFragment.this, false);
-                Utils.executeInOrder(mTask);
+                tryDataLiberationAction(REQUEST_CODE_IMPORT);
             }
         });
         mButtonImportAutoBackup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setProgressLock(true);
-
-                mTask = new JsonImportTask(context, DataLiberationFragment.this, true);
-                Utils.executeInOrder(mTask);
+                tryDataLiberationAction(REQUEST_CODE_IMPORT_AUTOBACKUP);
             }
         });
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         // restore UI state
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
@@ -186,5 +182,53 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
         mCheckBoxFullDump.setEnabled(!isLocked);
         mCheckBoxImportWarning.setEnabled(!isLocked);
+    }
+
+    private void tryDataLiberationAction(int requestCode) {
+        // make sure we have write permission
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // don't have it? request it, do task if granted
+            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                    requestCode);
+            return;
+        }
+
+        doDataLiberationAction(requestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_EXPORT
+                || requestCode == REQUEST_CODE_IMPORT
+                || requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                doDataLiberationAction(requestCode);
+            } else {
+                Toast.makeText(getContext(), R.string.dataliberation_permission_missing,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void doDataLiberationAction(int requestCode) {
+        if (requestCode == REQUEST_CODE_EXPORT) {
+            setProgressLock(true);
+
+            mTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
+                    DataLiberationFragment.this, mCheckBoxFullDump.isChecked(), false);
+            AndroidUtils.executeOnPool(mTask);
+        } else if (requestCode == REQUEST_CODE_IMPORT) {
+            setProgressLock(true);
+
+            mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
+            Utils.executeInOrder(mTask);
+        } else if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
+            setProgressLock(true);
+
+            mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, true);
+            Utils.executeInOrder(mTask);
+        }
     }
 }

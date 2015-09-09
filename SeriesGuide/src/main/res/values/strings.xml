@@ -425,6 +425,7 @@
     <string name="import_warning">I understand my current shows and lists will be lost!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
