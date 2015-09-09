@@ -32,6 +32,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
@@ -157,8 +158,8 @@ public class Utils {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, OnAlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
-                * DateUtils.MINUTE_IN_MILLIS, pi);
+        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
     /**
