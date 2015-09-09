@@ -481,13 +481,11 @@ public class Utils {
         // check connection state
         if (largeDataOverWifiOnly) {
             if (AndroidUtils.isJellyBeanOrHigher()) {
-                // better: only allow large data downloads on non-metered connections
-                ConnectivityManager connectivityManager
-                        = (ConnectivityManager) context.getSystemService(
-                        Context.CONNECTIVITY_SERVICE);
-                isConnected = !connectivityManager.isActiveNetworkMetered();
+                // better: only allow large data downloads over non-metered connections
+                isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
             } else {
-                // only allow large data downloads on WiFi
+                // only allow large data downloads over WiFi,
+                // assuming it is most likely to be not metered
                 isConnected = AndroidUtils.isWifiConnected(context);
             }
         } else {
