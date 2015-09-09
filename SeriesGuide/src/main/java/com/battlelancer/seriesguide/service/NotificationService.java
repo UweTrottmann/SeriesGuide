@@ -317,7 +317,9 @@ public class NotificationService extends IntentService {
         Intent i = new Intent(this, NotificationService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
         Timber.d("Going to sleep, setting wake-up alarm to: " + wakeUpTime);
-        if (AndroidUtils.isKitKatOrHigher()) {
+        if (AndroidUtils.isMarshmallowOrHigher()) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+        } else if (AndroidUtils.isKitKatOrHigher()) {
             am.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
         } else {
             am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
