@@ -16,10 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -132,6 +135,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private boolean onAutoBackup() {
         if (!AdvancedSettings.isAutoBackupEnabled(this)) {
+            return false;
+        }
+
+        // only continue if we are allowed to write to external storage
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
 
