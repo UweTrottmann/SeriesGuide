@@ -16,16 +16,20 @@
 
 package com.battlelancer.seriesguide.backend;
 
+import android.Manifest;
 import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +55,8 @@ import timber.log.Timber;
  * Helps connecting a device to Hexagon: sign in via Google account, initial uploading of shows.
  */
 public class CloudSetupFragment extends Fragment {
+
+    private static final int REQUEST_CODE_SIGN_IN = 0;
 
     private Button mButtonAction;
     private TextView mTextViewDescription;
@@ -135,7 +141,7 @@ public class CloudSetupFragment extends Fragment {
                 public void onClick(View v) {
                     // restrict access to supporters
                     if (Utils.hasAccessToX(getActivity())) {
-                        signIn();
+                        trySignIn();
                     } else {
                         Utils.advertiseSubscription(getActivity());
                     }
@@ -267,7 +273,33 @@ public class CloudSetupFragment extends Fragment {
         setLock(false);
     }
 
-    private void signIn() {
+    private void trySignIn() {
+        // make sure we have the required permissions
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+            // don't have it? request it, do task if granted
+            requestPermissions(new String[] { Manifest.permission.GET_ACCOUNTS },
+                    REQUEST_CODE_SIGN_IN);
+            return;
+        }
+
+        doSignIn();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                doSignIn();
+            } else {
+                Toast.makeText(getContext(), R.string.hexagon_permission_missing,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void doSignIn() {
         // launch account picker
         startActivityForResult(
                 HexagonTools.getAccountCredential(getActivity()).newChooseAccountIntent(),
