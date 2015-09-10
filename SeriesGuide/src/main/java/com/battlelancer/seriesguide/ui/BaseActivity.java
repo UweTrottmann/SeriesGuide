@@ -141,6 +141,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // only continue if we are allowed to write to external storage
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+            onShowAutoBackupPermissionWarning();
             return false;
         }
 
@@ -154,6 +155,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Implementers may choose to show a warning that auto backup can not complete because of
+     * missing permissions.
+     */
+    protected void onShowAutoBackupPermissionWarning() {
+        // do nothing
     }
 
     /**
