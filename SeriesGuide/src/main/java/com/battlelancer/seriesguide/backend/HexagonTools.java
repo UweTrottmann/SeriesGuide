@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -40,7 +39,6 @@ import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -52,8 +50,6 @@ import timber.log.Timber;
  * Handles credentials and services for interacting with Hexagon.
  */
 public class HexagonTools {
-
-    private static GoogleAccountCredential sAccountCredential;
 
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
@@ -112,18 +108,16 @@ public class HexagonTools {
     }
 
     /**
-     * Checks if it is possible to retrieve a valid OAuth2 token for the given account, hence, it
-     * can be used for connecting to Hexagon.
+     * Checks if the given Google account exists and can be accessed.
      */
     public static boolean validateAccount(Context context, String accountName) {
         GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
                 context.getApplicationContext(), HexagonSettings.AUDIENCE);
+        // set account, credential tries to fetch Google account from Android AccountManager
         credential.setSelectedAccountName(accountName);
 
-        try {
-            credential.getToken();
-        } catch (IOException | GoogleAuthException e) {
-            Timber.e(e, "validateAccount: failed to get valid OAuth2 token.");
+        if (credential.getSelectedAccountName() == null) {
+            Timber.e("validateAccount: failed to get Google account from AccountManager.");
             return false;
         }
 
@@ -131,16 +125,16 @@ public class HexagonTools {
     }
 
     /**
-     * Gets the account credentials used for talking with Hexagon.
+     * Get the Google account credentials used for talking with Hexagon.
+     *
+     * <p>Make sure to check {@link GoogleAccountCredential#getSelectedAccountName()} is not null
+     * (is null if e.g. do not have permission to access the account or the account was removed).
      */
     public synchronized static GoogleAccountCredential getAccountCredential(Context context) {
-        if (sAccountCredential == null) {
-            GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
-                    context.getApplicationContext(), HexagonSettings.AUDIENCE);
-            credential.setSelectedAccountName(HexagonSettings.getAccountName(context));
-            sAccountCredential = credential;
-        }
-        return sAccountCredential;
+        GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
+                context.getApplicationContext(), HexagonSettings.AUDIENCE);
+        credential.setSelectedAccountName(HexagonSettings.getAccountName(context));
+        return credential;
     }
 
     /**

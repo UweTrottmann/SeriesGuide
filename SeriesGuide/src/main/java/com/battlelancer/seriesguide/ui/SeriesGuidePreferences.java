@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -35,9 +37,14 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.preference.TwoStatePreference;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -432,6 +439,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
+        private static final int REQUEST_CODE_AUTO_BACKUP = 0;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -482,6 +491,49 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                             findPreference(KEY_ABOUT)
                     );
                     break;
+            }
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+                @NonNull Preference preference) {
+            if (preference.getKey().equals(AdvancedSettings.KEY_AUTOBACKUP)) {
+                TwoStatePreference autoBackupPref = (TwoStatePreference) preference;
+                boolean isEnabled = autoBackupPref.isChecked();
+                if (isEnabled) {
+                    ensureAutoBackupPermission();
+                }
+                return true;
+            }
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+
+        private void ensureAutoBackupPermission() {
+            // make sure we have the storage write permission
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // don't have it? request it, do task if granted
+                requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                        REQUEST_CODE_AUTO_BACKUP);
+            }
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                @NonNull int[] grantResults) {
+            if (requestCode == REQUEST_CODE_AUTO_BACKUP) {
+                if (grantResults.length > 0
+                        && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    if (getView() != null) {
+                        // disable auto backup as we don't have the required permission
+                        TwoStatePreference autoBackupPref = (TwoStatePreference) findPreference(
+                                AdvancedSettings.KEY_AUTOBACKUP);
+                        autoBackupPref.setChecked(false);
+                        Snackbar.make(getView(), R.string.autobackup_permission_missing,
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                }
             }
         }
 

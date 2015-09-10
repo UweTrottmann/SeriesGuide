@@ -16,10 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -135,6 +138,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             return false;
         }
 
+        // only continue if we are allowed to write to external storage
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            onShowAutoBackupPermissionWarning();
+            return false;
+        }
+
         long now = System.currentTimeMillis();
         long previousBackupTime = AdvancedSettings.getLastAutoBackupTime(this);
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
@@ -145,6 +155,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Implementers may choose to show a warning that auto backup can not complete because of
+     * missing permissions.
+     */
+    protected void onShowAutoBackupPermissionWarning() {
+        // do nothing
     }
 
     /**

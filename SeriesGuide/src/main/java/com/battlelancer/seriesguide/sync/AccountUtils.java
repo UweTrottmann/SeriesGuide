@@ -19,11 +19,14 @@ package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
 public class AccountUtils {
@@ -69,13 +72,19 @@ public class AccountUtils {
         Timber.d("Setting up account...DONE");
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private static void removeAccount(Context context) {
         Timber.d("Removing existing accounts...");
 
         AccountManager manager = AccountManager.get(context);
         Account[] accounts = manager.getAccountsByType(ACCOUNT_TYPE);
         for (Account account : accounts) {
-            manager.removeAccount(account, null, null);
+            if (AndroidUtils.isLollipopMR1OrHigher()) {
+                manager.removeAccount(account, null, null, null);
+            } else {
+                //noinspection deprecation
+                manager.removeAccount(account, null, null);
+            }
         }
 
         Timber.d("Removing existing accounts...DONE");
