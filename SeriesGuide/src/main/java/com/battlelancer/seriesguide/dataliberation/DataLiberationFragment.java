@@ -21,6 +21,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
@@ -34,7 +35,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
@@ -206,8 +206,10 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doDataLiberationAction(requestCode);
             } else {
-                Toast.makeText(getContext(), R.string.dataliberation_permission_missing,
-                        Toast.LENGTH_LONG).show();
+                if (getView() != null) {
+                    Snackbar.make(getView(), R.string.dataliberation_permission_missing,
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
         }
     }

@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -37,7 +38,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -264,9 +264,11 @@ public class CloudSetupFragment extends Fragment {
             return;
         }
         if (connectionStatusCode != ConnectionResult.SUCCESS) {
+            if (getView() != null) {
+                Snackbar.make(getView(), R.string.hexagon_google_play_missing,
+                        Snackbar.LENGTH_INDEFINITE).show();
+            }
             Timber.i("This device is not supported.");
-            Toast.makeText(getActivity(), "This device is not supported.", Toast.LENGTH_LONG)
-                    .show();
             setLock(true);
             return;
         }
@@ -293,8 +295,10 @@ public class CloudSetupFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doSignIn();
             } else {
-                Toast.makeText(getContext(), R.string.hexagon_permission_missing,
-                        Toast.LENGTH_LONG).show();
+                if (getView() != null) {
+                    Snackbar.make(getView(), R.string.hexagon_permission_missing,
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
         }
     }
@@ -407,8 +411,10 @@ public class CloudSetupFragment extends Fragment {
                 }
                 case HexagonSetupTask.FAILURE_AUTH: {
                     // show setup incomplete message + error toast
-                    Toast.makeText(getActivity(), R.string.hexagon_setup_fail_auth,
-                            Toast.LENGTH_LONG).show();
+                    if (getView() != null) {
+                        Snackbar.make(getView(), R.string.hexagon_setup_fail_auth,
+                                Snackbar.LENGTH_LONG).show();
+                    }
                     Timber.d("Setting up Hexagon...FAILURE_AUTH");
                     break;
                 }
