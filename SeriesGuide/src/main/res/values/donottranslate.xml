@@ -17,11 +17,28 @@
     <string name="powered_by_tmdb">powered by TMDb</string>
     <string name="tvdb_range">/10</string>
     <string name="placeholder_rating">--</string>
-    <string name="help_url">http://seriesgui.de/help</string>
-    <string name="url_whypay">http://seriesgui.de/whypay</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 	<string name="not_available">n/a</string>
     <string name="hexagon_short">Cloud beta</string>
+
+    <!-- URLs -->
+    <string name="url_website">http://seriesgui.de</string>
+    <string name="help_url">http://seriesgui.de/help</string>
+    <string name="url_whypay">http://seriesgui.de/whypay</string>
+    <string name="url_credits">https://github.com/UweTrottmann/SeriesGuide/blob/master/CREDITS.txt</string>
+    <string name="url_terms_tvdb">https://thetvdb.com/?tab=tos</string>
+    <string name="url_creative_commons">http://creativecommons.org/licenses/by-nc/4.0/</string>
+    <string name="url_terms_tmdb">https://www.themoviedb.org/terms-of-use</string>
+    <string name="url_terms_tmdb_api">https://www.themoviedb.org/documentation/api/terms-of-use</string>
+    <string name="url_terms_trakt">https://trakt.tv/terms</string>
+
+    <!-- About screen -->
+    <string name="website">seriesgui.de</string>
+    <string name="creative_commons">Creative Commons BY-NC 4.0</string>
+    <string name="tvdb_terms">TheTVDB terms</string>
+    <string name="tmdb_terms">TMDb terms</string>
+    <string name="tmdb_api_terms">TMDb API terms</string>
+    <string name="trakt_terms">trakt terms</string>
 
     <!-- Google Play links -->
     <string name="url_x_pass">http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>

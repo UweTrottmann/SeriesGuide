@@ -446,6 +446,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 }
                 return true;
             }
+            if (KEY_ABOUT.equals(key)) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new AboutSettingsFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                return true;
+            }
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
 
