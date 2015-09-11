@@ -71,6 +71,8 @@ import com.google.android.gms.analytics.GoogleAnalytics;
  */
 public class SeriesGuidePreferences extends AppCompatActivity {
 
+    private static final String EXTRA_SETTINGS_SCREEN = "settingsScreen";
+
     private static final String TAG = "Settings";
 
     // Preference keys
@@ -102,6 +104,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(R.id.content_frame, f);
             ft.commit();
+
+            // open a sub settings screen if requested
+            String settingsScreen = getIntent().getStringExtra(EXTRA_SETTINGS_SCREEN);
+            if (settingsScreen != null) {
+                switchToSettings(settingsScreen);
+            }
         }
     }
 
@@ -146,7 +154,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     public void switchToSettings(String settingsId) {
         Bundle args = new Bundle();
-        args.putString("settings", settingsId);
+        args.putString(EXTRA_SETTINGS_SCREEN, settingsId);
         Fragment f = new SettingsFragment();
         f.setArguments(args);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -183,6 +191,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
+        public static final String SETTINGS_SCREEN_BASIC = "screen_basic";
+
         private static final int REQUEST_CODE_RINGTONE = 0;
         private static final int REQUEST_CODE_AUTO_BACKUP = 1;
 
@@ -190,11 +200,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            String settings = getArguments() == null ? null : getArguments().getString("settings");
+            String settings = getArguments() == null ? null
+                    : getArguments().getString(EXTRA_SETTINGS_SCREEN);
             if (settings == null) {
                 addPreferencesFromResource(R.xml.settings_root);
                 setupRootSettings();
-            } else if (settings.equals("screen_basic")) {
+            } else if (settings.equals(SETTINGS_SCREEN_BASIC)) {
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings();
             } else if (settings.equals("screen_notifications")) {
@@ -316,10 +327,11 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
                             ThemeUtils.updateTheme((String) newValue);
 
-                            // restart to apply new theme (actually build an entirely new task stack)
+                            // restart to apply new theme, go back to this settings screen
                             TaskStackBuilder.create(getActivity())
                                     .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
-                                    .addNextIntent(getActivity().getIntent())
+                                    .addNextIntent(getActivity().getIntent()
+                                            .putExtra(EXTRA_SETTINGS_SCREEN, SETTINGS_SCREEN_BASIC))
                                     .startActivities();
                         }
                         return true;
