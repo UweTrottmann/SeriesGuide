@@ -1,38 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/upcominglimit"
-        android:entryValues="@array/upcominglimitData"
-        android:key="com.battlelancer.seriesguide.upcominglimit"
-        android:title="@string/pref_upcominglimit" />
+    <Preference
+        android:key="clearCache"
+        android:summary="@string/clear_cache_summary"
+        android:title="@string/clear_cache" />
 
-    <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/offsets"
-        android:entryValues="@array/offsetData"
-        android:key="com.battlelancer.seriesguide.timeoffset"
-        android:title="@string/pref_offset" />
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="enableGAnalytics"
+        android:summary="@string/pref_ganalyticssummary"
+        android:title="@string/analytics" />
 
-    <PreferenceCategory android:title="@string/pref_other">
-        <Preference
-            android:key="clearCache"
-            android:summary="@string/clear_cache_summary"
-            android:title="@string/clear_cache" />
-
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="enableGAnalytics"
-            android:summary="@string/pref_ganalyticssummary"
-            android:title="@string/analytics" />
-        <Preference
-            android:key="backup"
-            android:title="Legacy Backup/Restore">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
-    </PreferenceCategory>
+    <Preference
+        android:key="backup"
+        android:title="Legacy Backup/Restore">
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
+            android:targetPackage="@string/package_name" />
+    </Preference>
 
 </PreferenceScreen>
