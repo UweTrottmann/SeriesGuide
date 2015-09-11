@@ -353,10 +353,16 @@
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
-    <string name="pref_credits">Credits</string>
     <string name="pref_traktsummary">Add or edit your trakt credentials</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+
+    <!-- About screen -->
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="about_open_source">SeriesGuide is built using open source software.</string>
+    <string name="licences_and_credits">Licences and credits</string>
 
     <!-- Sort -->
     <string name="sort">Sort by</string>
@@ -396,7 +402,7 @@
     <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
-    <string name="pref_upcominglimit">Upcoming shows within…</string>
+    <string name="pref_upcominglimit">Upcoming filter range</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %s hours</string>

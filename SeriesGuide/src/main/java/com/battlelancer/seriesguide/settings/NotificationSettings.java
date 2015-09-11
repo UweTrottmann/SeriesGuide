@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 
 /**
  * Access settings related to the notification service.
@@ -92,8 +93,7 @@ public class NotificationSettings {
 
     public static String getNotificationsRingtone(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_RINGTONE,
-                        "content://settings/system/notification_sound");
+                .getString(KEY_RINGTONE, Settings.System.DEFAULT_NOTIFICATION_URI.toString());
     }
 
     public static boolean isNotificationVibrating(Context context) {
