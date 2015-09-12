@@ -8,6 +8,11 @@ All dates are in the European Central timezone.
 Version 25 *(in development)*
 -----------------------------
 
+#### 25-beta2 *(2015-09-12)*
+
+* TWEAK Support Android 6.0, including new permissions.
+* TWEAK Restructured settings, added important ones to the main screen.
+
 #### 25-beta1 *(2015-08-26)*
 
 * TWEAK Full height nav drawer on Android 5 Lollipop and up.
