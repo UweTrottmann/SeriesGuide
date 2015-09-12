@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Dodajanje na trakt.</string>
   <string name="trakt_seen">%s videna.</string>
   <string name="trakt_notseen">%s še ni pogledana.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">O SeriesGuide</string>
-  <string name="pref_credits">Ekipa in igralci</string>
   <string name="pref_traktsummary">Dodajanje ali urejanje prijavnih podatkov trakt.tv</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
   <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+  <string name="licence_trakt">This app uses data and images by trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Razvrsti po</string>
   <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="sort_order_latest_first">Novejša prva</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
-  <string name="pref_upcominglimit">Prihajajoče oddaje v…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="last_auto_backup">Nazadnje Auto Backup: %s</string>
   <string name="restore_auto_backup">Obnovite varnostno kopijo</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Izberi jezik</string>
   <string name="dismiss">Razveljavi</string>

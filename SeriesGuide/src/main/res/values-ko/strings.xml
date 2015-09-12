@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
   <string name="hexagon_api_error">SeriesGuide 클라우드에 접속할 수 없습니다. 나중에 다시 시도해주세요.</string>
   <string name="hexagon_api_queued">SeriesGuide 클라우드로 전송합니다.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>
   <string name="trakt_seen">%s 시청.</string>
   <string name="trakt_notseen">%s 미시청.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
   <string name="pref_updatewifionlysummary">데이터 요금을 줄이기 위해 와이파이가 연결되어 있을때만 이미지를 다운받습니다</string>
   <string name="about">시리즈가이드에 대하여</string>
-  <string name="pref_credits">만든이</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
+  <string name="licence_tvdb">이 앱은 CC BY NC 4.0에 의거한 TheTVDB 사용자의 데이터와 이미지를 활용합니다.</string>
+  <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증된 프로그램이 아닙니다. (비공식 앱 입니다)</string>
+  <string name="licence_trakt">이 앱은 trakt 의 데이터와 이미지를 활용합니다.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">정렬 기준</string>
   <string name="action_sort_ignore_articles">무시하기</string>
   <string name="sort_order_latest_first">최근 방영 순</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">주간 백업한 쇼 정보를 다운로드 폴더로 보내기</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
-  <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">에피소드 표시 형식</string>
   <string name="pref_offset">시차 수동 설정</string>
   <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">현재 앱에 저장한 쇼 목록이 삭제될 수 있습니다!</string>
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">시작하기</string>
   <string name="welcome_setuplanguage">언어 선택</string>
   <string name="dismiss">취소</string>

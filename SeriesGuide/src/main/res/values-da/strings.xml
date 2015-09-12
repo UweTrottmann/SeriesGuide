@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">At fjerne din konto vil slette alle film og serier fra SeriesGuide Cloud. Sørg for at fjerne den på andre tilsluttede enheder.</string>
   <string name="hexagon_api_error">Kunne ikke tale med SeriesGuide Cloud. Prøv igen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Gemmer i trakt.</string>
   <string name="trakt_seen">%s set.</string>
   <string name="trakt_notseen">%s ikke set.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Tilføj eller ret trakt.tv login-info</string>
   <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
+  <string name="licence_tvdb">Denne app bruger data og billeder af TheTVDB licenseret under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Dette produkt bruger TMDb API\'EN men er ikke godkendt eller certificeret af TMDb.</string>
+  <string name="licence_trakt">Denne app bruger data og billeder af Trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sorter efter</string>
   <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="sort_order_latest_first">Seneste først</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Ugentlig backup af databasen over dine serier til Download-mappen</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
-  <string name="pref_upcominglimit">Kommende serier indenfor…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Talformat</string>
   <string name="pref_offset">Manuel tidsforskydning</string>
   <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Jeg forstår mine nuværende serier og lister vil gå tabt!</string>
   <string name="last_auto_backup">Sidste automatiske backup: %s</string>
   <string name="restore_auto_backup">Gendan automatisk backup</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Vælg sprog</string>
   <string name="dismiss">Slet</string>

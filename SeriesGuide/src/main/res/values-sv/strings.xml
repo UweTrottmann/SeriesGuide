@@ -229,6 +229,8 @@
   <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
   <string name="hexagon_api_error">Kunde inte kommunicera med SeriesGuide Cloud. Försök igen senare.</string>
   <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Skickar till trakt.</string>
   <string name="trakt_seen">%s sedda.</string>
   <string name="trakt_notseen">%s ej sedda.</string>
@@ -296,10 +298,14 @@
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="pref_credits">Bidragsgivare</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
+  <string name="licence_tvdb">Den här appen använder data och bilder från TheTVDB under licensen CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>
+  <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sortera efter</string>
   <string name="action_sort_ignore_articles">Ignorera artiklar</string>
   <string name="sort_order_latest_first">Senaste först</string>
@@ -327,7 +333,7 @@
   <string name="pref_autobackupsummary">Din seriedatabas säkerhetskopieras varje vecka till hämtningsmappen</string>
   <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
-  <string name="pref_upcominglimit">Kommande serier inom…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Nummerformat</string>
   <string name="pref_offset">Manuell tidsskillnad</string>
   <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
@@ -356,6 +362,8 @@
   <string name="import_warning">Jag förstår att mina nuvarande serier och listor kommer att försvinna!</string>
   <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="dismiss">Avfärda</string>

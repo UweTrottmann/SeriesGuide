@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Retirer votre compte supprimera tous les films et séries se trouvant sur le cloud SeriesGuide. Assurez-vous de le retirer également sur vos autres appareils connectés.</string>
   <string name="hexagon_api_error">Impossible de communiquer avec SeriesGuide Cloud. Réessayez plus tard.</string>
   <string name="hexagon_api_queued">Envoi vers SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Envoi vers trakt.</string>
   <string name="trakt_seen">%s vu.</string>
   <string name="trakt_notseen">%s non vu.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
   <string name="about">A propos de SeriesGuide</string>
-  <string name="pref_credits">Crédits</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
   <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
   <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
+  <string name="licence_tvdb">Cette application utilise des données et images provenant de TheTVDB sous license CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Ce produit utilise l\'API TMDb mais n\'est pas approuvé ou certifié par TMDb.</string>
+  <string name="licence_trakt">Cette application utilise des données et images provenant de trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Trier par</string>
   <string name="action_sort_ignore_articles">Ignorer les articles</string>
   <string name="sort_order_latest_first">Plus récentes en premier</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos séries dans le dossier Download</string>
   <string name="backup">Sauvegarde/Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
-  <string name="pref_upcominglimit">Prochains épisodes dans…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format de nombre</string>
   <string name="pref_offset">Décalage horaire manuel</string>
   <string name="pref_offsetsummary">Décalage de %s heures</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Je comprends que mes séries et listes actuelles vont être supprimées !</string>
   <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
   <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Commencer</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
   <string name="dismiss">Passer</string>

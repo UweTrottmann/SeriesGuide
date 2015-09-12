@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
   <string name="hexagon_api_error">No s\'ha pogut connectar amb SeriesGuide Cloud. Prova-ho més tard.</string>
   <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
   <string name="trakt_seen">%s vists.</string>
   <string name="trakt_notseen">%s no vist.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
   <string name="pref_updatewifionlysummary">No descarreguis res a través de les xarxes mòbils</string>
   <string name="about">Quant a SeriesGuide</string>
-  <string name="pref_credits">Crèdits</string>
   <string name="pref_traktsummary">Afegiu o editeu les vostres credencials de trakt</string>
   <string name="pref_autoaddshows">Afegeix noves sèries del trakt</string>
   <string name="pref_autoaddshowssummary">Afegeix sèries de la meva activitat de trakt automàticament</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+  <string name="licence_trakt">This app uses data and images by trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Ordena per</string>
   <string name="action_sort_ignore_articles">Ignora els articles</string>
   <string name="sort_order_latest_first">Primer els darrers</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Còpia de seguretat setmanal de la vostra base de dades de sèries a la carpeta de Baixades</string>
   <string name="backup">Còpies de seguretat</string>
   <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
-  <string name="pref_upcominglimit">Sèries a punt de sortir en…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format de número</string>
   <string name="pref_offset">Compensació horària manual</string>
   <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Sóc conscient que les meves sèries i llistes es perdran.</string>
   <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
   <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Inici</string>
   <string name="welcome_setuplanguage">Trieu la llengua</string>
   <string name="dismiss">Omet</string>

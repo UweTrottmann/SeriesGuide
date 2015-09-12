@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
   <string name="hexagon_api_error">Comunicare cu SeriesGuide Cloud eșuată. Încearcă mai târziu.</string>
   <string name="hexagon_api_queued">Se trimite către SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Trimite pe trakt.</string>
   <string name="trakt_seen">%s văzut.</string>
   <string name="trakt_notseen">%s nevăzut.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile</string>
   <string name="about">Despre SeriesGuide</string>
-  <string name="pref_credits">Contribuţii</string>
   <string name="pref_traktsummary">Adăugaţi sau editaţi acreditările trakt</string>
   <string name="pref_autoaddshows">Adăugați emisiuni trakt</string>
   <string name="pref_autoaddshowssummary">Adăugați automat emisiunile după activitatea dvs. de pe trakt</string>
+  <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
+  <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sortați după</string>
   <string name="action_sort_ignore_articles">Ignoră articolele</string>
   <string name="sort_order_latest_first">Întai cele mai recente</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Arhivarea săptămânală a emisiunilor se va descărca în fișierul Download</string>
   <string name="backup">Arhivare/Restaurare</string>
   <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
-  <string name="pref_upcominglimit">Seriale viitoare în timpul</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format număr</string>
   <string name="pref_offset">Compensare manuală a timpului</string>
   <string name="pref_offsetsummary">Compensare timp de difuzare cu %s ore</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Am ințeles că emisiunile curente și listele vor fi pierdute!</string>
   <string name="last_auto_backup">Ultimul backup automat: %s</string>
   <string name="restore_auto_backup">Restaurare arhivă automat</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Cum să începeți</string>
   <string name="welcome_setuplanguage">Alegeți limba</string>
   <string name="dismiss">Respingeți</string>

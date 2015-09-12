@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
   <string name="hexagon_api_error">Не вдалося з\'єднатися з хмарою SeriesGuide. Спробуйте знову пізніше.</string>
   <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Надсилання до trakt.</string>
   <string name="trakt_seen">%s переглянуто.</string>
   <string name="trakt_notseen">%s не переглянуто.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Щоб знизити витрати через мобільного оператора, не завантажуйте через мобільні мережі</string>
   <string name="about">Про SeriesGuide</string>
-  <string name="pref_credits">Подяки</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис на trakt.tv</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
+  <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
+  <string name="licence_trakt">Ця програма використовує дані та зображення сервіса trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Сортувати за</string>
   <string name="action_sort_ignore_articles">Ігнорувати артиклі</string>
   <string name="sort_order_latest_first">Новіші спочатку</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Щотижневий бекап баз даних серіалів в теку для завантажень</string>
   <string name="backup">Бекап/Відновлення</string>
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
-  <string name="pref_upcominglimit">Найближчі серіали в межах…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Формат цифр</string>
   <string name="pref_offset">Зсув часу вручну</string>
   <string name="pref_offsetsummary">Зсув ефірного часу на %s годин</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Я розумію, що мої поточні серіали та списки будуть втрачені!</string>
   <string name="last_auto_backup">Останній авто Бекап: %s</string>
   <string name="restore_auto_backup">Відновити з авто Бекапу</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Початок роботи</string>
   <string name="welcome_setuplanguage">Вибрати мову</string>
   <string name="dismiss">Відхилити</string>

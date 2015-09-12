@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Sending to trakt.</string>
   <string name="trakt_seen">%s已觀賞</string>
   <string name="trakt_notseen">%s未觀賞</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">關於 SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+  <string name="licence_trakt">This app uses data and images by trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">排序方式</string>
   <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="sort_order_latest_first">按最新的項目排序</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
-  <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">數字格式</string>
   <string name="pref_offset">手動時間換算</string>
   <string name="pref_offsetsummary">Offset air times by %s hours</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="dismiss">Dismiss</string>

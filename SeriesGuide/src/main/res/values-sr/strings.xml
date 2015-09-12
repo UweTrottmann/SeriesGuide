@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
   <string name="hexagon_api_error">Није успостављен контакт са SeriesGuide Cloud. Покушајте поново касније.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Послато на тракт.</string>
   <string name="trakt_seen">%s погледано.</string>
   <string name="trakt_notseen">%s неодгледано.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>
   <string name="pref_updatewifionlysummary">Да би сте смањили рачун, немојте учитавати слике док користите мобилну мрежу</string>
   <string name="about">О SeriesGuide-у</string>
-  <string name="pref_credits">Заслуге</string>
   <string name="pref_traktsummary">Додај или измени своје trakt.tv податке</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
   <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+  <string name="licence_trakt">This app uses data and images by trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Поређај по</string>
   <string name="action_sort_ignore_articles">Игнориши чланке</string>
   <string name="sort_order_latest_first">Прво најновије</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Недељно архивирање података</string>
   <string name="backup">Архивирање/ повраћај архиве</string>
   <string name="backup_summary">Архивирај или врати архивиране серије</string>
-  <string name="pref_upcominglimit">Предстојеће серије у следећих…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Облик нумерисања</string>
   <string name="pref_offset">Ручно подеси временску разлику</string>
   <string name="pref_offsetsummary">Разлика у емитовању је %s сати</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Разумем да ће моје тренутне серије и листе бити изгубљене!</string>
   <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
   <string name="restore_auto_backup">Поврати податке</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Почни</string>
   <string name="welcome_setuplanguage">Изабери језик</string>
   <string name="dismiss">Одбаци</string>

@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="hexagon_api_error">SeriesGuide Cloud\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="trakt_seen">%s görüldü.</string>
   <string name="trakt_notseen">%s görülmedi.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Operatör veri ücretlerini azaltmak için sadece Wi-Fi kullanın</string>
   <string name="about">SeriesGuide Hakkında</string>
-  <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
+  <string name="licence_tvdb">Bu uygulama kullanılan veriler ve görseller CC BY-NC 4.0 lisansı altındaki TheTVDB verileridir.</string>
+  <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır. TMDb ile doğrudan ilişkili, bağlantılı değildir.</string>
+  <string name="licence_trakt">Bu uygulama trakt tarafından sağlanan veri ve görselleri kullanır.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sırala</string>
   <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="sort_order_latest_first">Önce en yenisi</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Dizi bilgilerinizi haftalık olarak İndirilenler klasörüne yedekleyin</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
-  <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Sayı biçimi</string>
   <string name="pref_offset">El ile saat farkı</string>
   <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Mevcut dizilerimi ve listelerimi kaybedeceğimin farkındayım!</string>
   <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
   <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Başlarken... </string>
   <string name="welcome_setuplanguage">Dil seçin</string>
   <string name="dismiss">Kapat</string>

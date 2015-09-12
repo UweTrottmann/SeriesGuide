@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
   <string name="trakt_seen">%s pozrené.</string>
   <string name="trakt_notseen">%s nových.</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pre zníženie platieb za prenos dát. Obrázky sa nebudú sťahovať cez mobilnú sieť</string>
   <string name="about">O SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">Pridať/Upraviť prihlasovacie údaje</string>
   <string name="pref_autoaddshows">Pridávať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridávať seriály z vašej aktivity na trakt.tv</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+  <string name="licence_trakt">This app uses data and images by trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Zoradiť podľa</string>
   <string name="action_sort_ignore_articles">Ignore articles</string>
   <string name="sort_order_latest_first">Od najnovších</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Zálohovanie / obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
-  <string name="pref_upcominglimit">Nadchádzajúce seriály počas…</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Formát číslovania</string>
   <string name="pref_offset">Manuálny časový posun</string>
   <string name="pref_offsetsummary">Kompenzácia času [offset] %s hodín</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Som si vedomí že moje všetky súčasné a zoznamy budú zmazané!</string>
   <string name="last_auto_backup">Posledná automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Get started</string>
   <string name="welcome_setuplanguage">Vyberte jazyk</string>
   <string name="dismiss">Zamietnuť</string>

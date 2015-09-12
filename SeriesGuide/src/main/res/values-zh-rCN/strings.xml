@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
   <string name="hexagon_api_error">无法与 SeriesGuide Cloud 建立连接。</string>
   <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">正在与 trakt 同步…</string>
   <string name="trakt_seen">%s 已观看。</string>
   <string name="trakt_notseen">%s 未观看。</string>
@@ -295,10 +297,14 @@
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">节省移动数据使用量</string>
   <string name="about">SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
   <string name="pref_traktsummary">添加或编辑 trakt 帐户信息</string>
   <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
   <string name="pref_autoaddshowssummary">自动从 trakt 用户数据中添加节目</string>
+  <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
+  <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口但没有被 TMDb 官方认证。</string>
+  <string name="licence_trakt">此应用程序还使用了来自 trakt 的用户数据和剧集图片。</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">排序依据</string>
   <string name="action_sort_ignore_articles">忽略起始冠词</string>
   <string name="sort_order_latest_first">最新在最上</string>
@@ -326,7 +332,7 @@
   <string name="pref_autobackupsummary">每周生成一次备份</string>
   <string name="backup">备份与还原</string>
   <string name="backup_summary">备份或还原节目单</string>
-  <string name="pref_upcominglimit">筛选将要播出节目的时限</string>
+  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">序号格式</string>
   <string name="pref_offset">手动偏移播出时间</string>
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">我确定要覆盖现有节目列表！</string>
   <string name="last_auto_backup">上次自动备份时间：%s</string>
   <string name="restore_auto_backup">从自动备份恢复</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">入门</string>
   <string name="welcome_setuplanguage">选择语言</string>
   <string name="dismiss">忽略</string>
