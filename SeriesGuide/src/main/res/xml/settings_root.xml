@@ -51,7 +51,7 @@
 
         <Preference
             android:key="com.battlelancer.seriesguide.cloud"
-            android:title="@string/hexagon_short">
+            android:title="@string/hexagon">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
                 android:targetPackage="@string/package_name" />
