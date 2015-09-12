@@ -131,17 +131,19 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         newSnackbar.setCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
-                        || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning, but chose to ignore it, so...
+                if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
+                    // user has acknowledged warning
+                    // disable auto backup so warning is not shown again
                     disableAutoBackup();
                 }
             }
         }).setAction(R.string.preferences, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(
-                        new Intent(BaseTopActivity.this, SeriesGuidePreferences.class));
+                // disable setting here (not in onDismissed)
+                // so settings screen is correctly showing as disabled
+                disableAutoBackup();
+                startActivity(new Intent(BaseTopActivity.this, SeriesGuidePreferences.class));
             }
         }).show();
 
@@ -169,7 +171,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
                         || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning, but chose to ignore it
+                    // user has acknowledged warning
                     // so remove stored account name so this warning is not displayed again
                     HexagonTools.storeAccountName(BaseTopActivity.this, null);
                 }
