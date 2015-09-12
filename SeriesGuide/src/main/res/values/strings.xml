@@ -272,8 +272,8 @@
     <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
     <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
     <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
-    <string name="hexagon_permission_missing">To connect to Cloud, allow access to your accounts.</string>
-    <string name="hexagon_google_play_missing">To connect to Cloud, Google Play Services are required.</string>
+    <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+    <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
 
     <!-- trakt -->
     <string name="trakt_submitqueued">Sending to trakt.</string>
