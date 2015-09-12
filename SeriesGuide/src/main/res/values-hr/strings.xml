@@ -130,7 +130,7 @@
   <string name="noupcoming">Nema nadolazećih epizoda.</string>
   <string name="norecent">Nema nedavnih epizoda.</string>
   <string name="only_favorites">Samo favoriti</string>
-  <string name="pref_infinite_scrolling">Neograničena aktivnost</string>
+  <string name="pref_infinite_scrolling">Infinite calendar</string>
   <string name="update_scheduled">Ažuriranje…</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>

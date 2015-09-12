@@ -30,10 +30,10 @@
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
   <string name="search_within_show">Cerca all\'interno di %s</string>
-  <string name="updated">Aggionato all\'ultima versione.</string>
+  <string name="updated">Aggiornato all\'ultima versione.</string>
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
-  <string name="offline">Collegati ad una rete, in seguito riprova.</string>
+  <string name="offline">Connettersi a una rete, quindi riprovare.</string>
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
@@ -77,7 +77,7 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <string name="mark_all">Visti tutti</string>
-  <string name="unmark_all">Visti nessuno</string>
+  <string name="unmark_all">Nessuno visto</string>
   <string name="mark_untilhere">Guardati tutti quelli già trasmessi</string>
   <string name="collect_all">Tutti collezionati</string>
   <string name="uncollect_all">Nessuno collezionato</string>
@@ -99,7 +99,7 @@
   <string name="unfavorited">Rimuovi dai preferiti</string>
   <string name="context_hide">Nascondi</string>
   <string name="context_unhide">Annulla nascondi</string>
-  <string name="hidden">Serie nascoste</string>
+  <string name="hidden">Spostato nei non visibili</string>
   <string name="unhidden">Visualizza non nascosti</string>
   <string name="action_shows_add">Aggiungi una serie</string>
   <string name="action_shows_filter">Filtra le serie</string>
@@ -165,7 +165,7 @@
   <string name="action_lists_reorder">Riordina le liste</string>
   <string name="movies_collection">Collezione</string>
   <string name="movies_watchlist">Programma visione</string>
-  <string name="watchlist_add">Aggiungi alla lista</string>
+  <string name="watchlist_add">Da vedere</string>
   <string name="watchlist_remove">Rimuovere dalla lista</string>
   <string name="watchlist_added">Aggiunto alla lista</string>
   <string name="watchlist_removed">Rimossa dalla lista</string>
@@ -308,7 +308,7 @@
   <string name="sort_order_top_rated_first">Le più votate</string>
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
-  <string name="upcoming_upto_now">adesso</string>
+  <string name="upcoming_upto_now">ora</string>
   <string name="upcoming_upto_one_day">entro un giorno</string>
   <string name="upcoming_upto_three_days">entro 3 giorni</string>
   <string name="upcoming_upto_one_week">entro 1 settimana</string>

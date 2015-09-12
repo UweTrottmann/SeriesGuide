@@ -121,7 +121,7 @@
   <string name="released_today">오늘 방영됨</string>
   <string name="friends_recently">trakt 친구</string>
   <string name="now_empty">아무것도 없습니다. TV프로 좀 보세요!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">진행중인 것이 없습니다. 영화를 감상하세요.</string>
   <string name="user_stream">기록</string>
   <string name="user_stream_empty">trakt에 최근 활동이 없습니다. 쇼를 확인하세요.</string>
   <string name="user_movie_stream_empty">trakt에 최근 활동이 없습니다. 영화를 확인하세요.</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
-  <string name="pref_infinite_scrolling">무한스크롤</string>
+  <string name="pref_infinite_scrolling">영구적인 달력</string>
   <string name="update_scheduled">업데이트 중…</string>
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">모든 기능 사용하기</string>
   <string name="billing_action_subscribe">구독</string>
   <string name="billing_action_pass">X 패스 얻기</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%/연, 무료로 사용해 보세요.</string>
   <string name="billing_price_pass">1회 구매로 계속 사용</string>
   <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
   <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Amazon 계정으로 로그인</string>
   <string name="subscription_unavailable">구독을 현재 사용할 수 없습니다.</string>
   <string name="subscription_failed">구매가 완료되지 않았습니다.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass는 현재 유효하지 않습니다.</string>
   <string name="extensions">확장프로그램</string>
   <string name="action_extensions_configure">확장프로그램 커스터마이즈</string>
   <string name="action_extensions_add">확장프로그램 추가</string>

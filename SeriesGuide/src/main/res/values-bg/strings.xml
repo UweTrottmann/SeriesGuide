@@ -235,11 +235,11 @@
   <string name="trakt_notcollected">%s не са в колекция.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Ненамерено (все още) в trakt. Опитайте отново по-късно.</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_account">trakt профил</string>
@@ -280,7 +280,7 @@
   <string name="checkin_hint">Напиши съобщение (по избор)</string>
   <string name="paste_title">Поставете заглавие</string>
   <string name="feedback">Обратна връзка</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Отвори в браузър</string>
   <string name="prefs_category_basic">Основни</string>
   <string name="prefs_category_sharing">Услуги</string>
   <string name="prefs_category_advanced">Разширени</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Отключване на всички функции</string>
   <string name="billing_action_subscribe">Абониране</string>
   <string name="billing_action_pass">Вземете X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/година, опитай безплатно</string>
   <string name="billing_price_pass">еднократно закупуване</string>
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>
   <string name="subscription_unavailable">Абонаментът не е наличен.</string>
   <string name="subscription_failed">Покупката не завърши.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass е недостъпен в момента.</string>
   <string name="extensions">Разширения</string>
   <string name="action_extensions_configure">Персонализиране на разширения</string>
   <string name="action_extensions_add">Добави разширение</string>

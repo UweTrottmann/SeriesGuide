@@ -130,7 +130,7 @@
   <string name="noupcoming">Nav gaidāmu epizožu.</string>
   <string name="norecent">Nav nesenu epizožu.</string>
   <string name="only_favorites">Tikai izlases seriāli</string>
-  <string name="pref_infinite_scrolling">Darbība bezgalīgi</string>
+  <string name="pref_infinite_scrolling">Infinite calendar</string>
   <string name="update_scheduled">Notiek atjaunināšana…</string>
   <string name="update_no_connection">Lai atjaunināt, pieslēdzieties internetam.</string>
   <string name="update_inprogress">Notiek atjaunināšana, mēģiniet vēlreiz vēlāk.</string>

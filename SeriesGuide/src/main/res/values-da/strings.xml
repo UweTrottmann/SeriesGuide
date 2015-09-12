@@ -121,7 +121,7 @@
   <string name="released_today">Udgivet i dag</string>
   <string name="friends_recently">Dine trakt venner</string>
   <string name="now_empty">Intet sker. Se nogle shows!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">Der sker ikke noget her. Se nogle film!</string>
   <string name="user_stream">Historik</string>
   <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle shows!</string>
   <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle film!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Der er ingen kommende episoder.</string>
   <string name="norecent">Der er ingen nylige episoder.</string>
   <string name="only_favorites">Kun favorit serier</string>
-  <string name="pref_infinite_scrolling">Infinite calendar</string>
+  <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <string name="update_scheduled">Opdaterer…</string>
   <string name="update_no_connection">Forbind til internettet for at opdatere.</string>
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/år, prøv gratis</string>
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Oplås alle funktioner, herunder: underretninger, temaer og flere widget indstillinger. Hjælp mig skabe fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte! Du har adgang til alle funktioner.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">Log ind på din Amazon konto!</string>
   <string name="subscription_unavailable">Abonnementet er i øjeblikket ikke tilgængeligt.</string>
   <string name="subscription_failed">Køb ikke afsluttet.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass er ikke tilgængelig i øjeblikket.</string>
   <string name="extensions">Udvidelser</string>
   <string name="action_extensions_configure">Tilpas udvidelser</string>
   <string name="action_extensions_add">Tilføj udvidelse</string>

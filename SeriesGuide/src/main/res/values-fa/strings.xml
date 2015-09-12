@@ -130,7 +130,7 @@
   <string name="noupcoming">هیچ قسمت آینده وجود ندارد.</string>
   <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
   <string name="only_favorites">تنها نمایش های مورد علاقه</string>
-  <string name="pref_infinite_scrolling">بی نهایت فعالیت</string>
+  <string name="pref_infinite_scrolling">Infinite calendar</string>
   <string name="update_scheduled">بروزرسانی...</string>
   <string name="update_no_connection">برای روز رسانی به اینترنت وصل شوید.</string>
   <string name="update_inprogress">به روز رسانی در حال اجرا است ,دوباره  سعی کنید.</string>

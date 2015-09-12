@@ -130,7 +130,7 @@
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
   <string name="only_favorites">僅顯示喜愛影集</string>
-  <string name="pref_infinite_scrolling">列表無限滾動</string>
+  <string name="pref_infinite_scrolling">Infinite calendar</string>
   <string name="update_scheduled">更新中......</string>
   <string name="update_no_connection">如需更新，請連接網路</string>
   <string name="update_inprogress">更新正在進行中，請稍後再試</string>

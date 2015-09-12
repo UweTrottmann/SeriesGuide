@@ -121,7 +121,7 @@
   <string name="released_today">יצא היום</string>
   <string name="friends_recently">חבריך מ-trakt</string>
   <string name="now_empty">שום דבר לא קורה. צפה בכמה סדרות!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">שום דבר לא קורה. לצפות בכמה סרטים!</string>
   <string name="user_stream">היסטוריה</string>
   <string name="user_stream_empty">אין פעולות אחרונות בTrakt. צפה בכמה סדרות!</string>
   <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. צפה בכמה סרטים!</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
-  <string name="pref_infinite_scrolling">פעילות אינסופית</string>
+  <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
   <string name="update_scheduled">מעדכן…</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
@@ -394,7 +394,7 @@
   <string name="action_upgrade">פתח את כל האפשרויות</string>
   <string name="billing_action_subscribe">הצטרף כמנוי</string>
   <string name="billing_action_pass">קבל את X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%sלשנה, נסה בחינם</string>
   <string name="billing_price_pass">רכישה חד פעמית</string>
   <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
   <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
@@ -404,7 +404,7 @@
   <string name="subscription_not_signed_in">התחבר לחשבון האמזון שלך!</string>
   <string name="subscription_unavailable">המנוי לא זמין כרגע.</string>
   <string name="subscription_failed">הרכישה לא הושלמה.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass אינו זמין כרגע.</string>
   <string name="extensions">תוספים</string>
   <string name="action_extensions_configure">התאמת תוספים</string>
   <string name="action_extensions_add">הוספת תוסף</string>

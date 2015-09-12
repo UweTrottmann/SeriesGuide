@@ -25,7 +25,7 @@
   <string name="discard">Zrušiť</string>
   <string name="save_selection">Uložiť výber</string>
   <string name="action_display_all">Zobraziť všetko</string>
-  <string name="web_search">Web search</string>
+  <string name="web_search">Vyhľadávanie na webe</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
   <string name="search_hint">Hľadať epizódy</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">Žiadne nadchádzajúce epizódy.</string>
   <string name="norecent">Žiadne nedávne epizódy.</string>
   <string name="only_favorites">Iba obľúbené seriály</string>
-  <string name="pref_infinite_scrolling">Neobmedzená činnosť</string>
+  <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
   <string name="update_scheduled">Aktualizuje sa...</string>
   <string name="update_no_connection">Pre aktualizáciu sa pripojte k internetu</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
@@ -216,13 +216,13 @@
   <string name="hexagon_setup">Nastaviť SeriesGuide Cloud</string>
   <string name="hexagon_description">Pripojte sa ku cloudu pre zálohovanie a synchronizovanie seriálov a filmov.</string>
   <string name="hexagon_warning_lists">Zoznamy nie su zahrnuté</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">Pri použití SeriesGuide Cloudu sa zmeny vykonané v Trakte nebudú synchronizovať so SeriesGuide.</string>
   <string name="hexagon_signin">Prihlásiť sa</string>
-  <string name="hexagon_signed_in">You are connected to SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_in">Ste pripojený k SeriesGuide cloudu.</string>
   <string name="hexagon_signout">Odhlásiť sa</string>
   <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
   <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account">Odstrániť účet</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
@@ -242,7 +242,7 @@
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
-  <string name="trakt_account">trakt account</string>
+  <string name="trakt_account">trakt účet</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Pripojenie na trakt.tv</string>
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
@@ -395,7 +395,7 @@
   <string name="billing_action_subscribe">Subscribe</string>
   <string name="billing_action_pass">Get X Pass</string>
   <string name="billing_price_subscribe">%s/year, try for free</string>
-  <string name="billing_price_pass">one-time purchase</string>
+  <string name="billing_price_pass">jednorázová platba</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
   <string name="billing_learn_more">Why pay? Learn more.</string>
@@ -404,10 +404,10 @@
   <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
   <string name="subscription_unavailable">The subscription is currently not available.</string>
   <string name="subscription_failed">Purchase not completed.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
-  <string name="extensions">Extensions</string>
+  <string name="pass_unavailable">X Pass nie je momentálne k dispozícii.</string>
+  <string name="extensions">Rozšírenia</string>
   <string name="action_extensions_configure">Customize extensions</string>
-  <string name="action_extensions_add">Add extension</string>
+  <string name="action_extensions_add">Pridať rozšírenie</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>
   <string name="action_extensions_search">Get more extensions</string>
   <string name="action_extension_remove">Odstrániť</string>

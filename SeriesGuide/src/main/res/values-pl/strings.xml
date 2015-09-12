@@ -130,7 +130,7 @@
   <string name="noupcoming">Brak nadchodzących odcinków.</string>
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
-  <string name="pref_infinite_scrolling">Nieskończona aktywność</string>
+  <string name="pref_infinite_scrolling">Przewijaj kalendarz</string>
   <string name="update_scheduled">Aktualizowanie…</string>
   <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
@@ -292,8 +292,8 @@
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
   <string name="pref_language">Język treści</string>
-  <string name="pref_updatewifionly">Obrazy tylko na Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty transferu danych, nie pobieraj przy użyciu sieci komórkowej</string>
+  <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Autorzy</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
@@ -318,11 +318,11 @@
   <string name="upcoming_upto_six_hours">6 godzin</string>
   <string name="upcoming_upto_half_day">12 godzin</string>
   <string name="pref_appearance">Wygląd</string>
-  <string name="pref_theme">Schemat graficzny</string>
+  <string name="pref_theme">Motyw</string>
   <string name="pref_other">Inne</string>
-  <string name="pref_autoupdate">Aktualizacje automatyczne</string>
+  <string name="pref_autoupdate">Uruchom aktualizacje automatyczne</string>
   <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale</string>
-  <string name="pref_autobackup">Włącz automatyczną kopię zapasową</string>
+  <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
   <string name="pref_autobackupsummary">Cotygodniowa kopia zapasowa bazy danych seriali w folderze Download</string>
   <string name="backup">Kopia zapasowa</string>
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
