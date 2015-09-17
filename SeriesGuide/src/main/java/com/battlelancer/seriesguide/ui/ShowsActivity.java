@@ -102,7 +102,7 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs_drawer);
+        setContentView(R.layout.activity_shows);
         setupActionBar();
         setupNavDrawer();
 
