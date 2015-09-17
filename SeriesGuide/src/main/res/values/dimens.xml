@@ -10,7 +10,6 @@
 
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>
-    <dimen name="floating_action_button_margin_end">40dp</dimen>
 
     <!-- Material text sizes -->
     <dimen name="text_size_default_sg">14sp</dimen>
@@ -81,5 +80,9 @@
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
     <integer name="grid_column_count">1</integer>
+    <!-- Floating action button -->
+    <!-- Below Android 5.0 seems to add auto-padding for shadows, so reduce margin. -->
+    <dimen name="fab_margin">4dp</dimen>
+    <dimen name="fab_scroll_threshold">4dp</dimen>
 
 </resources>

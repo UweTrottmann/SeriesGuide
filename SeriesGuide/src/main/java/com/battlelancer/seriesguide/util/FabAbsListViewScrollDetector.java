@@ -17,9 +17,10 @@
 package com.battlelancer.seriesguide.util;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AbsListView;
-import com.melnykov.fab.FloatingActionButton;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Hides the floating action button when scrolling down, shows it when scrolling up. If the end of
@@ -36,8 +37,9 @@ public class FabAbsListViewScrollDetector implements AbsListView.OnScrollListene
 
     public FabAbsListViewScrollDetector(@NonNull FloatingActionButton button) {
         this.button = button;
-        scrollThreshold = button.getContext().getResources().getDimensionPixelOffset(
-                com.melnykov.fab.R.dimen.fab_scroll_threshold);
+        scrollThreshold = button.getContext()
+                .getResources()
+                .getDimensionPixelOffset(R.dimen.fab_scroll_threshold);
     }
 
     @Override
