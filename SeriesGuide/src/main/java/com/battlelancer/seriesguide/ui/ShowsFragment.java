@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,6 +55,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -136,6 +138,8 @@ public class ShowsFragment extends Fragment implements
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
 

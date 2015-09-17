@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
@@ -102,7 +103,12 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shows);
+        // enable app bar scrolling out of view only on L or higher
+        if (AndroidUtils.isLollipopOrHigher()) {
+            setContentView(R.layout.activity_shows);
+        } else {
+            setContentView(R.layout.activity_tabs_drawer);
+        }
         setupActionBar();
         setupNavDrawer();
 
