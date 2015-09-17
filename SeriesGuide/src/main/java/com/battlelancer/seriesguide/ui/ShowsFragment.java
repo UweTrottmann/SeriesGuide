@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -52,7 +51,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -142,17 +140,6 @@ public class ShowsFragment extends Fragment implements
         ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-
-        // setup floating action button for adding shows
-        final FloatingActionButton buttonAddShow = (FloatingActionButton) getView().findViewById(
-                R.id.buttonShowsAdd);
-        mGrid.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
-        buttonAddShow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddActivity.class));
-            }
-        });
 
         // listen for some settings changes
         PreferenceManager
