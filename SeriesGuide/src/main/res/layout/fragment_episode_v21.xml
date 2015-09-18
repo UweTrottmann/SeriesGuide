@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +14,14 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<!-- Use native ScrollView as it behaves better when scrolling in view pager -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
+    tools:ignore="UnusedAttribute">
 
-    <item name="activity_shows" type="layout">@layout/activity_shows_v21</item>
-    <item name="activity_addshow" type="layout">@layout/activity_addshow_v21</item>
-    <item name="fragment_episode" type="layout">@layout/fragment_episode_v21</item>
+    <include layout="@layout/layout_episode" />
 
-</resources>
+</ScrollView>
