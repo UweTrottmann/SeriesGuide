@@ -378,6 +378,7 @@
     <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
 
     <!-- Upcoming thresholds -->
+    <string name="pref_upcominglimit">Upcoming range</string>
     <string name="upcoming_upto_now">now</string>
     <string name="upcoming_upto_one_day">1 day</string>
     <string name="upcoming_upto_three_days">3 days</string>
@@ -402,7 +403,6 @@
     <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
-    <string name="pref_upcominglimit">Upcoming filter range</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %s hours</string>

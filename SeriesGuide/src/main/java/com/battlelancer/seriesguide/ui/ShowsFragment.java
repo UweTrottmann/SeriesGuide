@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -50,6 +51,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
@@ -299,6 +301,28 @@ public class ShowsFragment extends Fragment implements
             getActivity().supportInvalidateOptionsMenu();
 
             fireTrackerEventAction("Filter Removed");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_filter_upcoming_range) {
+            // yes, converting back to a string for comparison
+            String upcomingLimit = String.valueOf(
+                    AdvancedSettings.getUpcomingLimitInDays(getActivity()));
+            String[] filterRanges = getResources().getStringArray(R.array.upcominglimitData);
+            int selectedIndex = 0;
+            for (int i = 0, filterRangesLength = filterRanges.length; i < filterRangesLength; i++) {
+                String range = filterRanges[i];
+                if (upcomingLimit.equals(range)) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+            SingleChoiceDialogFragment upcomingRangeDialog = SingleChoiceDialogFragment.newInstance(
+                    R.array.upcominglimit,
+                    R.array.upcominglimitData,
+                    selectedIndex,
+                    AdvancedSettings.KEY_UPCOMING_LIMIT,
+                    R.string.pref_upcominglimit);
+            upcomingRangeDialog.show(getFragmentManager(), "upcomingRangeDialog");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {

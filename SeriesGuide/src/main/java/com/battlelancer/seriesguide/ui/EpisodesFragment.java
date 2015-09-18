@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -360,7 +360,8 @@ public class EpisodesFragment extends ListFragment
 
     private void showSortDialog() {
         FragmentManager fm = getFragmentManager();
-        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.epsorting,
+        SingleChoiceDialogFragment sortDialog = SingleChoiceDialogFragment.newInstance(
+                R.array.epsorting,
                 R.array.epsortingData, mSorting.index(),
                 DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting);
         sortDialog.show(fm, "fragment_sort");

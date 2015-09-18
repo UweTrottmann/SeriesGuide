@@ -346,8 +346,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // show currently set values for list prefs
             setListPreferenceSummary(
-                    (ListPreference) findPreference(AdvancedSettings.KEY_UPCOMING_LIMIT));
-            setListPreferenceSummary(
                     (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
             ListPreference offsetListPref = (ListPreference) findPreference(KEY_OFFSET);
             offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
@@ -509,8 +507,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 new BackupManager(pref.getContext()).dataChanged();
             }
 
-            if (AdvancedSettings.KEY_UPCOMING_LIMIT.equals(key)
-                    || DisplaySettings.KEY_LANGUAGE.equals(key)
+            if (DisplaySettings.KEY_LANGUAGE.equals(key)
                     || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
                     || DisplaySettings.KEY_THEME.equals(key)
                     || NotificationSettings.KEY_THRESHOLD.equals(key)

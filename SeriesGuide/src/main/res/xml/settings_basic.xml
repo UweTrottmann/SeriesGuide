@@ -16,13 +16,6 @@
             android:title="@string/pref_onlyseasoneps" />
 
         <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/upcominglimit"
-            android:entryValues="@array/upcominglimitData"
-            android:key="com.battlelancer.seriesguide.upcominglimit"
-            android:title="@string/pref_upcominglimit" />
-
-        <ListPreference
             android:defaultValue="0"
             android:entries="@array/offsets"
             android:entryValues="@array/offsetData"
