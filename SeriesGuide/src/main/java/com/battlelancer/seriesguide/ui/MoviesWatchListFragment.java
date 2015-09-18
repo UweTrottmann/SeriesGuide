@@ -47,7 +47,7 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
             Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        mEmptyView.setText(R.string.movies_watchlist_empty);
+        emptyView.setText(R.string.movies_watchlist_empty);
 
         return v;
     }

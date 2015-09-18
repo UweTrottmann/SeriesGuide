@@ -25,6 +25,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrder;
@@ -52,21 +54,22 @@ public abstract class MoviesBaseFragment extends Fragment implements
 
     private static final int LAYOUT = R.layout.fragment_movies;
 
-    private GridView mGridView;
+    private GridView gridView;
+    protected TextView emptyView;
 
-    protected TextView mEmptyView;
-
-    protected MoviesCursorAdapter mAdapter;
+    protected MoviesCursorAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
 
-        mGridView = (GridView) v.findViewById(R.id.gridViewMovies);
-        mEmptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
-        mGridView.setEmptyView(mEmptyView);
-        mGridView.setOnItemClickListener(this);
+        gridView = (GridView) v.findViewById(R.id.gridViewMovies);
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        emptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
+        gridView.setEmptyView(emptyView);
+        gridView.setOnItemClickListener(this);
 
         return v;
     }
@@ -82,8 +85,8 @@ public abstract class MoviesBaseFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new MoviesCursorAdapter(getActivity(), this);
-        mGridView.setAdapter(mAdapter);
+        adapter = new MoviesCursorAdapter(getActivity(), this);
+        gridView.setAdapter(adapter);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);
 
@@ -168,7 +171,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Cursor movie = (Cursor) mAdapter.getItem(position);
+        Cursor movie = (Cursor) adapter.getItem(position);
         int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
 
         // launch movie details activity
@@ -187,12 +190,12 @@ public abstract class MoviesBaseFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     /**
