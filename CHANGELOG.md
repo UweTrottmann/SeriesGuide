@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 25 *(in development)*
 -----------------------------
 
+#### 25-beta3 *(2015-09-18)*
+
+* TWEAK Hide app bar when scrolling on Android 5.0 and up in Shows, Lists, Movies, Add show screens.
+* TWEAK Hide app bar when scrolling in episode details view on phones.
+* TWEAK Always display add show button, only hide it when moving between tabs.
+
 #### 25-beta2 *(2015-09-12)*
 
 * TWEAK Support Android 6.0, including new permissions.
