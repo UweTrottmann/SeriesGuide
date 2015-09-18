@@ -30,10 +30,10 @@
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
   <string name="search_within_show">Cerca all\'interno di %s</string>
-  <string name="updated">Aggionato all\'ultima versione.</string>
+  <string name="updated">Aggiornato all\'ultima versione.</string>
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
-  <string name="offline">Collegati ad una rete, in seguito riprova.</string>
+  <string name="offline">Connettersi a una rete, quindi riprovare.</string>
   <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
@@ -77,7 +77,7 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <string name="mark_all">Visti tutti</string>
-  <string name="unmark_all">Visti nessuno</string>
+  <string name="unmark_all">Nessuno visto</string>
   <string name="mark_untilhere">Guardati tutti quelli già trasmessi</string>
   <string name="collect_all">Tutti collezionati</string>
   <string name="uncollect_all">Nessuno collezionato</string>
@@ -99,7 +99,7 @@
   <string name="unfavorited">Rimuovi dai preferiti</string>
   <string name="context_hide">Nascondi</string>
   <string name="context_unhide">Annulla nascondi</string>
-  <string name="hidden">Serie nascoste</string>
+  <string name="hidden">Spostato nei non visibili</string>
   <string name="unhidden">Visualizza non nascosti</string>
   <string name="action_shows_add">Aggiungi una serie</string>
   <string name="action_shows_filter">Filtra le serie</string>
@@ -165,7 +165,7 @@
   <string name="action_lists_reorder">Riordina le liste</string>
   <string name="movies_collection">Collezione</string>
   <string name="movies_watchlist">Programma visione</string>
-  <string name="watchlist_add">Aggiungi alla lista</string>
+  <string name="watchlist_add">Da vedere</string>
   <string name="watchlist_remove">Rimuovere dalla lista</string>
   <string name="watchlist_added">Aggiunto alla lista</string>
   <string name="watchlist_removed">Rimossa dalla lista</string>
@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
   <string name="hexagon_api_error">Impossibile comunicare con SeriesGuide Cloud. Prova più tardi.</string>
   <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Invio a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s non visto.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Non mostrare gli episodi speciali tranne che nella lista della stagione</string>
   <string name="pref_seasonsorting">Ordina stagioni per…</string>
   <string name="pref_episodesorting">Ordina episodi per…</string>
-  <string name="pref_language">Lingua contenuto</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Per ridurre gli addebiti del gestore, non scaricare con la connessione mobile</string>
   <string name="about">Info su SeriesGuide</string>
-  <string name="pref_credits">Crediti</string>
   <string name="pref_traktsummary">Aggiungi o modifica le tue credenziali trakt</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
+  <string name="licence_tvdb">Questa applicazione utilizza dati e immagini di TheTVDB sotto licenza CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Questo prodotto utilizza l\'API di TMDb ma non è approvato o certificato da TMDb.</string>
+  <string name="licence_trakt">Questa applicazione utilizza dati e immagini di trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Ordina per</string>
   <string name="action_sort_ignore_articles">Ignora gli articoli</string>
   <string name="sort_order_latest_first">Prima i più recenti</string>
@@ -308,7 +314,8 @@
   <string name="sort_order_top_rated_first">Le più votate</string>
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
-  <string name="upcoming_upto_now">adesso</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="upcoming_upto_now">ora</string>
   <string name="upcoming_upto_one_day">entro un giorno</string>
   <string name="upcoming_upto_three_days">entro 3 giorni</string>
   <string name="upcoming_upto_one_week">entro 1 settimana</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">Esegui ogni settimana un backup del database delle serie nella cartella Download</string>
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Esegui il backup o ripristina le tue serie</string>
-  <string name="pref_upcominglimit">Nuovi episodi trasmessi…</string>
   <string name="pref_number">Formato numerico</string>
   <string name="pref_offset">Fuso orario manuale</string>
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Le mie serie attuali e le liste verranno perse!</string>
   <string name="last_auto_backup">Ultimo backup automatico: %s</string>
   <string name="restore_auto_backup">Ripristina il Backup automatico</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Inizia qui</string>
   <string name="welcome_setuplanguage">Scegli la lingua</string>
   <string name="dismiss">Cancella</string>

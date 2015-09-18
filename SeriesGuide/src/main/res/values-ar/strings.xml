@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
   <string name="hexagon_api_error">لا يمكن التحدث لسحابة دليل المسلسلات. حاول مرة أخرى.</string>
   <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
   <string name="trakt_seen">%s تمت  المشاهدة.</string>
   <string name="trakt_notseen">%s لم تتم المشاهدة.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
-  <string name="pref_language">لغة البرنامج</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
   <string name="about">حول دليل المسلسلات</string>
-  <string name="pref_credits">الاعتمادات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
   <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>
+  <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
+  <string name="licence_trakt">هذا البرنامج يستخدم صور وبيانات من Trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">ترتيب حسب</string>
   <string name="action_sort_ignore_articles">تجاهل المقال</string>
   <string name="sort_order_latest_first">الأحدث أولاً</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">أعلى تقييم</string>
   <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
   <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">الآن</string>
   <string name="upcoming_upto_one_day">يوم</string>
   <string name="upcoming_upto_three_days">ثلاثة أيام</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">نسخ أسبوعي للمسلسلات توضع داخل مجلد التحميل</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
-  <string name="pref_upcominglimit">إظهار المسلسلات القادمة خلال…</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
   <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">أنا أفهم ما أقوم به حاليا وأعلم أنه قد تضيع العروض والقوائم!</string>
   <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
   <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">بدء</string>
   <string name="welcome_setuplanguage">اختر اللغة</string>
   <string name="dismiss">إبعاد</string>

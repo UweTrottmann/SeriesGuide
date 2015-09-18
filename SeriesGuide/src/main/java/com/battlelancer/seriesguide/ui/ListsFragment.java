@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -84,13 +86,19 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
         mAdapter = new ListItemsAdapter(getActivity(), onContextMenuClickListener);
 
+        if (getView() == null) {
+            return;
+        }
+
         // setup grid view
-        GridView list = (GridView) getView().findViewById(android.R.id.list);
-        list.setAdapter(mAdapter);
-        list.setOnItemClickListener(this);
-        list.setEmptyView(getView().findViewById(android.R.id.empty));
-        list.setFastScrollAlwaysVisible(false);
-        list.setFastScrollEnabled(true);
+        GridView gridView = (GridView) getView().findViewById(android.R.id.list);
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        gridView.setAdapter(mAdapter);
+        gridView.setOnItemClickListener(this);
+        gridView.setEmptyView(getView().findViewById(android.R.id.empty));
+        gridView.setFastScrollAlwaysVisible(false);
+        gridView.setFastScrollEnabled(true);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }

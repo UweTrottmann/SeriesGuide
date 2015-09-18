@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer ifra SeriesGuide Sky. Husk og fjerne den på andre enheter også.</string>
   <string name="hexagon_api_error">Kan ikke kontakte SeriesGuide skyen.  Prøv senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide skyen.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Sender til trakt.</string>
   <string name="trakt_seen">%s sett.</string>
   <string name="trakt_notseen">%s ikke sett.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Spesialepisoder forsvinner fra alle lister utenom sesonglisten</string>
   <string name="pref_seasonsorting">Sorter sesonger etter…</string>
   <string name="pref_episodesorting">Sorter episoder etter…</string>
-  <string name="pref_language">Innholdsspråk</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere kostnader, ikke last ned via mobildataforbindelse</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="pref_credits">Krediteringer</string>
   <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
   <string name="pref_autoaddshows">Legg til nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
+  <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
+  <string name="licence_trakt">Denne appen bruker data og bilder fra trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sorter etter</string>
   <string name="action_sort_ignore_articles">Ignorer artikler</string>
   <string name="sort_order_latest_first">Nyeste først</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">Høyest rangerte først</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Eldste først (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nå</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dager</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av seriedatabasen til nedlastingsmappen</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
-  <string name="pref_upcominglimit">Kommende serier innen…</string>
   <string name="pref_number">Nummerering</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
   <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Jeg forstår at mine aktuelle serier og lister vil gå tapt!</string>
   <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
   <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Velg språk</string>
   <string name="dismiss">Avbryt</string>

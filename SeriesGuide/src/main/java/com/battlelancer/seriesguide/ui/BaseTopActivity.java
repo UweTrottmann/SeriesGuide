@@ -19,14 +19,20 @@ package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SyncStatusObserver;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
@@ -41,6 +47,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
     private SmoothProgressBar syncProgressBar;
     private Object syncObserverHandle;
+    private Snackbar snackbar;
 
     @Override
     protected void setupActionBar() {
@@ -109,6 +116,74 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onShowAutoBackupPermissionWarning() {
+        if (snackbar != null && snackbar.isShown()) {
+            // do not replace an existing snackbar
+            return;
+        }
+
+        Snackbar newSnackbar = Snackbar
+                .make(findViewById(android.R.id.content),
+                        R.string.autobackup_permission_missing, Snackbar.LENGTH_INDEFINITE);
+        newSnackbar.setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
+                    // user has acknowledged warning
+                    // disable auto backup so warning is not shown again
+                    disableAutoBackup();
+                }
+            }
+        }).setAction(R.string.preferences, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable setting here (not in onDismissed)
+                // so settings screen is correctly showing as disabled
+                disableAutoBackup();
+                startActivity(new Intent(BaseTopActivity.this, SeriesGuidePreferences.class));
+            }
+        }).show();
+
+        snackbar = newSnackbar;
+    }
+
+    private void disableAutoBackup() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, false)
+                .apply();
+    }
+
+    @Override
+    protected void onShowCloudPermissionWarning() {
+        if (snackbar != null && snackbar.isShown()) {
+            // do not replace an existing snackbar
+            return;
+        }
+
+        Snackbar newSnackbar = Snackbar
+                .make(findViewById(android.R.id.content), R.string.hexagon_permission_missing,
+                        Snackbar.LENGTH_INDEFINITE);
+        newSnackbar.setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
+                        || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
+                    // user has acknowledged warning
+                    // so remove stored account name so this warning is not displayed again
+                    HexagonTools.storeAccountName(BaseTopActivity.this, null);
+                }
+            }
+        }).setAction(R.string.preferences, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
+            }
+        }).show();
+
+        snackbar = newSnackbar;
     }
 
     /**

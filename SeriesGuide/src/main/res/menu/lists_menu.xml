@@ -15,9 +15,14 @@
         app:showAsAction="ifRoom"
         android:title="@string/search" />
     <item
+        android:id="@+id/menu_action_lists_edit"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/list_manage" />
+    <item
         android:id="@+id/menu_action_lists_sort"
         android:icon="@drawable/ic_action_sort"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         app:showAsAction="never"
         android:title="@string/action_lists_sort">
         <menu>
@@ -35,7 +40,7 @@
     </item>
     <item
         android:id="@+id/menu_action_lists_reorder"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         app:showAsAction="never"
         android:title="@string/action_lists_reorder" />
 

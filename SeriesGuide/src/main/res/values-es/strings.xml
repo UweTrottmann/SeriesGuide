@@ -229,6 +229,8 @@
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="hexagon_api_error">No puidera hablar a SeriesGuide Cloud. Por favor tratar otra vez mas tarde.</string>
   <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Enviando a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s no visto.</string>
@@ -292,14 +294,18 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episodios por…</string>
-  <string name="pref_language">Idioma del contenido</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reducir los cargos de la operadora, no descargar por red móvil</string>
   <string name="about">Acerca de SeriesGuide</string>
-  <string name="pref_credits">Créditos</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
   <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
+  <string name="licence_tvdb">La aplicación utiliza datos e imagenes de TheTVDB licenciadas bajo la CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
+  <string name="licence_trakt">La aplicación utiliza datos e imagenes de trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Ordenar por</string>
   <string name="action_sort_ignore_articles">Ignorar artículos</string>
   <string name="sort_order_latest_first">Más reciente primero</string>
@@ -309,6 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="sort_order_top_rated_first">Mas valorado</string>
   <string name="sort_order_latest_first_dvd">Primero los más rencientes (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Primero más antiguos (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">ahora</string>
   <string name="upcoming_upto_one_day">un día</string>
   <string name="upcoming_upto_three_days">3 días</string>
@@ -327,7 +334,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_autobackupsummary">Copia de seguridad semanal de tu base de datos de programas en la carpeta de Descargas</string>
   <string name="backup">Respaldo/Restauración</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
-  <string name="pref_upcominglimit">Próximas exposiciones dentro de…</string>
   <string name="pref_number">Formato numérico</string>
   <string name="pref_offset">Ajuste de hora manual</string>
   <string name="pref_offsetsummary">Ajustar %s horas los tiempos de emisión</string>
@@ -356,6 +362,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="import_warning">Entiendo que mis series y listas se perderán!</string>
   <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
   <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Empezar</string>
   <string name="welcome_setuplanguage">Elija idioma</string>
   <string name="dismiss">Descartar</string>

@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
   <string name="hexagon_api_error">Не взаимодейства със SeriesGuide облака. Опитайте отново по-късно.</string>
   <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Подаване към trakt.</string>
   <string name="trakt_seen">%s гледани.</string>
   <string name="trakt_notseen">%s не са гледани.</string>
@@ -235,11 +237,11 @@
   <string name="trakt_notcollected">%s не са в колекция.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
+  <string name="checkin_error_not_exists">Ненамерено (все още) в trakt. Опитайте отново по-късно.</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_account">trakt профил</string>
@@ -280,7 +282,7 @@
   <string name="checkin_hint">Напиши съобщение (по избор)</string>
   <string name="paste_title">Поставете заглавие</string>
   <string name="feedback">Обратна връзка</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Отвори в браузър</string>
   <string name="prefs_category_basic">Основни</string>
   <string name="prefs_category_sharing">Услуги</string>
   <string name="prefs_category_advanced">Разширени</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
   <string name="pref_seasonsorting">Сортирай сезоните по…</string>
   <string name="pref_episodesorting">Сортирай епизодите по…</string>
-  <string name="pref_language">Език на съдържанието</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
   <string name="about">Относно SeriesGuide</string>
-  <string name="pref_credits">Заслуги</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt</string>
   <string name="pref_autoaddshows">Добавяне на нови trakt сериали</string>
   <string name="pref_autoaddshowssummary">Автоматично добавяне на сериали от дейността ви в trakt</string>
+  <string name="licence_tvdb">Това приложение ползва данни и изображения от TheTVDB лицензиран под  CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
+  <string name="licence_trakt">Това приложение използва данни и изображения от trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Подреди по</string>
   <string name="action_sort_ignore_articles">Игнорирай статии</string>
   <string name="sort_order_latest_first">Най-новите отгоре</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">Най-високо оценени</string>
   <string name="sort_order_latest_first_dvd">Най-новите отгоре (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Най-старите отгоре (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">сега</string>
   <string name="upcoming_upto_one_day">1 ден</string>
   <string name="upcoming_upto_three_days">3 дни</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">Седмичен архив на вашите сериали в папка "Download"</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
-  <string name="pref_upcominglimit">Предстоящи епизоди в рамките...</string>
   <string name="pref_number">Формат на числата</string>
   <string name="pref_offset">Ръчна смяна време</string>
   <string name="pref_offsetsummary">Преместване на часовете за излъчване с %s часа</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Разбирам, че моите текущи сериали и списъци ще бъдат загубени!</string>
   <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
   <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Начало</string>
   <string name="welcome_setuplanguage">Избери език</string>
   <string name="dismiss">Отхвърли</string>
@@ -394,7 +402,7 @@
   <string name="action_upgrade">Отключване на всички функции</string>
   <string name="billing_action_subscribe">Абониране</string>
   <string name="billing_action_pass">Вземете X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/година, опитай безплатно</string>
   <string name="billing_price_pass">еднократно закупуване</string>
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
@@ -404,7 +412,7 @@
   <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>
   <string name="subscription_unavailable">Абонаментът не е наличен.</string>
   <string name="subscription_failed">Покупката не завърши.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass е недостъпен в момента.</string>
   <string name="extensions">Разширения</string>
   <string name="action_extensions_configure">Персонализиране на разширения</string>
   <string name="action_extensions_add">Добави разширение</string>

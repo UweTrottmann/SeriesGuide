@@ -54,6 +54,25 @@ public class ListManageDialogFragment extends DialogFragment {
         return f;
     }
 
+    /**
+     * Display a dialog which allows to edit the title of this list or remove it.
+     */
+    public static void show(String listId, FragmentManager fm) {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction. We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("listmanagedialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = ListManageDialogFragment.newInstance(listId);
+        newFragment.show(ft, "listmanagedialog");
+    }
+
     private EditText mTitle;
     private OnListsChangedListener mListener;
     private Button mButtonNegative;
@@ -159,32 +178,12 @@ public class ListManageDialogFragment extends DialogFragment {
         // do not allow removing last list, disable remove button
         Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
                 new String[] {
-                    Lists._ID
+                        Lists._ID
                 }, null, null, null);
         if (lists.getCount() == 1) {
             mButtonNegative.setEnabled(false);
         }
         lists.close();
-    }
-
-    /**
-     * Display a dialog which allows to edit the title of this list or remove
-     * it.
-     */
-    public static void showListManageDialog(String listId, FragmentManager fm) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("listmanagedialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = ListManageDialogFragment.newInstance(listId);
-        newFragment.show(ft, "listmanagedialog");
     }
 
     /**

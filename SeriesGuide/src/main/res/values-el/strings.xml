@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
   <string name="hexagon_api_error">Αποτηχία σύνδεσης με SeriesGuide. Προσπαθήστε αργότερα.</string>
   <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
   <string name="trakt_seen">%s έχουν παρακολουθηθεί.</string>
   <string name="trakt_notseen">το %s δεν έχουν παρακολουθηθεί.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Τα ειδικά επεισόδια να μην εμφανίζονται πουθενά εκτός από τη λίστα με τις σεζόν</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά…</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά…</string>
-  <string name="pref_language">Γλώσσα περιεχομένου</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Για να μειώσετε τις χρεώσεις του παρόχου κινητής τηλεφωνίας, μην χρησιμοποιείται δεδομένα κινητής τηλεφωνίας για λήψη</string>
   <string name="about">Σχετικά με το SeriesGuide</string>
-  <string name="pref_credits">Εύσημα</string>
   <string name="pref_traktsummary">Προσθέστε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
   <string name="pref_autoaddshows">Προσθήκη νέων σειρών από το trakt</string>
   <string name="pref_autoaddshowssummary">Αυτόματη προσθήκη σειρών από το trakt activity stream</string>
+  <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί πληροφορίες και εικόνες από το TheTVDB με άδεια CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
+  <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="action_sort_ignore_articles">Αγνόησε τα άρθρα</string>
   <string name="sort_order_latest_first">Η πιο πρόσφατη πρώτα</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">Κορυφαία</string>
   <string name="sort_order_latest_first_dvd">Το πιο πρόσφατο, πρώτο (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Το παλαιότερο πρώτα (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">τώρα</string>
   <string name="upcoming_upto_one_day">1 ημέρα</string>
   <string name="upcoming_upto_three_days">3 ημέρες</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">Εβδομαδιαία αντίγραφο ασφαλείας της βάσης δεδομένων των σειρών σας μέσα στο φάκελο λήψης</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
-  <string name="pref_upcominglimit">Επερχόμενες σειρές εντός…</string>
   <string name="pref_number">Μορφή των αριθμών</string>
   <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
   <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %s ώρες</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Κατανοώ πως οι τρέχουσες σειρές και λίστες μου θα χαθούν!</string>
   <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
   <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">Ξεκινήστε</string>
   <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
   <string name="dismiss">Απόρριψη</string>

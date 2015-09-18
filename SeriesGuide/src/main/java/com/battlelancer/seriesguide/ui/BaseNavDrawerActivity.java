@@ -16,11 +16,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -74,8 +77,18 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
+        boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
+        if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
+            // if not signed into hexagon, but still have an account name:
+            // check if the required persmission is missing
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                onShowCloudPermissionWarning();
+            }
+        }
+
         // update account type and signed in user
-        if (HexagonTools.isSignedIn(this)) {
+        if (isSignedIntoCloud) {
             // connected to SG Cloud
             textViewHeaderAccountType.setText(R.string.hexagon);
             textViewHeaderUser.setText(HexagonSettings.getAccountName(this));
@@ -93,6 +106,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_sub_item_unlock);
         menuItem.setEnabled(!Utils.hasAccessToX(this));
         menuItem.setVisible(!Utils.hasAccessToX(this));
+    }
+
+    /**
+     * Implementers may choose to show a warning that Cloud is not signed in due to missing
+     * permissions.
+     */
+    protected void onShowCloudPermissionWarning() {
+        // do nothing
     }
 
     /**

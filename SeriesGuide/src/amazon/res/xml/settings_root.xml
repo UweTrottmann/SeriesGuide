@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2015 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Link to Amazon billing instead -->
+    <Preference
+        android:key="com.battlelancer.seriesguide.upgrade"
+        android:title="@string/action_upgrade">
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity"
+            android:targetPackage="@string/package_name" />
+    </Preference>
+
+    <ListPreference
+        android:defaultValue="en"
+        android:entries="@array/languages"
+        android:entryValues="@array/languageData"
+        android:key="language"
+        android:title="@string/pref_language" />
+
+    <SwitchPreference
+        android:defaultValue="True"
+        android:key="com.battlelancer.seriesguide.autoupdate"
+        android:summary="@string/pref_autoupdatesummary"
+        android:title="@string/pref_autoupdate" />
+
+    <CheckBoxPreference
+        android:defaultValue="False"
+        android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
+        android:title="@string/pref_updatewifionly"
+        android:summary="@string/pref_updatewifionlysummary" />
+
+    <Preference
+        android:key="screen_notifications"
+        android:title="@string/pref_notifications" />
+
+    <PreferenceCategory android:title="@string/prefs_category_sharing">
+
+        <!-- Dropped link to Cloud setup, not available on Amazon version -->
+
+        <Preference
+            android:key="com.battlelancer.seriesguide.trakt.connect"
+            android:summary="@string/pref_traktsummary"
+            android:title="@string/trakt">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/backup">
+
+        <SwitchPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.autobackup"
+            android:summary="@string/pref_autobackupsummary"
+            android:title="@string/pref_autobackup" />
+
+        <Preference
+            android:key="dataliberation"
+            android:summary="@string/backup_summary"
+            android:title="@string/backup">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_other">
+
+        <Preference
+            android:key="screen_basic"
+            android:title="@string/prefs_category_basic" />
+
+        <Preference
+            android:key="screen_advanced"
+            android:title="@string/prefs_category_advanced" />
+
+        <Preference
+            android:key="screen_about"
+            android:title="@string/prefs_category_about" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

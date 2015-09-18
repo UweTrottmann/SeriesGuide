@@ -24,17 +24,17 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * A dialog displaying various given sorting methods, saving them to the given
+ * A dialog displaying a list of options to choose from, saving the selected option to the given
  * preference upon selection by the user.
  */
-public class SortDialogFragment extends DialogFragment {
+public class SingleChoiceDialogFragment extends DialogFragment {
 
-    public static SortDialogFragment newInstance(int itemArrayResource, int itemDataArrayResource,
-            int selectedItemIndex, String preferenceKey, int dialogTitleResource) {
-        SortDialogFragment f = new SortDialogFragment();
+    public static SingleChoiceDialogFragment newInstance(int itemArrayResource,
+            int itemDataArrayResource, int selectedItemIndex, String preferenceKey,
+            int dialogTitleResource) {
+        SingleChoiceDialogFragment f = new SingleChoiceDialogFragment();
 
         Bundle args = new Bundle();
         args.putInt("itemarray", itemArrayResource);
@@ -45,12 +45,6 @@ public class SortDialogFragment extends DialogFragment {
         f.setArguments(args);
 
         return f;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Sort Dialog");
     }
 
     @NonNull

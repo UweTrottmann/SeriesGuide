@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
-  ~ Copyright 2015 Uwe Trottmann
+  ~ Copyright 2014 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,15 +16,13 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <!-- Use regular CardView item spacing on Lollipop+ -->
-    <dimen name="grid_topbottom_padding">8dp</dimen>
-    <dimen name="grid_leftright_padding">8dp</dimen>
-    <dimen name="grid_vertical_spacing">8dp</dimen>
-    <dimen name="grid_horizontal_spacing">8dp</dimen>
-
-    <!-- Floating action button -->
-    <dimen name="fab_margin">16dp</dimen>
-
-</resources>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sgToolbar"
+    style="@style/Widget.SeriesGuide.ActionBar"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_width="match_parent"
+    android:theme="?attr/actionBarTheme"
+    app:popupTheme="?attr/actionBarPopupTheme"
+    android:background="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|enterAlways" />

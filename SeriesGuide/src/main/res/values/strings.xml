@@ -272,6 +272,8 @@
     <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
     <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
     <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+    <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+    <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
 
     <!-- trakt -->
     <string name="trakt_submitqueued">Sending to trakt.</string>
@@ -347,14 +349,20 @@
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
-    <string name="pref_language">Content language</string>
+    <string name="pref_language">Preferred content language</string>
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
-    <string name="pref_credits">Credits</string>
     <string name="pref_traktsummary">Add or edit your trakt credentials</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+
+    <!-- About screen -->
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="about_open_source">SeriesGuide is built using open source software.</string>
+    <string name="licences_and_credits">Licences and credits</string>
 
     <!-- Sort -->
     <string name="sort">Sort by</string>
@@ -370,6 +378,7 @@
     <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
 
     <!-- Upcoming thresholds -->
+    <string name="pref_upcominglimit">Upcoming range</string>
     <string name="upcoming_upto_now">now</string>
     <string name="upcoming_upto_one_day">1 day</string>
     <string name="upcoming_upto_three_days">3 days</string>
@@ -394,7 +403,6 @@
     <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
-    <string name="pref_upcominglimit">Upcoming shows within…</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %s hours</string>
@@ -425,6 +433,8 @@
     <string name="import_warning">I understand my current shows and lists will be lost!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+    <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>

@@ -121,7 +121,7 @@
   <string name="released_today">오늘 방영됨</string>
   <string name="friends_recently">trakt 친구</string>
   <string name="now_empty">아무것도 없습니다. TV프로 좀 보세요!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_movies_empty">진행중인 것이 없습니다. 영화를 감상하세요.</string>
   <string name="user_stream">기록</string>
   <string name="user_stream_empty">trakt에 최근 활동이 없습니다. 쇼를 확인하세요.</string>
   <string name="user_movie_stream_empty">trakt에 최근 활동이 없습니다. 영화를 확인하세요.</string>
@@ -130,7 +130,7 @@
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
-  <string name="pref_infinite_scrolling">무한스크롤</string>
+  <string name="pref_infinite_scrolling">영구적인 달력</string>
   <string name="update_scheduled">업데이트 중…</string>
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
   <string name="hexagon_api_error">SeriesGuide 클라우드에 접속할 수 없습니다. 나중에 다시 시도해주세요.</string>
   <string name="hexagon_api_queued">SeriesGuide 클라우드로 전송합니다.</string>
+  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>
   <string name="trakt_seen">%s 시청.</string>
   <string name="trakt_notseen">%s 미시청.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
-  <string name="pref_language">콘텐츠 언어</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
   <string name="pref_updatewifionlysummary">데이터 요금을 줄이기 위해 와이파이가 연결되어 있을때만 이미지를 다운받습니다</string>
   <string name="about">시리즈가이드에 대하여</string>
-  <string name="pref_credits">만든이</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
+  <string name="licence_tvdb">이 앱은 CC BY NC 4.0에 의거한 TheTVDB 사용자의 데이터와 이미지를 활용합니다.</string>
+  <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증된 프로그램이 아닙니다. (비공식 앱 입니다)</string>
+  <string name="licence_trakt">이 앱은 trakt 의 데이터와 이미지를 활용합니다.</string>
+  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">정렬 기준</string>
   <string name="action_sort_ignore_articles">무시하기</string>
   <string name="sort_order_latest_first">최근 방영 순</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">최고 점수</string>
   <string name="sort_order_latest_first_dvd">내림차순 (DVD)</string>
   <string name="sort_order_oldest_first_dvd">오름차순 (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">지금</string>
   <string name="upcoming_upto_one_day">1일</string>
   <string name="upcoming_upto_three_days">3일</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">주간 백업한 쇼 정보를 다운로드 폴더로 보내기</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
-  <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
   <string name="pref_number">에피소드 표시 형식</string>
   <string name="pref_offset">시차 수동 설정</string>
   <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">현재 앱에 저장한 쇼 목록이 삭제될 수 있습니다!</string>
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="get_started">시작하기</string>
   <string name="welcome_setuplanguage">언어 선택</string>
   <string name="dismiss">취소</string>
@@ -394,7 +402,7 @@
   <string name="action_upgrade">모든 기능 사용하기</string>
   <string name="billing_action_subscribe">구독</string>
   <string name="billing_action_pass">X 패스 얻기</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%/연, 무료로 사용해 보세요.</string>
   <string name="billing_price_pass">1회 구매로 계속 사용</string>
   <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
   <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
@@ -404,7 +412,7 @@
   <string name="subscription_not_signed_in">Amazon 계정으로 로그인</string>
   <string name="subscription_unavailable">구독을 현재 사용할 수 없습니다.</string>
   <string name="subscription_failed">구매가 완료되지 않았습니다.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass는 현재 유효하지 않습니다.</string>
   <string name="extensions">확장프로그램</string>
   <string name="action_extensions_configure">확장프로그램 커스터마이즈</string>
   <string name="action_extensions_add">확장프로그램 추가</string>

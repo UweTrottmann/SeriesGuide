@@ -8,6 +8,23 @@ All dates are in the European Central timezone.
 Version 25 *(in development)*
 -----------------------------
 
+#### 25-beta3 *(2015-09-18)*
+
+* TWEAK Hide app bar when scrolling on Android 5.0 and up in Shows, Lists, Movies, Add show screens.
+* TWEAK Hide app bar when scrolling in episode details view on phones.
+* TWEAK Always display add show button, only hide it when moving between tabs.
+* TWEAK Move "Upcoming range" setting to Shows tab filter menu.
+* TWEAK Rename "Content language" setting to "Preferred content language" as a fallback
+  to English is always possible.
+* TWEAK Use switch preference in settings where appropriate.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta2 *(2015-09-12)*
+
+* TWEAK Support Android 6.0, including new permissions.
+* TWEAK Restructured settings, added important ones to the main screen.
+* NOTICE Latest translations from crowdin.
+
 #### 25-beta1 *(2015-08-26)*
 
 * TWEAK Full height nav drawer on Android 5 Lollipop and up.

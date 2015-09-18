@@ -39,6 +39,7 @@
         android:textAppearance="@style/TextAppearance.Subhead.Narrow"
         tools:text="199 remaining" />
 
+    <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
     <ListView
         android:id="@+android:id/list"
         style="@style/DefaultPadding.List"
@@ -46,6 +47,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/imageViewSeasonsWatchedToggle"
         android:paddingTop="0dp"
-        android:fastScrollEnabled="true" />
+        android:fastScrollEnabled="true"
+        android:nestedScrollingEnabled="true"
+        tools:ignore="UnusedAttribute" />
 
 </RelativeLayout>

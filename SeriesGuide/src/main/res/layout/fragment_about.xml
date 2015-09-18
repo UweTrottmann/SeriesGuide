@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2015 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            style="@style/Page.Centered"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:paddingLeft="@dimen/keyline"
+            android:paddingRight="@dimen/keyline">
+
+            <TextView
+                android:id="@+id/textViewAboutTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Title" />
+
+            <TextView
+                android:id="@+id/textViewAboutVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="v42 (Database v42)"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAboutWebsite"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:text="@string/website" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_open_source"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAboutCredits"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/larger_padding"
+                android:text="@string/licences_and_credits" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/licence_tvdb"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAboutTvdbTerms"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvdb_terms" />
+
+            <Button
+                android:id="@+id/buttonAboutCreativeCommons"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/larger_padding"
+                android:text="@string/creative_commons" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/licence_themoviedb"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAboutTmdbTerms"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tmdb_terms" />
+
+            <Button
+                android:id="@+id/buttonAboutTmdbApiTerms"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/larger_padding"
+                android:text="@string/tmdb_api_terms" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/licence_trakt"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAboutTraktTerms"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/larger_padding"
+                android:text="@string/trakt_terms" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

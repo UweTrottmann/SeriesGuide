@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
   <string name="hexagon_api_error">Nem sikerült a kapcsolat a SeriesGuide felhőszolgáltatással. Próbáld újra később.</string>
   <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
+  <string name="hexagon_permission_missing">A SeriesGuide Cloud használatához engedélyezd a fiókodhoz való hozzáférést.</string>
+  <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
   <string name="trakt_submitqueued">Elküldés a traktnak.</string>
   <string name="trakt_seen">A(z) %s-t láttam.</string>
   <string name="trakt_notseen">A(z) %s-t nem láttam.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
-  <string name="pref_language">Tartalom nyelve</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">A szolgáltató által felszámolt díj csökkentése érdekében ne használd a mobilinternetet letöltésre</string>
   <string name="about">A SeriesGuide-ról</string>
-  <string name="pref_credits">Készítők listája</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitásod és adataid alapján sorozataid bekerülnek az adatbázisba</string>
+  <string name="licence_tvdb">Ez az alkalmazás a TheTVDB (CC BY-NC 4.0 licenc alatt álló) adatait és képeit használja.</string>
+  <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
+  <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
+  <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
+  <string name="licences_and_credits">Engedélyek és készítők listája</string>
   <string name="sort">Rendezés</string>
   <string name="action_sort_ignore_articles">Névelők mellőzése</string>
   <string name="sort_order_latest_first">Újabbak előre</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">Magasan értékelt</string>
   <string name="sort_order_latest_first_dvd">Újabbak előre (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Régebbiek előre (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">most</string>
   <string name="upcoming_upto_one_day">egy nap</string>
   <string name="upcoming_upto_three_days">3 nap</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">A sorozat adatbázis heti mentése a Letöltések mappába</string>
   <string name="backup">Biztonsági Mentés/Visszaállítás</string>
   <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
-  <string name="pref_upcominglimit">Közelgő műsorok megjelenítése…</string>
   <string name="pref_number">Számozás formátuma</string>
   <string name="pref_offset">Időeltolás</string>
   <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Megértettem, hogy az összes jelenlegi műsorom és listám törlésre kerül!</string>
   <string name="last_auto_backup">Utolsó automata mentés: %s</string>
   <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
+  <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
+  <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
   <string name="get_started">Vágjunk bele!</string>
   <string name="welcome_setuplanguage">Válassz nyelvet</string>
   <string name="dismiss">Mégsem</string>

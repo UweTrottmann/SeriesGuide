@@ -228,6 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
   <string name="hexagon_api_error">Não conseguiu se comunicar com SeriesGuide Cloud. Tente novamente mais tarde.</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
+  <string name="hexagon_permission_missing">Para usar o SeriesGuide Cloud, permita o acesso às suas contas.</string>
+  <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
   <string name="trakt_submitqueued">Enviando ao trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s não assistido.</string>
@@ -291,14 +293,18 @@
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
-  <string name="pref_language">Idioma do conteúdo</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reduzir cobranças da operadora, não baixar pela rede móvel</string>
   <string name="about">Sobre o SeriesGuide</string>
-  <string name="pref_credits">Créditos</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
   <string name="pref_autoaddshowssummary">Adiciona automaticamente séries do seu fluxo de atividades do trakt</string>
+  <string name="licence_tvdb">Este app usa dados e imagens do TheTVDB licenciado sob CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Este produto usa a API TMDb mas não é endossado ou certificado pelo TMDb.</string>
+  <string name="licence_trakt">Este app usa dados e imagens do trakt.</string>
+  <string name="about_open_source">SeriesGuide foi construído usando um software de código aberto.</string>
+  <string name="licences_and_credits">Licenças e créditos</string>
   <string name="sort">Ordenar por</string>
   <string name="action_sort_ignore_articles">Ignorar artigos</string>
   <string name="sort_order_latest_first">Mais recentes primeiro</string>
@@ -308,6 +314,7 @@
   <string name="sort_order_top_rated_first">Melhor classificado</string>
   <string name="sort_order_latest_first_dvd">Mais recentes primeiro (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Mais antigos primeiro (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">agora</string>
   <string name="upcoming_upto_one_day">1 dia</string>
   <string name="upcoming_upto_three_days">3 dias</string>
@@ -326,7 +333,6 @@
   <string name="pref_autobackupsummary">Backup semanal da database de suas séries na pasta de Download</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
-  <string name="pref_upcominglimit">Exibir séries futuras em até…</string>
   <string name="pref_number">Formato de número</string>
   <string name="pref_offset">Deslocamento de tempo manual</string>
   <string name="pref_offsetsummary">Deslocar horário de exibição em %s horas</string>
@@ -355,6 +361,8 @@
   <string name="import_warning">Eu entendo que minhas séries e listas atuais serão perdidas!</string>
   <string name="last_auto_backup">Último backup automático: %s</string>
   <string name="restore_auto_backup">Restaurar backup automático</string>
+  <string name="dataliberation_permission_missing">Para fazer backup ou restaurar, permita acesso a seus arquivos.</string>
+  <string name="autobackup_permission_missing">Para usar o backup automático, permita o acesso a seus arquivos.</string>
   <string name="get_started">Começar</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="dismiss">Dispensar</string>
