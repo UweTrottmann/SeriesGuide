@@ -27,9 +27,13 @@
         android:layout_gravity="right"
         android:background="?attr/sgColorSeparator" />
 
+    <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
     <ScrollView
+        android:id="@+id/scrollViewOverview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true"
+        tools:ignore="UnusedAttribute">
 
         <!-- Set focus to work around textIsSelectable auto-scroll -->
         <LinearLayout

@@ -24,6 +24,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -93,6 +94,8 @@ public class MoviesSearchFragment extends Fragment implements
         ButterKnife.bind(this, v);
 
         // setup grid view
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
         resultsGridView.setEmptyView(emptyView);
         resultsGridView.setOnItemClickListener(this);
 

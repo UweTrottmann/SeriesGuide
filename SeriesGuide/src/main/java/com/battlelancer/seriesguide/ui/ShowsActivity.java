@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -33,6 +34,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -61,6 +63,7 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
@@ -83,10 +86,8 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private IabHelper mBillingHelper;
 
-    private ShowsTabPageAdapter mTabsAdapter;
-
-    private ViewPager mViewPager;
-
+    private ShowsTabPageAdapter tabsAdapter;
+    private ViewPager viewPager;
     private ProgressDialog mProgressDialog;
 
     public interface InitBundle {
@@ -102,7 +103,7 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs_drawer);
+        setContentView(R.layout.activity_shows);
         setupActionBar();
         setupNavDrawer();
 
@@ -198,20 +199,29 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     private void setupViews() {
-        mViewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
+        // setup floating action button for adding shows
+        FloatingActionButton buttonAddShow = (FloatingActionButton) findViewById(
+                R.id.buttonShowsAdd);
+        buttonAddShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ShowsActivity.this, AddActivity.class));
+            }
+        });
 
-        mTabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(),
-                this, mViewPager, (SlidingTabLayout) findViewById(R.id.tabLayoutTabs));
+        viewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
+        tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
+                (SlidingTabLayout) findViewById(R.id.tabLayoutTabs), buttonAddShow);
 
         // shows tab (or first run fragment)
         if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-            mTabsAdapter.addTab(R.string.shows, FirstRunFragment.class, null);
+            tabsAdapter.addTab(R.string.shows, FirstRunFragment.class, null);
         } else {
-            mTabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
+            tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
         }
 
         // now tab
-        mTabsAdapter.addTab(R.string.now_tab, ShowsNowFragment.class, null);
+        tabsAdapter.addTab(R.string.now_tab, ShowsNowFragment.class, null);
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
@@ -220,7 +230,7 @@ public class ShowsActivity extends BaseTopActivity implements
         argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
-        mTabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
+        tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
@@ -229,10 +239,10 @@ public class ShowsActivity extends BaseTopActivity implements
         argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
-        mTabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
+        tabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
 
         // display new tabs
-        mTabsAdapter.notifyTabsChanged();
+        tabsAdapter.notifyTabsChanged();
     }
 
     /**
@@ -250,11 +260,11 @@ public class ShowsActivity extends BaseTopActivity implements
         }
 
         // never select a non-existent tab
-        if (selection > mTabsAdapter.getCount() - 1) {
+        if (selection > tabsAdapter.getCount() - 1) {
             selection = 0;
         }
 
-        mViewPager.setCurrentItem(selection);
+        viewPager.setCurrentItem(selection);
     }
 
     private void checkGooglePlayPurchase() {
@@ -486,8 +496,8 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     public void onFirstRunDismissed() {
         // replace the first run fragment with a show fragment
-        mTabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
-        mTabsAdapter.notifyTabsChanged();
+        tabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
+        tabsAdapter.notifyTabsChanged();
     }
 
     @Override
@@ -531,12 +541,14 @@ public class ShowsActivity extends BaseTopActivity implements
     public static class ShowsTabPageAdapter extends TabStripAdapter
             implements ViewPager.OnPageChangeListener {
 
-        private SharedPreferences mPrefs;
+        private final SharedPreferences prefs;
+        private final FloatingActionButton floatingActionButton;
 
         public ShowsTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
-                SlidingTabLayout tabs) {
+                SlidingTabLayout tabs, FloatingActionButton floatingActionButton) {
             super(fm, context, pager, tabs);
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            this.floatingActionButton = floatingActionButton;
             tabs.setOnPageChangeListener(this);
         }
 
@@ -560,7 +572,13 @@ public class ShowsActivity extends BaseTopActivity implements
         @Override
         public void onPageSelected(int position) {
             // save selected tab index
-            mPrefs.edit().putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, position).apply();
+            prefs.edit().putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, position).apply();
+            // only display add show button on Shows tab
+            if (position == InitBundle.INDEX_TAB_SHOWS) {
+                floatingActionButton.show();
+            } else {
+                floatingActionButton.hide();
+            }
         }
     }
 }

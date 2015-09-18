@@ -30,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +53,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Displays upcoming or recent episodes in a scrollable grid, by default grouped by day.
@@ -108,6 +110,8 @@ public class CalendarFragment extends Fragment implements
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(mGridView, AndroidUtils.isLollipopOrHigher());
         mGridView.setEmptyView(emptyView);
         mGridView.setAreHeadersSticky(false);
 
