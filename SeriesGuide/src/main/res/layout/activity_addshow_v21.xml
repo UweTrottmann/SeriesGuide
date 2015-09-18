@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +32,7 @@
             <include layout="@layout/toolbar_scrollable" />
 
             <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-                android:id="@+id/tabLayoutTabs"
+                android:id="@+id/tabsAddShows"
                 style="@style/Widget.SeriesGuide.TabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -42,27 +40,10 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/viewPagerTabs"
+            android:id="@+id/pagerAddShows"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-            android:id="@+id/progressBarTabs"
-            style="@style/Widget.SeriesGuide.SmoothProgressBar.Sync"
-            android:layout_width="match_parent"
-            android:layout_height="2dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/buttonShowsAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:src="@drawable/ic_action_add" />
 
     </android.support.design.widget.CoordinatorLayout>
 
