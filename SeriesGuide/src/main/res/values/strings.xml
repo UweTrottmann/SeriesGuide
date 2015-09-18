@@ -349,7 +349,7 @@
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
-    <string name="pref_language">Content language</string>
+    <string name="pref_language">Preferred content language</string>
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
