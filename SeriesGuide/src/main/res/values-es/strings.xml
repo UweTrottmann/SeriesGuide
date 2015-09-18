@@ -294,7 +294,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episodios por…</string>
-  <string name="pref_language">Idioma del contenido</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reducir los cargos de la operadora, no descargar por red móvil</string>
   <string name="about">Acerca de SeriesGuide</string>
@@ -315,6 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="sort_order_top_rated_first">Mas valorado</string>
   <string name="sort_order_latest_first_dvd">Primero los más rencientes (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Primero más antiguos (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">ahora</string>
   <string name="upcoming_upto_one_day">un día</string>
   <string name="upcoming_upto_three_days">3 días</string>
@@ -333,7 +334,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_autobackupsummary">Copia de seguridad semanal de tu base de datos de programas en la carpeta de Descargas</string>
   <string name="backup">Respaldo/Restauración</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Formato numérico</string>
   <string name="pref_offset">Ajuste de hora manual</string>
   <string name="pref_offsetsummary">Ajustar %s horas los tiempos de emisión</string>

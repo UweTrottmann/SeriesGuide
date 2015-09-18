@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Bonusové epizódy sa budú zobrazovať jedine v zozname sérií</string>
   <string name="pref_seasonsorting">Zoradiť série podľa…</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa…</string>
-  <string name="pref_language">Jazyk obsahu</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pre zníženie platieb za prenos dát. Obrázky sa nebudú sťahovať cez mobilnú sieť</string>
   <string name="about">O SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Najlepšie hodnotené</string>
   <string name="sort_order_latest_first_dvd">Od najnovších (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Od najstarších (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">teraz</string>
   <string name="upcoming_upto_one_day">denne</string>
   <string name="upcoming_upto_three_days">3 dní</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Zálohovanie / obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Formát číslovania</string>
   <string name="pref_offset">Manuálny časový posun</string>
   <string name="pref_offsetsummary">Kompenzácia času [offset] %s hodín</string>

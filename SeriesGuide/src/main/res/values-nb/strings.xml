@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Spesialepisoder forsvinner fra alle lister utenom sesonglisten</string>
   <string name="pref_seasonsorting">Sorter sesonger etter…</string>
   <string name="pref_episodesorting">Sorter episoder etter…</string>
-  <string name="pref_language">Innholdsspråk</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere kostnader, ikke last ned via mobildataforbindelse</string>
   <string name="about">Om SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Høyest rangerte først</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Eldste først (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nå</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dager</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av seriedatabasen til nedlastingsmappen</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Nummerering</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
   <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>

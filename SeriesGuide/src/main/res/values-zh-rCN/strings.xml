@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">仅在季列表中显示特别剧集</string>
   <string name="pref_seasonsorting">季排序依据……</string>
   <string name="pref_episodesorting">集排序依据……</string>
-  <string name="pref_language">内容显示语言</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">节省移动数据使用量</string>
   <string name="about">SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">高评分优先</string>
   <string name="sort_order_latest_first_dvd">最近发售优先</string>
   <string name="sort_order_oldest_first_dvd">最早发售优先</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">现在</string>
   <string name="upcoming_upto_one_day">1 天</string>
   <string name="upcoming_upto_three_days">3 天</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">每周生成一次备份</string>
   <string name="backup">备份与还原</string>
   <string name="backup_summary">备份或还原节目单</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">序号格式</string>
   <string name="pref_offset">手动偏移播出时间</string>
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Episódios especiais apenas na lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
-  <string name="pref_language">Idioma</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Actualizar imagens apenas por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reduzir taxas de dados da operadora, não transferir em redes móveis</string>
   <string name="about">Sobre SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Mais votados</string>
   <string name="sort_order_latest_first_dvd">Mais recente primeiro (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Mais antigo primeiro (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">Agora</string>
   <string name="upcoming_upto_one_day">Um dia</string>
   <string name="upcoming_upto_three_days">Três dias</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Backup semanal da base de dados das tuas séries para a pasta Download</string>
   <string name="backup">Backup/Restaurar</string>
   <string name="backup_summary">Fazer backup ou restaurar as tuas séries</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Formato numérico</string>
   <string name="pref_offset">Acerto manual do fuso horário</string>
   <string name="pref_offsetsummary">Equilibrar tempo da exibição por %s horas</string>

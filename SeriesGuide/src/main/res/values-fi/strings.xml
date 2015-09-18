@@ -228,8 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="hexagon_api_error">Ei voitu keskustella SeriesGuide Cloudin kanssa. Yritä myöhemmin uudelleen.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Salli pääsy tiliisi käyttääksesi SeriesGuide Cloudia.</string>
+  <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
   <string name="trakt_seen">%s katsottu.</string>
   <string name="trakt_notseen">%s ei ole katsottu.</string>
@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
-  <string name="pref_language">Sisällön kieli</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi operaattorin datamaksuja, älä lataa mobiiliverkon kautta</string>
   <string name="about">Tietoja SeriesGuidesta</string>
@@ -303,8 +303,8 @@
   <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta se ei ole TMDb:n hyväksymä tai sertifioima.</string>
   <string name="licence_trakt">Tämä sovellus käyttää traktin tietoja ja kuvia.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="about_open_source">SeriesGuide on luotu käyttäen avoimen lähdekoodin ohjelmistoja.</string>
+  <string name="licences_and_credits">Lisenssit ja tekijät</string>
   <string name="sort">Lajittele</string>
   <string name="action_sort_ignore_articles">Ohita artikkelit</string>
   <string name="sort_order_latest_first">Uusin ensin</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Suosituimmat</string>
   <string name="sort_order_latest_first_dvd">Uusin ensin (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Vanhin ensin (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nyt</string>
   <string name="upcoming_upto_one_day">päivän ajalta</string>
   <string name="upcoming_upto_three_days">3 päivän ajalta</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Varmuuskopioi viikoittain ohjelmatietokantasi Download-kansioon</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
   <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
@@ -361,8 +361,8 @@
   <string name="import_warning">Ymmärrän, että nykyiset ohjelmani ja listani kadotetaan!</string>
   <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
   <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+  <string name="dataliberation_permission_missing">Varmuuskopiointi ja palautus edellyttää pääsyä tiedostoihin.</string>
+  <string name="autobackup_permission_missing">Automaattinen varmuuskopiointi edellyttää pääsyä tiedostoihin.</string>
   <string name="get_started">Aloita</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="dismiss">Hylkää</string>

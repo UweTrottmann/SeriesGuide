@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Τα ειδικά επεισόδια να μην εμφανίζονται πουθενά εκτός από τη λίστα με τις σεζόν</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά…</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά…</string>
-  <string name="pref_language">Γλώσσα περιεχομένου</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Για να μειώσετε τις χρεώσεις του παρόχου κινητής τηλεφωνίας, μην χρησιμοποιείται δεδομένα κινητής τηλεφωνίας για λήψη</string>
   <string name="about">Σχετικά με το SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Κορυφαία</string>
   <string name="sort_order_latest_first_dvd">Το πιο πρόσφατο, πρώτο (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Το παλαιότερο πρώτα (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">τώρα</string>
   <string name="upcoming_upto_one_day">1 ημέρα</string>
   <string name="upcoming_upto_three_days">3 ημέρες</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Εβδομαδιαία αντίγραφο ασφαλείας της βάσης δεδομένων των σειρών σας μέσα στο φάκελο λήψης</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Μορφή των αριθμών</string>
   <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
   <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %s ώρες</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
-  <string name="pref_language">لغة البرنامج</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
   <string name="about">حول دليل المسلسلات</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">أعلى تقييم</string>
   <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
   <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">الآن</string>
   <string name="upcoming_upto_one_day">يوم</string>
   <string name="upcoming_upto_three_days">ثلاثة أيام</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">نسخ أسبوعي للمسلسلات توضع داخل مجلد التحميل</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
   <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>

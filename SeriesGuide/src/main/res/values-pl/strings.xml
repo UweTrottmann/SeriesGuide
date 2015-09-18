@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
-  <string name="pref_language">Język treści</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
   <string name="about">O SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Najwyżej oceniane</string>
   <string name="sort_order_latest_first_dvd">Najpierw najnowsze (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Najpierw najstarsze (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">teraz</string>
   <string name="upcoming_upto_one_day">Dziś</string>
   <string name="upcoming_upto_three_days">3 dni</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Cotygodniowa kopia zapasowa bazy danych seriali w folderze Download</string>
   <string name="backup">Kopia zapasowa</string>
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format numeracji</string>
   <string name="pref_offset">Ręczne przesunięcie czasu</string>
   <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>

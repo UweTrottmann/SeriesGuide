@@ -214,14 +214,14 @@
     <item quantity="other">%d minuter</item>
   </plurals>
   <string name="hexagon_warning">Experimentell!</string>
-  <string name="hexagon_setup">Ställa in SeriesGuide moln</string>
+  <string name="hexagon_setup">Ställa in SeriesGuide Cloud</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina serier och filmer.</string>
   <string name="hexagon_warning_lists">Listor ingår inte.</string>
-  <string name="hexagon_warning_trakt">När du använder SeriesGuide molnet, synkroniseras inte ändringarna på trakt till SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">När du använder SeriesGuide Cloud synkroniseras inte ändringarna på trakt till SeriesGuide.</string>
   <string name="hexagon_signin">Logga in</string>
-  <string name="hexagon_signed_in">Du är ansluten till SeriesGuide moln.</string>
+  <string name="hexagon_signed_in">Du är ansluten till SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Logga ut</string>
-  <string name="hexagon_setup_incomplete">Ställa in SeriesGuide cloud slutfördes inte.</string>
+  <string name="hexagon_setup_incomplete">Inställning av SeriesGuide Cloud slutfördes inte.</string>
   <string name="hexagon_setup_fail_auth">Ditt Google-konto stämmer inte.</string>
   <string name="hexagon_remove_account">Ta bort konto</string>
   <string name="hexagon_remove_account_success">Konto utplånat.</string>
@@ -229,8 +229,8 @@
   <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
   <string name="hexagon_api_error">Kunde inte kommunicera med SeriesGuide Cloud. Försök igen senare.</string>
   <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">För att använda SeriesGuide Cloud behöver du tillåta åtkomst till dina kontakter.</string>
+  <string name="hexagon_google_play_missing">För att använda SeriesGuide Cloud krävs Google Play-tjänster.</string>
   <string name="trakt_submitqueued">Skickar till trakt.</string>
   <string name="trakt_seen">%s sedda.</string>
   <string name="trakt_notseen">%s ej sedda.</string>
@@ -294,7 +294,7 @@
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
-  <string name="pref_language">Innehållsspråk</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
   <string name="about">Om SeriesGuide</string>
@@ -305,7 +305,7 @@
   <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>
   <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
   <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licences_and_credits">Licenser och tillkännagivanden</string>
   <string name="sort">Sortera efter</string>
   <string name="action_sort_ignore_articles">Ignorera artiklar</string>
   <string name="sort_order_latest_first">Senaste först</string>
@@ -315,6 +315,7 @@
   <string name="sort_order_top_rated_first">Högst rankad</string>
   <string name="sort_order_latest_first_dvd">Senaste först (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Äldsta först (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">1 dag</string>
   <string name="upcoming_upto_three_days">3 dagar</string>
@@ -333,7 +334,6 @@
   <string name="pref_autobackupsummary">Din seriedatabas säkerhetskopieras varje vecka till hämtningsmappen</string>
   <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Nummerformat</string>
   <string name="pref_offset">Manuell tidsskillnad</string>
   <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>

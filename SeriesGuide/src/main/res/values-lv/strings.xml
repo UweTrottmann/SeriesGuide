@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Īpašās epizodes pazūd no visurienes, izņemot sezonu sarakstu</string>
   <string name="pref_seasonsorting">Kārtot epizodes pēc...</string>
   <string name="pref_episodesorting">Kārtot epizodes pēc...</string>
-  <string name="pref_language">Satura valoda</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
   <string name="pref_updatewifionlysummary">Lai samazinātu operatoru datu pieprasījumus, nelejuplādēt izmantojot mobilos intertīklus</string>
   <string name="about">Par SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Visaugstāk novērtētākas</string>
   <string name="sort_order_latest_first_dvd">Jaunākās pirmās (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Vecākās pirmās (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">pašlaik</string>
   <string name="upcoming_upto_one_day">1 diena</string>
   <string name="upcoming_upto_three_days">3 dienas</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Jūsu seriālu saraksta iknedēļas rezerves kopija Lejupielāžu mapē</string>
   <string name="backup">Dublēt/Atjaunot</string>
   <string name="backup_summary">Dublēt vai atjaunot jūsu seriālus</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Epizožu formāts</string>
   <string name="pref_offset">Manuāla laika nobīde</string>
   <string name="pref_offsetsummary">Nobīdīt raidlaikus %s stundas</string>

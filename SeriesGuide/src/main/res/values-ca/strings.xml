@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
   <string name="pref_seasonsorting">Ordena les temporades per…</string>
   <string name="pref_episodesorting">Ordena els capítols per…</string>
-  <string name="pref_language">Idioma del contingut</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
   <string name="pref_updatewifionlysummary">No descarreguis res a través de les xarxes mòbils</string>
   <string name="about">Quant a SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Els més puntuats</string>
   <string name="sort_order_latest_first_dvd">Primer els darrers (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Primer els més antics (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">ara</string>
   <string name="upcoming_upto_one_day">1 dia</string>
   <string name="upcoming_upto_three_days">3 dies</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Còpia de seguretat setmanal de la vostra base de dades de sèries a la carpeta de Baixades</string>
   <string name="backup">Còpies de seguretat</string>
   <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format de número</string>
   <string name="pref_offset">Compensació horària manual</string>
   <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>

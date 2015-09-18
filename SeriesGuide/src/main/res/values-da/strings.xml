@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter…</string>
   <string name="pref_episodesorting">Sortér afsnit efter…</string>
-  <string name="pref_language">Sprog (indhold)</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
   <string name="about">Om SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Top bedømte</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dage</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Ugentlig backup af databasen over dine serier til Download-mappen</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Talformat</string>
   <string name="pref_offset">Manuel tidsforskydning</string>
   <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>

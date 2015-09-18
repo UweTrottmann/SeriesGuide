@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_language">內容語言</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">關於 SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Top rated</string>
   <string name="sort_order_latest_first_dvd">按最新的順序排序(DVD)</string>
   <string name="sort_order_oldest_first_dvd">按最舊的順序排序(DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">目前</string>
   <string name="upcoming_upto_one_day">1 day</string>
   <string name="upcoming_upto_three_days">3 days</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">數字格式</string>
   <string name="pref_offset">手動時間換算</string>
   <string name="pref_offsetsummary">Offset air times by %s hours</string>

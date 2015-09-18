@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
   <string name="pref_seasonsorting">Сортувати сезони за…</string>
   <string name="pref_episodesorting">Сортувати серії за…</string>
-  <string name="pref_language">Мова контенту</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Щоб знизити витрати через мобільного оператора, не завантажуйте через мобільні мережі</string>
   <string name="about">Про SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Топ кращих</string>
   <string name="sort_order_latest_first_dvd">Новіші спочатку (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Давніші спочатку (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">Сьогодні</string>
   <string name="upcoming_upto_one_day">1 дня</string>
   <string name="upcoming_upto_three_days">3 днів</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Щотижневий бекап баз даних серіалів в теку для завантажень</string>
   <string name="backup">Бекап/Відновлення</string>
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Формат цифр</string>
   <string name="pref_offset">Зсув часу вручну</string>
   <string name="pref_offsetsummary">Зсув ефірного часу на %s годин</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar de peste tot, cu excepţia celor din lista sezonului</string>
   <string name="pref_seasonsorting">Sortare sezoane după…</string>
   <string name="pref_episodesorting">Sortare episoade după…</string>
-  <string name="pref_language">Limbă conținut</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile</string>
   <string name="about">Despre SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Cele mai votate</string>
   <string name="sort_order_latest_first_dvd">Cele mai noi primele (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Cele mai vechi primele (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">acum</string>
   <string name="upcoming_upto_one_day">o zi</string>
   <string name="upcoming_upto_three_days">3 zile</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Arhivarea săptămânală a emisiunilor se va descărca în fișierul Download</string>
   <string name="backup">Arhivare/Restaurare</string>
   <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format număr</string>
   <string name="pref_offset">Compensare manuală a timpului</string>
   <string name="pref_offsetsummary">Compensare timp de difuzare cu %s ore</string>

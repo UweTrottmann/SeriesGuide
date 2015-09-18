@@ -228,8 +228,8 @@
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
   <string name="hexagon_api_error">Communicatie met Trakt mislukt, Probeer later opnieuw.</string>
   <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Voor het gebruik van Seriesguide Cloud is toegang tot uw account(s) noodzakelijk.</string>
+  <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
   <string name="trakt_seen">%s bekeken.</string>
   <string name="trakt_notseen">%s niet bekeken.</string>
@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
-  <string name="pref_language">Taal van de inhoud</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om datakosten te reduceren, niet downloaden over mobiele netwerken</string>
   <string name="about">Over SeriesGuide</string>
@@ -302,9 +302,9 @@
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet onderschreven of gecertificeerd door TMDb.</string>
-  <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van Trakt.</string>
+  <string name="about_open_source">Seriesguide is geprogrammeerd met behulp van open source software.</string>
+  <string name="licences_and_credits">Licenties en verantwoording</string>
   <string name="sort">Sorteren op</string>
   <string name="action_sort_ignore_articles">Negeer artikel</string>
   <string name="sort_order_latest_first">Nieuwste eerst</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Hoogste waardering</string>
   <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">1 dag</string>
   <string name="upcoming_upto_three_days">3 dagen</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Wekelijkse back-up van uw serie-database in de downloadmap</string>
   <string name="backup">Back-up maken/herstellen</string>
   <string name="backup_summary">Back-up van series maken/herstellen</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Nummer opmaak</string>
   <string name="pref_offset">Handmatige aanpassing tijdzone</string>
   <string name="pref_offsetsummary">Pas uitzendtijd aan met %s uren</string>
@@ -361,8 +361,8 @@
   <string name="import_warning">Ik begrijp dat mijn huidige series en lijsten zullen verloren gaan!</string>
   <string name="last_auto_backup">Laatste auto back-up: %s</string>
   <string name="restore_auto_backup">Auto back-up terugzetten</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+  <string name="dataliberation_permission_missing">Voor de back-up en restore functie Is toegang tot uw bestanden nodig.</string>
+  <string name="autobackup_permission_missing">Om auto back-up te gebruiken, sta toegang tot uw bestanden toe.</string>
   <string name="get_started">Aan de slag</string>
   <string name="welcome_setuplanguage">Selecteer een taal</string>
   <string name="dismiss">Afwijzen</string>

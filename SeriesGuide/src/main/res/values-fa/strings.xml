@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">قسمت ویژه از همه جا جز لیست فصل ها ناپدید شوند</string>
   <string name="pref_seasonsorting">مرتب کردن فصل ها براساس...</string>
   <string name="pref_episodesorting">مرنب کردن قسمت ها براساس...</string>
-  <string name="pref_language">زبان محتوا</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">تصاویر از طریق Wi-Fi فقط</string>
   <string name="pref_updatewifionlysummary">برای کاهش هزینه های خط موبایل، از طریق شبکه های موبایل دانلود نکنید</string>
   <string name="about">درباره SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Top rated</string>
   <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">الان</string>
   <string name="upcoming_upto_one_day">1 روز</string>
   <string name="upcoming_upto_three_days">3 روز</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">بصورت هفتگی از دیتابیس سریالها در پوشه دانلود پشتیبانی بگیر</string>
   <string name="backup">پشتیبان گیری / بازیابی</string>
   <string name="backup_summary">پشتیبان گیری یا بازیابی سریالهایتان</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">قاللبندی شماره</string>
   <string name="pref_offset">Manual time offset</string>
   <string name="pref_offsetsummary">Offset air times by %s hours</string>

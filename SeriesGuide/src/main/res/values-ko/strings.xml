@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
-  <string name="pref_language">콘텐츠 언어</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
   <string name="pref_updatewifionlysummary">데이터 요금을 줄이기 위해 와이파이가 연결되어 있을때만 이미지를 다운받습니다</string>
   <string name="about">시리즈가이드에 대하여</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">최고 점수</string>
   <string name="sort_order_latest_first_dvd">내림차순 (DVD)</string>
   <string name="sort_order_oldest_first_dvd">오름차순 (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">지금</string>
   <string name="upcoming_upto_one_day">1일</string>
   <string name="upcoming_upto_three_days">3일</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">주간 백업한 쇼 정보를 다운로드 폴더로 보내기</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">에피소드 표시 형식</string>
   <string name="pref_offset">시차 수동 설정</string>
   <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>

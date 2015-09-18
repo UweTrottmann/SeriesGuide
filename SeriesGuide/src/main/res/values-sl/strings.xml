@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Posebne epizode izginejo od povsod, razen s spiska sezone</string>
   <string name="pref_seasonsorting">Sezono razporedi po…</string>
   <string name="pref_episodesorting">Epizode razporedi po…</string>
-  <string name="pref_language">Jezik vsebine</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">O SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Najvišje ocenjene</string>
   <string name="sort_order_latest_first_dvd">Najprej zadnje (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Najprej najstarejše (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">zdaj</string>
   <string name="upcoming_upto_one_day">istega dne</string>
   <string name="upcoming_upto_three_days">3 dni</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>

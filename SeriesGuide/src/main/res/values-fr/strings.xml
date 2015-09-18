@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Les épisodes spéciaux n\'apparaissent plus excepté dans la liste des saisons</string>
   <string name="pref_seasonsorting">Trier les saisons par…</string>
   <string name="pref_episodesorting">Trier les épisodes par…</string>
-  <string name="pref_language">Langue</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
   <string name="about">A propos de SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Les mieux notés</string>
   <string name="sort_order_latest_first_dvd">Plus récents en premier (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Plus ancien en premier (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">maintenant</string>
   <string name="upcoming_upto_one_day">un jour</string>
   <string name="upcoming_upto_three_days">3 jours</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos séries dans le dossier Download</string>
   <string name="backup">Sauvegarde/Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format de nombre</string>
   <string name="pref_offset">Décalage horaire manuel</string>
   <string name="pref_offsetsummary">Décalage de %s heures</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Специјалне епизоде ће бити видљиве само у списку сезона</string>
   <string name="pref_seasonsorting">Поређај сезоне по…</string>
   <string name="pref_episodesorting">Поређај епизоде по…</string>
-  <string name="pref_language">Језик садржаја</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>
   <string name="pref_updatewifionlysummary">Да би сте смањили рачун, немојте учитавати слике док користите мобилну мрежу</string>
   <string name="about">О SeriesGuide-у</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Најбоље оцењене</string>
   <string name="sort_order_latest_first_dvd">Прво најновије (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Прво настарије (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">сада</string>
   <string name="upcoming_upto_one_day">1 дан</string>
   <string name="upcoming_upto_three_days">3 дана</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Недељно архивирање података</string>
   <string name="backup">Архивирање/ повраћај архиве</string>
   <string name="backup_summary">Архивирај или врати архивиране серије</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Облик нумерисања</string>
   <string name="pref_offset">Ручно подеси временску разлику</string>
   <string name="pref_offsetsummary">Разлика у емитовању је %s сати</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
-  <string name="pref_language">שפת תוכן</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
   <string name="pref_updatewifionlysummary">בכדי להפחית חיובי מפעילה סלולרית, אל תוריד באמצעות אינטרנט סלולרי</string>
   <string name="about">אודות SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">פופולרים</string>
   <string name="sort_order_latest_first_dvd">אחרון קודם (DVD)</string>
   <string name="sort_order_oldest_first_dvd">ראשון קודם (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">עכשיו</string>
   <string name="upcoming_upto_one_day">יום</string>
   <string name="upcoming_upto_three_days">3 ימים</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">שמור גיבוי שבועי של מידע הסדרות שלך אל תוך תיקיית ההורדות</string>
   <string name="backup">גיבוי/שחזור</string>
   <string name="backup_summary">גבה או שחזר את סדרותיך</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">תבנית מספרים</string>
   <string name="pref_offset">סטיית שעה ידנית</string>
   <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>

@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
   <string name="pref_seasonsorting">Сортирай сезоните по…</string>
   <string name="pref_episodesorting">Сортирай епизодите по…</string>
-  <string name="pref_language">Език на съдържанието</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
   <string name="about">Относно SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Най-високо оценени</string>
   <string name="sort_order_latest_first_dvd">Най-новите отгоре (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Най-старите отгоре (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">сега</string>
   <string name="upcoming_upto_one_day">1 ден</string>
   <string name="upcoming_upto_three_days">3 дни</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Седмичен архив на вашите сериали в папка "Download"</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Формат на числата</string>
   <string name="pref_offset">Ръчна смяна време</string>
   <string name="pref_offsetsummary">Преместване на часовете за излъчване с %s часа</string>

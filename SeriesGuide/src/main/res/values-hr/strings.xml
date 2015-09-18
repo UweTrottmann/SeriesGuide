@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Posebne epizode nestaju svugdje osim na popisu sezona</string>
   <string name="pref_seasonsorting">Poredaj sezone prema…</string>
   <string name="pref_episodesorting">Poredaj epizode prema…</string>
-  <string name="pref_language">Jezik sadržaja</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fia</string>
   <string name="pref_updatewifionlysummary">Kako bi smanjili troškove prenosnika,\ ne preuzimajte preko mobilnih mreža</string>
   <string name="about">O SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Najbolje ocijenjene</string>
   <string name="sort_order_latest_first_dvd">Prvo zadnje (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prvo najstarije (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">sada</string>
   <string name="upcoming_upto_one_day">1 dana</string>
   <string name="upcoming_upto_three_days">3 dana</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Tjedna sigurnosna kopija tvoje baze podataka o serijama u Mapu preuzimanja</string>
   <string name="backup">Sigurnosna kopija/Obnova</string>
   <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Format broja</string>
   <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
   <string name="pref_offsetsummary">Razlika u emitiranju %s sati</string>

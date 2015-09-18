@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Non mostrare gli episodi speciali tranne che nella lista della stagione</string>
   <string name="pref_seasonsorting">Ordina stagioni per…</string>
   <string name="pref_episodesorting">Ordina episodi per…</string>
-  <string name="pref_language">Lingua contenuto</string>
+  <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Per ridurre gli addebiti del gestore, non scaricare con la connessione mobile</string>
   <string name="about">Info su SeriesGuide</string>
@@ -314,6 +314,7 @@
   <string name="sort_order_top_rated_first">Le più votate</string>
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
+  <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">ora</string>
   <string name="upcoming_upto_one_day">entro un giorno</string>
   <string name="upcoming_upto_three_days">entro 3 giorni</string>
@@ -332,7 +333,6 @@
   <string name="pref_autobackupsummary">Esegui ogni settimana un backup del database delle serie nella cartella Download</string>
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Esegui il backup o ripristina le tue serie</string>
-  <string name="pref_upcominglimit">Upcoming filter range</string>
   <string name="pref_number">Formato numerico</string>
   <string name="pref_offset">Fuso orario manuale</string>
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
