@@ -31,7 +31,7 @@
         android:key="language"
         android:title="@string/pref_language" />
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="True"
         android:key="com.battlelancer.seriesguide.autoupdate"
         android:summary="@string/pref_autoupdatesummary"
@@ -70,7 +70,7 @@
 
     <PreferenceCategory android:title="@string/backup">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.autobackup"
             android:summary="@string/pref_autobackupsummary"

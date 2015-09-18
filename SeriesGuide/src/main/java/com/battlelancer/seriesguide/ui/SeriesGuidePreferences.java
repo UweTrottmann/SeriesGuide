@@ -38,6 +38,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.preference.TwoStatePreference;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -225,7 +226,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
 
             // set current value of auto-update pref
-            ((CheckBoxPreference) findPreference(UpdateSettings.KEY_AUTOUPDATE)).setChecked(
+            ((SwitchPreference) findPreference(UpdateSettings.KEY_AUTOUPDATE)).setChecked(
                     SgSyncAdapter.isSyncAutomatically(getActivity()));
         }
 
@@ -238,10 +239,10 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // allow supporters to enable notifications
             if (Utils.hasAccessToX(getActivity())) {
-                enabledPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                enabledPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        boolean isChecked = (boolean) newValue;
                         if (isChecked) {
                             Utils.trackCustomEvent(getActivity(), TAG, "Notifications", "Enable");
                         } else {
@@ -274,7 +275,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ringtonePref.setEnabled(isNotificationsEnabled);
             } else {
                 enabledPref.setOnPreferenceChangeListener(sNoOpChangeListener);
-                ((CheckBoxPreference) enabledPref).setChecked(false);
+                ((SwitchPreference) enabledPref).setChecked(false);
                 enabledPref.setSummary(R.string.onlyx);
                 thresholdPref.setEnabled(false);
                 favOnlyPref.setEnabled(false);
@@ -552,8 +553,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // Toggle auto-update on SyncAdapter
             if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
                 if (pref != null) {
-                    CheckBoxPreference checkBoxPref = (CheckBoxPreference) pref;
-                    SgSyncAdapter.setSyncAutomatically(getActivity(), checkBoxPref.isChecked());
+                    SwitchPreference autoUpdatePref = (SwitchPreference) pref;
+                    SgSyncAdapter.setSyncAutomatically(getActivity(), autoUpdatePref.isChecked());
                 }
             }
         }
