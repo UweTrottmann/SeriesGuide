@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -142,6 +144,11 @@ public class ShowsFragment extends Fragment implements
         ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
+
+        // hide floating action button when scrolling shows
+        FloatingActionButton buttonAddShow = (FloatingActionButton) getActivity().findViewById(
+                R.id.buttonShowsAdd);
+        mGrid.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
