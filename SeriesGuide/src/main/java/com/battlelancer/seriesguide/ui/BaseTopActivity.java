@@ -45,7 +45,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
  */
 public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
-    private SmoothProgressBar syncProgressBar;
+    private View syncProgressBar;
     private Object syncObserverHandle;
     private Snackbar snackbar;
 
@@ -70,7 +70,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
      * progress bar which displays when syncing.
      */
     protected void setupSyncProgressBar(@IdRes int progressBarId) {
-        syncProgressBar = (SmoothProgressBar) findViewById(progressBarId);
+        syncProgressBar = findViewById(progressBarId);
         syncProgressBar.setVisibility(View.GONE);
     }
 
