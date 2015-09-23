@@ -62,7 +62,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
     private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 4;
     private static final int REQUEST_CODE_SHOWS_IMPORT_URI = 5;
-    public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
 
     @Bind(R.id.containerDataLibExportFiles) View containerCustomExportFiles;
     @Bind(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
@@ -300,7 +299,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         // Create a file with the requested MIME type.
-        intent.setType(APPLICATION_OCTET_STREAM);
+        intent.setType("application/json");
         intent.putExtra(Intent.EXTRA_TITLE, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
 
         startActivityForResult(intent, REQUEST_CODE_SHOWS_EXPORT_URI);
@@ -315,8 +314,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         // json files might have mime type of "application/octet-stream"
         // but we are going to store them as "application/json"
-        // so filter to only show application files
-        intent.setType(APPLICATION_OCTET_STREAM);
+        // so filter to show all application files
+        intent.setType("application/*");
 
         startActivityForResult(intent, REQUEST_CODE_SHOWS_IMPORT_URI);
     }
