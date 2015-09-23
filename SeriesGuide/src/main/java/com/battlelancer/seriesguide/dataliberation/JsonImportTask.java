@@ -18,7 +18,9 @@ package com.battlelancer.seriesguide.dataliberation;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
@@ -37,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -46,6 +49,7 @@ import com.google.gson.stream.JsonReader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -92,20 +96,33 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // Ensure JSON file is available
         File importPath = JsonExportTask.getExportPath(mIsAutoBackupMode);
 
-        int result = importShows(importPath);
-        if (result == ERROR || isCancelled()) {
+        // last chance to abort
+        if (isCancelled()) {
             return ERROR;
         }
 
-        if (result == SUCCESS) { // only import lists, if show import was successful
-            result = importLists(importPath);
-            if (result == ERROR || isCancelled()) {
-                return ERROR;
-            }
+        int result = importShows(importPath);
+        if (result != SUCCESS) {
+            return result;
+        }
+        if (isCancelled()) {
+            return ERROR;
+        }
+
+        // always make sure to only import lists, if show import was successful
+        result = importLists(importPath);
+        if (result != SUCCESS) {
+            return result;
+        }
+        if (isCancelled()) {
+            return ERROR;
         }
 
         result = importMovies(importPath);
-        if (result == ERROR) {
+        if (result != SUCCESS) {
+            return result;
+        }
+        if (isCancelled()) {
             return ERROR;
         }
 
@@ -143,41 +160,88 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private int importShows(File importPath) {
-        File backupShows = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
-        if (!backupShows.exists() || !backupShows.canRead()) {
-            return ERROR_FILE_ACCESS;
+        // use Storage Access Framework on KitKat and up
+        // but for now still use fixed path for auto backup
+        if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
+            // make sure we have a file uri...
+            Uri showsImportUri = BackupSettings.getShowsImportUri(mContext);
+            if (showsImportUri == null) {
+                return ERROR;
+            }
+            // ...and the file actually exists
+            ParcelFileDescriptor pfd;
+            try {
+                pfd = mContext.getContentResolver().openFileDescriptor(showsImportUri, "r");
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "Shows import file not found.");
+                return ERROR_FILE_ACCESS;
+            }
+
+            clearExistingShowsData();
+
+            // Access JSON from backup file and try to import shows
+            FileInputStream in = new FileInputStream(pfd.getFileDescriptor());
+            Gson gson = new Gson();
+            try {
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    Show show = gson.fromJson(reader, Show.class);
+                    addShowToDatabase(show);
+                }
+                reader.endArray();
+                reader.close();
+
+                // let the document provider know we're done.
+                pfd.close();
+            } catch (JsonParseException | IOException | IllegalStateException e) {
+                // the given Json might not be valid or unreadable
+                Timber.e(e, "JSON show import failed");
+                return ERROR;
+            }
+        } else {
+            File backupShows = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
+            if (!backupShows.exists() || !backupShows.canRead()) {
+                return ERROR_FILE_ACCESS;
+            }
+            InputStream in;
+            try {
+                in = new FileInputStream(backupShows);
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "Shows import file not found.");
+                return ERROR_FILE_ACCESS;
+            }
+
+            clearExistingShowsData();
+
+            // Access JSON from backup folder to create new database
+            Gson gson = new Gson();
+            try {
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    Show show = gson.fromJson(reader, Show.class);
+                    addShowToDatabase(show);
+                }
+                reader.endArray();
+                reader.close();
+            } catch (JsonParseException | IOException | IllegalStateException e) {
+                // the given Json might not be valid or unreadable
+                Timber.e(e, "JSON show import failed");
+                return ERROR;
+            }
         }
 
+        return SUCCESS;
+    }
+
+    private void clearExistingShowsData() {
         // Clean out all existing tables
         mContext.getContentResolver().delete(Shows.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
         mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
-
-        // Access JSON from backup folder to create new database
-        try {
-            InputStream in = new FileInputStream(backupShows);
-
-            Gson gson = new Gson();
-
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                Show show = gson.fromJson(reader, Show.class);
-                addShowToDatabase(show);
-            }
-
-            reader.endArray();
-            reader.close();
-        } catch (JsonParseException | IOException | IllegalStateException e) {
-            // the given Json might not be valid or unreadable
-            Timber.e(e, "JSON show import failed");
-            return ERROR;
-        }
-
-        return SUCCESS;
     }
 
     private void addShowToDatabase(Show show) {

@@ -44,7 +44,7 @@
             android:indeterminate="true" />
 
         <LinearLayout
-            android:id="@+id/containerDataLibFiles"
+            android:id="@+id/containerDataLibExportFiles"
             android:layout_below="@+id/progressBarDataLiberation"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -53,19 +53,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Shows backup file"/>
+                android:text="@string/shows"/>
 
             <TextView
-                android:id="@+id/textViewDataLibShowsFile"
+                android:id="@+id/textViewDataLibShowsExportFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="content://some.path.on.storage/sg-shows-export.json"/>
 
             <Button
-                android:id="@+id/buttonDataLibShowsFile"
+                android:id="@+id/buttonDataLibShowsExportFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select shows backup file"/>
+                android:text="@string/action_select_file"/>
 
         </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:id="@+id/textViewDataLabelBackup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerDataLibFiles"
+            android:layout_below="@+id/containerDataLibExportFiles"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_button"
             android:textAppearance="@style/TextAppearance.Headline" />
@@ -104,11 +104,37 @@
             android:text="@string/import_button"
             android:textAppearance="@style/TextAppearance.Headline" />
 
+        <LinearLayout
+            android:id="@+id/containerDataLibImportFiles"
+            android:layout_below="@+id/textViewDataLabelRestore"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/shows"/>
+
+            <TextView
+                android:id="@+id/textViewDataLibShowsImportFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="content://some.path.on.storage/sg-shows-export.json"/>
+
+            <Button
+                android:id="@+id/buttonDataLibShowsImportFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_select_file"/>
+
+        </LinearLayout>
+
         <CheckBox
             android:id="@+id/checkBoxImportWarning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewDataLabelRestore"
+            android:layout_below="@+id/containerDataLibImportFiles"
             android:text="@string/import_warning" />
 
         <Button

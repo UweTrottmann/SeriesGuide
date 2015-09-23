@@ -60,12 +60,17 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     private static final int REQUEST_CODE_EXPORT = 1;
     private static final int REQUEST_CODE_IMPORT = 2;
     private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
-    private static final int REQUEST_CODE_FILE_URI = 4;
-    private static final int REQUEST_CODE_SHOWS_PATH = 5;
+    private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 4;
+    private static final int REQUEST_CODE_SHOWS_IMPORT_URI = 5;
+    public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
 
-    @Bind(R.id.containerDataLibFiles) View containerCustomFiles;
-    @Bind(R.id.textViewDataLibShowsFile) TextView textShowsPath;
-    @Bind(R.id.buttonDataLibShowsFile) Button buttonShowsPath;
+    @Bind(R.id.containerDataLibExportFiles) View containerCustomExportFiles;
+    @Bind(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
+    @Bind(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
+
+    @Bind(R.id.containerDataLibImportFiles) View containerCustomImportFiles;
+    @Bind(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
+    @Bind(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
 
     private Button mButtonExport;
     private Button mButtonImport;
@@ -150,15 +155,22 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         // selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         if (AndroidUtils.isKitKatOrHigher()) {
-            buttonShowsPath.setOnClickListener(new OnClickListener() {
+            buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectExportFile();
                 }
             });
+            buttonShowsImportFile.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectImportFile();
+                }
+            });
             updateCustomFileViews();
         } else {
-            containerCustomFiles.setVisibility(View.GONE);
+            containerCustomExportFiles.setVisibility(View.GONE);
+            containerCustomImportFiles.setVisibility(View.GONE);
         }
 
         return v;
@@ -203,6 +215,10 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     @Override
     public void onTaskFinished() {
+        if (!isAdded()) {
+            // don't touch views if fragment is not added to activity any longer
+            return;
+        }
         if (AndroidUtils.isKitKatOrHigher()) {
             updateCustomFileViews();
         }
@@ -221,6 +237,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
         mCheckBoxFullDump.setEnabled(!isLocked);
         mCheckBoxImportWarning.setEnabled(!isLocked);
+        buttonShowsExportFile.setEnabled(!isLocked);
+        buttonShowsImportFile.setEnabled(!isLocked);
     }
 
     private void tryDataLiberationAction(int requestCode) {
@@ -263,12 +281,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            if (AndroidUtils.isKitKatOrHigher()) {
-                selectImportFile();
-            } else {
-                mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
-                Utils.executeInOrder(mTask);
-            }
+            mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
+            Utils.executeInOrder(mTask);
         } else if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             setProgressLock(true);
 
@@ -277,6 +291,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void selectExportFile() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
@@ -285,12 +300,13 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         // Create a file with the requested MIME type.
-        intent.setType("application/octet-stream");
-        intent.putExtra(Intent.EXTRA_TITLE, "sg-shows-export.json");
+        intent.setType(APPLICATION_OCTET_STREAM);
+        intent.putExtra(Intent.EXTRA_TITLE, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
 
-        startActivityForResult(intent, REQUEST_CODE_SHOWS_PATH);
+        startActivityForResult(intent, REQUEST_CODE_SHOWS_EXPORT_URI);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void selectImportFile() {
         // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -300,9 +316,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         // json files might have mime type of "application/octet-stream"
         // but we are going to store them as "application/json"
         // so filter to only show application files
-        intent.setType("application/octet-stream");
+        intent.setType(APPLICATION_OCTET_STREAM);
 
-        startActivityForResult(intent, REQUEST_CODE_FILE_URI);
+        startActivityForResult(intent, REQUEST_CODE_SHOWS_IMPORT_URI);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -312,7 +328,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             return;
         }
 
-        if (requestCode == REQUEST_CODE_SHOWS_PATH) {
+        if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI
+                || requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
             Uri uri = data.getData();
 
             // persist read and write permission for this URI across device reboots
@@ -320,17 +337,21 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                     .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
                             | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-            BackupSettings.storeBackupShowsUri(getContext(), uri);
+            if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
+                BackupSettings.storeShowsExportUri(getContext(), uri);
+            } else {
+                BackupSettings.storeShowsImportUri(getContext(), uri);
+            }
             updateCustomFileViews();
         }
     }
 
     private void updateCustomFileViews() {
-        if (!isAdded()) {
-            return;
-        }
-        Uri backupShowsUri = BackupSettings.getBackupShowsUri(getContext());
-        textShowsPath.setText(backupShowsUri == null ? getString(R.string.backup_no_file_selected)
-                : backupShowsUri.toString());
+        Uri showsExportUri = BackupSettings.getShowsExportUri(getContext());
+        textShowsExportFile.setText(showsExportUri == null ? getString(R.string.no_file_selected)
+                : showsExportUri.toString());
+        Uri showsImportUri = BackupSettings.getShowsImportUri(getContext());
+        textShowsImportFile.setText(showsImportUri == null ? getString(R.string.no_file_selected)
+                : showsImportUri.toString());
     }
 }

@@ -132,20 +132,32 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         File exportPath = getExportPath(mIsAutoBackupMode);
         exportPath.mkdirs();
 
+        // last chance to abort
+        if (isCancelled()) {
+            return ERROR;
+        }
+
         int result = exportShows(exportPath);
-        if (result == ERROR || isCancelled()) {
+        if (result != SUCCESS) {
+            return result;
+        }
+        if (isCancelled()) {
             return ERROR;
         }
 
         result = exportLists(exportPath);
-        if (result == ERROR || isCancelled()) {
+        if (result != SUCCESS) {
+            return result;
+        }
+        if (isCancelled()) {
             return ERROR;
         }
 
         result = exportMovies(exportPath);
-        if (result == ERROR || isCancelled()) {
-            return ERROR;
+        if (result != SUCCESS) {
+            return result;
         }
+        // no need to return early here if canceled, we are almost done anyhow
 
         if (mIsAutoBackupMode) {
             // store current time = last backup time
@@ -208,7 +220,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             // but for now still use fixed path for auto backup
             if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
                 // ensure the user has selected a backup file
-                Uri backupShowsUri = BackupSettings.getBackupShowsUri(mContext);
+                Uri backupShowsUri = BackupSettings.getShowsExportUri(mContext);
                 if (backupShowsUri == null) {
                     return ERROR;
                 }
@@ -244,7 +256,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void removeBackupShowsUri() {
-        BackupSettings.storeBackupShowsUri(mContext, null);
+        BackupSettings.storeShowsExportUri(mContext, null);
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {

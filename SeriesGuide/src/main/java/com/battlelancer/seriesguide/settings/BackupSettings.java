@@ -26,19 +26,40 @@ import android.support.annotation.Nullable;
  */
 public class BackupSettings {
 
-    public static final String KEY_BACKUP_SHOWS_URI = "com.battlelancer.seriesguide.backup.shows";
+    public static final String KEY_SHOWS_EXPORT_URI
+            = "com.battlelancer.seriesguide.backup.showsExport";
+    public static final String KEY_SHOWS_IMPORT_URI
+            = "com.battlelancer.seriesguide.backup.showsImport";
 
     @Nullable
-    public static Uri getBackupShowsUri(Context context) {
+    public static Uri getShowsExportUri(Context context) {
         String uriString = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_BACKUP_SHOWS_URI, null);
+                .getString(KEY_SHOWS_EXPORT_URI, null);
         return uriString == null ? null : Uri.parse(uriString);
     }
 
-    public static boolean storeBackupShowsUri(Context context, @Nullable Uri uri) {
+    public static boolean storeShowsExportUri(Context context, @Nullable Uri uri) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putString(BackupSettings.KEY_BACKUP_SHOWS_URI, uri == null ? null : uri.toString())
+                .putString(BackupSettings.KEY_SHOWS_EXPORT_URI, uri == null ? null : uri.toString())
+                .commit();
+    }
+
+    @Nullable
+    public static Uri getShowsImportUri(Context context) {
+        String uriString = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_SHOWS_IMPORT_URI, null);
+        if (uriString == null) {
+            // fall back to export uri (though there might not be one)
+            return getShowsExportUri(context);
+        }
+        return Uri.parse(uriString);
+    }
+
+    public static boolean storeShowsImportUri(Context context, @Nullable Uri uri) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(BackupSettings.KEY_SHOWS_IMPORT_URI, uri == null ? null : uri.toString())
                 .commit();
     }
 }
