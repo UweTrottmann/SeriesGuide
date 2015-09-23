@@ -17,8 +17,13 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -35,11 +40,14 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -52,6 +60,12 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     private static final int REQUEST_CODE_EXPORT = 1;
     private static final int REQUEST_CODE_IMPORT = 2;
     private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
+    private static final int REQUEST_CODE_FILE_URI = 4;
+    private static final int REQUEST_CODE_SHOWS_PATH = 5;
+
+    @Bind(R.id.containerDataLibFiles) View containerCustomFiles;
+    @Bind(R.id.textViewDataLibShowsFile) TextView textShowsPath;
+    @Bind(R.id.buttonDataLibShowsFile) Button buttonShowsPath;
 
     private Button mButtonExport;
     private Button mButtonImport;
@@ -76,6 +90,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_data_liberation, container, false);
+        ButterKnife.bind(this, v);
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
         mProgressBar.setVisibility(View.GONE);
@@ -132,6 +147,20 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             }
         });
 
+        // selecting custom backup files is only supported on KitKat and up
+        // as we use Storage Access Framework in this case
+        if (AndroidUtils.isKitKatOrHigher()) {
+            buttonShowsPath.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectExportFile();
+                }
+            });
+            updateCustomFileViews();
+        } else {
+            containerCustomFiles.setVisibility(View.GONE);
+        }
+
         return v;
     }
 
@@ -143,6 +172,13 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
             setProgressLock(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -167,6 +203,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     @Override
     public void onTaskFinished() {
+        if (AndroidUtils.isKitKatOrHigher()) {
+            updateCustomFileViews();
+        }
         setProgressLock(false);
     }
 
@@ -224,13 +263,74 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
-            Utils.executeInOrder(mTask);
+            if (AndroidUtils.isKitKatOrHigher()) {
+                selectImportFile();
+            } else {
+                mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
+                Utils.executeInOrder(mTask);
+            }
         } else if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             setProgressLock(true);
 
             mTask = new JsonImportTask(getContext(), DataLiberationFragment.this, true);
             Utils.executeInOrder(mTask);
         }
+    }
+
+    private void selectExportFile() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+
+        // Filter to only show results that can be "opened", such as
+        // a file (as opposed to a list of contacts or timezones).
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        // Create a file with the requested MIME type.
+        intent.setType("application/octet-stream");
+        intent.putExtra(Intent.EXTRA_TITLE, "sg-shows-export.json");
+
+        startActivityForResult(intent, REQUEST_CODE_SHOWS_PATH);
+    }
+
+    private void selectImportFile() {
+        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        // Filter to only show results that can be "opened", such as a
+        // file (as opposed to a list of contacts or timezones)
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // json files might have mime type of "application/octet-stream"
+        // but we are going to store them as "application/json"
+        // so filter to only show application files
+        intent.setType("application/octet-stream");
+
+        startActivityForResult(intent, REQUEST_CODE_FILE_URI);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK || !isAdded() || data == null) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_SHOWS_PATH) {
+            Uri uri = data.getData();
+
+            // persist read and write permission for this URI across device reboots
+            getContext().getContentResolver()
+                    .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            BackupSettings.storeBackupShowsUri(getContext(), uri);
+            updateCustomFileViews();
+        }
+    }
+
+    private void updateCustomFileViews() {
+        if (!isAdded()) {
+            return;
+        }
+        Uri backupShowsUri = BackupSettings.getBackupShowsUri(getContext());
+        textShowsPath.setText(backupShowsUri == null ? getString(R.string.backup_no_file_selected)
+                : backupShowsUri.toString());
     }
 }

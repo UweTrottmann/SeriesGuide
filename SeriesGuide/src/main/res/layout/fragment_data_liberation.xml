@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,11 +43,37 @@
             android:layout_below="@+id/textViewBackupDatabaseVersion"
             android:indeterminate="true" />
 
+        <LinearLayout
+            android:id="@+id/containerDataLibFiles"
+            android:layout_below="@+id/progressBarDataLiberation"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shows backup file"/>
+
+            <TextView
+                android:id="@+id/textViewDataLibShowsFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="content://some.path.on.storage/sg-shows-export.json"/>
+
+            <Button
+                android:id="@+id/buttonDataLibShowsFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select shows backup file"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/textViewDataLabelBackup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarDataLiberation"
+            android:layout_below="@+id/containerDataLibFiles"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_button"
             android:textAppearance="@style/TextAppearance.Headline" />

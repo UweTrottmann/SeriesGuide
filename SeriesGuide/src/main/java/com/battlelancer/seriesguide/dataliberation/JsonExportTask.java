@@ -20,8 +20,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
@@ -40,12 +42,15 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -198,21 +203,48 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         publishProgress(shows.getCount(), 0);
 
-        File backup = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
         try {
-            OutputStream out = new FileOutputStream(backup);
+            // use Storage Access Framework on KitKat and up
+            // but for now still use fixed path for auto backup
+            if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
+                // ensure the user has selected a backup file
+                Uri backupShowsUri = BackupSettings.getBackupShowsUri(mContext);
+                if (backupShowsUri == null) {
+                    return ERROR;
+                }
 
-            writeJsonStreamShows(out, shows);
-        } catch (JsonIOException | IOException e) {
-            // Also catch IO exception as we want to know if exporting fails due
-            // to a JsonSyntaxException
-            Timber.e(e, "JSON shows export failed");
+                ParcelFileDescriptor pfd = mContext.getContentResolver()
+                        .openFileDescriptor(backupShowsUri, "w");
+                FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
+                writeJsonStreamShows(out, shows);
+
+                // let the document provider know we're done.
+                pfd.close();
+            } else {
+                File backup = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
+                OutputStream out = new FileOutputStream(backup);
+                writeJsonStreamShows(out, shows);
+            }
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Backup file not found.");
+            removeBackupShowsUri();
+            return ERROR;
+        } catch (IOException | SecurityException e) {
+            Timber.e(e, "Could not access backup file.");
+            removeBackupShowsUri();
+            return ERROR;
+        } catch (JsonParseException e) {
+            Timber.e(e, "JSON shows export failed.");
             return ERROR;
         } finally {
             shows.close();
         }
 
         return SUCCESS;
+    }
+
+    private void removeBackupShowsUri() {
+        BackupSettings.storeBackupShowsUri(mContext, null);
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
