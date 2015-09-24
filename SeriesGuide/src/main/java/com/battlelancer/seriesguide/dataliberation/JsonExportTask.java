@@ -220,7 +220,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             // but for now still use fixed path for auto backup
             if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
                 // ensure the user has selected a backup file
-                Uri backupShowsUri = BackupSettings.getShowsExportUri(mContext);
+                Uri backupShowsUri = BackupSettings.getFileUri(mContext,
+                        BackupSettings.KEY_SHOWS_EXPORT_URI);
                 if (backupShowsUri == null) {
                     return ERROR;
                 }
@@ -256,7 +257,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void removeBackupShowsUri() {
-        BackupSettings.storeShowsExportUri(mContext, null);
+        BackupSettings.storeFileUri(mContext, BackupSettings.KEY_SHOWS_EXPORT_URI, null);
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {

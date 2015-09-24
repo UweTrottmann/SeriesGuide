@@ -164,7 +164,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // but for now still use fixed path for auto backup
         if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
             // make sure we have a file uri...
-            Uri showsImportUri = BackupSettings.getShowsImportUri(mContext);
+            Uri showsImportUri = BackupSettings.getFileUri(mContext,
+                    BackupSettings.KEY_SHOWS_IMPORT_URI);
             if (showsImportUri == null) {
                 return ERROR;
             }

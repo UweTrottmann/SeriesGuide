@@ -411,7 +411,6 @@
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
     <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
@@ -436,7 +435,7 @@
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
     <string name="no_file_selected">No file selected</string>
-    <string name="action_select_file">Select</string>
+    <string name="action_select_file">Select file</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
