@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/toolbar_scrollable" />
+            <include layout="@layout/toolbar_progress" />
 
             <com.battlelancer.seriesguide.widgets.SlidingTabLayout
                 android:id="@+id/tabLayoutTabs"
@@ -46,12 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-            android:id="@+id/progressBarTabs"
-            style="@style/Widget.SeriesGuide.SmoothProgressBar.Sync"
-            android:layout_width="match_parent"
-            android:layout_height="2dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/buttonShowsAdd"

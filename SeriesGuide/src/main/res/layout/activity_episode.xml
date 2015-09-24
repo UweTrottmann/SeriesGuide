@@ -47,13 +47,7 @@
                     android:background="@color/transparent"
                     app:elevation="0dp">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/sgToolbar"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_width="match_parent"
-                        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                        android:background="@color/transparent"
-                        app:layout_scrollFlags="scroll|enterAlways" />
+                    <include layout="@layout/toolbar_transparent" />
 
                     <com.battlelancer.seriesguide.widgets.SlidingTabLayout
                         android:id="@+id/tabsEpisodeDetails"
