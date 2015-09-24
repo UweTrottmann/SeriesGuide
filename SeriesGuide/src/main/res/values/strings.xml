@@ -414,7 +414,7 @@
     <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
-    <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
+    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
     <string name="backup_inprogress">Backing up database…</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>

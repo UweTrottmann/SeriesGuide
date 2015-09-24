@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inclui todos os meta-dados como descrições, actores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>
   <string name="backup_version">Versão da Base de Dados</string>
-  <string name="backup_failed_nosd">Não é possível fazer backup. A pasta de backup não está disponível.</string>
+  <string name="backup_failed_file_access">Não é possível fazer backup. A pasta de backup não está disponível.</string>
   <string name="backup_inprogress">A efectuar backup da base de dados…</string>
   <string name="backup_success">Backup bem sucedido.</string>
   <string name="backup_failed">Falha no backup.</string>

@@ -343,7 +343,7 @@
   <string name="backup_full_dump">כלול את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
   <string name="backup_path">תיקיית גיבוי</string>
   <string name="backup_version">גרסת מסד נתונים</string>
-  <string name="backup_failed_nosd">אין אפשרות לגבות. תיקיית הגיבויים אינה זמינה.</string>
+  <string name="backup_failed_file_access">אין אפשרות לגבות. תיקיית הגיבויים אינה זמינה.</string>
   <string name="backup_inprogress">מגבה מסד נתונים</string>
   <string name="backup_success">הגיבוי הושלם בהצלחה.</string>
   <string name="backup_failed">הגיבוי נכשל.</string>

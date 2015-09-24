@@ -343,7 +343,7 @@
   <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
-  <string name="backup_failed_nosd">لا يمكن عمل نسخة إحتياطية. مجلد النسخة الإحتياطية غير موجود.</string>
+  <string name="backup_failed_file_access">لا يمكن عمل نسخة إحتياطية. مجلد النسخة الإحتياطية غير موجود.</string>
   <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات…</string>
   <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>

@@ -344,7 +344,7 @@
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
-  <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
+  <string name="backup_failed_file_access">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>

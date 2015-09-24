@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене...)</string>
   <string name="backup_path">Фасцикла за архивирање</string>
   <string name="backup_version">Верзија базе података</string>
-  <string name="backup_failed_nosd">Архивирање неуспешно. Потребна фасцикла за ту радњу није доступна.</string>
+  <string name="backup_failed_file_access">Архивирање неуспешно. Потребна фасцикла за ту радњу није доступна.</string>
   <string name="backup_inprogress">Архивирање базе података…</string>
   <string name="backup_success">Архивирање успешно.</string>
   <string name="backup_failed">Архивирање неуспешно.</string>

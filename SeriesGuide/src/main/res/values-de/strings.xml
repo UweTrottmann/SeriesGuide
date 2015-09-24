@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Alle Meta-Daten wie Beschreibungen, Schauspieler und Bewertungen mit einschließen.</string>
   <string name="backup_path">Sicherungsordner</string>
   <string name="backup_version">Datenbankversion</string>
-  <string name="backup_failed_nosd">Sicherung fehlgeschlagen. Der Sicherungsordner ist nicht verfügbar.</string>
+  <string name="backup_failed_file_access">Sicherung fehlgeschlagen. Der Sicherungsordner ist nicht verfügbar.</string>
   <string name="backup_inprogress">Sichern der Datenbank…</string>
   <string name="backup_success">Sicherung erfolgreich.</string>
   <string name="backup_failed">Sicherung ist fehlgeschlagen.</string>

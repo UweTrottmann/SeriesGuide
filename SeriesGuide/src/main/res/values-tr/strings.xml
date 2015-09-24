@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
-  <string name="backup_failed_nosd">Yedeklenemedi. Yedekleme klasörüne erişilemiyor.</string>
+  <string name="backup_failed_file_access">Yedeklenemedi. Yedekleme klasörüne erişilemiyor.</string>
   <string name="backup_inprogress">Veritabanı yedekleniyor…</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>

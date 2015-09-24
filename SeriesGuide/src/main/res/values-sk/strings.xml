@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Zahrnúť metadata ako popisy, herci alebo hodnotenie.</string>
   <string name="backup_path">Priečinok zálohy</string>
   <string name="backup_version">Verzia databázy</string>
-  <string name="backup_failed_nosd">Nemožno zálohovať. Adresár so zálohov nie je dostupný.</string>
+  <string name="backup_failed_file_access">Nemožno zálohovať. Adresár so zálohov nie je dostupný.</string>
   <string name="backup_inprogress">Zálohovanie databázy…</string>
   <string name="backup_success">Zálohovanie úspešné.</string>
   <string name="backup_failed">Zálohovanie zlyhalo.</string>

@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Включить все данные: описания, актеры и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
-  <string name="backup_failed_nosd">Не удается создать резервную копию. Папка резервного копирования не доступна.</string>
+  <string name="backup_failed_file_access">Не удается создать резервную копию. Папка резервного копирования не доступна.</string>
   <string name="backup_inprogress">Резервное копирование базы данных...</string>
   <string name="backup_success">Резервное копирование прошло успешно.</string>
   <string name="backup_failed">Не удалось выполнить резервное копирование.</string>

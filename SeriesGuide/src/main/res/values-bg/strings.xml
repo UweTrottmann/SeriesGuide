@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
   <string name="backup_path">Папка за архивиране</string>
   <string name="backup_version">Версията на базата данни</string>
-  <string name="backup_failed_nosd">Не може да се архивира. Папката за архивиране не е налична.</string>
+  <string name="backup_failed_file_access">Не може да се архивира. Папката за архивиране не е налична.</string>
   <string name="backup_inprogress">Архивиране на базата данни…</string>
   <string name="backup_success">Архивирането приключи успешно.</string>
   <string name="backup_failed">Архивирането не беше успешно.</string>

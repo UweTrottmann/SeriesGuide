@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Вклучи ги сите метаподатоци како описи, актери и рејтинзи.</string>
   <string name="backup_path">Фолдер за архивирање</string>
   <string name="backup_version">Верзија на базата на податоци</string>
-  <string name="backup_failed_nosd">Неможе да направи backup. Backup фолдерот не е достапен.</string>
+  <string name="backup_failed_file_access">Неможе да направи backup. Backup фолдерот не е достапен.</string>
   <string name="backup_inprogress">Сочување на базата со податоци…</string>
   <string name="backup_success">Backup заврши успешно.</string>
   <string name="backup_failed">Архивирањето не беше успешно.</string>

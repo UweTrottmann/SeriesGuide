@@ -344,7 +344,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="backup_full_dump">Incluir todos los metadatos como descripciones, actores y calificaciones.</string>
   <string name="backup_path">Carpeta de respaldo</string>
   <string name="backup_version">Versión de la base de datos</string>
-  <string name="backup_failed_nosd">No se puede respaldar. La carpeta de respaldo no está disponible.</string>
+  <string name="backup_failed_file_access">No se puede respaldar. La carpeta de respaldo no está disponible.</string>
   <string name="backup_inprogress">Guardando copia de seguridad de la base de datos…</string>
   <string name="backup_success">Copia de seguridad correcta.</string>
   <string name="backup_failed">Falló la copia de seguridad.</string>

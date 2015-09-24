@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Sisällytä kaikki metatiedot, kuten kuvaukset, näyttelijät ja arvosanat.</string>
   <string name="backup_path">Varmuuskopiokansio</string>
   <string name="backup_version">Tietokannan versio</string>
-  <string name="backup_failed_nosd">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
+  <string name="backup_failed_file_access">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
   <string name="backup_inprogress">Varmuuskopioidaan tietokantaa…</string>
   <string name="backup_success">Varmuuskopiointi onnistui.</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>

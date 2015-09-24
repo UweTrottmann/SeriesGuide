@@ -89,7 +89,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private static final int SUCCESS = 1;
-    private static final int ERROR_STORAGE_ACCESS = 0;
+    private static final int ERROR_FILE_ACCESS = 0;
     private static final int ERROR = -1;
 
     /**
@@ -145,13 +145,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         if (isAutoBackupMode || !AndroidUtils.isKitKatOrHigher()) {
             // Ensure external storage is available
             if (!AndroidUtils.isExtStorageAvailable()) {
-                return ERROR_STORAGE_ACCESS;
+                return ERROR_FILE_ACCESS;
             }
 
             // Ensure the export directory exists
             exportPath = getExportPath(isAutoBackupMode);
             if (!exportPath.mkdirs() && !exportPath.isDirectory()) {
-                return ERROR_STORAGE_ACCESS;
+                return ERROR_FILE_ACCESS;
             }
         }
 
@@ -207,8 +207,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 case SUCCESS:
                     messageId = R.string.backup_success;
                     break;
-                case ERROR_STORAGE_ACCESS:
-                    messageId = R.string.backup_failed_nosd;
+                case ERROR_FILE_ACCESS:
+                    messageId = R.string.backup_failed_file_access;
                     break;
                 default:
                     messageId = R.string.backup_failed;
@@ -245,7 +245,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 // ensure the user has selected a backup file
                 Uri backupFileUri = getDataBackupFile(type);
                 if (backupFileUri == null) {
-                    return ERROR;
+                    return ERROR_FILE_ACCESS;
                 }
 
                 ParcelFileDescriptor pfd = context.getContentResolver()
@@ -286,11 +286,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (FileNotFoundException e) {
             Timber.e(e, "Backup file not found.");
             removeBackupFileUri(type);
-            return ERROR;
+            return ERROR_FILE_ACCESS;
         } catch (IOException | SecurityException e) {
             Timber.e(e, "Could not access backup file.");
             removeBackupFileUri(type);
-            return ERROR;
+            return ERROR_FILE_ACCESS;
         } catch (JsonParseException e) {
             Timber.e(e, "JSON export failed.");
             return ERROR;
