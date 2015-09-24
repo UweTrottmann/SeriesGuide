@@ -21,6 +21,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
@@ -69,39 +70,43 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR = -1;
     private static final int ERROR_LARGE_DB_OP = -2;
     private static final int ERROR_FILE_ACCESS = -3;
-    private Context mContext;
-    private OnTaskFinishedListener mListener;
-    private boolean mIsAutoBackupMode;
+
+    private Context context;
+    private OnTaskFinishedListener finishedListener;
+    private boolean isImportingAutoBackup;
 
     public JsonImportTask(Context context, OnTaskFinishedListener listener,
             boolean isAutoBackupMode) {
-        mContext = context.getApplicationContext();
-        mListener = listener;
-        mIsAutoBackupMode = isAutoBackupMode;
+        this.context = context.getApplicationContext();
+        finishedListener = listener;
+        isImportingAutoBackup = isAutoBackupMode;
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        // Ensure external storage
-        if (!AndroidUtils.isExtStorageAvailable()) {
-            return ERROR_STORAGE_ACCESS;
-        }
-
         // Ensure no large database ops are running
-        TaskManager tm = TaskManager.getInstance(mContext);
-        if (SgSyncAdapter.isSyncActive(mContext, false) || tm.isAddTaskRunning()) {
+        TaskManager tm = TaskManager.getInstance(context);
+        if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning()) {
             return ERROR_LARGE_DB_OP;
         }
 
-        // Ensure JSON file is available
-        File importPath = JsonExportTask.getExportPath(mIsAutoBackupMode);
+        // use Storage Access Framework on KitKat and up
+        // but for now still use fixed path for auto backup
+        File importPath = null;
+        if (isImportingAutoBackup || !AndroidUtils.isKitKatOrHigher()) {
+            // Ensure external storage
+            if (!AndroidUtils.isExtStorageAvailable()) {
+                return ERROR_STORAGE_ACCESS;
+            }
+            importPath = JsonExportTask.getExportPath(isImportingAutoBackup);
+        }
 
         // last chance to abort
         if (isCancelled()) {
             return ERROR;
         }
 
-        int result = importShows(importPath);
+        int result = importData(importPath, JsonExportTask.BACKUP_SHOWS);
         if (result != SUCCESS) {
             return result;
         }
@@ -110,7 +115,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // always make sure to only import lists, if show import was successful
-        result = importLists(importPath);
+        result = importData(importPath, JsonExportTask.BACKUP_LISTS);
         if (result != SUCCESS) {
             return result;
         }
@@ -118,7 +123,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        result = importMovies(importPath);
+        result = importData(importPath, JsonExportTask.BACKUP_MOVIES);
         if (result != SUCCESS) {
             return result;
         }
@@ -127,7 +132,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Renew search table
-        DBUtils.rebuildFtsTable(mContext);
+        DBUtils.rebuildFtsTable(context);
 
         return SUCCESS;
     }
@@ -152,80 +157,72 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 messageId = R.string.import_failed;
                 break;
         }
-        Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
 
-        if (mListener != null) {
-            mListener.onTaskFinished();
+        if (finishedListener != null) {
+            finishedListener.onTaskFinished();
         }
     }
 
-    private int importShows(File importPath) {
+    private int importData(File importPath, @JsonExportTask.BackupType int type) {
         // use Storage Access Framework on KitKat and up
         // but for now still use fixed path for auto backup
-        if (!mIsAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
+        if (!isImportingAutoBackup && AndroidUtils.isKitKatOrHigher()) {
             // make sure we have a file uri...
-            Uri showsImportUri = BackupSettings.getFileUri(mContext,
-                    BackupSettings.KEY_SHOWS_IMPORT_URI);
-            if (showsImportUri == null) {
-                return ERROR;
+            Uri backupFileUri = getDataBackupFile(type);
+            if (backupFileUri == null) {
+                return ERROR_FILE_ACCESS;
             }
             // ...and the file actually exists
             ParcelFileDescriptor pfd;
             try {
-                pfd = mContext.getContentResolver().openFileDescriptor(showsImportUri, "r");
-            } catch (FileNotFoundException e) {
-                Timber.e(e, "Shows import file not found.");
+                pfd = context.getContentResolver().openFileDescriptor(backupFileUri, "r");
+            } catch (FileNotFoundException | SecurityException e) {
+                Timber.e(e, "Backup file not found.");
                 return ERROR_FILE_ACCESS;
             }
 
-            clearExistingShowsData();
+            clearExistingData(type);
 
-            // Access JSON from backup file and try to import shows
+            // Access JSON from backup file and try to import data
             FileInputStream in = new FileInputStream(pfd.getFileDescriptor());
-            Gson gson = new Gson();
             try {
-                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-                reader.beginArray();
-                while (reader.hasNext()) {
-                    Show show = gson.fromJson(reader, Show.class);
-                    addShowToDatabase(show);
-                }
-                reader.endArray();
-                reader.close();
+                importFromJson(type, in);
 
                 // let the document provider know we're done.
                 pfd.close();
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
-                Timber.e(e, "JSON show import failed");
+                Timber.e(e, "JSON import failed");
                 return ERROR;
             }
         } else {
-            File backupShows = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
-            if (!backupShows.exists() || !backupShows.canRead()) {
+            // make sure we can access the backup file
+            File backupFile = null;
+            if (type == JsonExportTask.BACKUP_SHOWS) {
+                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
+            } else if (type == JsonExportTask.BACKUP_LISTS) {
+                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_LISTS);
+            } else if (type == JsonExportTask.BACKUP_MOVIES) {
+                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
+            }
+            if (backupFile == null || !backupFile.exists() || !backupFile.canRead()) {
                 return ERROR_FILE_ACCESS;
             }
-            InputStream in;
+
+            FileInputStream in;
             try {
-                in = new FileInputStream(backupShows);
+                in = new FileInputStream(backupFile);
             } catch (FileNotFoundException e) {
-                Timber.e(e, "Shows import file not found.");
+                Timber.e(e, "Backup file not found.");
                 return ERROR_FILE_ACCESS;
             }
 
-            clearExistingShowsData();
+            clearExistingData(type);
 
-            // Access JSON from backup folder to create new database
-            Gson gson = new Gson();
+            // Access JSON from backup file and try to import data
             try {
-                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-                reader.beginArray();
-                while (reader.hasNext()) {
-                    Show show = gson.fromJson(reader, Show.class);
-                    addShowToDatabase(show);
-                }
-                reader.endArray();
-                reader.close();
+                importFromJson(type, in);
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
                 Timber.e(e, "JSON show import failed");
@@ -236,13 +233,58 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         return SUCCESS;
     }
 
-    private void clearExistingShowsData() {
-        // Clean out all existing tables
-        mContext.getContentResolver().delete(Shows.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
-        mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
+    @Nullable
+    private Uri getDataBackupFile(@JsonExportTask.BackupType int type) {
+        if (type == JsonExportTask.BACKUP_SHOWS) {
+            return BackupSettings.getFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI);
+        }
+        if (type == JsonExportTask.BACKUP_LISTS) {
+            return BackupSettings.getFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI);
+        }
+        if (type == JsonExportTask.BACKUP_MOVIES) {
+            return BackupSettings.getFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI);
+        }
+        return null;
+    }
+
+    private void clearExistingData(@JsonExportTask.BackupType int type) {
+        if (type == JsonExportTask.BACKUP_SHOWS) {
+            // when importing shows, also clear list data
+            context.getContentResolver().delete(Shows.CONTENT_URI, null, null);
+            context.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
+            context.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
+            context.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
+            context.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
+        } else if (type == JsonExportTask.BACKUP_MOVIES) {
+            context.getContentResolver().delete(Movies.CONTENT_URI, null, null);
+        }
+    }
+
+    private void importFromJson(@JsonExportTask.BackupType int type, FileInputStream in)
+            throws JsonParseException, IOException, IllegalArgumentException {
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        reader.beginArray();
+
+        if (type == JsonExportTask.BACKUP_SHOWS) {
+            while (reader.hasNext()) {
+                Show show = gson.fromJson(reader, Show.class);
+                addShowToDatabase(show);
+            }
+        } else if (type == JsonExportTask.BACKUP_LISTS) {
+            while (reader.hasNext()) {
+                List list = gson.fromJson(reader, List.class);
+                addListToDatabase(list);
+            }
+        } else if (type == JsonExportTask.BACKUP_MOVIES) {
+            while (reader.hasNext()) {
+                Movie movie = gson.fromJson(reader, Movie.class);
+                addMovieToDatabase(movie);
+            }
+        }
+
+        reader.endArray();
+        reader.close();
     }
 
     private void addShowToDatabase(Show show) {
@@ -298,7 +340,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.LASTUPDATED, show.lastUpdated);
         showValues.put(Shows.LASTEDIT, show.lastEdited);
 
-        mContext.getContentResolver().insert(Shows.CONTENT_URI, showValues);
+        context.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
         if (show.seasons == null || show.seasons.isEmpty()) {
             // no seasons (or episodes)
@@ -308,9 +350,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         ContentValues[][] seasonsAndEpisodes = buildSeasonAndEpisodeBatches(show);
         if (seasonsAndEpisodes[0] != null && seasonsAndEpisodes[1] != null) {
             // Insert all seasons
-            mContext.getContentResolver().bulkInsert(Seasons.CONTENT_URI, seasonsAndEpisodes[0]);
+            context.getContentResolver().bulkInsert(Seasons.CONTENT_URI, seasonsAndEpisodes[0]);
             // Insert all episodes
-            mContext.getContentResolver().bulkInsert(Episodes.CONTENT_URI, seasonsAndEpisodes[1]);
+            context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, seasonsAndEpisodes[1]);
         }
     }
 
@@ -449,7 +491,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         values.put(Lists.LIST_ID, list.listId);
         values.put(Lists.NAME, list.name);
         values.put(Lists.ORDER, list.order);
-        mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
+        context.getContentResolver().insert(Lists.CONTENT_URI, values);
 
         if (list.items == null || list.items.isEmpty()) {
             return;
@@ -479,11 +521,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         ContentValues[] itemsArray = new ContentValues[items.size()];
-        mContext.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
+        context.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
     }
 
     private int importMovies(File importPath) {
-        mContext.getContentResolver().delete(Movies.CONTENT_URI, null, null);
+        context.getContentResolver().delete(Movies.CONTENT_URI, null, null);
         File backupMovies = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
         if (!backupMovies.exists() || !backupMovies.canRead()) {
             // Skip movies if the file is not available
@@ -530,6 +572,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // full dump values
         values.put(Movies.OVERVIEW, movie.overview);
 
-        mContext.getContentResolver().insert(Movies.CONTENT_URI, values);
+        context.getContentResolver().insert(Movies.CONTENT_URI, values);
     }
 }

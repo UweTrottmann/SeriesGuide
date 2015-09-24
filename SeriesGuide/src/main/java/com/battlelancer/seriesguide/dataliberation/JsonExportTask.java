@@ -75,17 +75,17 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
     public static final String EXPORT_JSON_FILE_MOVIES = "sg-movies-export.json";
 
-    private static final int EXPORT_SHOWS = 1;
-    private static final int EXPORT_LISTS = 2;
-    private static final int EXPORT_MOVIES = 3;
+    public static final int BACKUP_SHOWS = 1;
+    public static final int BACKUP_LISTS = 2;
+    public static final int BACKUP_MOVIES = 3;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            EXPORT_SHOWS,
-            EXPORT_LISTS,
-            EXPORT_MOVIES
+            BACKUP_SHOWS,
+            BACKUP_LISTS,
+            BACKUP_MOVIES
     })
-    private @interface ExportType {
+    public @interface BackupType {
     }
 
     private static final int SUCCESS = 1;
@@ -160,7 +160,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        int result = exportData(exportPath, EXPORT_SHOWS);
+        int result = exportData(exportPath, BACKUP_SHOWS);
         if (result != SUCCESS) {
             return result;
         }
@@ -168,7 +168,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        result = exportData(exportPath, EXPORT_LISTS);
+        result = exportData(exportPath, BACKUP_LISTS);
         if (result != SUCCESS) {
             return result;
         }
@@ -176,7 +176,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        result = exportData(exportPath, EXPORT_MOVIES);
+        result = exportData(exportPath, BACKUP_MOVIES);
         if (result != SUCCESS) {
             return result;
         }
@@ -222,7 +222,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
     }
 
-    private int exportData(File exportPath, @ExportType int type) {
+    private int exportData(File exportPath, @BackupType int type) {
         // check if there is any data to export
         Cursor data = getDataCursor(type);
         if (data == null) {
@@ -252,11 +252,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                         .openFileDescriptor(backupFileUri, "w");
                 FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
 
-                if (type == EXPORT_SHOWS) {
+                if (type == BACKUP_SHOWS) {
                     writeJsonStreamShows(out, data);
-                } else if (type == EXPORT_LISTS) {
+                } else if (type == BACKUP_LISTS) {
                     writeJsonStreamLists(out, data);
-                } else if (type == EXPORT_MOVIES) {
+                } else if (type == BACKUP_MOVIES) {
                     writeJsonStreamMovies(out, data);
                 }
 
@@ -264,20 +264,20 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 pfd.close();
             } else {
                 File backupFile;
-                if (type == EXPORT_SHOWS) {
+                if (type == BACKUP_SHOWS) {
                     backupFile = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
-                } else if (type == EXPORT_LISTS) {
+                } else if (type == BACKUP_LISTS) {
                     backupFile = new File(exportPath, EXPORT_JSON_FILE_LISTS);
-                } else if (type == EXPORT_MOVIES) {
+                } else if (type == BACKUP_MOVIES) {
                     backupFile = new File(exportPath, EXPORT_JSON_FILE_MOVIES);
                 } else {
                     return ERROR;
                 }
 
                 OutputStream out = new FileOutputStream(backupFile);
-                if (type == EXPORT_SHOWS) {
+                if (type == BACKUP_SHOWS) {
                     writeJsonStreamShows(out, data);
-                } else if (type == EXPORT_LISTS) {
+                } else if (type == BACKUP_LISTS) {
                     writeJsonStreamLists(out, data);
                 } else {
                     writeJsonStreamMovies(out, data);
@@ -302,20 +302,20 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Cursor getDataCursor(@ExportType int type) {
-        if (type == EXPORT_SHOWS) {
+    private Cursor getDataCursor(@BackupType int type) {
+        if (type == BACKUP_SHOWS) {
             return context.getContentResolver().query(
                     Shows.CONTENT_URI,
                     isFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
                     null, null, ShowsQuery.SORT);
         }
-        if (type == EXPORT_LISTS) {
+        if (type == BACKUP_LISTS) {
             return context.getContentResolver()
                     .query(SeriesGuideContract.Lists.CONTENT_URI,
                             ListsQuery.PROJECTION, null, null,
                             SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
         }
-        if (type == EXPORT_MOVIES) {
+        if (type == BACKUP_MOVIES) {
             return context.getContentResolver()
                     .query(Movies.CONTENT_URI,
                             MoviesQuery.PROJECTION, null, null, MoviesQuery.SORT_ORDER);
@@ -324,25 +324,25 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Uri getDataBackupFile(@ExportType int type) {
-        if (type == EXPORT_SHOWS) {
+    private Uri getDataBackupFile(@BackupType int type) {
+        if (type == BACKUP_SHOWS) {
             return BackupSettings.getFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI);
         }
-        if (type == EXPORT_LISTS) {
+        if (type == BACKUP_LISTS) {
             return BackupSettings.getFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI);
         }
-        if (type == EXPORT_MOVIES) {
+        if (type == BACKUP_MOVIES) {
             return BackupSettings.getFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI);
         }
         return null;
     }
 
-    private void removeBackupFileUri(@ExportType int type) {
-        if (type == EXPORT_SHOWS) {
+    private void removeBackupFileUri(@BackupType int type) {
+        if (type == BACKUP_SHOWS) {
             BackupSettings.storeFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI, null);
-        } else if (type == EXPORT_LISTS) {
+        } else if (type == BACKUP_LISTS) {
             BackupSettings.storeFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI, null);
-        } else if (type == EXPORT_MOVIES) {
+        } else if (type == BACKUP_MOVIES) {
             BackupSettings.storeFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI, null);
         }
     }
