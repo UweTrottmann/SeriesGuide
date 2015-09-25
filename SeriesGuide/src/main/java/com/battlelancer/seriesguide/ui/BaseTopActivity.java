@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
@@ -119,6 +120,22 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    protected void onShowAutoBackupMissingFilesWarning() {
+        if (snackbar != null && snackbar.isShown()) {
+            // do not replace an existing snackbar
+            return;
+        }
+
+        Snackbar newSnackbar = Snackbar
+                .make(findViewById(android.R.id.content),
+                        R.string.autobackup_files_missing, Snackbar.LENGTH_LONG);
+        setUpAutoBackupSnackbar(newSnackbar);
+        newSnackbar.show();
+
+        snackbar = newSnackbar;
+    }
+
+    @Override
     protected void onShowAutoBackupPermissionWarning() {
         if (snackbar != null && snackbar.isShown()) {
             // do not replace an existing snackbar
@@ -128,7 +145,14 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         Snackbar newSnackbar = Snackbar
                 .make(findViewById(android.R.id.content),
                         R.string.autobackup_permission_missing, Snackbar.LENGTH_INDEFINITE);
-        newSnackbar.setCallback(new Snackbar.Callback() {
+        setUpAutoBackupSnackbar(newSnackbar);
+        newSnackbar.show();
+
+        snackbar = newSnackbar;
+    }
+
+    private void setUpAutoBackupSnackbar(Snackbar snackbar) {
+        snackbar.setCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
@@ -143,11 +167,11 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                 // disable setting here (not in onDismissed)
                 // so settings screen is correctly showing as disabled
                 disableAutoBackup();
-                startActivity(new Intent(BaseTopActivity.this, SeriesGuidePreferences.class));
+                startActivity(
+                        new Intent(BaseTopActivity.this, DataLiberationActivity.class).putExtra(
+                                DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
             }
-        }).show();
-
-        snackbar = newSnackbar;
+        });
     }
 
     private void disableAutoBackup() {

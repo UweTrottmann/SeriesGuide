@@ -434,6 +434,7 @@
     <string name="restore_auto_backup">Restore Auto Backup</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+    <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
     <string name="backup_use_default_files">Use default backup files</string>

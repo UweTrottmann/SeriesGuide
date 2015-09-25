@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -103,5 +104,23 @@ public class BackupSettings {
             return null;
         }
         return Uri.parse(uriString);
+    }
+
+    /**
+     * Returns whether an auto backup file is not configured (either because the user did not or the
+     * backup task removed a file that had issues).
+     */
+    public static boolean isMissingAutoBackupFile(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean isMissingBackupFile = false;
+        if (prefs.getString(KEY_AUTO_BACKUP_SHOWS_EXPORT_URI, null) == null) {
+            isMissingBackupFile = true;
+        } else if (prefs.getString(KEY_AUTO_BACKUP_LISTS_EXPORT_URI, null) == null) {
+            isMissingBackupFile = true;
+        } else if (prefs.getString(KEY_AUTO_BACKUP_MOVIES_EXPORT_URI, null) == null) {
+            isMissingBackupFile = true;
+        }
+        return isMissingBackupFile;
     }
 }
