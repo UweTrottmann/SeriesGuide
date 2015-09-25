@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 25 *(in development)*
 -----------------------------
 
+#### 25-beta4 *(2015-09-25)*
+
+* TWEAK On Android KitKat (4.4) and up, you can now select custom (auto) backup files. These may be
+  on external storage, Google Drive, etc (provider needs to support Storage Access Framework).
+* FIX The sync indicator has moved into the app bar and is now circular and less distracting.
+* NOTICE Latest translations from crowdin.
+
 #### 25-beta3 *(2015-09-18)*
 
 * TWEAK Hide app bar when scrolling on Android 5.0 and up in Shows, Lists, Movies, Add show screens.
