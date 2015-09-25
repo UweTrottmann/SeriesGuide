@@ -112,6 +112,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private OnTaskFinishedListener finishedListener;
     private boolean isFullDump;
     private boolean isAutoBackupMode;
+    private boolean isUseDefaultFolders;
 
     public static File getExportPath(boolean isAutoBackupMode) {
         return new File(
@@ -124,25 +125,28 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      *
      * @param isFullDump Whether to also export meta-data like descriptions, ratings, actors, etc.
      * Increases file size about 2-4 times.
-     * @param isSilentMode Whether to show result toasts.
+     * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
             OnTaskFinishedListener listener, boolean isFullDump,
-            boolean isSilentMode) {
+            boolean isAutoBackupMode) {
         this.context = context.getApplicationContext();
         this.progressListener = progressListener;
         finishedListener = listener;
         this.isFullDump = isFullDump;
-        isAutoBackupMode = isSilentMode;
+        this.isAutoBackupMode = isAutoBackupMode;
+        // use Storage Access Framework on KitKat and up to select custom backup files,
+        // on older versions use default folders
+        // also auto backup by default uses default folders
+        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
+                || (isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context));
     }
 
     @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(Void... params) {
-        // use Storage Access Framework on KitKat and up
-        // but for now still use fixed path for auto backup
         File exportPath = null;
-        if (isAutoBackupMode || !AndroidUtils.isKitKatOrHigher()) {
+        if (isUseDefaultFolders) {
             // Ensure external storage is available
             if (!AndroidUtils.isExtStorageAvailable()) {
                 return ERROR_FILE_ACCESS;
@@ -239,9 +243,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         // try to export all data
         try {
-            // use Storage Access Framework on KitKat and up
-            // but for now still use fixed path for auto backup
-            if (!isAutoBackupMode && AndroidUtils.isKitKatOrHigher()) {
+            if (!isUseDefaultFolders) {
                 // ensure the user has selected a backup file
                 Uri backupFileUri = getDataBackupFile(type);
                 if (backupFileUri == null) {
@@ -326,24 +328,36 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     @Nullable
     private Uri getDataBackupFile(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
+                            : BackupSettings.KEY_SHOWS_EXPORT_URI);
         }
         if (type == BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
+                            : BackupSettings.KEY_LISTS_EXPORT_URI);
         }
         if (type == BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
+                            : BackupSettings.KEY_MOVIES_EXPORT_URI);
         }
         return null;
     }
 
     private void removeBackupFileUri(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
-            BackupSettings.storeFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI, null);
+            BackupSettings.storeFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
+                            : BackupSettings.KEY_SHOWS_EXPORT_URI, null);
         } else if (type == BACKUP_LISTS) {
-            BackupSettings.storeFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI, null);
+            BackupSettings.storeFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
+                            : BackupSettings.KEY_LISTS_EXPORT_URI, null);
         } else if (type == BACKUP_MOVIES) {
-            BackupSettings.storeFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI, null);
+            BackupSettings.storeFileUri(context,
+                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
+                            : BackupSettings.KEY_MOVIES_EXPORT_URI, null);
         }
     }
 
