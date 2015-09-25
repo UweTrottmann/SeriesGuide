@@ -29,7 +29,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +44,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -58,13 +56,12 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     private static final int REQUEST_CODE_EXPORT = 1;
     private static final int REQUEST_CODE_IMPORT = 2;
-    private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
-    private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 4;
-    private static final int REQUEST_CODE_SHOWS_IMPORT_URI = 5;
-    private static final int REQUEST_CODE_LISTS_EXPORT_URI = 6;
-    private static final int REQUEST_CODE_LISTS_IMPORT_URI = 7;
-    private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 8;
-    private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 9;
+    private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 3;
+    private static final int REQUEST_CODE_SHOWS_IMPORT_URI = 4;
+    private static final int REQUEST_CODE_LISTS_EXPORT_URI = 5;
+    private static final int REQUEST_CODE_LISTS_IMPORT_URI = 6;
+    private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 7;
+    private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 8;
 
     @Bind(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
     @Bind(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
@@ -82,7 +79,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     @Bind(R.id.buttonDataLibExport) Button buttonExport;
     @Bind(R.id.buttonDataLibImport) Button buttonImport;
-    @Bind(R.id.buttonDataLibImportAutoBackup) Button buttonImportAutoBackup;
     @Bind(R.id.progressBarDataLib) ProgressBar progressBar;
     @Bind(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
     @Bind(R.id.checkBoxDataLibImportWarning) CheckBox checkBoxImportWarning;
@@ -108,16 +104,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
         progressBar.setVisibility(View.GONE);
 
-        // display last auto-backup date
-        TextView lastAutoBackup = (TextView) v.findViewById(R.id.textViewDataLibLastAutoBackup);
-        long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
-        lastAutoBackup
-                .setText(getString(R.string.last_auto_backup,
-                        DataLiberationTools.isAutoBackupAvailable() ?
-                                DateUtils.getRelativeDateTimeString(getActivity(),
-                                        lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
-                                        DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
-
         // setup listeners
         buttonExport.setOnClickListener(new OnClickListener() {
             @Override
@@ -129,19 +115,12 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 buttonImport.setEnabled(isChecked);
-                buttonImportAutoBackup.setEnabled(isChecked);
             }
         });
         buttonImport.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 tryDataLiberationAction(REQUEST_CODE_IMPORT);
-            }
-        });
-        buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tryDataLiberationAction(REQUEST_CODE_IMPORT_AUTOBACKUP);
             }
         });
 
@@ -252,10 +231,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     private void setProgressLock(boolean isLocked) {
         if (isLocked) {
             buttonImport.setEnabled(false);
-            buttonImportAutoBackup.setEnabled(false);
         } else {
             buttonImport.setEnabled(checkBoxImportWarning.isChecked());
-            buttonImportAutoBackup.setEnabled(checkBoxImportWarning.isChecked());
         }
         buttonExport.setEnabled(!isLocked);
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
@@ -286,8 +263,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
             @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE_EXPORT
-                || requestCode == REQUEST_CODE_IMPORT
-                || requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
+                || requestCode == REQUEST_CODE_IMPORT) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doDataLiberationAction(requestCode);
             } else {
@@ -310,11 +286,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             setProgressLock(true);
 
             dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
-            Utils.executeInOrder(dataLibTask);
-        } else if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
-            setProgressLock(true);
-
-            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this, true);
             Utils.executeInOrder(dataLibTask);
         }
     }

@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/backup_button"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
 
             <LinearLayout
                 android:id="@+id/containerDataLibExportFiles"
@@ -48,6 +48,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/inline_padding"
                     android:text="@string/lists"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -66,6 +67,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/inline_padding"
                     android:text="@string/movies"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -107,7 +109,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/import_button"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
 
             <LinearLayout
                 android:id="@+id/containerDataLibImportFiles"
@@ -138,6 +140,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/inline_padding"
                     android:text="@string/lists"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -156,6 +159,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/inline_padding"
                     android:text="@string/movies"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -189,23 +193,6 @@
                 android:enabled="false"
                 android:text="@string/import_button" />
 
-            <TextView
-                android:id="@+id/textViewDataLibLastAutoBackup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonDataLibImport"
-                android:layout_marginTop="@dimen/default_padding"
-                android:text="@string/last_auto_backup"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-            <Button
-                android:id="@+id/buttonDataLibImportAutoBackup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewDataLibLastAutoBackup"
-                android:layout_marginTop="@dimen/default_padding"
-                android:enabled="false"
-                android:text="@string/restore_auto_backup" />
         </RelativeLayout>
 
     </ScrollView>

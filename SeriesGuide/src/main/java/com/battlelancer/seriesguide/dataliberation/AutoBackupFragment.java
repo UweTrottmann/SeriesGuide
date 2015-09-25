@@ -65,6 +65,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 5;
 
     @Bind(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
+    @Bind(R.id.containerAutoBackupSettings) View containerSettings;
     @Bind(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
 
     @Bind(R.id.textViewAutoBackupShowsExportFile) TextView textShowsExportFile;
@@ -100,8 +101,6 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
 
         progressBar.setVisibility(View.GONE);
 
-
-
         // display last auto-backup date
         long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
         textViewLastAutoBackup
@@ -112,7 +111,9 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
                                         DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
         // setup listeners
-        switchAutoBackup.setChecked(AdvancedSettings.isAutoBackupEnabled(getContext()));
+        boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
+        containerSettings.setVisibility(View.VISIBLE);
+        switchAutoBackup.setChecked(autoBackupEnabled);
         switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -301,6 +302,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
                 .edit()
                 .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, isEnabled)
                 .apply();
+        containerSettings.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
     }
 
     private void doDataLiberationAction(int requestCode) {
