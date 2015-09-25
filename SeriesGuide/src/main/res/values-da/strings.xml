@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inkluder alt meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
   <string name="backup_path">Backup mappe</string>
   <string name="backup_version">Database version</string>
-  <string name="backup_failed_nosd">Kan ikke oprette backup. Backup-mappen er ikke tilgængelig.</string>
+  <string name="backup_failed_file_access">Kan ikke oprette backup. Backup-mappen er ikke tilgængelig.</string>
   <string name="backup_inprogress">Sikkerhedskopierer databasen</string>
   <string name="backup_success">Backup gennemført.</string>
   <string name="backup_failed">Backup mislykkedes.</string>

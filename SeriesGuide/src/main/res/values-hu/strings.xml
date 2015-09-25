@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>
-  <string name="backup_failed_nosd">Nem lehet menteni. A mentési mappa nem elérhető.</string>
+  <string name="backup_failed_file_access">Nem lehet menteni. A mentési mappa nem elérhető.</string>
   <string name="backup_inprogress">Adatbázis mentése…</string>
   <string name="backup_success">A mentés sikerült.</string>
   <string name="backup_failed">A biztonsági mentés nem sikerült.</string>

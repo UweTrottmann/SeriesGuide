@@ -29,6 +29,7 @@ import android.text.format.DateUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -150,11 +151,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {
+            // if custom files are enabled, make sure they are configured
+            // note: backup task clears backup file setting if there was an issue with the file
+            if (!BackupSettings.isUseAutoBackupDefaultFiles(this)
+                    && BackupSettings.isMissingAutoBackupFile(this)) {
+                onShowAutoBackupMissingFilesWarning();
+                return false;
+            }
+
             TaskManager.getInstance(this).tryBackupTask();
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Implementers may choose to show a warning that auto backup can not complete because not all
+     * custom backup files are configured.
+     */
+    protected void onShowAutoBackupMissingFilesWarning() {
+        // do nothing
     }
 
     /**

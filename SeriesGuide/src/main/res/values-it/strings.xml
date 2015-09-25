@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Includere tutti i metadati come descrizioni, attori e voti.</string>
   <string name="backup_path">Cartella di Backup</string>
   <string name="backup_version">Versione Database</string>
-  <string name="backup_failed_nosd">Impossibile effettuare il backup. La cartella non è disponibile.</string>
+  <string name="backup_failed_file_access">Impossibile effettuare il backup. La cartella non è disponibile.</string>
   <string name="backup_inprogress">Backup del database in corso…</string>
   <string name="backup_success">Backup eseguito con successo.</string>
   <string name="backup_failed">Backup fallito.</string>

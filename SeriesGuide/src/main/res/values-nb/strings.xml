@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
   <string name="backup_path">Sikkerhetskopimappe</string>
   <string name="backup_version">Databaseversjon</string>
-  <string name="backup_failed_nosd">Kan ikke ta sikkerhetskopi. Sikkerhetskopimappen er ikke tilgjengelig.</string>
+  <string name="backup_failed_file_access">Kan ikke ta sikkerhetskopi. Sikkerhetskopimappen er ikke tilgjengelig.</string>
   <string name="backup_inprogress">Sikkerhetskopierer databasen…</string>
   <string name="backup_success">Sikkerhetskopiering vellykket.</string>
   <string name="backup_failed">Sikkerhetskopieringen mislyktes.</string>

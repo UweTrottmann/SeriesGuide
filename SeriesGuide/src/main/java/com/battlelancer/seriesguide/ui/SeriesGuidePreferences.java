@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.backup.BackupManager;
@@ -26,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,19 +37,17 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.preference.TwoStatePreference;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -195,7 +191,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public static final String SETTINGS_SCREEN_BASIC = "screen_basic";
 
         private static final int REQUEST_CODE_RINGTONE = 0;
-        private static final int REQUEST_CODE_AUTO_BACKUP = 1;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -438,11 +433,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 return true;
             }
             if (AdvancedSettings.KEY_AUTOBACKUP.equals(key)) {
-                TwoStatePreference autoBackupPref = (TwoStatePreference) preference;
-                boolean isEnabled = autoBackupPref.isChecked();
-                if (isEnabled) {
-                    ensureAutoBackupPermission();
-                }
+                startActivity(new Intent(getActivity(), DataLiberationActivity.class).putExtra(
+                        DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
                 return true;
             }
             if (KEY_ABOUT.equals(key)) {
@@ -469,35 +461,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 return;
             }
             super.onActivityResult(requestCode, resultCode, data);
-        }
-
-        private void ensureAutoBackupPermission() {
-            // make sure we have the storage write permission
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // don't have it? request it, do task if granted
-                requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                        REQUEST_CODE_AUTO_BACKUP);
-            }
-        }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                @NonNull int[] grantResults) {
-            if (requestCode == REQUEST_CODE_AUTO_BACKUP) {
-                if (grantResults.length > 0
-                        && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    if (getView() != null) {
-                        // disable auto backup as we don't have the required permission
-                        TwoStatePreference autoBackupPref = (TwoStatePreference) findPreference(
-                                AdvancedSettings.KEY_AUTOBACKUP);
-                        autoBackupPref.setChecked(false);
-                        Snackbar.make(getView(), R.string.autobackup_permission_missing,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                }
-            }
         }
 
         @Override

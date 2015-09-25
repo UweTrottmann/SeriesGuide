@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Include toate detaliile ca descrieri, actori și evaluări.</string>
   <string name="backup_path">Fișier de arhive</string>
   <string name="backup_version">Versiunea bazei de date</string>
-  <string name="backup_failed_nosd">Nu se poate arhiva. Fișierul de arhivare nu este disponibil.</string>
+  <string name="backup_failed_file_access">Nu se poate arhiva. Fișierul de arhivare nu este disponibil.</string>
   <string name="backup_inprogress">Baza de date se arhivează...</string>
   <string name="backup_success">Arhivare reușită.</string>
   <string name="backup_failed">Arhivare eșuată.</string>

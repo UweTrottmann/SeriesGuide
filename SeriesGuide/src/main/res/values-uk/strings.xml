@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Включити усі мета-дані такі як опис, актори та рейтинги.</string>
   <string name="backup_path">Папка Бекапа</string>
   <string name="backup_version">Версія бази даних</string>
-  <string name="backup_failed_nosd">Не можливо створити резервну копію. Папка Бекапу недоступна.</string>
+  <string name="backup_failed_file_access">Не можливо створити резервну копію. Папка Бекапу недоступна.</string>
   <string name="backup_inprogress">Резервне копіювання бази даних…</string>
   <string name="backup_success">Резервне копіювання пройшло успішно.</string>
   <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>

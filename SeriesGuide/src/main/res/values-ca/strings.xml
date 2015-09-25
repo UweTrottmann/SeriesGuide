@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inclou tota la informació disponible, com ara descripcions, actors i puntuacions.</string>
   <string name="backup_path">Carpeta de còpies de seguretat</string>
   <string name="backup_version">Versió de la base de dades</string>
-  <string name="backup_failed_nosd">No es pot fer la còpia de seguretat. La carpeta no està disponible.</string>
+  <string name="backup_failed_file_access">No es pot fer la còpia de seguretat. La carpeta no està disponible.</string>
   <string name="backup_inprogress">S\'està fent una còpia de seguretat de la base de dades…</string>
   <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
   <string name="backup_failed">Ha fallat la còpia de seguretat.</string>

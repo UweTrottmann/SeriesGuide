@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup mapa</string>
   <string name="backup_version">Različica zbirke podatkov</string>
-  <string name="backup_failed_nosd">Ne morem ustvariti varnostne kopije. Mapa za varnostno kopijo ni na voljo.</string>
+  <string name="backup_failed_file_access">Ne morem ustvariti varnostne kopije. Mapa za varnostno kopijo ni na voljo.</string>
   <string name="backup_inprogress">Ustvarjam varnostno kopijo baze…</string>
   <string name="backup_success">Varnostna kopija uspela.</string>
   <string name="backup_failed">Varnostna kopija ni uspela.</string>

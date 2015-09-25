@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
   <string name="backup_path">Dossier de sauvegarde</string>
   <string name="backup_version">Version de la base de données</string>
-  <string name="backup_failed_nosd">Sauvegarde impossible. Le répertoire de sauvegarde est indisponible.</string>
+  <string name="backup_failed_file_access">Sauvegarde impossible. Le répertoire de sauvegarde est indisponible.</string>
   <string name="backup_inprogress">Sauvegarde de la base de données…</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>

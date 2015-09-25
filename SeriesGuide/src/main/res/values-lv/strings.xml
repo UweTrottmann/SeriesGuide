@@ -344,7 +344,7 @@
   <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>
   <string name="backup_path">Dublējuma mape</string>
   <string name="backup_version">Datu bāzes versija</string>
-  <string name="backup_failed_nosd">Neizdodas dublēt. Dublējuma mape nav pieejama.</string>
+  <string name="backup_failed_file_access">Neizdodas dublēt. Dublējuma mape nav pieejama.</string>
   <string name="backup_inprogress">Notiek datu bāzes dublēšana…</string>
   <string name="backup_success">Dublēšana izdevās.</string>
   <string name="backup_failed">Dublēšana neizdevās.</string>

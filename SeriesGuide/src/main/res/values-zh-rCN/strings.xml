@@ -343,7 +343,7 @@
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
   <string name="backup_path">备份/还原数据库的路径</string>
   <string name="backup_version">数据库版本</string>
-  <string name="backup_failed_nosd">无法创建备份，备份文件夹不可用。</string>
+  <string name="backup_failed_file_access">无法创建备份，备份文件夹不可用。</string>
   <string name="backup_inprogress">正在写入文件……</string>
   <string name="backup_success">备份成功。</string>
   <string name="backup_failed">备份失败。</string>

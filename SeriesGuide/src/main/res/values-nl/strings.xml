@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
   <string name="backup_path">Back-upmap</string>
   <string name="backup_version">Database-versie</string>
-  <string name="backup_failed_nosd">Back-up maken niet mogelijk. De back-up map is niet beschikbaar.</string>
+  <string name="backup_failed_file_access">Back-up maken niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="backup_inprogress">Gegevensbestand back-uppen…</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>

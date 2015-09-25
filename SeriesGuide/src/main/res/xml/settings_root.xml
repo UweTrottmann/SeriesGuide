@@ -70,8 +70,7 @@
 
     <PreferenceCategory android:title="@string/backup">
 
-        <SwitchPreference
-            android:defaultValue="True"
+        <Preference
             android:key="com.battlelancer.seriesguide.autobackup"
             android:summary="@string/pref_autobackupsummary"
             android:title="@string/pref_autobackup" />

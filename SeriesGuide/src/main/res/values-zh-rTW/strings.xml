@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>
   <string name="backup_version">Database version</string>
-  <string name="backup_failed_nosd">無法備份。備份資料夾不存在。</string>
+  <string name="backup_failed_file_access">無法備份。備份資料夾不存在。</string>
   <string name="backup_inprogress">Backing up database…</string>
   <string name="backup_success">備份成功。</string>
   <string name="backup_failed">備份失敗。</string>

@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Περιλαμβάνει όλα τα μετα-δεδομένα όπως περιγραφές, ηθοποιούς και βαθμολογίες.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
   <string name="backup_version">Έκδοση βάσης δεδομένων</string>
-  <string name="backup_failed_nosd">Δεν γίνεται να δημιουργηθούν αντίγραφα ασφαλείας. Ο φάκελος δεν είναι διαθέσιμος.</string>
+  <string name="backup_failed_file_access">Δεν γίνεται να δημιουργηθούν αντίγραφα ασφαλείας. Ο φάκελος δεν είναι διαθέσιμος.</string>
   <string name="backup_inprogress">Δημιουργία αντιγράφων ασφαλείας βάσης δεδομένων…</string>
   <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
   <string name="backup_failed">Απέτυχε η δημιουργία αντιγράφου ασφαλείας.</string>

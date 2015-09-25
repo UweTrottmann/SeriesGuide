@@ -343,7 +343,7 @@
   <string name="backup_full_dump">Uwzględnij wszystkie meta dane, takie jak opisy, aktorzy i oceny.</string>
   <string name="backup_path">Folder kopii zapasowej</string>
   <string name="backup_version">Wersja bazy danych</string>
-  <string name="backup_failed_nosd">Nie można utworzyć kopii zapasowej. Wskazany folder jest niedostępny.</string>
+  <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Wskazany folder jest niedostępny.</string>
   <string name="backup_inprogress">Tworzenie kopii bazy…</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
