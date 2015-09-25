@@ -143,9 +143,9 @@ dependencies {
     compile 'net.danlew:android.joda:2.8.1'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services-base:7.8.0'
-    compile 'com.google.android.gms:play-services-identity:7.8.0'
-    compile 'com.google.android.gms:play-services-analytics:7.8.0'
+    compile 'com.google.android.gms:play-services-base:8.1.0'
+    compile 'com.google.android.gms:play-services-identity:8.1.0'
+    compile 'com.google.android.gms:play-services-analytics:8.1.0'
 
     // App Engine
     compile('com.google.api-client:google-api-client-android:1.20.0') {
