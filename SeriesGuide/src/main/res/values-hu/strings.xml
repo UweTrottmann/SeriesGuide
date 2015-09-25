@@ -293,7 +293,7 @@
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Tartalom preferált nyelve</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">A szolgáltató által felszámolt díj csökkentése érdekében ne használd a mobilinternetet letöltésre</string>
   <string name="about">A SeriesGuide-ról</string>
@@ -314,7 +314,7 @@
   <string name="sort_order_top_rated_first">Magasan értékelt</string>
   <string name="sort_order_latest_first_dvd">Újabbak előre (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Régebbiek előre (DVD)</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Közelgő tartománya</string>
   <string name="upcoming_upto_now">most</string>
   <string name="upcoming_upto_one_day">egy nap</string>
   <string name="upcoming_upto_three_days">3 nap</string>
@@ -329,8 +329,8 @@
   <string name="pref_other">Egyéb</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
   <string name="pref_autoupdatesummary">A sorozataid időszakonként frissítésre kerülnek</string>
-  <string name="pref_autobackup">Automatikus mentés bekapcsolása</string>
-  <string name="pref_autobackupsummary">A sorozat adatbázis heti mentése a Letöltések mappába</string>
+  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Biztonsági Mentés/Visszaállítás</string>
   <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
   <string name="pref_number">Számozás formátuma</string>
@@ -339,11 +339,10 @@
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
-  <string name="backup_description">A <b>mentés</b> funkció az évadjaidat, epizódjaidat és listáidat fogja egy JSON fájlba kimenteni a lent látható mappába.\n<b>Visszaállítás</b> előtt győződj meg arról, hogy a mentési művelet során létrejött-e a JSON fájl a lent látható mappában.</string>
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>
-  <string name="backup_failed_file_access">Nem lehet menteni. A mentési mappa nem elérhető.</string>
+  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Adatbázis mentése…</string>
   <string name="backup_success">A mentés sikerült.</string>
   <string name="backup_failed">A biztonsági mentés nem sikerült.</string>
@@ -358,11 +357,15 @@
   <string name="import_button">Visszaállítás</string>
   <string name="backup_question">Ez felülírja a jelenlegi biztonsági másolatot!</string>
   <string name="import_question">A jelenlegi sorozatlista törlődik. Győződj meg róla, hogy van biztonsági másolatod a mentési mappában!</string>
-  <string name="import_warning">Megértettem, hogy az összes jelenlegi műsorom és listám törlésre kerül!</string>
+  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
   <string name="last_auto_backup">Utolsó automata mentés: %s</string>
   <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
   <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
   <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="no_file_selected">No file selected</string>
+  <string name="action_select_file">Select file</string>
+  <string name="backup_use_default_files">Use default backup files</string>
   <string name="get_started">Vágjunk bele!</string>
   <string name="welcome_setuplanguage">Válassz nyelvet</string>
   <string name="dismiss">Mégsem</string>
@@ -404,7 +407,7 @@
   <string name="billing_action_pass">X Pass beszerzése</string>
   <string name="billing_price_subscribe">%s/év, próbáld ki ingyenesen</string>
   <string name="billing_price_pass">Egyszeri fizetés</string>
-  <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts hozzá a program a jövőbeni frissítéseihez.</string>
+  <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
   <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
   <string name="billing_learn_more">Miért fizessek? Tudj meg többet.</string>
   <string name="subscription_expired">Lejárt az előfizetés</string>
