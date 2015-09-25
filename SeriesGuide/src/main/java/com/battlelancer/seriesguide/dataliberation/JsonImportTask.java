@@ -74,12 +74,18 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private Context context;
     private OnTaskFinishedListener finishedListener;
     private boolean isImportingAutoBackup;
+    private boolean isUseDefaultFolders;
 
     public JsonImportTask(Context context, OnTaskFinishedListener listener,
             boolean isAutoBackupMode) {
         this.context = context.getApplicationContext();
         finishedListener = listener;
         isImportingAutoBackup = isAutoBackupMode;
+        // use Storage Access Framework on KitKat and up to select custom backup files,
+        // on older versions use default folders
+        // also auto backup by default uses default folders
+        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
+                || (isImportingAutoBackup && BackupSettings.isUseAutoBackupDefaultFiles(context));
     }
 
     @Override
@@ -90,10 +96,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR_LARGE_DB_OP;
         }
 
-        // use Storage Access Framework on KitKat and up
-        // but for now still use fixed path for auto backup
         File importPath = null;
-        if (isImportingAutoBackup || !AndroidUtils.isKitKatOrHigher()) {
+        if (isUseDefaultFolders) {
             // Ensure external storage
             if (!AndroidUtils.isExtStorageAvailable()) {
                 return ERROR_STORAGE_ACCESS;
@@ -165,9 +169,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private int importData(File importPath, @JsonExportTask.BackupType int type) {
-        // use Storage Access Framework on KitKat and up
-        // but for now still use fixed path for auto backup
-        if (!isImportingAutoBackup && AndroidUtils.isKitKatOrHigher()) {
+        if (!isUseDefaultFolders) {
             // make sure we have a file uri...
             Uri backupFileUri = getDataBackupFile(type);
             if (backupFileUri == null) {
@@ -235,14 +237,23 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Nullable
     private Uri getDataBackupFile(@JsonExportTask.BackupType int type) {
+        // use import URIs
+        // if they are not set getFileUri will fall back to the export URI
+        // for auto backup always use the URI data is configured to be exported to
         if (type == JsonExportTask.BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_SHOWS_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
+                            : BackupSettings.KEY_SHOWS_IMPORT_URI);
         }
         if (type == JsonExportTask.BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_LISTS_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
+                            : BackupSettings.KEY_LISTS_IMPORT_URI);
         }
         if (type == JsonExportTask.BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context, BackupSettings.KEY_MOVIES_EXPORT_URI);
+            return BackupSettings.getFileUri(context,
+                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
+                            : BackupSettings.KEY_MOVIES_IMPORT_URI);
         }
         return null;
     }
