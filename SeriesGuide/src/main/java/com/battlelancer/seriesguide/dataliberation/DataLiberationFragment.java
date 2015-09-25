@@ -403,13 +403,13 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                     BackupSettings.KEY_MOVIES_IMPORT_URI));
         } else {
             String path = JsonExportTask.getExportPath(false).toString();
-            String showsFilePath = path + JsonExportTask.EXPORT_JSON_FILE_SHOWS;
+            String showsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_SHOWS;
             textShowsExportFile.setText(showsFilePath);
             textShowsImportFile.setText(showsFilePath);
-            String listsFilePath = path + JsonExportTask.EXPORT_JSON_FILE_LISTS;
+            String listsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_LISTS;
             textListsExportFile.setText(listsFilePath);
             textListsImportFile.setText(listsFilePath);
-            String moviesFilePath = path + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
+            String moviesFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
             textMoviesExportFile.setText(moviesFilePath);
             textMoviesImportFile.setText(moviesFilePath);
         }
