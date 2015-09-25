@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2015 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,43 +53,33 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
- * One button export or import of the show database using a JSON file on external storage.
+ * Configuration of auto backup, the backup files and restoring the last auto backup.
  */
-public class DataLiberationFragment extends Fragment implements OnTaskFinishedListener,
+public class AutoBackupFragment extends Fragment implements OnTaskFinishedListener,
         OnTaskProgressListener {
 
-    private static final int REQUEST_CODE_EXPORT = 1;
-    private static final int REQUEST_CODE_IMPORT = 2;
-    private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 3;
-    private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 4;
-    private static final int REQUEST_CODE_SHOWS_IMPORT_URI = 5;
-    private static final int REQUEST_CODE_LISTS_EXPORT_URI = 6;
-    private static final int REQUEST_CODE_LISTS_IMPORT_URI = 7;
-    private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 8;
-    private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 9;
+    private static final int REQUEST_CODE_ENABLE_AUTO_BACKUP = 1;
+    private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 2;
+    private static final int REQUEST_CODE_SHOWS_EXPORT_URI = 3;
+    private static final int REQUEST_CODE_LISTS_EXPORT_URI = 4;
+    private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 5;
 
-    @Bind(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
-    @Bind(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
-    @Bind(R.id.textViewDataLibListsExportFile) TextView textListsExportFile;
-    @Bind(R.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
-    @Bind(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
-    @Bind(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
+    @Bind(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
+    @Bind(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
 
-    @Bind(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
-    @Bind(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
-    @Bind(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
-    @Bind(R.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
-    @Bind(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
-    @Bind(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
+    @Bind(R.id.textViewAutoBackupShowsExportFile) TextView textShowsExportFile;
+    @Bind(R.id.buttonAutoBackupShowsExportFile) Button buttonShowsExportFile;
+    @Bind(R.id.textViewAutoBackupListsExportFile) TextView textListsExportFile;
+    @Bind(R.id.buttonAutoBackupListsExportFile) Button buttonListsExportFile;
+    @Bind(R.id.textViewAutoBackupMoviesExportFile) TextView textMoviesExportFile;
+    @Bind(R.id.buttonAutoBackupMoviesExportFile) Button buttonMoviesExportFile;
 
-    @Bind(R.id.buttonDataLibExport) Button buttonExport;
-    @Bind(R.id.buttonDataLibImport) Button buttonImport;
-    @Bind(R.id.buttonDataLibImportAutoBackup) Button buttonImportAutoBackup;
-    @Bind(R.id.progressBarDataLib) ProgressBar progressBar;
-    @Bind(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
-    @Bind(R.id.checkBoxDataLibImportWarning) CheckBox checkBoxImportWarning;
+    @Bind(R.id.checkBoxAutoBackupImportWarning) CheckBox checkBoxImportWarning;
+    @Bind(R.id.textViewAutoBackupLastTime) TextView textViewLastAutoBackup;
+    @Bind(R.id.buttonAutoBackupImport) Button buttonImportAutoBackup;
+    @Bind(R.id.progressBarAutoBackup) ProgressBar progressBar;
 
-    private AsyncTask<Void, Integer, Integer> dataLibTask;
+    private AsyncTask<Void, Integer, Integer> importTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,15 +95,16 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_data_liberation, container, false);
+        View v = inflater.inflate(R.layout.fragment_auto_backup, container, false);
         ButterKnife.bind(this, v);
 
         progressBar.setVisibility(View.GONE);
 
+
+
         // display last auto-backup date
-        TextView lastAutoBackup = (TextView) v.findViewById(R.id.textViewDataLibLastAutoBackup);
         long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
-        lastAutoBackup
+        textViewLastAutoBackup
                 .setText(getString(R.string.last_auto_backup,
                         DataLiberationTools.isAutoBackupAvailable() ?
                                 DateUtils.getRelativeDateTimeString(getActivity(),
@@ -119,23 +112,21 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                                         DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
         // setup listeners
-        buttonExport.setOnClickListener(new OnClickListener() {
+        switchAutoBackup.setChecked(AdvancedSettings.isAutoBackupEnabled(getContext()));
+        switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                tryDataLiberationAction(REQUEST_CODE_EXPORT);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tryEnableAutoBackup();
+                } else {
+                    setAutoBackupEnabled(false);
+                }
             }
         });
         checkBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonImport.setEnabled(isChecked);
                 buttonImportAutoBackup.setEnabled(isChecked);
-            }
-        });
-        buttonImport.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tryDataLiberationAction(REQUEST_CODE_IMPORT);
             }
         });
         buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
@@ -148,17 +139,23 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         // selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         if (AndroidUtils.isKitKatOrHigher()) {
+            checkBoxDefaultFiles.setChecked(
+                    BackupSettings.isUseAutoBackupDefaultFiles(getContext()));
+            checkBoxDefaultFiles.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
+                            .edit()
+                            .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
+                            .commit();
+                    updateFileViews();
+                }
+            });
             buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectExportFile(JsonExportTask.EXPORT_JSON_FILE_SHOWS,
                             REQUEST_CODE_SHOWS_EXPORT_URI);
-                }
-            });
-            buttonShowsImportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_SHOWS_IMPORT_URI);
                 }
             });
             buttonListsExportFile.setOnClickListener(new OnClickListener() {
@@ -168,12 +165,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                             REQUEST_CODE_LISTS_EXPORT_URI);
                 }
             });
-            buttonListsImportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_LISTS_IMPORT_URI);
-                }
-            });
             buttonMoviesExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -181,19 +172,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                             REQUEST_CODE_MOVIES_EXPORT_URI);
                 }
             });
-            buttonMoviesImportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_MOVIES_IMPORT_URI);
-                }
-            });
         } else {
-            buttonShowsExportFile.setVisibility(View.GONE);
-            buttonShowsImportFile.setVisibility(View.GONE);
-            buttonListsExportFile.setVisibility(View.GONE);
-            buttonListsImportFile.setVisibility(View.GONE);
-            buttonMoviesExportFile.setVisibility(View.GONE);
-            buttonMoviesImportFile.setVisibility(View.GONE);
+            checkBoxDefaultFiles.setVisibility(View.GONE);
         }
         updateFileViews();
 
@@ -205,7 +185,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         super.onActivityCreated(savedInstanceState);
 
         // restore UI state
-        if (dataLibTask != null && dataLibTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (importTask != null && importTask.getStatus() != AsyncTask.Status.FINISHED) {
             setProgressLock(true);
         }
     }
@@ -219,10 +199,10 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     @Override
     public void onDestroy() {
-        if (dataLibTask != null && dataLibTask.getStatus() != AsyncTask.Status.FINISHED) {
-            dataLibTask.cancel(true);
+        if (importTask != null && importTask.getStatus() != AsyncTask.Status.FINISHED) {
+            importTask.cancel(true);
         }
-        dataLibTask = null;
+        importTask = null;
 
         super.onDestroy();
     }
@@ -251,22 +231,28 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     private void setProgressLock(boolean isLocked) {
         if (isLocked) {
-            buttonImport.setEnabled(false);
             buttonImportAutoBackup.setEnabled(false);
         } else {
-            buttonImport.setEnabled(checkBoxImportWarning.isChecked());
             buttonImportAutoBackup.setEnabled(checkBoxImportWarning.isChecked());
         }
-        buttonExport.setEnabled(!isLocked);
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
-        checkBoxFullDump.setEnabled(!isLocked);
         checkBoxImportWarning.setEnabled(!isLocked);
         buttonShowsExportFile.setEnabled(!isLocked);
-        buttonShowsImportFile.setEnabled(!isLocked);
         buttonListsExportFile.setEnabled(!isLocked);
-        buttonListsImportFile.setEnabled(!isLocked);
         buttonMoviesExportFile.setEnabled(!isLocked);
-        buttonMoviesImportFile.setEnabled(!isLocked);
+    }
+
+    private void tryEnableAutoBackup() {
+        // make sure we have the storage write permission
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // don't have it? request it, do task if granted
+            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                    REQUEST_CODE_ENABLE_AUTO_BACKUP);
+            return;
+        }
+        setAutoBackupEnabled(true);
     }
 
     private void tryDataLiberationAction(int requestCode) {
@@ -285,9 +271,20 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
             @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_EXPORT
-                || requestCode == REQUEST_CODE_IMPORT
-                || requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
+        if (requestCode == REQUEST_CODE_ENABLE_AUTO_BACKUP) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setAutoBackupEnabled(true);
+            } else {
+                if (getView() != null && switchAutoBackup != null) {
+                    // disable auto backup as we don't have the required permission
+                    switchAutoBackup.setChecked(false);
+                    Snackbar.make(getView(), R.string.autobackup_permission_missing,
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+        }
+        if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doDataLiberationAction(requestCode);
             } else {
@@ -299,23 +296,19 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         }
     }
 
+    private void setAutoBackupEnabled(boolean isEnabled) {
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .edit()
+                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, isEnabled)
+                .apply();
+    }
+
     private void doDataLiberationAction(int requestCode) {
-        if (requestCode == REQUEST_CODE_EXPORT) {
+        if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             setProgressLock(true);
 
-            dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
-                    DataLiberationFragment.this, checkBoxFullDump.isChecked(), false);
-            AndroidUtils.executeOnPool(dataLibTask);
-        } else if (requestCode == REQUEST_CODE_IMPORT) {
-            setProgressLock(true);
-
-            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
-            Utils.executeInOrder(dataLibTask);
-        } else if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
-            setProgressLock(true);
-
-            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this, true);
-            Utils.executeInOrder(dataLibTask);
+            importTask = new JsonImportTask(getContext(), AutoBackupFragment.this, true);
+            Utils.executeInOrder(importTask);
         }
     }
 
@@ -338,21 +331,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void selectImportFile(int requestCode) {
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        // json files might have mime type of "application/octet-stream"
-        // but we are going to store them as "application/json"
-        // so filter to show all application files
-        intent.setType("application/*");
-
-        startActivityForResult(intent, requestCode);
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK || !isAdded() || data == null) {
@@ -360,11 +338,8 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         }
 
         if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI
-                || requestCode == REQUEST_CODE_SHOWS_IMPORT_URI
                 || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
-                || requestCode == REQUEST_CODE_LISTS_IMPORT_URI
-                || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI
-                || requestCode == REQUEST_CODE_MOVIES_IMPORT_URI) {
+                || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
             Uri uri = data.getData();
 
             // persist read and write permission for this URI across device reboots
@@ -373,49 +348,48 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                             | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
+                BackupSettings.storeFileUri(getContext(),
+                        BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI, uri);
             } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_EXPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_EXPORT_URI,
-                        uri);
+                BackupSettings.storeFileUri(getContext(),
+                        BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI, uri);
             } else {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_IMPORT_URI,
-                        uri);
+                BackupSettings.storeFileUri(getContext(),
+                        BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI, uri);
             }
             updateFileViews();
         }
     }
 
     private void updateFileViews() {
-        if (AndroidUtils.isKitKatOrHigher()) {
+        if (!BackupSettings.isUseAutoBackupDefaultFiles(getContext())
+                && AndroidUtils.isKitKatOrHigher()) {
             setUriOrPlaceholder(textShowsExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_SHOWS_EXPORT_URI));
-            setUriOrPlaceholder(textShowsImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_SHOWS_IMPORT_URI));
+                    BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI));
             setUriOrPlaceholder(textListsExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_LISTS_EXPORT_URI));
-            setUriOrPlaceholder(textListsImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_LISTS_IMPORT_URI));
+                    BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI));
             setUriOrPlaceholder(textMoviesExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_MOVIES_EXPORT_URI));
-            setUriOrPlaceholder(textMoviesImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_MOVIES_IMPORT_URI));
+                    BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI));
+            buttonShowsExportFile.setVisibility(View.VISIBLE);
+            buttonListsExportFile.setVisibility(View.VISIBLE);
+            buttonMoviesExportFile.setVisibility(View.VISIBLE);
         } else {
-            String path = JsonExportTask.getExportPath(false).toString();
+            String path = JsonExportTask.getExportPath(true).toString();
             String showsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_SHOWS;
             textShowsExportFile.setText(showsFilePath);
-            textShowsImportFile.setText(showsFilePath);
             String listsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_LISTS;
             textListsExportFile.setText(listsFilePath);
-            textListsImportFile.setText(listsFilePath);
             String moviesFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
             textMoviesExportFile.setText(moviesFilePath);
-            textMoviesImportFile.setText(moviesFilePath);
+            //noinspection deprecation
+            textShowsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            //noinspection deprecation
+            textListsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            //noinspection deprecation
+            textMoviesExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            buttonShowsExportFile.setVisibility(View.GONE);
+            buttonListsExportFile.setVisibility(View.GONE);
+            buttonMoviesExportFile.setVisibility(View.GONE);
         }
     }
 

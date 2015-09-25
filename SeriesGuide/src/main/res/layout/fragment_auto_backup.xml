@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout style="@style/Page.Centered">
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchAutoBackup"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:minHeight="48dp"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:text="@string/pref_autobackup"
+                android:textAppearance="@style/TextAppearance.Title" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAutoBackupDefaultFiles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/switchAutoBackup"
+                android:text="@string/backup_use_default_files" />
+
+            <LinearLayout
+                android:id="@+id/containerAutoBackupExportFiles"
+                android:orientation="vertical"
+                android:layout_below="@+id/checkBoxAutoBackupDefaultFiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding"
+                android:animateLayoutChanges="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shows"
+                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                <TextView
+                    android:id="@+id/textViewAutoBackupShowsExportFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="content://some.path.on.storage/sg-shows-export.json" />
+
+                <Button
+                    android:id="@+id/buttonAutoBackupShowsExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_select_file" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lists"
+                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                <TextView
+                    android:id="@+id/textViewAutoBackupListsExportFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="content://some.path.on.storage/sg-lists-export.json" />
+
+                <Button
+                    android:id="@+id/buttonAutoBackupListsExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_select_file" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movies"
+                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                <TextView
+                    android:id="@+id/textViewAutoBackupMoviesExportFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="content://some.path.on.storage/sg-movies-export.json" />
+
+                <Button
+                    android:id="@+id/buttonAutoBackupMoviesExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_select_file" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewAutoBackupLabelImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/containerAutoBackupExportFiles"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:text="@string/restore_auto_backup"
+                android:textAppearance="@style/TextAppearance.Headline" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAutoBackupImportWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAutoBackupLabelImport"
+                android:text="@string/import_warning" />
+
+            <TextView
+                android:id="@+id/textViewAutoBackupLastTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkBoxAutoBackupImportWarning"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/last_auto_backup"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <Button
+                android:id="@+id/buttonAutoBackupImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAutoBackupLastTime"
+                android:layout_marginTop="@dimen/default_padding"
+                android:enabled="false"
+                android:text="@string/restore_auto_backup" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBarAutoBackup"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+</FrameLayout>

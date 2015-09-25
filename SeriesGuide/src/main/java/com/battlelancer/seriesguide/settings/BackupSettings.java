@@ -29,6 +29,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class BackupSettings {
 
+    // manual backup
     public static final String KEY_SHOWS_EXPORT_URI
             = "com.battlelancer.seriesguide.backup.showsExport";
     public static final String KEY_SHOWS_IMPORT_URI
@@ -41,6 +42,15 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.backup.moviesExport";
     public static final String KEY_MOVIES_IMPORT_URI
             = "com.battlelancer.seriesguide.backup.moviesImport";
+    // auto backup
+    public static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
+            = "com.battlelancer.seriesguide.autobackup.defaultFiles";
+    public static final String KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
+            = "com.battlelancer.seriesguide.autobackup.showsExport";
+    public static final String KEY_AUTO_BACKUP_LISTS_EXPORT_URI
+            = "com.battlelancer.seriesguide.autobackup.listsExport";
+    public static final String KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
+            = "com.battlelancer.seriesguide.autobackup.moviesExport";
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
@@ -49,9 +59,17 @@ public class BackupSettings {
             KEY_LISTS_EXPORT_URI,
             KEY_LISTS_IMPORT_URI,
             KEY_MOVIES_EXPORT_URI,
-            KEY_MOVIES_IMPORT_URI
+            KEY_MOVIES_IMPORT_URI,
+            KEY_AUTO_BACKUP_SHOWS_EXPORT_URI,
+            KEY_AUTO_BACKUP_LISTS_EXPORT_URI,
+            KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
     })
     public @interface FileUriSettingsKey {
+    }
+
+    public static boolean isUseAutoBackupDefaultFiles(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
     }
 
     /**

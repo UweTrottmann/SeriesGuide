@@ -17,12 +17,17 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 public class DataLiberationActivity extends BaseActivity {
+
+    public interface InitBundle {
+        String EXTRA_SHOW_AUTOBACKUP = "showAutoBackup";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,14 @@ public class DataLiberationActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            DataLiberationFragment f = new DataLiberationFragment();
+            boolean showAutoBackup = getIntent().getBooleanExtra(InitBundle.EXTRA_SHOW_AUTOBACKUP,
+                    false);
+            Fragment f;
+            if (showAutoBackup) {
+                f = new AutoBackupFragment();
+            } else {
+                f = new DataLiberationFragment();
+            }
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, f).commit();
         }
     }
@@ -40,6 +52,9 @@ public class DataLiberationActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.backup);
     }

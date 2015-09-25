@@ -399,8 +399,8 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
     <string name="pref_autoupdatesummary">Periodically update your shows</string>
-    <string name="pref_autobackup">Turn on Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+    <string name="pref_autobackup">Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_number">Number format</string>
@@ -436,6 +436,7 @@
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
+    <string name="backup_use_default_files">Use default backup files</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
