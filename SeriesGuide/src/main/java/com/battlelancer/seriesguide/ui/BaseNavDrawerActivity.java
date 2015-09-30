@@ -17,11 +17,15 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -36,6 +40,8 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
+import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
+import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -221,7 +227,29 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
             case R.id.navigation_sub_item_help:
-                launchIntent = new Intent(this, HelpActivity.class);
+                // if we cant find a package name, it means there is no browser that supports
+                // Chrome Custom Tabs installed. So, we fallback to the webview activity.
+                String packageName = CustomTabsHelper.getPackageNameToUse(this);
+                if (packageName == null) {
+                    launchIntent = new Intent(this, HelpActivity.class);
+                } else {
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setShowTitle(true);
+                    //noinspection deprecation
+                    builder.setToolbarColor(getResources().getColor(
+                            Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
+                    builder.setActionButton(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_checkin),
+                            getString(R.string.feedback),
+                            PendingIntent.getBroadcast(getApplicationContext(), 0,
+                                    new Intent(getApplicationContext(),
+                                            FeedbackBroadcastReceiver.class), 0));
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.intent.setPackage(packageName);
+                    customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
+                    launchIntent = customTabsIntent.intent;
+                }
+
                 Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
             case R.id.navigation_sub_item_unlock:
