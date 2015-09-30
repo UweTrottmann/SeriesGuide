@@ -75,17 +75,36 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private OnTaskFinishedListener finishedListener;
     private boolean isImportingAutoBackup;
     private boolean isUseDefaultFolders;
+    private boolean isImportShows;
+    private boolean isImportLists;
+    private boolean isImportMovies;
 
-    public JsonImportTask(Context context, OnTaskFinishedListener listener,
-            boolean isAutoBackupMode) {
+    public JsonImportTask(Context context, OnTaskFinishedListener listener) {
         this.context = context.getApplicationContext();
         finishedListener = listener;
-        isImportingAutoBackup = isAutoBackupMode;
+        isImportingAutoBackup = true;
+        isImportShows = true;
+        isImportLists = true;
+        isImportMovies = true;
         // use Storage Access Framework on KitKat and up to select custom backup files,
         // on older versions use default folders
         // also auto backup by default uses default folders
         isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
-                || (isImportingAutoBackup && BackupSettings.isUseAutoBackupDefaultFiles(context));
+                || BackupSettings.isUseAutoBackupDefaultFiles(context);
+    }
+
+    public JsonImportTask(Context context, OnTaskFinishedListener listener,
+            boolean importShows, boolean importLists, boolean importMovies) {
+        this.context = context.getApplicationContext();
+        finishedListener = listener;
+        isImportingAutoBackup = false;
+        isImportShows = importShows;
+        isImportLists = importLists;
+        isImportMovies = importMovies;
+        // use Storage Access Framework on KitKat and up to select custom backup files,
+        // on older versions use default folders
+        // also auto backup by default uses default folders
+        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher();
     }
 
     @Override
@@ -110,29 +129,35 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        int result = importData(importPath, JsonExportTask.BACKUP_SHOWS);
-        if (result != SUCCESS) {
-            return result;
-        }
-        if (isCancelled()) {
-            return ERROR;
-        }
-
-        // always make sure to only import lists, if show import was successful
-        result = importData(importPath, JsonExportTask.BACKUP_LISTS);
-        if (result != SUCCESS) {
-            return result;
-        }
-        if (isCancelled()) {
-            return ERROR;
+        int result;
+        if (isImportShows) {
+            result = importData(importPath, JsonExportTask.BACKUP_SHOWS);
+            if (result != SUCCESS) {
+                return result;
+            }
+            if (isCancelled()) {
+                return ERROR;
+            }
         }
 
-        result = importData(importPath, JsonExportTask.BACKUP_MOVIES);
-        if (result != SUCCESS) {
-            return result;
+        if (isImportLists) {
+            result = importData(importPath, JsonExportTask.BACKUP_LISTS);
+            if (result != SUCCESS) {
+                return result;
+            }
+            if (isCancelled()) {
+                return ERROR;
+            }
         }
-        if (isCancelled()) {
-            return ERROR;
+
+        if (isImportMovies) {
+            result = importData(importPath, JsonExportTask.BACKUP_MOVIES);
+            if (result != SUCCESS) {
+                return result;
+            }
+            if (isCancelled()) {
+                return ERROR;
+            }
         }
 
         // Renew search table
@@ -169,6 +194,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private int importData(File importPath, @JsonExportTask.BackupType int type) {
+        // if using default files or non-user custom files the backup task will not create a file
+        // if there is no data to export,
+        // so make sure to not fail just because a default folder file is missing
         if (!isUseDefaultFolders) {
             // make sure we have a file uri...
             Uri backupFileUri = getDataBackupFile(type);
@@ -208,8 +236,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             } else if (type == JsonExportTask.BACKUP_MOVIES) {
                 backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
             }
-            if (backupFile == null || !backupFile.exists() || !backupFile.canRead()) {
+            if (backupFile == null || !backupFile.canRead()) {
                 return ERROR_FILE_ACCESS;
+            }
+            if (!backupFile.exists()) {
+                // no backup file, so nothing to restore, skip it
+                return SUCCESS;
             }
 
             FileInputStream in;
@@ -260,11 +292,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private void clearExistingData(@JsonExportTask.BackupType int type) {
         if (type == JsonExportTask.BACKUP_SHOWS) {
-            // when importing shows, also clear list data
             context.getContentResolver().delete(Shows.CONTENT_URI, null, null);
             context.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
             context.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
-            context.getContentResolver().delete(SeriesGuideContract.Lists.CONTENT_URI, null, null);
+        } else if (type == JsonExportTask.BACKUP_LISTS) {
+            context.getContentResolver().delete(Lists.CONTENT_URI, null, null);
             context.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
         } else if (type == JsonExportTask.BACKUP_MOVIES) {
             context.getContentResolver().delete(Movies.CONTENT_URI, null, null);

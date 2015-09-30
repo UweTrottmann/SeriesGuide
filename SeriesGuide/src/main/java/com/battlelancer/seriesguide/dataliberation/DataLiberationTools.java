@@ -28,14 +28,16 @@ import java.io.File;
 public class DataLiberationTools {
 
     /**
-     * Returns if auto backup files exist and are readable.
+     * Returns if at least one auto backup file in the default folder exists and is readable.
      */
-    public static boolean isAutoBackupAvailable() {
+    public static boolean isAutoBackupDefaultFilesAvailable() {
         File pathAutoBackup = JsonExportTask.getExportPath(true);
         File backupShows = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
         File backupLists = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_LISTS);
+        File backupMovies = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
         return (backupShows.exists() && backupShows.canRead())
-                || (backupLists.exists() && backupLists.canRead());
+                || (backupLists.exists() && backupLists.canRead()
+                || (backupMovies.exists() && backupMovies.canRead()));
     }
 
     /**

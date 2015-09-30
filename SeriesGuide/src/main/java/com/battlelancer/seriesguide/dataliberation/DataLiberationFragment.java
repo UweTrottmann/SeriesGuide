@@ -71,6 +71,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     @Bind(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
     @Bind(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
 
+    @Bind(R.id.checkBoxDataLibShows) CheckBox checkBoxShows;
+    @Bind(R.id.checkBoxDataLibLists) CheckBox checkBoxLists;
+    @Bind(R.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
     @Bind(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
     @Bind(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
     @Bind(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
@@ -115,7 +118,25 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         checkBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonImport.setEnabled(isChecked);
+                updateImportButtonEnabledState();
+            }
+        });
+        checkBoxShows.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateImportButtonEnabledState();
+            }
+        });
+        checkBoxLists.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateImportButtonEnabledState();
+            }
+        });
+        checkBoxMovies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateImportButtonEnabledState();
             }
         });
         buttonImport.setOnClickListener(new OnClickListener() {
@@ -186,6 +207,16 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         return v;
     }
 
+    private void updateImportButtonEnabledState() {
+        if (checkBoxShows.isChecked()
+                || checkBoxLists.isChecked()
+                || checkBoxMovies.isChecked()) {
+            buttonImport.setEnabled(checkBoxImportWarning.isChecked());
+        } else {
+            buttonImport.setEnabled(false);
+        }
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -239,7 +270,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         if (isLocked) {
             buttonImport.setEnabled(false);
         } else {
-            buttonImport.setEnabled(checkBoxImportWarning.isChecked());
+            updateImportButtonEnabledState();
         }
         buttonExport.setEnabled(!isLocked);
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
@@ -251,6 +282,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         buttonListsImportFile.setEnabled(!isLocked);
         buttonMoviesExportFile.setEnabled(!isLocked);
         buttonMoviesImportFile.setEnabled(!isLocked);
+        checkBoxShows.setEnabled(!isLocked);
+        checkBoxLists.setEnabled(!isLocked);
+        checkBoxMovies.setEnabled(!isLocked);
     }
 
     private void tryDataLiberationAction(int requestCode) {
@@ -292,7 +326,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this, false);
+            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this,
+                    checkBoxShows.isChecked(), checkBoxLists.isChecked(),
+                    checkBoxMovies.isChecked());
             Utils.executeInOrder(dataLibTask);
         }
     }

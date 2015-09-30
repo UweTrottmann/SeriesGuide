@@ -104,9 +104,11 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
 
         // display last auto-backup date
         long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
+        boolean showLastBackupTime = BackupSettings.isUseAutoBackupDefaultFiles(getContext())
+                ? DataLiberationTools.isAutoBackupDefaultFilesAvailable()
+                : !BackupSettings.isMissingAutoBackupFile(getContext());
         textViewLastAutoBackup
-                .setText(getString(R.string.last_auto_backup,
-                        DataLiberationTools.isAutoBackupAvailable() ?
+                .setText(getString(R.string.last_auto_backup, showLastBackupTime ?
                                 DateUtils.getRelativeDateTimeString(getActivity(),
                                         lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
                                         DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
@@ -313,7 +315,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             setProgressLock(true);
 
-            importTask = new JsonImportTask(getContext(), AutoBackupFragment.this, true);
+            importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
             Utils.executeInOrder(importTask);
         }
     }
