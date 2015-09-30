@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -35,6 +36,23 @@ import java.util.Locale;
  * Displays the SeriesGuide online help page.
  */
 public class HelpActivity extends BaseActivity {
+
+    public static Intent getFeedbackEmailIntent(Context context) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {
+                SeriesGuidePreferences.SUPPORT_MAIL
+        });
+        // include app version in subject
+        intent.putExtra(Intent.EXTRA_SUBJECT,
+                "SeriesGuide " + Utils.getVersion(context) + " Feedback");
+        // and hardware and Android info in body
+        intent.putExtra(Intent.EXTRA_TEXT,
+                Build.MANUFACTURER.toUpperCase(Locale.US) + " " + Build.MODEL + ", Android "
+                        + Build.VERSION.RELEASE + "\n\n");
+
+        return Intent.createChooser(intent, context.getString(R.string.feedback));
+    }
 
     private static final String TAG = "Help";
     private WebView webview;
@@ -107,7 +125,7 @@ public class HelpActivity extends BaseActivity {
             return true;
         }
         if (itemId == R.id.menu_action_help_send_feedback) {
-            sendEmail();
+            createFeedbackEmail();
             fireTrackerEvent("Feedback");
             return true;
         }
@@ -118,22 +136,8 @@ public class HelpActivity extends BaseActivity {
         Utils.launchWebsite(this, getString(R.string.help_url), TAG, "Open In Browser");
     }
 
-    private void sendEmail() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {
-                SeriesGuidePreferences.SUPPORT_MAIL
-        });
-        // include app version in subject
-        intent.putExtra(Intent.EXTRA_SUBJECT,
-                "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-        // and hardware and Android info in body
-        intent.putExtra(Intent.EXTRA_TEXT,
-                Build.MANUFACTURER.toUpperCase(Locale.US) + " " + Build.MODEL + ", Android "
-                        + Build.VERSION.RELEASE + "\n\n");
-
-        Intent chooser = Intent.createChooser(intent, getString(R.string.feedback));
-        Utils.tryStartActivity(this, chooser, true);
+    private void createFeedbackEmail() {
+        Utils.tryStartActivity(this, getFeedbackEmailIntent(this), true);
     }
 
     private void fireTrackerEvent(String label) {
