@@ -36,6 +36,7 @@ import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -537,6 +538,32 @@ public class Utils {
         }
 
         if (displayError && !handled) {
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
+
+        return handled;
+    }
+
+    /**
+     * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
+     * a result.
+     */
+    public static boolean tryStartActivityForResult(Fragment fragment, Intent intent,
+            int requestCode) {
+        Context context = fragment.getContext();
+
+        // check if the intent can be handled
+        boolean handled = false;
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            try {
+                fragment.startActivityForResult(intent, requestCode);
+                handled = true;
+            } catch (ActivityNotFoundException ignored) {
+                // catch failure to handle explicit intents
+            }
+        }
+
+        if (!handled) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
 

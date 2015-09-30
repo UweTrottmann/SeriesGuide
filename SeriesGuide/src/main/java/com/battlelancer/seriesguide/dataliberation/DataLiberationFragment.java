@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import timber.log.Timber;
 
 /**
  * One button export or import of the show database using a JSON file on external storage.
@@ -130,40 +131,46 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectExportFile(JsonExportTask.EXPORT_JSON_FILE_SHOWS,
+                    DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                            JsonExportTask.EXPORT_JSON_FILE_SHOWS,
                             REQUEST_CODE_SHOWS_EXPORT_URI);
                 }
             });
             buttonShowsImportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_SHOWS_IMPORT_URI);
+                    DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                            REQUEST_CODE_SHOWS_IMPORT_URI);
                 }
             });
             buttonListsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectExportFile(JsonExportTask.EXPORT_JSON_FILE_LISTS,
+                    DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                            JsonExportTask.EXPORT_JSON_FILE_LISTS,
                             REQUEST_CODE_LISTS_EXPORT_URI);
                 }
             });
             buttonListsImportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_LISTS_IMPORT_URI);
+                    DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                            REQUEST_CODE_LISTS_IMPORT_URI);
                 }
             });
             buttonMoviesExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectExportFile(JsonExportTask.EXPORT_JSON_FILE_MOVIES,
+                    DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                            JsonExportTask.EXPORT_JSON_FILE_MOVIES,
                             REQUEST_CODE_MOVIES_EXPORT_URI);
                 }
             });
             buttonMoviesImportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectImportFile(REQUEST_CODE_MOVIES_IMPORT_URI);
+                    DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                            REQUEST_CODE_MOVIES_IMPORT_URI);
                 }
             });
         } else {
@@ -291,39 +298,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void selectExportFile(String suggestedFileName, int requestCode) {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        // Filter to only show results that can be "opened", such as
-        // a file (as opposed to a list of contacts or timezones).
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // do NOT use the probably correct application/json as it would prevent selecting existing
-        // backup files on Android, which re-classifies them as application/octet-stream.
-        // also do NOT use application/octet-stream as it prevents selecting backup files from
-        // providers where the correct application/json mime type is used, *sigh*
-        // so, use application/* and let the provider decide
-        intent.setType("application/*");
-        intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName);
-
-        startActivityForResult(intent, requestCode);
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void selectImportFile(int requestCode) {
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        // json files might have mime type of "application/octet-stream"
-        // but we are going to store them as "application/json"
-        // so filter to show all application files
-        intent.setType("application/*");
-
-        startActivityForResult(intent, requestCode);
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK || !isAdded() || data == null) {
@@ -338,10 +312,14 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
                 || requestCode == REQUEST_CODE_MOVIES_IMPORT_URI) {
             Uri uri = data.getData();
 
-            // persist read and write permission for this URI across device reboots
-            getContext().getContentResolver()
-                    .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            // try to persist read and write permission for this URI across device reboots
+            try {
+                getContext().getContentResolver()
+                        .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            } catch (SecurityException e) {
+                Timber.e(e, "Could not persist r/w permission for backup file URI.");
+            }
 
             if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);

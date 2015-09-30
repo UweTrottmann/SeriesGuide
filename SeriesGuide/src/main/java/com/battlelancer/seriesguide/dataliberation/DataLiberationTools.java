@@ -16,8 +16,13 @@
 
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.Utils;
 import java.io.File;
 
 public class DataLiberationTools {
@@ -70,5 +75,39 @@ public class DataLiberationTools {
             default:
                 return JsonExportTask.ShowStatusExport.UNKNOWN;
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static void selectExportFile(Fragment fragment, String suggestedFileName,
+            int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        // Filter to only show results that can be "opened", such as
+        // a file (as opposed to a list of contacts or timezones).
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        // do NOT use the probably correct application/json as it would prevent selecting existing
+        // backup files on Android, which re-classifies them as application/octet-stream.
+        // also do NOT use application/octet-stream as it prevents selecting backup files from
+        // providers where the correct application/json mime type is used, *sigh*
+        // so, use application/* and let the provider decide
+        intent.setType("application/*");
+        intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName);
+
+        Utils.tryStartActivityForResult(fragment, intent, requestCode);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static void selectImportFile(Fragment fragment, int requestCode) {
+        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        // Filter to only show results that can be "opened", such as a
+        // file (as opposed to a list of contacts or timezones)
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // json files might have mime type of "application/octet-stream"
+        // but we are going to store them as "application/json"
+        // so filter to show all application files
+        intent.setType("application/*");
+
+        Utils.tryStartActivityForResult(fragment, intent, requestCode);
     }
 }
