@@ -38,6 +38,14 @@ public class AnalyticsTree extends Timber.DebugTree {
     @Override
     protected void log(int priority, String tag, String message, Throwable t) {
         if (priority == Log.ERROR) {
+            // remove any stack trace attached by Timber
+            if (message != null) {
+                int newLine = message.indexOf('\n');
+                if (newLine > 0) {
+                    message = message.substring(0, newLine);
+                }
+            }
+
             // special treatment for retrofit and TheTVDB errors
             if (t instanceof RetrofitError) {
                 RetrofitError e = (RetrofitError) t;
