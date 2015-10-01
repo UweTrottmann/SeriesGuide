@@ -47,7 +47,7 @@
         <item
             android:id="@+id/navigation_sub_item_help"
             android:icon="@drawable/ic_action_help"
-            android:title="@string/help" />
+            android:title="@string/help_and_feedback" />
         <item
             android:id="@+id/navigation_sub_item_unlock"
             android:icon="@drawable/ic_action_star"

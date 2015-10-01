@@ -74,6 +74,7 @@
     <!-- Floating action button -->
     <!-- Below Android 5.0 seems to add auto-padding for shadows, so reduce margin. -->
     <dimen name="fab_margin">4dp</dimen>
+    <dimen name="fab_scroll_threshold">4dp</dimen>
 
     <!-- Others -->
     <dimen name="max_width_text_size_body">400dp</dimen>

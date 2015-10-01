@@ -8,6 +8,7 @@
   <string name="search">Sök</string>
   <string name="preferences">Inställningar</string>
   <string name="help">Hjälp</string>
+  <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Öppna navigeringslåda
 </string>
   <string name="drawer_close">Stäng navigeringslåda</string>
@@ -294,7 +295,7 @@
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Innehållsspråk som föredras</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
   <string name="about">Om SeriesGuide</string>
@@ -330,8 +331,8 @@
   <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet</string>
-  <string name="pref_autobackup">Aktivera automatisk säkerhetskopiering</string>
-  <string name="pref_autobackupsummary">Din seriedatabas säkerhetskopieras varje vecka till hämtningsmappen</string>
+  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_number">Nummerformat</string>
@@ -340,11 +341,10 @@
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
-  <string name="backup_description"><b>Säkerhetskopiera</b> exporterar dina serier, säsonger, avsnitt och listor till en JSON-fil i mappen nedan. \nFör att <b>återställa</b> se till att den säkerhetskopierade JSON-filen finns i mappen nedan.</string>
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
-  <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
+  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
@@ -359,11 +359,15 @@
   <string name="import_button">Återställ säkerhetskopia</string>
   <string name="backup_question">Det här skriver över den nuvarande säkerhetskopian i mappen!</string>
   <string name="import_question">Den nuvarande serielistan försvinner! Se till så att säkerhetskopian finns i mappen för säkerhetskopior.</string>
-  <string name="import_warning">Jag förstår att mina nuvarande serier och listor kommer att försvinna!</string>
+  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
   <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+  <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
+  <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="no_file_selected">No file selected</string>
+  <string name="action_select_file">Select file</string>
+  <string name="backup_use_default_files">Use default backup files</string>
   <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="dismiss">Avfärda</string>

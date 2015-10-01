@@ -8,6 +8,7 @@
   <string name="search">Zoeken</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
+  <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Navigatiedrawer openen</string>
   <string name="drawer_close">Navigatiedrawer sluiten</string>
   <string name="show">Serie</string>
@@ -293,7 +294,7 @@
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Content taal voorkeur</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om datakosten te reduceren, niet downloaden over mobiele netwerken</string>
   <string name="about">Over SeriesGuide</string>
@@ -314,7 +315,7 @@
   <string name="sort_order_top_rated_first">Hoogste waardering</string>
   <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Aankomende bereik</string>
   <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">1 dag</string>
   <string name="upcoming_upto_three_days">3 dagen</string>
@@ -329,8 +330,8 @@
   <string name="pref_other">Andere</string>
   <string name="pref_autoupdate">Automatisch bijwerken inschakelen</string>
   <string name="pref_autoupdatesummary">Uw series periodiek bijwerken</string>
-  <string name="pref_autobackup">Automatische back-up inschakelen</string>
-  <string name="pref_autobackupsummary">Wekelijkse back-up van uw serie-database in de downloadmap</string>
+  <string name="pref_autobackup">Automatische back-up</string>
+  <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
   <string name="backup">Back-up maken/herstellen</string>
   <string name="backup_summary">Back-up van series maken/herstellen</string>
   <string name="pref_number">Nummer opmaak</string>
@@ -339,11 +340,10 @@
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
-  <string name="backup_description"><b>Back-up</b> zal uw series, seizoenen, afleveringen en lijsten naar een JSON-bestand exporteren in de onderstaande map. \nOm te <b>herstellen</b> zorg ervoor dat de JSON-bestanden die door back-up gecreëerd zijn zich in de map hieronder bevinden.</string>
   <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
   <string name="backup_path">Back-upmap</string>
   <string name="backup_version">Database-versie</string>
-  <string name="backup_failed_nosd">Back-up maken niet mogelijk. De back-up map is niet beschikbaar.</string>
+  <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
   <string name="backup_inprogress">Gegevensbestand back-uppen…</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
@@ -358,11 +358,15 @@
   <string name="import_button">Herstellen</string>
   <string name="backup_question">Dit overschrijft het huidige back-up bestand in de back-up map!</string>
   <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
-  <string name="import_warning">Ik begrijp dat mijn huidige series en lijsten zullen verloren gaan!</string>
+  <string name="import_warning">Ik begrijp dat mijn huidige series, lijsten en films worden vervangen!</string>
   <string name="last_auto_backup">Laatste auto back-up: %s</string>
   <string name="restore_auto_backup">Auto back-up terugzetten</string>
   <string name="dataliberation_permission_missing">Voor de back-up en restore functie Is toegang tot uw bestanden nodig.</string>
   <string name="autobackup_permission_missing">Om auto back-up te gebruiken, sta toegang tot uw bestanden toe.</string>
+  <string name="autobackup_files_missing">Om auto backup te gebruiken, selecteer geldige backup bestanden.</string>
+  <string name="no_file_selected">Geen bestand geselecteerd</string>
+  <string name="action_select_file">Selecteer bestand</string>
+  <string name="backup_use_default_files">Gebruik standaard backup bestanden</string>
   <string name="get_started">Aan de slag</string>
   <string name="welcome_setuplanguage">Selecteer een taal</string>
   <string name="dismiss">Afwijzen</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright 2014 Uwe Trottmann
+  ~ Copyright 2015 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
   ~ limitations under the License.
   -->
 
+<!-- The scroll flags are only useful on the L+ coordinator layouts and are otherwise ignored. -->
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
@@ -25,4 +26,12 @@
     android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
     android:background="?attr/colorPrimary"
-    app:layout_scrollFlags="scroll|enterAlways" />
+    app:layout_scrollFlags="scroll|enterAlways">
+
+    <!-- Inline progress bar used as a sync indicator. -->
+    <ProgressBar
+        android:id="@+id/progressBarTabs"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+</android.support.v7.widget.Toolbar>

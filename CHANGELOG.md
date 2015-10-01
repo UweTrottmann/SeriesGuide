@@ -5,8 +5,29 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 25 *(in development)*
+Version 25 *(2015-10-01)*
 -----------------------------
+
+* Support Android 6.0 (Marshmallow), will now ask for permissions.
+* On Android 4.4 (KitKat) and up, you can now select custom (auto) backup files. These may be
+  on external storage, Google Drive, etc. (provider needs to support Storage Access Framework).
+* On Android 5.0 (Lollipop) and up, the app bar hides in some screens when scrolling.
+* Restructured settings, open help page using Chrome custom tabs, other improvements.
+
+#### 25 *(2015-10-01)*
+
+* TWEAK Allow to select between importing shows, lists and movies.
+* TWEAK Show help and feedback page using Chrome custom tabs, if available. More prominent feedback action.
+* FIX Crash when choosing backup files and the system is configured not to allow it.
+* FIX Don't fail import when using default folders and a file is missing, but at least one other exists.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta4 *(2015-09-25)*
+
+* TWEAK On Android KitKat (4.4) and up, you can now select custom (auto) backup files. These may be
+  on external storage, Google Drive, etc (provider needs to support Storage Access Framework).
+* FIX The sync indicator has moved into the app bar and is now circular and less distracting.
+* NOTICE Latest translations from crowdin.
 
 #### 25-beta3 *(2015-09-18)*
 

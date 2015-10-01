@@ -19,11 +19,11 @@ allprojects {
 
 ext {
     compileSdkVersion = 23
-    buildToolsVersion = '23.0.0'
+    buildToolsVersion = '23.0.1'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15132
-    versionName = '25-beta3'
+    versionCode = 15134
+    versionName = '25'
 }
 
 ext.libraries = [

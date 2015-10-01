@@ -8,6 +8,7 @@
   <string name="search">Meklē</string>
   <string name="preferences">Iestatījumi</string>
   <string name="help">Palīdzība</string>
+  <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Atvērt navigācijas atvilktni</string>
   <string name="drawer_close">Aizvērt navigācijas atvilktni</string>
   <string name="show">Seriāls</string>
@@ -329,8 +330,8 @@
   <string name="pref_other">Citi</string>
   <string name="pref_autoupdate">Ieslēgt automātiskos atjauninājumus</string>
   <string name="pref_autoupdatesummary">Periodiski atjaunot tavus šovus</string>
-  <string name="pref_autobackup">Ieslēgt automātisko datu dublēšanu</string>
-  <string name="pref_autobackupsummary">Jūsu seriālu saraksta iknedēļas rezerves kopija Lejupielāžu mapē</string>
+  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Dublēt/Atjaunot</string>
   <string name="backup_summary">Dublēt vai atjaunot jūsu seriālus</string>
   <string name="pref_number">Epizožu formāts</string>
@@ -339,12 +340,10 @@
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
   <string name="pref_ganalyticssummary">Saglabā datus par funkciju lietošanu, lai palīdzētu uzlabot SeriesGuide</string>
-  <string name="backup_description"><b>Dublēt</b> eksportēs jūsu seriālus, sezonas, epizodes un sarakstus uz JSON failu sekojošā mapē.\nTo
-<b>Atjaunot</b> pārliecinieties, ka dublēšanas laikā izveidotie JSON faili atrodas sekojošā mapē.</string>
   <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>
   <string name="backup_path">Dublējuma mape</string>
   <string name="backup_version">Datu bāzes versija</string>
-  <string name="backup_failed_nosd">Neizdodas dublēt. Dublējuma mape nav pieejama.</string>
+  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Notiek datu bāzes dublēšana…</string>
   <string name="backup_success">Dublēšana izdevās.</string>
   <string name="backup_failed">Dublēšana neizdevās.</string>
@@ -359,11 +358,15 @@
   <string name="import_button">Atjaunot</string>
   <string name="backup_question">Tādējādi tiks pārrakstīts mapes pašreizējais dublējums!</string>
   <string name="import_question">Pašreizējais seriālu saraksts pazudīs! Pārliecinieties, ka dublējuma fails atrodas dublējuma mapē.</string>
-  <string name="import_warning">Es saprotu, ka mani pašreizēji seriāli un saraksti pazudīs!</string>
+  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
   <string name="last_auto_backup">Pēdējais automātiskais dublējums: %s</string>
   <string name="restore_auto_backup">Atjaunot no automātiskā dublējuma</string>
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="no_file_selected">No file selected</string>
+  <string name="action_select_file">Select file</string>
+  <string name="backup_use_default_files">Use default backup files</string>
   <string name="get_started">Gūsti startu</string>
   <string name="welcome_setuplanguage">Izvēlies valodu</string>
   <string name="dismiss">Atcelt</string>

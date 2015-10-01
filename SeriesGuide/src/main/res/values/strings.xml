@@ -9,6 +9,7 @@
     <string name="search">Search</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
+    <string name="help_and_feedback">Help &amp; Feedback</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
@@ -399,8 +400,8 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
     <string name="pref_autoupdatesummary">Periodically update your shows</string>
-    <string name="pref_autobackup">Turn on Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+    <string name="pref_autobackup">Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_number">Number format</string>
@@ -411,11 +412,10 @@
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
     <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
-    <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
+    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
     <string name="backup_inprogress">Backing up database…</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>
@@ -430,11 +430,15 @@
     <string name="import_button">Restore backup</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-    <string name="import_warning">I understand my current shows and lists will be lost!</string>
+    <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
+    <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="action_select_file">Select file</string>
+    <string name="backup_use_default_files">Use default backup files</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
