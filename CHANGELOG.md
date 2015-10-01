@@ -5,6 +5,52 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 25 *(2015-10-01)*
+-----------------------------
+
+* Support Android 6.0 (Marshmallow), will now ask for permissions.
+* On Android 4.4 (KitKat) and up, you can now select custom (auto) backup files. These may be
+  on external storage, Google Drive, etc. (provider needs to support Storage Access Framework).
+* On Android 5.0 (Lollipop) and up, the app bar hides in some screens when scrolling.
+* Restructured settings, open help page using Chrome custom tabs, other improvements.
+
+#### 25 *(2015-10-01)*
+
+* TWEAK Allow to select between importing shows, lists and movies.
+* TWEAK Show help and feedback page using Chrome custom tabs, if available. More prominent feedback action.
+* FIX Crash when choosing backup files and the system is configured not to allow it.
+* FIX Don't fail import when using default folders and a file is missing, but at least one other exists.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta4 *(2015-09-25)*
+
+* TWEAK On Android KitKat (4.4) and up, you can now select custom (auto) backup files. These may be
+  on external storage, Google Drive, etc (provider needs to support Storage Access Framework).
+* FIX The sync indicator has moved into the app bar and is now circular and less distracting.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta3 *(2015-09-18)*
+
+* TWEAK Hide app bar when scrolling on Android 5.0 and up in Shows, Lists, Movies, Add show screens.
+* TWEAK Hide app bar when scrolling in episode details view on phones.
+* TWEAK Always display add show button, only hide it when moving between tabs.
+* TWEAK Move "Upcoming range" setting to Shows tab filter menu.
+* TWEAK Rename "Content language" setting to "Preferred content language" as a fallback
+  to English is always possible.
+* TWEAK Use switch preference in settings where appropriate.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta2 *(2015-09-12)*
+
+* TWEAK Support Android 6.0, including new permissions.
+* TWEAK Restructured settings, added important ones to the main screen.
+* NOTICE Latest translations from crowdin.
+
+#### 25-beta1 *(2015-08-26)*
+
+* TWEAK Full height nav drawer on Android 5 Lollipop and up.
+* FIX trakt friend activity was not displayed if one friend had a username with a period in it.
+
 Version 24 *(2015-08-21)*
 -----------------------------
 

@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -82,13 +83,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
-            setTheme(R.style.ImmersiveTheme);
-        } else {
-            setTheme(R.style.ImmersiveTheme_Stock);
-        }
+        ThemeUtils.setImmersiveTheme(this);
     }
 
     @Override

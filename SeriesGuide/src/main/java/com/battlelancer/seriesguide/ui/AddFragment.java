@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,7 +61,7 @@ public abstract class AddFragment extends Fragment {
 
     /**
      * Implementers should inflate their own layout and inject views with {@link
-     * butterknife.ButterKnife#inject(Object, android.view.View)}.
+     * butterknife.ButterKnife}.
      */
     @Override
     public abstract View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -73,6 +74,8 @@ public abstract class AddFragment extends Fragment {
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
         resultsGridView.setOnItemClickListener(mItemClickListener);
+        // enable app bar scrolling out of view only on L or higher
+        ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
 
         // restore an existing adapter
         if (adapter != null) {

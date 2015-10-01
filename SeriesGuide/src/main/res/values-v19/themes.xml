@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Special themes -->
-    <style name="ImmersiveTheme" parent="Theme.SeriesGuide">
+    <style name="Theme.SeriesGuide.Immersive">
 
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
@@ -10,15 +10,15 @@
 
     </style>
 
-    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue">
+    <style name="Theme.SeriesGuide.DarkBlue.Immersive">
 
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        
+
     </style>
 
-    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light">
+    <style name="Theme.SeriesGuide.Light.Immersive">
 
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>

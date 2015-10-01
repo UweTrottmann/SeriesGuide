@@ -55,7 +55,7 @@ public class StatsActivity extends BaseTopActivity {
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_STATS_POSITION);
+        setDrawerSelectedItem(R.id.navigation_item_stats);
     }
 
     @Override

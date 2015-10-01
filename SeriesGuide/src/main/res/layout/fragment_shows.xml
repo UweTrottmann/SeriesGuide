@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/shows_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -41,19 +41,5 @@
         android:numColumns="auto_fit"
         android:paddingBottom="88dp"
         android:stretchMode="columnWidth" />
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/buttonShowsAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="@dimen/floating_action_button_margin_end"
-        android:src="@drawable/ic_action_add"
-        fab:fab_colorNormal="?attr/colorAccent"
-        fab:fab_colorPressed="?attr/sgColorBackgroundFabPressed"
-        fab:fab_colorRipple="?attr/colorControlHighlight" />
 
 </FrameLayout>

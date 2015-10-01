@@ -177,6 +177,9 @@
             </intent-filter>
         </receiver>
 
+        <!-- Chrome custom tabs -->
+        <receiver android:name="com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver" />
+
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"

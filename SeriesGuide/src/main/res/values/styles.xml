@@ -79,12 +79,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextAppearance.Body.Dim">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    <style name="TextAppearance.Body.Bold.Accent">
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
-    <style name="TextAppearance.Body.White">
-        <item name="android:textColor">@color/black_11</item>
+    <style name="TextAppearance.Body.Dim">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Body.Highlight">

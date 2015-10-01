@@ -8,78 +8,81 @@
     <dimen name="larger_padding">24dp</dimen>
     <dimen name="icon_padding">12dp</dimen>
 
-    <dimen name="max_width_text_size_body">400dp</dimen>
-    <dimen name="dialog_min_width">300dp</dimen>
-    <dimen name="floating_action_button_margin_end">40dp</dimen>
+    <dimen name="keyline">16dp</dimen>
+    <dimen name="keyline_minus_16">0dp</dimen>
+    <dimen name="icon_large_size">40dp</dimen>
+    <dimen name="item_regular_height">56dp</dimen>
 
-    <!-- Material text sizes -->
+    <!-- Text -->
     <dimen name="text_size_default_sg">14sp</dimen>
     <dimen name="text_size_caption_sg">12sp</dimen>
 
-    <dimen name="addpager_width">450dp</dimen>
-
+    <!-- Widgets -->
     <dimen name="widget_item_width">24dp</dimen>
     <dimen name="widget_item_height">35dp</dimen>
     <dimen name="widget_margin">5dp</dimen>
-    <dimen name="widget_paddingTop">8dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
-    <dimen name="widget_paddingBottom">8dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
     <dimen name="widget_poster_width">25dp</dimen>
     <dimen name="widget_text_small">11sp</dimen>
     <dimen name="widget_text_middle">12sp</dimen>
     <dimen name="widget_text_large">13sp</dimen>
 
+    <!-- Grids -->
     <dimen name="showgrid_columnWidth">275dp</dimen>
+    <integer name="grid_column_count">1</integer>
     <!-- CardView adds padding on pre-v21 to draw shadows, reduce grid spacing accordingly -->
     <dimen name="grid_topbottom_padding">5dp</dimen>
     <dimen name="grid_leftright_padding">6dp</dimen>
     <dimen name="grid_vertical_spacing">3dp</dimen>
     <dimen name="grid_horizontal_spacing">4dp</dimen>
 
+    <!-- Show posters -->
     <dimen name="show_poster_width">68dp</dimen>
     <dimen name="show_poster_height">100dp</dimen>
     <dimen name="show_poster_small_width">68dp</dimen>
     <dimen name="show_poster_small_height">100dp</dimen>
 
+    <!-- Episode images -->
     <dimen name="imagecontainer_height">180dp</dimen>
 
-    <dimen name="drawer_width">260dp</dimen>
-
-    <dimen name="movie_item_width">100dp</dimen>
-    <dimen name="movie_item_height">214dp</dimen>
-    <dimen name="movie_item_poster_height">150dp</dimen>
-
-    <dimen name="shortcut_icon_size">48dp</dimen>
-
-    <dimen name="buttons_min_height">64dp</dimen>
-    <dimen name="buttonbar_button_width">56dp</dimen>
-
-    <dimen name="empty_view_width">250dp</dimen>
-
-    <dimen name="drag_grip_ridge_size">4dp</dimen>
-    <dimen name="drag_grip_ridge_gap">2dp</dimen>
-
+    <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
     <dimen name="person_headshot_large_width">100dp</dimen>
     <dimen name="person_headshot_large_height">300dp</dimen>
 
-    <dimen name="tab_padding_horizontal">12dp</dimen>
+    <!-- Movies -->
+    <dimen name="movie_item_width">100dp</dimen>
+    <dimen name="movie_item_height">214dp</dimen>
+    <dimen name="movie_item_poster_height">150dp</dimen>
 
-    <dimen name="drawer_item_height">48dp</dimen>
-    <dimen name="drawer_icon_size">24dp</dimen>
+    <!-- Inline buttons -->
+    <dimen name="buttons_min_height">64dp</dimen>
+    <dimen name="buttonbar_button_width">56dp</dimen>
 
-    <dimen name="keyline">16dp</dimen>
-    <dimen name="keyline_minus_16">0dp</dimen>
-    <dimen name="icon_small_size">24dp</dimen>
-    <dimen name="icon_large_size">40dp</dimen>
-    <dimen name="item_regular_height">56dp</dimen>
+    <!-- Reorder drag grip -->
+    <dimen name="drag_grip_ridge_size">4dp</dimen>
+    <dimen name="drag_grip_ridge_gap">2dp</dimen>
 
-    <dimen name="search_padding_right">16dp</dimen>
+    <!-- Navigation drawer -->
+    <dimen name="drawer_width">260dp</dimen>
 
+    <!-- Refresh progress circle -->
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
-    <integer name="grid_column_count">1</integer>
+    <!-- Floating action button -->
+    <!-- Below Android 5.0 seems to add auto-padding for shadows, so reduce margin. -->
+    <dimen name="fab_margin">4dp</dimen>
+    <dimen name="fab_scroll_threshold">4dp</dimen>
+
+    <!-- Others -->
+    <dimen name="max_width_text_size_body">400dp</dimen>
+    <dimen name="dialog_min_width">300dp</dimen>
+    <dimen name="addpager_width">450dp</dimen>
+    <dimen name="empty_view_width">250dp</dimen>
+    <dimen name="shortcut_icon_size">48dp</dimen>
+    <dimen name="tab_padding_horizontal">12dp</dimen>
+    <dimen name="search_padding_right">16dp</dimen>
 
 </resources>

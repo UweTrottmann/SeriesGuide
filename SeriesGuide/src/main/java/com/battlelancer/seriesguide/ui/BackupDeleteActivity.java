@@ -314,7 +314,7 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     public void exportDatabase() {
-        if (isExternalStorageAvailable(R.string.backup_failed_nosd)) {
+        if (isExternalStorageAvailable(R.string.backup_failed_file_access)) {
             mTask = new ExportDatabaseTask();
             Utils.executeInOrder(mTask);
         }

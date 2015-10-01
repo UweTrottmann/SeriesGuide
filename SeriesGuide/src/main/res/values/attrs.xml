@@ -12,7 +12,6 @@
     <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
-    <attr name="sgColorBackgroundFabPressed" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />

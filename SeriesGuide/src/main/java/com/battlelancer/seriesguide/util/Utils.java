@@ -32,9 +32,11 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -157,8 +159,8 @@ public class Utils {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, OnAlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
-                * DateUtils.MINUTE_IN_MILLIS, pi);
+        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
     /**
@@ -411,24 +413,6 @@ public class Utils {
     }
 
     /**
-     * Sets the global app theme variable. Applied by all activities once they are created.
-     */
-    public static synchronized void updateTheme(String themeIndex) {
-        int theme = Integer.valueOf(themeIndex);
-        switch (theme) {
-            case 1:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_DarkBlue;
-                break;
-            case 2:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
-                break;
-            default:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
-                break;
-        }
-    }
-
-    /**
      * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
      */
     public static void trackView(Context context, String screenName) {
@@ -498,13 +482,11 @@ public class Utils {
         // check connection state
         if (largeDataOverWifiOnly) {
             if (AndroidUtils.isJellyBeanOrHigher()) {
-                // better: only allow large data downloads on non-metered connections
-                ConnectivityManager connectivityManager
-                        = (ConnectivityManager) context.getSystemService(
-                        Context.CONNECTIVITY_SERVICE);
-                isConnected = !connectivityManager.isActiveNetworkMetered();
+                // better: only allow large data downloads over non-metered connections
+                isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
             } else {
-                // only allow large data downloads on WiFi
+                // only allow large data downloads over WiFi,
+                // assuming it is most likely to be not metered
                 isConnected = AndroidUtils.isWifiConnected(context);
             }
         } else {
@@ -556,6 +538,32 @@ public class Utils {
         }
 
         if (displayError && !handled) {
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
+
+        return handled;
+    }
+
+    /**
+     * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
+     * a result.
+     */
+    public static boolean tryStartActivityForResult(Fragment fragment, Intent intent,
+            int requestCode) {
+        Context context = fragment.getContext();
+
+        // check if the intent can be handled
+        boolean handled = false;
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            try {
+                fragment.startActivityForResult(intent, requestCode);
+                handled = true;
+            } catch (ActivityNotFoundException ignored) {
+                // catch failure to handle explicit intents
+            }
+        }
+
+        if (!handled) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
 

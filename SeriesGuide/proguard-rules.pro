@@ -17,9 +17,10 @@
 -keepattributes Exceptions
 
 # Only shrink specific packages
-# Guava, added through google-api-client-android
+# Android Support libaries
 # Google Play services (also brings its own proguard config)
--keep,allowobfuscation class !com.google.common.**, !com.google.android.gms.** { *; }
+# Guava, added through google-api-client-android
+-keep,allowobfuscation class !android.support.**, !com.google.android.gms.**, !com.google.common.**  { *; }
 
 # Only obfuscate android.support.v7.internal.view.menu.**
 # to avoid problem on Samsung 4.2.2 devices with appcompat v21
@@ -60,3 +61,12 @@
 # Retrofit has some optional dependencies we don't use.
 -dontwarn rx.**
 -dontwarn retrofit.appengine.**
+-dontwarn retrofit.client.ApacheClient$GenericEntityHttpRequest
+-dontwarn retrofit.client.ApacheClient$GenericHttpRequest
+-dontwarn retrofit.client.ApacheClient$TypedOutputEntity
+
+# Apache HTTP was removed as of Android M
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.google.api.client.http.apache.**
+-dontwarn com.google.android.gms.internal.**

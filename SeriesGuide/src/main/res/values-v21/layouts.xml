@@ -17,8 +17,11 @@
 
 <resources>
 
-    <!-- Fast scrollbar sizes have changed on Android 5.1, they are now much more compact.
-     So position floating action button more to the right. -->
-    <dimen name="floating_action_button_margin_end">24dp</dimen>
+    <!-- On Lollipop and up, use CoordinatorLayouts and scrolling app bars. -->
+    <item name="activity_shows" type="layout">@layout/activity_shows_v21</item>
+    <item name="activity_addshow" type="layout">@layout/activity_addshow_v21</item>
+    <item name="activity_overview" type="layout">@layout/activity_overview_v21</item>
+    <item name="activity_tabs_drawer" type="layout">@layout/activity_tabs_drawer_v21</item>
+    <item name="fragment_episode" type="layout">@layout/fragment_episode_v21</item>
 
 </resources>

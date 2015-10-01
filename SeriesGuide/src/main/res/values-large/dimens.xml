@@ -2,6 +2,8 @@
 <resources>
 
     <dimen name="item_padding">4dp</dimen>
+
+    <!-- Increase tab width on large+ screen devices -->
     <dimen name="tab_padding_horizontal">24dp</dimen>
 
 </resources>

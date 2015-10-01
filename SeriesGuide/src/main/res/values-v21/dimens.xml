@@ -23,4 +23,7 @@
     <dimen name="grid_vertical_spacing">8dp</dimen>
     <dimen name="grid_horizontal_spacing">8dp</dimen>
 
+    <!-- Floating action button -->
+    <dimen name="fab_margin">16dp</dimen>
+
 </resources>

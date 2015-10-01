@@ -59,7 +59,6 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
-        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -148,7 +147,6 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
-        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -249,7 +247,6 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
-        <item name="sgColorBackgroundFabPressed">@color/teal_700</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
@@ -339,10 +336,16 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ImmersiveTheme" parent="Theme.SeriesGuide"/>
+    <style name="Theme.SeriesGuide.Drawer" />
 
-    <style name="ImmersiveTheme.Stock" parent="Theme.SeriesGuide.DarkBlue"/>
+    <style name="Theme.SeriesGuide.DarkBlue.Drawer" />
 
-    <style name="ImmersiveTheme.Light" parent="Theme.SeriesGuide.Light"/>
+    <style name="Theme.SeriesGuide.Light.Drawer" />
+
+    <style name="Theme.SeriesGuide.Immersive" />
+
+    <style name="Theme.SeriesGuide.DarkBlue.Immersive" />
+
+    <style name="Theme.SeriesGuide.Light.Immersive" />
 
 </resources>

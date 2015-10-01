@@ -16,6 +16,7 @@
   ~ limitations under the License.
   -->
 
+<!-- The scroll flags are only useful on the L+ coordinator layouts and are otherwise ignored. -->
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
@@ -24,4 +25,5 @@
     android:layout_width="match_parent"
     android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
-    android:background="?attr/colorPrimary" />
+    android:background="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|enterAlways" />

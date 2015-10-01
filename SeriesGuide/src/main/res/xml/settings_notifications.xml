@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="True"
         android:key="com.battlelancer.seriesguide.notifications"
         android:summary="@string/pref_notificationssummary"
@@ -25,12 +25,9 @@
         android:summary="@string/pref_vibratesummary"
         android:title="@string/pref_vibrate" />
 
-    <RingtonePreference
+    <Preference
         android:defaultValue="content://settings/system/notification_sound"
         android:key="com.battlelancer.seriesguide.notifications.ringtone"
-        android:ringtoneType="notification"
-        android:showDefault="true"
-        android:showSilent="true"
         android:title="@string/pref_ringtone" />
 
 </PreferenceScreen>

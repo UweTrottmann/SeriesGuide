@@ -28,7 +28,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -37,10 +36,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
 
 /**
@@ -81,13 +79,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void setCustomTheme() {
         // use a special immersive theme
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setTheme(R.style.ImmersiveTheme_Light);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide) {
-            setTheme(R.style.ImmersiveTheme);
-        } else {
-            setTheme(R.style.ImmersiveTheme_Stock);
-        }
+        ThemeUtils.setImmersiveTheme(this);
     }
 
     private void setupViews() {
@@ -167,17 +159,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue ? R.color.white
                         : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
         tabs.setViewPager(pager);
-
-        if (AndroidUtils.isKitKatOrHigher()) {
-            // fix padding with translucent status bar
-            // warning: status bar not always translucent (e.g. Nexus 10)
-            // (using fitsSystemWindows would not work correctly with multiple views)
-            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
-            ViewGroup contentContainer = (ViewGroup) findViewById(
-                    R.id.contentContainerEpisodeDetails);
-            contentContainer.setPadding(0, config.getPixelInsetTop(false), 0, 0);
-        }
 
         // set current item
         pager.setCurrentItem(startPosition, false);

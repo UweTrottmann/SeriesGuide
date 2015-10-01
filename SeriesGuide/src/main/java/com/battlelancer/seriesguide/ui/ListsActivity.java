@@ -84,9 +84,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
             @Override
             public void onTabClick(int position) {
                 if (mPager.getCurrentItem() == position) {
-                    String listId = mListsAdapter.getListId(position);
-                    ListManageDialogFragment.showListManageDialog(listId,
-                            getSupportFragmentManager());
+                    showListManageDialog(position);
                 }
             }
         });
@@ -97,7 +95,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     protected void onStart() {
         super.onStart();
 
-        setDrawerSelectedItem(BaseNavDrawerActivity.MENU_ITEM_LISTS_POSITION);
+        setDrawerSelectedItem(R.id.navigation_item_lists);
     }
 
     @Override
@@ -130,6 +128,11 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
             fireTrackerEvent("Search");
             return true;
         }
+        if (itemId == R.id.menu_action_lists_edit) {
+            int selectedListIndex = mPager.getCurrentItem();
+            showListManageDialog(selectedListIndex);
+            return true;
+        }
         if (itemId == R.id.menu_action_lists_sort_title) {
             if (ListsDistillationSettings.getSortOrderId(this)
                     == ListsSortOrder.TITLE_ALPHABETICAL_ID) {
@@ -157,6 +160,11 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showListManageDialog(int selectedListIndex) {
+        String listId = mListsAdapter.getListId(selectedListIndex);
+        ListManageDialogFragment.show(listId, getSupportFragmentManager());
     }
 
     @Override

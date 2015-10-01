@@ -9,8 +9,7 @@ keystore.properties
 local.properties
 
 ### Crashlytics
-crashlytics.properties
-com_crashlytics_export_strings.xml
+fabric.properties
 
 ### Linux
 !.gitignore
