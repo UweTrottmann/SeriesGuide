@@ -8,6 +8,7 @@
   <string name="search">Ara</string>
   <string name="preferences">Ayarlar</string>
   <string name="help">Yardım</string>
+  <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Navigasyon çekmecesini aç</string>
   <string name="drawer_close">Navigasyon çekmecesini kapat</string>
   <string name="show">Dizi</string>
@@ -228,8 +229,8 @@
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="hexagon_api_error">SeriesGuide Cloud\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">SeriesGuide Cloud\'u kullanabilmek için lütfen hesaplarınıza erişim için izin verin.</string>
+  <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="trakt_seen">%s görüldü.</string>
   <string name="trakt_notseen">%s görülmedi.</string>
@@ -293,7 +294,7 @@
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_seasonsorting">Sezonları sırala:…</string>
   <string name="pref_episodesorting">Bölümleri sırala:…</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Tercih edilen içerik dili</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Operatör veri ücretlerini azaltmak için sadece Wi-Fi kullanın</string>
   <string name="about">SeriesGuide Hakkında</string>
@@ -303,7 +304,7 @@
   <string name="licence_tvdb">Bu uygulama kullanılan veriler ve görseller CC BY-NC 4.0 lisansı altındaki TheTVDB verileridir.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır. TMDb ile doğrudan ilişkili, bağlantılı değildir.</string>
   <string name="licence_trakt">Bu uygulama trakt tarafından sağlanan veri ve görselleri kullanır.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
   <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sırala</string>
   <string name="action_sort_ignore_articles">Metinleri yoksay</string>
@@ -329,8 +330,8 @@
   <string name="pref_other">Diğer</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
   <string name="pref_autoupdatesummary">Dizilerinizi düzenli olarak güncelleyin</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Otomatik yedekleme</string>
+  <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_number">Sayı biçimi</string>
@@ -342,7 +343,7 @@
   <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
   <string name="backup_inprogress">Veritabanı yedekleniyor…</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>
@@ -357,15 +358,15 @@
   <string name="import_button">Geri Yükle</string>
   <string name="backup_question">Bu, aktif yedekleme klasöründeki yedek dosyasının üzerine yazacak!</string>
   <string name="import_question">Geçerli dizi listesi silinecektir! Yedek dosyasının yedekleme klasörünün içinde olduğundan emin olun.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Mevcut şovlarımın, listelerimin ve filmlerimin silineceğini anlıyorum!</string>
   <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
   <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
   <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="action_select_file">Dosya seçin</string>
+  <string name="backup_use_default_files">Varsayılan yedek dosyalarını kullan</string>
   <string name="get_started">Başlarken... </string>
   <string name="welcome_setuplanguage">Dil seçin</string>
   <string name="dismiss">Kapat</string>
