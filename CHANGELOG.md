@@ -14,6 +14,11 @@ Version 25 *(2015-10-01)*
 * On Android 5.0 (Lollipop) and up, the app bar hides in some screens when scrolling.
 * Restructured settings, open help page using Chrome custom tabs, other improvements.
 
+#### 25.0.1 *(2015-10-02)*
+
+* FIX Error messages in Now tabs not always visible.
+* NOTICE Latest translations from crowdin.
+
 #### 25 *(2015-10-01)*
 
 * TWEAK Allow to select between importing shows, lists and movies.

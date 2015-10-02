@@ -64,4 +64,10 @@
         <item name="android:elevation">4dp</item>
     </style>
 
+    <!-- Inline snackbar -->
+    <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
+    <style name="Widget.SeriesGuide.InlineSnackbar">
+        <item name="android:layout_marginBottom">?attr/actionBarSize</item>
+    </style>
+
 </resources>
