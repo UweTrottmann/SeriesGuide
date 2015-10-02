@@ -221,6 +221,9 @@
         <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
     </style>
 
+    <!-- Inline snackbar -->
+    <style name="Widget.SeriesGuide.InlineSnackbar" />
+
     <!-- Dialogs -->
     <style name="Widget.SeriesGuide.DialogWindowTitle">
         <item name="android:maxLines">1</item>
