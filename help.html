@@ -20,7 +20,7 @@ title: Help
       <li><a href="#backup">Backup or restore your data</a></li>
       <li><a href="#autobackup">Restore your data from an Auto-Backup</a></li>
       <li><a href="#language">Change the app language</a></li>
-      <li><a href="#sync">Sync with SeriesGuide Cloud (or trakt)</a></li>
+      <li><a href="#sync">Sync with SeriesGuide Cloud or trakt</a></li>
     </ul>
     
     <a href="#fixes"><h2>Fix an issue</h2></a>
@@ -119,10 +119,11 @@ title: Help
     <p>To backup or restore your shows, lists and movies:</p>
     <ol>
       <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
-      <li>Touch <strong>Settings</strong> > <strong>Advanced</strong> > <strong>Backup/Restore</strong>.</li>
+      <li>Touch <strong>Settings</strong> > <strong>Backup/Restore</strong>.</li>
       <li>Follow the instructions.</p></li>
     </ol>
-    <p>The backup tool will create a <strong>SeriesGuide</strong> folder inside your devices <strong>Download</strong> folder (accessible with a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a>; the exact path is displayed by the backup tool). There it will store your backup inside of JSON files.</p>
+    <p>On Android 4.4 (KitKat) and up you can choose where the backup files should be stored or which ones to restore from.</p>
+    <p>On older versions, the backup tool will create a <strong>SeriesGuide</strong> folder inside your devices <strong>Download</strong> folder (accessible with a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a>; the exact path is displayed by the backup tool). There it will store your backup inside of JSON files.</p>
     <p>To restore your backup <strong>on another device</strong>, copy the <strong>SeriesGuide</strong> folder into the <strong>Download</strong> folder of that device (e.g. email yourself the files or plug into a computer via USB) and use the restore tool in SeriesGuide.</p>
     <p><span class="label label-info">Tip</span> Some users save their backup files to e.g. Dropbox/Google Drive/OneDrive.</p>
 
@@ -130,12 +131,12 @@ title: Help
     <div class="spacer"></div>
   
     <h3>Restore your data from an Auto-Backup</h3>
-    <p>In case your shows, lists and movies get lost and you didn't use trakt or SeriesGuide Cloud, SeriesGuide creates <strong>weekly automatic backups to the "Download/SeriesGuide/AutoBackup"</strong> of your device. You can turn this off in advanced settings.</p>
+    <p>SeriesGuide creates <strong>weekly automatic backups to the "Download/SeriesGuide/AutoBackup"</strong> folder on your device (use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> to view it). You can turn this off or choose custom backup files (Android 4.4 and up) in settings.</p>
     <p>To restore an Auto-Backup:</p>
     <ol>
       <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
-      <li>Touch <strong>Settings</strong> > <strong>Advanced</strong> > <strong>Backup/Restore</strong>.</li>
-      <li>Look for the <strong>Restore Auto-Backup</strong> button to restore from the last auto-backup.</li>
+      <li>Touch <strong>Settings</strong> > <strong>Auto Backup</strong>.</li>
+      <li>Look for the <strong>Restore Auto-Backup</strong> button to restore the last auto-backup.</li>
     </ol>
   
     <a name="language"></a>
@@ -143,18 +144,23 @@ title: Help
     
     <h3>Change the app language</h3>
     <p>If available, SeriesGuide will use <strong>the language your Android device is set to</strong>. Otherwise it will fall back to English. To change the language of your Android device look in the Android Settings app.</p>
-    <p><span class="label label-info">Note</span> All translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="https://crowdin.com/project/seriesguide-translations/invite">to translate or proof read</a>!</p>
+    <p><span class="label label-info">Note</span> All translations come from amazing volunteers who translate on crowdin. Please consider <a href="https://crowdin.com/project/seriesguide-translations/invite">to translate or proof read</a> as well!</p>
 
     <a name="sync"></a>
     <div class="spacer"></div>
 
-    <h3>Should I sync with SeriesGuide Cloud (or trakt)?</h3>
-    <p>It depends on the devices and apps you use. Also keep in mind that <strong>SeriesGuide Cloud is experimental</strong>.</p>
+    <h3>Should I connect to SeriesGuide Cloud or trakt?</h3>
+    <p>It depends on the devices and apps you use. Also keep in mind that <strong>SeriesGuide Cloud is experimental</strong> and not available for the Amazon version.</p>
     <dt>SeriesGuide Cloud</dt>
-    <dd>You only use SeriesGuide, maybe even on multiple devices. You want to sync favorite and hidden state of shows. You want to sync skipped episodes, in addition to watched/collected state. You don't want to create a trakt account.</dd>
+    <dd>You only use SeriesGuide on all your devices. You want to sync the favorite and hidden state of shows. You want to sync the skipped state of episodes, in addition to their watched/collected state.</dd>
     <dt>trakt</dt>
-    <dd>You use other apps (e.g. apps on iOS, a media center) connected to trakt or the trakt website to access and sync your trakt library, to check in, mark episodes watched/collected or modify your movie watchlist and collection.</dd>
+    <dd>You use other apps connected to trakt (e.g. <a href="https://trakt.tv/downloads">apps on iOS, a media center</a>) or the <a href="https://trakt.tv">trakt website</a> to access and sync your trakt library, to check in, mark episodes watched/collected or modify your movie watchlist and collection.</dd>
     <br/>
+    <p>To connect to either service:</p>
+    <ol>
+      <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
+      <li>Touch <strong>Settings</strong> and look for the <strong>Services</strong> section.</li>
+    </ol>
     <p><span class="label label-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and trakt</strong> at the same time. Checking in, setting watched/collected, commenting, rating, etc. will still be sent to trakt. However, <strong>sync with trakt will be disabled</strong> (episode watched/collected state sync, movie watchlist and collection sync).</p>
     <p><span class="label label-info">Tip</span> <strong>You can always change your mind!</strong> First, disconnect SeriesGuide Cloud and trakt. Then, sign in again into either SeriesGuide Cloud or trakt. The shows and movies on your device will be merged with the data already existing on the service you signed into.</p>
   
@@ -236,8 +242,7 @@ title: Help
     <ol>
       <li>From the show list, swipe from the left edge to open the navigation drawer.</li>
       <li>Touch <strong>Settings</strong>.</li>
-      <li>Touch <strong>Services</strong>.</li>
-      <li>Touch <strong>Connect to trakt</strong> and follow the given instructions.</p></li>
+      <li>Touch <strong>trakt</strong> and follow the given instructions.</p></li>
     </ol>
     <p><span class="label label-info">Troubleshooting</span> If you can't connect (white screen, error message), trakt may currently be unreachable (check <a href="https://twitter.com/trakt">@trakt</a> and <a href="https://twitter.com/seriesguide">@SeriesGuide</a> for status updates). Please try again later.</p>
     <p>Try to turn off any proxy or VPN (e.g. for ad blocking). Try to clear the SeriesGuide cache (in Android Settings, in <strong>Apps</strong> find SeriesGuide, then touch <strong>Clear Cache</strong>).</p>
