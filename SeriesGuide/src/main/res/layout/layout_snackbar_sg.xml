@@ -33,7 +33,7 @@
         android:paddingLeft="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
         android:paddingBottom="@dimen/default_padding"
-        android:maxLines="2"
+        android:maxLines="3"
         android:ellipsize="end"
         tools:text="@string/offline"
         android:textAppearance="@style/TextAppearance.Body"
