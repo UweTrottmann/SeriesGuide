@@ -16,32 +16,46 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.Intent.ShortcutIconResource;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Transformation;
 import com.uwetrottmann.androidutils.AndroidUtils;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.Intent.ShortcutIconResource;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
+
 import timber.log.Timber;
 
+import static android.graphics.Shader.TileMode;
+
+/**
+ * Helpers for creating launcher shortcuts
+ */
 public final class ShortcutUtils {
 
     /** {@link Intent} action used to create the shortcut */
-    private static final String ACTION_INSTALL_SHORTCUT
-            = "com.android.launcher.action.INSTALL_SHORTCUT";
+    private static final String ACTION_INSTALL_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 
-    /* This class is never initialized */
+    /** This class is never initialized */
     private ShortcutUtils() {
     }
 
     /**
-     * Adds a shortcut to the overview page of the given show to the Home screen.
+     * Adds a shortcut from the overview page of the given show to the Home screen.
      *
      * @param showTitle  The name of the shortcut.
      * @param posterPath A TVDb show poster path.
@@ -54,16 +68,19 @@ public final class ShortcutUtils {
         AsyncTask<Void, Void, Intent> shortCutTask = new AsyncTask<Void, Void, Intent>() {
 
             @Override
-            protected Intent doInBackground(Void... params) {
-                // try to get the show poster
+            protected Intent doInBackground(Void... unused) {
+                // Try to get the show poster
                 Bitmap posterBitmap;
 
                 try {
+                    final String posterUrl = TheTVDB.buildPosterUrl(posterPath);
                     posterBitmap = ServiceUtils.getPicasso(context)
-                            .load(TheTVDB.buildPosterUrl(posterPath))
-                            .networkPolicy(NetworkPolicy.NO_STORE)
+                            .load(posterUrl)
                             .centerCrop()
-                            .resizeDimen(R.dimen.shortcut_icon_size, R.dimen.shortcut_icon_size)
+                            .memoryPolicy(MemoryPolicy.NO_STORE)
+                            .networkPolicy(NetworkPolicy.NO_STORE)
+                            .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                            .transform(new RoundedCornerTransformation(posterUrl, 10f))
                             .get();
                 } catch (IOException e) {
                     Timber.e(e, "Could not load show poster for shortcut " + posterPath);
@@ -82,9 +99,9 @@ public final class ShortcutUtils {
                 intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
                 intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
                 if (posterBitmap == null) {
-                    // fall back to the app icon
+                    // Fall back to the app icon
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                            ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
+                                    ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
                 } else {
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
                 }
@@ -94,7 +111,53 @@ public final class ShortcutUtils {
                 return null;
             }
         };
-        // do all the above async
+        // Do all the above async
         AndroidUtils.executeOnPool(shortCutTask);
     }
+
+    /** A {@link Transformation} used to draw a {@link Bitmap} with round corners */
+    private static final class RoundedCornerTransformation implements Transformation {
+
+        /** A key used to uniquely identify this {@link Transformation} */
+        private final String mKey;
+        /** The corner radius */
+        private final float mRadius;
+
+        /** Constructor for {@code RoundedCornerTransformation} */
+        private RoundedCornerTransformation(@NonNull String key, float radius) {
+            mKey = key;
+            mRadius = radius;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            final int w = source.getWidth();
+            final int h = source.getHeight();
+
+            Paint p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+            p.setShader(new BitmapShader(source, TileMode.CLAMP, TileMode.CLAMP));
+
+            final Bitmap transformed = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(transformed);
+            c.drawRoundRect(new RectF(0f, 0f, w, h), mRadius, mRadius, p);
+
+            // Picasso requires the original Bitmap to be recycled if we aren't returning it
+            source.recycle();
+            source = null;
+
+            // Release any references to avoid memory leaks
+            p.setShader(null);
+            c.setBitmap(null);
+            p = null;
+            c = null;
+            return transformed;
+        }
+
+        @Override
+        public String key() {
+            return mKey;
+        }
+
+    }
+
 }
