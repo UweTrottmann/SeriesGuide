@@ -46,7 +46,7 @@ IAP_KEY_C=dummy
 IAP_KEY_D=dummy
 ```
 
-Also create `SeriesGuide/crashlytics.properties` for [Crashlytics][13]. You may use the dummy values below:
+Also create `SeriesGuide/fabric.properties` for [Crashlytics][13]. You may use the dummy values below:
 
 ```
 # crashlytics dummy values
