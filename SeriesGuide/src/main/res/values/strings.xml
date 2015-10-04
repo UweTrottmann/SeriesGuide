@@ -134,6 +134,7 @@
     <string name="action_shows_filter_hidden">Hidden</string>
     <string name="action_shows_sort">Sort shows</string>
     <string name="action_shows_sort_title">Title</string>
+    <string name="action_shows_sort_network">Network</string>
     <string name="action_shows_sort_episode">Next episode</string>
     <string name="action_shows_sort_favorites">Favorites first</string>
     <string name="updateall_yes">Update (all)</string>

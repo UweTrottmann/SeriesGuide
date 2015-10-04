@@ -28,7 +28,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -340,6 +339,16 @@ public class ShowsFragment extends Fragment implements
             changeSort();
 
             fireTrackerEventAction("Sort Title");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_network) {
+            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.NETWORK_ID) {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.NETWORK_REVERSE_ID;
+            } else {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.NETWORK_ID;
+            }
+            changeSort();
+
+            fireTrackerEventAction("Sort Network");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_episode) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {

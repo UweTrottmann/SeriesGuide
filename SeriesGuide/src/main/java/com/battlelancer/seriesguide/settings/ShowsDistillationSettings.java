@@ -18,12 +18,12 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import com.battlelancer.seriesguide.ui.ShowsFragment;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
- * Provides settings used to filter and sort displayed shows in
- * {@link com.battlelancer.seriesguide.ui.ShowsFragment}.
+ * Provides settings used to filter and sort displayed shows in {@link ShowsFragment}.
  */
 public class ShowsDistillationSettings {
 
@@ -49,6 +49,12 @@ public class ShowsDistillationSettings {
         if (sortOrderId == ShowsSortOrder.TITLE_REVERSE_ID) {
             query.append(isSortIgnoreArticles ?
                     ShowsSortOrder.TITLE_REVERSE_NOARTICLE : ShowsSortOrder.TITLE_REVERSE);
+        } else if (sortOrderId == ShowsSortOrder.NETWORK_ID) {
+            query.append(isSortIgnoreArticles ? ShowsSortOrder.NETWORK_NO_ARTICLE
+                    : ShowsSortOrder.NETWORK);
+        } else if (sortOrderId == ShowsSortOrder.NETWORK_REVERSE_ID) {
+            query.append(isSortIgnoreArticles ? ShowsSortOrder.NETWORK_REVERSE_NO_ARTICLE
+                    : ShowsSortOrder.NETWORK_REVERSE);
         } else if (sortOrderId == ShowsSortOrder.EPISODE_ID) {
             query.append(ShowsSortOrder.EPISODE);
         } else if (sortOrderId == ShowsSortOrder.EPISODE_REVERSE_ID) {
@@ -62,9 +68,7 @@ public class ShowsDistillationSettings {
     }
 
     /**
-     * Returns the id as of
-     * {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
-     * of the current show sort order.
+     * Returns the id as of {@link ShowsSortOrder} of the current show sort order.
      */
     public static int getSortOrderId(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_SORT_ORDER, 0);
@@ -96,10 +100,12 @@ public class ShowsDistillationSettings {
     }
 
     /**
-     * Used by {@link com.battlelancer.seriesguide.ui.ShowsFragment} loader to sort the list of
-     * shows.
+     * Used by {@link ShowsFragment} loader to sort the list of shows.
      */
     public interface ShowsSortOrder {
+        // add as prefix to sort favorites first
+        String FAVORITES_FIRST_PREFIX = Shows.FAVORITE + " DESC,";
+
         // alphabetical by title
         String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         // alphabetical by title
@@ -108,18 +114,29 @@ public class ShowsDistillationSettings {
         String TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC";
         // reverse alphabetical by title
         String TITLE_REVERSE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
+
         // by next episode release time, oldest first
         String EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
         // by next episode release time, newest first
         String EPISODE_REVERSE = Shows.NEXTAIRDATEMS + " DESC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
-        // add as prefix to sort favorites first
-        String FAVORITES_FIRST_PREFIX = Shows.FAVORITE + " DESC,";
+
+        // Alphabetical by network and title
+        String NETWORK = Shows.NETWORK + " ASC," + TITLE;
+        // Reverse alphabetical by network and title
+        String NETWORK_REVERSE = Shows.NETWORK + " DESC," + TITLE_REVERSE;
+        // Alphabetical by network and title
+        String NETWORK_NO_ARTICLE = Shows.NETWORK + " ASC," + TITLE_NOARTICLE;
+        // Reverse alphabetical by network and title
+        String NETWORK_REVERSE_NO_ARTICLE = Shows.NETWORK + " DESC," + TITLE_REVERSE_NOARTICLE;
+
         // ids used for storing in preferences
         int TITLE_ID = 0;
         int TITLE_REVERSE_ID = 1;
         int EPISODE_ID = 2;
         int EPISODE_REVERSE_ID = 3;
+        int NETWORK_ID = 4;
+        int NETWORK_REVERSE_ID = 5;
     }
 }

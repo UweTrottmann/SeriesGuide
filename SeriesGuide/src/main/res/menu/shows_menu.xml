@@ -55,6 +55,9 @@
                 android:id="@+id/menu_action_shows_sort_title"
                 android:title="@string/action_shows_sort_title" />
             <item
+                android:id="@+id/menu_action_shows_sort_network"
+                android:title="@string/action_shows_sort_network" />
+            <item
                 android:id="@+id/menu_action_shows_sort_episode"
                 android:title="@string/action_shows_sort_episode" />
             <item
