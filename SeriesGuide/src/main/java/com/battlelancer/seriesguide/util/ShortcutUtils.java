@@ -48,7 +48,8 @@ import static android.graphics.Shader.TileMode;
 public final class ShortcutUtils {
 
     /** {@link Intent} action used to create the shortcut */
-    private static final String ACTION_INSTALL_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
+    private static final String ACTION_INSTALL_SHORTCUT
+            = "com.android.launcher.action.INSTALL_SHORTCUT";
 
     /** This class is never initialized */
     private ShortcutUtils() {
@@ -57,7 +58,7 @@ public final class ShortcutUtils {
     /**
      * Adds a shortcut from the overview page of the given show to the Home screen.
      *
-     * @param showTitle  The name of the shortcut.
+     * @param showTitle The name of the shortcut.
      * @param posterPath A TVDb show poster path.
      * @param showTvdbId The TVDb ID of the show.
      */
@@ -79,7 +80,8 @@ public final class ShortcutUtils {
                             .centerCrop()
                             .memoryPolicy(MemoryPolicy.NO_STORE)
                             .networkPolicy(NetworkPolicy.NO_STORE)
-                            .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                            .resizeDimen(R.dimen.show_poster_small_width,
+                                    R.dimen.show_poster_small_height)
                             .transform(new RoundedCornerTransformation(posterUrl, 10f))
                             .get();
                 } catch (IOException e) {
@@ -101,7 +103,7 @@ public final class ShortcutUtils {
                 if (posterBitmap == null) {
                     // Fall back to the app icon
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                                    ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
+                            ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
                 } else {
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
                 }
@@ -157,7 +159,5 @@ public final class ShortcutUtils {
         public String key() {
             return mKey;
         }
-
     }
-
 }
