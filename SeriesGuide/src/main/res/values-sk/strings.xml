@@ -152,7 +152,8 @@
   <string name="add_error">Nemožno pridať %s.</string>
   <string name="add_already_exists">%s je už vo vašom zozname.</string>
   <string name="recommended">Odporúčané</string>
-  <string name="library">Knižnica</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Kolekcia</string>
   <string name="watchlist">Watchlist</string>
   <string name="first_list">Prvý zoznam</string>
   <string name="list_add">Pridať zoznam</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
   <string name="paste_title">Paste title</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Poslať reakciu</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Základné</string>

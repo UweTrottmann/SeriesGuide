@@ -152,7 +152,8 @@
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
   <string name="recommended">Recomandat</string>
-  <string name="library">Bibliotecă</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Colecție</string>
   <string name="watchlist">Watchlist</string>
   <string name="first_list">Prima listă</string>
   <string name="list_add">Adăugați listă</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Înregistrare</string>
   <string name="checkin_hint">Scrie un mesaj (opțional)</string>
   <string name="paste_title">Lipiți titlul</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Trimiteţi feedback</string>
   <string name="action_open_in_browser">Deschide în browser</string>
   <string name="prefs_category_basic">Elemente de bază</string>

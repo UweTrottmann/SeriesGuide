@@ -152,7 +152,8 @@
   <string name="add_error">%s ni bilo mogoče dodati.</string>
   <string name="add_already_exists">%s je že na vašem seznamu.</string>
   <string name="recommended">Priporočeno</string>
-  <string name="library">Knjižnjica</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Zbirka</string>
   <string name="watchlist">Spisek za gledanje</string>
   <string name="first_list">Prvi spisek</string>
   <string name="list_add">Dodaj spisek</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Prijava</string>
   <string name="checkin_hint">Natipkaj sporočilo (opcijsko)</string>
   <string name="paste_title">Prilepi naslov</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Osnove</string>

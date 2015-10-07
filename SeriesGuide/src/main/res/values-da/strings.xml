@@ -152,7 +152,8 @@
   <string name="add_error">Kunne ikke tilføje %s.</string>
   <string name="add_already_exists">%s er allerede i din serieliste.</string>
   <string name="recommended">Anbefalet</string>
-  <string name="library">Bibliotek</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Samling</string>
   <string name="watchlist">Overvågningsliste</string>
   <string name="first_list">Første liste</string>
   <string name="list_add">Tilføj liste</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Tjek ind</string>
   <string name="checkin_hint">Skriv en besked (valgfrit)</string>
   <string name="paste_title">Indsæt titel</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Send feedback</string>
   <string name="action_open_in_browser">Åben i browser</string>
   <string name="prefs_category_basic">Grundlæggende</string>

@@ -152,7 +152,8 @@
   <string name="add_error">قادر به افزودن %s نمی باشد.</string>
   <string name="add_already_exists">%s  در حال حاضر در لیست نمایشتان هست.</string>
   <string name="recommended">توصیه می شود</string>
-  <string name="library">کتابخانه</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">مجموعه</string>
   <string name="watchlist">لیست نمایش</string>
   <string name="first_list">لیست اول</string>
   <string name="list_add">افزودن لیست</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">ارسال بازخورد</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">اصول اولیه</string>

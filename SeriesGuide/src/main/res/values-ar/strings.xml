@@ -152,7 +152,8 @@
   <string name="add_error">تعذر إضافة %s.</string>
   <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
   <string name="recommended">يُنصح به</string>
-  <string name="library">المكتبة</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">مجموعة</string>
   <string name="watchlist">قائمة المشاهدة</string>
   <string name="first_list">القائمة الأولى</string>
   <string name="list_add">إضافة قائمة</string>
@@ -282,6 +283,8 @@
   <string name="checkin">أشاهده الآن</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="paste_title">إلصق عنوان</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="action_open_in_browser">فتح في المتصفح</string>
   <string name="prefs_category_basic">أساسي</string>

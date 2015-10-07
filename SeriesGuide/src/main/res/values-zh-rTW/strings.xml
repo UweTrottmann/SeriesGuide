@@ -152,7 +152,8 @@
   <string name="add_error">Could not add %s.</string>
   <string name="add_already_exists">%s is already in your show list.</string>
   <string name="recommended">推薦</string>
-  <string name="library">我的資料庫</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Collection</string>
   <string name="watchlist">待看清單</string>
   <string name="first_list">First list</string>
   <string name="list_add">Add list</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Basics</string>

@@ -152,7 +152,8 @@
   <string name="add_error">Неуспешно додавање на %s.</string>
   <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
   <string name="recommended">Препорачани</string>
-  <string name="library">Библиотека</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Колекција</string>
   <string name="watchlist">Листа за гледање</string>
   <string name="first_list">Прва листа</string>
   <string name="list_add">Додај листа</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Пријави гледање</string>
   <string name="checkin_hint">Напиши порака (опционално)</string>
   <string name="paste_title">Залепи наслов</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Прати повратна информација</string>
   <string name="action_open_in_browser">Отвори browser</string>
   <string name="prefs_category_basic">Основи</string>

@@ -152,7 +152,8 @@
   <string name="add_error">%s konnte nicht hinzugefügt werden.</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste.</string>
   <string name="recommended">Empfehlungen</string>
-  <string name="library">Bibliothek</string>
+  <string name="watched_shows">Gesehen</string>
+  <string name="shows_collection">Sammlung</string>
   <string name="watchlist">Ansehen-Liste</string>
   <string name="first_list">Erste Liste</string>
   <string name="list_add">Liste hinzufügen</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Einchecken</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_title">Titel einfügen</string>
+  <string name="pref_quick_checkin">Schneller Check In</string>
+  <string name="pref_quick_checkin_summary">Nicht nach einer Check In Nachricht fragen</string>
   <string name="feedback">Feedback senden</string>
   <string name="action_open_in_browser">Im Browser öffnen</string>
   <string name="prefs_category_basic">Grundlegendes</string>

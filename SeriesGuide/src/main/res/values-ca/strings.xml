@@ -152,7 +152,8 @@
   <string name="add_error">No es pot afegir %s.</string>
   <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
   <string name="recommended">Recomanat</string>
-  <string name="library">Biblioteca</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Coŀlecció</string>
   <string name="watchlist">Llista de seguiment</string>
   <string name="first_list">Primera llista</string>
   <string name="list_add">Afegeix llista</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Inica sessió</string>
   <string name="checkin_hint">Escriviu un missatge (opcional)</string>
   <string name="paste_title">Enganxa el títol</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Envia comentaris</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Bàsics</string>

@@ -152,7 +152,8 @@
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
   <string name="recommended">Προτεινόμενα</string>
-  <string name="library">Βιβλιοθήκη</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Συλλογή</string>
   <string name="watchlist">Λίστα προς παρακολούθηση</string>
   <string name="first_list">Πρώτη λίστα</string>
   <string name="list_add">Προσθήκη λίστας</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_title">Επικόλληση τίτλου</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
   <string name="prefs_category_basic">Βασικά</string>

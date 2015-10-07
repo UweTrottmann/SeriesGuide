@@ -152,7 +152,8 @@
   <string name="add_error">Kan %s niet toevoegen.</string>
   <string name="add_already_exists">%s is al in uw lijst weergeven.</string>
   <string name="recommended">Aanbevolen</string>
-  <string name="library">Bibliotheek</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Collectie</string>
   <string name="watchlist">Watchlist</string>
   <string name="first_list">Eerste lijst</string>
   <string name="list_add">Lijst toevoegen</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_title">Titel plakken</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Reactie verzenden</string>
   <string name="action_open_in_browser">Openen in browser</string>
   <string name="prefs_category_basic">Basis</string>

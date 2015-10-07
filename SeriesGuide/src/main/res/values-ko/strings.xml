@@ -152,7 +152,8 @@
   <string name="add_error">%s를 추가할 수 없음</string>
   <string name="add_already_exists">%s는 이미 리스트에 있습니다.</string>
   <string name="recommended">추천</string>
-  <string name="library">라이브러리</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">컬렉션</string>
   <string name="watchlist">관심목록</string>
   <string name="first_list">첫번째 목록</string>
   <string name="list_add">목록 추가</string>
@@ -282,6 +283,8 @@
   <string name="checkin">체크인</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
   <string name="paste_title">제목 붙여넣기</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">사용자 의견 보내기</string>
   <string name="action_open_in_browser">브라우저에서 열기</string>
   <string name="prefs_category_basic">기본</string>

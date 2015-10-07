@@ -152,7 +152,8 @@
   <string name="add_error">无法将 %s 加入节目单。</string>
   <string name="add_already_exists">%s 已存在于您的节目单中</string>
   <string name="recommended">推荐</string>
-  <string name="library">资料库</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">收藏</string>
   <string name="watchlist">待看列表</string>
   <string name="first_list">我的列表</string>
   <string name="list_add">新建列表</string>
@@ -282,6 +283,8 @@
   <string name="checkin">签到</string>
   <string name="checkin_hint">输入一段文字（可选）</string>
   <string name="paste_title">粘贴名称</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">发送反馈报告</string>
   <string name="action_open_in_browser">在浏览器中打开</string>
   <string name="prefs_category_basic">基本</string>

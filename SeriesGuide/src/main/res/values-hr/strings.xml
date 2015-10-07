@@ -152,7 +152,8 @@
   <string name="add_error">Neuspješno dodavanje %s.</string>
   <string name="add_already_exists">%s je već u vašoj listi serija.</string>
   <string name="recommended">Preporučeno</string>
-  <string name="library">Zbirka</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Zbirka</string>
   <string name="watchlist">Popis gledanja</string>
   <string name="first_list">Prvi popis</string>
   <string name="list_add">Dodaj popis</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Prijavi se</string>
   <string name="checkin_hint">Napiši poruku (neobavezno)</string>
   <string name="paste_title">Zalijepi naziv</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Osnove</string>

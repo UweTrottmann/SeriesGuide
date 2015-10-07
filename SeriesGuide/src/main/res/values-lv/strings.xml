@@ -152,7 +152,8 @@
   <string name="add_error">%s pievienošana bija neveiksmīga.</string>
   <string name="add_already_exists">%s jau ir tavā šovu sarakstā.</string>
   <string name="recommended">Ieteikumi</string>
-  <string name="library">Bibliotēka</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Kolekcija</string>
   <string name="watchlist">Redzamo filmu saraksts</string>
   <string name="first_list">Pirmais saraksts</string>
   <string name="list_add">Pievienot sarakstu</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Iečekot</string>
   <string name="checkin_hint">Ierakstīt ziņu (opcionāli)</string>
   <string name="paste_title">Iekopēt nosaukumu</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Pamati</string>

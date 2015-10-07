@@ -152,7 +152,8 @@
   <string name="add_error">Не вдалося додати %s.</string>
   <string name="add_already_exists">%s вже є у вашому списку.</string>
   <string name="recommended">Рекомендовано</string>
-  <string name="library">Бібліотека</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Колекція</string>
   <string name="watchlist">Список перегляду</string>
   <string name="first_list">Перший список</string>
   <string name="list_add">Додати список</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Зареєструвати</string>
   <string name="checkin_hint">Введіть повідомлення (необов\'язково)</string>
   <string name="paste_title">Вставити заголовок</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Відправити відгук</string>
   <string name="action_open_in_browser">Відкрити в браузері</string>
   <string name="prefs_category_basic">Основні</string>

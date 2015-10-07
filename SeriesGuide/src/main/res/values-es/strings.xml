@@ -152,7 +152,8 @@
   <string name="add_error">No se pudo añadir %s.</string>
   <string name="add_already_exists">%s ya está en tu lista de visualización.</string>
   <string name="recommended">Recomendado</string>
-  <string name="library">Biblioteca</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Colección</string>
   <string name="watchlist">Lista de visualización</string>
   <string name="first_list">Primera lista</string>
   <string name="list_add">Añadir lista</string>
@@ -283,6 +284,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Escriba un mensaje (opcional)</string>
   <string name="paste_title">Pegar título</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Enviar comentarios</string>
   <string name="action_open_in_browser">Abrir en el navegador</string>
   <string name="prefs_category_basic">Básicos</string>

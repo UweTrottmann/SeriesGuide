@@ -152,7 +152,8 @@
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
   <string name="recommended">Doporučené</string>
-  <string name="library">Knihovna</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Sbírka</string>
   <string name="watchlist">Chci vidět</string>
   <string name="first_list">První seznam</string>
   <string name="list_add">Přidat seznam</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Ohlásit se</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_title">Vložit název</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Poslat reakci</string>
   <string name="action_open_in_browser">Otevřít v prohlížečí</string>
   <string name="prefs_category_basic">Základní</string>

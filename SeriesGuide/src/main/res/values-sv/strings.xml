@@ -153,7 +153,8 @@
   <string name="add_error">Kunde inte lägga till %s.</string>
   <string name="add_already_exists">%s finns redan i din serielista.</string>
   <string name="recommended">Rekommenderade</string>
-  <string name="library">Bibliotek</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Samling</string>
   <string name="watchlist">Bevakningslista</string>
   <string name="first_list">Första listan</string>
   <string name="list_add">Lägg till lista</string>
@@ -283,6 +284,8 @@
   <string name="checkin">Checka in</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>
   <string name="paste_title">Klistra in titel</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Skicka feedback</string>
   <string name="action_open_in_browser">Öppna i webbläsare</string>
   <string name="prefs_category_basic">Grunder</string>

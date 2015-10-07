@@ -152,7 +152,8 @@
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A(z) %s már a listádon van.</string>
   <string name="recommended">Ajánlott</string>
-  <string name="library">Saját</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Gyűjtemény</string>
   <string name="watchlist">Figyelőlista</string>
   <string name="first_list">Első lista</string>
   <string name="list_add">Lista hozzáadása</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Bejelentkezés</string>
   <string name="checkin_hint">Írj üzenetet (nem kötelező)</string>
   <string name="paste_title">Cím beillesztése</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="action_open_in_browser">Megnyitás böngészőben</string>
   <string name="prefs_category_basic">Alap beállítások</string>

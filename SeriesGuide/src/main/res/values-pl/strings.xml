@@ -152,7 +152,8 @@
   <string name="add_error">Nie można dodać %s.</string>
   <string name="add_already_exists">%s jest już na liście seriali.</string>
   <string name="recommended">Zalecane</string>
-  <string name="library">Biblioteka</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Kolekcja</string>
   <string name="watchlist">Lista obejrzanych</string>
   <string name="first_list">Pierwsza lista</string>
   <string name="list_add">Dodaj listę</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Podepnij się</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_title">Wklej tytuł</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Wyślij opinię</string>
   <string name="action_open_in_browser">Otwórz w przeglądarce</string>
   <string name="prefs_category_basic">Podstawowe</string>

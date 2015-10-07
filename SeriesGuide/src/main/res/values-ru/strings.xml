@@ -152,7 +152,8 @@
   <string name="add_error">Не удалось добавить %s.</string>
   <string name="add_already_exists">%s уже есть в вашем списке.</string>
   <string name="recommended">Рекомендуемые</string>
-  <string name="library">Библиотека</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Коллекция</string>
   <string name="watchlist">Список просмотра</string>
   <string name="first_list">Первый список</string>
   <string name="list_add">Добавить список</string>
@@ -282,6 +283,8 @@
   <string name="checkin">Отметить</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_title">Вставить название</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Отправить отзыв</string>
   <string name="action_open_in_browser">Открыть в браузере</string>
   <string name="prefs_category_basic">Основные</string>
