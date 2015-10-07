@@ -335,6 +335,8 @@
     <string name="checkin">Check in</string>
     <string name="checkin_hint">Type a message (optional)</string>
     <string name="paste_title">Paste title</string>
+    <string name="pref_quick_checkin">Quick check in</string>
+    <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
 
     <!-- Help -->
     <string name="feedback">Send feedback</string>
