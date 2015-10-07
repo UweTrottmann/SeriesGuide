@@ -372,7 +372,7 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpTvdbButton(getShowTvdbId(), mButtonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktButton(getShowTvdbId(), mButtonTrakt, TAG);
+        ServiceUtils.setUpTraktShowButton(mButtonTrakt, getShowTvdbId(), TAG);
 
         // web search button
         ServiceUtils.setUpWebSearchButton(mShowTitle, mButtonWebSearch, TAG);

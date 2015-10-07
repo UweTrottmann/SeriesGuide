@@ -519,7 +519,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mSkipButton.setEnabled(true);
 
         // service buttons
-        ServiceUtils.setUpTraktButton(getEpisodeTvdbId(), mTraktButton, TAG);
+        ServiceUtils.setUpTraktEpisodeButton(mTraktButton, getEpisodeTvdbId(), TAG);
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {

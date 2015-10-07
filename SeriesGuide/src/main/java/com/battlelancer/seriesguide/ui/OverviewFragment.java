@@ -746,7 +746,7 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpTvdbButton(getShowId(), seasonTvdbId, episodeTvdbId, buttonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktButton(mCurrentEpisodeTvdbId, buttonTrakt, TAG);
+        ServiceUtils.setUpTraktEpisodeButton(buttonTrakt, mCurrentEpisodeTvdbId, TAG);
 
         // trakt shouts button
         final String episodeTitle = episode.getString(EpisodeQuery.TITLE);

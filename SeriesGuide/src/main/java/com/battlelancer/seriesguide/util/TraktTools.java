@@ -954,8 +954,12 @@ public class TraktTools {
         }
     }
 
-    public static String buildEpisodeOrShowUrl(int tvdbId) {
-        return TraktLink.tvdb(tvdbId);
+    public static String buildShowUrl(int showTvdbId) {
+        return TraktLink.tvdb(showTvdbId) + "?id_type=show";
+    }
+
+    public static String buildEpisodeUrl(int episodeTvdbId) {
+        return TraktLink.tvdb(episodeTvdbId) + "?id_type=episode";
     }
 
     public static String buildMovieUrl(int movieTmdbId) {
