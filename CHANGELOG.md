@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 26 *(in development)*
+-----------------------------
+
+#### 26-beta1 *(2015-10-07)*
+
+* TWEAK Add trakt "Collection" tab in "Add show" screen. Rename "Library" to "Watched".
+* FEATURE Add "Quick check in" setting so the check in dialog will not ask for a check in message.
+* TWEAK Trakt links for shows and episodes now always open the item directly instead of showing search results.
+* TWEAK Show shortcuts now have nicer icons (thanks to a code contribution from @adneal).
+* NOTICE Latest translations from crowdin.
+
 Version 25 *(2015-10-01)*
 -----------------------------
 
