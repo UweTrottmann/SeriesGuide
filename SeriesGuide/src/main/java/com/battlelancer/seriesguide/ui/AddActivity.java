@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.util.Locale;
 
@@ -77,40 +76,6 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         tabs.setViewPager(pager);
-        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                    int positionOffsetPixels) {
-                // do nothing
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                String tag = null;
-                switch (position) {
-                    case AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION:
-                        tag = "TVDb Search";
-                        break;
-                    case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                        tag = "Recommended";
-                        break;
-                    case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                        tag = "Library";
-                        break;
-                    case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                        tag = "Watchlist";
-                        break;
-                }
-                if (tag != null) {
-                    Utils.trackView(AddActivity.this, tag);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                // do nothing
-            }
-        });
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -167,20 +132,21 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
         private static final int DEFAULT_TABCOUNT = 1;
         public static final int SEARCH_TAB_DEFAULT_POSITION = 0;
 
-        private static final int TRAKT_CONNECTED_TABCOUNT = 4;
+        private static final int TRAKT_CONNECTED_TABCOUNT = 5;
         public static final int SEARCH_TAB_CONNECTED_POSITION = 0;
         public static final int RECOMMENDED_TAB_POSITION = 1;
-        public static final int LIBRARY_TAB_POSITION = 2;
-        public static final int WATCHLIST_TAB_POSITION = 3;
+        public static final int WATCHED_TAB_POSITION = 2;
+        public static final int COLLECTION_TAB_POSITION = 3;
+        public static final int WATCHLIST_TAB_POSITION = 4;
 
-        private final boolean mIsConnectedToTrakt;
+        private final boolean isConnectedToTrakt;
 
-        private Context mContext;
+        private Context context;
 
         public AddPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
-            mContext = context;
-            mIsConnectedToTrakt = TraktCredentials.get(mContext).hasCredentials();
+            this.context = context;
+            isConnectedToTrakt = TraktCredentials.get(this.context).hasCredentials();
         }
 
         @Override
@@ -197,7 +163,7 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
 
         @Override
         public int getCount() {
-            if (mIsConnectedToTrakt) {
+            if (isConnectedToTrakt) {
                 // show trakt recommendations, library and watchlist, too
                 return TRAKT_CONNECTED_TABCOUNT;
             } else {
@@ -211,22 +177,25 @@ public class AddActivity extends BaseNavDrawerActivity implements OnAddShowListe
             if (getCount() == TRAKT_CONNECTED_TABCOUNT) {
                 switch (position) {
                     case RECOMMENDED_TAB_POSITION:
-                        return mContext.getString(R.string.recommended).toUpperCase(
+                        return context.getString(R.string.recommended).toUpperCase(
                                 Locale.getDefault());
-                    case LIBRARY_TAB_POSITION:
-                        return mContext.getString(R.string.library)
+                    case WATCHED_TAB_POSITION:
+                        return context.getString(R.string.watched_shows)
+                                .toUpperCase(Locale.getDefault());
+                    case COLLECTION_TAB_POSITION:
+                        return context.getString(R.string.shows_collection)
                                 .toUpperCase(Locale.getDefault());
                     case WATCHLIST_TAB_POSITION:
-                        return mContext.getString(R.string.watchlist).toUpperCase(
+                        return context.getString(R.string.watchlist).toUpperCase(
                                 Locale.getDefault());
                     case SEARCH_TAB_CONNECTED_POSITION:
-                        return mContext.getString(R.string.search).toUpperCase(
+                        return context.getString(R.string.search).toUpperCase(
                                 Locale.getDefault());
                 }
             } else {
                 switch (position) {
                     case SEARCH_TAB_DEFAULT_POSITION:
-                        return mContext.getString(R.string.search).toUpperCase(
+                        return context.getString(R.string.search).toUpperCase(
                                 Locale.getDefault());
                 }
             }

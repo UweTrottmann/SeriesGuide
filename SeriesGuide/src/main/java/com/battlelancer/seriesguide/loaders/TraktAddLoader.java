@@ -66,23 +66,20 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         try {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt != null) {
-                switch (type) {
-                    case AddActivity.AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                        shows = trakt.recommendations().shows(Extended.IMAGES);
-                        break;
-                    case AddActivity.AddPagerAdapter.LIBRARY_TAB_POSITION:
-                        List<BaseShow> watchedShows = trakt.sync().watchedShows(
-                                Extended.IMAGES);
-                        extractShows(watchedShows, shows);
-                        break;
-                    case AddActivity.AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                        List<BaseShow> watchlistedShows = trakt.sync()
-                                .watchlistShows(Extended.IMAGES);
-                        extractShows(watchlistedShows, shows);
-                        break;
-                    default:
-                        // cause NPE if used incorrectly
-                        return null;
+                if (type == AddActivity.AddPagerAdapter.RECOMMENDED_TAB_POSITION) {
+                    shows = trakt.recommendations().shows(Extended.IMAGES);
+                } else if (type == AddActivity.AddPagerAdapter.WATCHED_TAB_POSITION) {
+                    List<BaseShow> watchedShows = trakt.sync().watchedShows(Extended.IMAGES);
+                    extractShows(watchedShows, shows);
+                } else if (type == AddActivity.AddPagerAdapter.COLLECTION_TAB_POSITION) {
+                    List<BaseShow> collectedShows = trakt.sync().collectionShows(Extended.IMAGES);
+                    extractShows(collectedShows, shows);
+                } else if (type == AddActivity.AddPagerAdapter.WATCHLIST_TAB_POSITION) {
+                    List<BaseShow> watchlistedShows = trakt.sync().watchlistShows(Extended.IMAGES);
+                    extractShows(watchlistedShows, shows);
+                } else {
+                    // cause NPE if used incorrectly
+                    return null;
                 }
             }
         } catch (RetrofitError e) {

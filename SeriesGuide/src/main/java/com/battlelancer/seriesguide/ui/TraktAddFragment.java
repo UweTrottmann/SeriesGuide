@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
-import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
@@ -78,10 +77,7 @@ public class TraktAddFragment extends AddFragment {
         getLoaderManager().initLoader(type, null, mTraktAddCallbacks);
 
         // add menu options
-        if (type == AddPagerAdapter.LIBRARY_TAB_POSITION
-                || type == AddPagerAdapter.WATCHLIST_TAB_POSITION) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(true);
     }
 
     @Override

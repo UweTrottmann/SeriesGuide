@@ -187,7 +187,8 @@
     <string name="add_error">Could not add %s.</string>
     <string name="add_already_exists">%s is already in your show list.</string>
     <string name="recommended">Recommended</string>
-    <string name="library">Library</string>
+    <string name="watched_shows">Watched</string>
+    <string name="shows_collection">Collection</string>
     <string name="watchlist">Watchlist</string>
 
     <!-- Lists -->
