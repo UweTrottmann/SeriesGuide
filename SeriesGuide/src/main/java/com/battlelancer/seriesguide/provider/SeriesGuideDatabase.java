@@ -1143,8 +1143,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         query.append(Episodes.SEASON).append(" ASC,");
         query.append(Episodes.NUMBER).append(" ASC");
 
+        // ensure to strip double quotation marks (would break the MATCH query)
+        String searchTerm = selectionArgs[0];
+        if (searchTerm != null) {
+            searchTerm = searchTerm.replace("\"", "");
+        }
         // search for anything starting with the given search term
-        selectionArgs[0] = "\"" + selectionArgs[0] + "*\"";
+        selectionArgs[0] = "\"" + searchTerm + "*\"";
 
         return db.rawQuery(query.toString(), selectionArgs);
     }
