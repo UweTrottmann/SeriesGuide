@@ -29,6 +29,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -271,9 +272,14 @@ public class SeriesGuideProvider extends ContentProvider {
             default: {
                 // Most cases are handled with simple SelectionBuilder
                 final SelectionBuilder builder = buildSelection(uri, match);
-                Cursor query = builder
-                        .where(selection, selectionArgs)
-                        .query(db, projection, sortOrder);
+                Cursor query = null;
+                try {
+                    query = builder
+                            .where(selection, selectionArgs)
+                            .query(db, projection, sortOrder);
+                } catch (SQLiteException e) {
+                    Timber.e(e, "Failed to query with uri=" + uri);
+                }
                 if (query != null) {
                     //noinspection ConstantConditions
                     query.setNotificationUri(getContext().getContentResolver(), uri);
