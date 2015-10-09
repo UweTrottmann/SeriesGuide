@@ -51,10 +51,14 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
     private int mWait;
 
-    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData, int wait) {
+    /**
+     * @param waitInMinutes The time to wait. If negative, will show as no time available.
+     */
+    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData,
+            int waitInMinutes) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
         f.setArguments(traktTaskData);
-        f.mWait = wait;
+        f.mWait = waitInMinutes;
         return f;
     }
 
@@ -73,7 +77,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setMessage(context.getString(R.string.traktcheckin_inprogress,
-                DateUtils.formatElapsedTime(mWait)));
+                mWait < 0 ? context.getString(R.string.not_available)
+                        : DateUtils.formatElapsedTime(mWait)));
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 

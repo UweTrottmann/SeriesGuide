@@ -47,6 +47,7 @@ import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
 import de.greenrobot.event.EventBus;
+import org.joda.time.DateTime;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -262,8 +263,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         } catch (CheckinInProgressException e) {
             CheckinResponse checkinResponse = new CheckinResponse();
             checkinResponse.status = TraktStatus.FAILURE;
-            checkinResponse.wait = (int) (
-                    (e.getExpiresAt().getMillis() - System.currentTimeMillis()) / 1000);
+            DateTime expiresAt = e.getExpiresAt();
+            checkinResponse.wait = expiresAt == null ? -1
+                    : (int) ((expiresAt.getMillis() - System.currentTimeMillis()) / 1000);
             r = checkinResponse;
         }
 
