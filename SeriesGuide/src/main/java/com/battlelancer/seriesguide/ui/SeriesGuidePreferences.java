@@ -39,6 +39,7 @@ import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
@@ -180,9 +181,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         Utils.runNotificationService(context);
     }
 
-    public static void setListPreferenceSummary(ListPreference listPref) {
+    public static void setListPreferenceSummary(@Nullable ListPreference listPref) {
+        if (listPref == null) {
+            return;
+        }
         // Set summary to be the user-description for the selected value
-        listPref.setSummary(listPref.getEntry().toString().replaceAll("%", "%%"));
+        CharSequence entry = listPref.getEntry();
+        listPref.setSummary(entry == null ? "" : entry.toString().replaceAll("%", "%%"));
     }
 
     public static class SettingsFragment extends PreferenceFragment implements
