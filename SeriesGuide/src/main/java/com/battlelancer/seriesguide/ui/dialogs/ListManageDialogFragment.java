@@ -40,7 +40,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * Dialog to rename or remove a list. 
+ * Dialog to rename or remove a list.
  */
 public class ListManageDialogFragment extends DialogFragment {
 
@@ -86,7 +86,8 @@ public class ListManageDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
 
         // title
@@ -97,6 +98,7 @@ public class ListManageDialogFragment extends DialogFragment {
 
         // buttons
         mButtonNegative = (Button) layout.findViewById(R.id.buttonNegative);
+        mButtonNegative.setEnabled(false);
         mButtonNegative.setText(R.string.list_remove);
         mButtonNegative.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,7 +109,7 @@ public class ListManageDialogFragment extends DialogFragment {
                         null);
                 getActivity().getContentResolver().delete(ListItems.CONTENT_URI,
                         Lists.LIST_ID + "=?", new String[] {
-                            listId
+                                listId
                         });
 
                 // remove tab from view pager
@@ -171,24 +173,35 @@ public class ListManageDialogFragment extends DialogFragment {
                 .query(Lists.buildListUri(listId), new String[] {
                         Lists.NAME
                 }, null, null, null);
-        list.moveToFirst();
+        if (list == null) {
+            // list might have been removed, or query failed
+            dismiss();
+            return;
+        }
+        if (!list.moveToFirst()) {
+            // list not found
+            list.close();
+            dismiss();
+            return;
+        }
         mTitle.setText(list.getString(0));
         list.close();
 
-        // do not allow removing last list, disable remove button
+        // do only allow removing if this is NOT the last list
         Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
                 new String[] {
                         Lists._ID
                 }, null, null, null);
-        if (lists.getCount() == 1) {
-            mButtonNegative.setEnabled(false);
+        if (lists != null) {
+            if (lists.getCount() > 1) {
+                mButtonNegative.setEnabled(true);
+            }
+            lists.close();
         }
-        lists.close();
     }
 
     /**
-     * Restricts text input to characters and digits preventing any special
-     * characters.
+     * Restricts text input to characters and digits preventing any special characters.
      */
     public static class CharAndDigitInputFilter implements InputFilter {
         @Override
@@ -196,7 +209,7 @@ public class ListManageDialogFragment extends DialogFragment {
                 int dstart, int dend) {
             for (int i = start; i < end; i++) {
                 if (!(Character.isLetterOrDigit(source.charAt(i))
-                || Character.isWhitespace(source.charAt(i)))) {
+                        || Character.isWhitespace(source.charAt(i)))) {
                     return "";
                 }
             }
