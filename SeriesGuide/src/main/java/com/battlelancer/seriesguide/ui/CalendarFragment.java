@@ -220,7 +220,7 @@ public class CalendarFragment extends Fragment implements
 
     public void checkInEpisode(int episodeTvdbId) {
         CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
-        if (f != null) {
+        if (f != null && isResumed()) {
             f.show(getFragmentManager(), "checkin-dialog");
         }
     }

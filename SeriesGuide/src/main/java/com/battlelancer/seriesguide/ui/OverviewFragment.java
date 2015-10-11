@@ -359,15 +359,15 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void onCheckIn() {
-        fireTrackerEvent("Check-In");
-
         if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
             int episodeTvdbId = mCurrentEpisodeCursor.getInt(EpisodeQuery._ID);
             // check in
             CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                     episodeTvdbId);
-            if (f != null) {
+            // don't commit fragment change after onPause
+            if (f != null && isResumed()) {
                 f.show(getFragmentManager(), "checkin-dialog");
+                fireTrackerEvent("Check-In");
             }
         }
     }
