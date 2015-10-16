@@ -406,7 +406,7 @@
   <string name="action_upgrade">모든 기능 사용하기</string>
   <string name="billing_action_subscribe">구독</string>
   <string name="billing_action_pass">X 패스 얻기</string>
-  <string name="billing_price_subscribe">%/연, 무료로 사용해 보세요.</string>
+  <string name="billing_price_subscribe">%s/연, 무료로 사용해 보세요.</string>
   <string name="billing_price_pass">1회 구매로 계속 사용</string>
   <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
   <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>

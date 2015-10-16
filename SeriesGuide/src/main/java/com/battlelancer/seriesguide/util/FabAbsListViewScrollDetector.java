@@ -49,7 +49,7 @@ public class FabAbsListViewScrollDetector implements AbsListView.OnScrollListene
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
             int totalItemCount) {
-        if (totalItemCount == 0) {
+        if (!view.hasFocus() || totalItemCount == 0) {
             return;
         }
 
