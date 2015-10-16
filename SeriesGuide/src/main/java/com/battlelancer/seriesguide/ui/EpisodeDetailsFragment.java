@@ -440,7 +440,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 // display a check-in dialog
                 CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                         episodeTvdbId);
-                if (f != null) {
+                if (f != null && isResumed()) {
                     f.show(getFragmentManager(), "checkin-dialog");
                     fireTrackerEvent("Check-In");
                 }

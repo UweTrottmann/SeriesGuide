@@ -1143,13 +1143,18 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         query.append(Episodes.SEASON).append(" ASC,");
         query.append(Episodes.NUMBER).append(" ASC");
 
+        // ensure to strip double quotation marks (would break the MATCH query)
+        String searchTerm = selectionArgs[0];
+        if (searchTerm != null) {
+            searchTerm = searchTerm.replace("\"", "");
+        }
         // search for anything starting with the given search term
-        selectionArgs[0] = "\"" + selectionArgs[0] + "*\"";
+        selectionArgs[0] = "\"" + searchTerm + "*\"";
 
         return db.rawQuery(query.toString(), selectionArgs);
     }
 
-    public static Cursor getSuggestions(String searchterm, SQLiteDatabase db) {
+    public static Cursor getSuggestions(String searchTerm, SQLiteDatabase db) {
         String query = "select _id," + Episodes.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_1 + "," + Shows.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_2 + "," + "_id as "
@@ -1164,9 +1169,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + "on _id=docid)"
                 + "on sid=" + Shows.REF_SHOW_ID + ")";
 
+        // ensure to strip double quotation marks (would break the MATCH query)
+        if (searchTerm != null) {
+            searchTerm = searchTerm.replace("\"", "");
+        }
+
         // search for anything starting with the given search term
         return db.rawQuery(query, new String[] {
-                "\"" + searchterm + "*\""
+                "\"" + searchTerm + "*\""
         });
     }
 
