@@ -118,25 +118,9 @@ public class TvdbAddFragment extends AddFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(adapter);
         final String[] languageCodes = getResources().getStringArray(R.array.languageData);
-        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    language = null;
-                } else {
-                    language = languageCodes[position - 1];
-                }
-                Timber.d("Set search language to " + language);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        String preferredLanguage = DisplaySettings.getContentLanguage(getContext());
+        language = DisplaySettings.getContentLanguage(getContext());
         for (int i = 0; i < languageCodes.length; i++) {
-            if (languageCodes[i].equals(preferredLanguage)) {
+            if (languageCodes[i].equals(language)) {
                 spinnerLanguage.setSelection(i + 1);
                 break;
             }
@@ -162,9 +146,27 @@ public class TvdbAddFragment extends AddFragment {
                 android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
         searchBox.setAdapter(searchHistoryAdapter);
 
-        // load data
-        getLoaderManager().initLoader(AddActivity.AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION, null,
-                mTvdbAddCallbacks);
+        // no need to init loader, is done by language spinner setting default selection
+        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
+        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    language = null;
+                } else {
+                    language = languageCodes[position - 1];
+                }
+                // refresh results in newly selected language
+                // this also triggers the initial search
+                search();
+                Timber.d("Set search language to " + language);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // enable menu
         setHasOptionsMenu(true);
