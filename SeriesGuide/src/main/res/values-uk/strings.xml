@@ -31,6 +31,7 @@
   <string name="clear_search_history">Очистити історію пошуку</string>
   <string name="search_hint">Пошук серій</string>
   <string name="search_within_show">Пошук у %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Немає даних</string>
   <string name="unknown">Невідомо</string>

@@ -31,6 +31,7 @@
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="search_within_show">Keresés itt %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A(z) %s már a listádon van.</string>
   <string name="recommended">Ajánlott</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Megnézve</string>
   <string name="shows_collection">Gyűjtemény</string>
   <string name="watchlist">Figyelőlista</string>
   <string name="first_list">Első lista</string>
@@ -283,8 +284,8 @@
   <string name="checkin">Bejelentkezés</string>
   <string name="checkin_hint">Írj üzenetet (nem kötelező)</string>
   <string name="paste_title">Cím beillesztése</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Gyors bejelentkezés</string>
+  <string name="pref_quick_checkin_summary">Nincs bejelentkezési üzenetet</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="action_open_in_browser">Megnyitás böngészőben</string>
   <string name="prefs_category_basic">Alap beállítások</string>

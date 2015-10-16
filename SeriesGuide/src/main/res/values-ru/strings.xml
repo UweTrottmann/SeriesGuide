@@ -31,6 +31,7 @@
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="search_within_show">Поиск в %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Обновлено до последней версии.</string>
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Не удалось добавить %s.</string>
   <string name="add_already_exists">%s уже есть в вашем списке.</string>
   <string name="recommended">Рекомендуемые</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Просмотрено</string>
   <string name="shows_collection">Коллекция</string>
   <string name="watchlist">Список просмотра</string>
   <string name="first_list">Первый список</string>

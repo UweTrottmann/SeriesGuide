@@ -8,7 +8,7 @@
   <string name="search">搜索</string>
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">帮助 &amp; 反馈</string>
   <string name="drawer_open">显示导航栏</string>
   <string name="drawer_close">隐藏导航栏</string>
   <string name="show">节目</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
   <string name="search_within_show">在 %s 节目中搜索</string>
+  <string name="any_language">Any language</string>
   <string name="updated">已更新至最新版本。</string>
   <string name="norating">无评分</string>
   <string name="unknown">未知</string>
@@ -152,7 +153,7 @@
   <string name="add_error">无法将 %s 加入节目单。</string>
   <string name="add_already_exists">%s 已存在于您的节目单中</string>
   <string name="recommended">推荐</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">已观看</string>
   <string name="shows_collection">收藏</string>
   <string name="watchlist">待看列表</string>
   <string name="first_list">我的列表</string>
@@ -333,7 +334,7 @@
   <string name="pref_other">其它</string>
   <string name="pref_autoupdate">允许自动更新</string>
   <string name="pref_autoupdatesummary">允许后台自动更新节目单</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">自动备份</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">备份与还原</string>
   <string name="backup_summary">备份或还原节目单</string>
@@ -367,9 +368,9 @@
   <string name="dataliberation_permission_missing">若要备份或恢复，允许访问您的文件。</string>
   <string name="autobackup_permission_missing">若要使用自动备份，请允许访问您的文件。</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="no_file_selected">没有选择的文件</string>
+  <string name="action_select_file">选择文件</string>
+  <string name="backup_use_default_files">使用默认备份文件</string>
   <string name="get_started">入门</string>
   <string name="welcome_setuplanguage">选择语言</string>
   <string name="dismiss">忽略</string>

@@ -31,6 +31,7 @@
   <string name="clear_search_history">تاریخچه جستجو را پاک کنید</string>
   <string name="search_hint">جستجوی قسمتها</string>
   <string name="search_within_show">Search within %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">به آخرین نسخه به روز.</string>
   <string name="norating">N\a</string>
   <string name="unknown">نامعلوم</string>

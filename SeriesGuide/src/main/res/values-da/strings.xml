@@ -31,6 +31,7 @@
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
   <string name="search_within_show">Søg indenfor %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Opdateret til nyeste version.</string>
   <string name="norating">ikke tilgængelig</string>
   <string name="unknown">Ukendt</string>

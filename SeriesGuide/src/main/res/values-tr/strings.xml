@@ -31,6 +31,7 @@
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="search_within_show">İçinde ara %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">En son sürüme güncellendi.</string>
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>

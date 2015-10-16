@@ -31,6 +31,7 @@
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Actualizado a la última versión.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconocido</string>

@@ -8,7 +8,7 @@
   <string name="search">Szukaj</string>
   <string name="preferences">Ustawienia</string>
   <string name="help">Pomoc</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Pomoc i opinie</string>
   <string name="drawer_open">Otwórz szufladę nawigacji</string>
   <string name="drawer_close">Zamknij szufladę nawigacji</string>
   <string name="show">Serial</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
   <string name="search_within_show">Szukaj w %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Zaktualizowano do najnowszej wersji.</string>
   <string name="norating">brak danych</string>
   <string name="unknown">nieznana</string>
@@ -42,7 +43,7 @@
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_movie">Udostępnij film</string>
-  <string name="share_checkout">Sprawdź %s</string>
+  <string name="share_checkout">Nie oglądam %s</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
   <string name="comments">Komentarze</string>
@@ -124,8 +125,8 @@
   <string name="now_empty">Nic się nie dzieje. Obejrzyj coś! </string>
   <string name="now_movies_empty">Nic nie dzieje. Obejrzyj jakiś film!</string>
   <string name="user_stream">Historia</string>
-  <string name="user_stream_empty">Brak niedawnej aktywności na trakt. Podepnij się do jakichś seriali!</string>
-  <string name="user_movie_stream_empty">Brak niedawnej aktywności na trakt. Podepnij się do jakichś filmów!</string>
+  <string name="user_stream_empty">Brak historii na trakt. Obejrzyj jakiś serial i oznacz go jako oglądany!</string>
+  <string name="user_movie_stream_empty">Brak historii na trakt. Obejrzyj jakiś film i oznacz go jako oglądany!</string>
   <string name="upcoming">Nadchodzące</string>
   <string name="recent">Ostatnie</string>
   <string name="noupcoming">Brak nadchodzących odcinków.</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Nie można dodać %s.</string>
   <string name="add_already_exists">%s jest już na liście seriali.</string>
   <string name="recommended">Zalecane</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Obejrzane</string>
   <string name="shows_collection">Kolekcja</string>
   <string name="watchlist">Lista obejrzanych</string>
   <string name="first_list">Pierwsza lista</string>
@@ -237,11 +238,11 @@
   <string name="trakt_notseen">%s nieobejrzane.</string>
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
-  <string name="checkin_success_trakt">Podłączony do %s na trakt.</string>
-  <string name="checkin_canceled_success_trakt">Anulowano podpięcie na trakt.</string>
+  <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
+  <string name="checkin_canceled_success_trakt">%s odznaczono jako oglądane na trakt.</string>
   <string name="checkin_error_not_exists">Nie znaleziono elementu na trakt. Spróbuj ponownie później.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
-  <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Należy zamienić poprzednie podpięcie lub zaczekać %s i spróbować ponownie.</string>
+  <string name="traktcheckin_inprogress">Już oglądasz inny odcinek lub film. Należy zmienić wybór lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
@@ -280,11 +281,11 @@
     <item quantity="many">%d głosów</item>
     <item quantity="other">głosów: %d</item>
   </plurals>
-  <string name="checkin">Podepnij się</string>
+  <string name="checkin">Oglądam</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_title">Wklej tytuł</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Szybkie ustawianie opcji "oglądam"</string>
+  <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego "oglądam"</string>
   <string name="feedback">Wyślij opinię</string>
   <string name="action_open_in_browser">Otwórz w przeglądarce</string>
   <string name="prefs_category_basic">Podstawowe</string>
@@ -333,8 +334,8 @@
   <string name="pref_other">Inne</string>
   <string name="pref_autoupdate">Uruchom aktualizacje automatyczne</string>
   <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
+  <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
   <string name="backup">Kopia zapasowa</string>
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_number">Format numeracji</string>
@@ -346,7 +347,7 @@
   <string name="backup_full_dump">Uwzględnij wszystkie meta dane, takie jak opisy, aktorzy i oceny.</string>
   <string name="backup_path">Folder kopii zapasowej</string>
   <string name="backup_version">Wersja bazy danych</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
   <string name="backup_inprogress">Tworzenie kopii bazy…</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
@@ -361,15 +362,15 @@
   <string name="import_button">Przywróć</string>
   <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione.</string>
   <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
   <string name="restore_auto_backup">Przywróć kopię zapasową</string>
   <string name="dataliberation_permission_missing">Umożliwia dostęp do plików, aby użyć tworzenia i przywracania kopii zapasowych.</string>
   <string name="autobackup_permission_missing">Umożliwia dostęp do plików, aby użyć automatycznego tworzenia kopii zapasowych.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
+  <string name="no_file_selected">Nie wybrano pliku</string>
+  <string name="action_select_file">Wybierz plik</string>
+  <string name="backup_use_default_files">Użyj domyślnych plików kopii zapasowej</string>
   <string name="get_started">Wprowadzenie</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="dismiss">Zamknij</string>

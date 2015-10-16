@@ -31,6 +31,7 @@
   <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
   <string name="search_hint">Hľadať epizódy</string>
   <string name="search_within_show">Search within %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Aktualizované na najnovšiu verziu.</string>
   <string name="norating">Nedostupné</string>
   <string name="unknown">neznámy</string>

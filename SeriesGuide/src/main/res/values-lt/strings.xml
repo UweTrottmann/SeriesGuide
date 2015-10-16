@@ -31,6 +31,7 @@
   <string name="clear_search_history">Išvalyti paieškos istoriją</string>
   <string name="search_hint">Ieškoti serijų</string>
   <string name="search_within_show">Search within %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Atnaujinta iki naujausios versijos.</string>
   <string name="norating">n/a</string>
   <string name="unknown">Nežinomas</string>

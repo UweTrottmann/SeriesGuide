@@ -32,6 +32,7 @@
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="search_within_show">Sök inom %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Uppdaterad till senaste versionen</string>
   <string name="norating">saknas</string>
   <string name="unknown">okänd</string>

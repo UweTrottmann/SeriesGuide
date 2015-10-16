@@ -31,6 +31,7 @@
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
   <string name="search_within_show">Cerca a %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">S\'ha actualitzat a la darrera versió.</string>
   <string name="norating">cap</string>
   <string name="unknown">deconegut</string>

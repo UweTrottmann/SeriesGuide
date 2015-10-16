@@ -31,6 +31,7 @@
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>
   <string name="search_within_show">Търси в %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Актуализиран до последна версия.</string>
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>

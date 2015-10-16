@@ -31,6 +31,7 @@
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
   <string name="search_within_show">البحث في %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>

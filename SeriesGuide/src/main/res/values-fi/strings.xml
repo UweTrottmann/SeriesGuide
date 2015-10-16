@@ -31,6 +31,7 @@
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
   <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
   <string name="recommended">Suositellut</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Katsottu</string>
   <string name="shows_collection">Kokoelma</string>
   <string name="watchlist">Seurantalista</string>
   <string name="first_list">Ensimmäinen lista</string>
@@ -283,8 +284,8 @@
   <string name="checkin">Kuittaa</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_title">Liitä nimi</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Nopea kuittaus</string>
+  <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="action_open_in_browser">Avaa selaimessa</string>
   <string name="prefs_category_basic">Yleiset</string>

@@ -31,6 +31,7 @@
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
   <string name="search_within_show">Cerca all\'interno di %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Aggiornato all\'ultima versione.</string>
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>

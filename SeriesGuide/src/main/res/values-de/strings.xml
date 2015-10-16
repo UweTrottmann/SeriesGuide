@@ -31,6 +31,7 @@
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>
   <string name="search_within_show">Durchsuche %s</string>
+  <string name="any_language">Alle Sprachen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
   <string name="norating">n/a</string>
   <string name="unknown">unbekannt</string>

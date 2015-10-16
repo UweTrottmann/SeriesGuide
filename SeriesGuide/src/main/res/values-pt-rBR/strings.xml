@@ -31,6 +31,7 @@
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>
   <string name="search_within_show">Procurar dentro de %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Não foi possível adicionar %s.</string>
   <string name="add_already_exists">%s já está na sua lista de séries.</string>
   <string name="recommended">Recomendado</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Assistido</string>
   <string name="shows_collection">Coleção</string>
   <string name="watchlist">A assistir</string>
   <string name="first_list">Primeira lista</string>
@@ -283,8 +284,8 @@
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="paste_title">Colar título</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Check-in rápido</string>
+  <string name="pref_quick_checkin_summary">Ignorar perguntas para uma mensagem de check-in</string>
   <string name="feedback">Enviar comentários</string>
   <string name="action_open_in_browser">Abrir no navegador</string>
   <string name="prefs_category_basic">Básico</string>

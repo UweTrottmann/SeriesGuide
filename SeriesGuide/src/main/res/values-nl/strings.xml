@@ -31,6 +31,7 @@
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="search_within_show">Zoek binnen %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Nieuwste versie is geïnstalleerd.</string>
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
@@ -152,7 +153,7 @@
   <string name="add_error">Kan %s niet toevoegen.</string>
   <string name="add_already_exists">%s is al in uw lijst weergeven.</string>
   <string name="recommended">Aanbevolen</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Bekeken</string>
   <string name="shows_collection">Collectie</string>
   <string name="watchlist">Watchlist</string>
   <string name="first_list">Eerste lijst</string>
@@ -228,7 +229,7 @@
   <string name="hexagon_remove_account_success">Account vernietigd.</string>
   <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
-  <string name="hexagon_api_error">Communicatie met Trakt mislukt, Probeer later opnieuw.</string>
+  <string name="hexagon_api_error">Communicatie met SeriesGuide Cloud mislukt, Probeer later opnieuw.</string>
   <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
   <string name="hexagon_permission_missing">Voor het gebruik van Seriesguide Cloud is toegang tot uw account(s) noodzakelijk.</string>
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
@@ -283,8 +284,8 @@
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_title">Titel plakken</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Snelle check-in</string>
+  <string name="pref_quick_checkin_summary">Vraag niet voor een check-in bericht</string>
   <string name="feedback">Reactie verzenden</string>
   <string name="action_open_in_browser">Openen in browser</string>
   <string name="prefs_category_basic">Basis</string>

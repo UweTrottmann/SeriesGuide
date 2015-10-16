@@ -31,6 +31,7 @@
   <string name="clear_search_history">Clear search history</string>
   <string name="search_hint">Pretraži epizode</string>
   <string name="search_within_show">Traži u %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Ažurirano u najnoviju verziju.</string>
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>

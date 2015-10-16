@@ -31,6 +31,7 @@
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
   <string name="search_within_show">Тражи унутар %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Ажурирано на последњу верзију.</string>
   <string name="norating">непознато</string>
   <string name="unknown">непознато</string>
