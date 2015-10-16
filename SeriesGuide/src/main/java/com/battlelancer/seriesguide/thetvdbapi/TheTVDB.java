@@ -25,6 +25,8 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -231,13 +233,12 @@ public class TheTVDB {
     /**
      * Search TheTVDB for shows which include a certain keyword in their title.
      *
-     * @param allLanguages If set, will query for results in all languages instead of the user
-     * preferred language.
+     * @param language If not provided, will query for results in all languages.
      * @return At most 100 results (limited by TheTVDB API).
      */
     @Nonnull
-    public static List<SearchResult> searchShow(Context context, String query, boolean allLanguages)
-            throws TvdbException {
+    public static List<SearchResult> searchShow(@NonNull Context context, @NonNull String query,
+            @Nullable final String language) throws TvdbException {
         final List<SearchResult> series = new ArrayList<>();
         final SearchResult currentShow = new SearchResult();
 
@@ -246,7 +247,10 @@ public class TheTVDB {
         // set handlers for elements we want to react to
         item.setEndElementListener(new EndElementListener() {
             public void end() {
-                series.add(currentShow.copy());
+                // only take results in the selected language
+                if (language == null || language.equals(currentShow.language)) {
+                    series.add(currentShow.copy());
+                }
             }
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
@@ -279,10 +283,10 @@ public class TheTVDB {
             throw new TvdbException("Encoding show title failed", e);
         }
         // ...and set language filter
-        if (allLanguages) {
+        if (language == null) {
             url += TVDB_PARAM_LANGUAGE + "all";
         } else {
-            url += TVDB_PARAM_LANGUAGE + DisplaySettings.getContentLanguage(context);
+            url += TVDB_PARAM_LANGUAGE + language;
         }
 
         downloadAndParse(context, root.getContentHandler(), url, false);
@@ -361,23 +365,15 @@ public class TheTVDB {
     }
 
     /**
-     * Get show details from TVDb in the user preferred language ({@link
-     * DisplaySettings#getContentLanguage(android.content.Context)}). Tries to fetch additional
+     * Get show details from TVDb in the user preferred language. Tries to fetch additional
      * information from trakt.
-     */
-    public static Show getShow(Context context, int showTvdbId) throws TvdbException {
-        String language = DisplaySettings.getContentLanguage(context);
-        return fetchShow(context, showTvdbId, language);
-    }
-
-    /**
-     * Get show details from TVDb and trakt.
      *
-     * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
-     * >TVDb wiki</a>).
+     * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
+     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
+     * supplied, TVDb falls back to English.
      */
-    private static Show fetchShow(Context context, int showTvdbId, String language)
-            throws TvdbException {
+    public static Show fetchShow(@NonNull Context context, int showTvdbId,
+            @Nullable String language) throws TvdbException {
         // get show details from TVDb
         Show show = downloadAndParseShow(context, showTvdbId, language);
 
@@ -394,18 +390,25 @@ public class TheTVDB {
                 traktShow = null;
             }
         } catch (RetrofitError e) {
-            Timber.e(e, "Loading summary failed");
-        }
-        if (traktShow == null || traktShow.airs == null) {
-            throw new TvdbException("Could not load show from trakt: " + showTvdbId);
+            Timber.e(e, "Loading trakt show info failed");
         }
 
-        show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
-        show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
-        show.release_timezone = traktShow.airs.timezone;
-        show.country = traktShow.country;
-        show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
-        show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
+        if (traktShow != null) {
+            if (traktShow.airs != null) {
+                show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
+                show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
+                show.release_timezone = traktShow.airs.timezone;
+            }
+            show.country = traktShow.country;
+            show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+            show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
+        } else {
+            // set default values
+            show.release_time = -1;
+            show.release_weekday = -1;
+            show.firstAired = "";
+            show.rating = 0.0;
+        }
 
         return show;
     }

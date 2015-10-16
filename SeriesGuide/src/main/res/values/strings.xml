@@ -40,6 +40,7 @@
     <string name="clear_search_history">Clear search history</string>
     <string name="search_hint">Search episodes</string>
     <string name="search_within_show">Search within %s</string>
+    <string name="any_language">Any language</string>
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version.</string>

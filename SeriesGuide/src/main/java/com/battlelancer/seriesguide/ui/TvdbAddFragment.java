@@ -32,15 +32,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
 
@@ -48,13 +54,16 @@ public class TvdbAddFragment extends AddFragment {
         return new TvdbAddFragment();
     }
 
-    private static final String KEY_QUERY = "search-query";
+    private static final String KEY_QUERY = "searchQuery";
+    private static final String KEY_LANGUAGE = "searchLanguage";
 
     @Bind(R.id.buttonAddTvdbClear) ImageButton clearButton;
     @Bind(R.id.editTextAddTvdbSearch) AutoCompleteTextView searchBox;
+    @Bind(R.id.spinnerAddTvdbLanguage) Spinner spinnerLanguage;
 
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
+    private String language;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +107,40 @@ public class TvdbAddFragment extends AddFragment {
         searchBox.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         // drop-down is auto-shown on config change, ensure it is hidden when recreating views
         searchBox.dismissDropDown();
+
+        // language chooser (Supported languages + any as first option)
+        CharSequence[] languageNamesArray = getResources().getTextArray(R.array.languages);
+        ArrayList<CharSequence> languageNamesList = new ArrayList<>(languageNamesArray.length + 1);
+        languageNamesList.add(getString(R.string.any_language));
+        Collections.addAll(languageNamesList, languageNamesArray);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, languageNamesList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLanguage.setAdapter(adapter);
+        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
+        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    language = null;
+                } else {
+                    language = languageCodes[position - 1];
+                }
+                Timber.d("Set search language to " + language);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        String preferredLanguage = DisplaySettings.getContentLanguage(getContext());
+        for (int i = 0; i < languageCodes.length; i++) {
+            if (languageCodes[i].equals(preferredLanguage)) {
+                spinnerLanguage.setSelection(i + 1);
+                break;
+            }
+        }
 
         // set initial view states
         setProgressVisible(true, false);
@@ -159,6 +202,7 @@ public class TvdbAddFragment extends AddFragment {
         // do search
         Bundle args = new Bundle();
         args.putString(KEY_QUERY, query);
+        args.putString(KEY_LANGUAGE, language);
         getLoaderManager().restartLoader(AddActivity.AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION,
                 args, mTvdbAddCallbacks);
 
@@ -178,10 +222,12 @@ public class TvdbAddFragment extends AddFragment {
             setProgressVisible(true, false);
 
             String query = null;
+            String language = null;
             if (args != null) {
                 query = args.getString(KEY_QUERY);
+                language = args.getString(KEY_LANGUAGE);
             }
-            return new TvdbAddLoader(getActivity(), query);
+            return new TvdbAddLoader(getActivity(), query, language);
         }
 
         @Override

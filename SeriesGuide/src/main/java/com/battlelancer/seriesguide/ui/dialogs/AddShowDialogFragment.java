@@ -60,6 +60,7 @@ public class AddShowDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddShowDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
+    private static final String KEY_SHOW_LANGUAGE = "show_language";
 
     private SearchResult mShow;
 
@@ -208,6 +209,7 @@ public class AddShowDialogFragment extends DialogFragment {
         // load show details
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
+        args.putString(KEY_SHOW_LANGUAGE, mShow.language);
         getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
                 mShowLoaderCallbacks);
     }
@@ -231,7 +233,8 @@ public class AddShowDialogFragment extends DialogFragment {
         @Override
         public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
-            return new TvdbShowLoader(getActivity(), showTvdbId);
+            String language = args.getString(KEY_SHOW_LANGUAGE);
+            return new TvdbShowLoader(getActivity(), showTvdbId, language);
         }
 
         @Override
