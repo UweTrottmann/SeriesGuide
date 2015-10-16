@@ -25,6 +25,9 @@ public class SearchResult implements Parcelable {
 
     public int tvdbid;
 
+    /** Two-letter ISO 639-1 language code. */
+    public String language;
+
     public String title;
 
     public String overview;
@@ -48,6 +51,7 @@ public class SearchResult implements Parcelable {
 
     public SearchResult(Parcel in) {
         tvdbid = in.readInt();
+        language = in.readString();
         title = in.readString();
         overview = in.readString();
         poster = in.readString();
@@ -57,6 +61,7 @@ public class SearchResult implements Parcelable {
     public SearchResult copy() {
         SearchResult copy = new SearchResult();
         copy.tvdbid = this.tvdbid;
+        copy.language = this.language;
         copy.title = this.title;
         copy.overview = this.overview;
         copy.poster = this.poster;
@@ -72,6 +77,7 @@ public class SearchResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(tvdbid);
+        dest.writeString(language);
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster);

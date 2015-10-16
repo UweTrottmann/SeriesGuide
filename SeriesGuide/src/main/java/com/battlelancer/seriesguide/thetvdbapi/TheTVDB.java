@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -51,12 +52,15 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
+import javax.annotation.Nonnull;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
@@ -76,10 +80,13 @@ public class TheTVDB {
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
+    private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
+
     private static final String TVDB_API_SERIES = TVDB_API_URL + BuildConfig.TVDB_API_KEY
             + "/series/";
 
     private static final String TVDB_PATH_ALL = "all/";
+    private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
@@ -219,6 +226,68 @@ public class TheTVDB {
         batch.add(DBUtils.buildShowOp(show, false));
 
         getEpisodesAndUpdateDatabase(context, show, language, batch);
+    }
+
+    /**
+     * Search TheTVDB for shows which include a certain keyword in their title.
+     *
+     * @param allLanguages If set, will query for results in all languages instead of the user
+     * preferred language.
+     * @return At most 100 results (limited by TheTVDB API).
+     */
+    @Nonnull
+    public static List<SearchResult> searchShow(Context context, String query, boolean allLanguages)
+            throws TvdbException {
+        final List<SearchResult> series = new ArrayList<>();
+        final SearchResult currentShow = new SearchResult();
+
+        RootElement root = new RootElement("Data");
+        Element item = root.getChild("Series");
+        // set handlers for elements we want to react to
+        item.setEndElementListener(new EndElementListener() {
+            public void end() {
+                series.add(currentShow.copy());
+            }
+        });
+        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.tvdbid = Integer.valueOf(body);
+            }
+        });
+        item.getChild("language").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                currentShow.language = body.trim();
+            }
+        });
+        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.title = body.trim();
+            }
+        });
+        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.overview = body.trim();
+            }
+        });
+
+        // build search URL: encode query...
+        String url;
+        try {
+            url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new TvdbException("Encoding show title failed", e);
+        }
+        // ...and set language filter
+        if (allLanguages) {
+            url += TVDB_PARAM_LANGUAGE + "all";
+        } else {
+            url += TVDB_PARAM_LANGUAGE + DisplaySettings.getContentLanguage(context);
+        }
+
+        downloadAndParse(context, root.getContentHandler(), url, false);
+
+        return series;
     }
 
     // Values based on the assumption that sync runs about every 24 hours
