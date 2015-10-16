@@ -121,10 +121,28 @@ public class TvdbAddFragment extends AddFragment {
         language = DisplaySettings.getContentLanguage(getContext());
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(language)) {
-                spinnerLanguage.setSelection(i + 1);
+                spinnerLanguage.setSelection(i + 1, false);
                 break;
             }
         }
+        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    language = null;
+                } else {
+                    language = languageCodes[position - 1];
+                }
+                // refresh results in newly selected language
+                search();
+                Timber.d("Set search language to " + language);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // set initial view states
         setProgressVisible(true, false);
@@ -146,27 +164,11 @@ public class TvdbAddFragment extends AddFragment {
                 android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
         searchBox.setAdapter(searchHistoryAdapter);
 
-        // no need to init loader, is done by language spinner setting default selection
-        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
-        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    language = null;
-                } else {
-                    language = languageCodes[position - 1];
-                }
-                // refresh results in newly selected language
-                // this also triggers the initial search
-                search();
-                Timber.d("Set search language to " + language);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        // load data
+        Bundle args = new Bundle();
+        args.putString(KEY_LANGUAGE, language);
+        getLoaderManager().initLoader(AddActivity.AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION, args,
+                mTvdbAddCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
