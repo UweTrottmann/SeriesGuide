@@ -27,6 +27,7 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -92,6 +93,7 @@ public class TheTVDB {
     private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
+    private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
     /**
      * Builds a full url for a TVDb show poster using the given image path.
@@ -142,15 +144,15 @@ public class TheTVDB {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(Context context, int showTvdbId, List<BaseShow> traktWatched,
-            List<BaseShow> traktCollection) throws TvdbException {
+    public static boolean addShow(@NonNull Context context, int showTvdbId,
+            @NonNull String language, @NonNull List<BaseShow> traktWatched,
+            @NonNull List<BaseShow> traktCollection) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
         // get show info from TVDb and trakt
-        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(context, showTvdbId, language);
 
         // get show properties from hexagon
@@ -165,7 +167,7 @@ public class TheTVDB {
         // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(show, true));
-        getEpisodesAndUpdateDatabase(context, show, language, batch);
+        getEpisodesAndUpdateDatabase(context, show, show.language, batch);
 
         // download episode flags...
         if (HexagonTools.isSignedIn(context)) {
@@ -217,17 +219,42 @@ public class TheTVDB {
     }
 
     /**
-     * Updates show. Adds new, updates changed and removes orphaned episodes.
+     * Updates a show. Adds new, updates changed and removes orphaned episodes.
      */
+    public static void updateShow(@NonNull Context context, int showTvdbId) throws TvdbException {
+        // determine which translation to get
+        String language = getShowLanguage(context, showTvdbId);
+        if (language == null) {
+            return;
+        }
 
-    public static void updateShow(Context context, int showTvdbId) throws TvdbException {
-        String language = DisplaySettings.getContentLanguage(context);
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = fetchShow(context, showTvdbId, language);
         batch.add(DBUtils.buildShowOp(show, false));
 
         getEpisodesAndUpdateDatabase(context, show, language, batch);
+    }
+
+    private static String getShowLanguage(Context context, int showTvdbId) {
+        Cursor languageQuery = context.getContentResolver()
+                .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
+        if (languageQuery == null) {
+            // query failed, abort
+            return null;
+        }
+        String language = null;
+        if (languageQuery.moveToFirst()) {
+            language = languageQuery.getString(0);
+        }
+        languageQuery.close();
+
+        if (TextUtils.isEmpty(language)) {
+            // fall back to preferred language
+            language = DisplaySettings.getContentLanguage(context);
+        }
+
+        return language;
     }
 
     /**
@@ -497,6 +524,12 @@ public class TheTVDB {
                 } catch (NumberFormatException e) {
                     currentShow.lastEdited = 0;
                 }
+            }
+        });
+        show.getChild("Language").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                currentShow.language = body.trim();
             }
         });
 
