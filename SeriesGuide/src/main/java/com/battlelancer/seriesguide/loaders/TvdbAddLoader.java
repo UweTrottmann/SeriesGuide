@@ -22,6 +22,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -86,6 +87,10 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                     shows.add(show.show);
                 }
                 results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows);
+                // manually set the language to the current search language
+                for (SearchResult result : results) {
+                    result.language = language;
+                }
             } catch (RetrofitError e) {
                 Timber.e(e, "Loading trending shows failed");
                 return buildResultFailure(getContext(), R.string.trakt_error_general);
@@ -94,7 +99,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
             // have a query?
             // search trakt (has better search) when using English
             // use TheTVDB search for all other (or any) languages
-            if ("en".equals(language)) {
+            if (DisplaySettings.LANGUAGE_EN.equals(language)) {
                 try {
                     List<com.uwetrottmann.trakt.v2.entities.SearchResult> traktResults
                             = ServiceUtils.getTraktV2(getContext()).search()
@@ -111,6 +116,10 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                     }
 
                     results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows);
+                    // manually set the language to English
+                    for (SearchResult result : results) {
+                        result.language = DisplaySettings.LANGUAGE_EN;
+                    }
                 } catch (RetrofitError e) {
                     Timber.e(e, "Searching show failed");
                     return buildResultFailure(getContext(), R.string.search_error);
