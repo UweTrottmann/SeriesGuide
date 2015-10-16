@@ -8,6 +8,16 @@ All dates are in the European Central timezone.
 Version 26 *(in development)*
 -----------------------------
 
+#### 26-beta2 *(2015-10-16)*
+
+* NOTICE It is now again possible to add shows that are only on TheTVDB and not on trakt (e.g. if
+  they do or can not have an English translation), though they currently display no detailed
+  release information (e.g. week day, time or country).
+* TWEAK Add language selection when adding a show through search.
+* TWEAK Allow to change the preferred content language of a show.
+* FIX Resolved some bugs, crashes.
+* NOTICE Latest translations from crowdin.
+
 #### 26-beta1 *(2015-10-07)*
 
 * TWEAK Add trakt "Collection" tab in "Add show" screen. Rename "Library" to "Watched".
