@@ -25,12 +25,16 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -51,12 +55,15 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
+import javax.annotation.Nonnull;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import org.xml.sax.ContentHandler;
@@ -76,13 +83,17 @@ public class TheTVDB {
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
+    private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
+
     private static final String TVDB_API_SERIES = TVDB_API_URL + BuildConfig.TVDB_API_KEY
             + "/series/";
 
     private static final String TVDB_PATH_ALL = "all/";
+    private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
+    private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
     /**
      * Builds a full url for a TVDb show poster using the given image path.
@@ -133,15 +144,15 @@ public class TheTVDB {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(Context context, int showTvdbId, List<BaseShow> traktWatched,
-            List<BaseShow> traktCollection) throws TvdbException {
+    public static boolean addShow(@NonNull Context context, int showTvdbId,
+            @NonNull String language, @NonNull List<BaseShow> traktWatched,
+            @NonNull List<BaseShow> traktCollection) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
         // get show info from TVDb and trakt
-        String language = DisplaySettings.getContentLanguage(context);
         Show show = fetchShow(context, showTvdbId, language);
 
         // get show properties from hexagon
@@ -156,7 +167,7 @@ public class TheTVDB {
         // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(show, true));
-        getEpisodesAndUpdateDatabase(context, show, language, batch);
+        getEpisodesAndUpdateDatabase(context, show, show.language, batch);
 
         // download episode flags...
         if (HexagonTools.isSignedIn(context)) {
@@ -208,17 +219,106 @@ public class TheTVDB {
     }
 
     /**
-     * Updates show. Adds new, updates changed and removes orphaned episodes.
+     * Updates a show. Adds new, updates changed and removes orphaned episodes.
      */
+    public static void updateShow(@NonNull Context context, int showTvdbId) throws TvdbException {
+        // determine which translation to get
+        String language = getShowLanguage(context, showTvdbId);
+        if (language == null) {
+            return;
+        }
 
-    public static void updateShow(Context context, int showTvdbId) throws TvdbException {
-        String language = DisplaySettings.getContentLanguage(context);
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = fetchShow(context, showTvdbId, language);
         batch.add(DBUtils.buildShowOp(show, false));
 
         getEpisodesAndUpdateDatabase(context, show, language, batch);
+    }
+
+    private static String getShowLanguage(Context context, int showTvdbId) {
+        Cursor languageQuery = context.getContentResolver()
+                .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
+        if (languageQuery == null) {
+            // query failed, abort
+            return null;
+        }
+        String language = null;
+        if (languageQuery.moveToFirst()) {
+            language = languageQuery.getString(0);
+        }
+        languageQuery.close();
+
+        if (TextUtils.isEmpty(language)) {
+            // fall back to preferred language
+            language = DisplaySettings.getContentLanguage(context);
+        }
+
+        return language;
+    }
+
+    /**
+     * Search TheTVDB for shows which include a certain keyword in their title.
+     *
+     * @param language If not provided, will query for results in all languages.
+     * @return At most 100 results (limited by TheTVDB API).
+     */
+    @Nonnull
+    public static List<SearchResult> searchShow(@NonNull Context context, @NonNull String query,
+            @Nullable final String language) throws TvdbException {
+        final List<SearchResult> series = new ArrayList<>();
+        final SearchResult currentShow = new SearchResult();
+
+        RootElement root = new RootElement("Data");
+        Element item = root.getChild("Series");
+        // set handlers for elements we want to react to
+        item.setEndElementListener(new EndElementListener() {
+            public void end() {
+                // only take results in the selected language
+                if (language == null || language.equals(currentShow.language)) {
+                    series.add(currentShow.copy());
+                }
+            }
+        });
+        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.tvdbid = Integer.valueOf(body);
+            }
+        });
+        item.getChild("language").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                currentShow.language = body.trim();
+            }
+        });
+        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.title = body.trim();
+            }
+        });
+        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.overview = body.trim();
+            }
+        });
+
+        // build search URL: encode query...
+        String url;
+        try {
+            url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new TvdbException("Encoding show title failed", e);
+        }
+        // ...and set language filter
+        if (language == null) {
+            url += TVDB_PARAM_LANGUAGE + "all";
+        } else {
+            url += TVDB_PARAM_LANGUAGE + language;
+        }
+
+        downloadAndParse(context, root.getContentHandler(), url, false);
+
+        return series;
     }
 
     // Values based on the assumption that sync runs about every 24 hours
@@ -292,23 +392,15 @@ public class TheTVDB {
     }
 
     /**
-     * Get show details from TVDb in the user preferred language ({@link
-     * DisplaySettings#getContentLanguage(android.content.Context)}). Tries to fetch additional
+     * Get show details from TVDb in the user preferred language. Tries to fetch additional
      * information from trakt.
-     */
-    public static Show getShow(Context context, int showTvdbId) throws TvdbException {
-        String language = DisplaySettings.getContentLanguage(context);
-        return fetchShow(context, showTvdbId, language);
-    }
-
-    /**
-     * Get show details from TVDb and trakt.
      *
-     * @param language A TVDb language code (see <a href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
-     * >TVDb wiki</a>).
+     * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
+     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
+     * supplied, TVDb falls back to English.
      */
-    private static Show fetchShow(Context context, int showTvdbId, String language)
-            throws TvdbException {
+    public static Show fetchShow(@NonNull Context context, int showTvdbId,
+            @Nullable String language) throws TvdbException {
         // get show details from TVDb
         Show show = downloadAndParseShow(context, showTvdbId, language);
 
@@ -325,18 +417,25 @@ public class TheTVDB {
                 traktShow = null;
             }
         } catch (RetrofitError e) {
-            Timber.e(e, "Loading summary failed");
-        }
-        if (traktShow == null || traktShow.airs == null) {
-            throw new TvdbException("Could not load show from trakt: " + showTvdbId);
+            Timber.e(e, "Loading trakt show info failed");
         }
 
-        show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
-        show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
-        show.release_timezone = traktShow.airs.timezone;
-        show.country = traktShow.country;
-        show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
-        show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
+        if (traktShow != null) {
+            if (traktShow.airs != null) {
+                show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
+                show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
+                show.release_timezone = traktShow.airs.timezone;
+            }
+            show.country = traktShow.country;
+            show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+            show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
+        } else {
+            // set default values
+            show.release_time = -1;
+            show.release_weekday = -1;
+            show.firstAired = "";
+            show.rating = 0.0;
+        }
 
         return show;
     }
@@ -425,6 +524,12 @@ public class TheTVDB {
                 } catch (NumberFormatException e) {
                     currentShow.lastEdited = 0;
                 }
+            }
+        });
+        show.getChild("Language").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                currentShow.language = body.trim();
             }
         });
 

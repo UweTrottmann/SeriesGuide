@@ -27,6 +27,7 @@ import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -45,6 +46,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -379,6 +381,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.title = shows.getString(ShowsQuery.TITLE);
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
+            show.language = shows.getString(ShowsQuery.LANGUAGE);
+            if (TextUtils.isEmpty(show.language)) {
+                show.language = DisplaySettings.LANGUAGE_EN;
+            }
             show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
             show.release_weekday = shows.getInt(ShowsQuery.RELEASE_WEEKDAY);
             show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
@@ -600,7 +606,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.NETWORK,
                 Shows.IMDBID,
                 Shows.FIRST_RELEASE,
-                Shows.RATING_USER
+                Shows.RATING_USER,
+                Shows.LANGUAGE
         };
         String[] PROJECTION_FULL = new String[] {
                 Shows._ID,
@@ -620,6 +627,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.IMDBID,
                 Shows.FIRST_RELEASE,
                 Shows.RATING_USER,
+                Shows.LANGUAGE,
                 Shows.OVERVIEW,
                 Shows.RATING_GLOBAL,
                 Shows.RATING_VOTES,
@@ -648,14 +656,15 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int IMDBID = 14;
         int FIRSTAIRED = 15;
         int RATING_USER = 16;
+        int LANGUAGE = 17;
         // Full dump only
-        int OVERVIEW = 17;
-        int RATING_GLOBAL = 18;
-        int RATING_VOTES = 19;
-        int GENRES = 20;
-        int ACTORS = 21;
-        int LAST_UPDATED = 22;
-        int LAST_EDITED = 23;
+        int OVERVIEW = 18;
+        int RATING_GLOBAL = 19;
+        int RATING_VOTES = 20;
+        int GENRES = 21;
+        int ACTORS = 22;
+        int LAST_UPDATED = 23;
+        int LAST_EDITED = 24;
     }
 
     public interface EpisodesQuery {

@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
@@ -148,6 +149,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             }
         }
 
+        String defaultLanguage = DisplaySettings.getContentLanguage(context);
         int result;
         boolean addedAtLeastOneShow = false;
         boolean failedMergingShows = false;
@@ -170,7 +172,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = addQueue.removeFirst();
 
             try {
-                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid, watched, collection);
+                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid,
+                        nextShow.language == null ? defaultLanguage : nextShow.language, watched,
+                        collection);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success

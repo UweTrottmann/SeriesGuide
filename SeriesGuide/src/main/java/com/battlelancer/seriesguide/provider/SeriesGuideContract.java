@@ -238,6 +238,16 @@ public class SeriesGuideContract {
          * version 31.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
+
+        /**
+         * Language the show should be downloaded in, in two letter ISO 639-1 format.
+         *
+         * <pre>
+         * Example: "de"
+         * Default: "" (should fall back to English then)
+         * </pre>
+         */
+        String LANGUAGE = "series_language";
     }
 
     interface SeasonsColumns {

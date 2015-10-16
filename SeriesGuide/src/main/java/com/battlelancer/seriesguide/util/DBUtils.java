@@ -466,6 +466,7 @@ public class DBUtils {
         if (isNew) {
             // set TheTVDB id
             values.put(Shows._ID, show.tvdbId);
+            values.put(Shows.LANGUAGE, show.language);
             // set user values
             values.put(Shows.FAVORITE, show.favorite);
             values.put(Shows.HIDDEN, show.hidden);

@@ -32,6 +32,8 @@ public class Show {
 
     public boolean hidden;
 
+    public String language;
+
     public int release_time;
     public int release_weekday;
     public String release_timezone;
