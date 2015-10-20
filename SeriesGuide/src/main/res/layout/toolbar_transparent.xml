@@ -24,4 +24,4 @@
     android:layout_width="match_parent"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     android:background="@color/transparent"
-    app:layout_scrollFlags="scroll|enterAlways" />
+    app:layout_scrollFlags="scroll|enterAlways|snap” />
