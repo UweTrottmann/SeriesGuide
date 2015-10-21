@@ -141,7 +141,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     public static final int DBVER_37_LANGUAGE_PER_SERIES = 37;
 
-    public static final int DATABASE_VERSION = DBVER_37_LANGUAGE_PER_SERIES;
+    /**
+     * Added trakt id column to shows table.
+     */
+    private static final int DBVER_38_SHOW_TRAKT_ID = 38;
+
+    public static final int DATABASE_VERSION = DBVER_38_SHOW_TRAKT_ID;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -338,6 +343,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
 
             + ShowsColumns.IMDBID + " TEXT DEFAULT '',"
+
+            + ShowsColumns.TRAKT_ID + " INTEGER DEFAULT 0,"
 
             + ShowsColumns.FAVORITE + " INTEGER DEFAULT 0,"
 
@@ -604,7 +611,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtySix(db);
             case DBVER_36_ORDERABLE_LISTS:
                 upgradeToThirtySeven(db);
-                version = DBVER_37_LANGUAGE_PER_SERIES;
+            case DBVER_37_LANGUAGE_PER_SERIES:
+                upgradeToThirtyEight(db);
+                version = DBVER_38_SHOW_TRAKT_ID;
         }
 
         // drop all tables if version is not right
@@ -630,6 +639,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_38_SHOW_TRAKT_ID}.
+     */
+    private static void upgradeToThirtyEight(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.TRAKT_ID)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.TRAKT_ID + " INTEGER DEFAULT 0;");
+        }
     }
 
     /**
