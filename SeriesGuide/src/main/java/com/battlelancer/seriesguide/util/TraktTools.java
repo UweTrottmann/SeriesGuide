@@ -594,6 +594,7 @@ public class TraktTools {
             }
         }
 
+        // TODO ut: upload episodes of shows previously not on trakt, but now have a trakt id
         if (isMerging) {
             // upload flags of all shows NOT on trakt
             switch (flag) {
@@ -602,9 +603,6 @@ public class TraktTools {
                 case COLLECTED:
                     return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
             }
-        } else {
-            // clear flags on all shows NOT on trakt
-            clearFlagsOfShow(context, flag, localShowsNotOnTrakt);
         }
 
         return SUCCESS;
@@ -809,29 +807,6 @@ public class TraktTools {
         }
 
         return new SyncSeason().number(seasonNumber).episodes(syncEpisodes);
-    }
-
-    private static void clearFlagsOfShow(Context context, Flag flag,
-            HashSet<Integer> skippedShows) {
-        if (skippedShows.size() == 0) {
-            // nothing to do!
-            return;
-        }
-
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (Integer tvShowTvdbId : skippedShows) {
-            batch.add(ContentProviderOperation
-                    .newUpdate(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShowTvdbId))
-                    .withSelection(flag.clearFlagSelection, null)
-                    .withValue(flag.databaseColumn, flag.nonFlaggedValue).build());
-        }
-
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e("Clearing " + flag + " flags for shows failed");
-            // continue, next sync will try again
-        }
     }
 
     /**
