@@ -396,6 +396,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.runtime = shows.getInt(ShowsQuery.RUNTIME);
             show.network = shows.getString(ShowsQuery.NETWORK);
             show.imdbId = shows.getString(ShowsQuery.IMDBID);
+            show.traktId = shows.getInt(ShowsQuery.TRAKT_ID);
             show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
             show.rating_user = shows.getInt(ShowsQuery.RATING_USER);
             if (isFullDump) {
@@ -605,6 +606,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RUNTIME,
                 Shows.NETWORK,
                 Shows.IMDBID,
+                Shows.TRAKT_ID,
                 Shows.FIRST_RELEASE,
                 Shows.RATING_USER,
                 Shows.LANGUAGE
@@ -625,6 +627,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RUNTIME,
                 Shows.NETWORK,
                 Shows.IMDBID,
+                Shows.TRAKT_ID,
                 Shows.FIRST_RELEASE,
                 Shows.RATING_USER,
                 Shows.LANGUAGE,
@@ -654,17 +657,18 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int RUNTIME = 12;
         int NETWORK = 13;
         int IMDBID = 14;
-        int FIRSTAIRED = 15;
-        int RATING_USER = 16;
-        int LANGUAGE = 17;
+        int TRAKT_ID = 15;
+        int FIRSTAIRED = 16;
+        int RATING_USER = 17;
+        int LANGUAGE = 18;
         // Full dump only
-        int OVERVIEW = 18;
-        int RATING_GLOBAL = 19;
-        int RATING_VOTES = 20;
-        int GENRES = 21;
-        int ACTORS = 22;
-        int LAST_UPDATED = 23;
-        int LAST_EDITED = 24;
+        int OVERVIEW = 19;
+        int RATING_GLOBAL = 20;
+        int RATING_VOTES = 21;
+        int GENRES = 22;
+        int ACTORS = 23;
+        int LAST_UPDATED = 24;
+        int LAST_EDITED = 25;
     }
 
     public interface EpisodesQuery {
