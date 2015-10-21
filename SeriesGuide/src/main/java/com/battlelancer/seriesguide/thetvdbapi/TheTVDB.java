@@ -407,7 +407,8 @@ public class TheTVDB {
         // get some more details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
         try {
-            // look up trakt id
+            // always look up the trakt id based on the TVDb id
+            // e.g. a TVDb id might be linked against the wrong trakt entry, then get fixed
             String showTraktId = TraktTools.lookupShowTraktId(context, showTvdbId);
             if (showTraktId != null) {
                 // fetch details
@@ -421,6 +422,9 @@ public class TheTVDB {
         }
 
         if (traktShow != null) {
+            if (traktShow.ids != null && traktShow.ids.trakt != null) {
+                show.traktId = traktShow.ids.trakt;
+            }
             if (traktShow.airs != null) {
                 show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
                 show.release_weekday = TimeTools.parseShowReleaseWeekDay(traktShow.airs.day);
