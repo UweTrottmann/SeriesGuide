@@ -69,17 +69,9 @@ public class TraktTools {
 
     // Sync status codes
     public static final int SUCCESS = 1;
-    public static final int SUCCESS_NOWORK = 0;
     public static final int FAILED_API = -1;
     public static final int FAILED = -2;
     public static final int FAILED_CREDENTIALS = -3;
-
-    // Url parts
-    private static final String TRAKT_SEARCH_BASE_URL = "https://trakt.tv/search/";
-    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
-    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
-    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
-    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     public enum Flag {
         COLLECTED(SeriesGuideContract.Episodes.COLLECTED,
@@ -96,7 +88,7 @@ public class TraktTools {
         final int flaggedValue;
         final int nonFlaggedValue;
 
-        private Flag(String databaseColumn, String clearFlagSelection, int flaggedValue,
+        Flag(String databaseColumn, String clearFlagSelection, int flaggedValue,
                 int nonFlaggedValue) {
             this.databaseColumn = databaseColumn;
             this.clearFlagSelection = clearFlagSelection;
@@ -150,6 +142,9 @@ public class TraktTools {
         // apply watched flags for all watched trakt movies that are in the local database
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         Set<Integer> localMovies = MovieTools.getMovieTmdbIdsAsSet(context);
+        if (localMovies == null) {
+            return UpdateResult.INCOMPLETE;
+        }
         Set<Integer> unwatchedMovies = new HashSet<>(localMovies);
         for (BaseMovie movie : watchedMovies) {
             if (movie.movie == null || movie.movie.ids == null || movie.movie.ids.tmdb == null) {
@@ -1048,7 +1043,7 @@ public class TraktTools {
 
     public interface EpisodesQuery {
 
-        public String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[] {
                 SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
         };
 
