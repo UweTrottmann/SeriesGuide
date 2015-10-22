@@ -31,7 +31,8 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
     public static final int ERROR_DATABASE = -2;
     public static final int ERROR_TRAKT_AUTH = -3;
     public static final int ERROR_TRAKT_API = -4;
-    public static final int ERROR_HEXAGON_API = -5;
+    public static final int ERROR_TRAKT_API_NOT_FOUND = -5;
+    public static final int ERROR_HEXAGON_API = -6;
 
     private final Context context;
     private boolean isSendingToHexagon;
@@ -86,6 +87,9 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
                 break;
             case ERROR_TRAKT_API:
                 errorResId = R.string.trakt_error_general;
+                break;
+            case ERROR_TRAKT_API_NOT_FOUND:
+                errorResId = R.string.checkin_error_not_exists;
                 break;
             case ERROR_HEXAGON_API:
                 errorResId = R.string.hexagon_api_error;
