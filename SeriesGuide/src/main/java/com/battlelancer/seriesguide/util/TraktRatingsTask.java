@@ -92,14 +92,15 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
 
         try {
             // look up show trakt id
-            String showTraktId = TraktTools.lookupShowTraktId(mContext, mShowTvdbId);
+            Integer showTraktId = ShowTools.getShowTraktId(mContext, mShowTvdbId);
             if (showTraktId == null) {
+                Timber.d("Not loading ratings, show has no trakt id.");
                 return null;
             }
 
             if (mEpisodeTvdbId == 0) {
                 // download latest show ratings
-                Ratings ratings = trakt.shows().ratings(showTraktId);
+                Ratings ratings = trakt.shows().ratings(String.valueOf(showTraktId));
                 if (ratings == null || ratings.rating == null || ratings.votes == null) {
                     return null;
                 }
@@ -112,7 +113,8 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
                                 null);
             } else {
                 // download latest episode ratings
-                Ratings ratings = trakt.episodes().ratings(showTraktId, mSeason, mEpisode);
+                Ratings ratings = trakt.episodes()
+                        .ratings(String.valueOf(showTraktId), mSeason, mEpisode);
                 if (ratings == null || ratings.rating == null || ratings.votes == null) {
                     return null;
                 }
