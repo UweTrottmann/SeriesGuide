@@ -1039,8 +1039,8 @@ public class EpisodeTools {
              */
             if (mIsSendingToTrakt) {
                 // Do not send if show has no trakt id (was not on trakt last time we checked).
-                Integer traktId = getShowTraktId(mContext, mType.getShowTvdbId());
-                mCanSendToTrakt = traktId != null && traktId > 0;
+                Integer traktId = ShowTools.getShowTraktId(mContext, mType.getShowTvdbId());
+                mCanSendToTrakt = traktId != null;
                 if (mCanSendToTrakt) {
                     if (!AndroidUtils.isNetworkConnected(mContext)) {
                         return ERROR_NETWORK;
@@ -1063,25 +1063,6 @@ public class EpisodeTools {
             mType.onPostExecute();
 
             return SUCCESS;
-        }
-
-        @Nullable
-        private Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
-            Cursor traktIdQuery = context.getContentResolver()
-                    .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                            new String[] { SeriesGuideContract.Shows.TRAKT_ID }, null, null, null);
-            if (traktIdQuery == null) {
-                return null;
-            }
-
-            Integer traktId = null;
-            if (traktIdQuery.moveToFirst()) {
-                traktId = traktIdQuery.getInt(0);
-            }
-
-            traktIdQuery.close();
-
-            return traktId;
         }
 
         private static int uploadToHexagon(Context context, int showTvdbId,

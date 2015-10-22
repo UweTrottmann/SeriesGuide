@@ -594,15 +594,13 @@ public class TraktTools {
             }
         }
 
-        // TODO ut: upload episodes of shows previously not on trakt, but now have a trakt id
-        if (isMerging) {
-            // upload flags of all shows NOT on trakt
-            switch (flag) {
-                case WATCHED:
-                    return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
-                case COLLECTED:
-                    return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
-            }
+        // try to upload flags of all shows NOT on trakt
+        // will skip shows that do not have a trakt id (e.g. can not be tracked with trakt, yet)
+        switch (flag) {
+            case WATCHED:
+                return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
+            case COLLECTED:
+                return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
         }
 
         return SUCCESS;
@@ -820,7 +818,14 @@ public class TraktTools {
         SyncShow syncShow = new SyncShow();
         SyncItems syncItems = new SyncItems().shows(syncShow);
         for (int showTvdbId : localShows) {
-            syncShow.id(ShowIds.tvdb(showTvdbId));
+            // check if the show has a trakt id (e.g. is on trakt)
+            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
+            if (showTraktId == null) {
+                // has no valid trakt id, skip upload
+                continue;
+            }
+
+            syncShow.id(ShowIds.trakt(showTraktId));
 
             // query for watched episodes
             Cursor localEpisodes = context.getContentResolver()
@@ -869,7 +874,14 @@ public class TraktTools {
         SyncShow syncShow = new SyncShow();
         SyncItems syncItems = new SyncItems().shows(syncShow);
         for (int showTvdbId : localShows) {
-            syncShow.id(ShowIds.tvdb(showTvdbId));
+            // check if the show has a trakt id (e.g. is on trakt)
+            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
+            if (showTraktId == null) {
+                // has no valid trakt id, skip upload
+                continue;
+            }
+
+            syncShow.id(ShowIds.trakt(showTraktId));
 
             // query for watched episodes
             Cursor localEpisodes = context.getContentResolver().query(
