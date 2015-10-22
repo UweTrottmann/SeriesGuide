@@ -69,17 +69,9 @@ public class TraktTools {
 
     // Sync status codes
     public static final int SUCCESS = 1;
-    public static final int SUCCESS_NOWORK = 0;
     public static final int FAILED_API = -1;
     public static final int FAILED = -2;
     public static final int FAILED_CREDENTIALS = -3;
-
-    // Url parts
-    private static final String TRAKT_SEARCH_BASE_URL = "https://trakt.tv/search/";
-    private static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
-    private static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
-    private static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
-    private static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
 
     public enum Flag {
         COLLECTED(SeriesGuideContract.Episodes.COLLECTED,
@@ -96,7 +88,7 @@ public class TraktTools {
         final int flaggedValue;
         final int nonFlaggedValue;
 
-        private Flag(String databaseColumn, String clearFlagSelection, int flaggedValue,
+        Flag(String databaseColumn, String clearFlagSelection, int flaggedValue,
                 int nonFlaggedValue) {
             this.databaseColumn = databaseColumn;
             this.clearFlagSelection = clearFlagSelection;
@@ -150,6 +142,9 @@ public class TraktTools {
         // apply watched flags for all watched trakt movies that are in the local database
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         Set<Integer> localMovies = MovieTools.getMovieTmdbIdsAsSet(context);
+        if (localMovies == null) {
+            return UpdateResult.INCOMPLETE;
+        }
         Set<Integer> unwatchedMovies = new HashSet<>(localMovies);
         for (BaseMovie movie : watchedMovies) {
             if (movie.movie == null || movie.movie.ids == null || movie.movie.ids.tmdb == null) {
@@ -594,17 +589,13 @@ public class TraktTools {
             }
         }
 
-        if (isMerging) {
-            // upload flags of all shows NOT on trakt
-            switch (flag) {
-                case WATCHED:
-                    return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
-                case COLLECTED:
-                    return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
-            }
-        } else {
-            // clear flags on all shows NOT on trakt
-            clearFlagsOfShow(context, flag, localShowsNotOnTrakt);
+        // try to upload flags of all shows NOT on trakt
+        // will skip shows that do not have a trakt id (e.g. can not be tracked with trakt, yet)
+        switch (flag) {
+            case WATCHED:
+                return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
+            case COLLECTED:
+                return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
         }
 
         return SUCCESS;
@@ -811,29 +802,6 @@ public class TraktTools {
         return new SyncSeason().number(seasonNumber).episodes(syncEpisodes);
     }
 
-    private static void clearFlagsOfShow(Context context, Flag flag,
-            HashSet<Integer> skippedShows) {
-        if (skippedShows.size() == 0) {
-            // nothing to do!
-            return;
-        }
-
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (Integer tvShowTvdbId : skippedShows) {
-            batch.add(ContentProviderOperation
-                    .newUpdate(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(tvShowTvdbId))
-                    .withSelection(flag.clearFlagSelection, null)
-                    .withValue(flag.databaseColumn, flag.nonFlaggedValue).build());
-        }
-
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e("Clearing " + flag + " flags for shows failed");
-            // continue, next sync will try again
-        }
-    }
-
     /**
      * Uploads all collected episodes for the given shows to trakt.
      *
@@ -845,7 +813,14 @@ public class TraktTools {
         SyncShow syncShow = new SyncShow();
         SyncItems syncItems = new SyncItems().shows(syncShow);
         for (int showTvdbId : localShows) {
-            syncShow.id(ShowIds.tvdb(showTvdbId));
+            // check if the show has a trakt id (e.g. is on trakt)
+            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
+            if (showTraktId == null) {
+                // has no valid trakt id, skip upload
+                continue;
+            }
+
+            syncShow.id(ShowIds.trakt(showTraktId));
 
             // query for watched episodes
             Cursor localEpisodes = context.getContentResolver()
@@ -894,7 +869,14 @@ public class TraktTools {
         SyncShow syncShow = new SyncShow();
         SyncItems syncItems = new SyncItems().shows(syncShow);
         for (int showTvdbId : localShows) {
-            syncShow.id(ShowIds.tvdb(showTvdbId));
+            // check if the show has a trakt id (e.g. is on trakt)
+            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
+            if (showTraktId == null) {
+                // has no valid trakt id, skip upload
+                continue;
+            }
+
+            syncShow.id(ShowIds.trakt(showTraktId));
 
             // query for watched episodes
             Cursor localEpisodes = context.getContentResolver().query(
@@ -1061,7 +1043,7 @@ public class TraktTools {
 
     public interface EpisodesQuery {
 
-        public String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[] {
                 SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
         };
 

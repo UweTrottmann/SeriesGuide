@@ -149,6 +149,17 @@ public class SeriesGuideContract {
         String IMDBID = "imdbid";
 
         /**
+         * The trakt id of this show. Encoded as integer. Note: for simplification, the trakt id
+         * might be handled as a String within the app.
+         *
+         * <pre>
+         * Range:   integer
+         * Default: 0 (unknown)
+         * </pre>
+         */
+        String TRAKT_ID = "series_trakt_id";
+
+        /**
          * Whether this show has been favorited.
          */
         String FAVORITE = "series_favorite";

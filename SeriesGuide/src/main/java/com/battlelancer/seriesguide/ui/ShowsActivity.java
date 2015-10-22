@@ -468,15 +468,15 @@ public class ShowsActivity extends BaseTopActivity implements
             if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_16_BETA1) {
                 Utils.clearLegacyExternalFileCache(this);
             }
-            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_21) {
-                // flag all shows outdated so delta sync will pick up, if full sync was aborted
-                scheduleAllShowsUpdate();
-                // force a sync
-                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
-            }
             if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_23_BETA4) {
                 // make next trakt sync download watched movies
                 TraktSettings.resetMoviesLastActivity(this);
+            }
+            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_26_BETA3) {
+                // flag all shows outdated so delta sync will pick up, if full sync gets aborted
+                scheduleAllShowsUpdate();
+                // force a sync
+                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
             }
 
             // set this as lastVersion

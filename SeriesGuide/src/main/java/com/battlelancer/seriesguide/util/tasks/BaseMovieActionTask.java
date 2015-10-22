@@ -102,8 +102,13 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
                 return ERROR_TRAKT_AUTH;
             }
 
-            if (!isTraktActionSuccessful(response)) {
+            if (response == null) {
+                // invalid response
                 return ERROR_TRAKT_API;
+            }
+
+            if (!isTraktActionSuccessful(response)) {
+                return ERROR_TRAKT_API_NOT_FOUND;
             }
         }
 
@@ -124,10 +129,6 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
     }
 
     private static boolean isTraktActionSuccessful(SyncResponse response) {
-        if (response == null) {
-            // invalid response
-            return false;
-        }
         if (response.not_found != null && response.not_found.movies != null
                 && response.not_found.movies.size() != 0) {
             // movie was not found on trakt

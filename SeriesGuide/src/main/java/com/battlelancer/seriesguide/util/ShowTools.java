@@ -504,13 +504,38 @@ public class ShowTools {
     }
 
     /**
+     * Returns the trakt id of a show. Returns {@code null} if the query failed, there is no trakt
+     * id or if it is invalid.
+     */
+    @Nullable
+    public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
+        Cursor traktIdQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
+                        new String[] { SeriesGuideContract.Shows.TRAKT_ID }, null, null, null);
+        if (traktIdQuery == null) {
+            return null;
+        }
+
+        Integer traktId = null;
+        if (traktIdQuery.moveToFirst()) {
+            traktId = traktIdQuery.getInt(0);
+            if (traktId <= 0) {
+                traktId = null;
+            }
+        }
+
+        traktIdQuery.close();
+
+        return traktId;
+    }
+
+    /**
      * Returns a set of the TVDb ids of all shows in the local database.
      *
      * @return null if there was an error, empty list if there are no shows.
      */
-    public static
     @Nullable
-    HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
+    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,

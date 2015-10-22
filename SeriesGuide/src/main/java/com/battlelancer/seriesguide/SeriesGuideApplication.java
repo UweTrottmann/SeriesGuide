@@ -60,6 +60,10 @@ public class SeriesGuideApplication extends Application {
      * Requires trakt watched movie (re-)download.
      */
     public static final int RELEASE_VERSION_23_BETA4 = 15113;
+    /**
+     * Requires full show update due to switch to locally stored trakt ids.
+     */
+    public static final int RELEASE_VERSION_26_BETA3 = 15142;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}

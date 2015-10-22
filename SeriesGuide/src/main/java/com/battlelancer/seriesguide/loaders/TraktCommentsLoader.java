@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.TraktCommentsFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -97,13 +98,14 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
                 if (season != -1 && episode != -1 && showTvdbId != -1) {
                     // look up show trakt id
-                    String showTraktId = TraktTools.lookupShowTraktId(getContext(), showTvdbId);
+                    Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
                     if (showTraktId == null) {
-                        return buildResultFailure(R.string.trakt_error_general);
+                        return buildResultFailure(R.string.trakt_error_not_exists);
                     }
 
-                    List<Comment> comments = trakt.episodes().comments(showTraktId, season, episode,
-                            1, PAGE_SIZE, Extended.IMAGES);
+                    List<Comment> comments = trakt.episodes()
+                            .comments(String.valueOf(showTraktId), season, episode,
+                                    1, PAGE_SIZE, Extended.IMAGES);
                     return buildResultSuccess(comments);
                 } else {
                     Timber.e("loadInBackground: could not find episode in database");
@@ -113,13 +115,13 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
             // show comments!
             int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
-            String showTraktId = TraktTools.lookupShowTraktId(getContext(), showTvdbId);
+            Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
             if (showTraktId == null) {
-                return buildResultFailure(R.string.trakt_error_general);
+                return buildResultFailure(R.string.trakt_error_not_exists);
             }
 
-            List<Comment> comments = trakt.shows().comments(showTraktId, 1, PAGE_SIZE,
-                    Extended.IMAGES);
+            List<Comment> comments = trakt.shows()
+                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES);
             return buildResultSuccess(comments);
         } catch (RetrofitError e) {
             Timber.e(e, "Loading comments failed");

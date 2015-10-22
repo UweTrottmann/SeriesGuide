@@ -57,6 +57,9 @@ public class Show {
     @SerializedName("imdb_id")
     public String imdbId;
 
+    @SerializedName("trakt_id")
+    public Integer traktId;
+
     @SerializedName("first_aired")
     public String firstAired;
 

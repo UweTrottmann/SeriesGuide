@@ -460,6 +460,7 @@ public class DBUtils {
         values.put(Shows.RELEASE_COUNTRY, show.country);
         values.put(Shows.ACTORS, show.actors);
         values.put(Shows.IMDBID, show.imdbId);
+        values.put(Shows.TRAKT_ID, show.traktId);
         values.put(Shows.LASTUPDATED, System.currentTimeMillis());
         values.put(Shows.LASTEDIT, show.lastEdited);
 
