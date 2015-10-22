@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s vočlistā</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-    <item quantity="one">%d diena</item>
-    <item quantity="zero">%d dienas</item>
-    <item quantity="two">%d dienas</item>
-    <item quantity="few">%d dienas</item>
-    <item quantity="many">%d dienas</item>
-    <item quantity="other">%d dienas</item>
-  </plurals>
+        <item quantity="one">%d diena</item>
+        <item quantity="zero">%d dienas</item>
+        <item quantity="two">%d dienas</item>
+        <item quantity="few">%d dienas</item>
+        <item quantity="many">%d dienas</item>
+        <item quantity="other">%d dienas</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d stundas</item>
-    <item quantity="one">%d stunda</item>
-    <item quantity="two">%d stundas</item>
-    <item quantity="few">%d stundas</item>
-    <item quantity="many">%d stundas</item>
-    <item quantity="other">%d stundas</item>
-  </plurals>
+        <item quantity="zero">%d stundas</item>
+        <item quantity="one">%d stunda</item>
+        <item quantity="two">%d stundas</item>
+        <item quantity="few">%d stundas</item>
+        <item quantity="many">%d stundas</item>
+        <item quantity="other">%d stundas</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minūtes</item>
-    <item quantity="one">%d minūte</item>
-    <item quantity="two">%d minūtes</item>
-    <item quantity="few">%d minūtes</item>
-    <item quantity="many">%d minūtes</item>
-    <item quantity="other">%d minūtes</item>
-  </plurals>
+        <item quantity="zero">%d minūtes</item>
+        <item quantity="one">%d minūte</item>
+        <item quantity="two">%d minūtes</item>
+        <item quantity="few">%d minūtes</item>
+        <item quantity="many">%d minūtes</item>
+        <item quantity="other">%d minūtes</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s nekolekcionētas.</string>
   <string name="checkin_success_trakt">Iečekojies %s ar trakt.</string>
   <string name="checkin_canceled_success_trakt">Atcelta trakt iečekošanās.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Pārraksti</string>
   <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
   <string name="traktcheckin_wait">Es gaidīšu</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Kaut kas izgāzās. Lūdzu pārbaudi savus datus un mēģini vēlreiz.</string>
   <string name="trakt_error_general">Saruna ar trakt izgāzās. Mēģini vēlreiz.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Savieno trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Lieliska</string>
   <string name="rating9">Superīga</string>
   <plurals name="votes">
-    <item quantity="zero">%d balsis</item>
-    <item quantity="one">%d balss</item>
-    <item quantity="two">%d balsis</item>
-    <item quantity="few">%d balsu</item>
-    <item quantity="many">%d balsis</item>
-    <item quantity="other">%d balsis</item>
-  </plurals>
+        <item quantity="zero">%d balsis</item>
+        <item quantity="one">%d balss</item>
+        <item quantity="two">%d balsis</item>
+        <item quantity="few">%d balsu</item>
+        <item quantity="many">%d balsis</item>
+        <item quantity="other">%d balsis</item>
+    </plurals>
   <string name="checkin">Iečekot</string>
   <string name="checkin_hint">Ierakstīt ziņu (opcionāli)</string>
   <string name="paste_title">Iekopēt nosaukumu</string>

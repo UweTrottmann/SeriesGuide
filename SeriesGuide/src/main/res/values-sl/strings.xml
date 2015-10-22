@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s on watchlist</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dan</item>
-    <item quantity="zero">%d dni</item>
-    <item quantity="two">%d dni</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="many">%d dni</item>
-    <item quantity="other">%d dni</item>
-  </plurals>
+        <item quantity="one">%d dan</item>
+        <item quantity="zero">%d dni</item>
+        <item quantity="two">%d dni</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dni</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d ur</item>
-    <item quantity="one">%d ure</item>
-    <item quantity="two">%d ur</item>
-    <item quantity="few">%d ur</item>
-    <item quantity="many">%d ur</item>
-    <item quantity="other">%d ur</item>
-  </plurals>
+        <item quantity="zero">%d ur</item>
+        <item quantity="one">%d ure</item>
+        <item quantity="two">%d ur</item>
+        <item quantity="few">%d ur</item>
+        <item quantity="many">%d ur</item>
+        <item quantity="other">%d ur</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minut</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minut</item>
-    <item quantity="few">%d minut</item>
-    <item quantity="many">%d minut</item>
-    <item quantity="other">%d minut</item>
-  </plurals>
+        <item quantity="zero">%d minut</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="two">%d minut</item>
+        <item quantity="few">%d minut</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Nastavitev SeriesGuide oblaka</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s ne nabrana.</string>
   <string name="checkin_success_trakt">Prijavljen v %s v trakt.</string>
   <string name="checkin_canceled_success_trakt">Preklical prijavo v trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Poveži trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Super</string>
   <string name="rating9">Odlično</string>
   <plurals name="votes">
-    <item quantity="zero">%d glasov</item>
-    <item quantity="one">%d glasuj</item>
-    <item quantity="two">%d glasov</item>
-    <item quantity="few">%d glasov</item>
-    <item quantity="many">%d glasov</item>
-    <item quantity="other">%d glasov</item>
-  </plurals>
+        <item quantity="zero">%d glasov</item>
+        <item quantity="one">%d glasuj</item>
+        <item quantity="two">%d glasov</item>
+        <item quantity="few">%d glasov</item>
+        <item quantity="many">%d glasov</item>
+        <item quantity="other">%d glasov</item>
+    </plurals>
   <string name="checkin">Prijava</string>
   <string name="checkin_hint">Natipkaj sporočilo (opcijsko)</string>
   <string name="paste_title">Prilepi naslov</string>

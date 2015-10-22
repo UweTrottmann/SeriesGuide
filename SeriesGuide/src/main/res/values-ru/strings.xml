@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s не в коллекции.</string>
   <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
-  <string name="checkin_error_not_exists">Пункт (временно) не найден на trakt. Повторите попытку позже.</string>
   <string name="traktcheckin_cancel">Отменить</string>
   <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Согласен</string>
   <string name="trakt_success">Отправить в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
+  <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">Аккаунт trakt</string>
   <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>
   <string name="connect_trakt">Подключение trakt</string>

@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s pe lista de urmărite</string>
   <string name="runtime_movies_watchlist">Total timp vizionat listă favorite</string>
   <plurals name="days_plural">
-    <item quantity="one">%d zile</item>
-    <item quantity="zero">%d zile</item>
-    <item quantity="two">%d zile</item>
-    <item quantity="few">%d zile</item>
-    <item quantity="many">%d zile</item>
-    <item quantity="other">%d zile</item>
-  </plurals>
+        <item quantity="one">%d zile</item>
+        <item quantity="zero">%d zile</item>
+        <item quantity="two">%d zile</item>
+        <item quantity="few">%d zile</item>
+        <item quantity="many">%d zile</item>
+        <item quantity="other">%d zile</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d ore</item>
-    <item quantity="one">%d ora</item>
-    <item quantity="two">%d ore</item>
-    <item quantity="few">%d ore</item>
-    <item quantity="many">%d ore</item>
-    <item quantity="other">%d ore</item>
-  </plurals>
+        <item quantity="zero">%d ore</item>
+        <item quantity="one">%d ora</item>
+        <item quantity="two">%d ore</item>
+        <item quantity="few">%d ore</item>
+        <item quantity="many">%d ore</item>
+        <item quantity="other">%d ore</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minute</item>
-    <item quantity="one">%d minut</item>
-    <item quantity="two">%d minute</item>
-    <item quantity="few">%d minute</item>
-    <item quantity="many">%d minute</item>
-    <item quantity="other">%d minute</item>
-  </plurals>
+        <item quantity="zero">%d minute</item>
+        <item quantity="one">%d minut</item>
+        <item quantity="two">%d minute</item>
+        <item quantity="few">%d minute</item>
+        <item quantity="many">%d minute</item>
+        <item quantity="other">%d minute</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s necolectat.</string>
   <string name="checkin_success_trakt">%s verificat pe trakt.</string>
   <string name="checkin_canceled_success_trakt">Verificare anulată pe trakt.</string>
-  <string name="checkin_error_not_exists">Elementul (încă) nu este găsit pe trakt. Încercaţi din nou mai târziu.</string>
   <string name="traktcheckin_cancel">Suprascrie</string>
   <string name="traktcheckin_inprogress">Deja ați înregistrat alt episod sau film. Ori suprascrieți precedenta înregistrare sau așteptați %s și încercați din nou.</string>
   <string name="traktcheckin_wait">Voi aștepta</string>
   <string name="trakt_success">Trimis către trakt.</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
   <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Încercați mai tarziu.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">Cont trakt</string>
   <string name="trakt_connect_instructions">Conectează-te sau crează un cont trakt pe următorul ecran. Apoi permite SeriesGuide să acceseze contul trakt.</string>
   <string name="connect_trakt">Conectaţi trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Minunat</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-    <item quantity="zero">%d voturi</item>
-    <item quantity="one">%d vot</item>
-    <item quantity="two">%d voturi</item>
-    <item quantity="few">%d voturi</item>
-    <item quantity="many">%d voturi</item>
-    <item quantity="other">%d voturi</item>
-  </plurals>
+        <item quantity="zero">%d voturi</item>
+        <item quantity="one">%d vot</item>
+        <item quantity="two">%d voturi</item>
+        <item quantity="few">%d voturi</item>
+        <item quantity="many">%d voturi</item>
+        <item quantity="other">%d voturi</item>
+    </plurals>
   <string name="checkin">Înregistrare</string>
   <string name="checkin_hint">Scrie un mesaj (opțional)</string>
   <string name="paste_title">Lipiți titlul</string>

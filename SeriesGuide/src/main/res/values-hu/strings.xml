@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
   <string name="checkin_canceled_success_trakt">Bejelentkezés törölve a trakton.</string>
-  <string name="checkin_error_not_exists">(Még) nem szerepel a trakt adatbázisban. Próbálkozz később.</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
   <string name="traktcheckin_wait">Várok</string>
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt fiók</string>
   <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
   <string name="connect_trakt">Trakt csatlakozás</string>

@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in no trakt cancelado.</string>
-  <string name="checkin_error_not_exists">O item não foi (ainda) encontrado no trakt. Tente de novo mais tarde.</string>
   <string name="traktcheckin_cancel">Substituir</string>
   <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="trakt_success">Enviado ao trakt.</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">Conta trakt</string>
   <string name="trakt_connect_instructions">Na próxima tela faça login no trakt ou crie uma nova conta. Depois dê permissões de acesso à sua conta trakt.</string>
   <string name="connect_trakt">Conectar trakt</string>

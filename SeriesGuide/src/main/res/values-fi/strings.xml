@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
-  <string name="checkin_error_not_exists">Kohde ei (vielä) löytynyt traktista. Yritä myöhemmin uudelleen.</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="trakt_success">Lähetetty traktiin.</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt-tili</string>
   <string name="trakt_connect_instructions">Seuraavalla ruudulla voit kirjautua traktiin tai luoda uuden tilin. Sitten salli SeriesGuidelle pääsy trakt-tiliisi.</string>
   <string name="connect_trakt">Yhdistä traktiin</string>

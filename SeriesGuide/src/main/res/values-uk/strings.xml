@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s в списку спостереження</string>
   <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
   <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d днів</item>
-    <item quantity="two">%d днів</item>
-    <item quantity="few">%d днів</item>
-    <item quantity="many">%d днів</item>
-    <item quantity="other">%d днів</item>
-  </plurals>
+        <item quantity="one">%d день</item>
+        <item quantity="zero">%d днів</item>
+        <item quantity="two">%d днів</item>
+        <item quantity="few">%d днів</item>
+        <item quantity="many">%d днів</item>
+        <item quantity="other">%d днів</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d годин</item>
-    <item quantity="one">%d година</item>
-    <item quantity="two">%d години</item>
-    <item quantity="few">%d годин</item>
-    <item quantity="many">%d годин</item>
-    <item quantity="other">%d годин</item>
-  </plurals>
+        <item quantity="zero">%d годин</item>
+        <item quantity="one">%d година</item>
+        <item quantity="two">%d години</item>
+        <item quantity="few">%d годин</item>
+        <item quantity="many">%d годин</item>
+        <item quantity="other">%d годин</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d хвилин</item>
-    <item quantity="one">%d хвилина</item>
-    <item quantity="two">%d хвилини</item>
-    <item quantity="few">%d хвилин</item>
-    <item quantity="many">%d хвилин</item>
-    <item quantity="other">%d хвилин</item>
-  </plurals>
+        <item quantity="zero">%d хвилин</item>
+        <item quantity="one">%d хвилина</item>
+        <item quantity="two">%d хвилини</item>
+        <item quantity="few">%d хвилин</item>
+        <item quantity="many">%d хвилин</item>
+        <item quantity="other">%d хвилин</item>
+    </plurals>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
-  <string name="checkin_error_not_exists">Елемент (поки що) не знайдено на trakt. Повторіть спробу пізніше.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
   <string name="trakt_success">Надіслано до trakt.</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt аккаунт</string>
   <string name="trakt_connect_instructions">У наступному вікні увійдіть у свій trakt аккаунт або створіть новий. Потім дозвольте SeriesGuide доступ до вашого аккаунту на trakt.</string>
   <string name="connect_trakt">Підключитись до trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Дуже добре</string>
   <string name="rating9">Прекрасно</string>
   <plurals name="votes">
-    <item quantity="zero">%d голосів</item>
-    <item quantity="one">%d голос</item>
-    <item quantity="two">%d голоси</item>
-    <item quantity="few">%d голосів</item>
-    <item quantity="many">%d голосів</item>
-    <item quantity="other">%d голосів</item>
-  </plurals>
+        <item quantity="zero">%d голосів</item>
+        <item quantity="one">%d голос</item>
+        <item quantity="two">%d голоси</item>
+        <item quantity="few">%d голосів</item>
+        <item quantity="many">%d голосів</item>
+        <item quantity="other">%d голосів</item>
+    </plurals>
   <string name="checkin">Зареєструвати</string>
   <string name="checkin_hint">Введіть повідомлення (необов\'язково)</string>
   <string name="paste_title">Вставити заголовок</string>

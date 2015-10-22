@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
-  <string name="checkin_error_not_exists">Madde trakt\'da (daha) bulunamadı. Daha sonra tekrar dene.</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
   <string name="trakt_success">Trakt\'a gönder.</string>
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt hesabı</string>
   <string name="trakt_connect_instructions">Bir sonraki ekranda trakt\'e giriş yapabilir ya da hesap oluşturabilirsiniz. Sonrasında SeriesGuide erişimine izin verin.</string>
   <string name="connect_trakt">trakt\'e bağlan</string>

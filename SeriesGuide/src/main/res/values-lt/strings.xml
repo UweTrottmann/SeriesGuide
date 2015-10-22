@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s nėra kolekcijoj.</string>
   <string name="checkin_success_trakt">Pažymėta %s trakt paskyroje.</string>
   <string name="checkin_canceled_success_trakt">Atšauktas trakt pažymėjimas.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Perrašyti</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Palauksiu</string>
   <string name="trakt_success">Nusiųsta į trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Nepavyko susisiekti su trakt. Badykite vėliau.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt paskyra</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Prisijungti prie trakt</string>

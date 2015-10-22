@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s i overvåkningslisten</string>
   <string name="runtime_movies_watchlist">Total tid fra film-overvåkningslisten</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dag</item>
-    <item quantity="zero">%d dager</item>
-    <item quantity="two">%d dager</item>
-    <item quantity="few">%d dager</item>
-    <item quantity="many">%d dager</item>
-    <item quantity="other">%d dager</item>
-  </plurals>
+        <item quantity="one">%d dag</item>
+        <item quantity="zero">%d dager</item>
+        <item quantity="two">%d dager</item>
+        <item quantity="few">%d dager</item>
+        <item quantity="many">%d dager</item>
+        <item quantity="other">%d dager</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d timer</item>
-    <item quantity="one">%d time</item>
-    <item quantity="two">%d timer</item>
-    <item quantity="few">%d timer</item>
-    <item quantity="many">%d timer</item>
-    <item quantity="other">%d timer</item>
-  </plurals>
+        <item quantity="zero">%d timer</item>
+        <item quantity="one">%d time</item>
+        <item quantity="two">%d timer</item>
+        <item quantity="few">%d timer</item>
+        <item quantity="many">%d timer</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutter</item>
-    <item quantity="one">%d minutt</item>
-    <item quantity="two">%d minutter</item>
-    <item quantity="few">%d minutter</item>
-    <item quantity="many">%d minutter</item>
-    <item quantity="other">%d minutter</item>
-  </plurals>
+        <item quantity="zero">%d minutter</item>
+        <item quantity="one">%d minutt</item>
+        <item quantity="two">%d minutter</item>
+        <item quantity="few">%d minutter</item>
+        <item quantity="many">%d minutter</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_setup">Sett opp SeriesGuide sky</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="checkin_success_trakt">Sjekket inn %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Kansellerte innsjekking på trakt.</string>
-  <string name="checkin_error_not_exists">Ikke funnet på Trakt. Prøv igjen senere. </string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="trakt_success">Sendt til Trakt.</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
   <string name="trakt_error_general">Kunne ikke kontakte trakt. Prøv igjen senere.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt konto</string>
   <string name="trakt_connect_instructions">På neste skjerm logg inn på trakt eller opprett en ny konto. Deretter gi SeriesGuide tilgang til din trakt konto.</string>
   <string name="connect_trakt">Koble til trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Utmerket</string>
   <string name="rating9">Fantastisk</string>
   <plurals name="votes">
-    <item quantity="zero">%d stemmer</item>
-    <item quantity="one">%d stemme</item>
-    <item quantity="two">%d stemmer</item>
-    <item quantity="few">%d stemmer</item>
-    <item quantity="many">%d stemmer</item>
-    <item quantity="other">%d stemmer</item>
-  </plurals>
+        <item quantity="zero">%d stemmer</item>
+        <item quantity="one">%d stemme</item>
+        <item quantity="two">%d stemmer</item>
+        <item quantity="few">%d stemmer</item>
+        <item quantity="many">%d stemmer</item>
+        <item quantity="other">%d stemmer</item>
+    </plurals>
   <string name="checkin">Sjekk inn</string>
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>
   <string name="paste_title">Lim inn tittel</string>

@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s 와치리스트</string>
   <string name="runtime_movies_watchlist">와치리스트의 상영시간</string>
   <plurals name="days_plural">
-    <item quantity="one">%d 일</item>
-    <item quantity="zero">%d 일</item>
-    <item quantity="two">%d 일</item>
-    <item quantity="few">%d 일</item>
-    <item quantity="many">%d 일</item>
-    <item quantity="other">%d 일</item>
-  </plurals>
+        <item quantity="one">%d 일</item>
+        <item quantity="zero">%d 일</item>
+        <item quantity="two">%d 일</item>
+        <item quantity="few">%d 일</item>
+        <item quantity="many">%d 일</item>
+        <item quantity="other">%d 일</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d 시간</item>
-    <item quantity="one">%d 시간</item>
-    <item quantity="two">%d 시간</item>
-    <item quantity="few">%d 시간</item>
-    <item quantity="many">%d 시간</item>
-    <item quantity="other">%d 시간</item>
-  </plurals>
+        <item quantity="zero">%d 시간</item>
+        <item quantity="one">%d 시간</item>
+        <item quantity="two">%d 시간</item>
+        <item quantity="few">%d 시간</item>
+        <item quantity="many">%d 시간</item>
+        <item quantity="other">%d 시간</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d 분</item>
-    <item quantity="one">%d 분</item>
-    <item quantity="two">%d 분</item>
-    <item quantity="few">%d 분</item>
-    <item quantity="many">%d 분</item>
-    <item quantity="other">%d 분</item>
-  </plurals>
+        <item quantity="zero">%d 분</item>
+        <item quantity="one">%d 분</item>
+        <item quantity="two">%d 분</item>
+        <item quantity="few">%d 분</item>
+        <item quantity="many">%d 분</item>
+        <item quantity="other">%d 분</item>
+    </plurals>
   <string name="hexagon_warning">실험적인 기능</string>
   <string name="hexagon_setup">시리즈가이드 클라우드 설정</string>
   <string name="hexagon_description">쇼와 영화를 백업/동기화하기 위해 클라우드에 접속</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="checkin_success_trakt">%s을 trakt에 체크인하였습니다.</string>
   <string name="checkin_canceled_success_trakt">trakt 체크인을 취소하였습니다.</string>
-  <string name="checkin_error_not_exists">trakt에 아직 없는 항목입니다. 나중에 다시 시도해주세요.</string>
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
   <string name="traktcheckin_wait">기다리겠소</string>
   <string name="trakt_success">trakt로 전송하였습니다.</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt 계정</string>
   <string name="trakt_connect_instructions">다음 화면에서 trakt에 로그인하거나 새계정을 만들 수 있습니다. 그렇게 하면 SeriesGuide 가 trakt 에 접근할 수 있습니다.</string>
   <string name="connect_trakt">trakt에 연결하기</string>
@@ -274,13 +275,13 @@
   <string name="rating8">괜찮음</string>
   <string name="rating9">강추</string>
   <plurals name="votes">
-    <item quantity="zero">%d명이 투표</item>
-    <item quantity="one">%d명이 투표</item>
-    <item quantity="two">%d명이 투표</item>
-    <item quantity="few">%d명이 투표</item>
-    <item quantity="many">%d명이 투표</item>
-    <item quantity="other">%d명이 투표</item>
-  </plurals>
+        <item quantity="zero">%d명이 투표</item>
+        <item quantity="one">%d명이 투표</item>
+        <item quantity="two">%d명이 투표</item>
+        <item quantity="few">%d명이 투표</item>
+        <item quantity="many">%d명이 투표</item>
+        <item quantity="other">%d명이 투표</item>
+    </plurals>
   <string name="checkin">체크인</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
   <string name="paste_title">제목 붙여넣기</string>

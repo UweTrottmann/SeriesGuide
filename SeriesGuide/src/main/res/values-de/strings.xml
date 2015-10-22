@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
   <string name="runtime_movies_watchlist">Laufzeit von Filmen auf der Ansehen-Liste</string>
   <plurals name="days_plural">
-    <item quantity="one">%d Tag</item>
-    <item quantity="zero">%d Tage</item>
-    <item quantity="two">%d Tage</item>
-    <item quantity="few">%d Tage</item>
-    <item quantity="many">%d Tage</item>
-    <item quantity="other">%d Tage</item>
-  </plurals>
+        <item quantity="one">%d Tag</item>
+        <item quantity="zero">%d Tage</item>
+        <item quantity="two">%d Tage</item>
+        <item quantity="few">%d Tage</item>
+        <item quantity="many">%d Tage</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d Stunden</item>
-    <item quantity="one">%d Stunde</item>
-    <item quantity="two">%d Stunden</item>
-    <item quantity="few">%d Stunden</item>
-    <item quantity="many">%d Stunden</item>
-    <item quantity="other">%d Stunden</item>
-  </plurals>
+        <item quantity="zero">%d Stunden</item>
+        <item quantity="one">%d Stunde</item>
+        <item quantity="two">%d Stunden</item>
+        <item quantity="few">%d Stunden</item>
+        <item quantity="many">%d Stunden</item>
+        <item quantity="other">%d Stunden</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d Minuten</item>
-    <item quantity="one">%d Minute</item>
-    <item quantity="two">%d Minuten</item>
-    <item quantity="few">%d Minuten</item>
-    <item quantity="many">%d Minuten</item>
-    <item quantity="other">%d Minuten</item>
-  </plurals>
+        <item quantity="zero">%d Minuten</item>
+        <item quantity="one">%d Minute</item>
+        <item quantity="two">%d Minuten</item>
+        <item quantity="few">%d Minuten</item>
+        <item quantity="many">%d Minuten</item>
+        <item quantity="other">%d Minuten</item>
+    </plurals>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">SeriesGuide Cloud einrichten</string>
   <string name="hexagon_description">Stellen Sie eine Verbindung zur Cloud her um Ihre Serien und Filme zu sichern und zu synchronisieren.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
-  <string name="checkin_error_not_exists">(Noch) Nicht auf trakt gefunden. Versuchen Sie es später erneut.</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
   <string name="traktcheckin_wait">Ich warte</string>
   <string name="trakt_success">An trakt übermittelt.</string>
   <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre trakt-Anmeldeinformationen und versuchen Sie es erneut.</string>
   <string name="trakt_error_general">Konnte trakt nicht erreichen. Versuchen Sie es später erneut.</string>
+  <string name="trakt_error_not_exists">(Noch) nicht bei trakt verfügbar. Versuchen Sie es später erneut.</string>
+  <string name="trakt_notice_not_exists">Kann (noch) nicht mit trakt verwaltet werden.</string>
   <string name="trakt_account">trakt Konto</string>
   <string name="trakt_connect_instructions">Melden Sie sich auf dem nächsten Bildschirm bei trakt an, oder erstellen Sie ein neues Konto. Erlauben Sie dann SeriesGuide Zugriff auf Ihr trakt Konto.</string>
   <string name="connect_trakt">Mit Trakt verbinden</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Sehr gut</string>
   <string name="rating9">Hervorragend</string>
   <plurals name="votes">
-    <item quantity="zero">%d Stimmen</item>
-    <item quantity="one">%d Stimme</item>
-    <item quantity="two">%d Stimmen</item>
-    <item quantity="few">%d Stimmen</item>
-    <item quantity="many">%d Stimmen</item>
-    <item quantity="other">%d Stimmen</item>
-  </plurals>
+        <item quantity="zero">%d Stimmen</item>
+        <item quantity="one">%d Stimme</item>
+        <item quantity="two">%d Stimmen</item>
+        <item quantity="few">%d Stimmen</item>
+        <item quantity="many">%d Stimmen</item>
+        <item quantity="other">%d Stimmen</item>
+    </plurals>
   <string name="checkin">Einchecken</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_title">Titel einfügen</string>

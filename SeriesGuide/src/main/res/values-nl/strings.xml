@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s op watchlist</string>
   <string name="runtime_movies_watchlist">Looptijd van films op de watchlist</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dag</item>
-    <item quantity="zero">%d dagen</item>
-    <item quantity="two">%d dagen</item>
-    <item quantity="few">%d dagen</item>
-    <item quantity="many">%d dagen</item>
-    <item quantity="other">%d dagen</item>
-  </plurals>
+        <item quantity="one">%d dag</item>
+        <item quantity="zero">%d dagen</item>
+        <item quantity="two">%d dagen</item>
+        <item quantity="few">%d dagen</item>
+        <item quantity="many">%d dagen</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d uren</item>
-    <item quantity="one">%d uur</item>
-    <item quantity="two">%d uren</item>
-    <item quantity="few">%d uren</item>
-    <item quantity="many">%d uren</item>
-    <item quantity="other">%d uren</item>
-  </plurals>
+        <item quantity="zero">%d uren</item>
+        <item quantity="one">%d uur</item>
+        <item quantity="two">%d uren</item>
+        <item quantity="few">%d uren</item>
+        <item quantity="many">%d uren</item>
+        <item quantity="other">%d uren</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuten</item>
-    <item quantity="one">%d minuut</item>
-    <item quantity="two">%d minuten</item>
-    <item quantity="few">%d minuten</item>
-    <item quantity="many">%d minuten</item>
-    <item quantity="other">%d minuten</item>
-  </plurals>
+        <item quantity="zero">%d minuten</item>
+        <item quantity="one">%d minuut</item>
+        <item quantity="two">%d minuten</item>
+        <item quantity="few">%d minuten</item>
+        <item quantity="many">%d minuten</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
-  <string name="checkin_error_not_exists">(Nog) niet gevonden op trakt. Probeer het later opnieuw.</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="trakt_success">Verzonden naar Trakt.</string>
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
   <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt-account</string>
   <string name="trakt_connect_instructions">In het volgende scherm kun je inloggen op trakt of een nieuw account aanmaken. Daarna moet je SeriesGuide toegang geven tot je trakt-account.</string>
   <string name="connect_trakt">Verbinden met trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Geweldig</string>
   <string name="rating9">Uitmuntend</string>
   <plurals name="votes">
-    <item quantity="zero">%d stemmen</item>
-    <item quantity="one">%d stem</item>
-    <item quantity="two">%d stemmen</item>
-    <item quantity="few">%d stemmen</item>
-    <item quantity="many">%d stemmen</item>
-    <item quantity="other">%d stemmen</item>
-  </plurals>
+        <item quantity="zero">%d stemmen</item>
+        <item quantity="one">%d stem</item>
+        <item quantity="two">%d stemmen</item>
+        <item quantity="few">%d stemmen</item>
+        <item quantity="many">%d stemmen</item>
+        <item quantity="other">%d stemmen</item>
+    </plurals>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_title">Titel plakken</string>

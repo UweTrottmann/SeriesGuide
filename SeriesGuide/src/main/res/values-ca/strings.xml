@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s a la llista de seguiment</string>
   <string name="runtime_movies_watchlist">Durada de la llista de peŀlícules</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dia</item>
-    <item quantity="zero">%d dies</item>
-    <item quantity="two">%d dies</item>
-    <item quantity="few">%d dies</item>
-    <item quantity="many">%d dies</item>
-    <item quantity="other">%d dies</item>
-  </plurals>
+        <item quantity="one">%d dia</item>
+        <item quantity="zero">%d dies</item>
+        <item quantity="two">%d dies</item>
+        <item quantity="few">%d dies</item>
+        <item quantity="many">%d dies</item>
+        <item quantity="other">%d dies</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hores</item>
-    <item quantity="one">%d hora</item>
-    <item quantity="two">%d hores</item>
-    <item quantity="few">%d hores</item>
-    <item quantity="many">%d hores</item>
-    <item quantity="other">%d hores</item>
-  </plurals>
+        <item quantity="zero">%d hores</item>
+        <item quantity="one">%d hora</item>
+        <item quantity="two">%d hores</item>
+        <item quantity="few">%d hores</item>
+        <item quantity="many">%d hores</item>
+        <item quantity="other">%d hores</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuts</item>
-    <item quantity="one">%d minut</item>
-    <item quantity="two">%d minuts</item>
-    <item quantity="few">%d minuts</item>
-    <item quantity="many">%d minuts</item>
-    <item quantity="other">%d minuts</item>
-  </plurals>
+        <item quantity="zero">%d minuts</item>
+        <item quantity="one">%d minut</item>
+        <item quantity="two">%d minuts</item>
+        <item quantity="few">%d minuts</item>
+        <item quantity="many">%d minuts</item>
+        <item quantity="other">%d minuts</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configureu el Cloud de SeriesGuide</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
@@ -240,13 +240,14 @@
   <string name="trakt_notcollected">%s no recopilats.</string>
   <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
   <string name="checkin_canceled_success_trakt">S\'ha canceŀlat el registre a trakt.</string>
-  <string name="checkin_error_not_exists">Aquest element no es troba (encara) a trakt. Prova-ho més tard.</string>
   <string name="traktcheckin_cancel">Substitueix</string>
   <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
   <string name="traktcheckin_wait">Esperaré</string>
   <string name="trakt_success">Enviat a trakt.</string>
   <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
   <string name="trakt_error_general">No funciona la comunicació amb trakt. Intenteu-ho més tard.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">Compte de trakt</string>
   <string name="trakt_connect_instructions">En la següent pantalla accedeix a trakt o crea un compte nou. Llavors permet a SeriesGuide que hi accedeixi.</string>
   <string name="connect_trakt">Connecta\'t al trakt</string>
@@ -274,13 +275,13 @@
   <string name="rating8">Molt bo</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-    <item quantity="zero">%d vots</item>
-    <item quantity="one">%d vot</item>
-    <item quantity="two">%d vots</item>
-    <item quantity="few">%d vots</item>
-    <item quantity="many">%d vots</item>
-    <item quantity="other">%d vots</item>
-  </plurals>
+        <item quantity="zero">%d vots</item>
+        <item quantity="one">%d vot</item>
+        <item quantity="two">%d vots</item>
+        <item quantity="few">%d vots</item>
+        <item quantity="many">%d vots</item>
+        <item quantity="other">%d vots</item>
+    </plurals>
   <string name="checkin">Inica sessió</string>
   <string name="checkin_hint">Escriviu un missatge (opcional)</string>
   <string name="paste_title">Enganxa el títol</string>
