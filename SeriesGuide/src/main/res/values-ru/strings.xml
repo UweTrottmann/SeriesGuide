@@ -31,7 +31,7 @@
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="search_within_show">Поиск в %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Любой язык</string>
   <string name="updated">Обновлено до последней версии.</string>
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s в списке просмотра</string>
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d дней</item>
-    <item quantity="two">%d дней</item>
-    <item quantity="few">%d дней</item>
-    <item quantity="many">%d дней</item>
-    <item quantity="other">%d дней</item>
-  </plurals>
+        <item quantity="one">%d день</item>
+        <item quantity="zero">%d дней</item>
+        <item quantity="two">%d дней</item>
+        <item quantity="few">%d дней</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d часов</item>
-    <item quantity="one">%d час</item>
-    <item quantity="two">%d часа</item>
-    <item quantity="few">%d часов</item>
-    <item quantity="many">%d часов</item>
-    <item quantity="other">%d часов</item>
-  </plurals>
+        <item quantity="zero">%d часов</item>
+        <item quantity="one">%d час</item>
+        <item quantity="two">%d часа</item>
+        <item quantity="few">%d часов</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часов</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d минут</item>
-    <item quantity="one">%d минута</item>
-    <item quantity="two">%d минут</item>
-    <item quantity="few">%d минут</item>
-    <item quantity="many">%d минут</item>
-    <item quantity="other">%d минут</item>
-  </plurals>
+        <item quantity="zero">%d минут</item>
+        <item quantity="one">%d минута</item>
+        <item quantity="two">%d минут</item>
+        <item quantity="few">%d минут</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минут</item>
+    </plurals>
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
@@ -274,18 +274,18 @@
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
-    <item quantity="zero">%d голосов</item>
-    <item quantity="one">%d голоса</item>
-    <item quantity="two">%d голосов</item>
-    <item quantity="few">%d голосов</item>
-    <item quantity="many">%d голосов</item>
-    <item quantity="other">%d голосов</item>
-  </plurals>
+        <item quantity="zero">%d голосов</item>
+        <item quantity="one">%d голоса</item>
+        <item quantity="two">%d голосов</item>
+        <item quantity="few">%d голосов</item>
+        <item quantity="many">%d голосов</item>
+        <item quantity="other">%d голосов</item>
+    </plurals>
   <string name="checkin">Отметить</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_title">Вставить название</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Быстрая отметка</string>
+  <string name="pref_quick_checkin_summary">Больше не спрашивать об отметке</string>
   <string name="feedback">Отправить отзыв</string>
   <string name="action_open_in_browser">Открыть в браузере</string>
   <string name="prefs_category_basic">Основные</string>

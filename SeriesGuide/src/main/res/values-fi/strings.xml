@@ -31,7 +31,7 @@
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Millä tahansa kielellä</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s seurantalistalla</string>
   <string name="runtime_movies_watchlist">seurantalistan elokuvien kesto</string>
   <plurals name="days_plural">
-    <item quantity="one">%d päivä</item>
-    <item quantity="zero">%d päivää</item>
-    <item quantity="two">%d päivää</item>
-    <item quantity="few">%d päivää</item>
-    <item quantity="many">%d päivää</item>
-    <item quantity="other">%d päivää</item>
-  </plurals>
+        <item quantity="one">%d päivä</item>
+        <item quantity="zero">%d päivää</item>
+        <item quantity="two">%d päivää</item>
+        <item quantity="few">%d päivää</item>
+        <item quantity="many">%d päivää</item>
+        <item quantity="other">%d päivää</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d tuntia</item>
-    <item quantity="one">%d tunti</item>
-    <item quantity="two">%d tuntia</item>
-    <item quantity="few">%d tuntia</item>
-    <item quantity="many">%d tuntia</item>
-    <item quantity="other">%d tuntia</item>
-  </plurals>
+        <item quantity="zero">%d tuntia</item>
+        <item quantity="one">%d tunti</item>
+        <item quantity="two">%d tuntia</item>
+        <item quantity="few">%d tuntia</item>
+        <item quantity="many">%d tuntia</item>
+        <item quantity="other">%d tuntia</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuuttia</item>
-    <item quantity="one">%d minuutti</item>
-    <item quantity="two">%d minuuttia</item>
-    <item quantity="few">%d minuuttia</item>
-    <item quantity="many">%d minuuttia</item>
-    <item quantity="other">%d minuuttia</item>
-  </plurals>
+        <item quantity="zero">%d minuuttia</item>
+        <item quantity="one">%d minuutti</item>
+        <item quantity="two">%d minuuttia</item>
+        <item quantity="few">%d minuuttia</item>
+        <item quantity="many">%d minuuttia</item>
+        <item quantity="other">%d minuuttia</item>
+    </plurals>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
@@ -274,13 +274,13 @@
   <string name="rating8">Upea</string>
   <string name="rating9">Loistava</string>
   <plurals name="votes">
-    <item quantity="zero">%d ääntä</item>
-    <item quantity="one">%d ääni</item>
-    <item quantity="two">%d ääntä</item>
-    <item quantity="few">%d ääntä</item>
-    <item quantity="many">%d ääntä</item>
-    <item quantity="other">%d ääntä</item>
-  </plurals>
+        <item quantity="zero">%d ääntä</item>
+        <item quantity="one">%d ääni</item>
+        <item quantity="two">%d ääntä</item>
+        <item quantity="few">%d ääntä</item>
+        <item quantity="many">%d ääntä</item>
+        <item quantity="other">%d ääntä</item>
+    </plurals>
   <string name="checkin">Kuittaa</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_title">Liitä nimi</string>

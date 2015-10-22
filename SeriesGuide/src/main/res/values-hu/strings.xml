@@ -31,7 +31,7 @@
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="search_within_show">Keresés itt %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Bármely nyelv</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s a figyelőlistában</string>
   <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
   <plurals name="days_plural">
-    <item quantity="one">%d nap</item>
-    <item quantity="zero">%d nap</item>
-    <item quantity="two">%d nap</item>
-    <item quantity="few">%d nap</item>
-    <item quantity="many">%d nap</item>
-    <item quantity="other">%d nap</item>
-  </plurals>
+        <item quantity="one">%d nap</item>
+        <item quantity="zero">%d nap</item>
+        <item quantity="two">%d nap</item>
+        <item quantity="few">%d nap</item>
+        <item quantity="many">%d nap</item>
+        <item quantity="other">%d nap</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d óra</item>
-    <item quantity="one">%d óra</item>
-    <item quantity="two">%d óra</item>
-    <item quantity="few">%d óra</item>
-    <item quantity="many">%d óra</item>
-    <item quantity="other">%d óra</item>
-  </plurals>
+        <item quantity="zero">%d óra</item>
+        <item quantity="one">%d óra</item>
+        <item quantity="two">%d óra</item>
+        <item quantity="few">%d óra</item>
+        <item quantity="many">%d óra</item>
+        <item quantity="other">%d óra</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d perc</item>
-    <item quantity="one">%d perc</item>
-    <item quantity="two">%d perc</item>
-    <item quantity="few">%d perc</item>
-    <item quantity="many">%d perc</item>
-    <item quantity="other">%d perc</item>
-  </plurals>
+        <item quantity="zero">%d perc</item>
+        <item quantity="one">%d perc</item>
+        <item quantity="two">%d perc</item>
+        <item quantity="few">%d perc</item>
+        <item quantity="many">%d perc</item>
+        <item quantity="other">%d perc</item>
+    </plurals>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
@@ -274,13 +274,13 @@
   <string name="rating8">Nagyon jó</string>
   <string name="rating9">Nagyszerű</string>
   <plurals name="votes">
-    <item quantity="zero">%d szavazat</item>
-    <item quantity="one">%d szavazat</item>
-    <item quantity="two">%d szavazat</item>
-    <item quantity="few">%d szavazat</item>
-    <item quantity="many">%d szavazat</item>
-    <item quantity="other">%d szavazat</item>
-  </plurals>
+        <item quantity="zero">%d szavazat</item>
+        <item quantity="one">%d szavazat</item>
+        <item quantity="two">%d szavazat</item>
+        <item quantity="few">%d szavazat</item>
+        <item quantity="many">%d szavazat</item>
+        <item quantity="other">%d szavazat</item>
+    </plurals>
   <string name="checkin">Bejelentkezés</string>
   <string name="checkin_hint">Írj üzenetet (nem kötelező)</string>
   <string name="paste_title">Cím beillesztése</string>

@@ -8,7 +8,7 @@
   <string name="search">Ara</string>
   <string name="preferences">Ayarlar</string>
   <string name="help">Yardım</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Yardım ve Geribildirim</string>
   <string name="drawer_open">Navigasyon çekmecesini aç</string>
   <string name="drawer_close">Navigasyon çekmecesini kapat</string>
   <string name="show">Dizi</string>
@@ -31,7 +31,7 @@
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="search_within_show">İçinde ara %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Herhangi bir dil</string>
   <string name="updated">En son sürüme güncellendi.</string>
   <string name="norating">Geçersiz</string>
   <string name="unknown">bilinmiyor</string>
@@ -153,7 +153,7 @@
   <string name="add_error">%s eklenemedi.</string>
   <string name="add_already_exists">%s zaten dizi listenizde mevcut.</string>
   <string name="recommended">Önerilen</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">İzlenmiş</string>
   <string name="shows_collection">Koleksiyon</string>
   <string name="watchlist">İzleme listesi</string>
   <string name="first_list">İlk liste</string>
@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s İzleme listesi</string>
   <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
   <plurals name="days_plural">
-    <item quantity="one">%d gün</item>
-    <item quantity="zero">%d gün</item>
-    <item quantity="two">%d gün</item>
-    <item quantity="few">%d gün</item>
-    <item quantity="many">%d gün</item>
-    <item quantity="other">%d gün</item>
-  </plurals>
+        <item quantity="one">%d gün</item>
+        <item quantity="zero">%d gün</item>
+        <item quantity="two">%d gün</item>
+        <item quantity="few">%d gün</item>
+        <item quantity="many">%d gün</item>
+        <item quantity="other">%d gün</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d saat</item>
-    <item quantity="one">%d saat</item>
-    <item quantity="two">%d saat</item>
-    <item quantity="few">%d saat</item>
-    <item quantity="many">%d saat</item>
-    <item quantity="other">%d saat</item>
-  </plurals>
+        <item quantity="zero">%d saat</item>
+        <item quantity="one">%d saat</item>
+        <item quantity="two">%d saat</item>
+        <item quantity="few">%d saat</item>
+        <item quantity="many">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d dakika</item>
-    <item quantity="one">%d dakika</item>
-    <item quantity="two">%d dakika</item>
-    <item quantity="few">%d dakika</item>
-    <item quantity="many">%d dakika</item>
-    <item quantity="other">%d dakika</item>
-  </plurals>
+        <item quantity="zero">%d dakika</item>
+        <item quantity="one">%d dakika</item>
+        <item quantity="two">%d dakika</item>
+        <item quantity="few">%d dakika</item>
+        <item quantity="many">%d dakika</item>
+        <item quantity="other">%d dakika</item>
+    </plurals>
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
@@ -274,18 +274,18 @@
   <string name="rating8">Harika</string>
   <string name="rating9">Süper</string>
   <plurals name="votes">
-    <item quantity="zero">%d oy</item>
-    <item quantity="one">%d oy</item>
-    <item quantity="two">%d oy</item>
-    <item quantity="few">%d oy</item>
-    <item quantity="many">%d oy</item>
-    <item quantity="other">%d oylar</item>
-  </plurals>
+        <item quantity="zero">%d oy</item>
+        <item quantity="one">%d oy</item>
+        <item quantity="two">%d oy</item>
+        <item quantity="few">%d oy</item>
+        <item quantity="many">%d oy</item>
+        <item quantity="other">%d oylar</item>
+    </plurals>
   <string name="checkin">Giriş yap</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
   <string name="paste_title">Başlığı yapıştır</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Hızlıca check-in yap</string>
+  <string name="pref_quick_checkin_summary">Check-in mesajı sorma</string>
   <string name="feedback">Geribildirim Gönder</string>
   <string name="action_open_in_browser">Tarayıcıda aç</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
@@ -305,11 +305,11 @@
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
-  <string name="licence_tvdb">Bu uygulama kullanılan veriler ve görseller CC BY-NC 4.0 lisansı altındaki TheTVDB verileridir.</string>
+  <string name="licence_tvdb">Bu uygulama kullanılan theTVDb verileri ve görselleri CC BY-NC 4.0 lisansı altındadır.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır. TMDb ile doğrudan ilişkili, bağlantılı değildir.</string>
   <string name="licence_trakt">Bu uygulama trakt tarafından sağlanan veri ve görselleri kullanır.</string>
   <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licences_and_credits">Lisanslar ve Bilgiler</string>
   <string name="sort">Sırala</string>
   <string name="action_sort_ignore_articles">Metinleri yoksay</string>
   <string name="sort_order_latest_first">Önce en yenisi</string>
@@ -319,7 +319,7 @@
   <string name="sort_order_top_rated_first">En çok oy alanlar</string>
   <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Yaklaşan aralığı</string>
   <string name="upcoming_upto_now">Şu anda</string>
   <string name="upcoming_upto_one_day">bir gün</string>
   <string name="upcoming_upto_three_days">3 gün</string>
@@ -365,10 +365,10 @@
   <string name="import_warning">Mevcut şovlarımın, listelerimin ve filmlerimin silineceğini anlıyorum!</string>
   <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
   <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
+  <string name="dataliberation_permission_missing">Yedeklemek veya geri yüklemek için dosyalarınıza erişime izin verin.</string>
+  <string name="autobackup_permission_missing">Otomatik yedekleme kullanmak için dosyalarınıza erişime izin verin.</string>
+  <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyaları seçin.</string>
+  <string name="no_file_selected">Seçilmiş dosya yok</string>
   <string name="action_select_file">Dosya seçin</string>
   <string name="backup_use_default_files">Varsayılan yedek dosyalarını kullan</string>
   <string name="get_started">Başlarken... </string>

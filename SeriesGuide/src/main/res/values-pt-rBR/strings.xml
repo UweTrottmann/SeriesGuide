@@ -31,7 +31,7 @@
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>
   <string name="search_within_show">Procurar dentro de %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Qualquer idioma</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
@@ -192,29 +192,29 @@
   <string name="movies_on_watchlist">%s na lista de filmes a assistir</string>
   <string name="runtime_movies_watchlist">Tempo de execução dos filmes na lista</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dia</item>
-    <item quantity="zero">%d dia</item>
-    <item quantity="two">%d dias</item>
-    <item quantity="few">%d dias</item>
-    <item quantity="many">%d dias</item>
-    <item quantity="other">%d dias</item>
-  </plurals>
+        <item quantity="one">%d dia</item>
+        <item quantity="zero">%d dia</item>
+        <item quantity="two">%d dias</item>
+        <item quantity="few">%d dias</item>
+        <item quantity="many">%d dias</item>
+        <item quantity="other">%d dias</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hora</item>
-    <item quantity="one">%d hora</item>
-    <item quantity="two">%d horas</item>
-    <item quantity="few">%d horas</item>
-    <item quantity="many">%d horas</item>
-    <item quantity="other">%d horas</item>
-  </plurals>
+        <item quantity="zero">%d hora</item>
+        <item quantity="one">%d hora</item>
+        <item quantity="two">%d horas</item>
+        <item quantity="few">%d horas</item>
+        <item quantity="many">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuto</item>
-    <item quantity="one">%d minuto</item>
-    <item quantity="two">%d minutos</item>
-    <item quantity="few">%d minutos</item>
-    <item quantity="many">%d minutos</item>
-    <item quantity="other">%d minutos</item>
-  </plurals>
+        <item quantity="zero">%d minuto</item>
+        <item quantity="one">%d minuto</item>
+        <item quantity="two">%d minutos</item>
+        <item quantity="few">%d minutos</item>
+        <item quantity="many">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide Cloud</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
@@ -274,13 +274,13 @@
   <string name="rating8">Ótimo</string>
   <string name="rating9">Incrível</string>
   <plurals name="votes">
-    <item quantity="zero">%d votos</item>
-    <item quantity="one">%d votado</item>
-    <item quantity="two">%d votos</item>
-    <item quantity="few">%d votos</item>
-    <item quantity="many">%d votos</item>
-    <item quantity="other">%d Votos</item>
-  </plurals>
+        <item quantity="zero">%d votos</item>
+        <item quantity="one">%d votado</item>
+        <item quantity="two">%d votos</item>
+        <item quantity="few">%d votos</item>
+        <item quantity="many">%d votos</item>
+        <item quantity="other">%d Votos</item>
+    </plurals>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="paste_title">Colar título</string>
