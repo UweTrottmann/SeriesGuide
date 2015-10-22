@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -532,6 +533,9 @@ public class ShowFragment extends Fragment {
 
     private void changeShowLanguage(final String languageCode) {
         Timber.d("Changing show language to " + languageCode);
+        // use global context, to ensure runnable can complete
+        // (can be safely used, as is not dependent on local context)
+        final Context context = getContext().getApplicationContext();
         Runnable runnable = new Runnable() {
             public void run() {
                 android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
@@ -539,7 +543,7 @@ public class ShowFragment extends Fragment {
                 // change language
                 ContentValues values = new ContentValues();
                 values.put(Shows.LANGUAGE, languageCode);
-                getContext().getContentResolver()
+                context.getContentResolver()
                         .update(Shows.buildShowUri(getShowTvdbId()), values, null, null);
                 // reset episode last edit time so all get updated
                 values = new ContentValues();
@@ -548,19 +552,19 @@ public class ShowFragment extends Fragment {
                         .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(
                                 getShowTvdbId()), values, null, null);
                 // trigger update
-                SgSyncAdapter.requestSyncImmediate(getContext(), SgSyncAdapter.SyncType.SINGLE,
+                SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.SINGLE,
                         getShowTvdbId(), false);
             }
         };
         AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
 
         // show immediate feedback, also if offline and sync won't go through
-        if (AndroidUtils.isNetworkConnected(getContext())) {
+        if (AndroidUtils.isNetworkConnected(context)) {
             // notify about upcoming sync
-            Toast.makeText(getContext(), R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
         } else {
             // offline
-            Toast.makeText(getContext(), R.string.update_no_connection, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
         }
     }
 
