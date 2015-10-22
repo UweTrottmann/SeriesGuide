@@ -286,13 +286,13 @@
     <string name="trakt_notcollected">%s not collected.</string>
     <string name="checkin_success_trakt">Checked into %s on trakt.</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
-    <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="trakt_success">Sent to trakt.</string>
     <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
     <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
 
     <!-- Connect trakt -->

@@ -89,7 +89,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
                 errorResId = R.string.trakt_error_general;
                 break;
             case ERROR_TRAKT_API_NOT_FOUND:
-                errorResId = R.string.checkin_error_not_exists;
+                errorResId = R.string.trakt_error_not_exists;
                 break;
             case ERROR_HEXAGON_API:
                 errorResId = R.string.hexagon_api_error;
