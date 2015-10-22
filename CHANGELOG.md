@@ -8,6 +8,14 @@ All dates are in the European Central timezone.
 Version 26 *(in development)*
 -----------------------------
 
+#### 26-beta3 *(2015-10-22)*
+
+* TWEAK Allow to track shows locally if they are not (yet) available on trakt. Show better error
+  messages when trying to rate, comment or check-in on a show that is not available on trakt.
+* FIX Search history now correctly saves latest search terms, displays them in order of last use.
+* FIX Crash when trying to change show language.
+* NOTICE Latest translations from crowdin.
+
 #### 26-beta2 *(2015-10-16)*
 
 * NOTICE It is now again possible to add shows that are only on TheTVDB and not on trakt (e.g. if
