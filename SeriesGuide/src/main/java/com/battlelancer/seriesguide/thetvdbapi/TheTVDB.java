@@ -434,6 +434,8 @@ public class TheTVDB {
             show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
             show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
         } else {
+            // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
+            show.traktId = ShowTools.getShowTraktId(context, showTvdbId);
             // set default values
             show.release_time = -1;
             show.release_weekday = -1;
