@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.R;
@@ -30,6 +31,9 @@ import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
@@ -80,14 +84,25 @@ public class ListWidgetService extends RemoteViewsService {
                     newCursor = DBUtils.getRecentEpisodes(context, isOnlyFavorites, isHideWatched);
                     break;
                 case WidgetSettings.Type.FAVORITES:
-                    // Favorite shows + next episodes, exclude those without
-                    // episode
+                    // Favorite shows with released next episodes,
+                    // exclude shows if next episode is too far into the future
+                    final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
+                    int upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(context);
+                    long latestAirtime = timeInAnHour
+                            + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS;
+
                     newCursor = getContentResolver().query(
                             Shows.CONTENT_URI_WITH_NEXT_EPISODE,
                             ShowsQuery.PROJECTION,
-                            Shows.SELECTION_NO_HIDDEN + " AND " + Shows.SELECTION_FAVORITES
-                                    + " AND " + Shows.SELECTION_WITH_NEXT_EPISODE, null,
-                            Shows.DEFAULT_SORT);
+                            Shows.SELECTION_NO_HIDDEN
+                                    + " AND " + Shows.SELECTION_FAVORITES
+                                    + " AND " + Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE
+                                    + " AND " + Shows.NEXTAIRDATEMS + "<=" + latestAirtime,
+                            null,
+                            ShowsDistillationSettings.getSortQuery(
+                                    ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID,
+                                    false, DisplaySettings.isSortOrderIgnoringArticles(context))
+                    );
                     break;
                 default:
                     // Upcoming episodes

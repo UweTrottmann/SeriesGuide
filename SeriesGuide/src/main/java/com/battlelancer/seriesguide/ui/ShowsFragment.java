@@ -433,8 +433,7 @@ public class ShowsFragment extends Fragment implements
             if (selection.length() != 0) {
                 selection.append(" AND ");
             }
-            selection.append(Shows.NEXTAIRDATEMS).append("!=")
-                    .append(DBUtils.UNKNOWN_NEXT_RELEASE_DATE);
+            selection.append(Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE);
 
             // exclude shows with upcoming next episode
             if (!isFilterUpcoming) {

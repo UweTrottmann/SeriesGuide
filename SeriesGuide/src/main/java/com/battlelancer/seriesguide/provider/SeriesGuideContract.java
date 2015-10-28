@@ -22,6 +22,7 @@ import android.support.annotation.IntDef;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ParserUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -598,6 +599,9 @@ public class SeriesGuideContract {
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
 
         public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
+
+        public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
+                + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
 
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
