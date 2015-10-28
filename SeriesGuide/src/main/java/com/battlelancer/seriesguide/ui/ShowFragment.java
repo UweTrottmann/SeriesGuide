@@ -365,7 +365,7 @@ public class ShowFragment extends Fragment {
         mSpinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                changeShowLanguage(languageCodes[position]);
+                changeShowLanguage(parent.getContext(), getShowTvdbId(), languageCodes[position]);
             }
 
             @Override
@@ -531,11 +531,12 @@ public class ShowFragment extends Fragment {
         }
     }
 
-    private void changeShowLanguage(final String languageCode) {
+    private static void changeShowLanguage(Context context, final int showTvdbId,
+            final String languageCode) {
         Timber.d("Changing show language to " + languageCode);
         // use global context, to ensure runnable can complete
         // (can be safely used, as is not dependent on local context)
-        final Context context = getContext().getApplicationContext();
+        final Context appContext = context.getApplicationContext();
         Runnable runnable = new Runnable() {
             public void run() {
                 android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
@@ -543,17 +544,17 @@ public class ShowFragment extends Fragment {
                 // change language
                 ContentValues values = new ContentValues();
                 values.put(Shows.LANGUAGE, languageCode);
-                context.getContentResolver()
-                        .update(Shows.buildShowUri(getShowTvdbId()), values, null, null);
+                appContext.getContentResolver()
+                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
                 // reset episode last edit time so all get updated
                 values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
-                getActivity().getContentResolver()
-                        .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(
-                                getShowTvdbId()), values, null, null);
+                appContext.getContentResolver()
+                        .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                                values, null, null);
                 // trigger update
-                SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.SINGLE,
-                        getShowTvdbId(), false);
+                SgSyncAdapter.requestSyncImmediate(appContext, SgSyncAdapter.SyncType.SINGLE,
+                        showTvdbId, false);
             }
         };
         AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
