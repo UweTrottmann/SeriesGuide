@@ -156,9 +156,11 @@ public class TheTVDB {
         Show show = fetchShow(context, showTvdbId, language);
 
         // get show properties from hexagon
-        if (HexagonTools.isSignedIn(context)) {
+        com.uwetrottmann.seriesguide.backend.shows.Shows showsService
+                = HexagonTools.getShowsService(context);
+        if (showsService != null) {
             try {
-                ShowTools.Download.showPropertiesFromHexagon(context, show);
+                ShowTools.Download.showPropertiesFromHexagon(showsService, show);
             } catch (IOException e) {
                 throw new TvdbException("Failed to download show properties from Hexagon.");
             }

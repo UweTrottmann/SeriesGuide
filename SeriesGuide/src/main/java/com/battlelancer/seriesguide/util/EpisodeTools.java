@@ -1279,7 +1279,12 @@ public class EpisodeTools {
 
             while (hasMoreEpisodes) {
                 try {
-                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    if (episodesService == null) {
+                        return false;
+                    }
+
+                    Episodes.Get request = episodesService.get()
                             .setUpdatedSince(lastSyncTime)
                             .setLimit(EPISODE_MAX_BATCH_SIZE);
                     if (!TextUtils.isEmpty(cursor)) {
@@ -1376,8 +1381,13 @@ public class EpisodeTools {
                 }
 
                 try {
+                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    if (episodesService == null) {
+                        return false;
+                    }
+
                     // build request
-                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                    Episodes.Get request = episodesService.get()
                             .setShowTvdbId(showTvdbId)
                             .setLimit(EPISODE_MAX_BATCH_SIZE);
                     if (!TextUtils.isEmpty(cursor)) {
@@ -1525,7 +1535,11 @@ public class EpisodeTools {
                     episodeList.setShowTvdbId(showTvdbId);
 
                     try {
-                        HexagonTools.getEpisodesService(context).save(episodeList).execute();
+                        Episodes episodesService = HexagonTools.getEpisodesService(context);
+                        if (episodesService == null) {
+                            return false;
+                        }
+                        episodesService.save(episodeList).execute();
                     } catch (IOException e) {
                         // abort
                         Timber.e(e, "flagsToHexagon: failed to upload episode flags for show "
@@ -1550,7 +1564,11 @@ public class EpisodeTools {
          */
         public static boolean flagsToHexagon(Context context, EpisodeList episodes) {
             try {
-                HexagonTools.getEpisodesService(context).save(episodes).execute();
+                Episodes episodesService = HexagonTools.getEpisodesService(context);
+                if (episodesService == null) {
+                    return false;
+                }
+                episodesService.save(episodes).execute();
             } catch (IOException e) {
                 Timber.e(e, "flagsToHexagon: failed to upload episodes for show "
                         + episodes.getShowTvdbId());

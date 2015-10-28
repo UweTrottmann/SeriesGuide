@@ -384,6 +384,9 @@ public class CloudSetupFragment extends Fragment {
 
             // at last store the new credentials (enables SG hexagon integration)
             HexagonTools.storeAccountName(mContext, accountName);
+            if (!HexagonTools.isSignedIn(mContext)) {
+                return FAILURE_AUTH;
+            }
 
             return SYNC_REQUIRED;
         }
