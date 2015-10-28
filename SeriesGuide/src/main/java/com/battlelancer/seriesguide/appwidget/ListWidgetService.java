@@ -83,24 +83,37 @@ public class ListWidgetService extends RemoteViewsService {
                     // Recent episodes
                     newCursor = DBUtils.getRecentEpisodes(context, isOnlyFavorites, isHideWatched);
                     break;
-                case WidgetSettings.Type.FAVORITES:
-                    // Favorite shows with released next episodes,
-                    // exclude shows if next episode is too far into the future
+                case WidgetSettings.Type.SHOWS:
+                    // Shows
+                    // not hidden
+                    StringBuilder selection = new StringBuilder(Shows.SELECTION_NO_HIDDEN);
+
+                    // optionally only favorites
+                    if (isOnlyFavorites) {
+                        selection.append(" AND ").append(Shows.SELECTION_FAVORITES);
+                    }
+
+                    // with next episode
+                    selection.append(" AND ").append(Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE);
+
+                    // if next episode is in the future, exclude if too far into the future
                     final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
                     int upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(context);
                     long latestAirtime = timeInAnHour
                             + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS;
+                    selection.append(" AND ")
+                            .append(Shows.NEXTAIRDATEMS)
+                            .append("<=")
+                            .append(latestAirtime);
 
+                    // query, sort based on user preference
                     newCursor = getContentResolver().query(
                             Shows.CONTENT_URI_WITH_NEXT_EPISODE,
                             ShowsQuery.PROJECTION,
-                            Shows.SELECTION_NO_HIDDEN
-                                    + " AND " + Shows.SELECTION_FAVORITES
-                                    + " AND " + Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE
-                                    + " AND " + Shows.NEXTAIRDATEMS + "<=" + latestAirtime,
+                            selection.toString(),
                             null,
                             ShowsDistillationSettings.getSortQuery(
-                                    ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID,
+                                    WidgetSettings.getWidgetShowsSortOrderId(context, appWidgetId),
                                     false, DisplaySettings.isSortOrderIgnoringArticles(context))
                     );
                     break;
@@ -145,7 +158,7 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         public RemoteViews getViewAt(int position) {
-            final boolean isShowQuery = widgetType == WidgetSettings.Type.FAVORITES;
+            final boolean isShowQuery = widgetType == WidgetSettings.Type.SHOWS;
 
             // build a remote views collection item
             RemoteViews rv = new RemoteViews(context.getPackageName(),

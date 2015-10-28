@@ -73,6 +73,17 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         typePref.setNegativeButtonText(null);
         preferenceScreen.addPreference(typePref);
 
+        // widget show type sort order setting
+        final ListPreference sortPref = new ListPreference(getActivity());
+        sortPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId);
+        sortPref.setTitle(R.string.action_shows_sort);
+        sortPref.setEntries(R.array.widgetShowSortOrder);
+        sortPref.setEntryValues(R.array.widgetShowSortOrderData);
+        sortPref.setDefaultValue("0");
+        sortPref.setPositiveButtonText(null);
+        sortPref.setNegativeButtonText(null);
+        preferenceScreen.addPreference(sortPref);
+
         // only favorite shows setting
         final CheckBoxPreference onlyFavoritesPref = new CheckBoxPreference(getActivity());
         onlyFavoritesPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId);
@@ -113,6 +124,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         setPreferenceScreen(preferenceScreen);
 
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), typePref);
+        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), sortPref);
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), backgroundPref);
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), themePref);
 
@@ -126,7 +138,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
             backgroundPref.setSummary(R.string.onlyx);
         }
 
-        // disable episode related settings if selecting show widget type
+        // disable episode related setting if selecting show widget type
         preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
@@ -134,7 +146,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
                 if (typePref.getKey().equals(key)) {
                     String newTypeValue = typePref.getValue();
                     boolean displayingShows = "2".equals(newTypeValue);
-                    onlyFavoritesPref.setEnabled(!displayingShows);
+                    sortPref.setEnabled(displayingShows);
                     hideWatchedPreference.setEnabled(!displayingShows);
                 }
             }
