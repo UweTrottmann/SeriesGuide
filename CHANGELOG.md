@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 26 *(in development)*
 -----------------------------
 
+#### 26-beta4 *(2015-10-29)*
+
+* TWEAK Change "Favorites" widget type to "Shows", add setting to filter on favorites instead, add
+  sort order setting (by latest episode or title).
+* TWEAK Show fast scrollbar again in movies watchlist and collection tabs if displaying many items.
+* FIX Crash when trying to change show language (should now really be fixed).
+* FIX Crash when SeriesGuide Cloud account resolution fails while syncing.
+* NOTICE Latest translations from crowdin.
+
 #### 26-beta3 *(2015-10-22)*
 
 * TWEAK Allow to track shows locally if they are not (yet) available on trakt. Show better error
