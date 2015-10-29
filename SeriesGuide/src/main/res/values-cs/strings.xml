@@ -8,7 +8,7 @@
   <string name="search">Hledat</string>
   <string name="preferences">Nastavení</string>
   <string name="help">Nápověda</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Pomoc a připomínky</string>
   <string name="drawer_open">Otevřít záložky aplikace</string>
   <string name="drawer_close">Zavřít záložky aplikace</string>
   <string name="show">Seriál</string>
@@ -31,7 +31,7 @@
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
   <string name="search_within_show">Hledat v %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Jakýkoliv jazyk</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
@@ -153,7 +153,7 @@
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
   <string name="recommended">Doporučené</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Zhlédnuto</string>
   <string name="shows_collection">Sbírka</string>
   <string name="watchlist">Chci vidět</string>
   <string name="first_list">První seznam</string>
@@ -231,8 +231,8 @@
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
   <string name="hexagon_api_error">Nelze se spojit s SeriesGuide Cloud. Opakujte akci později.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Pro použití SeriesGuide Cloudu povolte přístup k vašim účtům.</string>
+  <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>
   <string name="trakt_seen">%s zhlédnuto.</string>
   <string name="trakt_notseen">%s nových.</string>
@@ -246,7 +246,7 @@
   <string name="trakt_success">Odesláno do trakt.tv.</string>
   <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
   <string name="trakt_error_general">Nelze se připojit na trakt.tv. Opakujte akci později.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Není k dispozici na traktu (zatím). Zkuste to později.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt.tv účet</string>
   <string name="trakt_connect_instructions">Na další obrazovce se přihlašte do trakt.tv nebo vytvořte nový účet. Poté umožněte SeriesGuide přístup k vašemu účtu na trakt.tv.</string>
@@ -285,7 +285,7 @@
   <string name="checkin">Ohlásit se</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_title">Vložit název</string>
-  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin">Rychle se ohlásit</string>
   <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Poslat reakci</string>
   <string name="action_open_in_browser">Otevřít v prohlížečí</string>
@@ -423,7 +423,7 @@
   <string name="subscription_failed">Nákup nebyl dokončen.</string>
   <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>
   <string name="extensions">Rozšíření</string>
-  <string name="action_extensions_configure">Přispůsobení rozšířeních</string>
+  <string name="action_extensions_configure">Přispůsobit rozšíření</string>
   <string name="action_extensions_add">Přidat rozšíření</string>
   <string name="action_extensions_limit">Získej X verzi s více funkcemi</string>
   <string name="action_extensions_search">Získat další rozšíření</string>

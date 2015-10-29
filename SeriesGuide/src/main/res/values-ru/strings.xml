@@ -247,7 +247,7 @@
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">(Пока) не может быть отслежен с помощью trakt.</string>
   <string name="trakt_account">Аккаунт trakt</string>
   <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>
   <string name="connect_trakt">Подключение trakt</string>

@@ -246,8 +246,8 @@
   <string name="trakt_success">Enviado ao trakt.</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">(Ainda) Não disponível no trakt.. Tente novamente mais tarde.</string>
+  <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt.</string>
   <string name="trakt_account">Conta trakt</string>
   <string name="trakt_connect_instructions">Na próxima tela faça login no trakt ou crie uma nova conta. Depois dê permissões de acesso à sua conta trakt.</string>
   <string name="connect_trakt">Conectar trakt</string>

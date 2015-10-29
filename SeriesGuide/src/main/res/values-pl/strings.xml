@@ -31,7 +31,7 @@
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
   <string name="search_within_show">Szukaj w %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Dowolny język</string>
   <string name="updated">Zaktualizowano do najnowszej wersji.</string>
   <string name="norating">brak danych</string>
   <string name="unknown">nieznana</string>
@@ -246,8 +246,8 @@
   <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
   <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
+  <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
   <string name="trakt_account">Konto trakt</string>
   <string name="trakt_connect_instructions">Na następnym ekranie zaloguj się do trakt lub utwórz nowe konto. Następnie włącz dostęp SeriesGuide do konta trakt.</string>
   <string name="connect_trakt">Połącz z trakt</string>
