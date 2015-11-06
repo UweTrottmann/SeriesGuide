@@ -27,7 +27,7 @@ public class WidgetSettings {
     public interface Type {
         int UPCOMING = 0;
         int RECENT = 1;
-        int FAVORITES = 2;
+        int SHOWS = 2;
     }
 
     public static final String SETTINGS_FILE = "ListWidgetPreferences";
@@ -41,6 +41,8 @@ public class WidgetSettings {
     public static final String KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_";
 
     public static final String KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_";
+
+    public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
 
     private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY = 50;
 
@@ -58,6 +60,27 @@ public class WidgetSettings {
         }
 
         return type;
+    }
+
+    /**
+     * Returns the sort order of shows. Should be used when the widget is set to the shows type.
+     *
+     * @return A {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
+     * id.
+     */
+    public static int getWidgetShowsSortOrderId(Context context, int appWidgetId) {
+        int sortOrder = 0;
+        try {
+            sortOrder = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
+                    .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId, "0"));
+        } catch (NumberFormatException ignored) {
+        }
+
+        if (sortOrder == 1) {
+            return ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
+        } else {
+            return ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
+        }
     }
 
     /**

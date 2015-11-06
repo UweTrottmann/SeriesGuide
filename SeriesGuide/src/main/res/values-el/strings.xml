@@ -31,6 +31,7 @@
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="search_within_show">Αναζήτηση μέσα σε %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
   <string name="recommended">Προτεινόμενα</string>
-  <string name="library">Βιβλιοθήκη</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Συλλογή</string>
   <string name="watchlist">Λίστα προς παρακολούθηση</string>
   <string name="first_list">Πρώτη λίστα</string>
   <string name="list_add">Προσθήκη λίστας</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
   <string name="runtime_movies_watchlist">Συνολικός χρόνος όλων των επεισοδίων που παρακολούθησες</string>
   <plurals name="days_plural">
-    <item quantity="one">%d ημέρα</item>
-    <item quantity="zero">%d ημέρες</item>
-    <item quantity="two">%d ημέρες</item>
-    <item quantity="few">%d ημέρες</item>
-    <item quantity="many">%d ημέρες</item>
-    <item quantity="other">%d ημέρες</item>
-  </plurals>
+        <item quantity="one">%d ημέρα</item>
+        <item quantity="zero">%d ημέρες</item>
+        <item quantity="two">%d ημέρες</item>
+        <item quantity="few">%d ημέρες</item>
+        <item quantity="many">%d ημέρες</item>
+        <item quantity="other">%d ημέρες</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d ώρες</item>
-    <item quantity="one">%d ώρα</item>
-    <item quantity="two">%d ώρες</item>
-    <item quantity="few">%d ώρες</item>
-    <item quantity="many">%d ώρες</item>
-    <item quantity="other">%d ώρες</item>
-  </plurals>
+        <item quantity="zero">%d ώρες</item>
+        <item quantity="one">%d ώρα</item>
+        <item quantity="two">%d ώρες</item>
+        <item quantity="few">%d ώρες</item>
+        <item quantity="many">%d ώρες</item>
+        <item quantity="other">%d ώρες</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d λεπτά</item>
-    <item quantity="one">%d λεπτό</item>
-    <item quantity="two">%d λεπτά</item>
-    <item quantity="few">%d λεπτά</item>
-    <item quantity="many">%d λεπτά</item>
-    <item quantity="other">%d λεπτά</item>
-  </plurals>
+        <item quantity="zero">%d λεπτά</item>
+        <item quantity="one">%d λεπτό</item>
+        <item quantity="two">%d λεπτά</item>
+        <item quantity="few">%d λεπτά</item>
+        <item quantity="many">%d λεπτά</item>
+        <item quantity="other">%d λεπτά</item>
+    </plurals>
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
   <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s εκτός συλλογής.</string>
   <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
   <string name="checkin_canceled_success_trakt">Ακύρωσε το check-in στο trackt.</string>
-  <string name="checkin_error_not_exists">Αντικείμενο όχι (ακόμα) διαθέσιμο στο trakt. Δοκιμάσετε πάλι αργότερα.</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>
   <string name="trakt_success">Στάλθηκε στο trakt.</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">λογαριασμός trakt</string>
   <string name="trakt_connect_instructions">Στην επόμενη οθόνη συνδεθείτε στο Trakt ή δημιουργήστε καινούργιο λογαριασμό. Μετά δώστε πρόσβαση στο SeriesGuide στον λογαριασμό Trakt.</string>
   <string name="connect_trakt">Σύνδεση trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Πολύ καλό</string>
   <string name="rating9">Εξαιρετικό</string>
   <plurals name="votes">
-    <item quantity="zero">%d ψήφοι</item>
-    <item quantity="one">%d ψήφος</item>
-    <item quantity="two">%d ψήφοι</item>
-    <item quantity="few">%d ψήφοι</item>
-    <item quantity="many">%d ψήφοι</item>
-    <item quantity="other">%d ψήφοι</item>
-  </plurals>
+        <item quantity="zero">%d ψήφοι</item>
+        <item quantity="one">%d ψήφος</item>
+        <item quantity="two">%d ψήφοι</item>
+        <item quantity="few">%d ψήφοι</item>
+        <item quantity="many">%d ψήφοι</item>
+        <item quantity="other">%d ψήφοι</item>
+    </plurals>
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_title">Επικόλληση τίτλου</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
   <string name="prefs_category_basic">Βασικά</string>

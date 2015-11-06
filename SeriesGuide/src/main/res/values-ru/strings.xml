@@ -8,7 +8,7 @@
   <string name="search">Поиск</string>
   <string name="preferences">Настройки</string>
   <string name="help">Справка</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Помощь и обратная связь</string>
   <string name="drawer_open">Открыть навигационную панель</string>
   <string name="drawer_close">Закрыть навигационную панель</string>
   <string name="show">Инфо</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="search_within_show">Поиск в %s</string>
+  <string name="any_language">Любой язык</string>
   <string name="updated">Обновлено до последней версии.</string>
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Не удалось добавить %s.</string>
   <string name="add_already_exists">%s уже есть в вашем списке.</string>
   <string name="recommended">Рекомендуемые</string>
-  <string name="library">Библиотека</string>
+  <string name="watched_shows">Просмотрено</string>
+  <string name="shows_collection">Коллекция</string>
   <string name="watchlist">Список просмотра</string>
   <string name="first_list">Первый список</string>
   <string name="list_add">Добавить список</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s в списке просмотра</string>
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d дней</item>
-    <item quantity="two">%d дней</item>
-    <item quantity="few">%d дней</item>
-    <item quantity="many">%d дней</item>
-    <item quantity="other">%d дней</item>
-  </plurals>
+        <item quantity="one">%d день</item>
+        <item quantity="zero">%d дней</item>
+        <item quantity="two">%d дней</item>
+        <item quantity="few">%d дней</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d часов</item>
-    <item quantity="one">%d час</item>
-    <item quantity="two">%d часа</item>
-    <item quantity="few">%d часов</item>
-    <item quantity="many">%d часов</item>
-    <item quantity="other">%d часов</item>
-  </plurals>
+        <item quantity="zero">%d часов</item>
+        <item quantity="one">%d час</item>
+        <item quantity="two">%d часа</item>
+        <item quantity="few">%d часов</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часов</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d минут</item>
-    <item quantity="one">%d минута</item>
-    <item quantity="two">%d минут</item>
-    <item quantity="few">%d минут</item>
-    <item quantity="many">%d минут</item>
-    <item quantity="other">%d минут</item>
-  </plurals>
+        <item quantity="zero">%d минут</item>
+        <item quantity="one">%d минута</item>
+        <item quantity="two">%d минут</item>
+        <item quantity="few">%d минут</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минут</item>
+    </plurals>
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s не в коллекции.</string>
   <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
-  <string name="checkin_error_not_exists">Пункт (временно) не найден на trakt. Повторите попытку позже.</string>
   <string name="traktcheckin_cancel">Отменить</string>
   <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Согласен</string>
   <string name="trakt_success">Отправить в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
+  <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
+  <string name="trakt_notice_not_exists">(Пока) не может быть отслежен с помощью trakt.</string>
   <string name="trakt_account">Аккаунт trakt</string>
   <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>
   <string name="connect_trakt">Подключение trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
-    <item quantity="zero">%d голосов</item>
-    <item quantity="one">%d голоса</item>
-    <item quantity="two">%d голосов</item>
-    <item quantity="few">%d голосов</item>
-    <item quantity="many">%d голосов</item>
-    <item quantity="other">%d голосов</item>
-  </plurals>
+        <item quantity="zero">%d голосов</item>
+        <item quantity="one">%d голоса</item>
+        <item quantity="two">%d голосов</item>
+        <item quantity="few">%d голосов</item>
+        <item quantity="many">%d голосов</item>
+        <item quantity="other">%d голосов</item>
+    </plurals>
   <string name="checkin">Отметить</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_title">Вставить название</string>
+  <string name="pref_quick_checkin">Быстрая отметка</string>
+  <string name="pref_quick_checkin_summary">Больше не спрашивать об отметке</string>
   <string name="feedback">Отправить отзыв</string>
   <string name="action_open_in_browser">Открыть в браузере</string>
   <string name="prefs_category_basic">Основные</string>
@@ -330,8 +335,8 @@
   <string name="pref_other">Другое</string>
   <string name="pref_autoupdate">Автоматическое обновление</string>
   <string name="pref_autoupdatesummary">Переодически обновлять сериалы</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Автоматическое резервное копирование</string>
+  <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_number">Числовой формат серий</string>
@@ -343,7 +348,7 @@
   <string name="backup_full_dump">Включить все данные: описания, актеры и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
   <string name="backup_inprogress">Резервное копирование базы данных...</string>
   <string name="backup_success">Резервное копирование прошло успешно.</string>
   <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
@@ -358,15 +363,15 @@
   <string name="import_button">Восстановление</string>
   <string name="backup_question">Текущий файл резервной копии будет перезаписан!</string>
   <string name="import_question">Текущий список сериалов будет утерян! Убедитесь, что резервная копия находится в папке резервного копирования.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Я понимаю, что мои текущие сериалы, списки и фильмы будут заменены!</string>
   <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
   <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
   <string name="dataliberation_permission_missing">Для резервного копирования или восстановления, разрешите доступ к вашим файлам.</string>
   <string name="autobackup_permission_missing">Чтобы использовать автоматическое резервное копирование, разрешите доступ к вашим файлам.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
+  <string name="no_file_selected">Файл не выбран</string>
+  <string name="action_select_file">Выбрать файл</string>
+  <string name="backup_use_default_files">Использовать файлы резервных копий по умолчанию</string>
   <string name="get_started">Начать</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="dismiss">Отменить</string>

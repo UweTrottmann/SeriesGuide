@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.service;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -29,6 +28,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -117,7 +117,6 @@ public class NotificationService extends IntentService {
     }
 
     @SuppressLint("CommitPrefEdits")
-    @TargetApi(android.os.Build.VERSION_CODES.KITKAT)
     @Override
     protected void onHandleIntent(Intent intent) {
         Timber.d("Waking up...");
@@ -317,9 +316,9 @@ public class NotificationService extends IntentService {
         Intent i = new Intent(this, NotificationService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
         Timber.d("Going to sleep, setting wake-up alarm to: " + wakeUpTime);
-        if (AndroidUtils.isMarshmallowOrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
-        } else if (AndroidUtils.isKitKatOrHigher()) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
         } else {
             am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
@@ -446,6 +445,7 @@ public class NotificationService extends IntentService {
                 Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
                 checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
+                checkInActionIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
                 checkInActionIntent.addFlags(
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
@@ -538,7 +538,7 @@ public class NotificationService extends IntentService {
         // build the notification
         Notification notification = nb.build();
 
-        // use string resource id, always unique within app
+        // use a unique id within the app
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         nm.notify(SeriesGuideApplication.NOTIFICATION_EPISODE_ID, notification);
     }

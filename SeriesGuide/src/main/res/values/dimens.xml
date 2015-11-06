@@ -81,7 +81,6 @@
     <dimen name="dialog_min_width">300dp</dimen>
     <dimen name="addpager_width">450dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
-    <dimen name="shortcut_icon_size">48dp</dimen>
     <dimen name="tab_padding_horizontal">12dp</dimen>
     <dimen name="search_padding_right">16dp</dimen>
 

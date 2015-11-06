@@ -31,6 +31,7 @@
   <string name="clear_search_history">Clear search history</string>
   <string name="search_hint">Pretraži epizode</string>
   <string name="search_within_show">Traži u %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Ažurirano u najnoviju verziju.</string>
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Neuspješno dodavanje %s.</string>
   <string name="add_already_exists">%s je već u vašoj listi serija.</string>
   <string name="recommended">Preporučeno</string>
-  <string name="library">Zbirka</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Zbirka</string>
   <string name="watchlist">Popis gledanja</string>
   <string name="first_list">Prvi popis</string>
   <string name="list_add">Dodaj popis</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s on watchlist</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dan</item>
-    <item quantity="zero">%d dana</item>
-    <item quantity="two">%d dana</item>
-    <item quantity="few">%d dana</item>
-    <item quantity="many">%d dana</item>
-    <item quantity="other">%d dana</item>
-  </plurals>
+        <item quantity="one">%d dan</item>
+        <item quantity="zero">%d dana</item>
+        <item quantity="two">%d dana</item>
+        <item quantity="few">%d dana</item>
+        <item quantity="many">%d dana</item>
+        <item quantity="other">%d dana</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d sati</item>
-    <item quantity="one">%d sat</item>
-    <item quantity="two">%d sati</item>
-    <item quantity="few">%d sati</item>
-    <item quantity="many">%d sati</item>
-    <item quantity="other">%d sati</item>
-  </plurals>
+        <item quantity="zero">%d sati</item>
+        <item quantity="one">%d sat</item>
+        <item quantity="two">%d sati</item>
+        <item quantity="few">%d sati</item>
+        <item quantity="many">%d sati</item>
+        <item quantity="other">%d sati</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuta</item>
-    <item quantity="one">%d minuta</item>
-    <item quantity="two">%d minuta</item>
-    <item quantity="few">%d minuta</item>
-    <item quantity="many">%d minuta</item>
-    <item quantity="other">%d minuta</item>
-  </plurals>
+        <item quantity="zero">%d minuta</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="two">%d minuta</item>
+        <item quantity="few">%d minuta</item>
+        <item quantity="many">%d minuta</item>
+        <item quantity="other">%d minuta</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s neprikupljeno.</string>
   <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava na trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Zamijeni</string>
   <string name="traktcheckin_inprogress">Već si prijavljen u drugu epizodu ili film. Ili zamijeni prošlu prijavu ili pričekaj %s i pokušaj ponovno.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
   <string name="trakt_error_general">Nije se moguće povezati s traktom. Pokušajte ponovno kasnije.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Poveži trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Odlično</string>
   <string name="rating9">Sjajno</string>
   <plurals name="votes">
-    <item quantity="zero">%d glasova</item>
-    <item quantity="one">%d glas</item>
-    <item quantity="two">%d glasova</item>
-    <item quantity="few">%d glasova</item>
-    <item quantity="many">%d glasova</item>
-    <item quantity="other">%d glasova</item>
-  </plurals>
+        <item quantity="zero">%d glasova</item>
+        <item quantity="one">%d glas</item>
+        <item quantity="two">%d glasova</item>
+        <item quantity="few">%d glasova</item>
+        <item quantity="many">%d glasova</item>
+        <item quantity="other">%d glasova</item>
+    </plurals>
   <string name="checkin">Prijavi se</string>
   <string name="checkin_hint">Napiši poruku (neobavezno)</string>
   <string name="paste_title">Zalijepi naziv</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Pošalji povratnu informaciju</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Osnove</string>

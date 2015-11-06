@@ -304,7 +304,7 @@ public class MovieDetailsFragment extends Fragment {
             TmdbTools.openTmdbMovie(getActivity(), mTmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
-            ServiceUtils.openTraktMovie(getActivity(), mTmdbId, TAG);
+            Utils.launchWebsite(getActivity(), TraktTools.buildMovieUrl(mTmdbId), TAG, "trakt");
             return true;
         }
         if (itemId == R.id.menu_action_movie_websearch) {

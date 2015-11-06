@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -28,11 +29,14 @@ import com.battlelancer.seriesguide.ui.BaseSettingsFragment;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
- * Shows settings fragment for a specific app widget, hosted inside a
- * {@link ListWidgetConfigure} activity.
+ * Shows settings fragment for a specific app widget, hosted inside a {@link ListWidgetConfigure}
+ * activity.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
+
+    @SuppressWarnings("FieldCanBeLocal") private SharedPreferences.OnSharedPreferenceChangeListener
+            preferenceChangeListener;
 
     public static ListWidgetPreferenceFragment newInstance(int appWidgetId) {
         ListWidgetPreferenceFragment f = new ListWidgetPreferenceFragment();
@@ -59,7 +63,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         int appWidgetId = getArguments().getInt("appWidgetId");
 
         // widget type setting
-        ListPreference typePref = new ListPreference(getActivity());
+        final ListPreference typePref = new ListPreference(getActivity());
         typePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
         typePref.setTitle(R.string.pref_widget_type);
         typePref.setEntries(R.array.widgetType);
@@ -69,15 +73,26 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         typePref.setNegativeButtonText(null);
         preferenceScreen.addPreference(typePref);
 
+        // widget show type sort order setting
+        final ListPreference sortPref = new ListPreference(getActivity());
+        sortPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId);
+        sortPref.setTitle(R.string.action_shows_sort);
+        sortPref.setEntries(R.array.widgetShowSortOrder);
+        sortPref.setEntryValues(R.array.widgetShowSortOrderData);
+        sortPref.setDefaultValue("0");
+        sortPref.setPositiveButtonText(null);
+        sortPref.setNegativeButtonText(null);
+        preferenceScreen.addPreference(sortPref);
+
         // only favorite shows setting
-        CheckBoxPreference onlyFavoritesPref = new CheckBoxPreference(getActivity());
+        final CheckBoxPreference onlyFavoritesPref = new CheckBoxPreference(getActivity());
         onlyFavoritesPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId);
         onlyFavoritesPref.setTitle(R.string.only_favorites);
         onlyFavoritesPref.setDefaultValue(false);
         preferenceScreen.addPreference(onlyFavoritesPref);
 
         // hide watched setting
-        CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
+        final CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
         hideWatchedPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);
         hideWatchedPreference.setTitle(R.string.hide_watched);
         hideWatchedPreference.setDefaultValue(true);
@@ -109,6 +124,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         setPreferenceScreen(preferenceScreen);
 
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), typePref);
+        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), sortPref);
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), backgroundPref);
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), themePref);
 
@@ -121,6 +137,24 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
             backgroundPref.setEnabled(false);
             backgroundPref.setSummary(R.string.onlyx);
         }
-    }
 
+        // disable episode related setting if selecting show widget type
+        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                    String key) {
+                if (typePref.getKey().equals(key)) {
+                    String newTypeValue = typePref.getValue();
+                    boolean displayingShows = "2".equals(newTypeValue);
+                    sortPref.setEnabled(displayingShows);
+                    hideWatchedPreference.setEnabled(!displayingShows);
+                }
+            }
+        };
+        // trigger the listener to handle the current state
+        preferenceChangeListener.onSharedPreferenceChanged(
+                getPreferenceManager().getSharedPreferences(), typePref.getKey());
+        getPreferenceManager().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
 }

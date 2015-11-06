@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <CheckBoxPreference
+        android:defaultValue="False"
+        android:key="com.battlelancer.seriesguide.trakt.quickcheckin"
+        android:summary="@string/pref_quick_checkin_summary"
+        android:title="@string/pref_quick_checkin" />
+
     <PreferenceCategory android:title="@string/shows">
 
         <CheckBoxPreference

@@ -32,6 +32,8 @@ public class Show {
 
     public boolean hidden;
 
+    public String language;
+
     public int release_time;
     public int release_weekday;
     public String release_timezone;
@@ -54,6 +56,9 @@ public class Show {
 
     @SerializedName("imdb_id")
     public String imdbId;
+
+    @SerializedName("trakt_id")
+    public Integer traktId;
 
     @SerializedName("first_aired")
     public String firstAired;

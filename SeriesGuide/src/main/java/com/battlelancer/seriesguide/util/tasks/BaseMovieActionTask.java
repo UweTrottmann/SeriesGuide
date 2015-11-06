@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.trakt.v2.TraktV2;
@@ -76,7 +77,11 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
             movieList.setMovies(movies);
 
             try {
-                HexagonTools.getMoviesService(getContext()).save(movieList).execute();
+                Movies moviesService = HexagonTools.getMoviesService(getContext());
+                if (moviesService == null) {
+                    return ERROR_HEXAGON_API;
+                }
+                moviesService.save(movieList).execute();
             } catch (IOException e) {
                 Timber.e(e, "doInBackground: failed to upload movie to hexagon.");
                 return ERROR_HEXAGON_API;
@@ -102,8 +107,13 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
                 return ERROR_TRAKT_AUTH;
             }
 
-            if (!isTraktActionSuccessful(response)) {
+            if (response == null) {
+                // invalid response
                 return ERROR_TRAKT_API;
+            }
+
+            if (!isTraktActionSuccessful(response)) {
+                return ERROR_TRAKT_API_NOT_FOUND;
             }
         }
 
@@ -124,10 +134,6 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
     }
 
     private static boolean isTraktActionSuccessful(SyncResponse response) {
-        if (response == null) {
-            // invalid response
-            return false;
-        }
         if (response.not_found != null && response.not_found.movies != null
                 && response.not_found.movies.size() != 0) {
             // movie was not found on trakt

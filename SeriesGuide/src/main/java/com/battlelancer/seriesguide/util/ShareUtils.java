@@ -43,13 +43,13 @@ public class ShareUtils {
         String message = activity.getString(R.string.share_checkout,
                 showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber,
                         episodeTitle))
-                + " " + TraktTools.buildEpisodeOrShowUrl(episodeTvdbId);
+                + " " + TraktTools.buildEpisodeUrl(episodeTvdbId);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
     public static void shareShow(Activity activity, int showTvdbId, String showTitle) {
         String message = activity.getString(R.string.share_checkout, showTitle) + " "
-                + TraktTools.buildEpisodeOrShowUrl(showTvdbId);
+                + TraktTools.buildShowUrl(showTvdbId);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 

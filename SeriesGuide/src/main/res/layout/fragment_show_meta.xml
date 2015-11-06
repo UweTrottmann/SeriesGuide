@@ -116,4 +116,18 @@
         android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true" />
 
+    <TextView
+        style="@style/Block.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_language"
+        android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+    <Spinner
+        android:id="@+id/spinnerShowLanguage"
+        style="@style/Block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:prompt="@string/welcome_setuplanguage" />
+
 </merge>

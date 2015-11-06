@@ -293,12 +293,22 @@
     <string-array name="widgetType">
         <item>@string/upcoming</item>
         <item>@string/recent</item>
-        <item>@string/action_shows_filter_favorites</item>
+        <item>@string/shows</item>
     </string-array>
     <string-array name="widgetTypeData">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <!-- Widget Show sort order -->
+    <string-array name="widgetShowSortOrder">
+        <item>@string/action_shows_sort_episode</item>
+        <item>@string/action_shows_sort_title</item>
+    </string-array>
+    <string-array name="widgetShowSortOrderData">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
     <!-- Widget themes -->

@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -72,6 +71,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_FILE_ACCESS = -3;
 
     private Context context;
+    private String[] languageCodes;
     private OnTaskFinishedListener finishedListener;
     private boolean isImportingAutoBackup;
     private boolean isUseDefaultFolders;
@@ -80,7 +80,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private boolean isImportMovies;
 
     public JsonImportTask(Context context, OnTaskFinishedListener listener) {
-        this.context = context.getApplicationContext();
+        this(context);
         finishedListener = listener;
         isImportingAutoBackup = true;
         isImportShows = true;
@@ -95,7 +95,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     public JsonImportTask(Context context, OnTaskFinishedListener listener,
             boolean importShows, boolean importLists, boolean importMovies) {
-        this.context = context.getApplicationContext();
+        this(context);
         finishedListener = listener;
         isImportingAutoBackup = false;
         isImportShows = importShows;
@@ -105,6 +105,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // on older versions use default folders
         // also auto backup by default uses default folders
         isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher();
+    }
+
+    private JsonImportTask(Context context) {
+        this.context = context.getApplicationContext();
+        languageCodes = this.context.getResources().getStringArray(R.array.languageData);
     }
 
     @Override
@@ -343,6 +348,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
+        // only add the language, if we support it
+        for (int i = 0, size = languageCodes.length; i < size; i++) {
+            if (languageCodes[i].equals(show.language)) {
+                showValues.put(Shows.LANGUAGE, show.language);
+                break;
+            }
+        }
         showValues.put(Shows.RELEASE_TIME, show.release_time);
         if (show.release_weekday < -1 || show.release_weekday > 7) {
             show.release_weekday = -1;
@@ -359,6 +371,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.RUNTIME, show.runtime);
         showValues.put(Shows.NETWORK, show.network);
         showValues.put(Shows.IMDBID, show.imdbId);
+        if (show.traktId != null && show.traktId > 0) {
+            showValues.put(Shows.TRAKT_ID, show.traktId);
+        }
         showValues.put(Shows.FIRST_RELEASE, show.firstAired);
         if (show.rating_user < 0 || show.rating_user > 10) {
             show.rating_user = 0;

@@ -20,6 +20,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -54,27 +56,39 @@ public class HexagonTools {
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
 
+    private static GoogleAccountCredential credential;
+
     private static Shows sShowsService;
     private static Episodes sEpisodesService;
     private static Movies sMoviesService;
 
     /**
-     * Creates and returns a new instance for this hexagon service.
+     * Creates and returns a new instance for this hexagon service or null if not signed in.
      */
+    @Nullable
     public static synchronized Account buildAccountService(Context context) {
+        GoogleAccountCredential credential = getAccountCredential(context);
+        if (credential.getSelectedAccountName() == null) {
+            return null;
+        }
         Account.Builder builder = new Account.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
+                HTTP_TRANSPORT, JSON_FACTORY, credential
         );
         return CloudEndpointUtils.updateBuilder(builder).build();
     }
 
     /**
-     * Returns the instance for this hexagon service.
+     * Returns the instance for this hexagon service or null if not signed in.
      */
+    @Nullable
     public static synchronized Shows getShowsService(Context context) {
+        GoogleAccountCredential credential = getAccountCredential(context);
+        if (credential.getSelectedAccountName() == null) {
+            return null;
+        }
         if (sShowsService == null) {
             Shows.Builder builder = new Shows.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, credential
             );
             sShowsService = CloudEndpointUtils.updateBuilder(builder).build();
         }
@@ -82,12 +96,17 @@ public class HexagonTools {
     }
 
     /**
-     * Returns the instance for this hexagon service.
+     * Returns the instance for this hexagon service or null if not signed in.
      */
+    @Nullable
     public static synchronized Episodes getEpisodesService(Context context) {
+        GoogleAccountCredential credential = getAccountCredential(context);
+        if (credential.getSelectedAccountName() == null) {
+            return null;
+        }
         if (sEpisodesService == null) {
             Episodes.Builder builder = new Episodes.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, credential
             );
             sEpisodesService = CloudEndpointUtils.updateBuilder(builder).build();
         }
@@ -95,12 +114,17 @@ public class HexagonTools {
     }
 
     /**
-     * Returns the instance for this hexagon service.
+     * Returns the instance for this hexagon service or null if not signed in.
      */
+    @Nullable
     public static synchronized Movies getMoviesService(Context context) {
+        GoogleAccountCredential credential = getAccountCredential(context);
+        if (credential.getSelectedAccountName() == null) {
+            return null;
+        }
         if (sMoviesService == null) {
             Movies.Builder builder = new Movies.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, getAccountCredential(context)
+                    HTTP_TRANSPORT, JSON_FACTORY, credential
             );
             sMoviesService = CloudEndpointUtils.updateBuilder(builder).build();
         }
@@ -131,25 +155,29 @@ public class HexagonTools {
      * (is null if e.g. do not have permission to access the account or the account was removed).
      */
     public synchronized static GoogleAccountCredential getAccountCredential(Context context) {
-        GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
-                context.getApplicationContext(), HexagonSettings.AUDIENCE);
-        credential.setSelectedAccountName(HexagonSettings.getAccountName(context));
+        if (credential == null) {
+            credential = GoogleAccountCredential.usingAudience(
+                    context.getApplicationContext(), HexagonSettings.AUDIENCE);
+        }
+        // try to restore account name if none is set
+        if (credential.getSelectedAccountName() == null) {
+            credential.setSelectedAccountName(HexagonSettings.getAccountName(context));
+        }
         return credential;
     }
 
     /**
      * Sets the account name used for calls to Hexagon.
      */
-    public static void storeAccountName(Context context, String accountName) {
-        // store account name in settings
+    public static void storeAccountName(@NonNull Context context, @Nullable String accountName) {
+        // store or remove account name in settings
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(HexagonSettings.KEY_ACCOUNT_NAME, accountName)
                 .commit();
 
-        // ensure account
-        GoogleAccountCredential credential = getAccountCredential(context);
-        credential.setSelectedAccountName(accountName);
+        // try to set or remove account on credential
+        getAccountCredential(context).setSelectedAccountName(accountName);
     }
 
     /**

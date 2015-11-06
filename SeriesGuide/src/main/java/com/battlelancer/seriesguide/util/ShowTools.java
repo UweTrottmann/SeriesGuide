@@ -296,7 +296,11 @@ public class ShowTools {
 
             // upload shows
             try {
-                HexagonTools.getShowsService(context).save(showList).execute();
+                Shows showsService = HexagonTools.getShowsService(context);
+                if (showsService == null) {
+                    return false;
+                }
+                showsService.save(showList).execute();
             } catch (IOException e) {
                 Timber.e(e, "toHexagon: failed to upload shows");
                 return false;
@@ -361,8 +365,12 @@ public class ShowTools {
                 }
 
                 try {
-                    Shows.Get request = HexagonTools.getShowsService(context).get()
-                            .setLimit(SHOWS_MAX_BATCH_SIZE);
+                    Shows showsService = HexagonTools.getShowsService(context);
+                    if (showsService == null) {
+                        return false;
+                    }
+
+                    Shows.Get request = showsService.get().setLimit(SHOWS_MAX_BATCH_SIZE);
                     if (hasMergedShows) {
                         // only get changed shows (otherwise returns all)
                         request.setUpdatedSince(lastSyncTime);
@@ -486,9 +494,10 @@ public class ShowTools {
          *
          * <p> <b>Note:</b> Ensure the given show has a valid TVDb id.
          */
-        public static void showPropertiesFromHexagon(Context context,
-                com.battlelancer.seriesguide.dataliberation.model.Show show) throws IOException {
-            Show hexagonShow = HexagonTools.getShowsService(context)
+        public static void showPropertiesFromHexagon(@NonNull Shows showsService,
+                @NonNull com.battlelancer.seriesguide.dataliberation.model.Show show)
+                throws IOException {
+            Show hexagonShow = showsService
                     .getShow()
                     .setShowTvdbId(show.tvdbId)
                     .execute();
@@ -504,13 +513,38 @@ public class ShowTools {
     }
 
     /**
+     * Returns the trakt id of a show. Returns {@code null} if the query failed, there is no trakt
+     * id or if it is invalid.
+     */
+    @Nullable
+    public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
+        Cursor traktIdQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
+                        new String[] { SeriesGuideContract.Shows.TRAKT_ID }, null, null, null);
+        if (traktIdQuery == null) {
+            return null;
+        }
+
+        Integer traktId = null;
+        if (traktIdQuery.moveToFirst()) {
+            traktId = traktIdQuery.getInt(0);
+            if (traktId <= 0) {
+                traktId = null;
+            }
+        }
+
+        traktIdQuery.close();
+
+        return traktId;
+    }
+
+    /**
      * Returns a set of the TVDb ids of all shows in the local database.
      *
      * @return null if there was an error, empty list if there are no shows.
      */
-    public static
     @Nullable
-    HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
+    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,

@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -82,7 +81,6 @@ public final class ServiceUtils {
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
     private static OkHttpClient cachingHttpClient;
-    private static OkUrlFactory cachingUrlFactory;
 
     private static Picasso sPicasso;
 
@@ -129,6 +127,7 @@ public final class ServiceUtils {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 available = statFs.getBlockCountLong() * statFs.getBlockSizeLong();
             } else {
+                //noinspection deprecation
                 available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
             }
             // Target 2% of the total space.
@@ -138,14 +137,6 @@ public final class ServiceUtils {
 
         // Bound inside min/max size for disk cache.
         return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
-    }
-
-    @NonNull
-    public static synchronized OkUrlFactory getCachingUrlFactory(Context context) {
-        if (cachingUrlFactory == null) {
-            cachingUrlFactory = new OkUrlFactory(getCachingOkHttpClient(context));
-        }
-        return cachingUrlFactory;
     }
 
     @NonNull
@@ -276,19 +267,21 @@ public final class ServiceUtils {
             return;
         }
 
+        // try launching the IMDb app
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri
                 .parse(IMDB_APP_TITLE_URI + imdbId + IMDB_APP_TITLE_URI_POSTFIX));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        // try launching IMDb app
-        if (!Utils.tryStartActivity(context, intent, false)) {
-            // on failure, try launching the web page
-            intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(IMDB_TITLE_URL + imdbId));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        } else {
+            //noinspection deprecation
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            Utils.tryStartActivity(context, intent, true);
         }
-
-        Utils.trackAction(context, logTag, "IMDb");
+        if (Utils.tryStartActivity(context, intent, false)) {
+            Utils.trackAction(context, logTag, "IMDb");
+        } else {
+            // on failure, try launching the web page
+            Utils.launchWebsite(context, IMDB_TITLE_URL + imdbId, logTag, "IMDb");
+        }
     }
 
     /**
@@ -308,45 +301,35 @@ public final class ServiceUtils {
      */
     public static void searchGooglePlay(final String title, final String logTag, Context context) {
         Intent intent = buildGooglePlayIntent(title, context);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-
-        Utils.trackAction(context, logTag, "Google Play");
+        Utils.openNewDocument(context, intent, logTag, "Google Play");
     }
 
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show or episode trakt.tv
-     * page.
-     */
-    public static void setUpTraktButton(final int showTvdbId, final View traktButton,
-            final String logTag) {
-        if (traktButton != null) {
-            traktButton.setOnClickListener(new OnClickListener() {
-
+    public static void setUpTraktShowButton(@Nullable View button, final int showTvdbId,
+            @NonNull final String logTag) {
+        if (button != null) {
+            button.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String uri = TraktTools.buildEpisodeOrShowUrl(showTvdbId);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(uri));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    Utils.tryStartActivity(v.getContext(), intent, true);
-
-                    Utils.trackAction(traktButton.getContext(), logTag, "trakt");
+                    // build url on demand
+                    String uri = TraktTools.buildShowUrl(showTvdbId);
+                    Utils.launchWebsite(v.getContext(), uri, logTag, "trakt");
                 }
             });
         }
     }
 
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given movies trakt.tv page.
-     */
-    public static void openTraktMovie(Context context, int tmdbId, String logTag) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(TraktTools.buildMovieUrl(tmdbId)));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-
-        Utils.trackAction(context, logTag, "trakt");
+    public static void setUpTraktEpisodeButton(@Nullable View button, final int episodeTvdbId,
+            @NonNull final String logTag) {
+        if (button != null) {
+            button.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // build url on demand
+                    String uri = TraktTools.buildEpisodeUrl(episodeTvdbId);
+                    Utils.launchWebsite(v.getContext(), uri, logTag, "trakt");
+                }
+            });
+        }
     }
 
     /**
@@ -372,12 +355,7 @@ public final class ServiceUtils {
                                 + TVDB_EPISODE_URL_EPISODE_PARAM + episodeTvdbId;
                     }
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(uri));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    Utils.tryStartActivity(v.getContext(), intent, true);
-
-                    Utils.trackAction(tvdbButton.getContext(), logTag, "TVDb");
+                    Utils.launchWebsite(v.getContext(), uri, logTag, "TVDb");
                 }
             });
         }
@@ -394,37 +372,7 @@ public final class ServiceUtils {
      * Opens the YouTube app or web page for the given video.
      */
     public static void openYoutube(String videoId, String logTag, Context context) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(YOUTUBE_BASE_URL + videoId));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-
-        Utils.trackAction(context, logTag, "YouTube");
-    }
-
-    /**
-     * Used to open the YouTube app and search for <code>query</code>
-     *
-     * @param query The search query for the YouTube app
-     * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
-     * @param logTag The log tag to use, for Analytics
-     */
-    public static void setUpYouTubeButton(final String query, View button, final String logTag) {
-        if (button == null) {
-            // Return if the button isn't initialized
-            return;
-        } else if (TextUtils.isEmpty(query)) {
-            // Disable the button if there's nothing to search for
-            button.setEnabled(false);
-            return;
-        }
-
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchYoutube(v.getContext(), query, logTag);
-            }
-        });
+        Utils.launchWebsite(context, YOUTUBE_BASE_URL + videoId, logTag, "YouTube");
     }
 
     /**
@@ -457,19 +405,24 @@ public final class ServiceUtils {
     }
 
     /**
-     * Attempts to open the YouTube application to search for <code>query</code>. If the app is
-     * unavailable, a web search if performed instead.
+     * Builds a search {@link android.content.Intent} using {@link Intent#ACTION_WEB_SEARCH} and
+     * <code>query</code> as {@link android.app.SearchManager#QUERY} extra.
+     */
+    public static Intent buildWebSearchIntent(String query) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        return intent;
+    }
+
+    /**
+     * Attempts to search the web for <code>query</code>.
      *
      * @param context The {@link Context} to use
      * @param query The search query
      * @param logTag The log tag to use, for Analytics
      */
-    public static void searchYoutube(Context context, String query, String logTag) {
-        Intent intent = buildYouTubeIntent(context, query);
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-        Utils.trackAction(context, logTag, "YouTube search");
+    public static void performWebSearch(Context context, String query, String logTag) {
+        Utils.openNewDocument(context, buildWebSearchIntent(query), logTag, "Web search");
     }
 
     /**
@@ -495,30 +448,5 @@ public final class ServiceUtils {
                 performWebSearch(v.getContext(), query, logTag);
             }
         });
-    }
-
-    /**
-     * Builds a search {@link android.content.Intent} using {@link Intent#ACTION_WEB_SEARCH} and
-     * <code>query</code> as {@link android.app.SearchManager#QUERY} extra.
-     */
-    public static Intent buildWebSearchIntent(String query) {
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
-        return intent;
-    }
-
-    /**
-     * Attempts to search the web for <code>query</code>.
-     *
-     * @param context The {@link Context} to use
-     * @param query The search query
-     * @param logTag The log tag to use, for Analytics
-     */
-    public static void performWebSearch(Context context, String query, String logTag) {
-        Intent intent = buildWebSearchIntent(query);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-
-        Utils.trackAction(context, logTag, "Web search");
     }
 }

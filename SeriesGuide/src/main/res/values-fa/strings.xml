@@ -31,6 +31,7 @@
   <string name="clear_search_history">تاریخچه جستجو را پاک کنید</string>
   <string name="search_hint">جستجوی قسمتها</string>
   <string name="search_within_show">Search within %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">به آخرین نسخه به روز.</string>
   <string name="norating">N\a</string>
   <string name="unknown">نامعلوم</string>
@@ -152,7 +153,8 @@
   <string name="add_error">قادر به افزودن %s نمی باشد.</string>
   <string name="add_already_exists">%s  در حال حاضر در لیست نمایشتان هست.</string>
   <string name="recommended">توصیه می شود</string>
-  <string name="library">کتابخانه</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">مجموعه</string>
   <string name="watchlist">لیست نمایش</string>
   <string name="first_list">لیست اول</string>
   <string name="list_add">افزودن لیست</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s در لیست تماشا</string>
   <string name="runtime_movies_watchlist">مدت زمان فیلم های لیست تماشا</string>
   <plurals name="days_plural">
-    <item quantity="one">روز %d</item>
-    <item quantity="zero">روز %d</item>
-    <item quantity="two">روز %d</item>
-    <item quantity="few">روز %d</item>
-    <item quantity="many">روز %d</item>
-    <item quantity="other">روز %d</item>
-  </plurals>
+        <item quantity="one">روز %d</item>
+        <item quantity="zero">روز %d</item>
+        <item quantity="two">روز %d</item>
+        <item quantity="few">روز %d</item>
+        <item quantity="many">روز %d</item>
+        <item quantity="other">روز %d</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">ساعت %d</item>
-    <item quantity="one">ساعت %d</item>
-    <item quantity="two">ساعت %d</item>
-    <item quantity="few">ساعت %d</item>
-    <item quantity="many">ساعت %d</item>
-    <item quantity="other">ساعت %d</item>
-  </plurals>
+        <item quantity="zero">ساعت %d</item>
+        <item quantity="one">ساعت %d</item>
+        <item quantity="two">ساعت %d</item>
+        <item quantity="few">ساعت %d</item>
+        <item quantity="many">ساعت %d</item>
+        <item quantity="other">ساعت %d</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d دقیقه</item>
-    <item quantity="one">%d دقیقه</item>
-    <item quantity="two">%d دقیقه</item>
-    <item quantity="few">%d دقیقه</item>
-    <item quantity="many">%d دقیقه</item>
-    <item quantity="other">%d دقیقه</item>
-  </plurals>
+        <item quantity="zero">%d دقیقه</item>
+        <item quantity="one">%d دقیقه</item>
+        <item quantity="two">%d دقیقه</item>
+        <item quantity="few">%d دقیقه</item>
+        <item quantity="many">%d دقیقه</item>
+        <item quantity="other">%d دقیقه</item>
+    </plurals>
   <string name="hexagon_warning">تجربی!</string>
   <string name="hexagon_setup">راه اندازی ذخیره ابری SeriesGuide</string>
   <string name="hexagon_description">اتصال به ابر برای پشتیبان گیری و همگام سازی رانمایش ها و فیلم هایتان.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Connect trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Great</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-    <item quantity="zero">رای ها %d</item>
-    <item quantity="one">%d vote</item>
-    <item quantity="two">رای ها %d</item>
-    <item quantity="few">رای ها %d</item>
-    <item quantity="many">رای %d</item>
-    <item quantity="other">رای ها %d</item>
-  </plurals>
+        <item quantity="zero">رای ها %d</item>
+        <item quantity="one">%d vote</item>
+        <item quantity="two">رای ها %d</item>
+        <item quantity="few">رای ها %d</item>
+        <item quantity="many">رای %d</item>
+        <item quantity="other">رای ها %d</item>
+    </plurals>
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">ارسال بازخورد</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">اصول اولیه</string>

@@ -16,11 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationManagerCompat;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -32,14 +33,13 @@ import de.greenrobot.event.EventBus;
  */
 public class QuickCheckInActivity extends FragmentActivity {
 
-    private CheckInDialogFragment mCheckInDialogFragment;
+    @SuppressWarnings("FieldCanBeLocal") private CheckInDialogFragment checkInDialogFragment;
 
     public interface InitBundle {
 
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle arg0) {
         // make the activity show the wallpaper, nothing else
@@ -56,13 +56,13 @@ public class QuickCheckInActivity extends FragmentActivity {
             return;
         }
 
-        mCheckInDialogFragment = CheckInDialogFragment.newInstance(this, episodeTvdbId);
-        if (mCheckInDialogFragment == null) {
+        checkInDialogFragment = CheckInDialogFragment.newInstance(this, episodeTvdbId);
+        if (checkInDialogFragment == null) {
             finish();
             return;
         }
         // show check-in dialog
-        mCheckInDialogFragment.show(getSupportFragmentManager(), "checkin-dialog");
+        checkInDialogFragment.show(getSupportFragmentManager(), "checkin-dialog");
     }
 
     @Override
@@ -79,17 +79,27 @@ public class QuickCheckInActivity extends FragmentActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(GenericCheckInDialogFragment.CheckInDialogDismissedEvent event) {
         // if check-in dialog is dismissed, finish ourselves as well
         finish();
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         if (event.mTraktAction != TraktAction.CHECKIN_EPISODE) {
             return;
         }
         // display status toast about trakt action
         event.handle(this);
-    }
 
+        // dismiss notification on successful check-in
+        if (event.mWasSuccessful) {
+            NotificationManagerCompat manager = NotificationManagerCompat.from(
+                    getApplicationContext());
+            manager.cancel(SeriesGuideApplication.NOTIFICATION_EPISODE_ID);
+            // replicate delete intent
+            NotificationService.handleDeleteIntent(this, getIntent());
+        }
+    }
 }

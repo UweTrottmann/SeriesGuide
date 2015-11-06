@@ -998,6 +998,8 @@ public class EpisodeTools {
         private boolean mIsSendingToTrakt;
         private boolean mIsSendingToHexagon;
 
+        private boolean mCanSendToTrakt;
+
         public EpisodeFlagTask(Context context, FlagType type) {
             mContext = context.getApplicationContext();
             mType = type;
@@ -1012,9 +1014,6 @@ public class EpisodeTools {
             }
             mIsSendingToTrakt = TraktCredentials.get(mContext).hasCredentials()
                     && !isSkipped(mType.mEpisodeFlag);
-            if (mIsSendingToTrakt) {
-                Toast.makeText(mContext, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
-            }
         }
 
         @Override
@@ -1039,17 +1038,22 @@ public class EpisodeTools {
              * to flagging as unwatched.
              */
             if (mIsSendingToTrakt) {
-                if (!AndroidUtils.isNetworkConnected(mContext)) {
-                    return ERROR_NETWORK;
-                }
+                // Do not send if show has no trakt id (was not on trakt last time we checked).
+                Integer traktId = ShowTools.getShowTraktId(mContext, mType.getShowTvdbId());
+                mCanSendToTrakt = traktId != null;
+                if (mCanSendToTrakt) {
+                    if (!AndroidUtils.isNetworkConnected(mContext)) {
+                        return ERROR_NETWORK;
+                    }
 
-                int result = uploadToTrakt(mContext,
-                        mType.getShowTvdbId(),
-                        mType.mAction,
-                        mType.getEpisodesForTrakt(),
-                        !isUnwatched(mType.mEpisodeFlag));
-                if (result < 0) {
-                    return result;
+                    int result = uploadToTrakt(mContext,
+                            traktId,
+                            mType.mAction,
+                            mType.getEpisodesForTrakt(),
+                            !isUnwatched(mType.mEpisodeFlag));
+                    if (result < 0) {
+                        return result;
+                    }
                 }
             }
 
@@ -1098,8 +1102,9 @@ public class EpisodeTools {
         /**
          * @param flags Send {@code null} to upload complete show.
          */
-        private static int uploadToTrakt(Context context, int showTvdbId, EpisodeAction flagAction,
-                @Nullable List<SyncSeason> flags, boolean isAddNotDelete) {
+        private static int uploadToTrakt(@NonNull Context context, int showTraktId,
+                @NonNull EpisodeAction flagAction, @Nullable List<SyncSeason> flags,
+                boolean isAddNotDelete) {
             if (flags != null && flags.isEmpty()) {
                 // nothing to upload
                 return SUCCESS;
@@ -1112,7 +1117,7 @@ public class EpisodeTools {
             Sync traktSync = trakt.sync();
 
             // outer wrapper and show are always required
-            SyncShow show = new SyncShow().id(ShowIds.tvdb(showTvdbId));
+            SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
             SyncItems items = new SyncItems().shows(show);
 
             // add season or episodes
@@ -1232,20 +1237,26 @@ public class EpisodeTools {
 
             // display success message
             if (mIsSendingToTrakt) {
-                int status = R.string.trakt_success;
-                if (mType.mAction == EpisodeAction.SHOW_WATCHED
-                        || mType.mAction == EpisodeAction.SHOW_COLLECTED
-                        || mType.mAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {
-                    // simple ack
-                    Toast.makeText(mContext,
-                            mContext.getString(status),
-                            Toast.LENGTH_SHORT).show();
+                if (mCanSendToTrakt) {
+                    int status = R.string.trakt_success;
+                    if (mType.mAction == EpisodeAction.SHOW_WATCHED
+                            || mType.mAction == EpisodeAction.SHOW_COLLECTED
+                            || mType.mAction == EpisodeAction.EPISODE_WATCHED_PREVIOUS) {
+                        // simple ack
+                        Toast.makeText(mContext,
+                                mContext.getString(status),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        // detailed ack
+                        String message = mType.getNotificationText();
+                        Toast.makeText(mContext,
+                                message + " " + mContext.getString(status),
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    // detailed ack
-                    String message = mType.getNotificationText();
-                    Toast.makeText(mContext,
-                            message + " " + mContext.getString(status),
-                            Toast.LENGTH_SHORT).show();
+                    // tell the user this change can not be sent to trakt for now
+                    Toast.makeText(mContext, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
+                            .show();
                 }
             }
         }
@@ -1268,7 +1279,12 @@ public class EpisodeTools {
 
             while (hasMoreEpisodes) {
                 try {
-                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    if (episodesService == null) {
+                        return false;
+                    }
+
+                    Episodes.Get request = episodesService.get()
                             .setUpdatedSince(lastSyncTime)
                             .setLimit(EPISODE_MAX_BATCH_SIZE);
                     if (!TextUtils.isEmpty(cursor)) {
@@ -1365,8 +1381,13 @@ public class EpisodeTools {
                 }
 
                 try {
+                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    if (episodesService == null) {
+                        return false;
+                    }
+
                     // build request
-                    Episodes.Get request = HexagonTools.getEpisodesService(context).get()
+                    Episodes.Get request = episodesService.get()
                             .setShowTvdbId(showTvdbId)
                             .setLimit(EPISODE_MAX_BATCH_SIZE);
                     if (!TextUtils.isEmpty(cursor)) {
@@ -1514,7 +1535,11 @@ public class EpisodeTools {
                     episodeList.setShowTvdbId(showTvdbId);
 
                     try {
-                        HexagonTools.getEpisodesService(context).save(episodeList).execute();
+                        Episodes episodesService = HexagonTools.getEpisodesService(context);
+                        if (episodesService == null) {
+                            return false;
+                        }
+                        episodesService.save(episodeList).execute();
                     } catch (IOException e) {
                         // abort
                         Timber.e(e, "flagsToHexagon: failed to upload episode flags for show "
@@ -1539,7 +1564,11 @@ public class EpisodeTools {
          */
         public static boolean flagsToHexagon(Context context, EpisodeList episodes) {
             try {
-                HexagonTools.getEpisodesService(context).save(episodes).execute();
+                Episodes episodesService = HexagonTools.getEpisodesService(context);
+                if (episodesService == null) {
+                    return false;
+                }
+                episodesService.save(episodes).execute();
             } catch (IOException e) {
                 Timber.e(e, "flagsToHexagon: failed to upload episodes for show "
                         + episodes.getShowTvdbId());

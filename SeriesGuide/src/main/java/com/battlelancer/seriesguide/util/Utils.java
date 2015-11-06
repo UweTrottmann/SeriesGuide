@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -36,6 +35,8 @@ import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -56,15 +57,10 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import timber.log.Timber;
 
 public class Utils {
@@ -582,18 +578,35 @@ public class Utils {
     }
 
     /**
-     * Tries to launch a web browser loading the given URL. Sets a flag to exit the browser if
-     * coming back to the app.
+     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
      */
-    public static void launchWebsite(Context context, String url, String logTag, String logItem) {
+    public static void launchWebsite(@Nullable Context context, @Nullable String url,
+            @NonNull String logTag, @NonNull String logItem) {
         if (context == null || TextUtils.isEmpty(url)) {
             return;
         }
-
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        openNewDocument(context, intent, logTag, logItem);
+    }
 
-        // try to launch web browser
+    /**
+     * Tries to start the given intent as a new document (e.g. opening a website, other app) so it
+     * appears as a new entry in the task switcher using {@link #tryStartActivity}.
+     *
+     * <p>On versions before L, will instead clear the launched activity from the task stack when
+     * returning to the app through the task switcher.
+     */
+    public static void openNewDocument(@NonNull Context context, @NonNull Intent intent,
+            @NonNull String logTag, @NonNull String logItem) {
+        // launch as a new document (separate entry in task switcher)
+        // or on older versions: clear from task stack when returning to app
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        } else {
+            //noinspection deprecation
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        }
+
         Utils.tryStartActivity(context, intent, true);
 
         Utils.trackAction(context, logTag, logItem);
@@ -608,20 +621,5 @@ public class Utils {
     @SafeVarargs
     public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
-    }
-
-    /**
-     * Returns an {@link java.io.InputStream} using {@link java.net.HttpURLConnection} to connect to
-     * the given URL. <p/> Responses are downloaded and cached using the default HTTP client
-     * instance (see {@link com.battlelancer.seriesguide.util.ServiceUtils}.
-     */
-    public static InputStream downloadAndCacheUrl(Context context, String urlString)
-            throws IOException {
-        URL url = new URL(urlString);
-
-        HttpURLConnection conn = ServiceUtils.getCachingUrlFactory(context).open(url);
-        conn.connect();
-
-        return conn.getInputStream();
     }
 }

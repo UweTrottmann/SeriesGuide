@@ -22,6 +22,7 @@ import android.support.annotation.IntDef;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ParserUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -149,6 +150,17 @@ public class SeriesGuideContract {
         String IMDBID = "imdbid";
 
         /**
+         * The trakt id of this show. Encoded as integer. Note: for simplification, the trakt id
+         * might be handled as a String within the app.
+         *
+         * <pre>
+         * Range:   integer
+         * Default: 0 (unknown)
+         * </pre>
+         */
+        String TRAKT_ID = "series_trakt_id";
+
+        /**
          * Whether this show has been favorited.
          */
         String FAVORITE = "series_favorite";
@@ -238,6 +250,16 @@ public class SeriesGuideContract {
          * version 31.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
+
+        /**
+         * Language the show should be downloaded in, in two letter ISO 639-1 format.
+         *
+         * <pre>
+         * Example: "de"
+         * Default: "" (should fall back to English then)
+         * </pre>
+         */
+        String LANGUAGE = "series_language";
     }
 
     interface SeasonsColumns {
@@ -577,6 +599,9 @@ public class SeriesGuideContract {
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
 
         public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
+
+        public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
+                + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
 
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 

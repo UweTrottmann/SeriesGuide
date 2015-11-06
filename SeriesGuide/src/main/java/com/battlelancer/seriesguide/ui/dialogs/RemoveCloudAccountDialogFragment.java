@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.backend.account.Account;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import timber.log.Timber;
@@ -83,7 +84,11 @@ public class RemoveCloudAccountDialogFragment extends DialogFragment {
         protected Boolean doInBackground(Void... params) {
             // remove account from hexagon
             try {
-                HexagonTools.buildAccountService(mContext).deleteData().execute();
+                Account accountService = HexagonTools.buildAccountService(mContext);
+                if (accountService == null) {
+                    return false;
+                }
+                accountService.deleteData().execute();
             } catch (IOException e) {
                 Timber.e(e, "Failed to remove hexagon account.");
                 return false;

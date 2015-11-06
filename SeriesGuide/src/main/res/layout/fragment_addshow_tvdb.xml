@@ -24,11 +24,21 @@
         android:contentDescription="@string/clear"
         android:src="?attr/drawableCancel" />
 
+    <Spinner
+        android:id="@+id/spinnerAddTvdbLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextAddTvdbSearch"
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:prompt="@string/welcome_setuplanguage" />
+
     <FrameLayout
         android:id="@+id/containerAddContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/editTextAddTvdbSearch">
+        android:layout_below="@+id/spinnerAddTvdbLanguage">
 
         <GridView
             android:id="@+android:id/list"

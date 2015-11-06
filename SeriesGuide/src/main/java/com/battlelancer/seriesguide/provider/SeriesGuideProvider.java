@@ -29,6 +29,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -115,7 +116,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
      * this {@link ContentProvider}.
      */
-    private static UriMatcher buildUriMatcher(Context context) {
+    private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SeriesGuideApplication.CONTENT_AUTHORITY;
 
@@ -213,7 +214,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public boolean onCreate() {
         Context context = getContext();
 
-        sUriMatcher = buildUriMatcher(context);
+        sUriMatcher = buildUriMatcher();
 
         mDbHelper = new SeriesGuideDatabase(context);
 
@@ -241,8 +242,8 @@ public class SeriesGuideProvider extends ContentProvider {
     };
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,
+            String[] selectionArgs, String sortOrder) {
         if (LOGV) {
             Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
         }
@@ -271,10 +272,16 @@ public class SeriesGuideProvider extends ContentProvider {
             default: {
                 // Most cases are handled with simple SelectionBuilder
                 final SelectionBuilder builder = buildSelection(uri, match);
-                Cursor query = builder
-                        .where(selection, selectionArgs)
-                        .query(db, projection, sortOrder);
+                Cursor query = null;
+                try {
+                    query = builder
+                            .where(selection, selectionArgs)
+                            .query(db, projection, sortOrder);
+                } catch (SQLiteException e) {
+                    Timber.e(e, "Failed to query with uri=" + uri);
+                }
                 if (query != null) {
+                    //noinspection ConstantConditions
                     query.setNotificationUri(getContext().getContentResolver(), uri);
                 }
                 return query;
@@ -283,7 +290,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS:
@@ -333,7 +340,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         Uri newItemUri;
 
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -350,6 +357,7 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         if (newItemUri != null) {
+            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -357,7 +365,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     @Override
-    public int bulkInsert(Uri uri, @NonNull ContentValues[] values) {
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         int numValues = values.length;
         boolean notifyChange = false;
 
@@ -378,6 +386,7 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         if (notifyChange) {
+            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -449,7 +458,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             default: {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+                throw new IllegalArgumentException("Unknown uri: " + uri);
             }
         }
 
@@ -460,7 +469,8 @@ public class SeriesGuideProvider extends ContentProvider {
      * {@inheritDoc}
      */
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection,
+            String[] selectionArgs) {
         if (LOGV) {
             Timber.v("update(uri=" + uri + ", values=" + values.toString() + ")");
         }
@@ -485,6 +495,7 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         if (count > 0) {
+            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -495,7 +506,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * {@inheritDoc}
      */
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         if (LOGV) {
             Timber.v("delete(uri=" + uri + ")");
         }
@@ -520,6 +531,7 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         if (count > 0) {
+            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -530,6 +542,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * Apply the given set of {@link ContentProviderOperation}, executing inside a {@link
      * SQLiteDatabase} transaction. All changes will be rolled back if any single one fails.
      */
+    @NonNull
     @Override
     public ContentProviderResult[] applyBatch(
             @NonNull ArrayList<ContentProviderOperation> operations)

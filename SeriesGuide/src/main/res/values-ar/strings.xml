@@ -31,6 +31,7 @@
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
   <string name="search_within_show">البحث في %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
@@ -152,7 +153,8 @@
   <string name="add_error">تعذر إضافة %s.</string>
   <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
   <string name="recommended">يُنصح به</string>
-  <string name="library">المكتبة</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">مجموعة</string>
   <string name="watchlist">قائمة المشاهدة</string>
   <string name="first_list">القائمة الأولى</string>
   <string name="list_add">إضافة قائمة</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
   <string name="runtime_movies_watchlist">وقت التشغيل لقائمة المشاهدة</string>
   <plurals name="days_plural">
-    <item quantity="one">%d يوم/أيام</item>
-    <item quantity="zero">%d أيام</item>
-    <item quantity="two">%d أيام</item>
-    <item quantity="few">%d أيام</item>
-    <item quantity="many">%d أيام</item>
-    <item quantity="other">%d أيام</item>
-  </plurals>
+        <item quantity="one">%d يوم/أيام</item>
+        <item quantity="zero">%d أيام</item>
+        <item quantity="two">%d أيام</item>
+        <item quantity="few">%d أيام</item>
+        <item quantity="many">%d أيام</item>
+        <item quantity="other">%d أيام</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d ساعات</item>
-    <item quantity="one">%d ساعة</item>
-    <item quantity="two">%d ساعات</item>
-    <item quantity="few">%d ساعات</item>
-    <item quantity="many">%d ساعات</item>
-    <item quantity="other">%d ساعات</item>
-  </plurals>
+        <item quantity="zero">%d ساعات</item>
+        <item quantity="one">%d ساعة</item>
+        <item quantity="two">%d ساعات</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعات</item>
+        <item quantity="other">%d ساعات</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d دقائق</item>
-    <item quantity="one">%d دقيقة</item>
-    <item quantity="two">%d دقائق</item>
-    <item quantity="few">%d دقائق</item>
-    <item quantity="many">%d دقائق</item>
-    <item quantity="other">%d دقائق</item>
-  </plurals>
+        <item quantity="zero">%d دقائق</item>
+        <item quantity="one">%d دقيقة</item>
+        <item quantity="two">%d دقائق</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقائق</item>
+        <item quantity="other">%d دقائق</item>
+    </plurals>
   <string name="hexagon_warning">تجريبي</string>
   <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s لم يتم جمعها.</string>
   <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
   <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
-  <string name="checkin_error_not_exists">العنصر لم يجد في trakt (حتي الأن ). حاول مرة أخري لاحقا.</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
   <string name="traktcheckin_wait">سأنتظر</string>
   <string name="trakt_success">تم إرسالها إلى Trakt.</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">حساب Trak</string>
   <string name="trakt_connect_instructions">بالنافذة التالية سجل دخولك في Trakt أو أنشئ حساب جديد. ثم أسمح لـ SeriesGuid بالوصول إلى حساب في Trakt.</string>
   <string name="connect_trakt">الإتصال بموقع Trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">ممتاز</string>
   <string name="rating9">رائع</string>
   <plurals name="votes">
-    <item quantity="zero">%d أصوات</item>
-    <item quantity="one">%d صوت</item>
-    <item quantity="two">%d أصوات</item>
-    <item quantity="few">%d أصوات</item>
-    <item quantity="many">%d أصوات</item>
-    <item quantity="other">%d أصوات</item>
-  </plurals>
+        <item quantity="zero">%d أصوات</item>
+        <item quantity="one">%d صوت</item>
+        <item quantity="two">%d أصوات</item>
+        <item quantity="few">%d أصوات</item>
+        <item quantity="many">%d أصوات</item>
+        <item quantity="other">%d أصوات</item>
+    </plurals>
   <string name="checkin">أشاهده الآن</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="paste_title">إلصق عنوان</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="action_open_in_browser">فتح في المتصفح</string>
   <string name="prefs_category_basic">أساسي</string>

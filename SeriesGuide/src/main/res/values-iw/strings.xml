@@ -31,6 +31,7 @@
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>
   <string name="search_within_show">חיפוש בתוך %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">עדכן לגרסה האחרונה.</string>
   <string name="norating">לא ידוע</string>
   <string name="unknown">לא ידוע</string>
@@ -152,7 +153,8 @@
   <string name="add_error">לא יכול להוסיף %s.</string>
   <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
   <string name="recommended">מומלץ</string>
-  <string name="library">ספרייה</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">אוסף</string>
   <string name="watchlist">רשימת מעקב</string>
   <string name="first_list">הרשימה הראשונה</string>
   <string name="list_add">הוסף רשימה</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s על רשימת המעקב</string>
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
-    <item quantity="one">יום אחד</item>
-    <item quantity="zero">%d ימים</item>
-    <item quantity="two">%d ימים</item>
-    <item quantity="few">%d ימים</item>
-    <item quantity="many">%d ימים</item>
-    <item quantity="other">%d ימים</item>
-  </plurals>
+        <item quantity="one">יום אחד</item>
+        <item quantity="zero">%d ימים</item>
+        <item quantity="two">%d ימים</item>
+        <item quantity="few">%d ימים</item>
+        <item quantity="many">%d ימים</item>
+        <item quantity="other">%d ימים</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d שעות</item>
-    <item quantity="one">שעה אחת</item>
-    <item quantity="two">%d שעות</item>
-    <item quantity="few">%d שעות</item>
-    <item quantity="many">%d שעות</item>
-    <item quantity="other">%d שעות</item>
-  </plurals>
+        <item quantity="zero">%d שעות</item>
+        <item quantity="one">שעה אחת</item>
+        <item quantity="two">%d שעות</item>
+        <item quantity="few">%d שעות</item>
+        <item quantity="many">%d שעות</item>
+        <item quantity="other">%d שעות</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d דקות</item>
-    <item quantity="one">דקה אחת</item>
-    <item quantity="two">%d דקות</item>
-    <item quantity="few">%d דקות</item>
-    <item quantity="many">%d דקות</item>
-    <item quantity="other">%d דקות</item>
-  </plurals>
+        <item quantity="zero">%d דקות</item>
+        <item quantity="one">דקה אחת</item>
+        <item quantity="two">%d דקות</item>
+        <item quantity="few">%d דקות</item>
+        <item quantity="many">%d דקות</item>
+        <item quantity="other">%d דקות</item>
+    </plurals>
   <string name="hexagon_warning">ניסיוני!</string>
   <string name="hexagon_setup">הגדר את SeriesGuide Cloud</string>
   <string name="hexagon_description">התחבר לענן בכדי לגבות ולסנכרן את התוכניות והסרטים שלך.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s שטרם אספת.</string>
   <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
   <string name="checkin_canceled_success_trakt">הצ\'ק-אין ב-trakt בוטל.</string>
-  <string name="checkin_error_not_exists">פריט (עדיין) לא נמצא ב-trakt. נסה שוב מאוחר יותר.</string>
   <string name="traktcheckin_cancel">דרוס</string>
   <string name="traktcheckin_inprogress">אתה כבר רשום כצופה בפרק או סרט אחר. באפשרותך לדרוס את הרישום הקיים, או לחכות %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
   <string name="trakt_success">נשלח ל-trakt.</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
   <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">חשבון trakt</string>
   <string name="trakt_connect_instructions">במסך הבא, התחבר ל trakt או צור חשבון חדש. לאחר מכן, אפשר ל SeriesGuide גישה לחשבונך.</string>
   <string name="connect_trakt">התחבר trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">טוב מאוד</string>
   <string name="rating9">מצוין</string>
   <plurals name="votes">
-    <item quantity="zero">הצבעות %d</item>
-    <item quantity="one">הצבעה %d</item>
-    <item quantity="two">הצבעות %d</item>
-    <item quantity="few">הצבעות %d</item>
-    <item quantity="many">הצבעות %d</item>
-    <item quantity="other">הצבעות %d</item>
-  </plurals>
+        <item quantity="zero">הצבעות %d</item>
+        <item quantity="one">הצבעה %d</item>
+        <item quantity="two">הצבעות %d</item>
+        <item quantity="few">הצבעות %d</item>
+        <item quantity="many">הצבעות %d</item>
+        <item quantity="other">הצבעות %d</item>
+    </plurals>
   <string name="checkin">צ\'ק-אין</string>
   <string name="checkin_hint">הקלד הודעה (אופציונלי)</string>
   <string name="paste_title">הדבקת כותרת</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">שלח משוב</string>
   <string name="action_open_in_browser">פתח בדפדפן</string>
   <string name="prefs_category_basic">בסיסי</string>

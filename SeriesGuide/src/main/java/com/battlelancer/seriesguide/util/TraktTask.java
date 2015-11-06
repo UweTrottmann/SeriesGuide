@@ -308,7 +308,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             // check if item user wants to check into does exist on trakt
             if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 404) {
                 r.status = TraktStatus.FAILURE;
-                r.error = mContext.getString(R.string.checkin_error_not_exists);
+                r.error = mContext.getString(R.string.trakt_error_not_exists);
             } else {
                 throw e;
             }
@@ -331,10 +331,17 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 r.error = mContext.getString(R.string.trakt_error_general);
             }
         } catch (RetrofitError e) {
-            // check if comment failed validation
-            if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 422) {
+            // check if comment failed validation or item does not exist on trakt
+            if (e.getKind() == RetrofitError.Kind.HTTP) {
+                int status = e.getResponse().getStatus();
                 r.status = TraktStatus.FAILURE;
-                r.error = mContext.getString(R.string.shout_invalid);
+                if (status == 422) {
+                    r.error = mContext.getString(R.string.shout_invalid);
+                } else if (status == 404) {
+                    r.error = mContext.getString(R.string.trakt_error_not_exists);
+                } else {
+                    throw e;
+                }
             } else {
                 throw e;
             }

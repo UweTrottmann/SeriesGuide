@@ -31,6 +31,7 @@
   <string name="clear_search_history">Clear search history</string>
   <string name="search_hint">搜尋集數</string>
   <string name="search_within_show">Search within %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">已更新到最新版本。</string>
   <string name="norating">無</string>
   <string name="unknown">不明</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Could not add %s.</string>
   <string name="add_already_exists">%s is already in your show list.</string>
   <string name="recommended">推薦</string>
-  <string name="library">我的資料庫</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Collection</string>
   <string name="watchlist">待看清單</string>
   <string name="first_list">First list</string>
   <string name="list_add">Add list</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s on watchlist</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
-  </plurals>
+        <item quantity="one">%d day</item>
+        <item quantity="zero">%d days</item>
+        <item quantity="two">%d days</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
-    <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
-  </plurals>
+        <item quantity="zero">%d hours</item>
+        <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
-  </plurals>
+        <item quantity="zero">%d minutes</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s未收藏</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
-  <string name="checkin_error_not_exists">Item not (yet) found on trakt. Try again later.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">等待</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt account</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Connect trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">讚</string>
   <string name="rating9">好愛！！</string>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
-    <item quantity="one">%d vote</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
-    <item quantity="other">%d votes</item>
-  </plurals>
+        <item quantity="zero">%d votes</item>
+        <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="action_open_in_browser">Open in browser</string>
   <string name="prefs_category_basic">Basics</string>

@@ -460,12 +460,14 @@ public class DBUtils {
         values.put(Shows.RELEASE_COUNTRY, show.country);
         values.put(Shows.ACTORS, show.actors);
         values.put(Shows.IMDBID, show.imdbId);
+        values.put(Shows.TRAKT_ID, show.traktId);
         values.put(Shows.LASTUPDATED, System.currentTimeMillis());
         values.put(Shows.LASTEDIT, show.lastEdited);
 
         if (isNew) {
             // set TheTVDB id
             values.put(Shows._ID, show.tvdbId);
+            values.put(Shows.LANGUAGE, show.language);
             // set user values
             values.put(Shows.FAVORITE, show.favorite);
             values.put(Shows.HIDDEN, show.hidden);

@@ -8,7 +8,7 @@
   <string name="search">Hae</string>
   <string name="preferences">Asetukset</string>
   <string name="help">Ohjeet</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Ohje ja palaute</string>
   <string name="drawer_open">Avaa sivuvalikko</string>
   <string name="drawer_close">Sulje sivuvalikko</string>
   <string name="show">Ohjelma</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_within_show">Hae ohjelmasta %s</string>
+  <string name="any_language">Millä tahansa kielellä</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
   <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
   <string name="recommended">Suositellut</string>
-  <string name="library">Kokoelma</string>
+  <string name="watched_shows">Katsottu</string>
+  <string name="shows_collection">Kokoelma</string>
   <string name="watchlist">Seurantalista</string>
   <string name="first_list">Ensimmäinen lista</string>
   <string name="list_add">Lisää lista</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s seurantalistalla</string>
   <string name="runtime_movies_watchlist">seurantalistan elokuvien kesto</string>
   <plurals name="days_plural">
-    <item quantity="one">%d päivä</item>
-    <item quantity="zero">%d päivää</item>
-    <item quantity="two">%d päivää</item>
-    <item quantity="few">%d päivää</item>
-    <item quantity="many">%d päivää</item>
-    <item quantity="other">%d päivää</item>
-  </plurals>
+        <item quantity="one">%d päivä</item>
+        <item quantity="zero">%d päivää</item>
+        <item quantity="two">%d päivää</item>
+        <item quantity="few">%d päivää</item>
+        <item quantity="many">%d päivää</item>
+        <item quantity="other">%d päivää</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d tuntia</item>
-    <item quantity="one">%d tunti</item>
-    <item quantity="two">%d tuntia</item>
-    <item quantity="few">%d tuntia</item>
-    <item quantity="many">%d tuntia</item>
-    <item quantity="other">%d tuntia</item>
-  </plurals>
+        <item quantity="zero">%d tuntia</item>
+        <item quantity="one">%d tunti</item>
+        <item quantity="two">%d tuntia</item>
+        <item quantity="few">%d tuntia</item>
+        <item quantity="many">%d tuntia</item>
+        <item quantity="other">%d tuntia</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuuttia</item>
-    <item quantity="one">%d minuutti</item>
-    <item quantity="two">%d minuuttia</item>
-    <item quantity="few">%d minuuttia</item>
-    <item quantity="many">%d minuuttia</item>
-    <item quantity="other">%d minuuttia</item>
-  </plurals>
+        <item quantity="zero">%d minuuttia</item>
+        <item quantity="one">%d minuutti</item>
+        <item quantity="two">%d minuuttia</item>
+        <item quantity="few">%d minuuttia</item>
+        <item quantity="many">%d minuuttia</item>
+        <item quantity="other">%d minuuttia</item>
+    </plurals>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
-  <string name="checkin_error_not_exists">Kohde ei (vielä) löytynyt traktista. Yritä myöhemmin uudelleen.</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="trakt_success">Lähetetty traktiin.</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
   <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
+  <string name="trakt_error_not_exists">Ei (vielä) saatavilla traktissa. Yritä myöhemmin uudelleen.</string>
+  <string name="trakt_notice_not_exists">Ei voida (vielä) kuitata traktissa.</string>
   <string name="trakt_account">trakt-tili</string>
   <string name="trakt_connect_instructions">Seuraavalla ruudulla voit kirjautua traktiin tai luoda uuden tilin. Sitten salli SeriesGuidelle pääsy trakt-tiliisi.</string>
   <string name="connect_trakt">Yhdistä traktiin</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Upea</string>
   <string name="rating9">Loistava</string>
   <plurals name="votes">
-    <item quantity="zero">%d ääntä</item>
-    <item quantity="one">%d ääni</item>
-    <item quantity="two">%d ääntä</item>
-    <item quantity="few">%d ääntä</item>
-    <item quantity="many">%d ääntä</item>
-    <item quantity="other">%d ääntä</item>
-  </plurals>
+        <item quantity="zero">%d ääntä</item>
+        <item quantity="one">%d ääni</item>
+        <item quantity="two">%d ääntä</item>
+        <item quantity="few">%d ääntä</item>
+        <item quantity="many">%d ääntä</item>
+        <item quantity="other">%d ääntä</item>
+    </plurals>
   <string name="checkin">Kuittaa</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_title">Liitä nimi</string>
+  <string name="pref_quick_checkin">Nopea kuittaus</string>
+  <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="action_open_in_browser">Avaa selaimessa</string>
   <string name="prefs_category_basic">Yleiset</string>
@@ -358,7 +363,7 @@
   <string name="import_button">Palauta</string>
   <string name="backup_question">Tämä korvaa nykyisen varmuuskopion varmuuskopiokansiossa!</string>
   <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
-  <string name="import_warning">Ymmärrän, että minun nykyiset ohjelmani, listani ja elokuvani korvataan!</string>
+  <string name="import_warning">Ymmärrän, että nykyiset ohjelmani, listani ja elokuvani korvataan!</string>
   <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
   <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
   <string name="dataliberation_permission_missing">Varmuuskopiointi ja palautus edellyttää pääsyä tiedostoihin.</string>

@@ -31,6 +31,7 @@
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="search_within_show">Keresés itt %s</string>
+  <string name="any_language">Bármely nyelv</string>
   <string name="updated">Frissítve a legújabb verzióra.</string>
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A(z) %s már a listádon van.</string>
   <string name="recommended">Ajánlott</string>
-  <string name="library">Saját</string>
+  <string name="watched_shows">Megnézve</string>
+  <string name="shows_collection">Gyűjtemény</string>
   <string name="watchlist">Figyelőlista</string>
   <string name="first_list">Első lista</string>
   <string name="list_add">Lista hozzáadása</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s a figyelőlistában</string>
   <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
   <plurals name="days_plural">
-    <item quantity="one">%d nap</item>
-    <item quantity="zero">%d nap</item>
-    <item quantity="two">%d nap</item>
-    <item quantity="few">%d nap</item>
-    <item quantity="many">%d nap</item>
-    <item quantity="other">%d nap</item>
-  </plurals>
+        <item quantity="one">%d nap</item>
+        <item quantity="zero">%d nap</item>
+        <item quantity="two">%d nap</item>
+        <item quantity="few">%d nap</item>
+        <item quantity="many">%d nap</item>
+        <item quantity="other">%d nap</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d óra</item>
-    <item quantity="one">%d óra</item>
-    <item quantity="two">%d óra</item>
-    <item quantity="few">%d óra</item>
-    <item quantity="many">%d óra</item>
-    <item quantity="other">%d óra</item>
-  </plurals>
+        <item quantity="zero">%d óra</item>
+        <item quantity="one">%d óra</item>
+        <item quantity="two">%d óra</item>
+        <item quantity="few">%d óra</item>
+        <item quantity="many">%d óra</item>
+        <item quantity="other">%d óra</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d perc</item>
-    <item quantity="one">%d perc</item>
-    <item quantity="two">%d perc</item>
-    <item quantity="few">%d perc</item>
-    <item quantity="many">%d perc</item>
-    <item quantity="other">%d perc</item>
-  </plurals>
+        <item quantity="zero">%d perc</item>
+        <item quantity="one">%d perc</item>
+        <item quantity="two">%d perc</item>
+        <item quantity="few">%d perc</item>
+        <item quantity="many">%d perc</item>
+        <item quantity="other">%d perc</item>
+    </plurals>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
   <string name="checkin_canceled_success_trakt">Bejelentkezés törölve a trakton.</string>
-  <string name="checkin_error_not_exists">(Még) nem szerepel a trakt adatbázisban. Próbálkozz később.</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
   <string name="traktcheckin_wait">Várok</string>
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
+  <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
+  <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a traktal.</string>
   <string name="trakt_account">trakt fiók</string>
   <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Nagyon jó</string>
   <string name="rating9">Nagyszerű</string>
   <plurals name="votes">
-    <item quantity="zero">%d szavazat</item>
-    <item quantity="one">%d szavazat</item>
-    <item quantity="two">%d szavazat</item>
-    <item quantity="few">%d szavazat</item>
-    <item quantity="many">%d szavazat</item>
-    <item quantity="other">%d szavazat</item>
-  </plurals>
+        <item quantity="zero">%d szavazat</item>
+        <item quantity="one">%d szavazat</item>
+        <item quantity="two">%d szavazat</item>
+        <item quantity="few">%d szavazat</item>
+        <item quantity="many">%d szavazat</item>
+        <item quantity="other">%d szavazat</item>
+    </plurals>
   <string name="checkin">Bejelentkezés</string>
   <string name="checkin_hint">Írj üzenetet (nem kötelező)</string>
   <string name="paste_title">Cím beillesztése</string>
+  <string name="pref_quick_checkin">Gyors bejelentkezés</string>
+  <string name="pref_quick_checkin_summary">Nincs bejelentkezési üzenetet</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="action_open_in_browser">Megnyitás böngészőben</string>
   <string name="prefs_category_basic">Alap beállítások</string>

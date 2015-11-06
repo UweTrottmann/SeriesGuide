@@ -28,8 +28,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
  */
 public class YouTubeExtension extends SeriesGuideExtension {
 
-    private static final String YOUTUBE_SEARCH = "http://www.youtube.com/results?search_query=%s";
-
     public YouTubeExtension() {
         super("YouTubeExtension");
     }

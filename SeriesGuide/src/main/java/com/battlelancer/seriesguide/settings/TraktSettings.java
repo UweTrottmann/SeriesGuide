@@ -65,6 +65,9 @@ public class TraktSettings {
     public static final String KEY_HAS_MERGED_MOVIES
             = "com.battlelancer.seriesguide.trakt.mergedmovies";
 
+    public static final String KEY_QUICK_CHECKIN
+            = "com.battlelancer.seriesguide.trakt.quickcheckin";
+
     private static final long FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS;
 
     /**
@@ -202,5 +205,14 @@ public class TraktSettings {
         long previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_FULL_EPISODE_SYNC, currentTime);
         return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS;
+    }
+
+    /**
+     * Whether the check-in dialog should not wait for the user to enter a message, but immediately
+     * start the check-in.
+     */
+    public static boolean useQuickCheckin(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_QUICK_CHECKIN, false);
     }
 }

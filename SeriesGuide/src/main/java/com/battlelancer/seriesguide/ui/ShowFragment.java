@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,16 +37,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -60,11 +70,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import java.util.Date;
+import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
- *
+ * Displays extended information (poster, release info, description, ...) and actions (favoriting,
+ * shortcut) for a particular show.
  */
 public class ShowFragment extends Fragment {
 
@@ -94,6 +106,7 @@ public class ShowFragment extends Fragment {
     @Bind(R.id.textViewShowRuntime) TextView mTextViewRuntime;
     @Bind(R.id.textViewShowNetwork) TextView mTextViewNetwork;
     @Bind(R.id.textViewShowOverview) TextView mTextViewOverview;
+    @Bind(R.id.spinnerShowLanguage) Spinner mSpinnerLanguage;
     @Bind(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
     @Bind(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
     @Bind(R.id.textViewShowContentRating) TextView mTextViewContentRating;
@@ -162,6 +175,12 @@ public class ShowFragment extends Fragment {
         crewHeader.setText(R.string.movie_crew);
         mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
 
+        // language chooser
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.languages, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerLanguage.setAdapter(adapter);
+
         return v;
     }
 
@@ -222,7 +241,8 @@ public class ShowFragment extends Fragment {
                 Shows.RATING_GLOBAL,
                 Shows.RATING_VOTES,
                 Shows.RATING_USER,
-                Shows.LASTEDIT
+                Shows.LASTEDIT,
+                Shows.LANGUAGE
         };
 
         int TITLE = 1;
@@ -244,6 +264,7 @@ public class ShowFragment extends Fragment {
         int RATING_VOTES = 17;
         int RATING_USER = 18;
         int LAST_EDIT_MS = 19;
+        int LANGUAGE = 20;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -329,6 +350,30 @@ public class ShowFragment extends Fragment {
         // overview
         mTextViewOverview.setText(mShowCursor.getString(ShowQuery.OVERVIEW));
 
+        // language preferred for content
+        String languageCode = mShowCursor.getString(ShowQuery.LANGUAGE);
+        if (TextUtils.isEmpty(languageCode)) {
+            languageCode = DisplaySettings.getContentLanguage(getContext());
+        }
+        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
+        for (int i = 0; i < languageCodes.length; i++) {
+            if (languageCodes[i].equals(languageCode)) {
+                mSpinnerLanguage.setSelection(i, false);
+                break;
+            }
+        }
+        mSpinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                changeShowLanguage(parent.getContext(), getShowTvdbId(), languageCodes[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
         // country for release time calculation
         // show "unknown" if country is not supported
         mTextViewReleaseCountry.setText(TimeTools.getCountry(getActivity(), releaseCountry));
@@ -372,7 +417,7 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpTvdbButton(getShowTvdbId(), mButtonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktButton(getShowTvdbId(), mButtonTrakt, TAG);
+        ServiceUtils.setUpTraktShowButton(mButtonTrakt, getShowTvdbId(), TAG);
 
         // web search button
         ServiceUtils.setUpWebSearchButton(mShowTitle, mButtonWebSearch, TAG);
@@ -483,6 +528,44 @@ public class ShowFragment extends Fragment {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
             mTraktTask = new TraktRatingsTask(getActivity(), getShowTvdbId());
             AndroidUtils.executeOnPool(mTraktTask);
+        }
+    }
+
+    private static void changeShowLanguage(Context context, final int showTvdbId,
+            final String languageCode) {
+        Timber.d("Changing show language to " + languageCode);
+        // use global context, to ensure runnable can complete
+        // (can be safely used, as is not dependent on local context)
+        final Context appContext = context.getApplicationContext();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
+                // change language
+                ContentValues values = new ContentValues();
+                values.put(Shows.LANGUAGE, languageCode);
+                appContext.getContentResolver()
+                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
+                // reset episode last edit time so all get updated
+                values = new ContentValues();
+                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+                appContext.getContentResolver()
+                        .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                                values, null, null);
+                // trigger update
+                SgSyncAdapter.requestSyncImmediate(appContext, SgSyncAdapter.SyncType.SINGLE,
+                        showTvdbId, false);
+            }
+        };
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
+
+        // show immediate feedback, also if offline and sync won't go through
+        if (AndroidUtils.isNetworkConnected(context)) {
+            // notify about upcoming sync
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+        } else {
+            // offline
+            Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

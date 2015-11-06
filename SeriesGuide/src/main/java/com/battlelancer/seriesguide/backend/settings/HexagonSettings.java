@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 public class HexagonSettings {
 
@@ -48,8 +49,9 @@ public class HexagonSettings {
             = "com.battlelancer.seriesguide.hexagon.v2.lastsync.movies";
 
     /**
-     * Returns the account name used for authenticating against Hexagon.
+     * Returns the account name used for authenticating against Hexagon, or null if not signed in.
      */
+    @Nullable
     public static String getAccountName(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_ACCOUNT_NAME, null);

@@ -32,6 +32,7 @@
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="search_within_show">Sök inom %s</string>
+  <string name="any_language">Any language</string>
   <string name="updated">Uppdaterad till senaste versionen</string>
   <string name="norating">saknas</string>
   <string name="unknown">okänd</string>
@@ -153,7 +154,8 @@
   <string name="add_error">Kunde inte lägga till %s.</string>
   <string name="add_already_exists">%s finns redan i din serielista.</string>
   <string name="recommended">Rekommenderade</string>
-  <string name="library">Bibliotek</string>
+  <string name="watched_shows">Watched</string>
+  <string name="shows_collection">Samling</string>
   <string name="watchlist">Bevakningslista</string>
   <string name="first_list">Första listan</string>
   <string name="list_add">Lägg till lista</string>
@@ -191,29 +193,29 @@
   <string name="movies_on_watchlist">%s på bevakningslistan</string>
   <string name="runtime_movies_watchlist">speltid på filmbevakningslistan</string>
   <plurals name="days_plural">
-    <item quantity="one">%d dag</item>
-    <item quantity="zero">%d dagar</item>
-    <item quantity="two">%d dagar</item>
-    <item quantity="few">%d dagar</item>
-    <item quantity="many">%d dagar</item>
-    <item quantity="other">%d dagar</item>
-  </plurals>
+        <item quantity="one">%d dag</item>
+        <item quantity="zero">%d dagar</item>
+        <item quantity="two">%d dagar</item>
+        <item quantity="few">%d dagar</item>
+        <item quantity="many">%d dagar</item>
+        <item quantity="other">%d dagar</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d timmar</item>
-    <item quantity="one">%d timme</item>
-    <item quantity="two">%d timmar</item>
-    <item quantity="few">%d timmar</item>
-    <item quantity="many">%d timmar</item>
-    <item quantity="other">%d timmar</item>
-  </plurals>
+        <item quantity="zero">%d timmar</item>
+        <item quantity="one">%d timme</item>
+        <item quantity="two">%d timmar</item>
+        <item quantity="few">%d timmar</item>
+        <item quantity="many">%d timmar</item>
+        <item quantity="other">%d timmar</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minuter</item>
-    <item quantity="one">%d minut</item>
-    <item quantity="two">%d minuter</item>
-    <item quantity="few">%d minuter</item>
-    <item quantity="many">%d minuter</item>
-    <item quantity="other">%d minuter</item>
-  </plurals>
+        <item quantity="zero">%d minuter</item>
+        <item quantity="one">%d minut</item>
+        <item quantity="two">%d minuter</item>
+        <item quantity="few">%d minuter</item>
+        <item quantity="many">%d minuter</item>
+        <item quantity="other">%d minuter</item>
+    </plurals>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide Cloud</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina serier och filmer.</string>
@@ -239,13 +241,14 @@
   <string name="trakt_notcollected">%s ej hämtade.</string>
   <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
-  <string name="checkin_error_not_exists">Objektet hittades inte (än) på trakt. Försök igen senare.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>
   <string name="trakt_success">Skickat till trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
+  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt-konto</string>
   <string name="trakt_connect_instructions">På nästa skärm loggar du in på trakt eller skapar ett nytt konto. Ge sedan SeriesGuide åtkomst till ditt trakt-konto.</string>
   <string name="connect_trakt">Anslut till trakt</string>
@@ -273,16 +276,18 @@
   <string name="rating8">Mycket bra</string>
   <string name="rating9">Fantastisk</string>
   <plurals name="votes">
-    <item quantity="zero">%d röster</item>
-    <item quantity="one">%d röst</item>
-    <item quantity="two">%d röster</item>
-    <item quantity="few">%d röster</item>
-    <item quantity="many">%d röster</item>
-    <item quantity="other">%d röster</item>
-  </plurals>
+        <item quantity="zero">%d röster</item>
+        <item quantity="one">%d röst</item>
+        <item quantity="two">%d röster</item>
+        <item quantity="few">%d röster</item>
+        <item quantity="many">%d röster</item>
+        <item quantity="other">%d röster</item>
+    </plurals>
   <string name="checkin">Checka in</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>
   <string name="paste_title">Klistra in titel</string>
+  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Skicka feedback</string>
   <string name="action_open_in_browser">Öppna i webbläsare</string>
   <string name="prefs_category_basic">Grunder</string>

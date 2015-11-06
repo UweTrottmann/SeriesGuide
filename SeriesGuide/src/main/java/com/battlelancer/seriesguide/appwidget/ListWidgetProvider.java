@@ -149,9 +149,9 @@ public class ListWidgetProvider extends AppWidgetProvider {
             titleResId = R.string.recent;
             emptyResId = R.string.norecent;
         } else {
-            // favorites
+            // shows
             showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_SHOWS;
-            titleResId = R.string.action_shows_filter_favorites;
+            titleResId = R.string.shows;
             emptyResId = R.string.no_nextepisode;
         }
 

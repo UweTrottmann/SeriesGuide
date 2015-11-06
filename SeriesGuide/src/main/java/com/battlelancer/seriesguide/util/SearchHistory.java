@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,10 +41,19 @@ public class SearchHistory {
     private static final int DATETIME_PREFIX_LENGTH = ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH + 1;
     private static final DateTimeFormatter ISO_DATETIME_FORMATTER
             = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC();
+    private static final Comparator<String> NATURAL_ORDER_REVERSE = new Comparator<String>() {
+        @Override
+        public int compare(String lhs, String rhs) {
+            return -lhs.compareTo(rhs);
+        }
+    };
 
     private final Context context;
     private final String settingsKey;
+    // timestamp+query -> query
     private final TreeMap<String, String> searchHistory;
+    // query -> timestamp+query
+    private final HashMap<String, String> queryMap;
 
     /**
      * Initialize search history by loading last saved history from {@link
@@ -58,20 +69,24 @@ public class SearchHistory {
         Set<String> storedSearchHistory = PreferenceManager.getDefaultSharedPreferences(context)
                 .getStringSet(settingsKey, null);
         if (storedSearchHistory == null) {
-            this.searchHistory = new TreeMap<>();
+            this.searchHistory = new TreeMap<>(NATURAL_ORDER_REVERSE);
+            this.queryMap = new HashMap<>();
         } else {
-            TreeMap<String, String> map = new TreeMap<>();
+            TreeMap<String, String> map = new TreeMap<>(NATURAL_ORDER_REVERSE);
+            HashMap<String, String> queryMap = new HashMap<>();
             for (String historyEntry : storedSearchHistory) {
                 String query = historyEntry.substring(DATETIME_PREFIX_LENGTH,
                         historyEntry.length());
-                map.put(query, historyEntry);
+                map.put(historyEntry, query);
+                queryMap.put(query, historyEntry);
             }
             this.searchHistory = map;
+            this.queryMap = queryMap;
         }
     }
 
     public synchronized List<String> getSearchHistory() {
-        return new ArrayList<>(searchHistory.keySet());
+        return new ArrayList<>(searchHistory.values());
     }
 
     /**
@@ -80,28 +95,35 @@ public class SearchHistory {
      * @return {@code false} if the query was already in search history.
      */
     public synchronized boolean saveRecentSearch(String query) {
-        boolean queryIsNew = !searchHistory.containsKey(query);
+        // prevent duplicate entries
+        String historyEntry = queryMap.get(query);
+        if (historyEntry != null) {
+            searchHistory.remove(historyEntry);
+        }
 
-        // add/replace entry
+        // add new entry
         String now = new DateTime().toString(ISO_DATETIME_FORMATTER);
-        searchHistory.put(query, now + " " + query);
+        String newHistoryEntry = now + " " + query;
+        searchHistory.put(now + " " + query, query);
+        queryMap.put(query, newHistoryEntry);
 
         // trim to size
         if (searchHistory.size() > MAX_HISTORY_SIZE) {
             while (searchHistory.size() > MAX_HISTORY_SIZE) {
                 // remove oldest entry (= lowest date value, sorted first)
-                searchHistory.remove(searchHistory.firstKey());
+                String removedQuery = searchHistory.remove(searchHistory.lastKey());
+                queryMap.remove(removedQuery);
             }
         }
 
         // save history
-        Set<String> historySet = new HashSet<>(searchHistory.values());
+        Set<String> historySet = new HashSet<>(searchHistory.keySet());
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putStringSet(settingsKey, historySet)
                 .apply();
 
-        return queryIsNew;
+        return historyEntry == null;
     }
 
     /**

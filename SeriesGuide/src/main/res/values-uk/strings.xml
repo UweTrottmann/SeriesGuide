@@ -8,7 +8,7 @@
   <string name="search">Пошук</string>
   <string name="preferences">Налаштування</string>
   <string name="help">Допомога</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Довідка &amp; Відгук</string>
   <string name="drawer_open">Відкрити вікно навігації</string>
   <string name="drawer_close">Закрити вікно навігації</string>
   <string name="show">Серіал</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">Очистити історію пошуку</string>
   <string name="search_hint">Пошук серій</string>
   <string name="search_within_show">Пошук у %s</string>
+  <string name="any_language">Будь-яка мова</string>
   <string name="updated">Оновлено до останньої версії.</string>
   <string name="norating">Немає даних</string>
   <string name="unknown">Невідомо</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Не вдалося додати %s.</string>
   <string name="add_already_exists">%s вже є у вашому списку.</string>
   <string name="recommended">Рекомендовано</string>
-  <string name="library">Бібліотека</string>
+  <string name="watched_shows">Переглянуто</string>
+  <string name="shows_collection">Колекція</string>
   <string name="watchlist">Список перегляду</string>
   <string name="first_list">Перший список</string>
   <string name="list_add">Додати список</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s в списку спостереження</string>
   <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
   <plurals name="days_plural">
-    <item quantity="one">%d день</item>
-    <item quantity="zero">%d днів</item>
-    <item quantity="two">%d днів</item>
-    <item quantity="few">%d днів</item>
-    <item quantity="many">%d днів</item>
-    <item quantity="other">%d днів</item>
-  </plurals>
+        <item quantity="one">%d день</item>
+        <item quantity="zero">%d днів</item>
+        <item quantity="two">%d днів</item>
+        <item quantity="few">%d днів</item>
+        <item quantity="many">%d днів</item>
+        <item quantity="other">%d днів</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d годин</item>
-    <item quantity="one">%d година</item>
-    <item quantity="two">%d години</item>
-    <item quantity="few">%d годин</item>
-    <item quantity="many">%d годин</item>
-    <item quantity="other">%d годин</item>
-  </plurals>
+        <item quantity="zero">%d годин</item>
+        <item quantity="one">%d година</item>
+        <item quantity="two">%d години</item>
+        <item quantity="few">%d годин</item>
+        <item quantity="many">%d годин</item>
+        <item quantity="other">%d годин</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d хвилин</item>
-    <item quantity="one">%d хвилина</item>
-    <item quantity="two">%d хвилини</item>
-    <item quantity="few">%d хвилин</item>
-    <item quantity="many">%d хвилин</item>
-    <item quantity="other">%d хвилин</item>
-  </plurals>
+        <item quantity="zero">%d хвилин</item>
+        <item quantity="one">%d хвилина</item>
+        <item quantity="two">%d хвилини</item>
+        <item quantity="few">%d хвилин</item>
+        <item quantity="many">%d хвилин</item>
+        <item quantity="other">%d хвилин</item>
+    </plurals>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -229,8 +231,8 @@
   <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
   <string name="hexagon_api_error">Не вдалося з\'єднатися з хмарою SeriesGuide. Спробуйте знову пізніше.</string>
   <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Щоб використати Хмару SeriesGuide, дозвольте доступ до ваших аккаунтів.</string>
+  <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
   <string name="trakt_submitqueued">Надсилання до trakt.</string>
   <string name="trakt_seen">%s переглянуто.</string>
   <string name="trakt_notseen">%s не переглянуто.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
-  <string name="checkin_error_not_exists">Елемент (поки що) не знайдено на trakt. Повторіть спробу пізніше.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
   <string name="traktcheckin_wait">Я зачекаю</string>
   <string name="trakt_success">Надіслано до trakt.</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
   <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
+  <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
+  <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
   <string name="trakt_account">trakt аккаунт</string>
   <string name="trakt_connect_instructions">У наступному вікні увійдіть у свій trakt аккаунт або створіть новий. Потім дозвольте SeriesGuide доступ до вашого аккаунту на trakt.</string>
   <string name="connect_trakt">Підключитись до trakt</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Дуже добре</string>
   <string name="rating9">Прекрасно</string>
   <plurals name="votes">
-    <item quantity="zero">%d голосів</item>
-    <item quantity="one">%d голос</item>
-    <item quantity="two">%d голоси</item>
-    <item quantity="few">%d голосів</item>
-    <item quantity="many">%d голосів</item>
-    <item quantity="other">%d голосів</item>
-  </plurals>
+        <item quantity="zero">%d голосів</item>
+        <item quantity="one">%d голос</item>
+        <item quantity="two">%d голоси</item>
+        <item quantity="few">%d голосів</item>
+        <item quantity="many">%d голосів</item>
+        <item quantity="other">%d голосів</item>
+    </plurals>
   <string name="checkin">Зареєструвати</string>
   <string name="checkin_hint">Введіть повідомлення (необов\'язково)</string>
   <string name="paste_title">Вставити заголовок</string>
+  <string name="pref_quick_checkin">Швидке логування</string>
+  <string name="pref_quick_checkin_summary">Не запитувати в повідомленні про логування</string>
   <string name="feedback">Відправити відгук</string>
   <string name="action_open_in_browser">Відкрити в браузері</string>
   <string name="prefs_category_basic">Основні</string>
@@ -294,18 +299,18 @@
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
   <string name="pref_seasonsorting">Сортувати сезони за…</string>
   <string name="pref_episodesorting">Сортувати серії за…</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Бажана мова контенту</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Щоб знизити витрати через мобільного оператора, не завантажуйте через мобільні мережі</string>
   <string name="about">Про SeriesGuide</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис на trakt.tv</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
-  <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Це додаток використовує дані та зображення через TheTVDB за ліцензією CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
-  <string name="licence_trakt">Ця програма використовує дані та зображення сервіса trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licence_trakt">Ця програма використовує дані та зображення сервісу trakt.</string>
+  <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
+  <string name="licences_and_credits">Ліцензії та кредити</string>
   <string name="sort">Сортувати за</string>
   <string name="action_sort_ignore_articles">Ігнорувати артиклі</string>
   <string name="sort_order_latest_first">Новіші спочатку</string>
@@ -315,7 +320,7 @@
   <string name="sort_order_top_rated_first">Топ кращих</string>
   <string name="sort_order_latest_first_dvd">Новіші спочатку (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Давніші спочатку (DVD)</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Незабаром в діапазоні</string>
   <string name="upcoming_upto_now">Сьогодні</string>
   <string name="upcoming_upto_one_day">1 дня</string>
   <string name="upcoming_upto_three_days">3 днів</string>
@@ -330,8 +335,8 @@
   <string name="pref_other">Інші</string>
   <string name="pref_autoupdate">Увімкнути Автооновлення</string>
   <string name="pref_autoupdatesummary">Періодично оновлювати ваші серіали</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Автоматичне резервне копіювання</string>
+  <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
   <string name="backup">Бекап/Відновлення</string>
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
   <string name="pref_number">Формат цифр</string>
@@ -343,7 +348,7 @@
   <string name="backup_full_dump">Включити усі мета-дані такі як опис, актори та рейтинги.</string>
   <string name="backup_path">Папка Бекапа</string>
   <string name="backup_version">Версія бази даних</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Не можливо створити резервну копію. Файл бекапу не знайдено або немає доступу.</string>
   <string name="backup_inprogress">Резервне копіювання бази даних…</string>
   <string name="backup_success">Резервне копіювання пройшло успішно.</string>
   <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>
@@ -358,15 +363,15 @@
   <string name="import_button">Відновити</string>
   <string name="backup_question">Це призведе до перезаписування поточного файлу резервної копії в папці Бекапу!</string>
   <string name="import_question">Поточний список серіалів буде втрачено! Переконайтеся, що файл резервної копії знаходиться всередині папки Бекапу.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Я розумію, що мої поточні серіали, списки та фільми будуть замінені!</string>
   <string name="last_auto_backup">Останній авто Бекап: %s</string>
   <string name="restore_auto_backup">Відновити з авто Бекапу</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="dataliberation_permission_missing">Щоб зберегти або відновити резервну копію дозвольте доступ до ваших файлів.</string>
+  <string name="autobackup_permission_missing">Щоб застосувати автоматичне резервне копіювання, дозвольте доступ до ваших файлів.</string>
+  <string name="autobackup_files_missing">Щоб використати автоматичну резервну копію, виберіть дійсні файли бекапу.</string>
+  <string name="no_file_selected">Не вибрано жодного файлу</string>
+  <string name="action_select_file">Виберіть файл</string>
+  <string name="backup_use_default_files">Використовувати резервну копію за замовчуванням</string>
   <string name="get_started">Початок роботи</string>
   <string name="welcome_setuplanguage">Вибрати мову</string>
   <string name="dismiss">Відхилити</string>

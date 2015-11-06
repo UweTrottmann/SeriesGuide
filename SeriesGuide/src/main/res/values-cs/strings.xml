@@ -8,7 +8,7 @@
   <string name="search">Hledat</string>
   <string name="preferences">Nastavení</string>
   <string name="help">Nápověda</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Pomoc a připomínky</string>
   <string name="drawer_open">Otevřít záložky aplikace</string>
   <string name="drawer_close">Zavřít záložky aplikace</string>
   <string name="show">Seriál</string>
@@ -31,6 +31,7 @@
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
   <string name="search_within_show">Hledat v %s</string>
+  <string name="any_language">Jakýkoliv jazyk</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
@@ -152,7 +153,8 @@
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
   <string name="recommended">Doporučené</string>
-  <string name="library">Knihovna</string>
+  <string name="watched_shows">Zhlédnuto</string>
+  <string name="shows_collection">Sbírka</string>
   <string name="watchlist">Chci vidět</string>
   <string name="first_list">První seznam</string>
   <string name="list_add">Přidat seznam</string>
@@ -190,29 +192,29 @@
   <string name="movies_on_watchlist">%s z Watchlistu</string>
   <string name="runtime_movies_watchlist">Celková délka filmového watchlistu</string>
   <plurals name="days_plural">
-    <item quantity="one">%d den</item>
-    <item quantity="zero">%d dnů</item>
-    <item quantity="two">%d dny</item>
-    <item quantity="few">%d dny</item>
-    <item quantity="many">%d dnů</item>
-    <item quantity="other">%d dnů</item>
-  </plurals>
+        <item quantity="one">%d den</item>
+        <item quantity="zero">%d dnů</item>
+        <item quantity="two">%d dny</item>
+        <item quantity="few">%d dny</item>
+        <item quantity="many">%d dnů</item>
+        <item quantity="other">%d dnů</item>
+    </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hodin</item>
-    <item quantity="one">%d hodina</item>
-    <item quantity="two">%d hodiny</item>
-    <item quantity="few">%d hodiny</item>
-    <item quantity="many">%d hodin</item>
-    <item quantity="other">%d hodin</item>
-  </plurals>
+        <item quantity="zero">%d hodin</item>
+        <item quantity="one">%d hodina</item>
+        <item quantity="two">%d hodiny</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
+        <item quantity="other">%d hodin</item>
+    </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minut</item>
-    <item quantity="one">%d minuta</item>
-    <item quantity="two">%d minuty</item>
-    <item quantity="few">%d minuty</item>
-    <item quantity="many">%d minut</item>
-    <item quantity="other">%d minut</item>
-  </plurals>
+        <item quantity="zero">%d minut</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="two">%d minuty</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
   <string name="hexagon_warning">Experimentální!</string>
   <string name="hexagon_setup">Nastavit SeriesGuide cloud</string>
   <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
@@ -229,8 +231,8 @@
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
   <string name="hexagon_api_error">Nelze se spojit s SeriesGuide Cloud. Opakujte akci později.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Pro použití SeriesGuide Cloudu povolte přístup k vašim účtům.</string>
+  <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>
   <string name="trakt_seen">%s zhlédnuto.</string>
   <string name="trakt_notseen">%s nových.</string>
@@ -238,13 +240,14 @@
   <string name="trakt_notcollected">%s chybí ve sbírce.</string>
   <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
-  <string name="checkin_error_not_exists">(Zatím) nenalezeno na tract.tv Zkuste to později.</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
   <string name="traktcheckin_wait">Já počkám</string>
   <string name="trakt_success">Odesláno do trakt.tv.</string>
   <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
   <string name="trakt_error_general">Nelze se připojit na trakt.tv. Opakujte akci později.</string>
+  <string name="trakt_error_not_exists">Není k dispozici na traktu (zatím). Zkuste to později.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt.tv účet</string>
   <string name="trakt_connect_instructions">Na další obrazovce se přihlašte do trakt.tv nebo vytvořte nový účet. Poté umožněte SeriesGuide přístup k vašemu účtu na trakt.tv.</string>
   <string name="connect_trakt">Připojit trakt.tv</string>
@@ -272,16 +275,18 @@
   <string name="rating8">Skvělý</string>
   <string name="rating9">Vynikající</string>
   <plurals name="votes">
-    <item quantity="zero">%d hlasů</item>
-    <item quantity="one">%d hlas</item>
-    <item quantity="two">%d hlasy</item>
-    <item quantity="few">%d hlasy</item>
-    <item quantity="many">%d hlasů</item>
-    <item quantity="other">%d hlasů</item>
-  </plurals>
+        <item quantity="zero">%d hlasů</item>
+        <item quantity="one">%d hlas</item>
+        <item quantity="two">%d hlasy</item>
+        <item quantity="few">%d hlasy</item>
+        <item quantity="many">%d hlasů</item>
+        <item quantity="other">%d hlasů</item>
+    </plurals>
   <string name="checkin">Ohlásit se</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_title">Vložit název</string>
+  <string name="pref_quick_checkin">Rychle se ohlásit</string>
+  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Poslat reakci</string>
   <string name="action_open_in_browser">Otevřít v prohlížečí</string>
   <string name="prefs_category_basic">Základní</string>
@@ -418,7 +423,7 @@
   <string name="subscription_failed">Nákup nebyl dokončen.</string>
   <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>
   <string name="extensions">Rozšíření</string>
-  <string name="action_extensions_configure">Přispůsobení rozšířeních</string>
+  <string name="action_extensions_configure">Přispůsobit rozšíření</string>
   <string name="action_extensions_add">Přidat rozšíření</string>
   <string name="action_extensions_limit">Získej X verzi s více funkcemi</string>
   <string name="action_extensions_search">Získat další rozšíření</string>

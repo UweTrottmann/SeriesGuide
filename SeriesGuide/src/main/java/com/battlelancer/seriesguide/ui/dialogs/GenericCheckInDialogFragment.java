@@ -30,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -120,6 +121,16 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // immediately start to check-in if the user has opted to skip entering a check-in message
+        if (TraktSettings.useQuickCheckin(getContext())) {
+            checkIn();
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -157,6 +168,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         }
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
         // launch a check-in override dialog
         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
