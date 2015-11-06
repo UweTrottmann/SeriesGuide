@@ -5,8 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 26 *(in development)*
+Version 26 *(2015-11-06)*
 -----------------------------
+
+* Add shows that can not be tracked with trakt (also no ratings, comments), though they will have limited release information.
+* Select the language when adding a show through search, change the preferred language of a show after adding it.
+* Add a trakt "Collection" tab to the "Add show" screen ("Library" tab is now called "Watched").
+* "Favorites" widget type is now "Shows", adds favorites filter and sort order (by latest episode or title).
+* "Quick check in" setting.
+
+#### 26 *(2015-11-06)*
+
+* TWEAK Clear notification when checking in from it.
+* NOTICE Latest translations from crowdin.
 
 #### 26-beta4 *(2015-10-29)*
 
