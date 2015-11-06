@@ -445,6 +445,7 @@ public class NotificationService extends IntentService {
                 Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
                 checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
+                checkInActionIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
                 checkInActionIntent.addFlags(
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
@@ -537,7 +538,7 @@ public class NotificationService extends IntentService {
         // build the notification
         Notification notification = nb.build();
 
-        // use string resource id, always unique within app
+        // use a unique id within the app
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         nm.notify(SeriesGuideApplication.NOTIFICATION_EPISODE_ID, notification);
     }
