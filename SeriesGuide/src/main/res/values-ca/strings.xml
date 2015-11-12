@@ -8,7 +8,7 @@
   <string name="search">Cerca</string>
   <string name="preferences">Configuració</string>
   <string name="help">Ajuda</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Ajuda i comentaris</string>
   <string name="drawer_open">Obre el calaix de navegació</string>
   <string name="drawer_close">Tanca el calaix de navegació</string>
   <string name="show">Sèrie</string>
@@ -31,7 +31,7 @@
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
   <string name="search_within_show">Cerca a %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Qualsevol idioma</string>
   <string name="updated">S\'ha actualitzat a la darrera versió.</string>
   <string name="norating">cap</string>
   <string name="unknown">deconegut</string>
@@ -288,7 +288,7 @@
   <string name="pref_quick_checkin">Quick check in</string>
   <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Envia comentaris</string>
-  <string name="action_open_in_browser">Open in browser</string>
+  <string name="action_open_in_browser">Obre al navegador</string>
   <string name="prefs_category_basic">Bàsics</string>
   <string name="prefs_category_sharing">Serveis</string>
   <string name="prefs_category_advanced">Avançat</string>

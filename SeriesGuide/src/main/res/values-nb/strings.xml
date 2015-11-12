@@ -85,7 +85,7 @@
   <string name="uncollect_all">Samlet ingen</string>
   <string name="action_skip">Hopp over</string>
   <string name="action_dont_skip">Ikke hopp over</string>
-  <string name="action_collection_add">Legge til samlingen</string>
+  <string name="action_collection_add">Legg til i samlingen</string>
   <string name="action_collection_remove">Fjern fra samlingen</string>
   <string name="action_collection_added">Lagt til i samlingen</string>
   <string name="action_collection_removed">Fjernet fra samlingen</string>
@@ -348,10 +348,10 @@
   <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
   <string name="backup_path">Sikkerhetskopimappe</string>
   <string name="backup_version">Databaseversjon</string>
-  <string name="backup_failed_file_access">Sikkerhetskopi feilet. Klarte ikke finne eller åpne filen.</string>
+  <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>
   <string name="backup_inprogress">Sikkerhetskopierer databasen…</string>
   <string name="backup_success">Sikkerhetskopiering vellykket.</string>
-  <string name="backup_failed">Sikkerhetskopieringen mislyktes.</string>
+  <string name="backup_failed">Sikkerhetskopiering mislyktes.</string>
   <string name="import_inprogress">Gjenoppretter databasen…</string>
   <string name="import_failed_nosd">Klarte ikke gjenopprette sikkerhetskopien. Sikkerhetskopimappen er ikke tilgjengelig.</string>
   <string name="import_failed_nofile">Fant ingen lesbar sikkerhetskopifil.</string>
@@ -359,7 +359,7 @@
   <string name="dbupgradefailed">Sikkerhetskopien kan være for gammel eller tom. Merk: Importere før-2.0 sikkerhetskopier i en 1.9.x versjon først.</string>
   <string name="import_success">Sikkerhetskopien ble gjenopprettet.</string>
   <string name="import_failed">Gjenoppretting av sikkerhetskopien mislyktes.</string>
-  <string name="backup_button">Sikkerhetskopi</string>
+  <string name="backup_button">Opprett sikkerhetskopi</string>
   <string name="import_button">Gjenopprett</string>
   <string name="backup_question">Dette vil overskrive gjeldende sikkerhetskopi i mappen for sikkerhetskopier.</string>
   <string name="import_question">Serielisten din vil gå tapt. Sjekk at sikkerhetskopien er i sikkerhetskopimappen.</string>
