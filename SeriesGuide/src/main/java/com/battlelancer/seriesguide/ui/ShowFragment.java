@@ -133,6 +133,7 @@ public class ShowFragment extends Fragment {
 
     private String mShowTitle;
     private String mShowPoster;
+    private int mSpinnerLastPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -358,6 +359,7 @@ public class ShowFragment extends Fragment {
         final String[] languageCodes = getResources().getStringArray(R.array.languageData);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
+                mSpinnerLastPosition = i;
                 mSpinnerLanguage.setSelection(i, false);
                 break;
             }
@@ -365,6 +367,13 @@ public class ShowFragment extends Fragment {
         mSpinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == mSpinnerLastPosition) {
+                    // guard against firing after layout completes
+                    // still happening on custom ROMs despite workaround described at
+                    // http://stackoverflow.com/a/17336944/1000543
+                    return;
+                }
+                mSpinnerLastPosition = position;
                 changeShowLanguage(parent.getContext(), getShowTvdbId(), languageCodes[position]);
             }
 
