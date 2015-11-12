@@ -134,7 +134,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation);
 
         // setup nav drawer account header
-        navigationView.findViewById(R.id.containerDrawerAccount).setOnClickListener(
+
+        View headerLayout = navigationView.inflateHeaderView(R.layout.drawer_item_account);
+        headerLayout.findViewById(R.id.containerDrawerAccount).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
