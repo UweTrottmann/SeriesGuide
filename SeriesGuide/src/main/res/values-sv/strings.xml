@@ -8,7 +8,7 @@
   <string name="search">Sök</string>
   <string name="preferences">Inställningar</string>
   <string name="help">Hjälp</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Hjälp &amp; Återkoppling</string>
   <string name="drawer_open">Öppna navigeringslåda
 </string>
   <string name="drawer_close">Stäng navigeringslåda</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="search_within_show">Sök inom %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Alla språk</string>
   <string name="updated">Uppdaterad till senaste versionen</string>
   <string name="norating">saknas</string>
   <string name="unknown">okänd</string>
@@ -154,7 +154,7 @@
   <string name="add_error">Kunde inte lägga till %s.</string>
   <string name="add_already_exists">%s finns redan i din serielista.</string>
   <string name="recommended">Rekommenderade</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Sedda</string>
   <string name="shows_collection">Samling</string>
   <string name="watchlist">Bevakningslista</string>
   <string name="first_list">Första listan</string>
@@ -247,7 +247,7 @@
   <string name="trakt_success">Skickat till trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">trakt-konto</string>
   <string name="trakt_connect_instructions">På nästa skärm loggar du in på trakt eller skapar ett nytt konto. Ge sedan SeriesGuide åtkomst till ditt trakt-konto.</string>
@@ -336,8 +336,8 @@
   <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Automatiskt Backup</string>
+  <string name="pref_autobackupsummary">Backup veckovis av dina serier, lister och filmer</string>
   <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_number">Nummerformat</string>
@@ -364,15 +364,15 @@
   <string name="import_button">Återställ säkerhetskopia</string>
   <string name="backup_question">Det här skriver över den nuvarande säkerhetskopian i mappen!</string>
   <string name="import_question">Den nuvarande serielistan försvinner! Se till så att säkerhetskopian finns i mappen för säkerhetskopior.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
   <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
   <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
   <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="no_file_selected">Ingen fil vald</string>
+  <string name="action_select_file">Välj fil</string>
+  <string name="backup_use_default_files">Använd standard Backup filer</string>
   <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="dismiss">Avfärda</string>

@@ -14,6 +14,12 @@ Version 26 *(2015-11-06)*
 * "Favorites" widget type is now "Shows", adds favorites filter and sort order (by latest episode or title).
 * "Quick check in" setting.
 
+#### 26.0.1 *(2015-11-12)*
+
+* FIX Language update triggering each time opening show details.
+* FIX Crash when updating shows on some devices.
+* NOTICE Latest translations from crowdin.
+
 #### 26 *(2015-11-06)*
 
 * TWEAK Clear notification when checking in from it.

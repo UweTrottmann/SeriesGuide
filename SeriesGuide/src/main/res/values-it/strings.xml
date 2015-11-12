@@ -246,8 +246,8 @@
   <string name="trakt_success">Inviato a trakt.</string>
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
   <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
+  <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
   <string name="trakt_account">Account trakt</string>
   <string name="trakt_connect_instructions">Nella prossima schermata effettua il login a trakt o crea un nuovo account. In seguito autorizza SeriesGuide ad accedere al tuo account trakt.</string>
   <string name="connect_trakt">Collegati a trakt</string>
