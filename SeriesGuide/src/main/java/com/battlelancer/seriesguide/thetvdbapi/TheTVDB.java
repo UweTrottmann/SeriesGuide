@@ -401,12 +401,10 @@ public class TheTVDB {
      * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
      * supplied, TVDb falls back to English.
      */
+    @NonNull
     public static Show fetchShow(@NonNull Context context, int showTvdbId,
             @Nullable String language) throws TvdbException {
-        // get show details from TVDb
-        Show show = downloadAndParseShow(context, showTvdbId, language);
-
-        // get some more details from trakt
+        // try to get some details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
         try {
             // always look up the trakt id based on the TVDb id
@@ -423,6 +421,10 @@ public class TheTVDB {
             Timber.e(e, "Loading trakt show info failed");
         }
 
+        // get full show details from TVDb
+        final Show show = downloadAndParseShow(context, showTvdbId, language);
+
+        // fill in data from trakt
         if (traktShow != null) {
             if (traktShow.ids != null && traktShow.ids.trakt != null) {
                 show.traktId = traktShow.ids.trakt;
@@ -451,11 +453,12 @@ public class TheTVDB {
     /**
      * Get a show from TVDb.
      */
+    @NonNull
     private static Show downloadAndParseShow(Context context, int showTvdbId, String language)
             throws TvdbException {
         final Show currentShow = new Show();
-        RootElement root = new RootElement("Data");
-        Element show = root.getChild("Series");
+        final RootElement root = new RootElement("Data");
+        final Element show = root.getChild("Series");
 
         // set handlers for elements we want to react to
         show.getChild("id").setEndTextElementListener(new EndTextElementListener() {
