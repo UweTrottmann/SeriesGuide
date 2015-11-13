@@ -26,4 +26,4 @@
     android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme"
     android:background="?attr/colorPrimary"
-    app:layout_scrollFlags="scroll|enterAlways" />
+    app:layout_scrollFlags="scroll|enterAlways|snap" />
