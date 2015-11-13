@@ -127,24 +127,25 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
-        actionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        navigationView = (NavigationView) findViewById(R.id.navigation);
+
+        actionBarToolbar = (Toolbar) drawerLayout.findViewById(R.id.sgToolbar);
+
+        navigationView = (NavigationView) drawerLayout.findViewById(R.id.navigation);
 
         // setup nav drawer account header
-        navigationView.findViewById(R.id.containerDrawerAccount).setOnClickListener(
+        View headerView = navigationView.getHeaderView(0);
+        headerView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onNavItemClick(NAV_ITEM_ACCOUNT_ID);
                     }
                 });
-        textViewHeaderAccountType = (TextView) navigationView.findViewById(
+        textViewHeaderAccountType = (TextView) headerView.findViewById(
                 R.id.textViewDrawerItemAccount);
-        textViewHeaderUser = (TextView) navigationView.findViewById(
-                R.id.textViewDrawerItemUsername);
+        textViewHeaderUser = (TextView) headerView.findViewById(R.id.textViewDrawerItemUsername);
 
         // setup nav drawer items
         navigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
@@ -239,7 +240,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     builder.setToolbarColor(getResources().getColor(
                             Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
                     builder.setActionButton(
-                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_checkin),
+                            BitmapFactory.decodeResource(getResources(),
+                                    R.drawable.ic_action_checkin),
                             getString(R.string.feedback),
                             PendingIntent.getBroadcast(getApplicationContext(), 0,
                                     new Intent(getApplicationContext(),
