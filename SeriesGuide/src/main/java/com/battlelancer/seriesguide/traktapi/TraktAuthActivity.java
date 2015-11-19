@@ -31,7 +31,8 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
 /**
- * Starts a trakt OAuth 2.0 authorization flow using an embedded {@link android.webkit.WebView}.
+ * Starts a trakt OAuth 2.0 authorization flow using the default browser or an embedded {@link
+ * android.webkit.WebView} as a fallback.
  */
 public class TraktAuthActivity extends BaseOAuthActivity {
 
@@ -41,7 +42,9 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.connect_trakt));
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.connect_trakt));
+        }
     }
 
     @Override
@@ -50,7 +53,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         try {
             OAuthClientRequest request = TraktV2.getAuthorizationRequest(
                     BuildConfig.TRAKT_CLIENT_ID,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
                     state,
                     null);
             return request.getLocationUri();
@@ -67,7 +70,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     }
 
     @Override
-    protected void fetchTokens(@Nullable String authCode, @Nullable String state) {
+    protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
         // if state does not match what we sent, drop the auth code
         if (this.state != null && !this.state.equals(state)) {
             authCode = null;
@@ -78,5 +81,4 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
-
 }

@@ -88,7 +88,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                     BuildConfig.TRAKT_CLIENT_ID,
                     BuildConfig.TRAKT_CLIENT_SECRET,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
                     authCode
             );
             if (response != null) {
