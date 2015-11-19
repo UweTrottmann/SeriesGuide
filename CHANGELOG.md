@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 27 *(in development)*
+-----------------------------
+
+#### 27-beta1 *(2015-11-19)*
+
+* TWEAK When connecting to trakt the default browser is used, which likely already has your credentials.
+  The integrated browser is still available as a fall back.
+* TWEAK Sync show languages with SeriesGuide Cloud.
+* TWEAK If the app bar scrolls out of view, it will now snap to an appropriate position.
+* NOTICE Latest translations from crowdin.
+
 Version 26 *(2015-11-06)*
 -----------------------------
 
