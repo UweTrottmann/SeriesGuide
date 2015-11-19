@@ -257,6 +257,7 @@
   <string name="waitplease">Einen Augenblick, bitte…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
+  <string name="use_integrated_browser">Integrierten Browser verwenden</string>
   <string name="connect_trakt_done">Mit Trakt verbunden!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide wird jetzt die Serien und Filme auf diesem Gerät mit trakt synchronisieren. Dies kann eine Weile dauern.</string>
   <string name="add_trakt_shows">Serien aus Ihrer Bibliothek hinzufügen:</string>

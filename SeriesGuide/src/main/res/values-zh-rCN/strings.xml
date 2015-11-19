@@ -257,6 +257,7 @@
   <string name="waitplease">请稍等一段时间……</string>
   <string name="connect">关联</string>
   <string name="disconnect">断开</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">trakt 已关联</string>
   <string name="connect_trakt_done_explanation">SeriesGuide 会将此设备上的电视节目和电影数据与您的 trakt 帐户同步，这需要几分钟的时间。</string>
   <string name="add_trakt_shows">同时，您也可以添加来自 trakt 资料库中先前观看的节目。</string>

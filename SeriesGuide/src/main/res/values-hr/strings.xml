@@ -257,6 +257,7 @@
   <string name="waitplease">Trenutak, molim…</string>
   <string name="connect">Povežite</string>
   <string name="disconnect">Isključi</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Povezano na trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide će sada sinkronizirati emisije i filmove na ovom uređaju s traktom. To može potrajati neko vrijeme.</string>
   <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>

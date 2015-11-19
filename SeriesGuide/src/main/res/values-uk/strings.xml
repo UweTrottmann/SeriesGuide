@@ -257,6 +257,7 @@
   <string name="waitplease">Зачекайте хвилинку…</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Підключено до trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
   <string name="add_trakt_shows">Додати ще серіали з бібліотеки trakt:</string>

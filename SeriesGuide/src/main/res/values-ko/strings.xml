@@ -257,6 +257,7 @@
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">trakt에 연결되었습니다!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide는 당신의 쇼와 영화들을 trakt에 지금 동기화합니다. 때로는 시간이 걸릴 수도 있습니다.</string>
   <string name="add_trakt_shows">라이브러리에 있는 쇼 추가:</string>

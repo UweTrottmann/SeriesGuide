@@ -257,6 +257,7 @@
   <string name="waitplease">רק רגע, בבקשה</string>
   <string name="connect">התחבר</string>
   <string name="disconnect">התנתק</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">מחובר אל trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide עכשיו יסנכרן את הסדרות והסרטים על מכשיר זה עם trakt. זה עלול לקחת מעט זמן.</string>
   <string name="add_trakt_shows">הוסף תוכניות מהספריה:</string>

@@ -257,6 +257,7 @@
   <string name="waitplease">Un moment, si us plau…</string>
   <string name="connect">Connecta</string>
   <string name="disconnect">Desconnecta</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">S\'ha connectat a trakt!</string>
   <string name="connect_trakt_done_explanation">Tot seguit, SeriesGuide sincronitzarà les sèries i peŀlícules en aquest dispositiu del trakt. Això pot trigar una estona.</string>
   <string name="add_trakt_shows">Afegiu més sèries de la vostra biblioteca del trakt:</string>

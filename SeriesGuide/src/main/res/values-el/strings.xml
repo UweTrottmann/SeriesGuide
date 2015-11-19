@@ -257,6 +257,7 @@
   <string name="waitplease">Μια στιγμή, παρακαλώ…</string>
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Συνδεδεμένο με το trakt!</string>
   <string name="connect_trakt_done_explanation">Το SeriesGuide θα συγχρονίσει τώρα τις σειρές και τις ταινίες σε αυτή την συσκευή μέσω του trackt. Αυτό μπορεί να διαρκέσει λίγο χρόνο.</string>
   <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>

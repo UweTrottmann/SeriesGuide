@@ -257,6 +257,7 @@
   <string name="waitplease">Vent et øjeblik</string>
   <string name="connect">Tilslut</string>
   <string name="disconnect">Afbryd</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Forbundet til trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere serier og film på denne enhed med trakt. Dette kan tage noget tid.</string>
   <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>

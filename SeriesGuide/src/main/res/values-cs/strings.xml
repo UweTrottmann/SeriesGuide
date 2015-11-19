@@ -257,6 +257,7 @@
   <string name="waitplease">Chvilku strpení…</string>
   <string name="connect">Připojit</string>
   <string name="disconnect">Odpojit</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide bude nyní synchronizovat, pořady a filmy na tomto zařízení se službou Trakt. To může chvíli trvat.</string>
   <string name="add_trakt_shows">Přidat seriály z vaší knihovny:</string>

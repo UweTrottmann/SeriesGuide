@@ -257,6 +257,7 @@
   <string name="waitplease">Een ogenblik geduld a.u.b.…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Verbreken</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>

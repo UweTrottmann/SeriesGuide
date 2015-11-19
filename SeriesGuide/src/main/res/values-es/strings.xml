@@ -258,6 +258,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="waitplease">Un momento, por favor…</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">¡Conectado a trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va a sincronizar las series y películas de este dispositivo con trakt. Esto puede demorar un poco.</string>
   <string name="add_trakt_shows">Añadir series de su biblioteca en trakt:</string>

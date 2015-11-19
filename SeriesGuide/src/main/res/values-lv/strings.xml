@@ -257,6 +257,7 @@
   <string name="waitplease">Vienu momentu, lūdzu...</string>
   <string name="connect">Savienot</string>
   <string name="disconnect">Atvienot</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Savienots ar trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide tagad sinhronizēs šovus un filmas uz šīs ierīces ar trakt. Šis var aizņemt kādu laiciņu.</string>
   <string name="add_trakt_shows">Pievienot vairāk šovus no tavas trakt bibliotēkas:</string>

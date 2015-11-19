@@ -257,6 +257,7 @@
   <string name="waitplease">Bir dakika lütfen…</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
   <string name="connect_trakt_done_explanation">Şimdi SeriesGuide bu cihazdaki dizileri ve filmleri trakt ile eşleyecek. Bu işlem biraz zaman alabilir.</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
