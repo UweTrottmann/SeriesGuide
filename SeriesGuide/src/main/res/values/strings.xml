@@ -305,6 +305,7 @@
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
+    <string name="use_integrated_browser">Use integrated browser</string>
     <string name="connect_trakt_done">Connected to trakt!</string>
     <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
     <string name="add_trakt_shows">Add more shows from your trakt library:</string>
