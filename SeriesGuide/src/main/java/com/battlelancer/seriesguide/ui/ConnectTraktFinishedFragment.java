@@ -25,8 +25,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users trakt library.
@@ -37,6 +37,11 @@ public class ConnectTraktFinishedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_trakt_finished, container, false);
+
+        // hide sync message if hexagon is connected (so trakt sync is disabled)
+        if (HexagonTools.isSignedIn(getActivity())) {
+            v.findViewById(R.id.textViewConnectTraktFinished).setVisibility(View.GONE);
+        }
 
         // library button
         v.findViewById(R.id.buttonShowLibrary).setOnClickListener(new OnClickListener() {
@@ -60,11 +65,5 @@ public class ConnectTraktFinishedFragment extends Fragment {
         });
 
         return v;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Connect Trakt Finished");
     }
 }
