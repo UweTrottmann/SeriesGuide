@@ -246,8 +246,8 @@
   <string name="trakt_success">Envoyé à trakt.</string>
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
   <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
+  <string name="trakt_notice_not_exists">Ne peut pas (encore) être suivis avec trakt.</string>
   <string name="trakt_account">Compte trakt</string>
   <string name="trakt_connect_instructions">Sur le prochain écran connectez vous dans trakt ou créez un nouveau compte. Puis permettez l\'accès à votre compte trakt par SeriesGuide.</string>
   <string name="connect_trakt">Me connecter à trakt</string>
@@ -348,7 +348,7 @@
   <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
   <string name="backup_path">Dossier de sauvegarde</string>
   <string name="backup_version">Version de la base de données</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>
   <string name="backup_inprogress">Sauvegarde de la base de données…</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>
