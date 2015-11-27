@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.traktapi;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
@@ -75,6 +76,14 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         if (this.state != null && !this.state.equals(state)) {
             authCode = null;
         }
+
+        if (TextUtils.isEmpty(authCode)) {
+            // no valid auth code, remain in activity and show fallback buttons
+            activateFallbackButtons();
+            setMessage(R.string.trakt_error_credentials);
+            return;
+        }
+
         // return auth code to credentials fragment
         Intent intent = new Intent();
         intent.putExtra(ConnectTraktCredentialsFragment.KEY_OAUTH_CODE, authCode);

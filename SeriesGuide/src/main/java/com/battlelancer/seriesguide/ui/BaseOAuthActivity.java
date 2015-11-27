@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
@@ -46,6 +48,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
     private WebView webview;
     private View buttonContainer;
+    private TextView textViewMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,10 +89,8 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
     private void setupViews() {
         webview = (WebView) findViewById(R.id.webView);
-        webview.setVisibility(View.GONE);
-
         buttonContainer = findViewById(R.id.containerOauthButtons);
-        buttonContainer.setVisibility(View.VISIBLE);
+        textViewMessage = (TextView) buttonContainer.findViewById(R.id.textViewOauthMessage);
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
         Button buttonBrowser = (Button) findViewById(R.id.buttonOauthBrowser);
@@ -106,6 +107,9 @@ public abstract class BaseOAuthActivity extends BaseActivity {
                 activateWebView();
             }
         });
+
+        activateFallbackButtons();
+        setMessage(0);
     }
 
     private void launchBrowser() {
@@ -122,6 +126,11 @@ public abstract class BaseOAuthActivity extends BaseActivity {
             fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
                     callbackUri.getQueryParameter("state"));
         }
+    }
+
+    protected void activateFallbackButtons() {
+        webview.setVisibility(View.GONE);
+        buttonContainer.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -145,6 +154,15 @@ public abstract class BaseOAuthActivity extends BaseActivity {
             finish();
         } else {
             webview.loadUrl(authUrl);
+        }
+    }
+
+    protected void setMessage(@StringRes int messageResId) {
+        if (messageResId == 0) {
+            textViewMessage.setVisibility(View.GONE);
+        } else {
+            textViewMessage.setVisibility(View.VISIBLE);
+            textViewMessage.setText(messageResId);
         }
     }
 
