@@ -160,9 +160,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
                         onNavItemClick(menuItem.getItemId());
-                        return true;
+                        return false;
                     }
                 });
     }
@@ -300,7 +299,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * this in {@link #onStart()}.
      */
     public void setDrawerSelectedItem(@IdRes int menuItemId) {
-        navigationView.getMenu().findItem(menuItemId).setChecked(true);
+        navigationView.setCheckedItem(menuItemId);
     }
 
     public void openNavDrawer() {
