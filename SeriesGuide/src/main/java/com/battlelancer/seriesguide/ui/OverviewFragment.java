@@ -50,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
@@ -254,15 +255,16 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
-
         EventBus.getDefault().unregister(this);
+
+        super.onPause();
     }
 
     @Override
@@ -640,6 +642,10 @@ public class OverviewFragment extends Fragment implements
                     : R.string.action_collection_add);
             CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
                     : R.string.action_collection_add);
+
+            // prevent checking in if hexagon is enabled
+            buttonCheckin.setVisibility(
+                    HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
             // buttons might have been disabled by action, re-enable
             buttonWatch.setEnabled(true);

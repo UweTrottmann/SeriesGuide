@@ -47,6 +47,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
@@ -447,6 +448,10 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             }
         });
         CheatSheet.setup(mCheckinButton);
+
+        // prevent checking in if hexagon is enabled
+        mCheckinButton.setVisibility(
+                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
         // watched button
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);

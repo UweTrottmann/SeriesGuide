@@ -42,6 +42,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
@@ -352,6 +353,10 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
         CheatSheet.setup(mCheckinButton);
+
+        // prevent checking in if hexagon is enabled
+        mCheckinButton.setVisibility(
+                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
         // watched button (only supported when connected to trakt)
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
