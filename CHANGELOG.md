@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 27 *(in development)*
 -----------------------------
 
+#### 27-beta2 *(2015-11-27)*
+
+* TWEAK Connect trakt: show integrated browser option also if no auth codes are returned.
+* TWEAK Hide check-in buttons when connected to SeriesGuide Cloud. If connected to trakt as well,
+  watched items would not sync down. Marking watched manually would create duplicate history entries.
+* FIX On some occasions the nav drawer has an incorrect item selected.
+* FIX Did not show last watched episode for trakt friends if their username had a space character.
+* NOTICE Latest translations from crowdin.
+
 #### 27-beta1 *(2015-11-19)*
 
 * TWEAK When connecting to trakt the default browser is used, which likely already has your credentials.
