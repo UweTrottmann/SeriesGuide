@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.battlelancer.seriesguide">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.battlelancer.seriesguide">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -256,7 +257,8 @@
                 android:value="true" />
             <meta-data
                 android:name="description"
-                android:value="@string/dashclock_extension_description" />
+                android:value="@string/dashclock_extension_description"
+                tools:ignore="ManifestResource" />
             <meta-data
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
@@ -277,7 +279,8 @@
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/extension_amazon"
-            android:description="@string/description_extension_amazon">
+            android:description="@string/description_extension_amazon"
+            tools:ignore="ManifestResource">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
@@ -289,7 +292,8 @@
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/extension_youtube"
-            android:description="@string/description_extension_youtube">
+            android:description="@string/description_extension_youtube"
+            tools:ignore="ManifestResource">
         <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
@@ -298,7 +302,8 @@
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/web_search"
-            android:description="@string/description_extension_web_search">
+            android:description="@string/description_extension_web_search"
+            tools:ignore="ManifestResource">
         <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
