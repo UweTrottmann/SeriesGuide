@@ -257,7 +257,7 @@
   <string name="waitplease">Kis türelmet…</string>
   <string name="connect">Kapcsolódás</string>
   <string name="disconnect">Megszakítás</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Beépített böngésző használata</string>
   <string name="connect_trakt_done">Csatlakozva a trakthoz!</string>
   <string name="connect_trakt_done_explanation">A SeriesGuide most szinkronizálni fogja a sorozatokat és filmeket a trakttal. Ez néhány percig eltarthat.</string>
   <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>

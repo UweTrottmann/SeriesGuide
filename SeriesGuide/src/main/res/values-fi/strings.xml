@@ -257,7 +257,7 @@
   <string name="waitplease">Odota hetki pieni…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Käytä sisäistä selainta</string>
   <string name="connect_trakt_done">Yhdistetty traktiin!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide synkronoi nyt tämän laitteen ohjelmat ja elokuvat traktin kanssa. Tämä voi kestää hetken.</string>
   <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>

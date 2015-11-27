@@ -86,13 +86,13 @@
   <string name="action_skip">Salta</string>
   <string name="action_dont_skip">Non saltare</string>
   <string name="action_collection_add">Aggiungere alla collezione</string>
-  <string name="action_collection_remove">Rimuovere dalla collezione</string>
+  <string name="action_collection_remove">Rimuovi dalla collezione</string>
   <string name="action_collection_added">Aggiunto alla collezione</string>
   <string name="action_collection_removed">Rimosso dalla collezione</string>
   <string name="action_watched">Visto</string>
   <string name="action_unwatched">Non visto</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
-  <string name="delete_error">Impossibile rimuovere la serie. Riprovare più tardi.</string>
+  <string name="delete_error">Impossibile rimuovere la serie. Riprova più tardi.</string>
   <string name="delete_show">Rimuovi</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
   <string name="context_favorite">Aggiungi ai preferiti</string>
@@ -119,7 +119,7 @@
   <string name="context_updateshow">Aggiorna</string>
   <string name="context_marknext">Episodio seguente visto</string>
   <string name="now_tab">In onda</string>
-  <string name="recently_watched">Visto recentemente</string>
+  <string name="recently_watched">Visti di recente</string>
   <string name="released_today">Usciti oggi</string>
   <string name="friends_recently">I tuoi amici di trakt</string>
   <string name="now_empty">Non succede nulla. Guarda qualche serie!</string>
@@ -158,7 +158,7 @@
   <string name="watchlist">Da vedere</string>
   <string name="first_list">Prima lista</string>
   <string name="list_add">Aggiungi lista</string>
-  <string name="list_title_hint">Rinomina lista</string>
+  <string name="list_title_hint">Nome lista</string>
   <string name="list_remove">Elimina lista</string>
   <string name="list_manage">Gestisci lista</string>
   <string name="list_item_manage">Gestisci liste</string>
@@ -167,7 +167,7 @@
   <string name="action_lists_sort">Ordina le liste</string>
   <string name="action_lists_reorder">Riordina le liste</string>
   <string name="movies_collection">Collezione</string>
-  <string name="movies_watchlist">Programma visione</string>
+  <string name="movies_watchlist">Da vedere</string>
   <string name="watchlist_add">Da vedere</string>
   <string name="watchlist_remove">Rimuovere dalla lista</string>
   <string name="watchlist_added">Aggiunto alla lista</string>
@@ -257,7 +257,7 @@
   <string name="waitplease">Un momento, per favore…</string>
   <string name="connect">Connetti</string>
   <string name="disconnect">Disconnetti</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Utilizza il browser integrato</string>
   <string name="connect_trakt_done">Connesso a trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide sta sincronizzando le serie e i film su questo dispositivo con trakt. Potrebbe volerci un po\' di tempo.</string>
   <string name="add_trakt_shows">Aggiungi serie dalla tua raccolta trakt:</string>
@@ -265,16 +265,16 @@
   <string name="about_trakt">trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi. <a href="http://trakt.tv">Maggiori informazioni</a></string>
   <string name="action_rate">Vota</string>
   <string name="your_rating">Il tuo voto</string>
-  <string name="love">Totalmente ninja!</string>
-  <string name="hate">Deboluccio :(</string>
+  <string name="love">Indimenticabile!</string>
+  <string name="hate">Deludente :(</string>
   <string name="rating2">Terribile</string>
   <string name="rating3">Brutto</string>
   <string name="rating4">Mediocre</string>
-  <string name="rating5">Indifferente</string>
+  <string name="rating5">Banale</string>
   <string name="rating6">Bello</string>
-  <string name="rating7">Buono</string>
-  <string name="rating8">Grande</string>
-  <string name="rating9">Superbo</string>
+  <string name="rating7">Bellissimo</string>
+  <string name="rating8">Ottimo</string>
+  <string name="rating9">Stupendo</string>
   <plurals name="votes">
         <item quantity="zero">%d voti</item>
         <item quantity="one">%d voto</item>

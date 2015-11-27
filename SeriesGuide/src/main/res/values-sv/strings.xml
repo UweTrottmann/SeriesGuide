@@ -248,7 +248,7 @@
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
   <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Kan inte (än) följas med trakt.</string>
   <string name="trakt_account">trakt-konto</string>
   <string name="trakt_connect_instructions">På nästa skärm loggar du in på trakt eller skapar ett nytt konto. Ge sedan SeriesGuide åtkomst till ditt trakt-konto.</string>
   <string name="connect_trakt">Anslut till trakt</string>
@@ -258,7 +258,7 @@
   <string name="waitplease">Ett ögonblick…</string>
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
   <string name="connect_trakt_done">Ansluten till trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide synkroniserar nu serier och filmer på den här enheten med trakt. Detta kan ta lite tid.</string>
   <string name="add_trakt_shows">Lägg till serier från ditt trakt-bibliotek:</string>
@@ -287,8 +287,8 @@
   <string name="checkin">Checka in</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>
   <string name="paste_title">Klistra in titel</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Snabb incheckning</string>
+  <string name="pref_quick_checkin_summary">Fråga inte efter meddelande vid incheckning</string>
   <string name="feedback">Skicka feedback</string>
   <string name="action_open_in_browser">Öppna i webbläsare</string>
   <string name="prefs_category_basic">Grunder</string>
@@ -311,7 +311,7 @@
   <string name="licence_tvdb">Den här appen använder data och bilder från TheTVDB under licensen CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>
   <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
   <string name="licences_and_credits">Licenser och tillkännagivanden</string>
   <string name="sort">Sortera efter</string>
   <string name="action_sort_ignore_articles">Ignorera artiklar</string>
@@ -350,7 +350,7 @@
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Kan ej göra backup. En backup-fil kan inte hittas eller öppnas.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
@@ -370,7 +370,7 @@
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
   <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
   <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="autobackup_files_missing">För att använda automatisk backup, välj giltiga backup-filer.</string>
   <string name="no_file_selected">Ingen fil vald</string>
   <string name="action_select_file">Välj fil</string>
   <string name="backup_use_default_files">Använd standard Backup filer</string>
