@@ -25,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -107,6 +108,18 @@ public class TraktAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void setupEmptyViewButton(Button buttonEmptyView) {
+        buttonEmptyView.setText(R.string.refresh);
+        buttonEmptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setProgressVisible(true, false);
+                getLoaderManager().restartLoader(getListType(), null, mTraktAddCallbacks);
+            }
+        });
     }
 
     private int getListType() {

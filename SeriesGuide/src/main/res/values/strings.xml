@@ -181,6 +181,7 @@
     <string name="checkin_searchhint">Type a show name</string>
     <string name="add_empty">There are no shows here.</string>
     <string name="no_results">No results, try complete words.</string>
+    <string name="action_try_any_language">Try any language</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_all">Add all</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>

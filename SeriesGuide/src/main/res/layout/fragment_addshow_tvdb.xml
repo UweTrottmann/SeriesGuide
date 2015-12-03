@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,16 +48,13 @@
             android:layout_height="match_parent"
             android:columnWidth="@dimen/showgrid_columnWidth"
             android:numColumns="auto_fit"
-            android:stretchMode="columnWidth" />
+            android:stretchMode="columnWidth"
+            tools:listitem="@layout/item_addshow" />
 
-        <TextView
-            android:id="@+id/emptyViewAdd"
-            android:layout_width="@dimen/empty_view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/no_results"
-            android:textAppearance="@style/TextAppearance.Light" />
+        <include
+            layout="@layout/empty_view"
+            android:id="@+id/emptyViewAdd" />
+
     </FrameLayout>
 
     <ProgressBar

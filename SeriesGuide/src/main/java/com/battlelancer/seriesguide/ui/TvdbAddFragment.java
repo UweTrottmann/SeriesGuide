@@ -31,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,9 +44,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
@@ -190,6 +189,24 @@ public class TvdbAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void setupEmptyViewButton(Button buttonEmptyView) {
+        buttonEmptyView.setText(R.string.action_try_any_language);
+        buttonEmptyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (language != null) {
+                    // not set to any language: set to any language
+                    // spinner selection change triggers search
+                    spinnerLanguage.setSelection(0);
+                } else {
+                    // already set to no language, trigger search directly
+                    search();
+                }
+            }
+        });
     }
 
     private void clearSearchTerm() {

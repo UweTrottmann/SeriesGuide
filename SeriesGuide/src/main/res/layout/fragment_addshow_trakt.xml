@@ -10,14 +10,10 @@
 
         <include layout="@layout/grid_shows" />
 
-        <TextView
-            android:id="@+id/emptyViewAdd"
-            android:layout_width="@dimen/empty_view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/add_empty"
-            android:textAppearance="@style/TextAppearance.Light" />
+        <include
+            layout="@layout/empty_view"
+            android:id="@+id/emptyViewAdd" />
+
     </FrameLayout>
 
     <ProgressBar

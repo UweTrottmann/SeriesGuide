@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +56,9 @@ public abstract class AddFragment extends Fragment {
     @Bind(R.id.containerAddContent) View contentContainer;
     @Bind(R.id.progressBarAdd) View progressBar;
     @Bind(android.R.id.list) GridView resultsGridView;
-    @Bind(R.id.emptyViewAdd) TextView emptyView;
+    @Bind(R.id.emptyViewAdd) View emptyView;
+    @Bind(R.id.textViewEmptyView) TextView textEmptyView;
+    @Bind(R.id.buttonEmptyView) Button buttonEmptyView;
 
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
@@ -66,6 +70,13 @@ public abstract class AddFragment extends Fragment {
     @Override
     public abstract View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState);
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setupEmptyViewButton(buttonEmptyView);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -104,11 +115,13 @@ public abstract class AddFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    protected abstract void setupEmptyViewButton(Button buttonEmptyView);
+
     /**
      * Changes the empty message.
      */
     public void setEmptyMessage(int stringResourceId) {
-        emptyView.setText(stringResourceId);
+        textEmptyView.setText(stringResourceId);
     }
 
     public void setSearchResults(List<SearchResult> searchResults) {
