@@ -803,7 +803,7 @@ public class MovieTools {
                 MoviesService tmdbMovies, String languageCode, int movieTmdbId) {
             MovieDetails details = new MovieDetails();
 
-            // load ratings and release time from trakt
+            // load ratings from trakt
             Integer movieTraktId = lookupTraktId(traktSearch, movieTmdbId);
             if (movieTraktId != null) {
                 details.traktRatings(loadRatingsFromTrakt(traktMovies, movieTraktId));

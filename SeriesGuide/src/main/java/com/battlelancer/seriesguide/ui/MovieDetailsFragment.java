@@ -317,8 +317,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private void populateMovieViews() {
         /**
-         * Ensure to take title, overview and poster from TMDb as they are localized.
-         * Get release time from trakt.
+         * Get everything from TMDb. Also get additional rating from trakt.
          */
         final Ratings traktRatings = mMovieDetails.traktRatings();
         final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
