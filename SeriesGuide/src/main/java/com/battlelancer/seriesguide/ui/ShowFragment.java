@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -345,7 +346,16 @@ public class ShowFragment extends Fragment {
         });
 
         // overview
-        mTextViewOverview.setText(mShowCursor.getString(ShowQuery.OVERVIEW));
+        String overview = mShowCursor.getString(ShowQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview) && mShowCursor != null) {
+            // no description available, show no translation available message
+            mTextViewOverview.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            mShowCursor.getString(ShowQuery.LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            mTextViewOverview.setText(overview);
+        }
 
         // language preferred for content
         String languageCode = mShowCursor.getString(ShowQuery.LANGUAGE);

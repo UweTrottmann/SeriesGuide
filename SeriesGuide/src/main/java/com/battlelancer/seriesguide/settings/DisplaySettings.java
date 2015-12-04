@@ -85,6 +85,9 @@ public class DisplaySettings {
                 getString(KEY_THEME, "0");
     }
 
+    /**
+     * Two letter ISO 639-1 language code of the content language preferred by the user.
+     */
     public static String getContentLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE, LANGUAGE_EN);

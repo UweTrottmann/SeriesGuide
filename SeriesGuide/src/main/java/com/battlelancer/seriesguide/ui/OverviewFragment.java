@@ -65,6 +65,7 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -513,7 +514,8 @@ public class OverviewFragment extends Fragment implements
                 Shows.POSTER,
                 Shows.IMDBID,
                 Shows.RUNTIME,
-                Shows.FAVORITE
+                Shows.FAVORITE,
+                Shows.LANGUAGE
         };
 
         int SHOW_TITLE = 1;
@@ -527,6 +529,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_IMDBID = 9;
         int SHOW_RUNTIME = 10;
         int SHOW_FAVORITE = 11;
+        int SHOW_LANGUAGE = 12;
     }
 
     @Override
@@ -717,7 +720,16 @@ public class OverviewFragment extends Fragment implements
 
     private void onLoadEpisodeDetails(final Cursor episode) {
         // description
-        textDescription.setText(episode.getString(EpisodeQuery.OVERVIEW));
+        String overview = episode.getString(EpisodeQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            textDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            mShowCursor.getString(ShowQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            textDescription.setText(overview);
+        }
 
         // dvd number
         boolean isShowingMeta = Utils.setLabelValueOrHide(labelDvdNumber, textDvdNumber,

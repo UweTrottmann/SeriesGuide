@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -334,7 +335,16 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // title and description
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
         mTitle.setText(mEpisodeTitle);
-        mDescription.setText(cursor.getString(DetailsQuery.OVERVIEW));
+        String overview = cursor.getString(DetailsQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            mDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            mDescription.setText(overview);
+        }
 
         // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
@@ -685,7 +695,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 Shows.REF_SHOW_ID,
                 Shows.IMDBID,
                 Shows.TITLE,
-                Shows.RUNTIME
+                Shows.RUNTIME,
+                Shows.LANGUAGE
         };
 
         int _ID = 0;
@@ -712,5 +723,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         int SHOW_IMDBID = 21;
         int SHOW_TITLE = 22;
         int SHOW_RUNTIME = 23;
+        int SHOW_LANGUAGE = 24;
     }
 }
