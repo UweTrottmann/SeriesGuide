@@ -271,8 +271,8 @@
   <string name="rating3">Brutto</string>
   <string name="rating4">Mediocre</string>
   <string name="rating5">Banale</string>
-  <string name="rating6">Bello</string>
-  <string name="rating7">Bellissimo</string>
+  <string name="rating6">Sufficiente</string>
+  <string name="rating7">Buono</string>
   <string name="rating8">Ottimo</string>
   <string name="rating9">Stupendo</string>
   <plurals name="votes">

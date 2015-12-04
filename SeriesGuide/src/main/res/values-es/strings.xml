@@ -31,7 +31,7 @@
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
   <string name="search_within_show">Búsqueda dentro de %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Cualquier idioma</string>
   <string name="updated">Actualizado a la última versión.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconocido</string>
@@ -125,7 +125,7 @@
   <string name="now_empty">Nada nuevo. ¡Mira algunas series!</string>
   <string name="now_movies_empty">Nada nuevo. ¡Mira alguna película!</string>
   <string name="user_stream">Historial</string>
-  <string name="user_stream_empty">No hay actividad reciente en trakt. Hace chek in en alguna serie!</string>
+  <string name="user_stream_empty">No hay actividad en trakt. Haz check in en alguna serie!</string>
   <string name="user_movie_stream_empty">No hay actividad en trakt. Haz check in en alguna película!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recientes</string>
@@ -153,7 +153,7 @@
   <string name="add_error">No se pudo añadir %s.</string>
   <string name="add_already_exists">%s ya está en tu lista de visualización.</string>
   <string name="recommended">Recomendado</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Visto</string>
   <string name="shows_collection">Colección</string>
   <string name="watchlist">Lista de visualización</string>
   <string name="first_list">Primera lista</string>
@@ -233,7 +233,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="hexagon_api_error">No puidera hablar a SeriesGuide Cloud. Por favor tratar otra vez mas tarde.</string>
   <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Para usar SeriesGuide Cloud, permite acceder a tus cuentas.</string>
-  <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud se requiere Google Play Services.</string>
+  <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud, se requiere Google Play Services.</string>
   <string name="trakt_submitqueued">Enviando a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
   <string name="trakt_notseen">%s no visto.</string>
@@ -247,8 +247,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="trakt_success">Enviado a trakt.</string>
   <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
   <string name="trakt_error_general">No es posible conectar con trakt. Inténtalo más tarde.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
+  <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>
   <string name="trakt_account">Cuenta Trakt</string>
   <string name="trakt_connect_instructions">En la siguiente pantalla inicia sesión en trakt o crea una cuenta nueva. Después, deja a SeriesGuide acceder a tu cuenta de trakt.</string>
   <string name="connect_trakt">Conectar a trakt</string>
@@ -258,7 +258,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="waitplease">Un momento, por favor…</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Usar navegador integrado</string>
   <string name="connect_trakt_done">¡Conectado a trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va a sincronizar las series y películas de este dispositivo con trakt. Esto puede demorar un poco.</string>
   <string name="add_trakt_shows">Añadir series de su biblioteca en trakt:</string>
@@ -287,8 +287,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Escriba un mensaje (opcional)</string>
   <string name="paste_title">Pegar título</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Check in rápido</string>
+  <string name="pref_quick_checkin_summary">No preguntar por un mensaje de check in</string>
   <string name="feedback">Enviar comentarios</string>
   <string name="action_open_in_browser">Abrir en el navegador</string>
   <string name="prefs_category_basic">Básicos</string>
