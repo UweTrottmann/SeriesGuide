@@ -73,6 +73,7 @@
   <string name="lastEdit">Ostatnia edycja // TVDb</string>
   <string name="services_watch">Oglądaj</string>
   <string name="services_more">Więcej</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">dziś</string>
   <string name="now">teraz</string>
   <string name="daily">codziennie</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_all">Dodaj wszystkie</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>

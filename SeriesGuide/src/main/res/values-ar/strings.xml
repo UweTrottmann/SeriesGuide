@@ -73,6 +73,7 @@
   <string name="lastEdit">آخر تحرير//TVDb</string>
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
   <string name="daily">يومي</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
   <string name="add_all">إضافة الكل </string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>

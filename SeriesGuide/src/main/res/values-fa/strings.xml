@@ -73,6 +73,7 @@
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="services_watch">تماشا کردن</string>
   <string name="services_more">بیشتر</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">امروز</string>
   <string name="now">الان</string>
   <string name="daily">روزانه</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="add_empty">هیچ سریالی در اینجا موجود نمیباشد.</string>
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">عدم موفقیت در جستجو، بعدا دوباره امتحان کنید.</string>
   <string name="add_all">افزودن همه</string>
   <string name="add_multiple">همه ی برنامه ها در لیستان بلافاصله ظاهر می شود.</string>

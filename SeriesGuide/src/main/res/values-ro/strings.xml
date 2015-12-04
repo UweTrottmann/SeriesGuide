@@ -73,6 +73,7 @@
   <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="services_watch">Vezi</string>
   <string name="services_more">Mai mult</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Căutarea nu a reuşit, încercaţi din nou mai târziu.</string>
   <string name="add_all">Adaugă-le pe toate</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>

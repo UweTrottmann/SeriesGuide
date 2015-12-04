@@ -73,6 +73,7 @@
   <string name="lastEdit">最后修改 // TVDb</string>
   <string name="services_watch">在线观看</string>
   <string name="services_more">更多</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">今天</string>
   <string name="now">现在</string>
   <string name="daily">每日</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">输入电视节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">搜索出错，请稍后再试。</string>
   <string name="add_all">全部添加</string>
   <string name="add_multiple">已选项将很快出现在节目单中。</string>

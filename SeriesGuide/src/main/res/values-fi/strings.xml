@@ -73,6 +73,7 @@
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">tänään</string>
   <string name="now">nyt</string>
   <string name="daily">Päivittäinen</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="add_empty">Täällä ei ole ohjelman ohjelmaa.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="add_all">Lisää kaikki</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>

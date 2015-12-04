@@ -73,6 +73,7 @@
   <string name="lastEdit">Zuletzt bearbeitet // TheTVDB</string>
   <string name="services_watch">Anschauen</string>
   <string name="services_more">Mehr</string>
+  <string name="no_translation">Es ist keine in %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
   <string name="today">heute</string>
   <string name="now">jetzt</string>
   <string name="daily">Täglich</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="add_empty">Keine Serien hier.</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
+  <string name="action_try_any_language">In allen Sprachen versuchen</string>
+  <string name="action_try_again">Erneut versuchen</string>
   <string name="search_error">Suche fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="add_all">Alle hinzufügen</string>
   <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt.</string>

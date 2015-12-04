@@ -73,6 +73,7 @@
   <string name="lastEdit">Останнє редагування / / TVDb</string>
   <string name="services_watch">Дивитися</string>
   <string name="services_more">Більше</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
   <string name="daily">Щодня</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Пошук не вдався, спробуйте пізніше.</string>
   <string name="add_all">Додати усі</string>
   <string name="add_multiple">Усі серіали з\'являться у вашому списку найближчим часом.</string>

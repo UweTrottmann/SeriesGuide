@@ -73,6 +73,7 @@
   <string name="lastEdit">Sist endret // TVDb</string>
   <string name="services_watch">Se</string>
   <string name="services_more">Mer</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">i dag</string>
   <string name="now">nå</string>
   <string name="daily">Daglig</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="no_results">Ingen treff, prøv hele ord.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Søk feilet. Prøv på nytt senere.</string>
   <string name="add_all">Legg til alle</string>
   <string name="add_multiple">Alle serier vil vises i serielisten om kort tid.</string>

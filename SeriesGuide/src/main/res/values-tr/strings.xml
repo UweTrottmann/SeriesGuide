@@ -73,6 +73,7 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Arama başarısız oldu, daha sonra tekrar deneyin.</string>
   <string name="add_all">Tümünü ekle</string>
   <string name="add_multiple">Tüm diziler kısa süre içinde listenizde görünecektir.</string>

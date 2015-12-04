@@ -74,6 +74,7 @@
   <string name="lastEdit">Senast redigerad // TVDb</string>
   <string name="services_watch">Titta på</string>
   <string name="services_more">Mer</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">idag</string>
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
@@ -147,6 +148,8 @@
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="add_empty">Det finns inga serier här.</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
   <string name="add_multiple">Alla serier kommer att visas i din serielista snart.</string>

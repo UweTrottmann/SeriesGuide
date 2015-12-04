@@ -73,6 +73,7 @@
   <string name="lastEdit">Pēdējais labojums //TVDb</string>
   <string name="services_watch">Skaties</string>
   <string name="services_more">Vairāk</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>
   <string name="daily">Ikdienišķi</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Ierakstiet seriāla nosaukumu</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Meklēšana neizdevās, mēģiniet vēlreiz vēlāk.</string>
   <string name="add_all">Pievienot visas</string>
   <string name="add_multiple">Visi seriāli tuvākajā laikā parādīsies jūsu seriālu sarakstā.</string>

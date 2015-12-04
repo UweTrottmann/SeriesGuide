@@ -73,6 +73,7 @@
   <string name="lastEdit">Darrera edició // TVDb</string>
   <string name="services_watch">Veure</string>
   <string name="services_more">Més</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">avui</string>
   <string name="now">ara</string>
   <string name="daily">Diàriament</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="no_results">Cap resultat, proveu paraules completes.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">La cerca ha fallat, intenteu-ho més tard.</string>
   <string name="add_all">Afegeix-ho tot</string>
   <string name="add_multiple">Totes les sèries apareixeran de seguida a la vostra llista de sèries.</string>

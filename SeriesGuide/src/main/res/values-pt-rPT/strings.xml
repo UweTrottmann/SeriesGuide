@@ -73,6 +73,7 @@
   <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Introduza o nome de uma série</string>
   <string name="add_empty">Não existe nenhuma série.</string>
   <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Erro de pesquisa, tenta novamente mais tarde.</string>
   <string name="add_all">Adicionar todas</string>
   <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>

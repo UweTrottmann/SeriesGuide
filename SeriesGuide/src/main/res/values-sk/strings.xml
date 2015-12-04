@@ -73,6 +73,7 @@
   <string name="lastEdit">Posledné úpravy / / TVDb</string>
   <string name="services_watch">Zhliadnuť</string>
   <string name="services_more">Viac</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">dnes</string>
   <string name="now">teraz</string>
   <string name="daily">Deňne</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="add_empty">Niesú tu žiadne seriály.</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
   <string name="add_all">Pridaj všetky</string>
   <string name="add_multiple">Všetky seriály sa zakrátko zobrazia vo vašom zozname.</string>

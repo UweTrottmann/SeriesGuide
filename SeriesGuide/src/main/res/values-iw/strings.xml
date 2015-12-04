@@ -73,6 +73,7 @@
   <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
   <string name="add_all">הוסף הכל</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>

@@ -73,6 +73,7 @@
   <string name="lastEdit">Naposledy editováno // TVDb</string>
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">dnes</string>
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
@@ -146,6 +147,8 @@
   <string name="checkin_searchhint">Napište název seriálu</string>
   <string name="add_empty">Nejsou zde žádné seriály.</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_all">Přidat vše</string>
   <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
