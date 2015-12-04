@@ -63,6 +63,7 @@ public class TvdbAddFragment extends AddFragment {
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
     private String language;
+    private boolean shouldTryAnyLanguage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,7 +135,7 @@ public class TvdbAddFragment extends AddFragment {
                 }
                 // refresh results in newly selected language
                 search();
-                Timber.d("Set search language to " + language);
+                Timber.d("Set search language to %s", language);
             }
 
             @Override
@@ -197,12 +198,13 @@ public class TvdbAddFragment extends AddFragment {
         buttonEmptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (language != null) {
+                if (shouldTryAnyLanguage && language != null) {
                     // not set to any language: set to any language
                     // spinner selection change triggers search
+                    shouldTryAnyLanguage = false;
                     spinnerLanguage.setSelection(0);
                 } else {
-                    // already set to no language, trigger search directly
+                    // already set to no language or retrying, trigger search directly
                     search();
                 }
             }
@@ -258,6 +260,12 @@ public class TvdbAddFragment extends AddFragment {
             }
             setSearchResults(data.results);
             setEmptyMessage(data.emptyTextResId);
+            if (data.successful && data.results.size() == 0 && language != null) {
+                shouldTryAnyLanguage = true;
+                buttonEmptyView.setText(R.string.action_try_any_language);
+            } else {
+                buttonEmptyView.setText(R.string.action_try_again);
+            }
             setProgressVisible(false, true);
         }
 

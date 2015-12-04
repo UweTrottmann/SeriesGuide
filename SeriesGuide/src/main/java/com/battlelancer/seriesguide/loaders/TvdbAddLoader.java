@@ -44,10 +44,13 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
     public static class Result {
         public List<SearchResult> results;
         public int emptyTextResId;
+        /** Whether the network call completed. Does not mean there are any results. */
+        public boolean successful;
 
-        public Result(List<SearchResult> results, int emptyTextResId) {
+        public Result(List<SearchResult> results, int emptyTextResId, boolean successful) {
             this.results = results;
             this.emptyTextResId = emptyTextResId;
+            this.successful = successful;
         }
     }
 
@@ -158,7 +161,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         if (results == null) {
             results = new LinkedList<>();
         }
-        return new Result(results, emptyTextResId);
+        return new Result(results, emptyTextResId, true);
     }
 
     private static Result buildResultFailure(Context context, int emptyTextResId) {
@@ -166,6 +169,6 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         if (!AndroidUtils.isNetworkConnected(context)) {
             emptyTextResId = R.string.offline;
         }
-        return new Result(new LinkedList<SearchResult>(), emptyTextResId);
+        return new Result(new LinkedList<SearchResult>(), emptyTextResId, false);
     }
 }
