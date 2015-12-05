@@ -16,6 +16,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.battlelancer.seriesguide.ui.PeopleActivity.PeopleFragment">
@@ -28,17 +29,16 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline_minus_16"
         android:divider="@color/transparent"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_person" />
 
-    <TextView
+    <com.battlelancer.seriesguide.widgets.EmptyView
         android:id="@+id/emptyViewPeople"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/empty_view_width"
+        android:layout_width="@dimen/empty_view_width"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:maxWidth="@dimen/empty_view_width"
-        android:gravity="center"
-        tools:text="@string/people_empty"
-        android:textAppearance="@style/TextAppearance.Light" />
+        app:emptyViewMessage="@string/people_empty"
+        app:emptyViewButtonText="@string/action_try_again"/>
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
         android:id="@+id/progressBarPeople"

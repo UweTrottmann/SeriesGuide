@@ -27,13 +27,13 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Credits;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
@@ -57,7 +57,7 @@ public class PeopleFragment extends Fragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private ListView mListView;
-    private TextView mEmptyView;
+    private EmptyView mEmptyView;
     private PeopleAdapter mAdapter;
     private SmoothProgressBar mProgressBar;
 
@@ -98,7 +98,7 @@ public class PeopleFragment extends Fragment {
 
         mListView = ButterKnife.findById(rootView, R.id.listViewPeople);
         mEmptyView = ButterKnife.findById(rootView, R.id.emptyViewPeople);
-        mEmptyView.setText(null);
+        mEmptyView.setContentVisibility(View.GONE);
         mListView.setEmptyView(mEmptyView);
 
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
@@ -150,7 +150,7 @@ public class PeopleFragment extends Fragment {
             }
         });
 
-        mEmptyView.setOnClickListener(new View.OnClickListener() {
+        mEmptyView.setButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();
@@ -214,10 +214,11 @@ public class PeopleFragment extends Fragment {
     private void setEmptyMessage() {
         // display error message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setText(R.string.offline);
+            mEmptyView.setMessage(R.string.offline);
         } else {
-            mEmptyView.setText(R.string.people_empty);
+            mEmptyView.setMessage(R.string.people_empty);
         }
+        mEmptyView.setContentVisibility(View.VISIBLE);
     }
 
     private LoaderManager.LoaderCallbacks<Credits> mCreditsLoaderCallbacks
