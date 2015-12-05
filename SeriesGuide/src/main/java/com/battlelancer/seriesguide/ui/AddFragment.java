@@ -19,7 +19,6 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +39,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -56,9 +55,7 @@ public abstract class AddFragment extends Fragment {
     @Bind(R.id.containerAddContent) View contentContainer;
     @Bind(R.id.progressBarAdd) View progressBar;
     @Bind(android.R.id.list) GridView resultsGridView;
-    @Bind(R.id.emptyViewAdd) View emptyView;
-    @Bind(R.id.textViewEmptyView) TextView textEmptyView;
-    @Bind(R.id.buttonEmptyView) Button buttonEmptyView;
+    @Bind(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
@@ -75,7 +72,7 @@ public abstract class AddFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setupEmptyViewButton(buttonEmptyView);
+        setupEmptyView(emptyView);
     }
 
     @Override
@@ -115,13 +112,13 @@ public abstract class AddFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    protected abstract void setupEmptyViewButton(Button buttonEmptyView);
+    protected abstract void setupEmptyView(EmptyView buttonEmptyView);
 
     /**
      * Changes the empty message.
      */
     public void setEmptyMessage(int stringResourceId) {
-        textEmptyView.setText(stringResourceId);
+        emptyView.setMessage(stringResourceId);
     }
 
     public void setSearchResults(List<SearchResult> searchResults) {

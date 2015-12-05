@@ -22,15 +22,14 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:showIn="@layout/fragment_addshow_tvdb">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewEmptyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="@string/add_empty"
+        tools:text="The empty view message."
         android:textAppearance="@style/TextAppearance.Body.Dim" />
 
     <Button
@@ -38,6 +37,6 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/refresh" />
+        tools:text="Empty Action" />
 
 </LinearLayout>

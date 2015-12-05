@@ -25,12 +25,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -111,9 +111,8 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    protected void setupEmptyViewButton(Button buttonEmptyView) {
-        buttonEmptyView.setText(R.string.refresh);
-        buttonEmptyView.setOnClickListener(new View.OnClickListener() {
+    protected void setupEmptyView(EmptyView emptyView) {
+        emptyView.setButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setProgressVisible(true, false);

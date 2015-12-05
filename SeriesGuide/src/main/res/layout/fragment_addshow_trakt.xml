@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
         android:id="@+id/containerAddContent"
@@ -10,9 +11,12 @@
 
         <include layout="@layout/grid_shows" />
 
-        <include
-            layout="@layout/empty_view"
-            android:id="@+id/emptyViewAdd" />
+        <com.battlelancer.seriesguide.widgets.EmptyView
+            android:id="@+id/emptyViewAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyViewMessage="@string/add_empty"
+            app:emptyViewButtonText="@string/refresh" />
 
     </FrameLayout>
 

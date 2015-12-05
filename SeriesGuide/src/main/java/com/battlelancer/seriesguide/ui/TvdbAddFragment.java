@@ -31,7 +31,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,6 +42,7 @@ import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.Collections;
 import timber.log.Timber;
@@ -193,9 +193,9 @@ public class TvdbAddFragment extends AddFragment {
     }
 
     @Override
-    protected void setupEmptyViewButton(Button buttonEmptyView) {
-        buttonEmptyView.setText(R.string.action_try_any_language);
-        buttonEmptyView.setOnClickListener(new OnClickListener() {
+    protected void setupEmptyView(EmptyView emptyView) {
+        emptyView.setButtonText(R.string.action_try_any_language);
+        emptyView.setButtonClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (shouldTryAnyLanguage && language != null) {
@@ -262,9 +262,9 @@ public class TvdbAddFragment extends AddFragment {
             setEmptyMessage(data.emptyTextResId);
             if (data.successful && data.results.size() == 0 && language != null) {
                 shouldTryAnyLanguage = true;
-                buttonEmptyView.setText(R.string.action_try_any_language);
+                emptyView.setButtonText(R.string.action_try_any_language);
             } else {
-                buttonEmptyView.setText(R.string.action_try_again);
+                emptyView.setButtonText(R.string.action_try_again);
             }
             setProgressVisible(false, true);
         }

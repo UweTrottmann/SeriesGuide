@@ -34,9 +34,8 @@
 
     <com.battlelancer.seriesguide.widgets.EmptyView
         android:id="@+id/emptyViewPeople"
-        android:layout_width="@dimen/empty_view_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:emptyViewMessage="@string/people_empty"
         app:emptyViewButtonText="@string/action_try_again"/>
 

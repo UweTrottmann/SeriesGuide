@@ -22,14 +22,14 @@ import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 
 /**
  * Helper layout to show an empty view with a message and action button (e.g. to refresh content).
  */
-public class EmptyView extends LinearLayout {
+public class EmptyView extends FrameLayout {
 
     private final TextView emptyViewText;
     private final Button emptyViewButton;
@@ -54,6 +54,10 @@ public class EmptyView extends LinearLayout {
 
     public void setMessage(@StringRes int textResId) {
         emptyViewText.setText(textResId);
+    }
+
+    public void setButtonText(@StringRes int textResId) {
+        emptyViewButton.setText(textResId);
     }
 
     public void setButtonClickListener(OnClickListener listener) {
