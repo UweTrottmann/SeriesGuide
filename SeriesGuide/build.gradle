@@ -137,7 +137,8 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.uwetrottmann:androidutils:2.1.0'
     compile 'com.uwetrottmann.photoview:library:1.2.4'
-    compile 'com.uwetrottmann:tmdb-java:0.8.0'
+    // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
+    compile 'com.uwetrottmann:tmdb-java:0.9.0'
     compile ('com.uwetrottmann:trakt-java:4.5.2') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
