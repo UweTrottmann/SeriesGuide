@@ -21,7 +21,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 tools:text="Dummy empty view message!"
-                android:textAppearance="@style/TextAppearance.Light" />
+                android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         </ScrollView>
 

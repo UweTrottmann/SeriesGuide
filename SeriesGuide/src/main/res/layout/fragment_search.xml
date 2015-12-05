@@ -26,6 +26,6 @@
         android:gravity="center"
         android:padding="@dimen/default_padding"
         android:text="@string/no_results"
-        android:textAppearance="@style/TextAppearance.Light" />
+        android:textAppearance="@style/TextAppearance.Body.Dim" />
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -43,7 +44,7 @@
             android:drawableTop="?attr/drawableArrowUp"
             android:padding="10dp"
             android:text="@string/movies_empty"
-            android:textAppearance="@style/TextAppearance.Light" />
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
 
         <GridView
             android:id="@+id/gridViewMoviesSearch"
@@ -52,7 +53,8 @@
             android:layout_height="match_parent"
             android:columnWidth="@dimen/movie_item_width"
             android:numColumns="auto_fit"
-            android:stretchMode="columnWidth" />
+            android:stretchMode="columnWidth"
+            tools:listitem="@layout/item_movie" />
 
     </FrameLayout>
 
