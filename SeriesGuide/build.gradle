@@ -120,7 +120,8 @@ dependencies {
     compile 'com.android.support:customtabs:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+    // https://docs.fabric.io/android/changelog.html
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
