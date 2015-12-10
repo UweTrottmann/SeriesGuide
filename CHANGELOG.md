@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 27 *(in development)*
 -----------------------------
 
+#### 27-beta3 *(2015-12-10)*
+
+* TWEAK Show message if no show or episode description is available.
+* TWEAK Show re-try buttons if there are no search results or searching for shows/movies failed.
+* NOTICE Latest translations from crowdin.
+
 #### 27-beta2 *(2015-11-27)*
 
 * TWEAK Connect trakt: show integrated browser option also if no auth codes are returned.
