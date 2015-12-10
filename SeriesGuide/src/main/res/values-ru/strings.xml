@@ -176,7 +176,6 @@
   <string name="watchlist_added">Добавлены в список просмотра</string>
   <string name="watchlist_removed">Удалить из списка просмотра</string>
   <string name="movies_search_hint">Введите название фильма</string>
-  <string name="movies_empty">Поиск фильма выше.</string>
   <string name="movies_collection_empty">Вы не добавили фильмы в вашу коллекцию.</string>
   <string name="movies_watchlist_empty">Вы не добавили фильмы в список просмотра.</string>
   <string name="trailer">Трейлер</string>

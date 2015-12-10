@@ -176,7 +176,6 @@
   <string name="watchlist_added">Dodano do listy oglądanych</string>
   <string name="watchlist_removed">Usunięto z listy oglądanych</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
-  <string name="movies_empty">Szukaj filmu.</string>
   <string name="movies_collection_empty">Brak filmów w kolekcji.</string>
   <string name="movies_watchlist_empty">Brak filmów na liście do obejrzenia.</string>
   <string name="trailer">Zwiastun</string>

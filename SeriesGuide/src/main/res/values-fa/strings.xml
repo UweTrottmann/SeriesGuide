@@ -176,7 +176,6 @@
   <string name="watchlist_added">به لیست تماشا اظافه شد</string>
   <string name="watchlist_removed">از لیست تماشا حذف شد</string>
   <string name="movies_search_hint">نوع عنوان فیلم</string>
-  <string name="movies_empty">جستجو برای فیلم .</string>
   <string name="movies_collection_empty">شما هیچ فیلمی به مجموعه اظافه نکرده اید.</string>
   <string name="movies_watchlist_empty">شما فیلم ها را به لیست تماشای خود اضافه نکرده اید.</string>
   <string name="trailer">تریلر</string>

@@ -176,7 +176,6 @@
   <string name="watchlist_added">Προστέθηκε στη λίστα παρακολούθησης</string>
   <string name="watchlist_removed">Αφαιρέθηκε από τη λίστα παρακολούθησης</string>
   <string name="movies_search_hint">Πληκτρολογήστε έναν τίτλο ταινίας</string>
-  <string name="movies_empty">Αναζήτηση στις παραπάνω ταινίες.</string>
   <string name="movies_collection_empty">Δεν έχετε προσθέσει ταινίες στην συλλογή σας.</string>
   <string name="movies_watchlist_empty">Δεν έχετε προσθέσει ταινίες στην λίστα προς παρακολούθηση.</string>
   <string name="trailer">Τρέιλερ</string>

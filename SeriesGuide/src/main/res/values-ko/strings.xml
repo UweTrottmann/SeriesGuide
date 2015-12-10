@@ -176,7 +176,6 @@
   <string name="watchlist_added">관심목록에 추가되었습니다</string>
   <string name="watchlist_removed">관심목록에서 제거되었습니다</string>
   <string name="movies_search_hint">영화 제목을 입력하세요</string>
-  <string name="movies_empty">위의 검색창에서 영화를 검색하세요.</string>
   <string name="movies_collection_empty">아직 영화를 컬렉션에 추가하지 않으셨습니다.</string>
   <string name="movies_watchlist_empty">아직 영화를 와치리스트에 추가하지 않으셨습니다.</string>
   <string name="trailer">예고편</string>

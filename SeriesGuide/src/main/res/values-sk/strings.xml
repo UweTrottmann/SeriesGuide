@@ -176,7 +176,6 @@
   <string name="watchlist_added">Pridané do zoznamu videných</string>
   <string name="watchlist_removed">Odstránené zo zoznamu videných</string>
   <string name="movies_search_hint">Zadajte názov filmu</string>
-  <string name="movies_empty">Hľadať zadaný film.</string>
   <string name="movies_collection_empty">Do zbierky ste nepridali žiadne filmy.</string>
   <string name="movies_watchlist_empty">Do watchlistu ste nepridali žiadne filmy.</string>
   <string name="trailer">Trailer</string>

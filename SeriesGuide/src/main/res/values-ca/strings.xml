@@ -176,7 +176,6 @@
   <string name="watchlist_added">S\'ha afegit a la llista de seguiment</string>
   <string name="watchlist_removed">S\'ha eliminat de la llista de seguiment</string>
   <string name="movies_search_hint">Escriviu el títol d\'una peŀlícula</string>
-  <string name="movies_empty">Cerca per a una peŀlícula anterior.</string>
   <string name="movies_collection_empty">No heu afegit cap peŀlícula a la vostra coŀlecció.</string>
   <string name="movies_watchlist_empty">No heu afegit cap peŀlícula a la vostra llista de seguiment.</string>
   <string name="trailer">Tràiler</string>

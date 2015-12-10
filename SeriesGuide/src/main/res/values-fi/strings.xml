@@ -176,7 +176,6 @@
   <string name="watchlist_added">Lisätty seurantalistalle</string>
   <string name="watchlist_removed">Poistettu seurantalistalta</string>
   <string name="movies_search_hint">Kirjoita elokuvan nimi</string>
-  <string name="movies_empty">Etsi elokuva.</string>
   <string name="movies_collection_empty">Et ole lisännyt elokuvien kokoelmaasi.</string>
   <string name="movies_watchlist_empty">Et ole lisännyt elokuvia seurantalistallesi.</string>
   <string name="trailer">Traileri</string>
