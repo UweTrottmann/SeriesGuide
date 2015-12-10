@@ -54,15 +54,14 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Movie;
-import java.util.List;
 
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
  */
-public class MoviesSearchFragment extends Fragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener,
+public class MoviesSearchFragment extends Fragment implements OnItemClickListener,
         MoviesAdapter.PopupMenuClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
@@ -76,7 +75,7 @@ public class MoviesSearchFragment extends Fragment implements
     @Bind(R.id.containerMoviesSearchContent) View resultsContainer;
     @Bind(R.id.progressBarMoviesSearch) View progressBar;
     @Bind(R.id.gridViewMoviesSearch) GridView resultsGridView;
-    @Bind(R.id.emptyViewMoviesSearch) TextView emptyView;
+    @Bind(R.id.emptyViewMoviesSearch) EmptyView emptyView;
     @Bind(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
     @Bind(R.id.buttonMoviesSearchClear) View clearButton;
 
@@ -138,6 +137,14 @@ public class MoviesSearchFragment extends Fragment implements
             }
         });
 
+        // setup empty view button
+        emptyView.setButtonClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+
         setProgressVisible(false, false);
 
         return v;
@@ -159,7 +166,7 @@ public class MoviesSearchFragment extends Fragment implements
             searchBox.setAdapter(searchHistoryAdapter);
         }
 
-        getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, null, this);
+        getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, null, searchLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -193,7 +200,8 @@ public class MoviesSearchFragment extends Fragment implements
         String query = searchBox.getText().toString();
         Bundle args = new Bundle();
         args.putString(SEARCH_QUERY_KEY, query);
-        getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, args, this);
+        getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, args,
+                searchLoaderCallbacks);
 
         // update history
         if (searchHistory.saveRecentSearch(query)) {
@@ -211,35 +219,6 @@ public class MoviesSearchFragment extends Fragment implements
         }
         resultsContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public Loader<List<Movie>> onCreateLoader(int loaderId, Bundle args) {
-        setProgressVisible(true, false);
-        String query = null;
-        if (args != null) {
-            query = args.getString(SEARCH_QUERY_KEY);
-        }
-        return new TmdbMoviesLoader(getActivity(), query);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-        if (!isAdded()) {
-            return;
-        }
-        if (AndroidUtils.isNetworkConnected(getActivity())) {
-            emptyView.setText(R.string.movies_empty);
-        } else {
-            emptyView.setText(R.string.offline);
-        }
-        resultsAdapter.setData(data);
-        setProgressVisible(false, true);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Movie>> loader) {
-        resultsAdapter.setData(null);
     }
 
     @Override
@@ -318,4 +297,33 @@ public class MoviesSearchFragment extends Fragment implements
         });
         popupMenu.show();
     }
+
+    private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
+            = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
+        @Override
+        public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
+            setProgressVisible(true, false);
+            String query = null;
+            if (args != null) {
+                query = args.getString(SEARCH_QUERY_KEY);
+            }
+            return new TmdbMoviesLoader(getActivity(), query);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<TmdbMoviesLoader.Result> loader,
+                TmdbMoviesLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
+            emptyView.setMessage(data.emptyTextResId);
+            resultsAdapter.setData(data.results);
+            setProgressVisible(false, true);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
+            resultsAdapter.setData(null);
+        }
+    };
 }

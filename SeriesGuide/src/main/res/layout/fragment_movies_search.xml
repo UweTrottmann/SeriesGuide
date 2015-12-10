@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -35,16 +36,12 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/editTextMoviesSearch">
 
-        <TextView
+        <com.battlelancer.seriesguide.widgets.EmptyView
             android:id="@+id/emptyViewMoviesSearch"
-            android:layout_width="@dimen/empty_view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:drawableTop="?attr/drawableArrowUp"
-            android:padding="10dp"
-            android:text="@string/movies_empty"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyViewMessage="@string/no_results"
+            app:emptyViewButtonText="@string/action_try_again"/>
 
         <GridView
             android:id="@+id/gridViewMoviesSearch"
