@@ -73,7 +73,7 @@
   <string name="lastEdit">Utolsó szerkesztés / / TheTVDb</string>
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
@@ -147,8 +147,8 @@
   <string name="checkin_searchhint">Írj be egy sorozat címet</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Keresés bármely nyelven</string>
+  <string name="action_try_again">Próbáld újra</string>
   <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
   <string name="add_all">Add hozzá mindet</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>

@@ -73,7 +73,7 @@
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="services_watch">Смотреть</string>
   <string name="services_more">Подробнее</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
@@ -147,8 +147,8 @@
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Попробовать любой язык</string>
+  <string name="action_try_again">Повторить попытку</string>
   <string name="search_error">Найти не удалось, повторите попытку позже.</string>
   <string name="add_all">Добавить все</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
