@@ -34,7 +34,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -58,7 +57,6 @@ public class SearchActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private static final String TAG = "Search";
     private static final int EPISODES_TAB_INDEX = 1;
 
     private EditText searchBar;
@@ -266,9 +264,5 @@ public class SearchActivity extends BaseNavDrawerActivity {
             progressDialog.dismiss();
         }
         progressDialog = null;
-    }
-
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 }

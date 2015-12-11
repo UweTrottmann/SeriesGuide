@@ -126,7 +126,7 @@ public class HelpActivity extends BaseActivity {
         }
         if (itemId == R.id.menu_action_help_send_feedback) {
             createFeedbackEmail();
-            fireTrackerEvent("Feedback");
+            Utils.trackAction(this, TAG, "Feedback");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -138,9 +138,5 @@ public class HelpActivity extends BaseActivity {
 
     private void createFeedbackEmail() {
         Utils.tryStartActivity(this, getFeedbackEmailIntent(this), true);
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 }

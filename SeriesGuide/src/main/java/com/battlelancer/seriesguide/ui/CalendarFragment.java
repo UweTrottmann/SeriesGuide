@@ -199,19 +199,19 @@ public class CalendarFragment extends Fragment implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS);
-            fireTrackerEvent("Only favorite shows Toggle");
+            Utils.trackAction(getActivity(), TAG, "Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
             toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS);
-            fireTrackerEvent("Hide specials Toggle");
+            Utils.trackAction(getActivity(), TAG, "Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_nowatched) {
             toggleFilterSetting(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
-            fireTrackerEvent("Hide watched Toggle");
+            Utils.trackAction(getActivity(), TAG, "Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_infinite_scrolling) {
             toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING);
-            fireTrackerEvent("Infinite Scrolling Toggle");
+            Utils.trackAction(getActivity(), TAG, "Infinite Scrolling Toggle");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -381,10 +381,6 @@ public class CalendarFragment extends Fragment implements
                 || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             onRequery();
         }
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 
     @SuppressLint("CommitPrefEdits")

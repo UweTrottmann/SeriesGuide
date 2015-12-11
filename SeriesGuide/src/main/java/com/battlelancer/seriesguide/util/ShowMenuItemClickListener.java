@@ -51,47 +51,47 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
         switch (item.getItemId()) {
             case R.id.menu_action_shows_watched_next: {
                 DBUtils.markNextEpisode(context, showTvdbId, episodeTvdbId);
-                fireTrackerEventContext("Mark next episode");
+                Utils.trackContextMenu(context, logTag, "Mark next episode");
                 return true;
             }
             case R.id.menu_action_shows_favorites_add: {
                 ShowTools.get(context).storeIsFavorite(showTvdbId, true);
-                fireTrackerEventContext("Favorite show");
+                Utils.trackContextMenu(context, logTag, "Favorite show");
                 return true;
             }
             case R.id.menu_action_shows_favorites_remove: {
                 ShowTools.get(context).storeIsFavorite(showTvdbId, false);
-                fireTrackerEventContext("Unfavorite show");
+                Utils.trackContextMenu(context, logTag, "Unfavorite show");
                 return true;
             }
             case R.id.menu_action_shows_hide: {
                 ShowTools.get(context).storeIsHidden(showTvdbId, true);
-                fireTrackerEventContext("Hide show");
+                Utils.trackContextMenu(context, logTag, "Hide show");
                 return true;
             }
             case R.id.menu_action_shows_unhide: {
                 ShowTools.get(context).storeIsHidden(showTvdbId, false);
-                fireTrackerEventContext("Unhide show");
+                Utils.trackContextMenu(context, logTag, "Unhide show");
                 return true;
             }
             case R.id.menu_action_shows_manage_lists: {
                 ManageListsDialogFragment.showListsDialog(showTvdbId,
                         SeriesGuideContract.ListItemTypes.SHOW,
                         fragmentManager);
-                fireTrackerEventContext("Manage lists");
+                Utils.trackContextMenu(context, logTag, "Manage lists");
                 return true;
             }
             case R.id.menu_action_shows_update: {
                 SgSyncAdapter.requestSyncImmediate(context,
                         SgSyncAdapter.SyncType.SINGLE, showTvdbId, true);
-                fireTrackerEventContext("Update show");
+                Utils.trackContextMenu(context, logTag, "Update show");
                 return true;
             }
             case R.id.menu_action_shows_remove: {
                 if (!SgSyncAdapter.isSyncActive(context, true)) {
                     RemoveShowDialogFragment.show(fragmentManager, showTvdbId);
                 }
-                fireTrackerEventContext("Delete show");
+                Utils.trackContextMenu(context, logTag, "Delete show");
                 return true;
             }
             default:
@@ -99,7 +99,4 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
         }
     }
 
-    private void fireTrackerEventContext(String label) {
-        Utils.trackContextMenu(context, logTag, label);
-    }
 }

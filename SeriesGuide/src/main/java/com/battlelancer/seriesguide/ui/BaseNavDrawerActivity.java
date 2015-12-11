@@ -196,7 +196,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 launchIntent = new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
             case R.id.navigation_item_lists:
                 if (this instanceof ListsActivity) {
@@ -204,7 +203,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
             case R.id.navigation_item_movies:
                 if (this instanceof MoviesActivity) {
@@ -212,7 +210,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
             case R.id.navigation_item_stats:
                 if (this instanceof StatsActivity) {
@@ -220,11 +217,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
             case R.id.navigation_sub_item_settings:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
             case R.id.navigation_sub_item_help:
                 // if we cant find a package name, it means there is no browser that supports
@@ -250,8 +245,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
                     launchIntent = customTabsIntent.intent;
                 }
-
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
             case R.id.navigation_sub_item_unlock:
                 if (Utils.isAmazonVersion()) {
