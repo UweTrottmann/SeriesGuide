@@ -20,7 +20,7 @@
 # Android Support libaries
 # Google Play services (also brings its own proguard config)
 # Guava, added through google-api-client-android
--keep,allowobfuscation class !android.support.**, !com.google.android.gms.**, !com.google.common.**  { *; }
+-keep,allowobfuscation class !android.support.**, !com.google.ads.**, !com.google.android.gms.**, !com.google.common.**  { *; }
 
 # Only obfuscate android.support.v7.internal.view.menu.**
 # to avoid problem on Samsung 4.2.2 devices with appcompat v21
