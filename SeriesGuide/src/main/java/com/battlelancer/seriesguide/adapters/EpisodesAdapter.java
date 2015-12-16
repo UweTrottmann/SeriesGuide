@@ -138,8 +138,11 @@ public class EpisodesAdapter extends CursorAdapter {
         });
         viewHolder.watchedBox.setEnabled(true);
         final int watchedFlag = viewHolder.watchedBox.getEpisodeFlag();
+        boolean watched = EpisodeTools.isWatched(watchedFlag);
+        viewHolder.watchedBox.setContentDescription(
+                mContext.getString(watched ? R.string.action_unwatched : R.string.action_watched));
         CheatSheet.setup(viewHolder.watchedBox,
-                EpisodeTools.isWatched(watchedFlag) ? R.string.action_unwatched : R.string.action_watched
+                watched ? R.string.action_unwatched : R.string.action_watched
         );
 
         // collected tag

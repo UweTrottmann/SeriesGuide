@@ -92,6 +92,7 @@
                     android:focusable="true"
                     android:padding="10dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@null"
                     android:src="?attr/drawableStar0" />
             </LinearLayout>
 

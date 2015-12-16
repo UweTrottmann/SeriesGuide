@@ -854,6 +854,8 @@ public class OverviewFragment extends Fragment implements
             favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                     R.attr.drawableStar0));
         }
+        favorited.setContentDescription(getString(isFavorited ? R.string.context_unfavorite
+                : R.string.context_favorite));
         CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
                 : R.string.context_favorite);
         favorited.setTag(isFavorited);
