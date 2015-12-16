@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -73,7 +74,7 @@ public class AnalyticsTree extends Timber.DebugTree {
                         e.getMessage());
                 return;
             } else if (t instanceof OAuthProblemException) {
-                // log if getting trakt access token fails
+                // log trakt OAuth failures
                 OAuthProblemException e = (OAuthProblemException) t;
                 StringBuilder exceptionMessage = new StringBuilder();
                 if (!TextUtils.isEmpty(e.getError())) {
@@ -89,6 +90,14 @@ public class AnalyticsTree extends Timber.DebugTree {
                         "OAuth Error",
                         tag + ": " + message,
                         exceptionMessage.toString());
+                return;
+            } else if (t instanceof OAuthSystemException) {
+                // log trakt OAuth failures
+                OAuthSystemException e = (OAuthSystemException) t;
+                Utils.trackCustomEvent(context,
+                        "OAuth Error",
+                        tag + ": " + message,
+                        e.getMessage());
                 return;
             }
         }

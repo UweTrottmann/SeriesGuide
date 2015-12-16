@@ -28,6 +28,7 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
@@ -73,8 +74,10 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     @Override
     protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
         // if state does not match what we sent, drop the auth code
-        if (this.state != null && !this.state.equals(state)) {
+        if (this.state == null || !this.state.equals(state)) {
             authCode = null;
+            Timber.e(OAuthProblemException.error("invalid_state",
+                    "State is null or does not match."), "fetchTokensAndFinish: failed.");
         }
 
         if (TextUtils.isEmpty(authCode)) {
