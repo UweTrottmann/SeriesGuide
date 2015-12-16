@@ -197,7 +197,6 @@ public class EpisodesFragment extends ListFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_epsorting) {
-            fireTrackerEvent("Sort");
             showSortDialog();
             return true;
         } else {
@@ -232,44 +231,44 @@ public class EpisodesFragment extends ListFragment
                 switch (item.getItemId()) {
                     case R.id.menu_action_episodes_watched: {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true);
-                        fireTrackerEventContextMenu("Flag watched");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag watched");
                         return true;
                     }
                     case R.id.menu_action_episodes_not_watched: {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false);
-                        fireTrackerEventContextMenu("Flag unwatched");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag unwatched");
                         return true;
                     }
                     case R.id.menu_action_episodes_collection_add: {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true);
-                        fireTrackerEventContextMenu("Flag collected");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag collected");
                         return true;
                     }
                     case R.id.menu_action_episodes_collection_remove: {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false);
-                        fireTrackerEventContextMenu("Flag uncollected");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag uncollected");
                         return true;
                     }
                     case R.id.menu_action_episodes_skip: {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true);
-                        fireTrackerEventContextMenu("Flag skipped");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag skipped");
                         return true;
                     }
                     case R.id.menu_action_episodes_dont_skip: {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false);
-                        fireTrackerEvent("Flag not skipped");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag not skipped");
                         return true;
                     }
                     case R.id.menu_action_episodes_watched_previous: {
                         onMarkUntilHere(releaseTimeMs);
-                        fireTrackerEventContextMenu("Flag previously aired");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag previously aired");
                         return true;
                     }
                     case R.id.menu_action_episodes_manage_lists: {
                         ManageListsDialogFragment.showListsDialog(episodeTvdbId,
                                 ListItemTypes.EPISODE,
                                 getFragmentManager());
-                        fireTrackerEventContextMenu("Manage lists");
+                        Utils.trackContextMenu(getActivity(), TAG, "Manage lists");
                         return true;
                     }
                 }
@@ -403,13 +402,5 @@ public class EpisodesFragment extends ListFragment
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
-
-    private void fireTrackerEventContextMenu(String label) {
-        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

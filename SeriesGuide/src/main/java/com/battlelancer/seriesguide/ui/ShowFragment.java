@@ -449,7 +449,6 @@ public class ShowFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
-                fireTrackerEvent("Shouts");
             }
         });
 
@@ -523,10 +522,6 @@ public class ShowFragment extends Fragment {
         }
     }
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
-
     private int getShowTvdbId() {
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
@@ -535,7 +530,7 @@ public class ShowFragment extends Fragment {
         if (TraktCredentials.ensureCredentials(getActivity())) {
             RateDialogFragment rateDialog = RateDialogFragment.newInstanceShow(getShowTvdbId());
             rateDialog.show(getFragmentManager(), "ratedialog");
-            fireTrackerEvent("Rate (trakt)");
+            Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
         }
     }
 
@@ -569,13 +564,13 @@ public class ShowFragment extends Fragment {
                 Intent.FLAG_ACTIVITY_NEW_TASK));
 
         // Analytics
-        fireTrackerEvent("Add to Homescreen");
+        Utils.trackAction(getActivity(), TAG, "Add to Homescreen");
     }
 
     private void shareShow() {
         if (mShowCursor != null) {
             ShareUtils.shareShow(getActivity(), getShowTvdbId(), mShowTitle);
-            fireTrackerEvent("Share");
+            Utils.trackAction(getActivity(), TAG, "Share");
         }
     }
 }

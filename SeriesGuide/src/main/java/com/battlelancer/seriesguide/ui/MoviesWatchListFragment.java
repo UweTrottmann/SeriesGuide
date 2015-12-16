@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.Utils;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -37,8 +36,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends MoviesBaseFragment {
-
-    private static final String TAG = "Movie Watchlist";
 
     private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
 
@@ -62,7 +59,6 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
                 switch (item.getItemId()) {
                     case CONTEXT_WATCHLIST_REMOVE_ID: {
                         MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Remove from watchlist");
                         return true;
                     }
                 }
@@ -82,9 +78,5 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     @Override
     protected int getLoaderId() {
         return MoviesActivity.WATCHLIST_LOADER_ID;
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 }

@@ -53,7 +53,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -65,8 +64,6 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         MoviesAdapter.PopupMenuClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
-
-    protected static final String TAG = "Movies Search";
 
     private MoviesAdapter resultsAdapter;
     private SearchHistory searchHistory;
@@ -236,10 +233,6 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         );
     }
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
-
     @Override
     public void onPopupMenuClick(View v, final int movieTmdbId) {
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
@@ -273,22 +266,18 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
                 switch (item.getItemId()) {
                     case R.id.menu_action_movies_watchlist_add: {
                         MovieTools.addToWatchlist(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Add to watchlist");
                         return true;
                     }
                     case R.id.menu_action_movies_watchlist_remove: {
                         MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Remove from watchlist");
                         return true;
                     }
                     case R.id.menu_action_movies_collection_add: {
                         MovieTools.addToCollection(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Add to collection");
                         return true;
                     }
                     case R.id.menu_action_movies_collection_remove: {
                         MovieTools.removeFromCollection(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Remove from collection");
                         return true;
                     }
                 }

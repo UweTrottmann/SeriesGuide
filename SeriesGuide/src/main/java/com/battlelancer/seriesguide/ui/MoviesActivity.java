@@ -22,7 +22,6 @@ import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
 /**
@@ -106,10 +105,5 @@ public class MoviesActivity extends BaseTopActivity {
             // update tabs
             tabsAdapter.notifyTabsChanged();
         }
-    }
-
-    @Override
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 }

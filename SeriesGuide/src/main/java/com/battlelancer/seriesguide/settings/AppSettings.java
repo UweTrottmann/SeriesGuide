@@ -74,11 +74,11 @@ public class AppSettings {
 
         long currentTime = System.currentTimeMillis();
         long lastReportTime = prefs.getLong(KEY_LAST_STATS_REPORT, 0);
-        boolean shouldReport = lastReportTime + DateUtils.DAY_IN_MILLIS < currentTime;
+        boolean shouldReport = lastReportTime + 30 * DateUtils.DAY_IN_MILLIS < currentTime;
 
         if (shouldReport) {
             // reset report time
-            prefs.edit().putLong(KEY_LAST_STATS_REPORT, currentTime).commit();
+            prefs.edit().putLong(KEY_LAST_STATS_REPORT, currentTime).apply();
         }
 
         return shouldReport;

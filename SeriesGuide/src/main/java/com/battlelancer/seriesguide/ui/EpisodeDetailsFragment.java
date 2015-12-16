@@ -244,13 +244,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         } else if (itemId == R.id.menu_manage_lists) {
             ManageListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
                     getFragmentManager());
-            fireTrackerEvent("Manage lists");
+            Utils.trackAction(getActivity(), TAG, "Manage lists");
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
             ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
                     Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
                             mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
-            fireTrackerEvent("Add to calendar");
+            Utils.trackAction(getActivity(), TAG, "Add to calendar");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -453,7 +453,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                         episodeTvdbId);
                 if (f != null && isResumed()) {
                     f.show(getFragmentManager(), "checkin-dialog");
-                    fireTrackerEvent("Check-In");
+                    Utils.trackAction(getActivity(), TAG, "Check-In");
                 }
             }
         });
@@ -477,7 +477,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 onToggleWatched();
-                fireTrackerEvent("Toggle watched");
+                Utils.trackAction(getActivity(), TAG, "Toggle watched");
             }
         });
         mWatchedButton.setEnabled(true);
@@ -497,7 +497,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 onToggleCollected();
-                fireTrackerEvent("Toggle collected");
+                Utils.trackAction(getActivity(), TAG, "Toggle collected");
             }
         });
         mCollectedButton.setEnabled(true);
@@ -524,7 +524,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     // disable button, will be re-enabled on data reload once action completes
                     v.setEnabled(false);
                     onToggleSkipped();
-                    fireTrackerEvent("Toggle skipped");
+                    Utils.trackAction(getActivity(), TAG, "Toggle skipped");
                 }
             });
             mSkipButton.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
@@ -559,7 +559,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
-                fireTrackerEvent("Comments");
             }
         });
 
@@ -576,7 +575,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void rateEpisode() {
         EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), getEpisodeTvdbId());
-        fireTrackerEvent("Rate (trakt)");
+        Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
 
     private void shareEpisode() {
@@ -585,8 +584,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         }
         ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber,
                 mShowTitle, mEpisodeTitle);
-
-        fireTrackerEvent("Share");
+        Utils.trackAction(getActivity(), TAG, "Share");
     }
 
     private void loadImage(String imagePath) {
@@ -663,10 +661,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mHandler.removeCallbacks(mEpisodeActionsRunnable);
         mHandler.postDelayed(mEpisodeActionsRunnable,
                 ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 
     interface DetailsQuery {

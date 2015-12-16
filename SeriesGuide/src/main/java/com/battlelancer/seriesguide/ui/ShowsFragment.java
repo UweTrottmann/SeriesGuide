@@ -253,40 +253,32 @@ public class ShowsFragment extends Fragment implements
         if (itemId == R.id.menu_action_shows_add) {
             startActivity(new Intent(getActivity(), AddActivity.class));
             return true;
-        } else if (itemId == R.id.menu_action_shows_filter) {
-            fireTrackerEventAction("Filter shows");
-            // did not handle here
-            return super.onOptionsItemSelected(item);
-        } else if (itemId == R.id.menu_action_shows_sort) {
-            fireTrackerEventAction("Sort shows");
-            // did not handle here
-            return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites,
                     item);
 
-            fireTrackerEventAction("Filter Favorites");
+            Utils.trackAction(getActivity(), TAG, "Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched,
                     item);
 
-            fireTrackerEventAction("Filter Unwatched");
+            Utils.trackAction(getActivity(), TAG, "Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming,
                     item);
 
-            fireTrackerEventAction("Filter Upcoming");
+            Utils.trackAction(getActivity(), TAG, "Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             mIsFilterHidden = !mIsFilterHidden;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
 
-            fireTrackerEventAction("Filter Hidden");
+            Utils.trackAction(getActivity(), TAG, "Filter Hidden");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_remove) {
             mIsFilterFavorites = false;
@@ -307,7 +299,7 @@ public class ShowsFragment extends Fragment implements
             // refresh filter icon state
             getActivity().supportInvalidateOptionsMenu();
 
-            fireTrackerEventAction("Filter Removed");
+            Utils.trackAction(getActivity(), TAG, "Filter Removed");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming_range) {
             // yes, converting back to a string for comparison
@@ -339,7 +331,7 @@ public class ShowsFragment extends Fragment implements
             }
             changeSort();
 
-            fireTrackerEventAction("Sort Title");
+            Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_episode) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
@@ -349,21 +341,21 @@ public class ShowsFragment extends Fragment implements
             }
             changeSort();
 
-            fireTrackerEventAction("Sort Episode");
+            Utils.trackAction(getActivity(), TAG, "Sort Episode");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
                     mIsSortFavoritesFirst, item);
 
-            fireTrackerEventAction("Sort Favorites");
+            Utils.trackAction(getActivity(), TAG, "Sort Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
             mIsSortIgnoreArticles = !mIsSortIgnoreArticles;
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
                     mIsSortIgnoreArticles, item);
 
-            fireTrackerEventAction("Sort Ignore Articles");
+            Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -557,8 +549,4 @@ public class ShowsFragment extends Fragment implements
             }
         }
     };
-
-    private void fireTrackerEventAction(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
 }

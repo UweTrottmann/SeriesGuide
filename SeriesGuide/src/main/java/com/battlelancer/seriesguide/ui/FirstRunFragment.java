@@ -94,7 +94,7 @@ public class FirstRunFragment extends Fragment {
                     public void onClick(View v) {
                         startActivity(new Intent(getActivity(), AddActivity.class));
                         setFirstRunDismissed();
-                        fireTrackerEvent("Add show");
+                        Utils.trackClick(getActivity(), TAG, "Add show");
                     }
                 });
 
@@ -111,7 +111,7 @@ public class FirstRunFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-                fireTrackerEvent("Connect trakt");
+                Utils.trackClick(getActivity(), TAG, "Connect trakt");
             }
         });
 
@@ -121,7 +121,7 @@ public class FirstRunFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(getActivity(), DataLiberationActivity.class));
-                        fireTrackerEvent("Restore backup");
+                        Utils.trackClick(getActivity(), TAG, "Restore backup");
                     }
                 });
 
@@ -131,7 +131,7 @@ public class FirstRunFragment extends Fragment {
         buttonDismiss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fireTrackerEvent("Dismiss");
+                Utils.trackClick(getActivity(), TAG, "Dismiss");
                 setFirstRunDismissed();
             }
         });
@@ -183,7 +183,4 @@ public class FirstRunFragment extends Fragment {
         }
     }
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackClick(getActivity(), TAG, label);
-    }
 }
