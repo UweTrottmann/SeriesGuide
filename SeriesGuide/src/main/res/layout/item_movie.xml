@@ -31,6 +31,7 @@
             android:paddingBottom="24dp"
             android:paddingLeft="28dp"
             android:scaleType="centerInside"
+            android:contentDescription="@string/description_menu_overflow"
             android:src="?attr/drawableDropdown" />
 
         <TextView

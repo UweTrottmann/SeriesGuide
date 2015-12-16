@@ -45,6 +45,7 @@
             android:paddingBottom="4dp"
             android:paddingLeft="24dp"
             android:scaleType="centerInside"
+            android:contentDescription="@string/description_menu_overflow"
             android:src="?attr/drawableDropdown"
             tools:ignore="ContentDescription" />
 
