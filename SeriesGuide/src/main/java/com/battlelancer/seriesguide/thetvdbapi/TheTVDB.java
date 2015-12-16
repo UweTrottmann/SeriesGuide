@@ -169,6 +169,8 @@ public class TheTVDB {
         // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(show, true));
+        // get episodes in the language as returned in the TVDB show entry
+        // the show might not be available in the desired language
         getEpisodesAndUpdateDatabase(context, show, show.language, batch);
 
         // download episode flags...
@@ -235,7 +237,9 @@ public class TheTVDB {
         Show show = fetchShow(context, showTvdbId, language);
         batch.add(DBUtils.buildShowOp(show, false));
 
-        getEpisodesAndUpdateDatabase(context, show, language, batch);
+        // get episodes in the language as returned in the TVDB show entry
+        // the show might not be available in the desired language
+        getEpisodesAndUpdateDatabase(context, show, show.language, batch);
     }
 
     private static String getShowLanguage(Context context, int showTvdbId) {

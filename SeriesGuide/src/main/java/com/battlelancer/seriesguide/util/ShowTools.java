@@ -534,7 +534,7 @@ public class ShowTools {
                     values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
                 }
             }
-            if (show.getLanguage() != null) {
+            if (!TextUtils.isEmpty(show.getLanguage())) {
                 // always overwrite with hexagon language value
                 values.put(SeriesGuideContract.Shows.LANGUAGE, show.getLanguage());
             }
@@ -560,7 +560,7 @@ public class ShowTools {
                 if (hexagonShow.getIsHidden() != null) {
                     show.hidden = hexagonShow.getIsHidden();
                 }
-                if (hexagonShow.getLanguage() !=  null) {
+                if (!TextUtils.isEmpty(hexagonShow.getLanguage())) {
                     show.language = hexagonShow.getLanguage();
                 }
             }
