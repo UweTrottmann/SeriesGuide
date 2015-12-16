@@ -95,9 +95,11 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         });
         viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(Query.WATCHED));
         viewHolder.watchedBox.setEnabled(true);
+        boolean watched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
+        viewHolder.watchedBox.setContentDescription(
+                context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
         CheatSheet.setup(viewHolder.watchedBox,
-                EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag())
-                        ? R.string.action_unwatched : R.string.action_watched
+                watched ? R.string.action_unwatched : R.string.action_watched
         );
 
         // show title
