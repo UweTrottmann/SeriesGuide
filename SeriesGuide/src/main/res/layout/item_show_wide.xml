@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/large_padding"
             android:scaleType="centerInside"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@null" />
 
         <ImageView
             android:id="@+id/favoritedLabel"

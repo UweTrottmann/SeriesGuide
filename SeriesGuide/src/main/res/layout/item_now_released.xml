@@ -39,7 +39,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:scaleType="centerInside"
             tools:src="@color/protection_dark"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/textViewReleasedTimestamp"

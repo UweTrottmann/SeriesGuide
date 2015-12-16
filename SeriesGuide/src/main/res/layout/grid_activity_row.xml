@@ -17,7 +17,7 @@
             android:layout_height="@dimen/show_poster_small_height"
             android:layout_marginRight="@dimen/default_padding"
             android:scaleType="centerInside"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@null" />
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxActivity"

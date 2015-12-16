@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:layout_gravity="left"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@null" />
 
     <ProgressBar
         android:id="@+id/progressBar"

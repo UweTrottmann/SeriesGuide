@@ -30,7 +30,7 @@
         android:layout_marginRight="@dimen/large_padding"
         android:layout_centerVertical="true"
         android:src="@color/protection_dark"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@null" />
 
     <LinearLayout
         android:orientation="vertical"
