@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -62,13 +61,6 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
         setupViews();
         setupSyncProgressBar(R.id.progressBarTabs);
-    }
-
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.lists);
     }
 
     private void setupViews() {

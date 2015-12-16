@@ -78,10 +78,14 @@ public class TraktCommentsActivity extends BaseActivity {
     @Override
     protected void setupActionBar() {
         super.setupActionBar();
+        String commentsTitle = getIntent().getExtras().getString(InitBundle.TITLE);
+        setTitle(getString(R.string.comments) + " " + commentsTitle);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.comments);
-        actionBar.setSubtitle(getIntent().getExtras().getString(InitBundle.TITLE));
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.comments);
+            actionBar.setSubtitle(commentsTitle);
+        }
     }
 
     @Override

@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -39,15 +38,6 @@ import timber.log.Timber;
 public class TraktAuthActivity extends BaseOAuthActivity {
 
     private String state;
-
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.connect_trakt));
-        }
-    }
 
     @Override
     protected String getAuthorizationUrl() {

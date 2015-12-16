@@ -110,13 +110,16 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     @Override
     protected void setupActionBar() {
         super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
         PeopleType peopleType = PeopleType.valueOf(
                 getIntent().getStringExtra(InitBundle.PEOPLE_TYPE));
-        actionBar.setTitle(
-                peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
+        setTitle(peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(
+                    peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
+        }
     }
 
     @Override

@@ -80,10 +80,12 @@ public class SearchActivity extends BaseNavDrawerActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setCustomView(R.layout.actionbar_search);
-        actionBar.setDisplayShowCustomEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setCustomView(R.layout.actionbar_search);
+            actionBar.setDisplayShowCustomEnabled(true);
+        }
     }
 
     private void setupViews() {

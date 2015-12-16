@@ -834,6 +834,7 @@ public class OverviewFragment extends Fragment implements
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mShowTitle);
+            getActivity().setTitle(getString(R.string.description_overview) + mShowTitle);
         }
 
         if (getView() == null) {
