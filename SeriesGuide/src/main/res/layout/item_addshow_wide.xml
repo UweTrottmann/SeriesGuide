@@ -16,9 +16,9 @@
             android:layout_width="100dp"
             android:layout_height="147dp"
             android:layout_alignParentLeft="true"
-            android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop"
-            tools:src="@color/background_dim" />
+            tools:src="@color/background_dim"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/textViewAddTitle"

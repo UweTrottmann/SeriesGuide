@@ -22,9 +22,9 @@
                 android:id="@+id/imageViewAddPoster"
                 android:layout_width="60dp"
                 android:layout_height="88dp"
-                android:contentDescription="@string/description_poster"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/appwidget_bg" />
+                tools:src="@drawable/appwidget_bg"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textViewAddTitle"

@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_item_poster_height"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/imageViewMovieItemContextMenu"

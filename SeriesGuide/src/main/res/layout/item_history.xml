@@ -33,9 +33,9 @@
             android:layout_width="@dimen/show_poster_small_width"
             android:layout_height="@dimen/show_poster_small_height"
             android:layout_marginRight="@dimen/default_padding"
-            android:contentDescription="@string/description_poster"
             android:scaleType="centerInside"
-            tools:src="@color/protection_dark" />
+            tools:src="@color/protection_dark"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/textViewHistoryTimestamp"
