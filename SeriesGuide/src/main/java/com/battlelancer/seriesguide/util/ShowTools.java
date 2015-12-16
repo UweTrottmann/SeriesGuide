@@ -251,7 +251,8 @@ public class ShowTools {
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
                 mContext.getContentResolver()
-                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
+                                null);
                 // reset episode last edit time so all get updated
                 values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
@@ -541,29 +542,18 @@ public class ShowTools {
         }
 
         /**
-         * If the given show exists on Hexagon, downloads and sets properties from Hexagon on the
-         * given show entity.
-         *
-         * <p> <b>Note:</b> Ensure the given show has a valid TVDb id.
+         * If signed in to Hexagon, tries to download the given show.
          */
-        public static void showPropertiesFromHexagon(@NonNull Shows showsService,
-                @NonNull com.battlelancer.seriesguide.dataliberation.model.Show show)
-                throws IOException {
-            Show hexagonShow = showsService
-                    .getShow()
-                    .setShowTvdbId(show.tvdbId)
-                    .execute();
-            if (hexagonShow != null) {
-                if (hexagonShow.getIsFavorite() != null) {
-                    show.favorite = hexagonShow.getIsFavorite();
-                }
-                if (hexagonShow.getIsHidden() != null) {
-                    show.hidden = hexagonShow.getIsHidden();
-                }
-                if (!TextUtils.isEmpty(hexagonShow.getLanguage())) {
-                    show.language = hexagonShow.getLanguage();
-                }
+        @Nullable
+        public static Show showFromHexagon(Context context, int showTvdbId) throws IOException {
+            Shows showsService = HexagonTools.getShowsService(context);
+            if (showsService == null) {
+                return null;
             }
+            return showsService
+                    .getShow()
+                    .setShowTvdbId(showTvdbId)
+                    .execute();
         }
     }
 

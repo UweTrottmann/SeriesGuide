@@ -153,18 +153,8 @@ public class TheTVDB {
         }
 
         // get show info from TVDb and trakt
-        Show show = fetchShow(context, showTvdbId, language);
-
-        // get show properties from hexagon
-        com.uwetrottmann.seriesguide.backend.shows.Shows showsService
-                = HexagonTools.getShowsService(context);
-        if (showsService != null) {
-            try {
-                ShowTools.Download.showPropertiesFromHexagon(showsService, show);
-            } catch (IOException e) {
-                throw new TvdbException("Failed to download show properties from Hexagon.");
-            }
-        }
+        // if available, restore properties from hexagon
+        Show show = getShowDetailsWithHexagon(context, showTvdbId, language);
 
         // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
@@ -234,7 +224,7 @@ public class TheTVDB {
 
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
-        Show show = fetchShow(context, showTvdbId, language);
+        Show show = getShowDetails(context, showTvdbId, language);
         batch.add(DBUtils.buildShowOp(show, false));
 
         // get episodes in the language as returned in the TVDB show entry
@@ -398,6 +388,45 @@ public class TheTVDB {
     }
 
     /**
+     * Like {@link #getShowDetails(Context, int, String)}, but if signed in and available adds
+     * properties and prefers the language stored on Hexagon.
+     */
+    @NonNull
+    private static Show getShowDetailsWithHexagon(@NonNull Context context, int showTvdbId,
+            @Nullable String language) throws TvdbException {
+        // try to get show properties from hexagon
+        com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
+        try {
+            hexagonShow = ShowTools.Download.showFromHexagon(context, showTvdbId);
+        } catch (IOException e) {
+            throw new TvdbException("Failed to download show properties from Hexagon.");
+        }
+
+        // override with language stored on hexagon: more likely to be the desired one
+        if (hexagonShow != null) {
+            String hexagonShowLanguage = hexagonShow.getLanguage();
+            if (!TextUtils.isEmpty(hexagonShowLanguage)) {
+                language = hexagonShowLanguage;
+            }
+        }
+
+        // get show info from TVDb and trakt
+        Show show = getShowDetails(context, showTvdbId, language);
+
+        // if available, restore properties from hexagon
+        if (hexagonShow != null) {
+            if (hexagonShow.getIsFavorite() != null) {
+                show.favorite = hexagonShow.getIsFavorite();
+            }
+            if (hexagonShow.getIsHidden() != null) {
+                show.hidden = hexagonShow.getIsHidden();
+            }
+        }
+
+        return show;
+    }
+
+    /**
      * Get show details from TVDb in the user preferred language. Tries to fetch additional
      * information from trakt.
      *
@@ -406,7 +435,7 @@ public class TheTVDB {
      * supplied, TVDb falls back to English.
      */
     @NonNull
-    public static Show fetchShow(@NonNull Context context, int showTvdbId,
+    public static Show getShowDetails(@NonNull Context context, int showTvdbId,
             @Nullable String language) throws TvdbException {
         // try to get some details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
