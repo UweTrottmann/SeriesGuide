@@ -61,7 +61,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Implementers must call this in {@link #onCreate} after {@link #setContentView} if they want
-     * to use the action bar.
+     * to use the action bar. <p>If setting a title, might also want to supply a title to the
+     * activity ({@link #setTitle(CharSequence)}) for better accessibility.
      */
     protected void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);

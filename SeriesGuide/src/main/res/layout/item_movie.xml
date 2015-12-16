@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_item_poster_height"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
 
         <ImageView
             android:id="@+id/imageViewMovieItemContextMenu"
@@ -30,6 +31,7 @@
             android:paddingBottom="24dp"
             android:paddingLeft="28dp"
             android:scaleType="centerInside"
+            android:contentDescription="@string/description_menu_overflow"
             android:src="?attr/drawableDropdown" />
 
         <TextView

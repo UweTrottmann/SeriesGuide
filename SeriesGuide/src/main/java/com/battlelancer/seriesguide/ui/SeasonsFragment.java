@@ -128,6 +128,8 @@ public class SeasonsFragment extends ListFragment implements
                         R.attr.drawableWatchedAll)
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatchAll));
+        mButtonWatchedAll.setContentDescription(
+                getString(mWatchedAllEpisodes ? R.string.unmark_all : R.string.mark_all));
         // set onClick listener not before here to avoid unexpected actions
         mButtonWatchedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -166,6 +168,8 @@ public class SeasonsFragment extends ListFragment implements
         mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableCollectAll));
+        mButtonCollectedAll.setContentDescription(
+                getString(mCollectedAllEpisodes ? R.string.uncollect_all : R.string.collect_all));
         // set onClick listener not before here to avoid unexpected actions
         mButtonCollectedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -571,5 +575,4 @@ public class SeasonsFragment extends ListFragment implements
     public void onClick(View v) {
         getActivity().openContextMenu(v);
     }
-
 }

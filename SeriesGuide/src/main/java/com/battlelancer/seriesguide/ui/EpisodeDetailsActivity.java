@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -94,7 +95,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // get show and season id, poster path
         final Cursor episode = getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE,
+                        Episodes.SEASON
                 }, null, null, null
         );
         if (episode == null || !episode.moveToFirst()) {
@@ -106,7 +108,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        setupActionBar(episode.getString(3));
+        int seasonNumber = episode.getInt(4);
+        setupActionBar(episode.getString(3), SeasonTools.getSeasonString(this, seasonNumber));
 
         // set show poster as background
         Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
@@ -120,7 +123,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
         Cursor episodesOfSeason = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                        Episodes._ID, Episodes.NUMBER
                 }, null, null, sortOrder.query()
         );
 
@@ -137,7 +140,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 }
                 ep.episodeId = curEpisodeId;
                 ep.episodeNumber = episodesOfSeason.getInt(1);
-                ep.seasonNumber = episodesOfSeason.getInt(2);
+                ep.seasonNumber = seasonNumber;
                 episodes.add(ep);
                 i++;
             }
@@ -164,10 +167,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         pager.setCurrentItem(startPosition, false);
     }
 
-    private void setupActionBar(String showTitle) {
+    private void setupActionBar(String showTitle, String season) {
+        setTitle(getString(R.string.episodes) + " " + showTitle + " " + season);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(showTitle);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(showTitle);
+        }
     }
 
     @Override

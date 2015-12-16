@@ -27,6 +27,7 @@
     <string name="description_overview">Overview</string>
     <string name="description_poster">Show poster</string>
     <string name="description_image">Episode image</string>
+    <string name="description_menu_overflow">More options</string>
 
     <!-- Actions -->
     <string name="clear">Clear</string>

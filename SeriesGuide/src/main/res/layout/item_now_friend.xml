@@ -37,9 +37,9 @@
             android:layout_width="68dp"
             android:layout_height="100dp"
             android:layout_marginRight="@dimen/default_padding"
-            android:contentDescription="@string/description_poster"
             android:scaleType="centerInside"
-            tools:src="@color/protection_dark" />
+            tools:src="@color/protection_dark"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/textViewFriendTimestamp"
@@ -65,7 +65,7 @@
             android:layout_marginRight="@dimen/inline_padding"
             android:layout_marginBottom="@dimen/default_padding"
             tools:src="@color/protection_dark"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/textViewFriendUsername"

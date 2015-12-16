@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -49,15 +48,6 @@ public class MoviesActivity extends BaseTopActivity {
 
         setupViews();
         setupSyncProgressBar(R.id.progressBarTabs);
-    }
-
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.movies));
-        }
     }
 
     private void setupViews() {

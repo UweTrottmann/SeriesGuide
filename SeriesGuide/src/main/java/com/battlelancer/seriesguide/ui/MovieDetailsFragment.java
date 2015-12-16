@@ -327,6 +327,7 @@ public class MovieDetailsFragment extends Fragment {
         final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
+        getActivity().setTitle(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
         // release date and runtime: "July 17, 2009 | 95 min"

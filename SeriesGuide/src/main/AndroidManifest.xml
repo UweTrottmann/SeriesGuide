@@ -67,7 +67,9 @@
         </activity>
 
         <!-- Hexagon -->
-        <activity android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"/>
+        <activity
+            android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"
+            android:label="@string/hexagon" />
 
         <!-- Shows -->
         <activity
@@ -96,11 +98,17 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.HistoryActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ListsActivity"
+            android:label="@string/lists" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.HistoryActivity"
+            android:label="@string/user_stream" />
 
         <!-- Movies -->
-        <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
+            android:label="@string/movies" />
         <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" />
 
         <!-- Settings -->
@@ -120,18 +128,25 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
+            android:label="@string/action_extensions_configure" />
 
         <!-- Import and Export -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
             android:label="@string/backup" />
-        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+            android:label="@string/backup" />
 
         <!-- trakt -->
-        <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
+            android:label="@string/connect_trakt" />
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
+            android:label="@string/connect_trakt"
             android:launchMode="singleTask">
             <!-- Support callback for external browser OAuth flow. -->
             <intent-filter>
@@ -147,7 +162,9 @@
 
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.StatsActivity"
+            android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
             android:launchMode="singleTop"
@@ -170,7 +187,9 @@
             android:taskAffinity="com.battlelancer.seriesguide.task.quickcheckin"
             android:exported="true" >
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.HelpActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.HelpActivity"
+            android:label="@string/help">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />

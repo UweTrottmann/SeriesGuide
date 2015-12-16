@@ -25,6 +25,7 @@
         android:layout_alignParentRight="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
+        android:contentDescription="@string/description_menu_overflow"
         android:src="?attr/drawableDropdown" />
 
     <TextView

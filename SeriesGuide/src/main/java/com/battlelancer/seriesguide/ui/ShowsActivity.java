@@ -193,6 +193,7 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void setupActionBar() {
         super.setupActionBar();
+        setTitle(R.string.shows);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(R.string.shows);

@@ -13,7 +13,8 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
-        android:src="?attr/drawableWatchAll" />
+        android:src="?attr/drawableWatchAll"
+        android:contentDescription="@null" />
 
     <ImageView
         android:id="@+id/imageViewSeasonsCollectedToggle"
@@ -23,7 +24,8 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/icon_padding"
-        android:src="?attr/drawableCollectAll" />
+        android:src="?attr/drawableCollectAll"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/textViewSeasonsRemaining"

@@ -86,6 +86,7 @@
             android:paddingRight="@dimen/default_padding"
             android:paddingBottom="13dp"
             android:scaleType="fitXY"
+            android:contentDescription="@string/description_menu_overflow"
             android:src="?attr/drawableDropdown" />
     </RelativeLayout>
 
