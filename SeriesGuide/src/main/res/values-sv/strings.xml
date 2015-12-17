@@ -23,6 +23,7 @@
   <string name="description_overview">Översikt</string>
   <string name="description_poster">Visa affisch</string>
   <string name="description_image">Bild från avsnittet</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Rensa</string>
   <string name="discard">Avbryt</string>
   <string name="save_selection">Spara valda</string>

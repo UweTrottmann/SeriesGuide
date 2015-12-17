@@ -22,6 +22,7 @@
   <string name="description_overview">Prezentare generală</string>
   <string name="description_poster">Posterul emisiunii</string>
   <string name="description_image">Imaginea episodului</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Ștergere</string>
   <string name="discard">Renunță</string>
   <string name="save_selection">Salvează selecția</string>

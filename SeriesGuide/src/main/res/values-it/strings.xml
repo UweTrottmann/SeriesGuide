@@ -22,6 +22,7 @@
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
   <string name="description_image">Immagine dell\'episodio</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Cancella</string>
   <string name="discard">Scarta</string>
   <string name="save_selection">Salva selezione</string>

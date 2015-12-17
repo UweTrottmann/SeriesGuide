@@ -22,6 +22,7 @@
   <string name="description_overview">Apžvalga</string>
   <string name="description_poster">Rodyti plakatą</string>
   <string name="description_image">Serijos paveikslas</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Išvalyti</string>
   <string name="discard">Atmesti</string>
   <string name="save_selection">Išsaugoti pasirinkimą</string>

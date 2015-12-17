@@ -22,6 +22,7 @@
   <string name="description_overview">תקציר</string>
   <string name="description_poster">הצג פוסטר</string>
   <string name="description_image">תמונת הפרק</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">נקה</string>
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>

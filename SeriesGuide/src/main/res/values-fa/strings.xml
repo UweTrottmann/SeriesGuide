@@ -22,6 +22,7 @@
   <string name="description_overview">بررسی اجمالی</string>
   <string name="description_poster">نمایش پوستر</string>
   <string name="description_image">تصویر قسمت</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">حذف</string>
   <string name="discard">نپذیرفتن</string>
   <string name="save_selection">ذخیره انتخاب</string>

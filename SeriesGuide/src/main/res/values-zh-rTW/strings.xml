@@ -22,6 +22,7 @@
   <string name="description_overview">簡介</string>
   <string name="description_poster">顯示海報</string>
   <string name="description_image">影集圖片</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">清除</string>
   <string name="discard">放棄</string>
   <string name="save_selection">儲存所選項目</string>

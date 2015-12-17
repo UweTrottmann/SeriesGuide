@@ -22,6 +22,7 @@
   <string name="description_overview">预览</string>
   <string name="description_poster">节目海报</string>
   <string name="description_image">剧集图片</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">清空</string>
   <string name="discard">放弃</string>
   <string name="save_selection">保存已选项</string>

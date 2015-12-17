@@ -22,6 +22,7 @@
   <string name="description_overview">Tartalom</string>
   <string name="description_poster">Borító mutatása</string>
   <string name="description_image">Epizód kép</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Törlés</string>
   <string name="discard">Elvetés</string>
   <string name="save_selection">Kijelöltek mentése</string>

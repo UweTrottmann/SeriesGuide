@@ -22,6 +22,7 @@
   <string name="description_overview">개요</string>
   <string name="description_poster">포스터 보이기</string>
   <string name="description_image">에피소드 이미지</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">지우기</string>
   <string name="discard">취소</string>
   <string name="save_selection">선택한 것 저장</string>

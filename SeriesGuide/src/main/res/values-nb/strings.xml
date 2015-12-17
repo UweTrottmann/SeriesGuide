@@ -22,6 +22,7 @@
   <string name="description_overview">Oversikt</string>
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episodebilde</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Fjern</string>
   <string name="discard">Avbryt</string>
   <string name="save_selection">Lagre valg</string>

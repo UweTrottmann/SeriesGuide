@@ -22,6 +22,7 @@
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика на епизода</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Избриши</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Зачувај селектирано</string>

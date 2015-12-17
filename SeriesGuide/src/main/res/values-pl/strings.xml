@@ -22,6 +22,7 @@
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
   <string name="description_image">Obraz odcinka</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Wyczyść</string>
   <string name="discard">Anuluj</string>
   <string name="save_selection">Zapisz zaznaczone</string>

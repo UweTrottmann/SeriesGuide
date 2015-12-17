@@ -22,6 +22,7 @@
   <string name="description_overview">Prehľad</string>
   <string name="description_poster">Zobraziť plagát</string>
   <string name="description_image">Obrázok z epizódy</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Zmazať</string>
   <string name="discard">Zrušiť</string>
   <string name="save_selection">Uložiť výber</string>

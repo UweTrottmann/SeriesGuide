@@ -22,6 +22,7 @@
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Pokaži poster</string>
   <string name="description_image">Slika epizode</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Izbriši</string>
   <string name="discard">Odbaci</string>
   <string name="save_selection">Pohrani odabrano</string>

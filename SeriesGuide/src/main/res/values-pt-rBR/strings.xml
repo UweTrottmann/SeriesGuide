@@ -22,6 +22,7 @@
   <string name="description_overview">Resumo</string>
   <string name="description_poster">Exibir cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Limpar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Salvar seleção</string>

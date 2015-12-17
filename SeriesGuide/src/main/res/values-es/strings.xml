@@ -22,6 +22,7 @@
   <string name="description_overview">Reseña</string>
   <string name="description_poster">Mostrar póster</string>
   <string name="description_image">Imagen del episodio</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Limpiar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>

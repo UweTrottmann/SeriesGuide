@@ -22,6 +22,7 @@
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Изчисти</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>

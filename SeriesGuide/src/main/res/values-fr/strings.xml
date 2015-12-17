@@ -22,6 +22,7 @@
   <string name="description_overview">Aperçu</string>
   <string name="description_poster">Affiche de la série</string>
   <string name="description_image">Image de l\'épisode</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Effacer</string>
   <string name="discard">Annuler</string>
   <string name="save_selection">Enregistrer</string>

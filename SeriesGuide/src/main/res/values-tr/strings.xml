@@ -22,6 +22,7 @@
   <string name="description_overview">Genel Bakış</string>
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Temizle</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
