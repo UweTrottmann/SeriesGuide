@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 27 *(in development)*
 -----------------------------
 
+#### 27-beta4 *(2015-12-17)*
+
+* TWEAK Improve accessibility by adding missing descriptions to buttons and labels, useful titles to screens.
+* FIX Could not add show existing on SeriesGuide Cloud in some circumstances.
+* FIX trakt login was broken on Android 4.4 and below.
+* NOTICE Latest translations from crowdin.
+
 #### 27-beta3 *(2015-12-10)*
 
 * TWEAK Show message if no show or episode description is available.
