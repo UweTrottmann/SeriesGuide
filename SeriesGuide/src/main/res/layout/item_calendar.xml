@@ -35,6 +35,7 @@
             android:layout_below="@+id/watchedBoxActivity"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dp"
+            android:contentDescription="@string/action_collection_added"
             android:src="@drawable/ic_collected" />
 
         <TextView

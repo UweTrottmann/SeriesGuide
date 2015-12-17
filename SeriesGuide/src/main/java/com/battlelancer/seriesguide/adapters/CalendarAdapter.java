@@ -141,7 +141,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(R.layout.grid_activity_row, parent, false);
+        View v = mLayoutInflater.inflate(R.layout.item_calendar, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
         v.setTag(viewHolder);
