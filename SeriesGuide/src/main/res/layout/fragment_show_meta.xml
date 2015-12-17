@@ -14,30 +14,30 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/large_padding"
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:layout_marginBottom="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:background="?attr/sgColorDivider" />
 
     <include
-        layout="@layout/people_list"
         android:id="@+id/containerShowCast"
+        layout="@layout/people_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <include
-        layout="@layout/people_list"
         android:id="@+id/containerShowCrew"
+        layout="@layout/people_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/large_padding"
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:background="?attr/sgColorDivider" />
 
     <TextView
@@ -112,9 +112,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="July 17, 21:48"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        tools:text="July 17, 21:48" />
 
     <TextView
         style="@style/Block.WithTopMargin"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
@@ -18,8 +18,8 @@
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/default_padding"
-            android:scaleType="centerInside"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            android:scaleType="centerInside" />
 
         <ImageView
             android:id="@+id/favoritedLabel"
@@ -27,10 +27,10 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingTop="6dp"
-            android:paddingRight="6dp"
-            android:paddingLeft="22dp"
             android:paddingBottom="22dp"
+            android:paddingLeft="22dp"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp"
             android:src="?attr/drawableStar"
             tools:ignore="ContentDescription" />
 
@@ -41,11 +41,11 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingTop="20dp"
+            android:contentDescription="@string/description_menu_overflow"
             android:paddingBottom="4dp"
             android:paddingLeft="24dp"
+            android:paddingTop="20dp"
             android:scaleType="centerInside"
-            android:contentDescription="@string/description_menu_overflow"
             android:src="?attr/drawableDropdown"
             tools:ignore="ContentDescription" />
 
@@ -54,12 +54,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_toRightOf="@id/showposter"
             android:layout_toLeftOf="@id/favoritedLabel"
+            android:layout_toRightOf="@id/showposter"
             android:ellipsize="end"
             android:singleLine="true"
-            tools:text="@string/show"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="@string/show" />
 
         <TextView
             android:id="@+id/TextViewShowListNextEpisode"
@@ -67,12 +67,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/seriesname"
             android:layout_toRightOf="@id/showposter"
-            android:paddingTop="@dimen/inline_padding"
-            android:paddingRight="@dimen/inline_padding"
             android:ellipsize="end"
+            android:paddingRight="@dimen/inline_padding"
+            android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            tools:text="10x456 Some Very Cool Episode Title Therefore"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Body.Dim"
+            tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
         <TextView
             android:id="@+id/episodetime"
@@ -80,11 +80,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/TextViewShowListNextEpisode"
             android:layout_toRightOf="@id/showposter"
-            android:paddingRight="@dimen/inline_padding"
             android:ellipsize="end"
+            android:paddingRight="@dimen/inline_padding"
             android:singleLine="true"
-            tools:text="Jan 8, 2009 (Thur)"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="Jan 8, 2009 (Thur)" />
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
@@ -93,15 +93,15 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/episodetime"
-            android:paddingBottom="8dp"
             android:layout_marginRight="24dp"
             android:layout_toRightOf="@+id/showposter"
             android:ellipsize="end"
+            android:gravity="bottom|right"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="@string/norating"
-            tools:text="Tue 08:00 PM | Showtime Network"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            android:gravity="bottom|right" />
+            tools:text="Tue 08:00 PM | Showtime Network" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

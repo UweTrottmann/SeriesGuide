@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
@@ -16,8 +16,8 @@
             android:layout_width="@dimen/show_poster_small_width"
             android:layout_height="@dimen/show_poster_small_height"
             android:layout_marginRight="@dimen/default_padding"
-            android:scaleType="centerInside"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            android:scaleType="centerInside" />
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxActivity"
@@ -32,8 +32,8 @@
             android:id="@+id/imageViewActivityCollected"
             android:layout_width="14dp"
             android:layout_height="14dp"
-            android:layout_below="@+id/watchedBoxActivity"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/watchedBoxActivity"
             android:layout_marginRight="18dp"
             android:contentDescription="@string/action_collection_added"
             android:src="@drawable/ic_collected" />
@@ -42,51 +42,51 @@
             android:id="@+id/textViewActivityShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:paddingTop="@dimen/default_padding"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:ellipsize="end"
+            android:paddingTop="@dimen/default_padding"
             android:singleLine="true"
-            tools:text="Defiance"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Body.Dim"
+            tools:text="Defiance" />
 
         <TextView
             android:id="@+id/textViewActivityEpisode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewActivityShow"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:paddingTop="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:ellipsize="end"
+            android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            tools:text="2x08 Somewhere in the middle of the park"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="2x08 Somewhere in the middle of the park" />
 
         <TextView
             android:id="@+id/textViewActivityInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewActivityEpisode"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:paddingTop="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:ellipsize="end"
+            android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            tools:text="8:00 PM / Showtime"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="8:00 PM / Showtime" />
 
         <TextView
             android:id="@+id/textViewActivityTimestamp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewActivityInfo"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
+            android:layout_toRightOf="@+id/imageViewActivityPoster"
             android:ellipsize="end"
             android:singleLine="true"
-            tools:text="in 7 hours"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="in 7 hours" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

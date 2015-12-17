@@ -23,14 +23,14 @@
         android:id="@+id/menu_action_now_refresh"
         android:icon="@drawable/ic_action_reload"
         android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/refresh" />
+        android:title="@string/refresh"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_action_now_filter_released_today"
         android:checkable="true"
         android:orderInCategory="3"
-        app:showAsAction="never"
-        android:title="@string/released_today" />
+        android:title="@string/released_today"
+        app:showAsAction="never" />
 
 </menu>

@@ -18,10 +18,10 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
     android:id="@+id/textViewItemActionTitle"
-    android:layout_height="48dp"
+    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
     android:layout_width="match_parent"
+    android:layout_height="48dp"
     android:ellipsize="end"
     android:singleLine="true"
     tools:text="Episode Action" />

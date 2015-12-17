@@ -20,8 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                tools:text="Dummy empty view message!"
-                android:textAppearance="@style/TextAppearance.Body.Dim" />
+                android:textAppearance="@style/TextAppearance.Body.Dim"
+                tools:text="Dummy empty view message!" />
 
         </ScrollView>
 

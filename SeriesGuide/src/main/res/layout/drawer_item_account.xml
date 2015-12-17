@@ -25,10 +25,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
         android:paddingTop="@dimen/large_padding"
-        android:paddingBottom="@dimen/default_padding"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
@@ -36,9 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:ellipsize="end"
             android:paddingBottom="@dimen/inline_padding"
             android:singleLine="true"
-            android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Body"
             tools:text="uwe" />
 
@@ -47,8 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textViewDrawerItemUsername"
-            android:singleLine="true"
             android:ellipsize="end"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Body.Bold"
             tools:text="trakt" />
 

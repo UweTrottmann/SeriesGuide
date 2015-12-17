@@ -5,12 +5,12 @@
     <item
         android:id="@+id/menu_action_help_send_feedback"
         android:orderInCategory="0"
-        app:showAsAction="ifRoom|withText"
-        android:title="@string/feedback" />
+        android:title="@string/feedback"
+        app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/menu_action_help_open_browser"
         android:orderInCategory="1"
-        app:showAsAction="never"
-        android:title="@string/action_open_in_browser" />
+        android:title="@string/action_open_in_browser"
+        app:showAsAction="never" />
 
 </menu>

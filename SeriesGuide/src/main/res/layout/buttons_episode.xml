@@ -30,12 +30,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableCheckin"
-        android:text="@string/checkin"
         android:contentDescription="@string/checkin"
+        android:drawableTop="?attr/drawableCheckin"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/checkin" />
 
     <Button
         android:id="@+id/buttonEpisodeWatched"
@@ -43,12 +43,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableWatch"
-        android:text="@string/action_watched"
         android:contentDescription="@string/action_watched"
+        android:drawableTop="?attr/drawableWatch"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/action_watched" />
 
     <Button
         android:id="@+id/buttonEpisodeCollected"
@@ -56,11 +56,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
         android:drawableTop="?attr/drawableCollect"
-        android:text="@string/action_collection_add"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/action_collection_add" />
 
     <Button
         android:id="@+id/buttonEpisodeSkip"
@@ -68,11 +68,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableSkip"
-        android:text="@string/action_skip"
         android:contentDescription="@string/action_skip"
+        android:drawableTop="?attr/drawableSkip"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/action_skip" />
 
 </LinearLayout>

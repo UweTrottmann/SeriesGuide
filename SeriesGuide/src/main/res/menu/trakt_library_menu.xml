@@ -6,7 +6,7 @@
         android:id="@+id/menu_add_all"
         android:icon="@drawable/ic_action_add_all"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom|withText"
-        android:title="@string/add_all"/>
+        android:title="@string/add_all"
+        app:showAsAction="ifRoom|withText" />
 
 </menu>

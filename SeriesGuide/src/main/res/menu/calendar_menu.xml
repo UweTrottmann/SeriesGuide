@@ -6,25 +6,25 @@
         android:id="@+id/menu_onlyfavorites"
         android:checkable="true"
         android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/only_favorites" />
+        android:title="@string/only_favorites"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_nowatched"
         android:checkable="true"
         android:orderInCategory="3"
-        app:showAsAction="never"
-        android:title="@string/hide_watched" />
+        android:title="@string/hide_watched"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_nospecials"
         android:checkable="true"
         android:orderInCategory="4"
-        app:showAsAction="never"
-        android:title="@string/pref_onlyseasoneps" />
+        android:title="@string/pref_onlyseasoneps"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_infinite_scrolling"
         android:checkable="true"
         android:orderInCategory="5"
-        app:showAsAction="never"
-        android:title="@string/pref_infinite_scrolling" />
+        android:title="@string/pref_infinite_scrolling"
+        app:showAsAction="never" />
 
 </menu>

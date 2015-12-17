@@ -29,12 +29,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
         android:drawableTop="?attr/drawableStar"
-        android:text="@string/context_favorite"
-        tools:text="Remove from favorites"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/context_favorite"
+        tools:text="Remove from favorites" />
 
     <Button
         android:id="@+id/buttonShowShare"
@@ -42,12 +42,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableShare"
-        android:text="@string/share"
         android:contentDescription="@string/share"
+        android:drawableTop="?attr/drawableShare"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/share" />
 
     <Button
         android:id="@+id/buttonShowShortcut"
@@ -55,11 +55,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableLink"
-        android:text="@string/add_to_homescreen"
         android:contentDescription="@string/add_to_homescreen"
+        android:drawableTop="?attr/drawableLink"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/add_to_homescreen" />
 
 </LinearLayout>

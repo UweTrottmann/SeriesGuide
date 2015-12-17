@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2015 Uwe Trottmann
   ~
@@ -20,34 +21,34 @@
     android:id="@+id/containerSnackbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@color/background_snackbar"
+    android:orientation="horizontal"
     tools:showIn="@layout/fragment_now">
 
     <TextView
         android:id="@+id/textViewSnackbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
-        android:paddingBottom="@dimen/default_padding"
-        android:maxLines="3"
-        android:ellipsize="end"
-        tools:text="@string/offline"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        tools:text="@string/offline" />
 
     <Button
         android:id="@+id/buttonSnackbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
-        tools:text="@string/refresh"
         android:textAppearance="@style/TextAppearance.Button"
         android:textColor="?attr/colorAccent"
-        android:background="?attr/selectableItemBackgroundBorderless" />
+        tools:text="@string/refresh" />
 </LinearLayout>

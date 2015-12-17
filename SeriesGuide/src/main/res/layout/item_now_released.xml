@@ -17,8 +17,8 @@
   -->
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
@@ -37,24 +37,24 @@
             android:layout_width="@dimen/show_poster_small_width"
             android:layout_height="@dimen/show_poster_small_height"
             android:layout_marginRight="@dimen/default_padding"
+            android:contentDescription="@null"
             android:scaleType="centerInside"
-            tools:src="@color/protection_dark"
-            android:contentDescription="@null" />
+            tools:src="@color/protection_dark" />
 
         <TextView
             android:id="@+id/textViewReleasedTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="120dp"
             android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxWidth="120dp"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
-            android:gravity="end"
-            android:ellipsize="end"
             android:singleLine="true"
-            tools:text="in 9 hours"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="in 9 hours" />
 
         <TextView
             android:id="@+id/textViewReleasedShow"
@@ -62,12 +62,12 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/textViewReleasedTimestamp"
             android:layout_toRightOf="@+id/imageViewReleasedPoster"
-            android:paddingTop="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding"
             android:ellipsize="end"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
             android:singleLine="true"
-            tools:text="Somewhere in the middle of the park"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Body.Dim"
+            tools:text="Somewhere in the middle of the park" />
 
         <TextView
             android:id="@+id/textViewReleasedEpisode"
@@ -75,12 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewReleasedShow"
             android:layout_toRightOf="@+id/imageViewReleasedPoster"
-            android:paddingTop="@dimen/inline_padding"
-            android:paddingRight="@dimen/default_padding"
             android:ellipsize="end"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            tools:text="24x10 On a Troublesome Terribly Long Episode Name"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="24x10 On a Troublesome Terribly Long Episode Name" />
 
         <TextView
             android:id="@+id/textViewReleasedInfo"
@@ -88,12 +88,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewReleasedEpisode"
             android:layout_toRightOf="@+id/imageViewReleasedPoster"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/inline_padding"
             android:ellipsize="end"
             android:maxLines="2"
-            tools:text="Showtime / 8:00 PM"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="Showtime / 8:00 PM" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-    android:gravity="center_vertical"
     android:ellipsize="end"
-    android:singleLine="true"
+    android:gravity="center_vertical"
     android:paddingLeft="@dimen/larger_padding"
     android:paddingRight="@dimen/larger_padding"
-    tools:text="Example List"
-    android:textAppearance="@style/TextAppearance.Menu" />
+    android:singleLine="true"
+    android:textAppearance="@style/TextAppearance.Menu"
+    tools:text="Example List" />

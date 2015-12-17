@@ -16,9 +16,9 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.PersonFragment">
 
     <ScrollView
@@ -44,24 +44,24 @@
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/keyline"
                 android:layout_marginRight="@dimen/keyline"
-                android:maxLines="2"
                 android:ellipsize="end"
-                tools:text="Kiefer Sutherland"
+                android:maxLines="2"
                 android:shadowColor="@color/protection_dark"
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="2"
-                android:textAppearance="@style/TextAppearance.Display1.White" />
+                android:textAppearance="@style/TextAppearance.Display1.White"
+                tools:text="Kiefer Sutherland" />
 
             <TextView
                 android:id="@+id/textViewPersonBiographyHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageViewPersonHeadshot"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/keyline"
                 android:layout_marginRight="@dimen/keyline"
-                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
                 android:text="@string/person_biography"
                 android:textAppearance="@style/TextAppearance.Subhead" />
 
@@ -71,11 +71,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewPersonBiographyHeader"
+                android:paddingBottom="@dimen/default_padding"
                 android:paddingLeft="@dimen/keyline"
                 android:paddingRight="@dimen/keyline"
-                android:paddingBottom="@dimen/default_padding"
-                tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor"
-                android:textAppearance="@style/TextAppearance.Body" />
+                android:textAppearance="@style/TextAppearance.Body"
+                tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
         </RelativeLayout>
     </ScrollView>

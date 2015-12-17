@@ -18,9 +18,9 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="250dp"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:background="?attr/colorPrimary">
 
     <!-- Toolbar will force down its style, no need to force text colors. -->
@@ -29,10 +29,10 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingRight="40dp"
+        android:hint="@string/search"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:hint="@string/search">
+        android:paddingRight="40dp">
 
         <requestFocus />
     </EditText>

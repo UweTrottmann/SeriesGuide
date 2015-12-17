@@ -19,8 +19,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        tools:text="@string/noupcoming"
         android:textAppearance="@style/TextAppearance.Body.Dim"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="@string/noupcoming" />
 
 </FrameLayout>

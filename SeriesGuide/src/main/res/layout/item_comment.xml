@@ -30,15 +30,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="sgtest"
-            android:textAppearance="@style/TextAppearance.Subhead" />
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="sgtest" />
 
         <TextView
             android:id="@+id/timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Dec 28, 2013"
-            android:textAppearance="@style/TextAppearance.Caption.Dim" />
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="Dec 28, 2013" />
     </LinearLayout>
 
     <TextView
@@ -46,11 +46,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userstrip"
-        android:layout_toRightOf="@+id/avatar"
-        android:layout_marginRight="@dimen/large_padding"
         android:layout_marginBottom="@dimen/large_padding"
-        tools:text="Some comment describing how the user felt or not felt about the watched media item..."
-        android:textAppearance="@style/TextAppearance.Body" />
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_toRightOf="@+id/avatar"
+        android:textAppearance="@style/TextAppearance.Body"
+        tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
 
     <View
         android:layout_width="match_parent"

@@ -21,11 +21,11 @@
 
             <LinearLayout
                 android:id="@+id/containerDataLibExportFiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewDataLibLabelBackup"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/default_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/default_padding">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -106,18 +106,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonDataLibExport"
-                android:layout_marginTop="32dp"
                 android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginTop="32dp"
                 android:text="@string/import_button"
                 android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
 
             <LinearLayout
                 android:id="@+id/containerDataLibImportFiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewDataLibLabelImport"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/default_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/default_padding">
 
                 <CheckBox
                     android:id="@+id/checkBoxDataLibShows"

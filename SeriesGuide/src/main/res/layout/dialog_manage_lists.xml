@@ -11,8 +11,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:minWidth="@dimen/dialog_min_width"
-        android:paddingTop="@dimen/large_padding"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/large_padding">
 
         <TextView
             android:id="@+id/title"
@@ -30,8 +30,8 @@
             android:layout_marginBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
-            tools:text="Defiance"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            tools:text="Defiance" />
 
         <include layout="@layout/divider_horizontal" />
 

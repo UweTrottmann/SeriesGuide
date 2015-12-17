@@ -6,12 +6,12 @@
         android:id="@+id/menu_overview_share"
         android:icon="@drawable/ic_action_share"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom"
-        android:title="@string/share_episode"/>
+        android:title="@string/share_episode"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_overview_calendar"
         android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/addtocalendar" />
+        android:title="@string/addtocalendar"
+        app:showAsAction="never" />
 
 </menu>

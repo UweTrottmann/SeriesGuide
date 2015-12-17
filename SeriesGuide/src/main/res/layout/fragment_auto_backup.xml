@@ -15,17 +15,17 @@
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchAutoBackup"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:text="@string/pref_autobackup"
                 android:textAppearance="@style/TextAppearance.Title" />
 
             <RelativeLayout
                 android:id="@+id/containerAutoBackupSettings"
-                android:paddingTop="@dimen/large_padding"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/large_padding">
 
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupDefaultFiles"
@@ -35,12 +35,12 @@
 
                 <LinearLayout
                     android:id="@+id/containerAutoBackupExportFiles"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/checkBoxAutoBackupDefaultFiles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/default_padding"
-                    android:animateLayoutChanges="true">
+                    android:layout_below="@+id/checkBoxAutoBackupDefaultFiles"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_padding">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -105,8 +105,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/containerAutoBackupExportFiles"
-                    android:layout_marginTop="32dp"
                     android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginTop="32dp"
                     android:text="@string/restore_auto_backup"
                     android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Page.Centered"
-    android:padding="0dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="0dp">
 
     <com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutShouts"
@@ -35,11 +35,11 @@
                 android:id="@+id/listViewShouts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/default_padding"
-                android:nextFocusDown="@+id/editTextShouts"
                 android:clipToPadding="@bool/gridClipToPadding"
                 android:divider="@color/transparent"
-                android:dividerHeight="0dp" />
+                android:dividerHeight="0dp"
+                android:nextFocusDown="@+id/editTextShouts"
+                android:paddingTop="@dimen/default_padding" />
 
         </FrameLayout>
 
@@ -62,11 +62,11 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toLeftOf="@+id/buttonShouts"
-            android:nextFocusUp="@+id/listViewShouts"
             android:gravity="top"
             android:hint="@string/shout_hint"
             android:maxLength="2000"
-            android:maxLines="3" />
+            android:maxLines="3"
+            android:nextFocusUp="@+id/listViewShouts" />
 
         <Button
             android:id="@+id/buttonShouts"

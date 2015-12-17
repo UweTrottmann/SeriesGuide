@@ -29,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="The empty view message."
-        android:textAppearance="@style/TextAppearance.Body.Dim" />
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        tools:text="The empty view message." />
 
     <Button
         android:id="@+id/buttonEmptyView"

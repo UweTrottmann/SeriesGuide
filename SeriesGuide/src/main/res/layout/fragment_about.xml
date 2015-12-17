@@ -26,12 +26,12 @@
 
         <LinearLayout
             style="@style/Page.Centered"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="@dimen/large_padding"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/keyline"
-            android:paddingRight="@dimen/keyline">
+            android:paddingRight="@dimen/keyline"
+            android:paddingTop="@dimen/large_padding">
 
             <TextView
                 android:id="@+id/textViewAboutTitle"
@@ -44,8 +44,8 @@
                 android:id="@+id/textViewAboutVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="v42 (Database v42)"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.Body.Bold"
+                tools:text="v42 (Database v42)" />
 
             <Button
                 android:id="@+id/buttonAboutWebsite"

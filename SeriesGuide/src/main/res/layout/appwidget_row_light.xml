@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -26,8 +27,8 @@
         android:id="@+id/widgetPoster"
         android:layout_width="@dimen/widget_item_width"
         android:layout_height="@dimen/widget_item_height"
-        android:layout_marginRight="@dimen/inline_padding"
         android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/inline_padding"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing" />
 
@@ -35,39 +36,39 @@
         android:id="@+id/textViewWidgetShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/widgetPoster"
         android:layout_toLeftOf="@+id/widgetAirtime"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:ellipsize="end"
         android:paddingRight="@dimen/inline_padding"
         android:singleLine="true"
-        android:ellipsize="end"
-        tools:text="2 Broke Girls"
         android:textColor="@color/black_87"
-        android:textSize="@dimen/widget_text_large" />
+        android:textSize="@dimen/widget_text_large"
+        tools:text="2 Broke Girls" />
 
     <TextView
         android:id="@+id/textViewWidgetEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewWidgetShow"
-        android:layout_toRightOf="@+id/widgetPoster"
         android:layout_toLeftOf="@+id/widgetNetwork"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:ellipsize="end"
         android:paddingRight="@dimen/inline_padding"
         android:singleLine="true"
-        android:ellipsize="end"
-        tools:text="2x13 If The Time Ever Comes"
         android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_middle" />
+        android:textSize="@dimen/widget_text_middle"
+        tools:text="2x13 If The Time Ever Comes" />
 
     <TextView
         android:id="@+id/widgetAirtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:singleLine="true"
-        tools:text="7 hours ago (Mon)"
         android:fontFamily="sans-serif-condensed"
+        android:singleLine="true"
         android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_small" />
+        android:textSize="@dimen/widget_text_small"
+        tools:text="7 hours ago (Mon)" />
 
     <TextView
         android:id="@+id/widgetNetwork"
@@ -75,10 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
-        android:singleLine="true"
-        tools:text="08:00 PM ABE"
         android:fontFamily="sans-serif-condensed"
+        android:singleLine="true"
         android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_small" />
+        android:textSize="@dimen/widget_text_small"
+        tools:text="08:00 PM ABE" />
 
 </RelativeLayout>
