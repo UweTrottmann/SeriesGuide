@@ -147,8 +147,8 @@
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="add_empty">Nenhuma série aqui.</string>
   <string name="no_results">Sem resultados, tente palavras completas.</string>
-  <string name="action_try_any_language">Tente qualquer idioma</string>
-  <string name="action_try_again">Tente novamente</string>
+  <string name="action_try_any_language">Tentar qualquer idioma</string>
+  <string name="action_try_again">Tentar novamente</string>
   <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
   <string name="add_all">Adicionar tudo</string>
   <string name="add_multiple">Todas as séries aparecerão na sua lista em breve.</string>

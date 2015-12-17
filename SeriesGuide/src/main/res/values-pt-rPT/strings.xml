@@ -8,7 +8,7 @@
   <string name="search">Procurar</string>
   <string name="preferences">Definições</string>
   <string name="help">Ajuda</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Ajuda &amp; Comentários</string>
   <string name="drawer_open">Abrir painel de navegação</string>
   <string name="drawer_close">Fechar painel de navegação</string>
   <string name="show">Série</string>
@@ -31,7 +31,7 @@
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episódios</string>
   <string name="search_within_show">Procurar dentro da %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Qualquer idioma</string>
   <string name="updated">Actualizado para a última versão.</string>
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
@@ -73,7 +73,7 @@
   <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>
@@ -147,8 +147,8 @@
   <string name="checkin_searchhint">Introduza o nome de uma série</string>
   <string name="add_empty">Não existe nenhuma série.</string>
   <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Tentar em qualquer idioma</string>
+  <string name="action_try_again">Tentar novamente</string>
   <string name="search_error">Erro de pesquisa, tenta novamente mais tarde.</string>
   <string name="add_all">Adicionar todas</string>
   <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>
@@ -156,7 +156,7 @@
   <string name="add_error">Não foi possível adicionar %s.</string>
   <string name="add_already_exists">A série %s já se encontra na sua lista.</string>
   <string name="recommended">Recomendado</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Visto</string>
   <string name="shows_collection">Colecção</string>
   <string name="watchlist">Desejo Ver</string>
   <string name="first_list">Primeira lista</string>
@@ -248,8 +248,8 @@
   <string name="trakt_success">Enviado para o trakt.</string>
   <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
   <string name="trakt_error_general">Não é possível contactar o trakt. Tenta novamente mais tarde.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Não está (ainda) disponível na trakt. Tente novamente mais tarde.</string>
+  <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com trakt.</string>
   <string name="trakt_account">conta trakt</string>
   <string name="trakt_connect_instructions">No próximo ecrã faz login no trakt ou cria uma nova conta. Depois dá permissões de acesso à tua conta trakt.</string>
   <string name="connect_trakt">Conectar ao trakt</string>
@@ -259,7 +259,7 @@
   <string name="waitplease">Um momento, por favor…</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Usar navegador integrado</string>
   <string name="connect_trakt_done">Conectado ao trakt!</string>
   <string name="connect_trakt_done_explanation">O SeriesGuide irá agora sincronizar séries e filmes deste dispositivo no trakt. Isto pode levar algum tempo.</string>
   <string name="add_trakt_shows">Adiciona séries da tua biblioteca:</string>
@@ -288,8 +288,8 @@
   <string name="checkin">Dar entrada</string>
   <string name="checkin_hint">Insira uma mensagem (opcional)</string>
   <string name="paste_title">Colar título</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Check in Rápido</string>
+  <string name="pref_quick_checkin_summary">Não perguntar por uma mensagem de Check in</string>
   <string name="feedback">Enviar comentários</string>
   <string name="action_open_in_browser">Abrir no navegador</string>
   <string name="prefs_category_basic">Básico</string>
