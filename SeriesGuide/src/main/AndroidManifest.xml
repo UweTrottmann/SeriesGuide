@@ -147,8 +147,9 @@
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
             android:label="@string/connect_trakt"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
             <!-- Support callback for external browser OAuth flow. -->
+            <!-- Use singleTop to not break onActivityResult on Android K-. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
