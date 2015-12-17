@@ -38,7 +38,8 @@
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
             android:paddingLeft="@dimen/inline_padding"
-            android:paddingRight="@dimen/inline_padding" />
+            android:paddingRight="@dimen/inline_padding"
+            tools:listitem="@layout/appwidget_row_light" />
 
         <TextView
             android:id="@+id/empty_view"

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--
+  ~ Copyright 2015 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/accent_primary"
+    android:baselineAligned="false"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    tools:showIn="@layout/appwidget_v11">
+
+    <FrameLayout
+        android:id="@+id/widget_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/list_selector_dark"
+        android:focusable="true"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding"
+        android:paddingTop="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/widgetTitle"
+            style="@style/TextAppearance.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="@string/upcoming"
+            android:textColor="@color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/widget_settings"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_selector_dark"
+        android:focusable="true"
+        android:paddingRight="@dimen/default_padding">
+
+        <ImageView
+            android:id="@+id/imageViewSettings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@string/preferences"
+            android:src="@drawable/ic_action_overflow_round" />
+
+    </FrameLayout>
+
+</LinearLayout>

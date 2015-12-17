@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.battlelancer.seriesguide.R;
 
 /**
  * Access some widget related settings values.
@@ -131,14 +132,14 @@ public class WidgetSettings {
         } catch (NumberFormatException ignored) {
         }
 
+        int baseColor = context.getResources()
+                .getColor(lightBackground ? R.color.grey_50 : R.color.grey_850);
         if (opacity == 100) {
             // avoid overflow by handling 100
-            return lightBackground ? 0xffffffff : 0xff000000;
+            return baseColor;
         } else {
             int color = (opacity * 256 / 100) << 24;
-            if (lightBackground) {
-                color += 0x00ffffff;
-            }
+            color += lightBackground ? 0x00fafafa : 0x00303030;
             return color;
         }
     }
