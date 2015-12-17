@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -37,9 +38,28 @@ import timber.log.Timber;
  */
 public class TraktAuthActivity extends BaseOAuthActivity {
 
+    private static final String KEY_STATE = "state";
     private String state;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            // restore state on recreation
+            // (e.g. if launching external browser dropped us out of memory)
+            state = savedInstanceState.getString(KEY_STATE);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_STATE, state);
+    }
+
+    @Override
+    @Nullable
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
         try {
@@ -50,7 +70,9 @@ public class TraktAuthActivity extends BaseOAuthActivity {
                     null);
             return request.getLocationUri();
         } catch (OAuthSystemException e) {
-            Timber.e(e, "Building auth request failed");
+            Timber.e(e, "Building auth request failed.");
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(" + e.getMessage() + ")");
         }
 
         return null;
@@ -65,15 +87,17 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
-            authCode = null;
             Timber.e(OAuthProblemException.error("invalid_state",
                     "State is null or does not match."), "fetchTokensAndFinish: failed.");
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(Cross-site request forgery detected.)");
+            return;
         }
 
         if (TextUtils.isEmpty(authCode)) {
             // no valid auth code, remain in activity and show fallback buttons
             activateFallbackButtons();
-            setMessage(R.string.trakt_error_credentials);
+            setMessage(getAuthErrorMessage() + "\n\n(No auth code returned.)");
             return;
         }
 

@@ -78,7 +78,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                connect();
+                connect(false);
             }
         });
 
@@ -148,14 +148,17 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         ButterKnife.unbind(this);
     }
 
-    private void connect() {
+    private void connect(boolean isRetry) {
         // disable buttons, show status message
         setButtonStates(false, false);
         setStatus(true, R.string.waitplease);
 
         // launch activity to authorize with trakt
-        startActivityForResult(new Intent(getActivity(), TraktAuthActivity.class),
-                ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE);
+        startActivityForResult(
+                new Intent(getActivity(), TraktAuthActivity.class)
+                        .putExtra(TraktAuthActivity.EXTRA_KEY_IS_RETRY, isRetry),
+                ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE
+        );
     }
 
     private void disconnect() {
@@ -190,6 +193,9 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
                 errorResId = R.string.trakt_error_general;
                 break;
             case TraktResult.AUTH_ERROR:
+                // try to connect again, but show internal browser option
+                connect(true);
+                // fall through
             case TraktResult.ERROR:
             default:
                 errorResId = R.string.trakt_error_credentials;
