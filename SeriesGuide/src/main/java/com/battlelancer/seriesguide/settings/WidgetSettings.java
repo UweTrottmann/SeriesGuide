@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 
 /**
@@ -45,7 +46,8 @@ public class WidgetSettings {
 
     public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
 
-    private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY = 50;
+    public static final String DEFAULT_WIDGET_BACKGROUND_OPACITY = "100";
+    private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY_INT = 100;
 
     /**
      * Returns the type of episodes that the widget should display.
@@ -124,23 +126,20 @@ public class WidgetSettings {
      */
     public static int getWidgetBackgroundColor(Context context, int appWidgetId,
             boolean lightBackground) {
-        // taken from https://code.google.com/p/dashclock
-        int opacity = DEFAULT_WIDGET_BACKGROUND_OPACITY;
+        int opacity = DEFAULT_WIDGET_BACKGROUND_OPACITY_INT;
         try {
             opacity = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
-                    .getString(KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId, "50"));
+                    .getString(KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId,
+                            DEFAULT_WIDGET_BACKGROUND_OPACITY));
         } catch (NumberFormatException ignored) {
         }
 
-        int baseColor = context.getResources()
-                .getColor(lightBackground ? R.color.grey_50 : R.color.grey_850);
-        if (opacity == 100) {
-            // avoid overflow by handling 100
-            return baseColor;
-        } else {
-            int color = (opacity * 256 / 100) << 24;
-            color += lightBackground ? 0x00fafafa : 0x00303030;
-            return color;
-        }
+        int baseColor = ContextCompat.getColor(context,
+                lightBackground ? R.color.grey_50 : R.color.grey_850);
+        // strip alpha from base color
+        baseColor = baseColor & 0xFFFFFF;
+        // add new alpha
+        int alpha = (opacity * 255 / 100) << 24;
+        return alpha | baseColor;
     }
 }
