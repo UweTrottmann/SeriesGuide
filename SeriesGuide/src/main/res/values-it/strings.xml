@@ -22,7 +22,7 @@
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
   <string name="description_image">Immagine dell\'episodio</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Opzioni aggiuntive</string>
   <string name="clear">Cancella</string>
   <string name="discard">Scarta</string>
   <string name="save_selection">Salva selezione</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Ultima modifica // TVDb</string>
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Non c\'è nessuna descrizione tradotta in %1$s disponibile su %2$s.</string>
   <string name="today">oggi</string>
   <string name="now">adesso</string>
   <string name="daily">Giornaliero</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">Digitare il nome della serie</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="no_results">Nessun risultato, prova parole complete.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Prova in altre lingue</string>
+  <string name="action_try_again">Riprova</string>
   <string name="search_error">Ricerca non riuscita, riprovare più tardi.</string>
   <string name="add_all">Aggiungi tutto</string>
   <string name="add_multiple">Tutte le serie appariranno nella tua lista tra poco.</string>
