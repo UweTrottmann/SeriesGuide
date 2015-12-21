@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Screens with more than 720dp of available width. This would
+    include 7" in landscape and 10" devices in portrait. -->
+
+    <!-- List widget -->
+    <dimen name="widget_item_width">31dp</dimen>
+    <dimen name="widget_item_height">45dp</dimen>
+    <dimen name="widget_text_small">12sp</dimen>
+    <dimen name="widget_text_middle">13sp</dimen>
+    <dimen name="widget_text_large">14sp</dimen>
+    <dimen name="widget_padding_default">16dp</dimen>
+    <dimen name="widget_padding_inline">8dp</dimen>
+
     <dimen name="addpager_width">600dp</dimen>
     <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="buttonbar_button_width">64dp</dimen>
