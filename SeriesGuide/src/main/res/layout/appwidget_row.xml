@@ -23,11 +23,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="48dp"
-    android:paddingBottom="@dimen/inline_padding"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:paddingTop="@dimen/inline_padding"
-    tools:background="@android:color/holo_red_dark">
+    android:paddingBottom="@dimen/widget_padding_inline"
+    android:paddingLeft="@dimen/widget_padding_default"
+    android:paddingRight="@dimen/widget_padding_default"
+    android:paddingTop="@dimen/widget_padding_inline"
+    tools:background="@android:color/holo_red_dark"
+    tools:ignore="UnusedAttribute">
 
     <ImageView
         android:id="@+id/widgetPoster"
@@ -46,7 +47,7 @@
         android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingRight="@dimen/widget_padding_default"
         android:paddingTop="2dp"
         android:singleLine="true"
         android:textColor="@color/white"
@@ -61,7 +62,7 @@
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/default_padding"
+        android:paddingRight="@dimen/widget_padding_default"
         android:singleLine="true"
         android:textColor="@color/white_70"
         android:textSize="@dimen/widget_text_large"
@@ -76,8 +77,8 @@
         android:paddingTop="2dp"
         android:singleLine="true"
         android:textColor="@color/white_70"
-        android:textSize="@dimen/widget_text_middle"
-        tools:text="7 hours ago (Mon)" />
+        android:textSize="@dimen/widget_text_small"
+        tools:text="Mon yesterday" />
 
     <TextView
         android:id="@+id/widgetNetwork"
@@ -88,7 +89,7 @@
         android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
         android:textColor="@color/white_70"
-        android:textSize="@dimen/widget_text_middle"
+        android:textSize="@dimen/widget_text_small"
         tools:text="08:00 PM ABE" />
 
 </RelativeLayout>
