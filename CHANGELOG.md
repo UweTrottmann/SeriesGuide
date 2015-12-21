@@ -5,8 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 27 *(in development)*
+Version 27 *(2015-12-21)*
 -----------------------------
+
+* trakt login through default browser.
+* Improved accessibility.
+* More material list widget design.
+
+#### 27 *(2015-12-21)*
+
+* TWEAK Updated list widget design to feel more material.
+* NOTICE Latest translations from crowdin.
 
 #### 27-beta4 *(2015-12-17)*
 
