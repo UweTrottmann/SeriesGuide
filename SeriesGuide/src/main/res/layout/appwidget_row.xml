@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<!--
+  ~ Copyright 2015 Uwe Trottmann
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout
     android:id="@+id/appwidget_row"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/inline_padding">
+    android:minHeight="48dp"
+    android:paddingBottom="@dimen/inline_padding"
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingRight="@dimen/default_padding"
+    android:paddingTop="@dimen/inline_padding"
+    tools:background="@android:color/holo_red_dark">
 
     <ImageView
         android:id="@+id/widgetPoster"
         android:layout_width="@dimen/widget_item_width"
         android:layout_height="@dimen/widget_item_height"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/inline_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing" />
 
@@ -22,7 +46,8 @@
         android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/inline_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="2dp"
         android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="@dimen/widget_text_large"
@@ -36,10 +61,10 @@
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/inline_padding"
+        android:paddingRight="@dimen/default_padding"
         android:singleLine="true"
         android:textColor="@color/white_70"
-        android:textSize="@dimen/widget_text_middle"
+        android:textSize="@dimen/widget_text_large"
         tools:text="2x13 If The Time Ever Comes" />
 
     <TextView
@@ -48,9 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:fontFamily="sans-serif-condensed"
+        android:paddingTop="2dp"
         android:singleLine="true"
         android:textColor="@color/white_70"
-        android:textSize="@dimen/widget_text_small"
+        android:textSize="@dimen/widget_text_middle"
         tools:text="7 hours ago (Mon)" />
 
     <TextView
@@ -62,7 +88,7 @@
         android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
         android:textColor="@color/white_70"
-        android:textSize="@dimen/widget_text_small"
+        android:textSize="@dimen/widget_text_middle"
         tools:text="08:00 PM ABE" />
 
 </RelativeLayout>
