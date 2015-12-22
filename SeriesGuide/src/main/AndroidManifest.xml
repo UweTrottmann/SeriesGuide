@@ -130,7 +130,8 @@
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
-            android:label="@string/action_extensions_configure" />
+            android:label="@string/action_extensions_configure"
+            android:exported="true" />
 
         <!-- Import and Export -->
         <activity
