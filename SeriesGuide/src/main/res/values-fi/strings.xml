@@ -22,7 +22,7 @@
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
   <string name="description_image">Jaksokuva</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Lisäasetukset</string>
   <string name="clear">Tyhjennä</string>
   <string name="discard">Peruuta</string>
   <string name="save_selection">Tallenna valinta</string>
