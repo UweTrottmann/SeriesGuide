@@ -128,6 +128,8 @@ public class SeasonsFragment extends ListFragment implements
                         R.attr.drawableWatchedAll)
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatchAll));
+        mButtonWatchedAll.setContentDescription(
+                getString(mWatchedAllEpisodes ? R.string.unmark_all : R.string.mark_all));
         // set onClick listener not before here to avoid unexpected actions
         mButtonWatchedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -143,12 +145,13 @@ public class SeasonsFragment extends ListFragment implements
                         switch (item.getItemId()) {
                             case CONTEXT_WATCHED_SHOW_ALL_ID: {
                                 onFlagShowWatched(true);
-                                fireTrackerEvent("Flag all watched (inline)");
+                                Utils.trackAction(getActivity(), TAG, "Flag all watched (inline)");
                                 return true;
                             }
                             case CONTEXT_WATCHED_SHOW_NONE_ID: {
                                 onFlagShowWatched(false);
-                                fireTrackerEvent("Flag all unwatched (inline)");
+                                Utils.trackAction(getActivity(), TAG,
+                                        "Flag all unwatched (inline)");
                                 return true;
                             }
                         }
@@ -165,6 +168,8 @@ public class SeasonsFragment extends ListFragment implements
         mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableCollectAll));
+        mButtonCollectedAll.setContentDescription(
+                getString(mCollectedAllEpisodes ? R.string.uncollect_all : R.string.collect_all));
         // set onClick listener not before here to avoid unexpected actions
         mButtonCollectedAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -182,12 +187,14 @@ public class SeasonsFragment extends ListFragment implements
                         switch (item.getItemId()) {
                             case CONTEXT_COLLECTED_SHOW_ALL_ID: {
                                 onFlagShowCollected(true);
-                                fireTrackerEvent("Flag all collected (inline)");
+                                Utils.trackAction(getActivity(), TAG,
+                                        "Flag all collected (inline)");
                                 return true;
                             }
                             case CONTEXT_COLLECTED_SHOW_NONE_ID: {
                                 onFlagShowCollected(false);
-                                fireTrackerEvent("Flag all uncollected (inline)");
+                                Utils.trackAction(getActivity(), TAG,
+                                        "Flag all uncollected (inline)");
                                 return true;
                             }
                         }
@@ -255,7 +262,6 @@ public class SeasonsFragment extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_sesortby) {
-            fireTrackerEvent("Sort");
             showSortDialog();
             return true;
         } else {
@@ -285,34 +291,34 @@ public class SeasonsFragment extends ListFragment implements
                 switch (item.getItemId()) {
                     case R.id.menu_action_seasons_watched_all: {
                         onFlagSeasonWatched(seasonTvdbId, seasonNumber, true);
-                        fireTrackerEventContextMenu("Flag all watched");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag all watched");
                         return true;
                     }
                     case R.id.menu_action_seasons_watched_none: {
                         onFlagSeasonWatched(seasonTvdbId, seasonNumber, false);
-                        fireTrackerEventContextMenu("Flag all unwatched");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag all unwatched");
                         return true;
                     }
                     case R.id.menu_action_seasons_collection_add: {
                         onFlagSeasonCollected(seasonTvdbId, seasonNumber, true);
-                        fireTrackerEventContextMenu("Flag all collected");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag all collected");
                         return true;
                     }
                     case R.id.menu_action_seasons_collection_remove: {
                         onFlagSeasonCollected(seasonTvdbId, seasonNumber, false);
-                        fireTrackerEventContextMenu("Flag all uncollected");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag all uncollected");
                         return true;
                     }
                     case R.id.menu_action_seasons_skip: {
                         onFlagSeasonSkipped(seasonTvdbId, seasonNumber);
-                        fireTrackerEventContextMenu("Flag all skipped");
+                        Utils.trackContextMenu(getActivity(), TAG, "Flag all skipped");
                         return true;
                     }
                     case R.id.menu_action_seasons_manage_lists: {
                         ManageListsDialogFragment.showListsDialog(seasonTvdbId,
                                 ListItemTypes.SEASON,
                                 getFragmentManager());
-                        fireTrackerEventContextMenu("Manage lists");
+                        Utils.trackContextMenu(getActivity(), TAG, "Manage lists");
                         return true;
                     }
                 }
@@ -545,6 +551,7 @@ public class SeasonsFragment extends ListFragment implements
         getActivity().invalidateOptionsMenu();
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         /**
          * Updates the total remaining episodes counter, updates season
@@ -567,13 +574,5 @@ public class SeasonsFragment extends ListFragment implements
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
-
-    private void fireTrackerEventContextMenu(String label) {
-        Utils.trackContextMenu(getActivity(), TAG, label);
     }
 }

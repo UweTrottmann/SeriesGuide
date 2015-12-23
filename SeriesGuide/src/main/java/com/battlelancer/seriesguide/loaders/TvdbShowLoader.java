@@ -57,7 +57,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
                 // fall back to user preferred language
                 language = DisplaySettings.getContentLanguage(getContext());
             }
-            result.show = TheTVDB.fetchShow(getContext(), showTvdbId, language);
+            result.show = TheTVDB.getShowDetails(getContext(), showTvdbId, language);
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
             result.show = null;

@@ -127,24 +127,25 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
-        actionBarToolbar = (Toolbar) findViewById(R.id.sgToolbar);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        navigationView = (NavigationView) findViewById(R.id.navigation);
+
+        actionBarToolbar = (Toolbar) drawerLayout.findViewById(R.id.sgToolbar);
+
+        navigationView = (NavigationView) drawerLayout.findViewById(R.id.navigation);
 
         // setup nav drawer account header
-        navigationView.findViewById(R.id.containerDrawerAccount).setOnClickListener(
+        View headerView = navigationView.getHeaderView(0);
+        headerView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onNavItemClick(NAV_ITEM_ACCOUNT_ID);
                     }
                 });
-        textViewHeaderAccountType = (TextView) navigationView.findViewById(
+        textViewHeaderAccountType = (TextView) headerView.findViewById(
                 R.id.textViewDrawerItemAccount);
-        textViewHeaderUser = (TextView) navigationView.findViewById(
-                R.id.textViewDrawerItemUsername);
+        textViewHeaderUser = (TextView) headerView.findViewById(R.id.textViewDrawerItemUsername);
 
         // setup nav drawer items
         navigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
@@ -159,9 +160,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
                         onNavItemClick(menuItem.getItemId());
-                        return true;
+                        return false;
                     }
                 });
     }
@@ -196,7 +196,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 launchIntent = new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Shows");
                 break;
             case R.id.navigation_item_lists:
                 if (this instanceof ListsActivity) {
@@ -204,7 +203,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Lists");
                 break;
             case R.id.navigation_item_movies:
                 if (this instanceof MoviesActivity) {
@@ -212,7 +210,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Movies");
                 break;
             case R.id.navigation_item_stats:
                 if (this instanceof StatsActivity) {
@@ -220,11 +217,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 launchIntent = new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Statistics");
                 break;
             case R.id.navigation_sub_item_settings:
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Settings");
                 break;
             case R.id.navigation_sub_item_help:
                 // if we cant find a package name, it means there is no browser that supports
@@ -239,7 +234,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     builder.setToolbarColor(getResources().getColor(
                             Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
                     builder.setActionButton(
-                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_checkin),
+                            BitmapFactory.decodeResource(getResources(),
+                                    R.drawable.ic_action_checkin),
                             getString(R.string.feedback),
                             PendingIntent.getBroadcast(getApplicationContext(), 0,
                                     new Intent(getApplicationContext(),
@@ -249,8 +245,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
                     launchIntent = customTabsIntent.intent;
                 }
-
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Help");
                 break;
             case R.id.navigation_sub_item_unlock:
                 if (Utils.isAmazonVersion()) {
@@ -298,7 +292,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * this in {@link #onStart()}.
      */
     public void setDrawerSelectedItem(@IdRes int menuItemId) {
-        navigationView.getMenu().findItem(menuItemId).setChecked(true);
+        navigationView.setCheckedItem(menuItemId);
     }
 
     public void openNavDrawer() {

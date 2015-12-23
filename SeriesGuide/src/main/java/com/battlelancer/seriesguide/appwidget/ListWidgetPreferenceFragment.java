@@ -116,7 +116,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         backgroundPref.setTitle(R.string.pref_widget_opacity);
         backgroundPref.setEntries(R.array.widgetOpacity);
         backgroundPref.setEntryValues(R.array.widgetOpacityData);
-        backgroundPref.setDefaultValue("50");
+        backgroundPref.setDefaultValue(WidgetSettings.DEFAULT_WIDGET_BACKGROUND_OPACITY);
         backgroundPref.setPositiveButtonText(null);
         backgroundPref.setNegativeButtonText(null);
         preferenceScreen.addPreference(backgroundPref);

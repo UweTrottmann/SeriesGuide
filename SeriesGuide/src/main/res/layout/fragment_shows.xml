@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shows_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <Button
         android:id="@+id/emptyViewShows"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -15,11 +16,11 @@
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/action_shows_add"
-        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
-    <TextView
+    <Button
         android:id="@+id/emptyViewShowsFilter"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -28,7 +29,6 @@
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/empty_filter"
-        android:textAppearance="@style/TextAppearance.Light"
         android:visibility="gone" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
@@ -40,6 +40,7 @@
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:numColumns="auto_fit"
         android:paddingBottom="88dp"
-        android:stretchMode="columnWidth" />
+        android:stretchMode="columnWidth"
+        tools:listitem="@layout/item_show" />
 
 </FrameLayout>

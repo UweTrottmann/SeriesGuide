@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -71,9 +71,9 @@
                     android:layout_below="@+id/buttonBillingGetSubscription"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/inline_padding"
-                    tools:text="1.99 €/year, 30 day trial"
                     android:textAppearance="@style/TextAppearance.Body.Highlight"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"
+                    tools:text="1.99 €/year, 30 day trial" />
 
                 <Button
                     android:id="@+id/buttonBillingGetPass"
@@ -102,8 +102,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewBillingPricePass"
-                    android:layout_marginTop="@dimen/large_padding"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/large_padding"
                     android:text="@string/billing_learn_more" />
 
             </RelativeLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.battlelancer.seriesguide">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.battlelancer.seriesguide">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -66,7 +67,9 @@
         </activity>
 
         <!-- Hexagon -->
-        <activity android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"/>
+        <activity
+            android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"
+            android:label="@string/hexagon" />
 
         <!-- Shows -->
         <activity
@@ -95,11 +98,17 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.HistoryActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ListsActivity"
+            android:label="@string/lists" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.HistoryActivity"
+            android:label="@string/user_stream" />
 
         <!-- Movies -->
-        <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
+            android:label="@string/movies" />
         <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" />
 
         <!-- Settings -->
@@ -119,22 +128,44 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
+            android:label="@string/action_extensions_configure" />
 
         <!-- Import and Export -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
             android:label="@string/backup" />
-        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+            android:label="@string/backup" />
 
         <!-- trakt -->
-        <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" />
-        <activity android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
+            android:label="@string/connect_trakt" />
+        <activity
+            android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
+            android:label="@string/connect_trakt"
+            android:launchMode="singleTop">
+            <!-- Support callback for external browser OAuth flow. -->
+            <!-- Use singleTop to not break onActivityResult on Android K-. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sgoauth" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktCommentsActivity" />
 
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.StatsActivity"
+            android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
             android:launchMode="singleTop"
@@ -157,7 +188,9 @@
             android:taskAffinity="com.battlelancer.seriesguide.task.quickcheckin"
             android:exported="true" >
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.HelpActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.HelpActivity"
+            android:label="@string/help">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
@@ -244,7 +277,8 @@
                 android:value="true" />
             <meta-data
                 android:name="description"
-                android:value="@string/dashclock_extension_description" />
+                android:value="@string/dashclock_extension_description"
+                tools:ignore="ManifestResource" />
             <meta-data
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
@@ -265,7 +299,8 @@
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/extension_amazon"
-            android:description="@string/description_extension_amazon">
+            android:description="@string/description_extension_amazon"
+            tools:ignore="ManifestResource">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
@@ -277,7 +312,8 @@
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/extension_youtube"
-            android:description="@string/description_extension_youtube">
+            android:description="@string/description_extension_youtube"
+            tools:ignore="ManifestResource">
         <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
@@ -286,7 +322,8 @@
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
             android:icon="@drawable/ic_launcher"
             android:label="@string/web_search"
-            android:description="@string/description_extension_web_search">
+            android:description="@string/description_extension_web_search"
+            tools:ignore="ManifestResource">
         <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>

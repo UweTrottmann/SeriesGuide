@@ -228,7 +228,7 @@ public class TraktCredentials {
             OAuthAccessTokenResponse response = TraktV2.refreshAccessToken(
                     BuildConfig.TRAKT_CLIENT_ID,
                     BuildConfig.TRAKT_CLIENT_SECRET,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
                     oldRefreshToken
             );
             if (response != null) {

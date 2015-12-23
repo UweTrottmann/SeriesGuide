@@ -20,8 +20,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:padding="@dimen/large_padding"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackground"
+    android:padding="@dimen/large_padding">
 
     <!-- ratings layout for narrow show details, currently only smaller font sizes -->
 
@@ -30,16 +30,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder_rating"
-        tools:text="9.6"
         android:textAppearance="@style/TextAppearance.Display1"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        tools:text="9.6" />
 
     <TextView
         android:id="@+id/textViewRatingsRange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/default_padding"
         android:layout_alignBaseline="@+id/textViewRatingsValue"
+        android:layout_marginRight="@dimen/default_padding"
         android:layout_toRightOf="@+id/textViewRatingsValue"
         android:text="@string/tvdb_range"
         android:textAppearance="@style/TextAppearance.Caption" />
@@ -50,18 +50,18 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textViewRatingsValue"
         android:layout_toRightOf="@id/textViewRatingsRange"
-        android:text="@string/norating"
-        tools:text="1234 votes"
-        android:maxLines="2"
         android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:maxLines="2"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Caption"
+        tools:text="1234 votes" />
 
     <TextView
         android:id="@+id/textViewRatingsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-4dp"
         android:layout_below="@+id/textViewRatingsValue"
+        android:layout_marginTop="-4dp"
         android:text="@string/trakt"
         android:textAppearance="@style/TextAppearance.Caption" />
 
@@ -69,9 +69,9 @@
         android:id="@+id/textViewRatingsUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_padding"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewRatingsLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/large_padding"
         android:text="@string/action_rate"
         android:textAppearance="@style/TextAppearance.Body.Highlight" />
 
@@ -79,8 +79,8 @@
         android:id="@+id/textViewRatingsUserLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewRatingsUser"
+        android:layout_centerHorizontal="true"
         android:text="@string/your_rating"
         android:textAppearance="@style/TextAppearance.Caption" />
 

@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.Utils;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
@@ -37,8 +36,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  * Displays a users collection of movies in a grid.
  */
 public class MoviesCollectionFragment extends MoviesBaseFragment {
-
-    private static final String TAG = "Movie Collection";
 
     private static final int CONTEXT_COLLECTION_REMOVE_ID = 0;
 
@@ -63,7 +60,6 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
                 switch (item.getItemId()) {
                     case CONTEXT_COLLECTION_REMOVE_ID: {
                         MovieTools.removeFromCollection(getActivity(), movieTmdbId);
-                        fireTrackerEvent("Remove from collection");
                         return true;
                     }
                 }
@@ -83,9 +79,5 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
     @Override
     protected int getLoaderId() {
         return MoviesActivity.COLLECTION_LOADER_ID;
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 }

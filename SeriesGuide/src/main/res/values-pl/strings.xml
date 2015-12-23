@@ -22,6 +22,7 @@
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
   <string name="description_image">Obraz odcinka</string>
+  <string name="description_menu_overflow">Więcej opcji</string>
   <string name="clear">Wyczyść</string>
   <string name="discard">Anuluj</string>
   <string name="save_selection">Zapisz zaznaczone</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Ostatnia edycja // TVDb</string>
   <string name="services_watch">Oglądaj</string>
   <string name="services_more">Więcej</string>
+  <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
   <string name="today">dziś</string>
   <string name="now">teraz</string>
   <string name="daily">codziennie</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
+  <string name="action_try_any_language">Szukaj w innych językach</string>
+  <string name="action_try_again">Spróbuj ponownie</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_all">Dodaj wszystkie</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Dodano do listy oglądanych</string>
   <string name="watchlist_removed">Usunięto z listy oglądanych</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
-  <string name="movies_empty">Szukaj filmu.</string>
   <string name="movies_collection_empty">Brak filmów w kolekcji.</string>
   <string name="movies_watchlist_empty">Brak filmów na liście do obejrzenia.</string>
   <string name="trailer">Zwiastun</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Proszę czekać…</string>
   <string name="connect">Połącz</string>
   <string name="disconnect">Rozłącz</string>
+  <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
   <string name="connect_trakt_done">Podłączono do trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide zsynchronizuje teraz seriale i filmy na tym urządzeniu z trakt. Może to zająć trochę czasu.</string>
   <string name="add_trakt_shows">Dodaj seriale z biblioteki:</string>

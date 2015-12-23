@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -229,6 +230,52 @@ public class ShowTools {
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
     }
 
+    public void storeLanguage(final int showTvdbId, final String languageCode) {
+        if (HexagonTools.isSignedIn(mContext)) {
+            if (Utils.isNotConnected(mContext, true)) {
+                return;
+            }
+            // send to cloud
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setLanguage(languageCode);
+            uploadShowAsync(show);
+        }
+
+        // schedule database update and sync
+        Runnable runnable = new Runnable() {
+            public void run() {
+                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
+                // change language
+                ContentValues values = new ContentValues();
+                values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
+                mContext.getContentResolver()
+                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
+                                null);
+                // reset episode last edit time so all get updated
+                values = new ContentValues();
+                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+                mContext.getContentResolver()
+                        .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                                values, null, null);
+                // trigger update
+                SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.SINGLE,
+                        showTvdbId, false);
+            }
+        };
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
+
+        // show immediate feedback, also if offline and sync won't go through
+        if (AndroidUtils.isNetworkConnected(mContext)) {
+            // notify about upcoming sync
+            Toast.makeText(mContext, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+        } else {
+            // offline
+            Toast.makeText(mContext, R.string.update_no_connection, Toast.LENGTH_LONG).show();
+        }
+    }
+
     /**
      * Store the rating for the given episode in the database and send it to trakt.
      */
@@ -314,9 +361,10 @@ public class ShowTools {
 
             Cursor query = context.getContentResolver()
                     .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
-                            SeriesGuideContract.Shows._ID,
+                            SeriesGuideContract.Shows._ID, // 0
                             SeriesGuideContract.Shows.FAVORITE,
-                            SeriesGuideContract.Shows.HIDDEN
+                            SeriesGuideContract.Shows.HIDDEN, // 2
+                            SeriesGuideContract.Shows.LANGUAGE
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -327,6 +375,7 @@ public class ShowTools {
                 show.setTvdbId(query.getInt(0));
                 show.setIsFavorite(query.getInt(1) == 1);
                 show.setIsHidden(query.getInt(2) == 1);
+                show.setLanguage(query.getString(3));
                 shows.add(show);
             }
 
@@ -486,29 +535,25 @@ public class ShowTools {
                     values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
                 }
             }
+            if (!TextUtils.isEmpty(show.getLanguage())) {
+                // always overwrite with hexagon language value
+                values.put(SeriesGuideContract.Shows.LANGUAGE, show.getLanguage());
+            }
         }
 
         /**
-         * If the given show exists on Hexagon, downloads and sets properties from Hexagon on the
-         * given show entity.
-         *
-         * <p> <b>Note:</b> Ensure the given show has a valid TVDb id.
+         * If signed in to Hexagon, tries to download the given show.
          */
-        public static void showPropertiesFromHexagon(@NonNull Shows showsService,
-                @NonNull com.battlelancer.seriesguide.dataliberation.model.Show show)
-                throws IOException {
-            Show hexagonShow = showsService
-                    .getShow()
-                    .setShowTvdbId(show.tvdbId)
-                    .execute();
-            if (hexagonShow != null) {
-                if (hexagonShow.getIsFavorite() != null) {
-                    show.favorite = hexagonShow.getIsFavorite();
-                }
-                if (hexagonShow.getIsHidden() != null) {
-                    show.hidden = hexagonShow.getIsHidden();
-                }
+        @Nullable
+        public static Show showFromHexagon(Context context, int showTvdbId) throws IOException {
+            Shows showsService = HexagonTools.getShowsService(context);
+            if (showsService == null) {
+                return null;
             }
+            return showsService
+                    .getShow()
+                    .setShowTvdbId(showTvdbId)
+                    .execute();
         }
     }
 

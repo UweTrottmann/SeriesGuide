@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -18,8 +19,8 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
-    android:layout_height="?attr/actionBarSize"
     android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@drawable/background_actionbar_gradient"
     android:theme="?attr/actionBarTheme"
-    app:popupTheme="?attr/actionBarPopupTheme"
-    android:background="@drawable/background_actionbar_gradient" />
+    app:popupTheme="?attr/actionBarPopupTheme" />

@@ -22,6 +22,7 @@
   <string name="description_overview">Prezentare generală</string>
   <string name="description_poster">Posterul emisiunii</string>
   <string name="description_image">Imaginea episodului</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Ștergere</string>
   <string name="discard">Renunță</string>
   <string name="save_selection">Salvează selecția</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="services_watch">Vezi</string>
   <string name="services_more">Mai mult</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Căutarea nu a reuşit, încercaţi din nou mai târziu.</string>
   <string name="add_all">Adaugă-le pe toate</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Adăugat în watchlist</string>
   <string name="watchlist_removed">Eliminat din watchlist</string>
   <string name="movies_search_hint">Tastaţi un titlu de film</string>
-  <string name="movies_empty">Căutați un film.</string>
   <string name="movies_collection_empty">Nu aţi adăugat filmele la colecţie.</string>
   <string name="movies_watchlist_empty">Nu aţi adăugat filmele in watchlist.</string>
   <string name="trailer">Trailer</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Un moment, vă rugăm…</string>
   <string name="connect">Conectează-te</string>
   <string name="disconnect">Deconectează-te</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Conectat la trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide va sincroniza emisiunile și filmele de pe dispozitivul acesta cu trakt. Acest lucru poate dura ceva timp.</string>
   <string name="add_trakt_shows">Adaugă emisiuni din biblioteca trakt:</string>

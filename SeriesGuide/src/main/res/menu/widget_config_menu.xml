@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_save"
         android:icon="@drawable/ic_action_tick"
-        app:showAsAction="ifRoom|withText"
-        android:title="@string/save_selection"/>
+        android:title="@string/save_selection"
+        app:showAsAction="ifRoom|withText" />
 
 </menu>

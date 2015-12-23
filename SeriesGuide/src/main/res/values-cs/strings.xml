@@ -22,6 +22,7 @@
   <string name="description_overview">Přehled</string>
   <string name="description_poster">Zobrazit plakát</string>
   <string name="description_image">Obrázek z epizody</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Vyčistit</string>
   <string name="discard">Zrušit</string>
   <string name="save_selection">Uložit výběr</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Naposledy editováno // TVDb</string>
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">dnes</string>
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Napište název seriálu</string>
   <string name="add_empty">Nejsou zde žádné seriály.</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_all">Přidat vše</string>
   <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Přídáno do seznamu Chci vidět</string>
   <string name="watchlist_removed">Odebráno ze seznamu Chci vidět</string>
   <string name="movies_search_hint">Napište název filmu</string>
-  <string name="movies_empty">Vyhledejte film výše.</string>
   <string name="movies_collection_empty">Ve sbírce nemáte přidány žádné filmy.</string>
   <string name="movies_watchlist_empty">V Chci vidět nemáte přidány žádné filmy.</string>
   <string name="trailer">Trailer</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Chvilku strpení…</string>
   <string name="connect">Připojit</string>
   <string name="disconnect">Odpojit</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide bude nyní synchronizovat, pořady a filmy na tomto zařízení se službou Trakt. To může chvíli trvat.</string>
   <string name="add_trakt_shows">Přidat seriály z vaší knihovny:</string>

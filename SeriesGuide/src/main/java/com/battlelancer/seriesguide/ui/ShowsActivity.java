@@ -63,7 +63,6 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
@@ -194,8 +193,11 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void setupActionBar() {
         super.setupActionBar();
+        setTitle(R.string.shows);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.shows);
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.shows);
+        }
     }
 
     private void setupViews() {
@@ -379,16 +381,15 @@ public class ShowsActivity extends BaseTopActivity implements
         int itemId = item.getItemId();
         if (itemId == R.id.menu_search) {
             startActivity(new Intent(this, SearchActivity.class));
-            fireTrackerEvent("Search");
             return true;
         } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
-            fireTrackerEvent("Update (outdated)");
+            Utils.trackAction(this, TAG, "Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
-            fireTrackerEvent("Update (all)");
+            Utils.trackAction(this, TAG, "Update (all)");
 
             return true;
         } else {
@@ -498,11 +499,6 @@ public class ShowsActivity extends BaseTopActivity implements
         // replace the first run fragment with a show fragment
         tabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
         tabsAdapter.notifyTabsChanged();
-    }
-
-    @Override
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 
     // Listener that's called when we finish querying the items and

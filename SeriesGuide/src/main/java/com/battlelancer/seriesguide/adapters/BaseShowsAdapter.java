@@ -65,6 +65,8 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     public void setFavoriteState(ImageView view, boolean isFavorite) {
         view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
+        view.setContentDescription(view.getContext()
+                .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
     /**

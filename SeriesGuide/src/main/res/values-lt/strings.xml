@@ -22,6 +22,7 @@
   <string name="description_overview">Apžvalga</string>
   <string name="description_poster">Rodyti plakatą</string>
   <string name="description_image">Serijos paveikslas</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Išvalyti</string>
   <string name="discard">Atmesti</string>
   <string name="save_selection">Išsaugoti pasirinkimą</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Paskutinis redagavimas // TVDb</string>
   <string name="services_watch">Žiūrėti</string>
   <string name="services_more">Daugiau</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">šiandien</string>
   <string name="now">dabar</string>
   <string name="daily">Kasdien</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Įveskite pavadinimą</string>
   <string name="add_empty">Nėra serialų.</string>
   <string name="no_results">Rezultatų nėra, pabandykite įvesti pilnus žodžius.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Paieška nepavyko, bandykite dar kartą vėliau.</string>
   <string name="add_all">Pridėti visus</string>
   <string name="add_multiple">Visi serialai netrukus atsiras jūsų serialų sąraše.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Įtraukta į stebimų sarašą</string>
   <string name="watchlist_removed">Pašalinta iš stebimų sąrašo</string>
   <string name="movies_search_hint">Įveskite filmo pavadinimą</string>
-  <string name="movies_empty">Ieškoti aukščiau nurodymo filmo.</string>
   <string name="movies_collection_empty">Dar nesate įtraukę filmų į savo kolekciją.</string>
   <string name="movies_watchlist_empty">Dar nesate įtraukę filmų į stebimų sąrašą.</string>
   <string name="trailer">Reklama</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Sekunde, prašome…</string>
   <string name="connect">Prisijungti</string>
   <string name="disconnect">Atsijungti</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Prijungti prie trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Įtraukti sąrašus iš jūsų bibliotekos:</string>

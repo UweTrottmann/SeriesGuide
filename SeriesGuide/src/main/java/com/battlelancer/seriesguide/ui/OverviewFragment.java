@@ -50,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
@@ -64,6 +65,7 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -162,7 +164,7 @@ public class OverviewFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 onToggleShowFavorited(v);
-                fireTrackerEvent("Toggle favorited");
+                Utils.trackAction(getActivity(), TAG, "Toggle favorited");
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
@@ -254,15 +256,16 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
-
         EventBus.getDefault().unregister(this);
+
+        super.onPause();
     }
 
     @Override
@@ -323,7 +326,7 @@ public class OverviewFragment extends Fragment implements
             createCalendarEvent();
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
-            fireTrackerEvent("Manage lists");
+            Utils.trackAction(getActivity(), TAG, "Manage lists");
             if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
                 ManageListsDialogFragment.showListsDialog(
                         mCurrentEpisodeCursor.getInt(EpisodeQuery._ID),
@@ -339,8 +342,6 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void createCalendarEvent() {
-        fireTrackerEvent("Add to calendar");
-
         if (mShowCursor != null && mShowCursor.moveToFirst() && mCurrentEpisodeCursor != null
                 && mCurrentEpisodeCursor.moveToFirst()) {
             final int seasonNumber = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
@@ -356,6 +357,8 @@ public class OverviewFragment extends Fragment implements
                     mShowCursor.getInt(ShowQuery.SHOW_RUNTIME)
             );
         }
+
+        Utils.trackAction(getActivity(), TAG, "Add to calendar");
     }
 
     private void onCheckIn() {
@@ -367,19 +370,19 @@ public class OverviewFragment extends Fragment implements
             // don't commit fragment change after onPause
             if (f != null && isResumed()) {
                 f.show(getFragmentManager(), "checkin-dialog");
-                fireTrackerEvent("Check-In");
+                Utils.trackAction(getActivity(), TAG, "Check-In");
             }
         }
     }
 
     private void onEpisodeSkipped() {
         onChangeEpisodeFlag(EpisodeFlags.SKIPPED);
-        fireTrackerEvent("Flag Skipped");
+        Utils.trackAction(getActivity(), TAG, "Flag Skipped");
     }
 
     private void onEpisodeWatched() {
         onChangeEpisodeFlag(EpisodeFlags.WATCHED);
-        fireTrackerEvent("Flag Watched");
+        Utils.trackAction(getActivity(), TAG, "Flag Watched");
     }
 
     private void onChangeEpisodeFlag(int episodeFlag) {
@@ -398,7 +401,7 @@ public class OverviewFragment extends Fragment implements
 
         EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), mCurrentEpisodeTvdbId);
 
-        fireTrackerEvent("Rate (trakt)");
+        Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
 
     private void shareEpisode() {
@@ -412,11 +415,10 @@ public class OverviewFragment extends Fragment implements
         ShareUtils.shareEpisode(getActivity(), mCurrentEpisodeTvdbId, seasonNumber, episodeNumber,
                 mShowTitle, episodeTitle);
 
-        fireTrackerEvent("Share");
+        Utils.trackAction(getActivity(), TAG, "Share");
     }
 
     private void onToggleCollected() {
-        fireTrackerEvent("Toggle Collected");
         if (mCurrentEpisodeCursor != null && mCurrentEpisodeCursor.moveToFirst()) {
             final int season = mCurrentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mCurrentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
@@ -424,6 +426,7 @@ public class OverviewFragment extends Fragment implements
             EpisodeTools.episodeCollected(getActivity(), getShowId(),
                     mCurrentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
         }
+        Utils.trackAction(getActivity(), TAG, "Toggle Collected");
     }
 
     private void onToggleShowFavorited(View v) {
@@ -511,7 +514,8 @@ public class OverviewFragment extends Fragment implements
                 Shows.POSTER,
                 Shows.IMDBID,
                 Shows.RUNTIME,
-                Shows.FAVORITE
+                Shows.FAVORITE,
+                Shows.LANGUAGE
         };
 
         int SHOW_TITLE = 1;
@@ -525,6 +529,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_IMDBID = 9;
         int SHOW_RUNTIME = 10;
         int SHOW_FAVORITE = 11;
+        int SHOW_LANGUAGE = 12;
     }
 
     @Override
@@ -572,10 +577,6 @@ public class OverviewFragment extends Fragment implements
         if (mCurrentEpisodeTvdbId == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
         }
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 
     private void onPopulateEpisodeData(Cursor episode) {
@@ -640,6 +641,10 @@ public class OverviewFragment extends Fragment implements
                     : R.string.action_collection_add);
             CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
                     : R.string.action_collection_add);
+
+            // prevent checking in if hexagon is enabled
+            buttonCheckin.setVisibility(
+                    HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
             // buttons might have been disabled by action, re-enable
             buttonWatch.setEnabled(true);
@@ -711,7 +716,16 @@ public class OverviewFragment extends Fragment implements
 
     private void onLoadEpisodeDetails(final Cursor episode) {
         // description
-        textDescription.setText(episode.getString(EpisodeQuery.OVERVIEW));
+        String overview = episode.getString(EpisodeQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            textDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            mShowCursor.getString(ShowQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            textDescription.setText(overview);
+        }
 
         // dvd number
         boolean isShowingMeta = Utils.setLabelValueOrHide(labelDvdNumber, textDvdNumber,
@@ -763,7 +777,6 @@ public class OverviewFragment extends Fragment implements
                                     .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                     .toBundle()
                     );
-                    fireTrackerEvent("Comments");
                 }
             }
         });
@@ -819,7 +832,14 @@ public class OverviewFragment extends Fragment implements
         // set show title in action bar
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle(mShowTitle);
+        if (actionBar != null) {
+            actionBar.setTitle(mShowTitle);
+            getActivity().setTitle(getString(R.string.description_overview) + mShowTitle);
+        }
+
+        if (getView() == null) {
+            return;
+        }
 
         // status
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
@@ -835,6 +855,8 @@ public class OverviewFragment extends Fragment implements
             favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                     R.attr.drawableStar0));
         }
+        favorited.setContentDescription(getString(isFavorited ? R.string.context_unfavorite
+                : R.string.context_favorite));
         CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
                 : R.string.context_favorite);
         favorited.setTag(isFavorited);

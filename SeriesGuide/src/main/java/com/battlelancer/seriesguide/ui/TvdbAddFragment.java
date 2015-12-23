@@ -42,10 +42,9 @@ import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
@@ -64,6 +63,7 @@ public class TvdbAddFragment extends AddFragment {
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
     private String language;
+    private boolean shouldTryAnyLanguage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,7 +135,7 @@ public class TvdbAddFragment extends AddFragment {
                 }
                 // refresh results in newly selected language
                 search();
-                Timber.d("Set search language to " + language);
+                Timber.d("Set search language to %s", language);
             }
 
             @Override
@@ -192,6 +192,25 @@ public class TvdbAddFragment extends AddFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void setupEmptyView(EmptyView emptyView) {
+        emptyView.setButtonText(R.string.action_try_any_language);
+        emptyView.setButtonClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (shouldTryAnyLanguage && language != null) {
+                    // not set to any language: set to any language
+                    // spinner selection change triggers search
+                    shouldTryAnyLanguage = false;
+                    spinnerLanguage.setSelection(0);
+                } else {
+                    // already set to no language or retrying, trigger search directly
+                    search();
+                }
+            }
+        });
+    }
+
     private void clearSearchTerm() {
         searchBox.setText(null);
         searchBox.requestFocus();
@@ -241,6 +260,12 @@ public class TvdbAddFragment extends AddFragment {
             }
             setSearchResults(data.results);
             setEmptyMessage(data.emptyTextResId);
+            if (data.successful && data.results.size() == 0 && language != null) {
+                shouldTryAnyLanguage = true;
+                emptyView.setButtonText(R.string.action_try_any_language);
+            } else {
+                emptyView.setButtonText(R.string.action_try_again);
+            }
             setProgressVisible(false, true);
         }
 

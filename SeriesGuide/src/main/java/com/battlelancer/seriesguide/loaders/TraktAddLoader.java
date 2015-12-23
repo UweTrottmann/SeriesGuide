@@ -119,8 +119,8 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     }
 
     /**
-     * Transforms a list of trakt shows to a list of {@link SearchResult}, filters out shows already
-     * in the local database.
+     * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already
+     * in the local database as added.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
             @NonNull List<Show> traktShows) {

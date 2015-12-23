@@ -103,7 +103,9 @@ public class BillingActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setupViews() {

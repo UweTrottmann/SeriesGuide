@@ -127,26 +127,15 @@ public class ExtensionsConfigurationFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.extensions_configuration_menu, menu);
-        if (Utils.isAmazonVersion()) {
-            // no third-party extensions supported on Amazon app store for now
-            menu.findItem(R.id.menu_action_extensions_search).setVisible(false);
-            menu.findItem(R.id.menu_action_extensions_search).setEnabled(false);
-        }
-        if (!BuildConfig.DEBUG) {
-            menu.findItem(R.id.menu_action_extensions_enable).setVisible(false);
-            menu.findItem(R.id.menu_action_extensions_disable).setVisible(false);
+        if (BuildConfig.DEBUG) {
+            // add debug options to enable/disable all extensions
+            inflater.inflate(R.menu.extensions_configuration_menu, menu);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_extensions_search) {
-            Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
-                    "Get more extensions");
-            return true;
-        }
         if (itemId == R.id.menu_action_extensions_enable) {
             List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
                     getActivity()).queryAllAvailableExtensions();
@@ -289,15 +278,29 @@ public class ExtensionsConfigurationFragment extends Fragment
         }
 
         mAddExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
+        Menu menu = mAddExtensionPopupMenu.getMenu();
+        // list of installed, but disabled extensions
         for (int i = 0; i < mAvailableExtensions.size(); i++) {
             ExtensionManager.Extension extension = mAvailableExtensions.get(i);
-            mAddExtensionPopupMenu.getMenu().add(Menu.NONE, i, Menu.NONE, extension.label);
+            menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label);
+        }
+        // no third-party extensions supported on Amazon app store for now
+        if (!Utils.isAmazonVersion()) {
+            // link to get more extensions
+            menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search);
         }
         mAddExtensionPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
+                if (item.getItemId() == 0) {
+                    // special item: search for more extensions
+                    onGetMoreExtensions();
+                    return true;
+                }
+
                 // add to enabled extensions
-                ExtensionManager.Extension extension = mAvailableExtensions.get(item.getItemId());
+                ExtensionManager.Extension extension = mAvailableExtensions.get(
+                        item.getItemId() - 1);
                 mEnabledExtensions.add(extension.componentName);
                 // re-populate extension list
                 getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
@@ -309,6 +312,11 @@ public class ExtensionsConfigurationFragment extends Fragment
         });
 
         mAddExtensionPopupMenu.show();
+    }
+
+    private void onGetMoreExtensions() {
+        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
+                "Get more extensions");
     }
 
     private class ExtensionsDragSortController extends DragSortController {

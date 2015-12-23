@@ -75,8 +75,9 @@ public class HistoryActivity extends BaseActivity implements
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.user_stream);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

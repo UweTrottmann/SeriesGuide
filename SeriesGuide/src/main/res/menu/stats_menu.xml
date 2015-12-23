@@ -22,8 +22,8 @@
     <item
         android:id="@+id/menu_action_stats_share"
         android:icon="@drawable/ic_action_share"
-        app:showAsAction="ifRoom"
-        android:title="@string/share" />
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_action_stats_filter_specials"
         android:checkable="true"

@@ -17,10 +17,13 @@
 package com.battlelancer.seriesguide;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -67,6 +70,32 @@ public class AnalyticsTree extends Timber.DebugTree {
                 TvdbException e = (TvdbException) t;
                 Utils.trackCustomEvent(context,
                         "TheTVDB Error",
+                        tag + ": " + message,
+                        e.getMessage());
+                return;
+            } else if (t instanceof OAuthProblemException) {
+                // log trakt OAuth failures
+                OAuthProblemException e = (OAuthProblemException) t;
+                StringBuilder exceptionMessage = new StringBuilder();
+                if (!TextUtils.isEmpty(e.getError())) {
+                    exceptionMessage.append(e.getError());
+                }
+                if (!TextUtils.isEmpty(e.getDescription())) {
+                    exceptionMessage.append(", ").append(e.getDescription());
+                }
+                if (!TextUtils.isEmpty(e.getUri())) {
+                    exceptionMessage.append(", ").append(e.getUri());
+                }
+                Utils.trackCustomEvent(context,
+                        "OAuth Error",
+                        tag + ": " + message,
+                        exceptionMessage.toString());
+                return;
+            } else if (t instanceof OAuthSystemException) {
+                // log trakt OAuth failures
+                OAuthSystemException e = (OAuthSystemException) t;
+                Utils.trackCustomEvent(context,
+                        "OAuth Error",
                         tag + ": " + message,
                         e.getMessage());
                 return;

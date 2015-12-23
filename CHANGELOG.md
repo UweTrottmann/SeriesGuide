@@ -5,6 +5,48 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 27 *(2015-12-21)*
+-----------------------------
+
+* trakt login through default browser.
+* Improved accessibility.
+* More material list widget design.
+
+#### 27 *(2015-12-21)*
+
+* TWEAK Updated list widget design to feel more material.
+* NOTICE Latest translations from crowdin.
+
+#### 27-beta4 *(2015-12-17)*
+
+* TWEAK Improve accessibility by adding missing descriptions to buttons and labels, useful titles to screens.
+* FIX Could not add show existing on SeriesGuide Cloud in some circumstances.
+* FIX trakt login was broken on Android 4.4 and below.
+* NOTICE Latest translations from crowdin.
+
+#### 27-beta3 *(2015-12-10)*
+
+* TWEAK Show message if no show or episode description is available.
+* TWEAK Show re-try buttons if there are no search results or searching for shows/movies failed.
+* NOTICE Latest translations from crowdin.
+
+#### 27-beta2 *(2015-11-27)*
+
+* TWEAK Connect trakt: show integrated browser option also if no auth codes are returned.
+* TWEAK Hide check-in buttons when connected to SeriesGuide Cloud. If connected to trakt as well,
+  watched items would not sync down. Marking watched manually would create duplicate history entries.
+* FIX On some occasions the nav drawer has an incorrect item selected.
+* FIX Did not show last watched episode for trakt friends if their username had a space character.
+* NOTICE Latest translations from crowdin.
+
+#### 27-beta1 *(2015-11-19)*
+
+* TWEAK When connecting to trakt the default browser is used, which likely already has your credentials.
+  The integrated browser is still available as a fall back.
+* TWEAK Sync show languages with SeriesGuide Cloud.
+* TWEAK If the app bar scrolls out of view, it will now snap to an appropriate position.
+* NOTICE Latest translations from crowdin.
+
 Version 26 *(2015-11-06)*
 -----------------------------
 

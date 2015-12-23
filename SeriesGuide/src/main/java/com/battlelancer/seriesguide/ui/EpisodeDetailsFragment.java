@@ -47,6 +47,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
@@ -61,6 +62,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -242,13 +244,13 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         } else if (itemId == R.id.menu_manage_lists) {
             ManageListsDialogFragment.showListsDialog(getEpisodeTvdbId(), ListItemTypes.EPISODE,
                     getFragmentManager());
-            fireTrackerEvent("Manage lists");
+            Utils.trackAction(getActivity(), TAG, "Manage lists");
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
             ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
                     Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
                             mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
-            fireTrackerEvent("Add to calendar");
+            Utils.trackAction(getActivity(), TAG, "Add to calendar");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -333,7 +335,16 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // title and description
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
         mTitle.setText(mEpisodeTitle);
-        mDescription.setText(cursor.getString(DetailsQuery.OVERVIEW));
+        String overview = cursor.getString(DetailsQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            mDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            mDescription.setText(overview);
+        }
 
         // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
@@ -442,11 +453,15 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                         episodeTvdbId);
                 if (f != null && isResumed()) {
                     f.show(getFragmentManager(), "checkin-dialog");
-                    fireTrackerEvent("Check-In");
+                    Utils.trackAction(getActivity(), TAG, "Check-In");
                 }
             }
         });
         CheatSheet.setup(mCheckinButton);
+
+        // prevent checking in if hexagon is enabled
+        mCheckinButton.setVisibility(
+                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
         // watched button
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
@@ -462,7 +477,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 onToggleWatched();
-                fireTrackerEvent("Toggle watched");
+                Utils.trackAction(getActivity(), TAG, "Toggle watched");
             }
         });
         mWatchedButton.setEnabled(true);
@@ -482,7 +497,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 onToggleCollected();
-                fireTrackerEvent("Toggle collected");
+                Utils.trackAction(getActivity(), TAG, "Toggle collected");
             }
         });
         mCollectedButton.setEnabled(true);
@@ -509,7 +524,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                     // disable button, will be re-enabled on data reload once action completes
                     v.setEnabled(false);
                     onToggleSkipped();
-                    fireTrackerEvent("Toggle skipped");
+                    Utils.trackAction(getActivity(), TAG, "Toggle skipped");
                 }
             });
             mSkipButton.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
@@ -544,7 +559,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
-                fireTrackerEvent("Comments");
             }
         });
 
@@ -561,7 +575,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void rateEpisode() {
         EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), getEpisodeTvdbId());
-        fireTrackerEvent("Rate (trakt)");
+        Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
 
     private void shareEpisode() {
@@ -570,8 +584,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         }
         ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber,
                 mShowTitle, mEpisodeTitle);
-
-        fireTrackerEvent("Share");
+        Utils.trackAction(getActivity(), TAG, "Share");
     }
 
     private void loadImage(String imagePath) {
@@ -650,10 +663,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
-    }
-
     interface DetailsQuery {
 
         String[] PROJECTION = new String[] {
@@ -680,7 +689,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 Shows.REF_SHOW_ID,
                 Shows.IMDBID,
                 Shows.TITLE,
-                Shows.RUNTIME
+                Shows.RUNTIME,
+                Shows.LANGUAGE
         };
 
         int _ID = 0;
@@ -707,5 +717,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         int SHOW_IMDBID = 21;
         int SHOW_TITLE = 22;
         int SHOW_RUNTIME = 23;
+        int SHOW_LANGUAGE = 24;
     }
 }

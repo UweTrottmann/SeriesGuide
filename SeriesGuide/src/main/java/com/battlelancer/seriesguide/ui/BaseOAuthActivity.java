@@ -17,36 +17,58 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
 import timber.log.Timber;
 
 /**
- * Base class to create an OAuth 2.0 authorization flow using an embedded {@link
- * android.webkit.WebView}.
+ * Base class to create an OAuth 2.0 authorization flow using the browser, offering fallback to an
+ * embedded {@link android.webkit.WebView}.
  */
 public abstract class BaseOAuthActivity extends BaseActivity {
 
-    public static final String OAUTH_CALLBACK_URL_LOCALHOST = "http://localhost";
+    /** Pass with true to not auto launch the external browser, display default error message. */
+    public static final String EXTRA_KEY_IS_RETRY = "isRetry";
+
+    /** Needs to match with the scheme registered in the manifest. */
+    private static final String OAUTH_URI_SCHEME = "sgoauth";
+    public static final String OAUTH_CALLBACK_URL_CUSTOM = OAUTH_URI_SCHEME + "://callback";
+
     private WebView webview;
+    private View buttonContainer;
+    private TextView textViewMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_oauth);
         setupActionBar();
 
-        webview = (WebView) findViewById(R.id.webView);
-        setupViews(webview);
+        setupViews();
+
+        boolean isRetry = getIntent().getBooleanExtra(EXTRA_KEY_IS_RETRY, false);
+        if (isRetry) {
+            setMessage(getAuthErrorMessage());
+        }
+
+        if (savedInstanceState == null && !isRetry) {
+            // try to launch external browser with OAuth page
+            launchBrowser();
+        }
     }
 
     @Override
@@ -69,11 +91,65 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void setupViews() {
+        webview = (WebView) findViewById(R.id.webView);
+        buttonContainer = findViewById(R.id.containerOauthButtons);
+        textViewMessage = (TextView) buttonContainer.findViewById(R.id.textViewOauthMessage);
+
+        // setup buttons (can be used if browser launch fails or user comes back without code)
+        Button buttonBrowser = (Button) findViewById(R.id.buttonOauthBrowser);
+        buttonBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchBrowser();
+            }
+        });
+        Button buttonWebView = (Button) findViewById(R.id.buttonOauthWebView);
+        buttonWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activateWebView();
+            }
+        });
+
+        activateFallbackButtons();
+        setMessage(null);
+    }
+
+    private void launchBrowser() {
+        String authorizationUrl = getAuthorizationUrl();
+        if (authorizationUrl != null) {
+            Utils.launchWebsite(this, authorizationUrl, "OAuth", "Launch browser for OAuth");
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // handle callback from external browser
+        Uri callbackUri = intent.getData();
+        if (callbackUri != null && callbackUri.getScheme().equals(OAUTH_URI_SCHEME)) {
+            fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
+                    callbackUri.getQueryParameter("state"));
+        }
+    }
+
+    protected void activateFallbackButtons() {
+        webview.setVisibility(View.GONE);
+        buttonContainer.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    protected void setupViews(WebView webview) {
+    protected void activateWebView() {
+        buttonContainer.setVisibility(View.GONE);
+        webview.setVisibility(View.VISIBLE);
+
         webview.setWebViewClient(webViewClient);
         webview.getSettings().setJavaScriptEnabled(true);
 
@@ -85,11 +161,17 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         // load the authorization page
         Timber.d("Initiating authorization request...");
         String authUrl = getAuthorizationUrl();
-        if (TextUtils.isEmpty(authUrl)) {
-            Toast.makeText(this, getAuthErrorMessage(), Toast.LENGTH_LONG).show();
-            finish();
-        } else {
+        if (authUrl != null) {
             webview.loadUrl(authUrl);
+        }
+    }
+
+    protected void setMessage(String message) {
+        if (message == null) {
+            textViewMessage.setVisibility(View.GONE);
+        } else {
+            textViewMessage.setVisibility(View.VISIBLE);
+            textViewMessage.setText(message);
         }
     }
 
@@ -97,19 +179,16 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         @Override
         public void onReceivedError(WebView view, int errorCode, String description,
                 String failingUrl) {
-            Toast.makeText(BaseOAuthActivity.this, getAuthErrorMessage() + " " + description,
-                    Toast.LENGTH_LONG).show();
-            finish();
+            Timber.e("WebView error: %s %s", errorCode, description);
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(" + errorCode + " " + description + ")");
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url != null && url.startsWith(OAUTH_CALLBACK_URL_LOCALHOST)) {
+            if (url != null && url.startsWith(OAUTH_CALLBACK_URL_CUSTOM)) {
                 Uri uri = Uri.parse(url);
-
-                fetchTokens(uri.getQueryParameter("code"), uri.getQueryParameter("state"));
-
-                finish();
+                fetchTokensAndFinish(uri.getQueryParameter("code"), uri.getQueryParameter("state"));
                 return true;
             }
             return false;
@@ -128,6 +207,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     /**
      * Return the url of the OAuth authorization page.
      */
+    @Nullable
     protected abstract String getAuthorizationUrl();
 
     /**
@@ -140,5 +220,5 @@ public abstract class BaseOAuthActivity extends BaseActivity {
      * once the user has authorized us. If state was sent, ensure it matches. Then retrieve the
      * OAuth tokens with the auth code.
      */
-    protected abstract void fetchTokens(@Nullable String authCode, @Nullable String state);
+    protected abstract void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state);
 }

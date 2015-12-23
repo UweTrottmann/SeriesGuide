@@ -42,6 +42,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
@@ -284,7 +285,7 @@ public class MovieDetailsFragment extends Fragment {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
             ShareUtils.shareMovie(getActivity(), mTmdbId, mMovieDetails.tmdbMovie().title);
-            fireTrackerEvent("Share");
+            Utils.trackAction(getActivity(), TAG, "Share");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
@@ -316,8 +317,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private void populateMovieViews() {
         /**
-         * Ensure to take title, overview and poster from TMDb as they are localized.
-         * Get release time from trakt.
+         * Get everything from TMDb. Also get additional rating from trakt.
          */
         final Ratings traktRatings = mMovieDetails.traktRatings();
         final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
@@ -327,6 +327,7 @@ public class MovieDetailsFragment extends Fragment {
         final int rating = mMovieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
+        getActivity().setTitle(tmdbMovie.title);
         mMovieDescription.setText(tmdbMovie.overview);
 
         // release date and runtime: "July 17, 2009 | 95 min"
@@ -348,10 +349,14 @@ public class MovieDetailsFragment extends Fragment {
                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
                         .newInstance(mTmdbId, title);
                 f.show(getFragmentManager(), "checkin-dialog");
-                fireTrackerEvent("Check-In");
+                Utils.trackAction(getActivity(), TAG, "Check-In");
             }
         });
         CheatSheet.setup(mCheckinButton);
+
+        // prevent checking in if hexagon is enabled
+        mCheckinButton.setVisibility(
+                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
 
         // watched button (only supported when connected to trakt)
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
@@ -370,10 +375,10 @@ public class MovieDetailsFragment extends Fragment {
                     v.setEnabled(false);
                     if (isWatched) {
                         MovieTools.unwatchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Unwatched movie");
+                        Utils.trackAction(getActivity(), TAG, "Unwatched movie");
                     } else {
                         MovieTools.watchedMovie(getActivity(), mTmdbId);
-                        fireTrackerEvent("Watched movie");
+                        Utils.trackAction(getActivity(), TAG, "Watched movie");
                     }
                 }
             });
@@ -400,10 +405,10 @@ public class MovieDetailsFragment extends Fragment {
                 v.setEnabled(false);
                 if (inCollection) {
                     MovieTools.removeFromCollection(getActivity(), mTmdbId);
-                    fireTrackerEvent("Uncollected movie");
+                    Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
                     MovieTools.addToCollection(getActivity(), mTmdbId);
-                    fireTrackerEvent("Collected movie");
+                    Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
         });
@@ -426,10 +431,10 @@ public class MovieDetailsFragment extends Fragment {
                 v.setEnabled(false);
                 if (inWatchlist) {
                     MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
-                    fireTrackerEvent("Unwatchlist movie");
+                    Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
                     MovieTools.addToWatchlist(getActivity(), mTmdbId);
-                    fireTrackerEvent("Watchlist movie");
+                    Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
         });
@@ -483,7 +488,6 @@ public class MovieDetailsFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
-                fireTrackerEvent("Comments");
             }
         });
 
@@ -532,7 +536,7 @@ public class MovieDetailsFragment extends Fragment {
         if (TraktCredentials.ensureCredentials(getActivity())) {
             RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(mTmdbId);
             newFragment.show(getFragmentManager(), "ratedialog");
-            fireTrackerEvent("Rate (trakt)");
+            Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
         }
     }
 
@@ -541,10 +545,6 @@ public class MovieDetailsFragment extends Fragment {
         args.putInt(InitBundle.TMDB_ID, mTmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
                 mMovieLoaderCallbacks);
-    }
-
-    private void fireTrackerEvent(String label) {
-        Utils.trackAction(getActivity(), TAG, label);
     }
 
     private LoaderManager.LoaderCallbacks<MovieDetails> mMovieLoaderCallbacks

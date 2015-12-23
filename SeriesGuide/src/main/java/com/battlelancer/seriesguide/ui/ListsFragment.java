@@ -230,7 +230,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                 case R.id.menu_action_lists_manage: {
                     ManageListsDialogFragment.showListsDialog(itemTvdbId, itemType,
                             fragmentManager);
-                    fireTrackerEvent("Manage lists");
+                    Utils.trackContextMenu(context, TAG, "Manage lists");
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
@@ -238,15 +238,11 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                             .delete(ListItems.buildListItemUri(itemId), null, null);
                     context.getContentResolver()
                             .notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
-                    fireTrackerEvent("Remove from mList");
+                    Utils.trackContextMenu(context, TAG, "Remove from list");
                     return true;
                 }
             }
             return false;
-        }
-
-        private void fireTrackerEvent(String label) {
-            Utils.trackContextMenu(context, TAG, label);
         }
     }
 }

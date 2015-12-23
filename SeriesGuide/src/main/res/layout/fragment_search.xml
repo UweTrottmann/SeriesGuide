@@ -9,13 +9,13 @@
         style="@style/DefaultPadding.List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/grid_topbottom_padding"
+        android:dividerHeight="@dimen/grid_vertical_spacing"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="true"
         android:paddingBottom="@dimen/grid_topbottom_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/search_padding_right"
-        android:dividerHeight="@dimen/grid_vertical_spacing"
-        android:fastScrollEnabled="true"
-        android:drawSelectorOnTop="true"
+        android:paddingTop="@dimen/grid_topbottom_padding"
         android:scrollbarStyle="outsideOverlay" />
 
     <TextView
@@ -26,6 +26,6 @@
         android:gravity="center"
         android:padding="@dimen/default_padding"
         android:text="@string/no_results"
-        android:textAppearance="@style/TextAppearance.Light" />
+        android:textAppearance="@style/TextAppearance.Body.Dim" />
 
 </FrameLayout>

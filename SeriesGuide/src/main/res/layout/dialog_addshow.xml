@@ -13,12 +13,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="@dimen/dialog_min_width"
-            android:padding="@dimen/larger_padding"
+            android:animateLayoutChanges="true"
+            android:descendantFocusability="beforeDescendants"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:descendantFocusability="beforeDescendants"
-            android:animateLayoutChanges="true">
+            android:minWidth="@dimen/dialog_min_width"
+            android:padding="@dimen/larger_padding">
 
             <ProgressBar
                 android:id="@+id/progressBarAdd"
@@ -40,9 +40,9 @@
                 android:layout_width="@dimen/show_poster_width"
                 android:layout_height="@dimen/show_poster_height"
                 android:layout_below="@+id/textViewAddTitle"
-                tools:src="@drawable/ic_image_missing"
                 android:scaleType="centerInside"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_image_missing" />
 
             <TextView
                 android:id="@+id/textViewAddShowMeta"
@@ -50,30 +50,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddTitle"
-                android:layout_toRightOf="@+id/imageViewAddPoster"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="0dp"
-                tools:text="Continuing\nMon 07:00 PM\nShowtime\n60 min"
+                android:layout_toRightOf="@+id/imageViewAddPoster"
                 android:textAppearance="@style/TextAppearance.Subhead"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="Continuing\nMon 07:00 PM\nShowtime\n60 min" />
 
             <TextView
                 android:id="@+id/textViewAddRatingValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageViewAddPoster"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/default_padding"
                 android:text="@string/placeholder_rating"
-                tools:text="9.6"
-                android:textAppearance="@style/TextAppearance.Display1" />
+                android:textAppearance="@style/TextAppearance.Display1"
+                tools:text="9.6" />
 
             <TextView
                 android:id="@+id/textViewAddRatingRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/default_padding"
                 android:layout_alignBaseline="@+id/textViewAddRatingValue"
+                android:layout_marginRight="@dimen/default_padding"
                 android:layout_toRightOf="@+id/textViewAddRatingValue"
                 android:text="@string/tvdb_range"
                 android:textAppearance="@style/TextAppearance.Caption" />
@@ -82,9 +82,9 @@
                 android:id="@+id/textViewAddRatingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-4dp"
-                android:layout_below="@+id/textViewAddRatingValue"
                 android:layout_alignLeft="@+id/textViewAddRatingValue"
+                android:layout_below="@+id/textViewAddRatingValue"
+                android:layout_marginTop="-4dp"
                 android:text="@string/trakt"
                 android:textAppearance="@style/TextAppearance.Caption" />
 
@@ -93,18 +93,18 @@
                 style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/max_width_text_size_body"
                 android:layout_below="@+id/textViewAddRatingLabel"
-                android:layout_marginTop="@dimen/large_padding"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                tools:text="@string/description_overview"
+                android:layout_marginTop="@dimen/large_padding"
+                android:maxWidth="@dimen/max_width_text_size_body"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="@string/description_overview" />
 
             <TextView
-                style="@style/Block.WithTopMargin"
                 android:id="@+id/textViewAddGenresLabel"
+                style="@style/Block.WithTopMargin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddDescription"
@@ -121,13 +121,13 @@
                 android:layout_below="@+id/textViewAddGenresLabel"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                tools:text="Comedy, Drama"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="Comedy, Drama" />
 
             <TextView
-                style="@style/Block.WithTopMargin"
                 android:id="@+id/textViewAddReleasedLabel"
+                style="@style/Block.WithTopMargin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddGenres"
@@ -144,9 +144,9 @@
                 android:layout_below="@+id/textViewAddReleasedLabel"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                tools:text="2014"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="2014" />
 
         </RelativeLayout>
     </ScrollView>

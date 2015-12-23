@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_show_manage_lists"
         android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/list_item_manage"/>
+        android:title="@string/list_item_manage"
+        app:showAsAction="never" />
 
 </menu>

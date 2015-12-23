@@ -49,10 +49,12 @@ public class PersonActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.background_actionbar_gradient));
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(
+                    getResources().getDrawable(R.drawable.background_actionbar_gradient));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 
     @Override

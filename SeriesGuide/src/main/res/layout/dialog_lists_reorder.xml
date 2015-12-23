@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2015 Uwe Trottmann
   ~
@@ -26,15 +27,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:minWidth="@dimen/dialog_min_width"
-        android:paddingTop="@dimen/large_padding"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/large_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
-            android:paddingBottom="@dimen/large_padding"
             android:text="@string/action_lists_reorder"
             android:textAppearance="@style/TextAppearance.Title" />
 
@@ -47,11 +48,11 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="true"
-            app:use_default_controller="false"
-            app:sort_enabled="true"
             app:drag_start_mode="onDown"
+            app:float_alpha="0.8"
             app:remove_enabled="false"
-            app:float_alpha="0.8" />
+            app:sort_enabled="true"
+            app:use_default_controller="false" />
     </LinearLayout>
 
     <include layout="@layout/dialog_buttons_divided" />

@@ -27,10 +27,10 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="true"
-        app:use_default_controller="false"
-        app:sort_enabled="true"
         app:drag_start_mode="onDown"
+        app:float_alpha="0.8"
         app:remove_enabled="false"
-        app:float_alpha="0.8" />
+        app:sort_enabled="true"
+        app:use_default_controller="false" />
 
 </FrameLayout>

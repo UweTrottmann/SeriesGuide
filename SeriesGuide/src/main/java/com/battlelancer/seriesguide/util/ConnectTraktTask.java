@@ -77,7 +77,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // check if we have any usable data
         if (TextUtils.isEmpty(authCode)) {
-            return TraktResult.API_ERROR;
+            return TraktResult.AUTH_ERROR;
         }
 
         // get access token
@@ -88,7 +88,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                     BuildConfig.TRAKT_CLIENT_ID,
                     BuildConfig.TRAKT_CLIENT_SECRET,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
                     authCode
             );
             if (response != null) {
@@ -103,7 +103,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
-            return TraktResult.API_ERROR;
+            return TraktResult.AUTH_ERROR;
         }
 
         // get user name

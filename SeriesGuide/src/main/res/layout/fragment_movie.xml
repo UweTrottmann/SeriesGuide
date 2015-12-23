@@ -9,8 +9,8 @@
         android:id="@+id/imageViewMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@null"
+        android:scaleType="centerCrop" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -28,9 +28,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/default_padding"
+            android:animateLayoutChanges="true"
             android:paddingBottom="@dimen/default_padding"
-            android:animateLayoutChanges="true">
+            android:paddingTop="@dimen/default_padding">
 
             <TextView
                 android:id="@+id/textViewMovieTitle"
@@ -39,9 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                tools:text="Awesome Movie Title"
                 android:textAppearance="@style/TextAppearance.Headline"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="Awesome Movie Title" />
 
             <TextView
                 android:id="@+id/textViewMovieDate"
@@ -49,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewMovieTitle"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:layout_marginBottom="@dimen/large_padding"
                 android:ellipsize="end"
                 android:maxLines="1"
-                tools:text="20 Oct 2013"
                 android:textAppearance="@style/TextAppearance.Caption"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="20 Oct 2013" />
 
             <include layout="@layout/buttons_movie" />
 
@@ -65,9 +65,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/containerMovieButtons"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:layout_marginBottom="@dimen/large_padding"
                 android:background="?attr/sgColorDivider" />
 
             <TextView
@@ -95,8 +95,8 @@
                 layout="@layout/ratings_movies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/dividerMovie1" />
+                android:layout_below="@+id/dividerMovie1"
+                android:layout_centerHorizontal="true" />
 
             <View
                 android:id="@+id/dividerMovie2"
@@ -123,20 +123,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewMovieGenresLabel"
                 android:layout_marginBottom="@dimen/large_padding"
-                tools:text="Action, Comedy, Drama"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                tools:text="Action, Comedy, Drama" />
 
             <include
-                layout="@layout/people_list"
                 android:id="@+id/containerMovieCast"
+                layout="@layout/people_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewMovieGenres" />
 
             <include
-                layout="@layout/people_list"
                 android:id="@+id/containerMovieCrew"
+                layout="@layout/people_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/containerMovieCast" />

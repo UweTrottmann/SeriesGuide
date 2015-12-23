@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,12 +9,12 @@
         android:id="@+id/editTextAddTvdbSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:paddingRight="48dp"
         android:layout_marginTop="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/inline_padding"
-        android:hint="@string/checkin_searchhint" />
+        android:hint="@string/checkin_searchhint"
+        android:paddingRight="48dp" />
 
     <ImageButton
         android:id="@+id/buttonAddTvdbClear"
@@ -47,16 +49,16 @@
             android:layout_height="match_parent"
             android:columnWidth="@dimen/showgrid_columnWidth"
             android:numColumns="auto_fit"
-            android:stretchMode="columnWidth" />
+            android:stretchMode="columnWidth"
+            tools:listitem="@layout/item_addshow" />
 
-        <TextView
+        <com.battlelancer.seriesguide.widgets.EmptyView
             android:id="@+id/emptyViewAdd"
-            android:layout_width="@dimen/empty_view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/no_results"
-            android:textAppearance="@style/TextAppearance.Light" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyViewButtonText="@string/action_try_again"
+            app:emptyViewMessage="@string/add_empty" />
+
     </FrameLayout>
 
     <ProgressBar

@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -107,6 +108,17 @@ public class TraktAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void setupEmptyView(EmptyView emptyView) {
+        emptyView.setButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setProgressVisible(true, false);
+                getLoaderManager().restartLoader(getListType(), null, mTraktAddCallbacks);
+            }
+        });
     }
 
     private int getListType() {

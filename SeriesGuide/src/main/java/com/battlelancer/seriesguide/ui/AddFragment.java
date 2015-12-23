@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -54,7 +55,7 @@ public abstract class AddFragment extends Fragment {
     @Bind(R.id.containerAddContent) View contentContainer;
     @Bind(R.id.progressBarAdd) View progressBar;
     @Bind(android.R.id.list) GridView resultsGridView;
-    @Bind(R.id.emptyViewAdd) TextView emptyView;
+    @Bind(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
@@ -66,6 +67,13 @@ public abstract class AddFragment extends Fragment {
     @Override
     public abstract View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState);
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setupEmptyView(emptyView);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -104,11 +112,13 @@ public abstract class AddFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    protected abstract void setupEmptyView(EmptyView buttonEmptyView);
+
     /**
      * Changes the empty message.
      */
     public void setEmptyMessage(int stringResourceId) {
-        emptyView.setText(stringResourceId);
+        emptyView.setMessage(stringResourceId);
     }
 
     public void setSearchResults(List<SearchResult> searchResults) {

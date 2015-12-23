@@ -30,10 +30,10 @@
             android:id="@+id/imageViewItemExtensionIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_centerVertical="true"
             tools:src="@drawable/ic_launcher" />
 
         <ImageView
@@ -42,21 +42,21 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingTop="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="12dp"
             android:paddingLeft="@dimen/large_padding"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingTop="12dp"
             android:src="?attr/drawableDropdown" />
 
         <TextView
             android:id="@+id/textViewItemExtensionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
             android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
+            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
+            android:ellipsize="end"
             android:paddingTop="20dp"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Sample Extension" />
 
@@ -64,13 +64,13 @@
             android:id="@+id/textViewItemExtensionDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
-            android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
             android:layout_below="@+id/textViewItemExtensionTitle"
+            android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
+            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:paddingBottom="20dp"
             android:textAppearance="@style/TextAppearance.Body.Dim"
-            android:maxLines="2"
-            android:ellipsize="end"
             tools:text="Displays some important information about episodes" />
 
     </RelativeLayout>
@@ -80,10 +80,10 @@
         android:layout_width="64dp"
         android:layout_height="match_parent"
         android:layout_gravity="fill_vertical|left"
+        android:color="?attr/sgColorDivider"
+        android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
-        android:paddingBottom="@dimen/default_padding"
-        android:src="?attr/sgColorDivider"
-        android:color="?attr/sgColorDivider" />
+        android:src="?attr/sgColorDivider" />
 
 </FrameLayout>

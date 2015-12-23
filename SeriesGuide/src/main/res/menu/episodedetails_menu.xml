@@ -5,17 +5,17 @@
     <item
         android:id="@+id/menu_share"
         android:icon="@drawable/ic_action_share"
-        app:showAsAction="ifRoom"
-        android:title="@string/share_episode"/>
+        android:title="@string/share_episode"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_action_episode_calendar"
-        app:showAsAction="never"
-        android:title="@string/addtocalendar" />
+        android:title="@string/addtocalendar"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_manage_lists"
-        app:showAsAction="never"
-        android:title="@string/list_item_manage"/>
+        android:title="@string/list_item_manage"
+        app:showAsAction="never" />
 
 </menu>

@@ -19,10 +19,10 @@
     android:id="@+id/containerMovieButtons"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/buttons_min_height"
     android:layout_below="@+id/textViewMovieDate"
     android:layout_marginLeft="@dimen/large_padding"
     android:layout_marginRight="@dimen/large_padding"
+    android:minHeight="@dimen/buttons_min_height"
     android:orientation="horizontal"
     tools:showIn="@layout/fragment_movie">
 
@@ -32,12 +32,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:drawableTop="?attr/drawableCheckin"
-        android:text="@string/checkin"
         android:contentDescription="@string/checkin"
+        android:drawableTop="?attr/drawableCheckin"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/checkin" />
 
     <Button
         android:id="@+id/buttonMovieWatched"
@@ -45,11 +45,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
         android:drawableTop="?attr/drawableWatch"
-        android:text="@string/action_watched"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/action_watched" />
 
     <Button
         android:id="@+id/buttonMovieWatchlisted"
@@ -57,11 +57,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
         android:drawableTop="?attr/drawableList"
-        android:text="@string/watchlist_add"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/watchlist_add" />
 
     <Button
         android:id="@+id/buttonMovieCollected"
@@ -69,10 +69,10 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="8dp"
         android:drawableTop="?attr/drawableCollect"
-        android:text="@string/action_collection_add"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:ellipsize="end" />
+        android:padding="8dp"
+        android:text="@string/action_collection_add" />
 
 </LinearLayout>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AlwaysShowAction">
 
     <item
         android:id="@+id/menu_action_shows_filter"
         android:icon="@drawable/ic_action_filter"
         android:orderInCategory="0"
-        app:showAsAction="always"
-        android:title="@string/action_shows_filter">
+        android:title="@string/action_shows_filter"
+        app:showAsAction="always">
         <menu>
             <item
                 android:id="@+id/menu_action_shows_filter_favorites"
@@ -41,15 +41,15 @@
         android:id="@+id/menu_action_shows_add"
         android:icon="@drawable/ic_action_new_show"
         android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/action_shows_add" />
+        android:title="@string/action_shows_add"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_action_shows_sort"
         android:icon="@drawable/ic_action_sort"
         android:orderInCategory="3"
-        app:showAsAction="never"
-        android:title="@string/action_shows_sort">
+        android:title="@string/action_shows_sort"
+        app:showAsAction="never">
         <menu>
             <item
                 android:id="@+id/menu_action_shows_sort_title"

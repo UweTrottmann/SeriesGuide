@@ -22,6 +22,7 @@
   <string name="description_overview">Oversigt</string>
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episode billede</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Slet</string>
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Sidste redigering / / TVDb</string>
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">i dag</string>
   <string name="now">Nu</string>
   <string name="daily">Daglig</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Skriv et serienavn</string>
   <string name="add_empty">Der er ingen serier her.</string>
   <string name="no_results">Ingen resultater, prøv komplette ord.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Søgning mislykkedes, prøv igen senere.</string>
   <string name="add_all">Tilføj alle</string>
   <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Tilføjet til overvågningsliste</string>
   <string name="watchlist_removed">Fjernet fra overvågningsliste</string>
   <string name="movies_search_hint">Skriv en filmtitel</string>
-  <string name="movies_empty">Søg efter en film ovenfor.</string>
   <string name="movies_collection_empty">Du har ikke tilføjet film til din samling.</string>
   <string name="movies_watchlist_empty">Du har ikke tilføjet film til din overvågningsliste.</string>
   <string name="trailer">Trailer</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Vent et øjeblik</string>
   <string name="connect">Tilslut</string>
   <string name="disconnect">Afbryd</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Forbundet til trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere serier og film på denne enhed med trakt. Dette kan tage noget tid.</string>
   <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>

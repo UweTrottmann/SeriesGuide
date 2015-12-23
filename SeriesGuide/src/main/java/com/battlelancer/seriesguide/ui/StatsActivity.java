@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Hosts fragments displaying statistics.
@@ -48,7 +47,9 @@ public class StatsActivity extends BaseTopActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.statistics);
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.statistics);
+        }
     }
 
     @Override
@@ -64,10 +65,5 @@ public class StatsActivity extends BaseTopActivity {
 
         // prefs might have changed, update menu
         supportInvalidateOptionsMenu();
-    }
-
-    @Override
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 }

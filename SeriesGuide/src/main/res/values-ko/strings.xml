@@ -22,6 +22,7 @@
   <string name="description_overview">개요</string>
   <string name="description_poster">포스터 보이기</string>
   <string name="description_image">에피소드 이미지</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">지우기</string>
   <string name="discard">취소</string>
   <string name="save_selection">선택한 것 저장</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">마지막 편집 // TVDb</string>
   <string name="services_watch">보기</string>
   <string name="services_more">더보기</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">오늘</string>
   <string name="now">지금</string>
   <string name="daily">매일</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_all">모두 추가</string>
   <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">관심목록에 추가되었습니다</string>
   <string name="watchlist_removed">관심목록에서 제거되었습니다</string>
   <string name="movies_search_hint">영화 제목을 입력하세요</string>
-  <string name="movies_empty">위의 검색창에서 영화를 검색하세요.</string>
   <string name="movies_collection_empty">아직 영화를 컬렉션에 추가하지 않으셨습니다.</string>
   <string name="movies_watchlist_empty">아직 영화를 와치리스트에 추가하지 않으셨습니다.</string>
   <string name="trailer">예고편</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">trakt에 연결되었습니다!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide는 당신의 쇼와 영화들을 trakt에 지금 동기화합니다. 때로는 시간이 걸릴 수도 있습니다.</string>
   <string name="add_trakt_shows">라이브러리에 있는 쇼 추가:</string>

@@ -21,10 +21,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_padding"
         android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:text="@string/extensions"
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 

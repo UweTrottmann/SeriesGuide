@@ -22,6 +22,7 @@
   <string name="description_overview">بررسی اجمالی</string>
   <string name="description_poster">نمایش پوستر</string>
   <string name="description_image">تصویر قسمت</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">حذف</string>
   <string name="discard">نپذیرفتن</string>
   <string name="save_selection">ذخیره انتخاب</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="services_watch">تماشا کردن</string>
   <string name="services_more">بیشتر</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">امروز</string>
   <string name="now">الان</string>
   <string name="daily">روزانه</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="add_empty">هیچ سریالی در اینجا موجود نمیباشد.</string>
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">عدم موفقیت در جستجو، بعدا دوباره امتحان کنید.</string>
   <string name="add_all">افزودن همه</string>
   <string name="add_multiple">همه ی برنامه ها در لیستان بلافاصله ظاهر می شود.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">به لیست تماشا اظافه شد</string>
   <string name="watchlist_removed">از لیست تماشا حذف شد</string>
   <string name="movies_search_hint">نوع عنوان فیلم</string>
-  <string name="movies_empty">جستجو برای فیلم .</string>
   <string name="movies_collection_empty">شما هیچ فیلمی به مجموعه اظافه نکرده اید.</string>
   <string name="movies_watchlist_empty">شما فیلم ها را به لیست تماشای خود اضافه نکرده اید.</string>
   <string name="trailer">تریلر</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Connected to trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
   <string name="add_trakt_shows">Add more shows from your trakt library:</string>

@@ -35,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                tools:text="@string/now_empty"
-                android:textAppearance="@style/TextAppearance.Light" />
+                android:textAppearance="@style/TextAppearance.Body.Dim"
+                tools:text="@string/now_empty" />
 
         </ScrollView>
 
@@ -45,16 +45,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:scrollbars="vertical"
-            android:scrollbarStyle="outsideOverlay"
-            android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/grid_topbottom_padding"
             android:paddingLeft="@dimen/grid_leftright_padding"
-            android:paddingRight="@dimen/grid_leftright_padding" />
+            android:paddingRight="@dimen/grid_leftright_padding"
+            android:paddingTop="@dimen/default_padding"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical" />
 
         <include
-            layout="@layout/layout_snackbar_sg"
             style="@style/Widget.SeriesGuide.InlineSnackbar"
+            layout="@layout/layout_snackbar_sg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />

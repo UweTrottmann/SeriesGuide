@@ -20,10 +20,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground"
     android:focusable="true"
-    android:background="?attr/selectableItemBackground">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="24dp"
@@ -36,11 +36,11 @@
         android:id="@+id/textViewNowMoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/large_padding"
         android:ellipsize="end"
+        android:paddingRight="@dimen/large_padding"
         android:singleLine="true"
-        tools:text="@string/user_stream"
         android:textAppearance="@style/TextAppearance.Button"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorSecondary"
+        tools:text="@string/user_stream" />
 
 </LinearLayout>

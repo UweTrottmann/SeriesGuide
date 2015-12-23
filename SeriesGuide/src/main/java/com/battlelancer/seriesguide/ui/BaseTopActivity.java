@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 /**
  * Activities at the top of the navigation hierarchy, display the nav drawer upon pressing the
@@ -54,8 +53,10 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -255,9 +256,4 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             });
         }
     };
-
-    /**
-     * Google Analytics helper method for easy sending of click events.
-     */
-    protected abstract void fireTrackerEvent(String label);
 }

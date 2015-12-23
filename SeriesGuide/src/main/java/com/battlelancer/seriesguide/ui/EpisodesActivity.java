@@ -227,11 +227,17 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
     private void setupActionBar(Series show) {
         // setup ActionBar
+        String showTitle = show.getTitle();
+        String seasonString = SeasonTools.getSeasonString(this, mSeasonNumber);
+        setTitle(showTitle + " " + seasonString);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(show.getTitle());
-        actionBar.setSubtitle(SeasonTools.getSeasonString(this, mSeasonNumber));
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setTitle(showTitle);
+            actionBar.setSubtitle(seasonString);
+        }
     }
 
     @Override

@@ -29,8 +29,8 @@
             android:id="@+id/textViewRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/confirm_delete"
-            android:textAppearance="@style/TextAppearance.Body" />
+            android:textAppearance="@style/TextAppearance.Body"
+            tools:text="@string/confirm_delete" />
 
         <ProgressBar
             android:id="@+id/progressBarRemove"

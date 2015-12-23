@@ -22,6 +22,7 @@
   <string name="description_overview">Pārskats</string>
   <string name="description_poster">Rādīt plakātu</string>
   <string name="description_image">Epizodes attēls</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Iztīrīt</string>
   <string name="discard">Atmest</string>
   <string name="save_selection">Saglabāt izvēli</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Pēdējais labojums //TVDb</string>
   <string name="services_watch">Skaties</string>
   <string name="services_more">Vairāk</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>
   <string name="daily">Ikdienišķi</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Ierakstiet seriāla nosaukumu</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Meklēšana neizdevās, mēģiniet vēlreiz vēlāk.</string>
   <string name="add_all">Pievienot visas</string>
   <string name="add_multiple">Visi seriāli tuvākajā laikā parādīsies jūsu seriālu sarakstā.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Pievienots uzraugāmo sarakstam</string>
   <string name="watchlist_removed">Noņemts no uzraugāmo saraksta</string>
   <string name="movies_search_hint">Ieraksti filmas nosaukumu</string>
-  <string name="movies_empty">Meklē filmu iepriekš.</string>
   <string name="movies_collection_empty">Tu vēl neesi pievienojis filmas savai kolekcijai.</string>
   <string name="movies_watchlist_empty">Tu vēl neesi pievienojis filmas savam skatāmo filmu sarakstam.</string>
   <string name="trailer">Treileris</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Vienu momentu, lūdzu...</string>
   <string name="connect">Savienot</string>
   <string name="disconnect">Atvienot</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Savienots ar trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide tagad sinhronizēs šovus un filmas uz šīs ierīces ar trakt. Šis var aizņemt kādu laiciņu.</string>
   <string name="add_trakt_shows">Pievienot vairāk šovus no tavas trakt bibliotēkas:</string>

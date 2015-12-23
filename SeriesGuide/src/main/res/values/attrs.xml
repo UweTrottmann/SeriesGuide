@@ -52,4 +52,10 @@
     <attr name="drawableWatchedAll" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
+    <!-- Empty view attributes -->
+    <declare-styleable name="EmptyView">
+        <attr name="emptyViewMessage" format="string" />
+        <attr name="emptyViewButtonText" format="string" />
+    </declare-styleable>
+
 </resources>

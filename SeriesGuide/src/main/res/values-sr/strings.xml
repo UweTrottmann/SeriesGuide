@@ -22,6 +22,7 @@
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика епизоде</string>
+  <string name="description_menu_overflow">More options</string>
   <string name="clear">Обриши</string>
   <string name="discard">Одбаци</string>
   <string name="save_selection">Сачувај изабрано</string>
@@ -73,6 +74,7 @@
   <string name="lastEdit">Последње уређено // TVDb</string>
   <string name="services_watch">Гледај</string>
   <string name="services_more">Више</string>
+  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="today">данас</string>
   <string name="now">сада</string>
   <string name="daily">Дневно</string>
@@ -146,6 +148,8 @@
   <string name="checkin_searchhint">Унеси име серије</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="no_results">Нема резултата, покушајте са целим речима.</string>
+  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_again">Try again</string>
   <string name="search_error">Неуспела претрага, покушајте поново касније.</string>
   <string name="add_all">Додај све</string>
   <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
@@ -173,7 +177,6 @@
   <string name="watchlist_added">Додато на листу за гледање</string>
   <string name="watchlist_removed">Листа за гледање је уклоњена</string>
   <string name="movies_search_hint">Унеси име филма</string>
-  <string name="movies_empty">Тражи филм приказан изнад.</string>
   <string name="movies_collection_empty">Још увек нисте додали филмове вашој колекцији.</string>
   <string name="movies_watchlist_empty">Листа филмова за гледање је празна.</string>
   <string name="trailer">Трејлер</string>
@@ -257,6 +260,7 @@
   <string name="waitplease">Тренутак, молим…</string>
   <string name="connect">Повежи</string>
   <string name="disconnect">Прекини везу</string>
+  <string name="use_integrated_browser">Use integrated browser</string>
   <string name="connect_trakt_done">Повезано са trakt-ом!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide ће сада синхронизовати серије и филмове са овог уређаја на trakt. Ово може потрајати неко време.</string>
   <string name="add_trakt_shows">Додајте серије из ваше trakt библиотеке:</string>

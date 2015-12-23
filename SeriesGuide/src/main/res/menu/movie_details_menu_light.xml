@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2014 Uwe Trottmann
   ~
@@ -21,32 +22,32 @@
     <item
         android:id="@+id/menu_open_youtube"
         android:icon="@drawable/ic_action_movie_inverse"
-        app:showAsAction="ifRoom"
-        android:title="@string/trailer"/>
+        android:title="@string/trailer"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_movie_share"
         android:icon="@drawable/ic_action_share_inverse"
-        app:showAsAction="ifRoom"
-        android:title="@string/share_movie" />
+        android:title="@string/share_movie"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_open_google_play"
-        app:showAsAction="never"
-        android:title="@string/googleplay"/>
+        android:title="@string/googleplay"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_open_imdb"
-        app:showAsAction="never"
-        android:title="@string/imdb"/>
+        android:title="@string/imdb"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_open_tmdb"
-        app:showAsAction="never"
-        android:title="@string/tmdb" />
+        android:title="@string/tmdb"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_open_trakt"
-        app:showAsAction="never"
-        android:title="@string/trakt"/>
+        android:title="@string/trakt"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_action_movie_websearch"
-        app:showAsAction="never"
-        android:title="@string/web_search"/>
+        android:title="@string/web_search"
+        app:showAsAction="never" />
 
 </menu>

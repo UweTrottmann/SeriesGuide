@@ -18,9 +18,9 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewPeopleHeader"
@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        tools:text="Cast"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.Body.Bold"
+        tools:text="Cast" />
 
     <LinearLayout
         android:id="@+id/containerPeople"

@@ -18,8 +18,10 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -31,7 +33,17 @@ import timber.log.Timber;
 /**
  * Loads a list of movies from TMDb.
  */
-public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
+public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Result> {
+
+    public static class Result {
+        public List<Movie> results;
+        public int emptyTextResId;
+
+        public Result(List<Movie> results, int emptyTextResId) {
+            this.results = results;
+            this.emptyTextResId = emptyTextResId;
+        }
+    }
 
     private String mQuery;
 
@@ -41,9 +53,11 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
     }
 
     @Override
-    public List<Movie> loadInBackground() {
+    public Result loadInBackground() {
         Tmdb tmdb = ServiceUtils.getTmdb(getContext());
         String languageCode = DisplaySettings.getContentLanguage(getContext());
+
+        List<Movie> results = null;
 
         try {
             MovieResultsPage page;
@@ -54,14 +68,18 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
                 page = tmdb.searchService()
                         .movie(mQuery, null, languageCode, false, null, null, null);
             }
-            if (page != null && page.results != null) {
-                return page.results;
+
+            if (page != null) {
+                results = page.results;
             }
         } catch (RetrofitError e) {
-            Timber.e(e, "Downloading now playing movies failed");
+            Timber.e(e, "Loading movies from TMDb failed.");
+            // only check for connection here to allow hitting the response cache
+            return new Result(null,
+                    AndroidUtils.isNetworkConnected(getContext()) ? R.string.search_error
+                            : R.string.offline);
         }
 
-        return null;
+        return new Result(results, R.string.no_results);
     }
-
 }

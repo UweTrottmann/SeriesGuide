@@ -28,10 +28,10 @@
                 android:id="@+id/textViewFirstRunTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginTop="@dimen/large_padding"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/get_started"
                 android:textAppearance="@style/TextAppearance.Headline" />
 
@@ -65,12 +65,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/containerFirstRunSettings"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/large_padding"
                 android:paddingLeft="@dimen/large_padding"
                 android:paddingRight="@dimen/large_padding"
-                android:paddingTop="@dimen/larger_padding"
-                android:paddingBottom="@dimen/large_padding"
-                android:gravity="end"
-                android:orientation="vertical">
+                android:paddingTop="@dimen/larger_padding">
 
                 <Button
                     android:id="@+id/buttonFirstRunAddShow"
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/action_shows_add"
-                    android:textColor="?attr/colorAccent"/>
+                    android:textColor="?attr/colorAccent" />
 
                 <Button
                     android:id="@+id/buttonFirstRunTrakt"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.Light"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
         android:visibility="gone" />
 
     <GridView
@@ -21,6 +22,7 @@
         android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth" />
+        android:stretchMode="columnWidth"
+        tools:listitem="@layout/item_movie" />
 
 </RelativeLayout>

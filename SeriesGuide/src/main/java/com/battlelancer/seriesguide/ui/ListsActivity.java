@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
@@ -62,13 +61,6 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
         setupViews();
         setupSyncProgressBar(R.id.progressBarTabs);
-    }
-
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.lists);
     }
 
     private void setupViews() {
@@ -120,12 +112,11 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {
             AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
-            fireTrackerEvent("Add list");
+            Utils.trackAction(this, TAG, "Add list");
             return true;
         }
         if (itemId == R.id.menu_action_lists_search) {
             startActivity(new Intent(this, SearchActivity.class));
-            fireTrackerEvent("Search");
             return true;
         }
         if (itemId == R.id.menu_action_lists_edit) {
@@ -199,9 +190,5 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());
-    }
-
-    protected void fireTrackerEvent(String label) {
-        Utils.trackAction(this, TAG, label);
     }
 }

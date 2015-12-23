@@ -17,8 +17,9 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
@@ -27,35 +28,51 @@ import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
 /**
- * Starts a trakt OAuth 2.0 authorization flow using an embedded {@link android.webkit.WebView}.
+ * Starts a trakt OAuth 2.0 authorization flow using the default browser or an embedded {@link
+ * android.webkit.WebView} as a fallback.
  */
 public class TraktAuthActivity extends BaseOAuthActivity {
 
+    private static final String KEY_STATE = "state";
     private String state;
 
     @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.connect_trakt));
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            // restore state on recreation
+            // (e.g. if launching external browser dropped us out of memory)
+            state = savedInstanceState.getString(KEY_STATE);
+        }
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_STATE, state);
+    }
+
+    @Override
+    @Nullable
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
         try {
             OAuthClientRequest request = TraktV2.getAuthorizationRequest(
                     BuildConfig.TRAKT_CLIENT_ID,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_LOCALHOST,
+                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
                     state,
                     null);
             return request.getLocationUri();
         } catch (OAuthSystemException e) {
-            Timber.e(e, "Building auth request failed");
+            Timber.e(e, "Building auth request failed.");
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(" + e.getMessage() + ")");
         }
 
         return null;
@@ -67,16 +84,27 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     }
 
     @Override
-    protected void fetchTokens(@Nullable String authCode, @Nullable String state) {
+    protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
         // if state does not match what we sent, drop the auth code
-        if (this.state != null && !this.state.equals(state)) {
-            authCode = null;
+        if (this.state == null || !this.state.equals(state)) {
+            Timber.e(OAuthProblemException.error("invalid_state",
+                    "State is null or does not match."), "fetchTokensAndFinish: failed.");
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(Cross-site request forgery detected.)");
+            return;
         }
+
+        if (TextUtils.isEmpty(authCode)) {
+            // no valid auth code, remain in activity and show fallback buttons
+            activateFallbackButtons();
+            setMessage(getAuthErrorMessage() + "\n\n(No auth code returned.)");
+            return;
+        }
+
         // return auth code to credentials fragment
         Intent intent = new Intent();
         intent.putExtra(ConnectTraktCredentialsFragment.KEY_OAUTH_CODE, authCode);
         setResult(RESULT_OK, intent);
         finish();
     }
-
 }

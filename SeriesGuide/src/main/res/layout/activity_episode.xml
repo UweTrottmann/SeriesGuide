@@ -28,6 +28,7 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@null"
             android:scaleType="centerCrop" />
 
         <!-- Wrap CoordinatorLayout to simulate a smaller screen if status bar is translucent -->
