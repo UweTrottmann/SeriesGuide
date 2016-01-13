@@ -30,6 +30,7 @@ title: Help
       <li><a href="#syncfail">Shows are not updated</a></li>
       <li><a href="#missing">Missing or incorrect information</a></li>
       <li><a href="#airtimes">Wrong air/release times</a></li>
+      <li><a href="#sources">Where show, episode and movie data is coming from</a></li>
       <li><a href="#widget">The widget displays no data or is missing</a></li>
       <li><a href="#timezone">After changing the time zone times are incorrect</a></li>
     </ul>
@@ -195,29 +196,85 @@ title: Help
     <div class="spacer"></div>    	
   
     <h3>Missing or incorrect information about shows, episodes or movies</h3>
-    <p><span class="label label-info">Note</span> If search in the <strong>Add show</strong> screen (which is powered by trakt) can't find a show , it maybe is not or can't be added on trakt, yet. Check out how to <a href="http://support.trakt.tv/knowledgebase/articles/151225-how-do-i-add-a-missing-tv-show">add a missing TV show on trakt</a> for details.</p>
-    <p>First of all, <a href="#syncfail">make sure Auto Update is working</a>.</p>
-    <p>Otherwise, the <strong>information on TheTVDb (shows) or TMDb (movies) might be wrong or outdated</strong>. SeriesGuide gets its data from <a href="https://www.thetvdb.com">thetvdb.com</a>, an open user-maintained TV database and <a href="https://www.themoviedb.org/">themoviedb.org</a>, an open user-maintained movie database.</p>
-    <p>You may <strong>consider helping those projects to add or update show and movie information</strong>. Look on their websites for further information: <a href="https://forums.thetvdb.com/viewtopic.php?f=7&amp;t=4076">Guidelines for thetvdb.com</a>, <a href="https://www.themoviedb.org/content/about">About themoviedb.org</a>.</p>
+    <p><span class="label label-info">Note</span> If search in the <strong>Add show</strong> screen can't find a show, try to change the language to <strong>Any language</strong>.</p>
+    <p><a href="#syncfail">Make sure Auto Update is working</a>.</p>
+    <p>Otherwise, you can <strong>check or help update the information</strong> at <a href="#sources">the data source</a>.</p>
   
     <a name="airtimes"></a>
     <div class="spacer"></div>
   
     <h3>Wrong air/release times</h3>
-    <p>SeriesGuide gets its data from <a href="https://www.thetvdb.com">thetvdb.com</a>, an open user-maintained TV database (see above) and <a href="https://trakt.tv">trakt</a>. The release times there are restricted to the <strong>original release</strong> in the country of origin.</p>
+    <p>The show/episode release times are restricted to the <strong>original release</strong> in the country of origin.</p>
     <p><span class="label label-info">Tip</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
-    <p>If <strong>the release country is known</strong> (check a show's <a href="https://trakt.tv">trakt</a> page), SeriesGuide will assume the release time to be in a timezone of this country (e.g. Eastern Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>.</p>
+    <p>If <strong>the release country is known</strong>, SeriesGuide will assume the release time to be in a time zone of this country (e.g. Eastern Time for US shows, British Time for British shows, Central European Time for German shows, ...) and <strong>convert it to your device time zone</strong>.</p>
     <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
+    <p>You can view the country in the detailed show information.</p>
     <p><span class="label label-info">Info</span> If your device is <strong>set to a US mainland time zone</strong>, SeriesGuide will automatically adjust the release time (e.g. one hour earlier in Central Time).</p>
-    <p>If <strong>the country displayed on trakt is not correct</strong>, please submit a request for improvement and proof of your claim (link to show website, ...) with <a href="https://support.trakt.tv">trakt support</a>.
-    <p>If <strong>the country on trakt is correct</strong>, but you believe a release time is incorrectly converted in SeriesGuide, please <a href="#contact">drop a message</a>.</p>
+    <p>If <strong>the displayed country is not correct</strong> it can be changed at <a href="#sources">the data source</a>.</p>
+    <p>If <strong>the country is correct</strong>, but you believe the release time is incorrectly converted in SeriesGuide, please <a href="#contact">drop a message</a>.</p>
+
+    <a name="sources"></a>
+    <div class="spacer"></div>
+
+    <h3>Where show, episode and movie data is coming from</h3>
+    <p>The main data provider for <strong>shows and episodes</strong> is <a href="https://www.thetvdb.com">TheTVDB.com</a>, for <strong>movies</strong> <a href="https://www.themoviedb.org">themoviedb.org</a>. Both are open, user-maintained databases.</p>
+    <p>Below are the sources of some important data in SeriesGuide:</p>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Shows</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Release time<br/>and day:</td>
+          <td><a href="https://www.thetvdb.com">TheTVDB</a><br/>Show > Airs field</td>
+        </tr>
+        <tr>
+          <td>Release country<br/>(time zone):</td>
+          <td><a href="https://www.themoviedb.org/tv">TMDb</a><br/>Show > Production Information > Production Country</td>
+        </tr>
+        <tr>
+          <td>Cast and Crew:</td>
+          <td><a href="https://www.themoviedb.org/tv">TMDb</a><br/>Show > Regular Cast/Crew</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Episode</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Release date:</td>
+          <td><a href="https://www.thetvdb.com">TheTVDB</a><br/>Episode > First Aired field</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Movie</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Release date:</td>
+          <td><a href="https://www.themoviedb.org/movie">TMDb</a><br/>Movie > Release Information</td>
+        </tr>
+      </tbody>
+    </table> 
+
+    <p><strong>Consider to help those projects by adding or updating information</strong>. Get started at <a href="https://forums.thetvdb.com/viewtopic.php?f=7&amp;t=4076">Guidelines for TheTVDB.com</a> and <a href="https://www.themoviedb.org/content/about">About themoviedb.org</a>.</p>
   
     <a name="widget"></a>
     <div class="spacer"></div>
     
     <h3>The widget displays no data or is missing</h3>
-    <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it has to be installed on your device/internal memory. Move it back and everything should be fine again (if not, try rebooting your device).</p> 
-    <p>If you are running MIUI (e.g. Xiaomi devices), make sure to allow SeriesGuide to run on start-up in your security settings and to disable managed battery usage for the app.</p>
+    <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it <strong>has to be installed on your device/internal memory</strong>. Move it back and everything should be fine again (if not, <strong>try rebooting your device</strong>).</p> 
+    <p>If you are <strong>running MIUI (e.g. Xiaomi devices)</strong>, make sure to allow SeriesGuide to run on start-up in your security settings and to disable managed battery usage for the app.</p>
   
     <a name="timezone"></a>
     <div class="spacer"></div>
