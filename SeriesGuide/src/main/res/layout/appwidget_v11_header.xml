@@ -17,8 +17,10 @@
   ~ limitations under the License.
   -->
 
+<!-- Note: The header background color is overridden in ListWidgetProvider. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerWidgetHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/accent_primary"

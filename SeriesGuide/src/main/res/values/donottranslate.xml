@@ -315,10 +315,12 @@
     <string-array name="widgetTheme">
         <item>@string/theme_default</item>
         <item>@string/theme_light</item>
+        <item>@string/theme_dark_alt</item>
     </string-array>
     <string-array name="widgetThemeData">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
     <!-- DashClock extension thresholds -->

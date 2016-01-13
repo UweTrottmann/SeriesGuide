@@ -119,6 +119,23 @@ public class WidgetSettings {
     }
 
     /**
+     * Returns if this widget should use a completely dark theme (header is not colored) instead of
+     * the regular one.
+     */
+    public static boolean isDarkTheme(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
+
+        boolean isDarkTheme = false;
+        try {
+            isDarkTheme =
+                    Integer.parseInt(prefs.getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, "0"))
+                            == 2;
+        } catch (NumberFormatException ignored) {
+        }
+        return isDarkTheme;
+    }
+
+    /**
      * Calculates the background color for this widget based on user preference.
      *
      * @param lightBackground If true, will return white with alpha. Otherwise black with alpha. See
