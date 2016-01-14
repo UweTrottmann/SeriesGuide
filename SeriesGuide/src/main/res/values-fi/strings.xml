@@ -146,7 +146,7 @@
   <string name="otherepisodes">muuta jaksoa</string>
   <string name="remaining">%s jäljellä</string>
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
-  <string name="add_empty">Täällä ei ole ohjelman ohjelmaa.</string>
+  <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="action_try_any_language">Kokeile mikä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>

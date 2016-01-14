@@ -22,7 +22,7 @@
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Повече опции</string>
   <string name="clear">Изчисти</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Запази избраните</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>
   <string name="search_within_show">Търси в %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Който и да е език</string>
   <string name="updated">Актуализиран до последна версия.</string>
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>
@@ -149,7 +149,7 @@
   <string name="add_empty">Няма ТВ предавания.</string>
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_again">Опитай отново</string>
   <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
   <string name="add_all">Добави всички</string>
   <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
@@ -157,7 +157,7 @@
   <string name="add_error">Неуспешно добавяне на %s.</string>
   <string name="add_already_exists">%s вече е в списъка със сериали.</string>
   <string name="recommended">Препоръчани</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Гледано</string>
   <string name="shows_collection">Колекция</string>
   <string name="watchlist">Списък за гледане</string>
   <string name="first_list">Първи списък</string>
@@ -234,7 +234,7 @@
   <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
   <string name="hexagon_api_error">Не взаимодейства със SeriesGuide облака. Опитайте отново по-късно.</string>
   <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_permission_missing">За да ползвате облака на SeriesGuide, позволете достъп до профила си.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <string name="trakt_submitqueued">Подаване към trakt.</string>
   <string name="trakt_seen">%s гледани.</string>

@@ -8,7 +8,7 @@
   <string name="search">بحث</string>
   <string name="preferences">الإعدادات</string>
   <string name="help">مساعدة</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">مساعدة واقتراحات</string>
   <string name="drawer_open">فتح لوحة الملاحة</string>
   <string name="drawer_close">إغلاق لوحة الملاحة</string>
   <string name="show">العرض</string>
@@ -22,7 +22,7 @@
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
   <string name="description_image">صورة الحلقة</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">خيارات اخرى</string>
   <string name="clear">تنظيف</string>
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
   <string name="search_within_show">البحث في %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">اي لغة</string>
   <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
