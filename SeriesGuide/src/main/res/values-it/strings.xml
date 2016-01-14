@@ -11,7 +11,7 @@
   <string name="help_and_feedback">Aiuto e Feedback</string>
   <string name="drawer_open">Apri il menù di navigazione</string>
   <string name="drawer_close">Chiudi il menù di navigazione</string>
-  <string name="show">Spettacolo</string>
+  <string name="show">Descrizione</string>
   <string name="episode">Episodio</string>
   <string name="episode_number">Episodio %s</string>
   <string name="episodes">Episodi</string>
@@ -28,7 +28,7 @@
   <string name="save_selection">Salva selezione</string>
   <string name="action_display_all">Mostra tutti</string>
   <string name="web_search">Ricerca Web</string>
-  <string name="add_to_homescreen">Collegamento</string>
+  <string name="add_to_homescreen">Aggiungi alla Home</string>
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
   <string name="search_within_show">Cerca all\'interno di %s</string>

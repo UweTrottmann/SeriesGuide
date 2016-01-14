@@ -22,7 +22,7 @@
   <string name="description_overview">Visão geral</string>
   <string name="description_poster">Mostrar cartaz</string>
   <string name="description_image">Imagem do Episódio</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Mais opções</string>
   <string name="clear">Apagar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selecção</string>
@@ -56,7 +56,7 @@
   <string name="refresh">Atualizar</string>
   <string name="episode_number_absolute">ABSOLUTO</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Data de lançamento</string>
+  <string name="episode_firstaired">Data de estreia</string>
   <string name="episode_firstaired_unknown">Data de estreia desconhecida</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores</string>
@@ -68,7 +68,7 @@
   <string name="show_release_times">Horários de exibição</string>
   <string name="episode_directors">Realizadores</string>
   <string name="episode_gueststars">Participações especiais</string>
-  <string name="episode_writers">Escritores</string>
+  <string name="episode_writers">Argumentistas</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>
   <string name="lastEdit">Última Edição // TheTVDB</string>
@@ -96,7 +96,7 @@
   <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_error">Não foi possível remover a série. Tenta novamente mais tarde.</string>
   <string name="delete_show">Remover</string>
-  <string name="no_nextepisode">Nenhum próximo episódio encontrado</string>
+  <string name="no_nextepisode">nenhum próximo episódio encontrado</string>
   <string name="context_favorite">Adicionar aos Favoritos</string>
   <string name="context_unfavorite">Remover dos Favoritos</string>
   <string name="favorited">Adicionado aos favoritos</string>
@@ -119,7 +119,7 @@
   <string name="updateall_yes">Atualização (tudo)</string>
   <string name="menu_update_delta">Atualização (apenas desatualizada)</string>
   <string name="context_updateshow">Actualizar</string>
-  <string name="context_marknext">Assisti o próximo episódio</string>
+  <string name="context_marknext">Marcar próximo episódio como visto</string>
   <string name="now_tab">Agora</string>
   <string name="recently_watched">Visto recentemente</string>
   <string name="released_today">Estreado hoje</string>

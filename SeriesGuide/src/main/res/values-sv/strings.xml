@@ -8,7 +8,7 @@
   <string name="search">Sök</string>
   <string name="preferences">Inställningar</string>
   <string name="help">Hjälp</string>
-  <string name="help_and_feedback">Hjälp &amp; Återkoppling</string>
+  <string name="help_and_feedback">Hjälp &amp; feedback</string>
   <string name="drawer_open">Öppna navigeringslåda
 </string>
   <string name="drawer_close">Stäng navigeringslåda</string>
@@ -23,7 +23,7 @@
   <string name="description_overview">Översikt</string>
   <string name="description_poster">Visa affisch</string>
   <string name="description_image">Bild från avsnittet</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Fler alternativ</string>
   <string name="clear">Rensa</string>
   <string name="discard">Avbryt</string>
   <string name="save_selection">Spara valda</string>
@@ -61,7 +61,7 @@
   <string name="episode_firstaired_unknown">Releasedatum okänt</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
   <string name="show_actors">Skådespelare</string>
-  <string name="original_release">Original releasedatum</string>
+  <string name="original_release">Ursprunglig release</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_runtime">Speltid</string>
@@ -124,7 +124,7 @@
   <string name="now_tab">Nu</string>
   <string name="recently_watched">Nyligen sedda</string>
   <string name="released_today">Release idag</string>
-  <string name="friends_recently">Dina trakt vänner</string>
+  <string name="friends_recently">Dina trakt-vänner</string>
   <string name="now_empty">Inget att göra. Se några tv-serier!</string>
   <string name="now_movies_empty">Ingenting händer. Titta på några filmer!</string>
   <string name="user_stream">Historik</string>
@@ -150,7 +150,7 @@
   <string name="add_empty">Det finns inga serier här.</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_again">Försök igen</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
   <string name="add_multiple">Alla serier kommer att visas i din serielista snart.</string>
@@ -332,7 +332,7 @@
   <string name="upcoming_upto_one_week">1 vecka</string>
   <string name="upcoming_upto_two_weeks">2 veckor</string>
   <string name="upcoming_upto_one_month">1 månad</string>
-  <string name="upcoming_upto_one_hour">timme</string>
+  <string name="upcoming_upto_one_hour">1 timme</string>
   <string name="upcoming_upto_six_hours">6 timmar</string>
   <string name="upcoming_upto_half_day">12 timmar</string>
   <string name="pref_appearance">Utseende</string>
@@ -340,8 +340,8 @@
   <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet</string>
-  <string name="pref_autobackup">Automatiskt Backup</string>
-  <string name="pref_autobackupsummary">Backup veckovis av dina serier, lister och filmer</string>
+  <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
+  <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
   <string name="backup">Säkerhetskopiera/återställ</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_number">Nummerformat</string>
@@ -353,7 +353,7 @@
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
-  <string name="backup_failed_file_access">Kan ej göra backup. En backup-fil kan inte hittas eller öppnas.</string>
+  <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
@@ -373,7 +373,7 @@
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
   <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
   <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
-  <string name="autobackup_files_missing">För att använda automatisk backup, välj giltiga backup-filer.</string>
+  <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
   <string name="no_file_selected">Ingen fil vald</string>
   <string name="action_select_file">Välj fil</string>
   <string name="backup_use_default_files">Använd standard Backup filer</string>
@@ -408,7 +408,7 @@
   <string name="widget_background_25">25%</string>
   <string name="widget_background_50">50%</string>
   <string name="widget_background_75">75%</string>
-  <string name="widget_background_opaque">Ogenkomskinlig</string>
+  <string name="widget_background_opaque">Solid</string>
   <string name="dashclock_extension_label">Kommande avsnitt</string>
   <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
   <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom…</string>

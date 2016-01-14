@@ -22,7 +22,7 @@
   <string name="description_overview">Reseña</string>
   <string name="description_poster">Mostrar póster</string>
   <string name="description_image">Imagen del episodio</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Más opciones</string>
   <string name="clear">Limpiar</string>
   <string name="discard">Descartar</string>
   <string name="save_selection">Guardar selección</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Última edición//TVDb</string>
   <string name="services_watch">Ver</string>
   <string name="services_more">Más</string>
-  <string name="no_translation">La descripción traducida en %1$s no es disponible en %2$s.</string>
+  <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
   <string name="daily">Diariamente</string>
