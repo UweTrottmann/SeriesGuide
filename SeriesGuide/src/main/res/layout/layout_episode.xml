@@ -183,7 +183,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeReleaseDay"
+        android:id="@+id/textViewEpisodeReleaseDate"
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

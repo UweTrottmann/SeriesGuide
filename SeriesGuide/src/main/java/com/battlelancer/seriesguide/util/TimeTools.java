@@ -487,9 +487,21 @@ public class TimeTools {
     /**
      * Formats to a date like "October 31", or if the date is not in the current year "October 31,
      * 2010".
+     *
+     * @see #formatToLocalDateShort(Context, Date)
      */
     public static String formatToLocalDate(Context context, Date dateTime) {
         return DateUtils.formatDateTime(context, dateTime.getTime(), DateUtils.FORMAT_SHOW_DATE);
+    }
+
+    /**
+     * Formats to a date like "Oct 31", or if the date is not in the current year "Oct 31, 2010".
+     *
+     * @see #formatToLocalDate(Context, Date)
+     */
+    public static String formatToLocalDateShort(Context context, Date dateTime) {
+        return DateUtils.formatDateTime(context, dateTime.getTime(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
     }
 
     /**

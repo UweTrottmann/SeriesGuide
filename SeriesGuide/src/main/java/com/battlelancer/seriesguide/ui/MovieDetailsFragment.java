@@ -27,7 +27,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,6 +54,7 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -333,8 +333,8 @@ public class MovieDetailsFragment extends Fragment {
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
         if (tmdbMovie.release_date != null) {
-            releaseAndRuntime.append(DateUtils.formatDateTime(getActivity(),
-                    tmdbMovie.release_date.getTime(), DateUtils.FORMAT_SHOW_DATE));
+            releaseAndRuntime.append(
+                    TimeTools.formatToLocalDate(getContext(), tmdbMovie.release_date));
             releaseAndRuntime.append(" | ");
         }
         releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));

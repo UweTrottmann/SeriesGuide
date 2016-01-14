@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -604,10 +605,15 @@ public class OverviewFragment extends Fragment implements
             // air date
             long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
             if (releaseTime != -1) {
-                Date actualRelease = TimeTools.applyUserOffset(getActivity(), releaseTime);
-                // "in 14 mins (Fri)"
-                textEpisodeTime.setText(getString(R.string.release_date_and_day,
-                        TimeTools.formatToLocalRelativeTime(getActivity(), actualRelease),
+                Date actualRelease = TimeTools.applyUserOffset(getContext(), releaseTime);
+                // "Oct 31 (Fri)" or "in 14 mins (Fri)"
+                String dateTime;
+                if (DisplaySettings.isDisplayExactDate(getContext())) {
+                    dateTime = TimeTools.formatToLocalDateShort(getContext(), actualRelease);
+                } else {
+                    dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
+                }
+                textEpisodeTime.setText(getString(R.string.release_date_and_day, dateTime,
                         TimeTools.formatToLocalDay(actualRelease)));
             } else {
                 textEpisodeTime.setText(null);
