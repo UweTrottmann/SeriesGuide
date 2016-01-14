@@ -357,6 +357,8 @@
     <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
     <string name="pref_onlyseasoneps">Hide special episodes</string>
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+    <string name="pref_exactdates">Display exact dates</string>
+    <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="pref_language">Preferred content language</string>
