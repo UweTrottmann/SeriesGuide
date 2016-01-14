@@ -658,6 +658,7 @@ public class DBUtils {
         final ContentValues newShowValues = new ContentValues();
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
+        final boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
         for (String[] show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
             final String showTvdbId = show[0];
@@ -708,9 +709,12 @@ public class DBUtils {
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
                 Date actualRelease = TimeTools.applyUserOffset(context, releaseTimeNext);
+                String dateTime = displayExactDate ?
+                        TimeTools.formatToLocalDateShort(context, actualRelease)
+                        : TimeTools.formatToLocalRelativeTime(context, actualRelease);
                 final String nextReleaseDateString = context.getString(
                         R.string.release_date_and_day,
-                        TimeTools.formatToLocalRelativeTime(context, actualRelease),
+                        dateTime,
                         TimeTools.formatToLocalDay(actualRelease));
 
                 nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.ID);

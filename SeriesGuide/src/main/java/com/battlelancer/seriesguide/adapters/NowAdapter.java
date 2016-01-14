@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -287,7 +288,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             // timestamp
             Date actualRelease = TimeTools.applyUserOffset(context, item.timestamp);
-            holder.timestamp.setText(TimeTools.formatToLocalRelativeTime(context, actualRelease));
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+            holder.timestamp.setText(displayExactDate ?
+                    TimeTools.formatToLocalDateShort(context, actualRelease)
+                    : TimeTools.formatToLocalRelativeTime(context, actualRelease));
 
             // absolute time and network
             StringBuilder releaseInfo = new StringBuilder();

@@ -58,6 +58,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -110,7 +111,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     @Bind(R.id.textViewEpisodeTitle) TextView mTitle;
     @Bind(R.id.textViewEpisodeDescription) TextView mDescription;
     @Bind(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
-    @Bind(R.id.textViewEpisodeReleaseDay) TextView mReleaseDay;
+    @Bind(R.id.textViewEpisodeReleaseDate) TextView mReleaseDate;
     @Bind(R.id.textViewEpisodeLastEdit) TextView mLastEdit;
     @Bind(R.id.labelEpisodeGuestStars) View mLabelGuestStars;
     @Bind(R.id.textViewEpisodeGuestStars) TextView mGuestStars;
@@ -349,23 +350,26 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
 
-        // release time and day
+        // release date, also build release time and day
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
         if (mEpisodeReleaseTime != -1) {
-            Date actualRelease = TimeTools.applyUserOffset(getActivity(),
-                    mEpisodeReleaseTime);
-            mReleaseDay.setText(TimeTools.formatToLocalDateAndDay(getActivity(), actualRelease));
-            // "in 15 mins (Fri)"
-            timeAndNumbersText
-                    .append(getString(R.string.release_date_and_day,
-                            TimeTools.formatToLocalRelativeTime(getActivity(),
-                                    actualRelease),
-                            TimeTools.formatToLocalDay(actualRelease)
-                    )
-                            .toUpperCase(Locale.getDefault()));
+            Date actualRelease = TimeTools.applyUserOffset(getContext(), mEpisodeReleaseTime);
+            mReleaseDate.setText(TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
+
+            String dateTime;
+            if (DisplaySettings.isDisplayExactDate(getContext())) {
+                // "31. October 2010"
+                dateTime = TimeTools.formatToLocalDate(getContext(), actualRelease);
+            } else {
+                // "in 15 mins"
+                dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
+            }
+            // append day: "in 15 mins (Fri)"
+            timeAndNumbersText.append(getString(R.string.release_date_and_day, dateTime,
+                    TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault()));
             timeAndNumbersText.append("  ");
         } else {
-            mReleaseDay.setText(R.string.unknown);
+            mReleaseDate.setText(R.string.unknown);
         }
         // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
         int numberStartIndex = timeAndNumbersText.length();

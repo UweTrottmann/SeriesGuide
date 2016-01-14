@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -45,11 +46,11 @@ public class EpisodesAdapter extends CursorAdapter {
     private OnFlagEpisodeListener mOnFlagListener;
 
     public interface OnFlagEpisodeListener {
-        public void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
+        void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
     }
 
     public interface PopupMenuClickListener {
-        public void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
+        void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
@@ -170,9 +171,11 @@ public class EpisodesAdapter extends CursorAdapter {
         final long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
-            // "in 15 mins" or "15 July 2001"
-            viewHolder.episodeAirdate
-                    .setText(TimeTools.formatToLocalRelativeTime(mContext, actualRelease));
+            // "in 15 mins" or "Oct 31, 2010"
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(mContext);
+            viewHolder.episodeAirdate.setText(displayExactDate ?
+                    TimeTools.formatToLocalDateShort(mContext, actualRelease)
+                    : TimeTools.formatToLocalRelativeTime(mContext, actualRelease));
         } else {
             viewHolder.episodeAirdate.setText(mContext
                     .getString(R.string.episode_firstaired_unknown));

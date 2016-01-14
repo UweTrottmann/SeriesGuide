@@ -58,6 +58,9 @@ public class DisplaySettings {
     public static final String KEY_LAST_ACTIVE_SHOWS_TAB
             = "com.battlelancer.seriesguide.activitytab";
 
+    private static final String KEY_DISPLAY_EXACT_DATE =
+            "com.battlelancer.seriesguide.shows.exactdate";
+
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
      */
@@ -143,5 +146,14 @@ public class DisplaySettings {
     public static int getLastShowsTabPosition(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(KEY_LAST_ACTIVE_SHOWS_TAB, ShowsActivity.InitBundle.INDEX_TAB_SHOWS);
+    }
+
+    /**
+     * Whether to show the exact/absolute date (31.10.2010) instead of a relative time string (in 5
+     * days).
+     */
+    public static boolean isDisplayExactDate(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                KEY_DISPLAY_EXACT_DATE, false);
     }
 }
