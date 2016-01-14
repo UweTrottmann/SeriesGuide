@@ -82,6 +82,7 @@
             android:layout_toRightOf="@id/showposter"
             android:ellipsize="end"
             android:paddingRight="@dimen/inline_padding"
+            android:paddingBottom="@dimen/inline_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Jan 8, 2009 (Thur)" />
