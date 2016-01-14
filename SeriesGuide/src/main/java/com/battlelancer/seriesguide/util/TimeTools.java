@@ -485,6 +485,14 @@ public class TimeTools {
     }
 
     /**
+     * Formats to a date like "October 31", or if the date is not in the current year "October 31,
+     * 2010".
+     */
+    public static String formatToLocalDate(Context context, Date dateTime) {
+        return DateUtils.formatDateTime(context, dateTime.getTime(), DateUtils.FORMAT_SHOW_DATE);
+    }
+
+    /**
      * Formats to a date, time zone and week day (e.g. "2014/02/04 CET (Mon)") as defined by the
      * devices locale. If the date time is today, uses the local equivalent of "today" instead of a
      * week day.
