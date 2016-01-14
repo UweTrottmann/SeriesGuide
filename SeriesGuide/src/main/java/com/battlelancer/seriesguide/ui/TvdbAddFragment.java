@@ -133,8 +133,12 @@ public class TvdbAddFragment extends AddFragment {
                 } else {
                     language = languageCodes[position - 1];
                 }
-                // refresh results in newly selected language
-                search();
+                // prevent crash due to views not being available
+                // https://fabric.io/seriesguide/android/apps/com.battlelancer.seriesguide/issues/567bff98f5d3a7f76b9e8502
+                if (isVisible()) {
+                    // refresh results in newly selected language
+                    search();
+                }
                 Timber.d("Set search language to %s", language);
             }
 
