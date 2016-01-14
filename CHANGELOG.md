@@ -5,6 +5,20 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 28 *(in development)*
+-----------------------------
+
+#### 28-beta1 *(2016-01-14)*
+
+* FEATURE Add setting to show absolute (e.g. "Oct 31") instead of relative ("in 3 days") timestamps
+  for episodes.
+* TWEAK Add "Android Dark" theme to widget, which has a transparent header, similar to the old
+  widget design.
+* TWEAK `ExtensionsConfigurationActivity` is now exported so extensions can send the user to it.
+  Thanks @tasomaniac-taso!
+* FIX Prevent crashes in overview, search, certain network and time zone configurations.
+* NOTICE Latest translations from crowdin.
+
 Version 27 *(2015-12-21)*
 -----------------------------
 
