@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Nigdy nie wyświetlaj wyemitowanych odcinków</string>
   <string name="pref_onlyseasoneps">Ukryj odcinki specjalne</string>
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
   <string name="pref_language">Preferowany język zawartości</string>

@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Не показвай вече излъчвани епизоди</string>
   <string name="pref_onlyseasoneps">Скрий специалните епизоди</string>
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Сортирай сезоните по…</string>
   <string name="pref_episodesorting">Сортирай епизодите по…</string>
   <string name="pref_language">Preferred content language</string>

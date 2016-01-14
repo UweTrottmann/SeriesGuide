@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">عدم عرض الحلقات التي تم بثها مسبقاً</string>
   <string name="pref_onlyseasoneps">إخفاء الحلقات الخاصة</string>
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
   <string name="pref_language">Preferred content language</string>

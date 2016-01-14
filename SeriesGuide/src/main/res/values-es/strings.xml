@@ -302,6 +302,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>
   <string name="pref_onlyseasoneps">Ocultar episodios especiales</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episodios por…</string>
   <string name="pref_language">Lenguaje preferido para el contenido</string>

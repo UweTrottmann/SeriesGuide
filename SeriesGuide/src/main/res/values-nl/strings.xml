@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
   <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
   <string name="pref_language">Content taal voorkeur</string>

@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Не показывать транслируемые эпизоды</string>
   <string name="pref_onlyseasoneps">Скрывать особые эпизоды</string>
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Сортировка сезонов по</string>
   <string name="pref_episodesorting">Сортировка эпизодов по</string>
   <string name="pref_language">Предпочтительный язык контента</string>

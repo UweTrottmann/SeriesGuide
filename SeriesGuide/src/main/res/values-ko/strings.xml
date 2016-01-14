@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">방영된 에피소드를 목록에 표시하지 않습니다</string>
   <string name="pref_onlyseasoneps">스페셜 에피소드 숨기기</string>
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
   <string name="pref_language">Preferred content language</string>

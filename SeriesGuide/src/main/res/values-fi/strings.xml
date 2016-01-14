@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Piilota erikoisjaksot</string>
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
   <string name="pref_language">Ensisijainen sisällön kieli</string>

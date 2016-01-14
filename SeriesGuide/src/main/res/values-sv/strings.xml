@@ -302,6 +302,8 @@
   <string name="pref_onlyfuturesummary">Visa aldrig redan sända avsnitt</string>
   <string name="pref_onlyseasoneps">Dölj specialavsnitt</string>
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
   <string name="pref_language">Innehållsspråk som föredras</string>

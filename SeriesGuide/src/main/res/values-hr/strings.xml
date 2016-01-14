@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Nikada ne prikazuj već pogledane epizode</string>
   <string name="pref_onlyseasoneps">Sakrij posebne epizode</string>
   <string name="pref_onlyseasonepssummary">Posebne epizode nestaju svugdje osim na popisu sezona</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Poredaj sezone prema…</string>
   <string name="pref_episodesorting">Poredaj epizode prema…</string>
   <string name="pref_language">Preferred content language</string>
