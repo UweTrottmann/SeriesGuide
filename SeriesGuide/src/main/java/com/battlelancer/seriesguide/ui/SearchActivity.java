@@ -164,6 +164,10 @@ public class SearchActivity extends BaseNavDrawerActivity {
             searchBar.setText(query);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
+            if (data == null) {
+                // no data, just stay inside search activity
+                return;
+            }
             String id = data.getLastPathSegment();
             displayEpisode(id);
             finish();
