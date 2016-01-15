@@ -8,7 +8,7 @@
   <string name="search">Søg</string>
   <string name="preferences">Indstillinger</string>
   <string name="help">Hjælp</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Hjælp &amp; Feedback</string>
   <string name="drawer_open">Åben navigations skuffen</string>
   <string name="drawer_close">Luk navigations skuffen</string>
   <string name="show">Serie</string>
@@ -22,7 +22,7 @@
   <string name="description_overview">Oversigt</string>
   <string name="description_poster">Vis plakat</string>
   <string name="description_image">Episode billede</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Flere indstillinger</string>
   <string name="clear">Slet</string>
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
   <string name="search_within_show">Søg indenfor %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Ethvert sprog</string>
   <string name="updated">Opdateret til nyeste version.</string>
   <string name="norating">ikke tilgængelig</string>
   <string name="unknown">Ukendt</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Sidste redigering / / TVDb</string>
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
   <string name="today">i dag</string>
   <string name="now">Nu</string>
   <string name="daily">Daglig</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">Skriv et serienavn</string>
   <string name="add_empty">Der er ingen serier her.</string>
   <string name="no_results">Ingen resultater, prøv komplette ord.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Prøv ethvert sprog</string>
+  <string name="action_try_again">Prøv igen</string>
   <string name="search_error">Søgning mislykkedes, prøv igen senere.</string>
   <string name="add_all">Tilføj alle</string>
   <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
@@ -260,7 +260,7 @@
   <string name="waitplease">Vent et øjeblik</string>
   <string name="connect">Tilslut</string>
   <string name="disconnect">Afbryd</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Brug integreret browser</string>
   <string name="connect_trakt_done">Forbundet til trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere serier og film på denne enhed med trakt. Dette kan tage noget tid.</string>
   <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>
@@ -313,7 +313,7 @@
   <string name="licence_tvdb">Denne app bruger data og billeder af TheTVDB licenseret under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produkt bruger TMDb API\'EN men er ikke godkendt eller certificeret af TMDb.</string>
   <string name="licence_trakt">Denne app bruger data og billeder af Trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
+  <string name="about_open_source">SeriesGuide er lavet ved hjælp af open source software.</string>
   <string name="licences_and_credits">Licences and credits</string>
   <string name="sort">Sorter efter</string>
   <string name="action_sort_ignore_articles">Ignorer artikler</string>
@@ -373,8 +373,8 @@
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
+  <string name="no_file_selected">Ingen fil valgt</string>
+  <string name="action_select_file">Vælg fil</string>
   <string name="backup_use_default_files">Use default backup files</string>
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Vælg sprog</string>

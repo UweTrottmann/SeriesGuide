@@ -131,8 +131,8 @@ dependencies {
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp:okhttp:2.7.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.2'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.uwetrottmann:androidutils:2.1.0'
@@ -144,7 +144,8 @@ dependencies {
         exclude group: 'joda-time', module: 'joda-time'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'net.danlew:android.joda:2.9.0'
+    // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
+    compile 'net.danlew:android.joda:2.9.1'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:8.1.0'
