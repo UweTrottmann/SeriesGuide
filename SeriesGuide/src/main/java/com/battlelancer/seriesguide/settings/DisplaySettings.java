@@ -58,7 +58,7 @@ public class DisplaySettings {
     public static final String KEY_LAST_ACTIVE_SHOWS_TAB
             = "com.battlelancer.seriesguide.activitytab";
 
-    private static final String KEY_DISPLAY_EXACT_DATE =
+    public static final String KEY_DISPLAY_EXACT_DATE =
             "com.battlelancer.seriesguide.shows.exactdate";
 
     /**

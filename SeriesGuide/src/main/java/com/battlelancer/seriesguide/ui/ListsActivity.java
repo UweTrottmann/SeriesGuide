@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
@@ -187,6 +188,9 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
         // refresh icon state
         supportInvalidateOptionsMenu();
+
+        // refresh all list widgets
+        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(this);
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());

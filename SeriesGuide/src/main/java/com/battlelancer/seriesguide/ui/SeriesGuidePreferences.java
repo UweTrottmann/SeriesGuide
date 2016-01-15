@@ -48,6 +48,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -475,6 +476,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 new BackupManager(pref.getContext()).dataChanged();
             }
 
+            // update pref summary text
             if (DisplaySettings.KEY_LANGUAGE.equals(key)
                     || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
                     || DisplaySettings.KEY_THEME.equals(key)
@@ -483,6 +485,28 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
                 }
+            }
+            if (KEY_OFFSET.equals(key)) {
+                if (pref != null) {
+                    ListPreference listPref = (ListPreference) pref;
+                    // Set summary to be the user-description for the selected value
+                    listPref.setSummary(
+                            getString(R.string.pref_offsetsummary, listPref.getEntry()));
+                }
+            }
+
+            // pref changes that require the notification service to be reset
+            if (KEY_OFFSET.equals(key)
+                    || NotificationSettings.KEY_THRESHOLD.equals(key)) {
+                resetAndRunNotificationsService(getActivity());
+            }
+
+            // pref changes that require the widgets to be updated
+            if (KEY_OFFSET.equals(key)
+                    || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
+                    || DisplaySettings.KEY_DISPLAY_EXACT_DATE.equals(key)) {
+                // update any widgets
+                ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getActivity());
             }
 
             if (DisplaySettings.KEY_LANGUAGE.equals(key)) {
@@ -495,24 +519,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                                 .update(Episodes.CONTENT_URI, values, null, null);
                     }
                 }).start();
-            }
-
-            if (key.equals(KEY_OFFSET)) {
-                if (pref != null) {
-                    ListPreference listPref = (ListPreference) pref;
-                    // Set summary to be the user-description for the selected
-                    // value
-                    listPref.setSummary(
-                            getString(R.string.pref_offsetsummary, listPref.getEntry()));
-
-                    resetAndRunNotificationsService(getActivity());
-                }
-            }
-
-            if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
-                if (pref != null) {
-                    resetAndRunNotificationsService(getActivity());
-                }
             }
 
             // Toggle auto-update on SyncAdapter
