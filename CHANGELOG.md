@@ -12,6 +12,12 @@ Version 27 *(2015-12-21)*
 * Improved accessibility.
 * More material list widget design.
 
+#### 27.0.1 *(2016-01-15)*
+
+* FIX Prevent crashes in overview, search, certain network and time zone configurations.
+* FIX Improve show and movie card sizes with large fonts.
+* NOTICE Latest translations from crowdin.
+
 #### 27 *(2015-12-21)*
 
 * TWEAK Updated list widget design to feel more material.
