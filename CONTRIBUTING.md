@@ -4,22 +4,19 @@ Contributing
 #### Would you like to contribute code?
 
 1. [Fork SeriesGuide][11]. See further setup instructions below.
-2. `git checkout -b descriptive-branch-name dev` and make [great commits + messages][10].
-3. [Start a pull request][6] against dev. Reference [existing issues][7] when possible.
+2. Create a new branch (for example using `git checkout -b descriptive-branch-name master`) and make [great commits + messages][10].
+3. [Start a pull request][6]. Reference [existing issues][7] when possible.
 
 #### No code!
 * You can [get help][12].
 * You can [suggest features][9].
-* You can [discuss a bug][7] or if it was not reported yet [submit a bug][8]!
+* You can [discuss a bug][7] or if it was not reported yet [submit a bug][8].
 * You can [translate strings][4].
 
-Branch structure
-----------------
+Repository structure
+--------------------
 
-The repository is made up of two main branches: master (stable) and dev (unstable).
-
-* **master** has the latest stable code, its tags are released as [SeriesGuide][1] on Google Play.
-* **dev** includes the latest unstable code, contributers (you!) should submit pull requests against it.
+This repository contains one main development branch, `master`. Its tags are released as [SeriesGuide][1] on Google Play.
 
 Setup
 -----
