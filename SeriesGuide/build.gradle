@@ -153,7 +153,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
 
     // App Engine
-    compile('com.google.api-client:google-api-client-android:1.20.0') {
+    // https://github.com/google/google-http-java-client/commits/dev
+    compile('com.google.api-client:google-api-client-android:1.21.0') {
         exclude group: 'com.google.android.google-play-services'
         exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
     }
