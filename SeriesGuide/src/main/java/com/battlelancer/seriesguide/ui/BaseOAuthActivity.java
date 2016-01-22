@@ -86,6 +86,8 @@ public abstract class BaseOAuthActivity extends BaseActivity {
          */
         if (webview != null) {
             webview.getSettings().setJavaScriptEnabled(false);
+            // remove client to avoid callbacks to non-existent views
+            webview.setWebViewClient(null);
             webview = null;
         }
     }
