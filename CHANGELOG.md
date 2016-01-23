@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 28 *(in development)*
 -----------------------------
 
+#### 28-beta2 *(2016-01-23)*
+
+* FIX Signing in with trakt results in loops or incorrect cross-site request forgery warning.
+* FIX Changing exact date setting does not affect widgets.
+* FIX Changing some settings do not affect list widget immediately.
+* NOTICE Latest translations from crowdin.
+
 #### 28-beta1 *(2016-01-14)*
 
 * FEATURE Add setting to show absolute (e.g. "Oct 31") instead of relative ("in 3 days") timestamps
