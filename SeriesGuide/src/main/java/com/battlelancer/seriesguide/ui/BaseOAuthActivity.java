@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -30,7 +29,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 import timber.log.Timber;
@@ -50,6 +48,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
     private WebView webview;
     private View buttonContainer;
+    private View progressBar;
     private TextView textViewMessage;
 
     @Override
@@ -59,6 +58,10 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         setupActionBar();
 
         setupViews();
+
+        if (handleAuthIntent(getIntent())) {
+            return;
+        }
 
         boolean isRetry = getIntent().getBooleanExtra(EXTRA_KEY_IS_RETRY, false);
         if (isRetry) {
@@ -101,6 +104,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     private void setupViews() {
         webview = (WebView) findViewById(R.id.webView);
         buttonContainer = findViewById(R.id.containerOauthButtons);
+        progressBar = findViewById(R.id.progressBarOauth);
         textViewMessage = (TextView) buttonContainer.findViewById(R.id.textViewOauthMessage);
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
@@ -134,12 +138,18 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        // handle callback from external browser
+        handleAuthIntent(intent);
+    }
+
+    private boolean handleAuthIntent(Intent intent) {
+        // handle auth callback from external browser
         Uri callbackUri = intent.getData();
-        if (callbackUri != null && callbackUri.getScheme().equals(OAUTH_URI_SCHEME)) {
-            fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
-                    callbackUri.getQueryParameter("state"));
+        if (callbackUri == null || !callbackUri.getScheme().equals(OAUTH_URI_SCHEME)) {
+            return false;
         }
+        fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
+                callbackUri.getQueryParameter("state"));
+        return true;
     }
 
     protected void activateFallbackButtons() {
@@ -169,12 +179,17 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     protected void setMessage(String message) {
+        setMessage(message, false);
+    }
+
+    protected void setMessage(String message, boolean progressVisible) {
         if (message == null) {
             textViewMessage.setVisibility(View.GONE);
         } else {
             textViewMessage.setVisibility(View.VISIBLE);
             textViewMessage.setText(message);
         }
+        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.GONE);
     }
 
     protected WebViewClient webViewClient = new WebViewClient() {
