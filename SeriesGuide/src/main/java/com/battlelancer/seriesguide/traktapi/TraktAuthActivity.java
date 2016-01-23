@@ -16,14 +16,17 @@
 
 package com.battlelancer.seriesguide.traktapi;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
-import com.battlelancer.seriesguide.ui.ConnectTraktCredentialsFragment;
+import com.battlelancer.seriesguide.util.ConnectTraktTask;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -40,10 +43,21 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     private static final String KEY_STATE = "state";
     private String state;
+    private ConnectTraktTaskFragment taskFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("trakt-connect-task");
+        if (fragment == null) {
+            taskFragment = new ConnectTraktTaskFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(taskFragment, "trakt-connect-task")
+                    .commit();
+        } else {
+            taskFragment = (ConnectTraktTaskFragment) fragment;
+        }
 
         if (savedInstanceState != null) {
             // restore state on recreation
@@ -85,12 +99,20 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     @Override
     protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
+        if (taskFragment.getTask() != null
+                && taskFragment.getTask().getStatus() != AsyncTask.Status.FINISHED) {
+            // connect task is still running
+            setMessage(getString(R.string.waitplease), true);
+            return;
+        }
+
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
             Timber.e(OAuthProblemException.error("invalid_state",
                     "State is null or does not match."), "fetchTokensAndFinish: failed.");
             activateFallbackButtons();
-            setMessage(getAuthErrorMessage() + "\n\n(Cross-site request forgery detected.)");
+            setMessage(getAuthErrorMessage() + "\n\n(State is null or does not match. "
+                    + "May indicate cross-site request forgery.)");
             return;
         }
 
@@ -101,10 +123,39 @@ public class TraktAuthActivity extends BaseOAuthActivity {
             return;
         }
 
-        // return auth code to credentials fragment
-        Intent intent = new Intent();
-        intent.putExtra(ConnectTraktCredentialsFragment.KEY_OAUTH_CODE, authCode);
-        setResult(RESULT_OK, intent);
-        finish();
+        // fetch access token with given OAuth auth code
+        setMessage(getString(R.string.waitplease), true);
+        ConnectTraktTask task = new ConnectTraktTask(getApplicationContext());
+        Utils.executeInOrder(task, authCode);
+        taskFragment.setTask(task);
+    }
+
+    public void onEventMainThread(ConnectTraktTask.FinishedEvent event) {
+        taskFragment.setTask(null);
+
+        int resultCode = event.resultCode;
+        if (resultCode == TraktResult.SUCCESS) {
+            // if we got here, looks like credentials were stored successfully
+            finish();
+            return;
+        }
+
+        // handle errors
+        int errorResId;
+        switch (resultCode) {
+            case TraktResult.OFFLINE:
+                errorResId = R.string.offline;
+                break;
+            case TraktResult.API_ERROR:
+                errorResId = R.string.trakt_error_general;
+                break;
+            case TraktResult.AUTH_ERROR:
+            case TraktResult.ERROR:
+            default:
+                errorResId = R.string.trakt_error_credentials;
+                break;
+        }
+        setMessage(getString(errorResId));
+        activateFallbackButtons();
     }
 }

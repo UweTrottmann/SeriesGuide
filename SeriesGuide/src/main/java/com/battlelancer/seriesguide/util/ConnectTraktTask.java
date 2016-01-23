@@ -35,6 +35,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import de.greenrobot.event.EventBus;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -47,21 +48,21 @@ import timber.log.Timber;
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
-    public interface OnTaskFinishedListener {
-
+    public class FinishedEvent {
         /**
-         * Returns one of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
+         * One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
          */
-        public void onTaskFinished(int resultCode);
+        public int resultCode;
+
+        public FinishedEvent(int resultCode) {
+            this.resultCode = resultCode;
+        }
     }
 
     private final Context mContext;
 
-    private OnTaskFinishedListener mListener;
-
-    public ConnectTraktTask(Context context, OnTaskFinishedListener listener) {
+    public ConnectTraktTask(Context context) {
         mContext = context;
-        mListener = listener;
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -176,8 +177,6 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.DELTA, 0, true);
         }
 
-        if (mListener != null) {
-            mListener.onTaskFinished(resultCode);
-        }
+        EventBus.getDefault().post(new FinishedEvent(resultCode));
     }
 }

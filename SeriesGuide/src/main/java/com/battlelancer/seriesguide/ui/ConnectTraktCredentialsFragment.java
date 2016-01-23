@@ -16,9 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -33,18 +31,14 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
-import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Provides a user interface to connect or create a trakt account.
  */
-public class ConnectTraktCredentialsFragment extends Fragment implements
-        ConnectTraktTask.OnTaskFinishedListener {
+public class ConnectTraktCredentialsFragment extends Fragment {
 
-    public static final String KEY_OAUTH_CODE = "auth-code";
-
-    private ConnectTraktTask mTask;
+    private boolean isConnecting;
 
     @Bind(R.id.buttonConnectTraktConnect) Button buttonConnect;
     @Bind(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
@@ -58,17 +52,6 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        /*
-         * Try to keep the fragment around on config changes so the credentials task
-         * does not have to be finished.
-         */
-        setRetainInstance(true);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
@@ -78,7 +61,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                connect(false);
+                connect();
             }
         });
 
@@ -102,43 +85,26 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
     }
 
     private void updateViews() {
-        // unfinished task around?
-        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
-            // disable buttons, show status message
-            setButtonStates(false, false);
-            setStatus(true, R.string.waitplease);
-            setUsernameViewsStates(false);
-            return;
-        }
-
         boolean hasCredentials = TraktCredentials.get(getActivity()).hasCredentials();
         if (hasCredentials) {
-            username.setText(TraktCredentials.get(getActivity()).getUsername());
-            setButtonStates(false, true);
-            setUsernameViewsStates(true);
-            setStatus(false, -1);
+            if (isConnecting) {
+                // show further options after successful connection
+                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, f);
+                ft.commitAllowingStateLoss();
+            } else {
+                username.setText(TraktCredentials.get(getActivity()).getUsername());
+                setButtonStates(false, true);
+                setUsernameViewsStates(true);
+                setStatus(false, -1);
+            }
         } else {
+            isConnecting = false;
             setButtonStates(true, false);
             setUsernameViewsStates(false);
             setStatus(false, R.string.trakt_connect_instructions);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE
-                || resultCode != Activity.RESULT_OK
-                || data == null
-                || !data.hasExtra(KEY_OAUTH_CODE)) {
-            return;
-        }
-
-        // fetch access token with given OAuth auth code
-        String authCode = data.getStringExtra(KEY_OAUTH_CODE);
-        mTask = new ConnectTraktTask(getActivity(), ConnectTraktCredentialsFragment.this);
-        Utils.executeInOrder(mTask, authCode == null ? "" : authCode); // avoid method ambiguity
-
-        updateViews();
     }
 
     @Override
@@ -148,61 +114,18 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
         ButterKnife.unbind(this);
     }
 
-    private void connect(boolean isRetry) {
+    private void connect() {
         // disable buttons, show status message
         setButtonStates(false, false);
         setStatus(true, R.string.waitplease);
 
         // launch activity to authorize with trakt
-        startActivityForResult(
-                new Intent(getActivity(), TraktAuthActivity.class)
-                        .putExtra(TraktAuthActivity.EXTRA_KEY_IS_RETRY, isRetry),
-                ConnectTraktActivity.OAUTH_CODE_REQUEST_CODE
-        );
+        startActivity(new Intent(getActivity(), TraktAuthActivity.class));
     }
 
     private void disconnect() {
         TraktCredentials.get(getActivity()).removeCredentials();
         updateViews();
-    }
-
-    @Override
-    public void onTaskFinished(int resultCode) {
-        mTask = null;
-
-        if (resultCode == TraktResult.SUCCESS) {
-            // if we got here, looks like credentials were stored successfully
-
-            // show further options after successful connection
-            if (getFragmentManager() != null) {
-                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, f);
-                ft.commitAllowingStateLoss();
-            }
-            return;
-        }
-
-        // handle errors
-        int errorResId;
-        switch (resultCode) {
-            case TraktResult.OFFLINE:
-                errorResId = R.string.offline;
-                break;
-            case TraktResult.API_ERROR:
-                errorResId = R.string.trakt_error_general;
-                break;
-            case TraktResult.AUTH_ERROR:
-                // try to connect again, but show internal browser option
-                connect(true);
-                // fall through
-            case TraktResult.ERROR:
-            default:
-                errorResId = R.string.trakt_error_credentials;
-                break;
-        }
-        setStatus(false, errorResId);
-        setButtonStates(true, false);
     }
 
     private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
@@ -221,6 +144,7 @@ public class ConnectTraktCredentialsFragment extends Fragment implements
      * given text ressource.
      */
     private void setStatus(boolean progressVisible, int statusTextResourceId) {
+        isConnecting = progressVisible;
         // guard calls, as we might get called after the views were detached
         if (status == null || progressBar == null) {
             return;
