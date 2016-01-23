@@ -32,7 +32,7 @@
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="search_within_show">Zoek binnen %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Elke taal</string>
   <string name="updated">Nieuwste versie is geïnstalleerd.</string>
   <string name="norating">n.v.t.</string>
   <string name="unknown">onbekend</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="today">vandaag</string>
   <string name="now">nu</string>
   <string name="daily">Dagelijks</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Probeer elke taal</string>
+  <string name="action_try_again">Probeer nogmaals</string>
   <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
   <string name="add_all">Alles toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
@@ -249,8 +249,8 @@
   <string name="trakt_success">Verzonden naar Trakt.</string>
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
   <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
+  <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
   <string name="trakt_account">trakt-account</string>
   <string name="trakt_connect_instructions">In het volgende scherm kun je inloggen op trakt of een nieuw account aanmaken. Daarna moet je SeriesGuide toegang geven tot je trakt-account.</string>
   <string name="connect_trakt">Verbinden met trakt</string>
@@ -260,7 +260,7 @@
   <string name="waitplease">Een ogenblik geduld a.u.b.…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Verbreken</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Gebruik de geïntegreerde browser</string>
   <string name="connect_trakt_done">Verbonden met trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide zal nu de shows en films op dit apparaat synchroniseren met Trakt. Dit kan enige tijd duren.</string>
   <string name="add_trakt_shows">Series toevoegen vanuit uw bibliotheek:</string>
@@ -301,8 +301,8 @@
   <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
   <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">Juiste datum weergeven</string>
+  <string name="pref_exactdates_summary">\"October 31\" in plaats van \"in 3 days\"</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
   <string name="pref_language">Content taal voorkeur</string>

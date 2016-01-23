@@ -341,7 +341,7 @@
   <string name="pref_other">기타</string>
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
   <string name="pref_autoupdatesummary">주기적으로 쇼 업데이트</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">자동 백업</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
@@ -375,9 +375,9 @@
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
+  <string name="action_select_file">파일 선택</string>
+  <string name="backup_use_default_files">기본 백업 파일 사용</string>
   <string name="get_started">시작하기</string>
   <string name="welcome_setuplanguage">언어 선택</string>
   <string name="dismiss">취소</string>

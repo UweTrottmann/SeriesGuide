@@ -75,7 +75,7 @@
   <string name="lastEdit">Senast redigerad // TVDb</string>
   <string name="services_watch">Titta på</string>
   <string name="services_more">Mer</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
   <string name="today">idag</string>
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
@@ -149,7 +149,7 @@
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="add_empty">Det finns inga serier här.</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
-  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_any_language">Testa alla språk</string>
   <string name="action_try_again">Försök igen</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
@@ -302,8 +302,8 @@
   <string name="pref_onlyfuturesummary">Visa aldrig redan sända avsnitt</string>
   <string name="pref_onlyseasoneps">Dölj specialavsnitt</string>
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">Visa exakt datum</string>
+  <string name="pref_exactdates_summary">\"31 Oktober\" istället för \"om 3 dagar\"</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
