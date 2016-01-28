@@ -131,10 +131,11 @@ dependencies {
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp:okhttp:2.7.2'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.2'
+    compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    // temporarily add okhttp 3 support to retrofit 1
+    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
     compile 'com.uwetrottmann:androidutils:2.1.0'
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
