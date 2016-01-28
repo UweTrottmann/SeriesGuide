@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -143,7 +144,9 @@ public final class ServiceUtils {
     @NonNull
     public static synchronized Picasso getPicasso(Context context) {
         if (sPicasso == null) {
-            sPicasso = new Picasso.Builder(context).build();
+            sPicasso = new Picasso.Builder(context)
+                    .downloader(new OkHttp3Downloader(context))
+                    .build();
         }
         return sPicasso;
     }
