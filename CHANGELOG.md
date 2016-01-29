@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 28 *(in development)*
 -----------------------------
 
+#### 28-beta3 *(2016-01-29)*
+
+* TWEAK Remember last selected language in "Add show" screen.
+* TWEAK Update to okhttp 3 for network connections.
+* FIX Signing in with trakt results in crash.
+* NOTICE Latest translations from crowdin.
+
 #### 28-beta2 *(2016-01-23)*
 
 * FIX Signing in with trakt results in loops or incorrect cross-site request forgery warning.
