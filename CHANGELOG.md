@@ -33,6 +33,10 @@ Version 27 *(2015-12-21)*
 * Improved accessibility.
 * More material list widget design.
 
+#### 27.0.3 *(2016-01-24)*
+
+* FIX Signing in with trakt results in crash.
+
 #### 27.0.2 *(2016-01-23)*
 
 * FIX Signing in with trakt results in loops or incorrect cross-site request forgery warning.

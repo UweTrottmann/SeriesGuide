@@ -42,6 +42,7 @@ import timber.log.Timber;
 public class TraktAuthActivity extends BaseOAuthActivity {
 
     private static final String KEY_STATE = "state";
+    private static final String TRAKT_CONNECT_TASK_TAG = "trakt-connect-task";
     private String state;
     private ConnectTraktTaskFragment taskFragment;
 
@@ -49,13 +50,8 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("trakt-connect-task");
-        if (fragment == null) {
-            taskFragment = new ConnectTraktTaskFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(taskFragment, "trakt-connect-task")
-                    .commit();
-        } else {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TRAKT_CONNECT_TASK_TAG);
+        if (fragment != null) {
             taskFragment = (ConnectTraktTaskFragment) fragment;
         }
 
@@ -99,6 +95,15 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     @Override
     protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
+        activateFallbackButtons();
+
+        if (taskFragment == null) {
+            taskFragment = new ConnectTraktTaskFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(taskFragment, TRAKT_CONNECT_TASK_TAG)
+                    .commit();
+        }
+
         if (taskFragment.getTask() != null
                 && taskFragment.getTask().getStatus() != AsyncTask.Status.FINISHED) {
             // connect task is still running
@@ -110,15 +115,14 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         if (this.state == null || !this.state.equals(state)) {
             Timber.e(OAuthProblemException.error("invalid_state",
                     "State is null or does not match."), "fetchTokensAndFinish: failed.");
-            activateFallbackButtons();
-            setMessage(getAuthErrorMessage() + "\n\n(State is null or does not match. "
-                    + "May indicate cross-site request forgery.)");
+            setMessage(getAuthErrorMessage() + (this.state == null ?
+                    "\n\n(State is null.)" :
+                    "\n\n(State does not match. Cross-site request forgery detected.)"));
             return;
         }
 
         if (TextUtils.isEmpty(authCode)) {
             // no valid auth code, remain in activity and show fallback buttons
-            activateFallbackButtons();
             setMessage(getAuthErrorMessage() + "\n\n(No auth code returned.)");
             return;
         }
