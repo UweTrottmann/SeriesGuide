@@ -35,8 +35,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -44,6 +43,8 @@ import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 /**
@@ -95,17 +96,18 @@ public final class ServiceUtils {
     }
 
     /**
-     * Returns this apps {@link com.squareup.okhttp.OkHttpClient} with enabled response cache.
+     * Returns this apps {@link OkHttpClient} with enabled response cache.
      * Should be used with API calls.
      */
     @NonNull
     public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
         if (cachingHttpClient == null) {
-            cachingHttpClient = new OkHttpClient();
-            cachingHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            cachingHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             File cacheDir = createApiCacheDir(context);
-            cachingHttpClient.setCache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
+            builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
+            cachingHttpClient = builder.build();
         }
         return cachingHttpClient;
     }
@@ -142,7 +144,9 @@ public final class ServiceUtils {
     @NonNull
     public static synchronized Picasso getPicasso(Context context) {
         if (sPicasso == null) {
-            sPicasso = new Picasso.Builder(context).build();
+            sPicasso = new Picasso.Builder(context)
+                    .downloader(new OkHttp3Downloader(context))
+                    .build();
         }
         return sPicasso;
     }

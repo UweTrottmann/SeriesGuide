@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.tmdb.Tmdb;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -33,6 +34,6 @@ public class SgTmdb extends Tmdb {
     @Override
     protected RestAdapter.Builder newRestAdapterBuilder() {
         return new RestAdapter.Builder().setClient(
-                new OkClient(ServiceUtils.getCachingOkHttpClient(context)));
+                new Ok3Client(ServiceUtils.getCachingOkHttpClient(context)));
     }
 }
