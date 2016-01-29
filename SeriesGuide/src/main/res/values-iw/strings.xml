@@ -22,7 +22,7 @@
   <string name="description_overview">תקציר</string>
   <string name="description_poster">הצג פוסטר</string>
   <string name="description_image">תמונת הפרק</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">אפשרויות נוספות</string>
   <string name="clear">נקה</string>
   <string name="discard">בטל</string>
   <string name="save_selection">שמור בחירה</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">נסה בכל שפה</string>
+  <string name="action_try_again">נסה שוב</string>
   <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
   <string name="add_all">הוסף הכל</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
@@ -301,8 +301,8 @@
   <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
   <string name="pref_onlyseasoneps">הסתר פרקים מיוחדים</string>
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">הצג תאריכים מדויקים</string>
+  <string name="pref_exactdates_summary">\"אוקטובר 31\"במקום\"ב 3 ימים\"</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
   <string name="pref_language">שפת תוכן מועדפת</string>

@@ -103,7 +103,7 @@
   <string name="unfavorited">Borrado de los favoritos</string>
   <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Mostrar</string>
-  <string name="hidden">Se movió a Ocultos</string>
+  <string name="hidden">Se movió a ocultos</string>
   <string name="unhidden">Mostrar serie</string>
   <string name="action_shows_add">Añadir serie</string>
   <string name="action_shows_filter">Filtrar series</string>
@@ -127,8 +127,8 @@
   <string name="now_empty">Nada nuevo. ¡Mira algunas series!</string>
   <string name="now_movies_empty">Nada nuevo. ¡Mira alguna película!</string>
   <string name="user_stream">Historial</string>
-  <string name="user_stream_empty">No hay actividad en trakt. Haz check in en alguna serie!</string>
-  <string name="user_movie_stream_empty">No hay actividad en trakt. Haz check in en alguna película!</string>
+  <string name="user_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna serie!</string>
+  <string name="user_movie_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna película!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recientes</string>
   <string name="noupcoming">No hay capítulos próximamente.</string>
