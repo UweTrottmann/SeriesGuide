@@ -35,6 +35,8 @@ public class DisplaySettings {
 
     public static final String KEY_LANGUAGE = "language";
 
+    public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
+
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
     public static final String NUMBERFORMAT_DEFAULT = "default";
@@ -89,11 +91,22 @@ public class DisplaySettings {
     }
 
     /**
-     * Two letter ISO 639-1 language code of the content language preferred by the user.
+     * @return Two letter ISO 639-1 language code of the content language preferred by the user. If
+     * the value does not exist, defaults to English.
      */
     public static String getContentLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE, LANGUAGE_EN);
+    }
+
+    /**
+     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
+     * an empty string if all languages should be searched. Defaults to {@link
+     * #getContentLanguage(Context)} if the value does not exist.
+     */
+    public static String getSearchLanguage(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_SEARCH, getContentLanguage(context));
     }
 
     public static String getNumberFormat(Context context) {

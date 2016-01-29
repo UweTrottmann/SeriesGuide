@@ -17,8 +17,10 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -118,21 +120,29 @@ public class TvdbAddFragment extends AddFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(adapter);
         final String[] languageCodes = getResources().getStringArray(R.array.languageData);
-        language = DisplaySettings.getContentLanguage(getContext());
-        for (int i = 0; i < languageCodes.length; i++) {
-            if (languageCodes[i].equals(language)) {
-                spinnerLanguage.setSelection(i + 1, false);
-                break;
+        language = DisplaySettings.getSearchLanguage(getContext());
+        if (!TextUtils.isEmpty(language)) {
+            for (int i = 0; i < languageCodes.length; i++) {
+                if (languageCodes[i].equals(language)) {
+                    spinnerLanguage.setSelection(i + 1, false);
+                    break;
+                }
             }
         }
         spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    language = null;
+                    language = "";
                 } else {
                     language = languageCodes[position - 1];
                 }
+
+                // save selected search language
+                PreferenceManager.getDefaultSharedPreferences(parent.getContext()).edit()
+                        .putString(DisplaySettings.KEY_LANGUAGE_SEARCH, language)
+                        .apply();
+
                 // prevent crash due to views not being available
                 // https://fabric.io/seriesguide/android/apps/com.battlelancer.seriesguide/issues/567bff98f5d3a7f76b9e8502
                 if (isVisible()) {
@@ -202,13 +212,13 @@ public class TvdbAddFragment extends AddFragment {
         emptyView.setButtonClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (shouldTryAnyLanguage && language != null) {
+                if (shouldTryAnyLanguage && !TextUtils.isEmpty(language)) {
                     // not set to any language: set to any language
                     // spinner selection change triggers search
                     shouldTryAnyLanguage = false;
                     spinnerLanguage.setSelection(0);
                 } else {
-                    // already set to no language or retrying, trigger search directly
+                    // already set to any language or retrying, trigger search directly
                     search();
                 }
             }
@@ -253,6 +263,10 @@ public class TvdbAddFragment extends AddFragment {
             if (args != null) {
                 query = args.getString(KEY_QUERY);
                 language = args.getString(KEY_LANGUAGE);
+                if (TextUtils.isEmpty(language)) {
+                    // map empty string to null to search in all languages
+                    language = null;
+                }
             }
             return new TvdbAddLoader(getActivity(), query, language);
         }
@@ -264,7 +278,7 @@ public class TvdbAddFragment extends AddFragment {
             }
             setSearchResults(data.results);
             setEmptyMessage(data.emptyTextResId);
-            if (data.successful && data.results.size() == 0 && language != null) {
+            if (data.successful && data.results.size() == 0 && !TextUtils.isEmpty(language)) {
                 shouldTryAnyLanguage = true;
                 emptyView.setButtonText(R.string.action_try_any_language);
             } else {
