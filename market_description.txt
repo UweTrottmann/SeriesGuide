@@ -19,4 +19,6 @@ This app uses data and images by TheTVDB licensed under CC BY-NC 4.0. https://th
 This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
 This app uses data and images by trakt. https://trakt.tv/terms
 
+Sample shows by Ross Scott, visit him at http://www.accursedfarms.com
+
 Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.
