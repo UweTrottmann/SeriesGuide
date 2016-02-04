@@ -85,7 +85,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new MoviesCursorAdapter(getActivity(), this);
+        adapter = new MoviesCursorAdapter(getContext(), this);
         gridView.setAdapter(adapter);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);
@@ -112,14 +112,14 @@ public abstract class MoviesBaseFragment extends Fragment implements
         inflater.inflate(R.menu.movies_menu, menu);
 
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
-                .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getActivity()));
+                .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getContext()));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_movies_sort_title) {
-            if (MoviesDistillationSettings.getSortOrderId(getActivity())
+            if (MoviesDistillationSettings.getSortOrderId(getContext())
                     == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
                 changeSortOrder(MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
             } else {
@@ -129,7 +129,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
             return true;
         }
         if (itemId == R.id.menu_action_movies_sort_release) {
-            if (MoviesDistillationSettings.getSortOrderId(getActivity())
+            if (MoviesDistillationSettings.getSortOrderId(getContext())
                     == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
                 changeSortOrder(MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID);
             } else {
@@ -139,7 +139,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
             return true;
         }
         if (itemId == R.id.menu_action_movies_sort_ignore_articles) {
-            changeSortIgnoreArticles(!DisplaySettings.isSortOrderIgnoringArticles(getActivity()));
+            changeSortIgnoreArticles(!DisplaySettings.isSortOrderIgnoringArticles(getContext()));
             return true;
         }
 
@@ -147,7 +147,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     }
 
     private void changeSortOrder(int sortOrderId) {
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
                 .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
                 .commit();
 
@@ -155,7 +155,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     }
 
     private void changeSortIgnoreArticles(boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
                 .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
                 .commit();
 

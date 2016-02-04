@@ -77,13 +77,6 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
     @Bind(R.id.buttonMoviesSearchClear) View clearButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setRetainInstance(true);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
@@ -152,13 +145,13 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        resultsAdapter = new MoviesAdapter(getActivity(), this);
+        resultsAdapter = new MoviesAdapter(getContext(), this);
         resultsGridView.setAdapter(resultsAdapter);
 
         // setup search history
         if (searchHistory == null || searchHistoryAdapter == null) {
-            searchHistory = new SearchHistory(getActivity(), SearchSettings.KEY_SUFFIX_TMDB);
-            searchHistoryAdapter = new ArrayAdapter<>(getActivity(),
+            searchHistory = new SearchHistory(getContext(), SearchSettings.KEY_SUFFIX_TMDB);
+            searchHistoryAdapter = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
             searchBox.setAdapter(searchHistoryAdapter);
         }
@@ -209,8 +202,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
     private void setProgressVisible(boolean visible, boolean animate) {
         if (animate) {
-            Animation out = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out);
-            Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
+            Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
+            Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
             resultsContainer.startAnimation(visible ? out : in);
             progressBar.startAnimation(visible ? in : out);
         }
@@ -241,7 +234,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         // check if movie is already in watchlist or collection
         boolean isInWatchlist = false;
         boolean isInCollection = false;
-        Cursor movie = getActivity().getContentResolver().query(
+        Cursor movie = getContext().getContentResolver().query(
                 SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
                 new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
                         SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
@@ -265,19 +258,19 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_action_movies_watchlist_add: {
-                        MovieTools.addToWatchlist(getActivity(), movieTmdbId);
+                        MovieTools.addToWatchlist(getContext(), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_watchlist_remove: {
-                        MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
+                        MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_collection_add: {
-                        MovieTools.addToCollection(getActivity(), movieTmdbId);
+                        MovieTools.addToCollection(getContext(), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_collection_remove: {
-                        MovieTools.removeFromCollection(getActivity(), movieTmdbId);
+                        MovieTools.removeFromCollection(getContext(), movieTmdbId);
                         return true;
                     }
                 }
@@ -296,7 +289,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (args != null) {
                 query = args.getString(SEARCH_QUERY_KEY);
             }
-            return new TmdbMoviesLoader(getActivity(), query);
+            return new TmdbMoviesLoader(getContext(), query);
         }
 
         @Override
