@@ -22,7 +22,7 @@
   <string name="description_overview">Огляд</string>
   <string name="description_poster">Показати постер</string>
   <string name="description_image">Зображення Серії</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Додаткові параметри</string>
   <string name="clear">Очистити</string>
   <string name="discard">Відмінити</string>
   <string name="save_selection">Зберегти вибране</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Останнє редагування / / TVDb</string>
   <string name="services_watch">Дивитися</string>
   <string name="services_more">Більше</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
   <string name="daily">Щодня</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Виберіть будь-яку мову</string>
+  <string name="action_try_again">Спробувати ще раз</string>
   <string name="search_error">Пошук не вдався, спробуйте пізніше.</string>
   <string name="add_all">Додати усі</string>
   <string name="add_multiple">Усі серіали з\'являться у вашому списку найближчим часом.</string>
@@ -260,7 +260,7 @@
   <string name="waitplease">Зачекайте хвилинку…</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Використовувати вбудований браузер</string>
   <string name="connect_trakt_done">Підключено до trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
   <string name="add_trakt_shows">Додати ще серіали з бібліотеки trakt:</string>
@@ -301,8 +301,8 @@
   <string name="pref_onlyfuturesummary">Не показувати серії що вийшли</string>
   <string name="pref_onlyseasoneps">Приховати спец. епізоди</string>
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">Відображати точні дати</string>
+  <string name="pref_exactdates_summary">\"31 жовтня\" замість \"Через 3 дні\"</string>
   <string name="pref_seasonsorting">Сортувати сезони за…</string>
   <string name="pref_episodesorting">Сортувати серії за…</string>
   <string name="pref_language">Бажана мова контенту</string>

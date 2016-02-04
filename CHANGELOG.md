@@ -5,8 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 28 *(in development)*
+Version 28 *(2016-02-04)*
 -----------------------------
+
+* Setting to show absolute ("Oct 31") instead of relative ("in 3 days") time for episodes.
+* Dark theme for widget.
+* Improvements and fixes.
+
+#### 28 *(2016-02-04)*
+
+* TWEAK Show 3 columns of show cards on Nexus 9.
+* NOTICE Latest translations from crowdin.
 
 #### 28-beta3 *(2016-01-29)*
 
