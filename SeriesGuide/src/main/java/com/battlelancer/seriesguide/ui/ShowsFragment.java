@@ -48,6 +48,7 @@ import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsAdapter;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -354,6 +355,8 @@ public class ShowsFragment extends Fragment implements
             mIsSortIgnoreArticles = !mIsSortIgnoreArticles;
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
                     mIsSortIgnoreArticles, item);
+            // refresh all list widgets
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
 
             Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
@@ -546,6 +549,8 @@ public class ShowsFragment extends Fragment implements
             if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
                 getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
                         ShowsFragment.this);
+                // refresh all list widgets
+                ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
             }
         }
     };

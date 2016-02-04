@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Ne pas afficher les épisodes déjà diffusés</string>
   <string name="pref_onlyseasoneps">Masquer les épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">Les épisodes spéciaux n\'apparaissent plus excepté dans la liste des saisons</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Trier les saisons par…</string>
   <string name="pref_episodesorting">Trier les épisodes par…</string>
   <string name="pref_language">Langue préférée pour le contenu</string>

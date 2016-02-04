@@ -148,7 +148,7 @@
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
-  <string name="action_try_any_language">Kokeile mikä tahansa kieltä</string>
+  <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="add_all">Lisää kaikki</string>
@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Piilota erikoisjaksot</string>
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
+  <string name="pref_exactdates">Tarkat päivämäärät</string>
+  <string name="pref_exactdates_summary">\"31. lokakuuta\" sen sijaan kuin \"3 päivän kuluttua\"</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
   <string name="pref_language">Ensisijainen sisällön kieli</string>

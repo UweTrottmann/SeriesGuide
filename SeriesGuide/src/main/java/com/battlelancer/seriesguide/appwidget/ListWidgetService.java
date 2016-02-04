@@ -67,6 +67,7 @@ public class ListWidgetService extends RemoteViewsService {
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
+        @Override
         public void onCreate() {
             // Since we reload the cursor in onDataSetChanged() which gets called immediately after
             // onCreate(), we do nothing here.
@@ -141,6 +142,7 @@ public class ListWidgetService extends RemoteViewsService {
             }
         }
 
+        @Override
         public void onDestroy() {
             // In onDestroy() you should tear down anything that was setup for
             // your data source, eg. cursors, connections, etc.
@@ -149,6 +151,7 @@ public class ListWidgetService extends RemoteViewsService {
             }
         }
 
+        @Override
         public int getCount() {
             if (dataCursor != null) {
                 return dataCursor.getCount();
@@ -157,6 +160,7 @@ public class ListWidgetService extends RemoteViewsService {
             }
         }
 
+        @Override
         public RemoteViews getViewAt(int position) {
             final boolean isShowQuery = widgetType == WidgetSettings.Type.SHOWS;
 
@@ -194,9 +198,12 @@ public class ListWidgetService extends RemoteViewsService {
                     dataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
                             : CalendarAdapter.Query.RELEASE_TIME_MS));
-            // "Fri 2 days ago"
-            rv.setTextViewText(R.id.widgetAirtime,
-                    TimeTools.formatToLocalDayAndRelativeTime(context, actualRelease));
+            // "Fri Oct 31" or "Fri 2 days ago"
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+            rv.setTextViewText(R.id.widgetAirtime, displayExactDate ?
+                    TimeTools.formatToLocalDay(actualRelease) + " "
+                            + TimeTools.formatToLocalDateShort(context, actualRelease)
+                    : TimeTools.formatToLocalDayAndRelativeTime(context, actualRelease));
 
             // absolute release time and network (if any)
             String absoluteTime = TimeTools.formatToLocalTime(context, actualRelease);
@@ -234,6 +241,7 @@ public class ListWidgetService extends RemoteViewsService {
             return rv;
         }
 
+        @Override
         public RemoteViews getLoadingView() {
             // If you return null here, you will get the default loading view.
             // create a custom loading view
@@ -241,19 +249,23 @@ public class ListWidgetService extends RemoteViewsService {
                     isLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
         }
 
+        @Override
         public int getViewTypeCount() {
             // different view layout for default and light theme
             return 2;
         }
 
+        @Override
         public long getItemId(int position) {
             return position;
         }
 
+        @Override
         public boolean hasStableIds() {
             return true;
         }
 
+        @Override
         public void onDataSetChanged() {
             // This is triggered when you call AppWidgetManager
             // notifyAppWidgetViewDataChanged

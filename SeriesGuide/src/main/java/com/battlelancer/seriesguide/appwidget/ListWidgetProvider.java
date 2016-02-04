@@ -24,12 +24,15 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
@@ -66,11 +69,27 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // check if we received our update alarm
         if (UPDATE.equals(intent.getAction())) {
             // trigger refresh of list widgets
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
-                    ListWidgetProvider.class));
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
+            notifyAllAppWidgetsViewDataChanged(context);
         }
+    }
+
+    /**
+     * Notifies all list widgets bound to this provider to update their views.
+     */
+    public static void notifyAllAppWidgetsViewDataChanged(@Nullable Context context) {
+        if (context == null) {
+            return;
+        }
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (appWidgetManager == null) {
+            return;
+        }
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
+                ListWidgetProvider.class));
+        if (appWidgetIds == null || appWidgetIds.length == 0) {
+            return;
+        }
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
     }
 
     @Override
@@ -129,7 +148,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // should be a sibling of the collection view.
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
-        // set the background color
+        // set the background colors of...
+        // ...the header
+        boolean isDarkTheme = WidgetSettings.isDarkTheme(context, appWidgetId);
+        rv.setInt(R.id.containerWidgetHeader, "setBackgroundColor", isDarkTheme ? Color.TRANSPARENT
+                : ContextCompat.getColor(context, R.color.accent_primary));
+        // ...the whole widget
         int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 

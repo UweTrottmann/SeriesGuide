@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import timber.log.Timber;
 
 /**
  * Displays history of watched episodes or movies.
@@ -61,8 +62,9 @@ public class HistoryActivity extends BaseActivity implements
             } else if (historyType == DISPLAY_MOVIE_HISTORY) {
                 f = new UserMovieStreamFragment();
             } else {
-                throw new IllegalArgumentException(
-                        "Did not specify a valid HistoryType in the launch intent.");
+                // default to episode history
+                Timber.w("onCreate: did not specify a valid HistoryType in the launch intent.");
+                f = new UserEpisodeStreamFragment();
             }
             f.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()

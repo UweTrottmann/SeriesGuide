@@ -22,7 +22,7 @@
   <string name="description_overview">Genel Bakış</string>
   <string name="description_poster">Posteri göster</string>
   <string name="description_image">Bölüm resmi</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Daha fazla seçenek</string>
   <string name="clear">Temizle</string>
   <string name="discard">Yoksay</string>
   <string name="save_selection">Seçimi kaydet</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -250,7 +250,7 @@
   <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_error_general">Trakt\'a bağlanılamadı. Daha sonra tekrar deneyin.</string>
   <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>
   <string name="trakt_account">trakt hesabı</string>
   <string name="trakt_connect_instructions">Bir sonraki ekranda trakt\'e giriş yapabilir ya da hesap oluşturabilirsiniz. Sonrasında SeriesGuide erişimine izin verin.</string>
   <string name="connect_trakt">trakt\'e bağlan</string>
@@ -260,7 +260,7 @@
   <string name="waitplease">Bir dakika lütfen…</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
   <string name="connect_trakt_done">trakt\'e bağlanıldı!</string>
   <string name="connect_trakt_done_explanation">Şimdi SeriesGuide bu cihazdaki dizileri ve filmleri trakt ile eşleyecek. Bu işlem biraz zaman alabilir.</string>
   <string name="add_trakt_shows">Kütüphanenden diziler ekle:</string>
@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>
   <string name="pref_onlyseasoneps">Özel bölümleri gizle</string>
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
+  <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
+  <string name="pref_exactdates_summary">\"31 Kasım\" yerine \"3 gün içerisinde\"</string>
   <string name="pref_seasonsorting">Sezonları sırala:…</string>
   <string name="pref_episodesorting">Bölümleri sırala:…</string>
   <string name="pref_language">Tercih edilen içerik dili</string>

@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Nu afișați episoadele deja difuzate</string>
   <string name="pref_onlyseasoneps">Ascundeți episoadele speciale</string>
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar de peste tot, cu excepţia celor din lista sezonului</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Sortare sezoane după…</string>
   <string name="pref_episodesorting">Sortare episoade după…</string>
   <string name="pref_language">Limba preferată</string>

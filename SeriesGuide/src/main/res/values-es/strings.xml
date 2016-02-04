@@ -103,7 +103,7 @@
   <string name="unfavorited">Borrado de los favoritos</string>
   <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Mostrar</string>
-  <string name="hidden">Se movió a Ocultos</string>
+  <string name="hidden">Se movió a ocultos</string>
   <string name="unhidden">Mostrar serie</string>
   <string name="action_shows_add">Añadir serie</string>
   <string name="action_shows_filter">Filtrar series</string>
@@ -127,8 +127,8 @@
   <string name="now_empty">Nada nuevo. ¡Mira algunas series!</string>
   <string name="now_movies_empty">Nada nuevo. ¡Mira alguna película!</string>
   <string name="user_stream">Historial</string>
-  <string name="user_stream_empty">No hay actividad en trakt. Haz check in en alguna serie!</string>
-  <string name="user_movie_stream_empty">No hay actividad en trakt. Haz check in en alguna película!</string>
+  <string name="user_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna serie!</string>
+  <string name="user_movie_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna película!</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recientes</string>
   <string name="noupcoming">No hay capítulos próximamente.</string>
@@ -302,6 +302,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>
   <string name="pref_onlyseasoneps">Ocultar episodios especiales</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
+  <string name="pref_exactdates">Mostrar fechas exactas</string>
+  <string name="pref_exactdates_summary">\"31 de octubre\" en vez de \"en 3 días\"</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episodios por…</string>
   <string name="pref_language">Lenguaje preferido para el contenido</string>

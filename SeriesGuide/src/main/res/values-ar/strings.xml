@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">حاول بأي لغة</string>
+  <string name="action_try_again">حاول مرة أخرى</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
   <string name="add_all">إضافة الكل </string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
@@ -157,7 +157,7 @@
   <string name="add_error">تعذر إضافة %s.</string>
   <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
   <string name="recommended">يُنصح به</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">تمت مشاهدتها</string>
   <string name="shows_collection">مجموعة</string>
   <string name="watchlist">قائمة المشاهدة</string>
   <string name="first_list">القائمة الأولى</string>
@@ -234,8 +234,8 @@
   <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
   <string name="hexagon_api_error">لا يمكن التحدث لسحابة دليل المسلسلات. حاول مرة أخرى.</string>
   <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، إسمح بالوصول إلى حسابك.</string>
+  <string name="hexagon_google_play_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، لابد من توفر خدمات قوقل بلاي.</string>
   <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
   <string name="trakt_seen">%s تمت  المشاهدة.</string>
   <string name="trakt_notseen">%s لم تتم المشاهدة.</string>
@@ -249,7 +249,7 @@
   <string name="trakt_success">تم إرسالها إلى Trakt.</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <string name="trakt_account">حساب Trak</string>
   <string name="trakt_connect_instructions">بالنافذة التالية سجل دخولك في Trakt أو أنشئ حساب جديد. ثم أسمح لـ SeriesGuid بالوصول إلى حساب في Trakt.</string>
@@ -260,7 +260,7 @@
   <string name="waitplease">لحظات, من فضلك…</string>
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">استخدام متصفح متكامل</string>
   <string name="connect_trakt_done">متصل بالتراكت!</string>
   <string name="connect_trakt_done_explanation">برنامج دليل المسلسلات سوف يزامن المسلسلات والأفلام الموجودة على هذا الجهاز مع موقع التراكت. قد يستغرق هذا بعض الوقت.</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
@@ -289,8 +289,8 @@
   <string name="checkin">أشاهده الآن</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="paste_title">إلصق عنوان</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">تحقق سريع</string>
+  <string name="pref_quick_checkin_summary">لا تسأل عن رسالة التحقق مرة أخرى</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="action_open_in_browser">فتح في المتصفح</string>
   <string name="prefs_category_basic">أساسي</string>
@@ -301,9 +301,11 @@
   <string name="pref_onlyfuturesummary">عدم عرض الحلقات التي تم بثها مسبقاً</string>
   <string name="pref_onlyseasoneps">إخفاء الحلقات الخاصة</string>
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
+  <string name="pref_exactdates">عرض التواريخ بشكل دقيق</string>
+  <string name="pref_exactdates_summary">\"أوكتوبر 31\" بدلا من \"خلال 3 أيام\"</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">اللغة المفضلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
   <string name="about">حول دليل المسلسلات</string>
@@ -313,8 +315,8 @@
   <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
   <string name="licence_trakt">هذا البرنامج يستخدم صور وبيانات من Trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
+  <string name="licences_and_credits">تراخيص مفتوحة المصدر</string>
   <string name="sort">ترتيب حسب</string>
   <string name="action_sort_ignore_articles">تجاهل المقال</string>
   <string name="sort_order_latest_first">الأحدث أولاً</string>
@@ -324,7 +326,7 @@
   <string name="sort_order_top_rated_first">أعلى تقييم</string>
   <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
   <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">الترتيب حسب القادم</string>
   <string name="upcoming_upto_now">الآن</string>
   <string name="upcoming_upto_one_day">يوم</string>
   <string name="upcoming_upto_three_days">ثلاثة أيام</string>
@@ -339,7 +341,7 @@
   <string name="pref_other">أخرى</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
   <string name="pref_autoupdatesummary">تحديث المسلسلات بشكل دوري</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
@@ -373,9 +375,9 @@
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="no_file_selected">لم يتم إختيار أي ملف</string>
+  <string name="action_select_file">حدد ملف</string>
+  <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
   <string name="get_started">بدء</string>
   <string name="welcome_setuplanguage">اختر اللغة</string>
   <string name="dismiss">إبعاد</string>

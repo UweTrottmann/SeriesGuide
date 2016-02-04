@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
   <string name="pref_onlyseasoneps">Specials verstecken</string>
   <string name="pref_onlyseasonepssummary">Specials verschwinden, außer in der Staffel-Liste</string>
+  <string name="pref_exactdates">Genaues Datum anzeigen</string>
+  <string name="pref_exactdates_summary">\"31. Oktober\" anstelle von \"in 3 Tagen\"</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>

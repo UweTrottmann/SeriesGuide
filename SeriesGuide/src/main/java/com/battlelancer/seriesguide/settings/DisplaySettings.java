@@ -35,6 +35,8 @@ public class DisplaySettings {
 
     public static final String KEY_LANGUAGE = "language";
 
+    public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
+
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
     public static final String NUMBERFORMAT_DEFAULT = "default";
@@ -57,6 +59,9 @@ public class DisplaySettings {
 
     public static final String KEY_LAST_ACTIVE_SHOWS_TAB
             = "com.battlelancer.seriesguide.activitytab";
+
+    public static final String KEY_DISPLAY_EXACT_DATE =
+            "com.battlelancer.seriesguide.shows.exactdate";
 
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
@@ -86,11 +91,22 @@ public class DisplaySettings {
     }
 
     /**
-     * Two letter ISO 639-1 language code of the content language preferred by the user.
+     * @return Two letter ISO 639-1 language code of the content language preferred by the user. If
+     * the value does not exist, defaults to English.
      */
     public static String getContentLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE, LANGUAGE_EN);
+    }
+
+    /**
+     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
+     * an empty string if all languages should be searched. Defaults to {@link
+     * #getContentLanguage(Context)} if the value does not exist.
+     */
+    public static String getSearchLanguage(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_SEARCH, getContentLanguage(context));
     }
 
     public static String getNumberFormat(Context context) {
@@ -143,5 +159,14 @@ public class DisplaySettings {
     public static int getLastShowsTabPosition(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(KEY_LAST_ACTIVE_SHOWS_TAB, ShowsActivity.InitBundle.INDEX_TAB_SHOWS);
+    }
+
+    /**
+     * Whether to show the exact/absolute date (31.10.2010) instead of a relative time string (in 5
+     * days).
+     */
+    public static boolean isDisplayExactDate(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                KEY_DISPLAY_EXACT_DATE, false);
     }
 }

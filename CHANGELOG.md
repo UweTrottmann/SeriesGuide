@@ -5,6 +5,43 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 28 *(2016-02-04)*
+-----------------------------
+
+* Setting to show absolute ("Oct 31") instead of relative ("in 3 days") time for episodes.
+* Dark theme for widget.
+* Improvements and fixes.
+
+#### 28 *(2016-02-04)*
+
+* TWEAK Show 3 columns of show cards on Nexus 9.
+* NOTICE Latest translations from crowdin.
+
+#### 28-beta3 *(2016-01-29)*
+
+* TWEAK Remember last selected language in "Add show" screen.
+* TWEAK Update to okhttp 3 for network connections.
+* FIX Signing in with trakt results in crash.
+* NOTICE Latest translations from crowdin.
+
+#### 28-beta2 *(2016-01-23)*
+
+* FIX Signing in with trakt results in loops or incorrect cross-site request forgery warning.
+* FIX Changing exact date setting does not affect widgets.
+* FIX Changing some settings do not affect list widget immediately.
+* NOTICE Latest translations from crowdin.
+
+#### 28-beta1 *(2016-01-14)*
+
+* FEATURE Add setting to show absolute (e.g. "Oct 31") instead of relative ("in 3 days") timestamps
+  for episodes.
+* TWEAK Add "Android Dark" theme to widget, which has a transparent header, similar to the old
+  widget design.
+* TWEAK `ExtensionsConfigurationActivity` is now exported so extensions can send the user to it.
+  Thanks @tasomaniac-taso!
+* FIX Prevent crashes in overview, search, certain network and time zone configurations.
+* NOTICE Latest translations from crowdin.
+
 Version 27 *(2015-12-21)*
 -----------------------------
 

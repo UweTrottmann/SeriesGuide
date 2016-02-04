@@ -32,6 +32,7 @@ import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -111,6 +112,8 @@ public class AppWidget extends AppWidgetProvider {
                 item.setTextViewText(R.id.widgetNetwork, "");
                 views.addView(R.id.LinearLayoutWidget, item);
             } else {
+                boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
                     viewsToAdd--;
@@ -129,10 +132,13 @@ public class AppWidget extends AppWidgetProvider {
                             upcomingEpisodes.getLong(CalendarAdapter.Query.RELEASE_TIME_MS)
                     );
 
-                    // "in 13 mins (Fri)"
+                    // "Oct 31 (Fri)" or "in 13 mins (Fri)"
+                    String dateTime = displayExactDate ?
+                            TimeTools.formatToLocalDateShort(context, actualRelease)
+                            : TimeTools.formatToLocalRelativeTime(context, actualRelease);
                     item.setTextViewText(R.id.widgetAirtime,
                             getString(R.string.release_date_and_day,
-                                    TimeTools.formatToLocalRelativeTime(this, actualRelease),
+                                    dateTime,
                                     TimeTools.formatToLocalDay(actualRelease))
                     );
 

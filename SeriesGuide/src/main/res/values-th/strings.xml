@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">ไม่ต้องแสดงตอนที่ออกอากาศไปแล้ว</string>
   <string name="pref_onlyseasoneps">ซ่อนตอนพิเศษ</string>
   <string name="pref_onlyseasonepssummary">ตอนพิเศษจะหายไปจากทุกที่ยกเว้นรายการซีซั่น</string>
+  <string name="pref_exactdates">แสดงวันที่ที่แน่นอน</string>
+  <string name="pref_exactdates_summary">\"31 ตุลาคม\" แทน \"ใน 3 วัน\"</string>
   <string name="pref_seasonsorting">เรียงซีซั่นโดย…</string>
   <string name="pref_episodesorting">เรียงตอนโดย…</string>
   <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>

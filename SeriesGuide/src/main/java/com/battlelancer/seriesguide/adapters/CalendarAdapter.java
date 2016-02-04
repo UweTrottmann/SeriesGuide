@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -115,8 +116,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
             // timestamp
-            viewHolder.timestamp.setText(
-                    TimeTools.formatToLocalRelativeTime(context, actualRelease));
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+            viewHolder.timestamp.setText(displayExactDate ?
+                    TimeTools.formatToLocalDateShort(context, actualRelease)
+                    : TimeTools.formatToLocalRelativeTime(context, actualRelease));
 
             // "10:00 PM / Network", as left aligned, exactly mirrored from show list
             releaseInfo.append(TimeTools.formatToLocalTime(context, actualRelease));

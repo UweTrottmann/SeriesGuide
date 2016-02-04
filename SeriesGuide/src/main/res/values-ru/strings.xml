@@ -141,7 +141,7 @@
   <string name="season_watchcount">не просмотрено</string>
   <string name="season_allwatched">Все эпизоды просмотрены</string>
   <string name="season_onenotwatched">эпизод не просмотрен</string>
-  <string name="season_unaired">Не транслировался в эфир</string>
+  <string name="season_unaired">не транслировались</string>
   <string name="oneotherepisode">другой эпизод</string>
   <string name="otherepisodes">другие эпизоды</string>
   <string name="remaining">%s осталось</string>
@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Не показывать транслируемые эпизоды</string>
   <string name="pref_onlyseasoneps">Скрывать особые эпизоды</string>
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
+  <string name="pref_exactdates">Отображать точные даты</string>
+  <string name="pref_exactdates_summary">\"31 октября\" вместо \"Через 3 дня\"</string>
   <string name="pref_seasonsorting">Сортировка сезонов по</string>
   <string name="pref_episodesorting">Сортировка эпизодов по</string>
   <string name="pref_language">Предпочтительный язык контента</string>

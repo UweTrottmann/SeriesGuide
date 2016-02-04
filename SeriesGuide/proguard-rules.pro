@@ -27,6 +27,9 @@
 # see https://code.google.com/p/android/issues/detail?id=78377
 -keep,allowshrinking class !android.support.v7.internal.view.menu.** { *; }
 
+# Ignore notes about reflection use in support library
+-dontnote android.support.**
+
 # Ignore some warnings
 # Amazon IAP library
 -dontwarn com.amazon.**

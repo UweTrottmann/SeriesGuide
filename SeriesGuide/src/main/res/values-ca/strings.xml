@@ -22,7 +22,7 @@
   <string name="description_overview">Visió general</string>
   <string name="description_poster">Mostra el cartell</string>
   <string name="description_image">Imatge de l\'episodi</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Més opcions</string>
   <string name="clear">Buida</string>
   <string name="discard">Descarta</string>
   <string name="save_selection">Desa la selecció</string>
@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
   <string name="pref_onlyseasoneps">Amaga episodis especials</string>
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Ordena les temporades per…</string>
   <string name="pref_episodesorting">Ordena els capítols per…</string>
   <string name="pref_language">Preferred content language</string>

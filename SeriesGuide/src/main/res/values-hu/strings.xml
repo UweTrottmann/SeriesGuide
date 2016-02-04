@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">Soha ne mutassa a már leadott epizódokat</string>
   <string name="pref_onlyseasoneps">Speciális epizódok elrejtése</string>
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
+  <string name="pref_exactdates">Pontos dátumok megjelenítése</string>
+  <string name="pref_exactdates_summary">\"Október 31\" a \"3 napon belül\" helyett</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom preferált nyelve</string>

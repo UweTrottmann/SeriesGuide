@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">هرگز قسمت های قبلا پخش شده را نشان نده</string>
   <string name="pref_onlyseasoneps">پنهان کردن قسمت های ویژه</string>
   <string name="pref_onlyseasonepssummary">قسمت ویژه از همه جا جز لیست فصل ها ناپدید شوند</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">مرتب کردن فصل ها براساس...</string>
   <string name="pref_episodesorting">مرنب کردن قسمت ها براساس...</string>
   <string name="pref_language">Preferred content language</string>

@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
     }
 }
 
@@ -27,8 +27,8 @@ ext {
     buildToolsVersion = '23.0.2'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15157
-    versionName = '27.0.3'
+    versionCode = 15163
+    versionName = '28'
 }
 
 ext.libraries = [

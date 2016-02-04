@@ -301,6 +301,8 @@
   <string name="pref_onlyfuturesummary">忽略已播剧集的观看状态</string>
   <string name="pref_onlyseasoneps">不显示特别剧集</string>
   <string name="pref_onlyseasonepssummary">仅在季列表中显示特别剧集</string>
+  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">季排序依据……</string>
   <string name="pref_episodesorting">集排序依据……</string>
   <string name="pref_language">内容首选的语言</string>
