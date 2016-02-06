@@ -20,7 +20,10 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -94,7 +97,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         setupViews();
 
-        handleIntent(getIntent());
+        handleSearchIntent(getIntent());
     }
 
     @Override
@@ -180,10 +183,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        handleIntent(intent);
+        handleSearchIntent(intent);
     }
 
-    private void handleIntent(Intent intent) {
+    private void handleSearchIntent(Intent intent) {
         if (intent == null) {
             return;
         }
@@ -261,6 +264,17 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // If the activity was started due to an Android Beam, handle the incoming beam
+        if (getIntent() != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(
+                getIntent().getAction())) {
+            handleBeamIntent(getIntent());
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -318,5 +332,29 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             progressDialog.dismiss();
         }
         progressDialog = null;
+    }
+
+    /**
+     * Extracts the beamed show from the NDEF Message and displays an add dialog for the show.
+     */
+    private void handleBeamIntent(Intent intent) {
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+        if (rawMsgs == null || rawMsgs.length == 0) {
+            // corrupted or invalid data
+            return;
+        }
+
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+
+        int showTvdbId;
+        try {
+            showTvdbId = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        // display add dialog
+        AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
     }
 }

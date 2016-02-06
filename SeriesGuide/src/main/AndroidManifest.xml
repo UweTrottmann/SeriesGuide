@@ -79,12 +79,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/vnd.com.uwetrottmann.seriesguide" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
@@ -168,8 +162,7 @@
             android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateVisible">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -177,6 +170,12 @@
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/vnd.com.uwetrottmann.seriesguide" />
             </intent-filter>
 
             <meta-data
