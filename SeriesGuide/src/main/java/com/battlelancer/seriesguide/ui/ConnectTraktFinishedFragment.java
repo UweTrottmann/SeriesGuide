@@ -26,7 +26,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users trakt library.
@@ -48,10 +47,8 @@ public class ConnectTraktFinishedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // open library tab
-                Intent i = new Intent(getActivity(), AddActivity.class);
-                i.putExtra(AddActivity.InitBundle.DEFAULT_TAB,
-                        AddPagerAdapter.WATCHED_TAB_POSITION);
-                startActivity(i);
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.WATCHED_TAB_POSITION));
                 getActivity().finish();
             }
         });

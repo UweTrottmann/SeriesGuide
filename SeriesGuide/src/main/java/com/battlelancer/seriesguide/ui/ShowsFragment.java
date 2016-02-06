@@ -28,7 +28,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -54,7 +53,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
@@ -101,7 +99,7 @@ public class ShowsFragment extends Fragment implements
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddActivity.class));
+                startActivityAddShows();
             }
         });
         v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
@@ -252,7 +250,7 @@ public class ShowsFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
-            startActivity(new Intent(getActivity(), AddActivity.class));
+            startActivityAddShows();
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
@@ -517,6 +515,11 @@ public class ShowsFragment extends Fragment implements
             }
         }
     };
+
+    private void startActivityAddShows() {
+        startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+    }
 
     private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
             = new BaseShowsAdapter.OnContextMenuClickListener() {

@@ -51,6 +51,19 @@ import de.greenrobot.event.EventBus;
 public class SearchActivity extends BaseNavDrawerActivity implements
         AddShowDialogFragment.OnAddShowListener {
 
+    /**
+     * Which tab to select upon launch.
+     */
+    public static final String EXTRA_DEFAULT_TAB = "default_tab";
+
+    public static final int ADDED_TAB_POSITION = 0;
+    public static final int EPISODES_TAB_POSITION = 1;
+    public static final int SEARCH_TAB_POSITION = 2;
+    public static final int RECOMMENDED_TAB_POSITION = 3;
+    public static final int WATCHED_TAB_POSITION = 4;
+    public static final int COLLECTION_TAB_POSITION = 5;
+    public static final int WATCHLIST_TAB_POSITION = 6;
+
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
     public static final int SEARCH_LOADER_ID = 102;
@@ -146,6 +159,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
 
         tabsAdapter.notifyTabsChanged();
+
+        // set default tab
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            int defaultTab = getIntent().getExtras().getInt(EXTRA_DEFAULT_TAB);
+            if (defaultTab < tabsAdapter.getCount()) {
+                viewPager.setCurrentItem(defaultTab);
+            }
+        }
     }
 
     private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,
