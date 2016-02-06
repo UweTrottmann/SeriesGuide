@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
     <ListView
         android:id="@id/android:list"
         style="@style/DefaultPadding.List"
@@ -12,11 +14,13 @@
         android:dividerHeight="@dimen/grid_vertical_spacing"
         android:drawSelectorOnTop="true"
         android:fastScrollEnabled="true"
+        android:nestedScrollingEnabled="true"
         android:paddingBottom="@dimen/grid_topbottom_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/search_padding_right"
         android:paddingTop="@dimen/grid_topbottom_padding"
-        android:scrollbarStyle="outsideOverlay" />
+        android:scrollbarStyle="outsideOverlay"
+        tools:ignore="UnusedAttribute" />
 
     <TextView
         android:id="@id/android:empty"
