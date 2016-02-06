@@ -21,6 +21,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -33,7 +34,11 @@ import android.widget.EditText;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -43,10 +48,13 @@ import de.greenrobot.event.EventBus;
  * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or redirects
  * directly to an {@link EpisodeDetailsActivity}.
  */
-public class SearchActivity extends BaseNavDrawerActivity {
+public class SearchActivity extends BaseNavDrawerActivity implements
+        AddShowDialogFragment.OnAddShowListener {
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
+    public static final int SEARCH_LOADER_ID = 102;
+    public static final int TRAKT_BASE_LOADER_ID = 200;
 
     public class SearchQueryEvent {
 
@@ -129,8 +137,22 @@ public class SearchActivity extends BaseNavDrawerActivity {
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
+        tabsAdapter.addTab(R.string.search, TvdbAddFragment.class, null);
+        if (TraktCredentials.get(this).hasCredentials()) {
+            addTraktTab(tabsAdapter, R.string.recommended, TraktAddFragment.TYPE_RECOMMENDED);
+            addTraktTab(tabsAdapter, R.string.watched_shows, TraktAddFragment.TYPE_WATCHED);
+            addTraktTab(tabsAdapter, R.string.shows_collection, TraktAddFragment.TYPE_COLLECTION);
+            addTraktTab(tabsAdapter, R.string.watchlist, TraktAddFragment.TYPE_WATCHLIST);
+        }
 
         tabsAdapter.notifyTabsChanged();
+    }
+
+    private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,
+            @TraktAddFragment.ListType int type) {
+        Bundle args = new Bundle();
+        args.putInt(TraktAddFragment.ARG_TYPE, type);
+        tabsAdapter.addTab(titleResId, TraktAddFragment.class, args);
     }
 
     @Override
@@ -241,6 +263,11 @@ public class SearchActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAddShow(SearchResult show) {
+        TaskManager.getInstance(this).performAddTask(show);
     }
 
     /**

@@ -181,8 +181,7 @@ public class TvdbAddFragment extends AddFragment {
         // load data
         Bundle args = new Bundle();
         args.putString(KEY_LANGUAGE, language);
-        getLoaderManager().initLoader(AddActivity.AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION, args,
-                mTvdbAddCallbacks);
+        getLoaderManager().initLoader(SearchActivity.SEARCH_LOADER_ID, args, mTvdbAddCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
@@ -240,8 +239,7 @@ public class TvdbAddFragment extends AddFragment {
         Bundle args = new Bundle();
         args.putString(KEY_QUERY, query);
         args.putString(KEY_LANGUAGE, language);
-        getLoaderManager().restartLoader(AddActivity.AddPagerAdapter.SEARCH_TAB_DEFAULT_POSITION,
-                args, mTvdbAddCallbacks);
+        getLoaderManager().restartLoader(SearchActivity.SEARCH_LOADER_ID, args, mTvdbAddCallbacks);
 
         // update history
         if (query.length() > 0) {
@@ -268,7 +266,7 @@ public class TvdbAddFragment extends AddFragment {
                     language = null;
                 }
             }
-            return new TvdbAddLoader(getActivity(), query, language);
+            return new TvdbAddLoader(getContext(), query, language);
         }
 
         @Override

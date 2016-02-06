@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.AddActivity;
+import com.battlelancer.seriesguide.ui.TraktAddFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -55,7 +55,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     private final int type;
 
-    public TraktAddLoader(Context context, int type) {
+    public TraktAddLoader(Context context, @TraktAddFragment.ListType int type) {
         super(context);
         this.type = type;
     }
@@ -66,15 +66,15 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         try {
             TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
             if (trakt != null) {
-                if (type == AddActivity.AddPagerAdapter.RECOMMENDED_TAB_POSITION) {
+                if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                     shows = trakt.recommendations().shows(Extended.IMAGES);
-                } else if (type == AddActivity.AddPagerAdapter.WATCHED_TAB_POSITION) {
+                } else if (type == TraktAddFragment.TYPE_WATCHED) {
                     List<BaseShow> watchedShows = trakt.sync().watchedShows(Extended.IMAGES);
                     extractShows(watchedShows, shows);
-                } else if (type == AddActivity.AddPagerAdapter.COLLECTION_TAB_POSITION) {
+                } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     List<BaseShow> collectedShows = trakt.sync().collectionShows(Extended.IMAGES);
                     extractShows(collectedShows, shows);
-                } else if (type == AddActivity.AddPagerAdapter.WATCHLIST_TAB_POSITION) {
+                } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     List<BaseShow> watchlistedShows = trakt.sync().watchlistShows(Extended.IMAGES);
                     extractShows(watchlistedShows, shows);
                 } else {
