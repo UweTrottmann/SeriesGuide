@@ -154,7 +154,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
-        tabsAdapter.addTab(R.string.search, TvdbAddFragment.class, null);
+        tabsAdapter.addTab(R.string.action_shows_add, TvdbAddFragment.class, null);
         if (TraktCredentials.get(this).hasCredentials()) {
             addTraktTab(tabsAdapter, R.string.recommended, TraktAddFragment.TYPE_RECOMMENDED);
             addTraktTab(tabsAdapter, R.string.watched_shows, TraktAddFragment.TYPE_WATCHED);
