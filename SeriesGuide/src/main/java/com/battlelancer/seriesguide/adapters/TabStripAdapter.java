@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -78,7 +79,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     /**
      * Adds a new tab. Make sure to call {@link #notifyTabsChanged} after you have added them all.
      */
-    public void addTab(int titleRes, Class<?> fragmentClass, Bundle args) {
+    public void addTab(@StringRes int titleRes, Class<?> fragmentClass, Bundle args) {
         mTabs.add(new TabInfo(fragmentClass, args, titleRes));
     }
 
