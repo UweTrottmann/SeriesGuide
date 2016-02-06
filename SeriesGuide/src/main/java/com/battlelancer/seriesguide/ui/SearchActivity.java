@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -80,8 +82,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             this.args = args;
         }
     }
-
-    private static final int EPISODES_TAB_INDEX = 1;
 
     private EditText searchBar;
     private View clearButton;
@@ -147,9 +147,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         viewPager = (ViewPager) findViewById(R.id.pagerSearch);
 
-        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+        SearchTabAdapter tabsAdapter = new SearchTabAdapter(getSupportFragmentManager(), this,
                 (ViewPager) findViewById(R.id.pagerSearch),
-                (SlidingTabLayout) findViewById(R.id.tabsSearch));
+                (SlidingTabLayout) findViewById(R.id.tabsSearch),
+                searchBar, clearButton);
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
@@ -179,6 +180,40 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         tabsAdapter.addTab(titleResId, TraktAddFragment.class, args);
     }
 
+    public static class SearchTabAdapter extends TabStripAdapter
+            implements ViewPager.OnPageChangeListener {
+
+        private final EditText searchBox;
+        private final View clearButton;
+
+        public SearchTabAdapter(FragmentManager fm, Context context, ViewPager pager,
+                SlidingTabLayout tabs, EditText searchBox, View clearButton) {
+            super(fm, context, pager, tabs);
+            this.searchBox = searchBox;
+            this.clearButton = clearButton;
+            tabs.setOnPageChangeListener(this);
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            // only display search box if it can be used
+            boolean visible = position <= EPISODES_TAB_POSITION;
+            searchBox.setVisibility(visible ? View.VISIBLE : View.GONE);
+            // re-show clear button only if there is a search term
+            clearButton.setVisibility(visible && searchBox.length() > 0 ? View.VISIBLE : View.GONE);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -201,7 +236,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
                 String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
-                    viewPager.setCurrentItem(EPISODES_TAB_INDEX);
+                    viewPager.setCurrentItem(EPISODES_TAB_POSITION);
                 }
             }
 
