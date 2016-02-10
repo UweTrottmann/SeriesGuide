@@ -207,7 +207,8 @@ public class ShowsActivity extends BaseTopActivity implements
         buttonAddShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ShowsActivity.this, AddActivity.class));
+                startActivity(new Intent(ShowsActivity.this, SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
             }
         });
 

@@ -92,7 +92,7 @@ public class FirstRunFragment extends Fragment {
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), AddActivity.class));
+                        startActivityAddShows();
                         setFirstRunDismissed();
                         Utils.trackClick(getActivity(), TAG, "Add show");
                     }
@@ -154,10 +154,15 @@ public class FirstRunFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
-            startActivity(new Intent(getActivity(), AddActivity.class));
+            startActivityAddShows();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startActivityAddShows() {
+        startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
     }
 
     private void setFirstRunDismissed() {

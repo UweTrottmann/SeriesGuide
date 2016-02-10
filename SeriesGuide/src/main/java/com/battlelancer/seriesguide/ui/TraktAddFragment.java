@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,12 +45,27 @@ import java.util.List;
  */
 public class TraktAddFragment extends AddFragment {
 
+    /**
+     * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
+     */
+    public final static String ARG_TYPE = "traktListType";
+
+    @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ListType {
+    }
+
+    public final static int TYPE_RECOMMENDED = 0;
+    public final static int TYPE_WATCHED = 1;
+    public final static int TYPE_COLLECTION = 2;
+    public final static int TYPE_WATCHLIST = 3;
+
     public static TraktAddFragment newInstance(int type) {
         TraktAddFragment f = new TraktAddFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putInt("traktlisttype", type);
+        args.putInt(ARG_TYPE, type);
         f.setArguments(args);
 
         return f;
@@ -74,8 +92,8 @@ public class TraktAddFragment extends AddFragment {
                 new ArrayList<SearchResult>());
 
         // load data
-        int type = getListType();
-        getLoaderManager().initLoader(type, null, mTraktAddCallbacks);
+        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + getListType(), null,
+                mTraktAddCallbacks);
 
         // add menu options
         setHasOptionsMenu(true);
@@ -116,20 +134,34 @@ public class TraktAddFragment extends AddFragment {
             @Override
             public void onClick(View v) {
                 setProgressVisible(true, false);
-                getLoaderManager().restartLoader(getListType(), null, mTraktAddCallbacks);
+                getLoaderManager().restartLoader(
+                        SearchActivity.TRAKT_BASE_LOADER_ID + getListType(), null,
+                        mTraktAddCallbacks);
             }
         });
     }
 
+    @ListType
     private int getListType() {
-        return getArguments().getInt("traktlisttype");
+        final int type = getArguments().getInt(ARG_TYPE);
+        switch (type) {
+            case TYPE_RECOMMENDED:
+                return TYPE_RECOMMENDED;
+            case TYPE_COLLECTION:
+                return TYPE_COLLECTION;
+            case TYPE_WATCHLIST:
+                return TYPE_WATCHLIST;
+            case TYPE_WATCHED:
+            default:
+                return TYPE_WATCHED;
+        }
     }
 
     private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> mTraktAddCallbacks
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktAddLoader(getActivity(), getListType());
+            return new TraktAddLoader(getContext(), getListType());
         }
 
         @Override
