@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -27,26 +26,32 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -74,8 +79,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     public static final int SEARCH_LOADER_ID = 102;
     public static final int TRAKT_BASE_LOADER_ID = 200;
 
+    /**
+     * Used by {@link ShowSearchFragment} and {@link EpisodeSearchFragment} to search as the user
+     * types.
+     */
     public class SearchQueryEvent {
-
         public final Bundle args;
 
         public SearchQueryEvent(Bundle args) {
@@ -83,10 +91,28 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    private EditText searchBar;
-    private View clearButton;
-    private ViewPager viewPager;
+    /**
+     * Used by {@link TvdbAddFragment} to submit a query. Unlike local search it is not type and
+     * search.
+     */
+    public class SearchQuerySubmitEvent {
+        public final String query;
+
+        public SearchQuerySubmitEvent(String query) {
+            this.query = query;
+        }
+    }
+
+    @Bind(R.id.containerSearchBar) View searchContainer;
+    @Bind(R.id.editTextSearchBar) AutoCompleteTextView searchView;
+    @Bind(R.id.imageButtonSearchClear) View clearButton;
+    @Bind(R.id.tabsSearch) SlidingTabLayout tabs;
+    @Bind(R.id.pagerSearch) ViewPager viewPager;
     private ProgressDialog progressDialog;
+
+    private SearchHistory searchHistory;
+    private ArrayAdapter<String> searchHistoryAdapter;
+    private boolean tvdbSearchVisible;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,26 +133,21 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setCustomView(R.layout.actionbar_search);
-            actionBar.setDisplayShowCustomEnabled(true);
         }
     }
 
     private void setupViews() {
-        clearButton = ButterKnife.findById(this, R.id.imageButtonSearchClear);
+        ButterKnife.bind(this);
         clearButton.setVisibility(View.GONE);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBar.setText(null);
+                searchView.setText(null);
+                searchView.requestFocus();
             }
         });
 
-        searchBar = ButterKnife.findById(this, R.id.editTextSearchBar);
-        if (!AndroidUtils.isLollipopOrHigher()) {
-            searchBar.setBackgroundResource(R.drawable.textfield_default_sg);
-        }
-        searchBar.addTextChangedListener(new TextWatcher() {
+        searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -135,7 +156,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean isEmptyText = TextUtils.isEmpty(s);
-                submitSearchQuery(isEmptyText ? "" : s.toString());
+                triggerLocalSearch(isEmptyText ? "" : s.toString());
                 clearButton.setVisibility(isEmptyText ? View.GONE : View.VISIBLE);
             }
 
@@ -144,13 +165,45 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
             }
         });
+        searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    triggerTvdbSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        viewPager = (ViewPager) findViewById(R.id.pagerSearch);
+        // setup search history (only used by TVDb search)
+        searchHistory = new SearchHistory(this, SearchSettings.KEY_SUFFIX_THETVDB);
+        searchHistoryAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+        searchView.setThreshold(1);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AutoCompleteTextView) v).showDropDown();
+            }
+        });
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                triggerTvdbSearch();
+            }
+        });
+        // set in code as XML is overridden
+        searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+        // drop-down is auto-shown on config change, ensure it is hidden when recreating views
+        searchView.dismissDropDown();
 
-        SearchTabAdapter tabsAdapter = new SearchTabAdapter(getSupportFragmentManager(), this,
-                (ViewPager) findViewById(R.id.pagerSearch),
-                (SlidingTabLayout) findViewById(R.id.tabsSearch),
-                searchBar, clearButton);
+        TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
+                viewPager, tabs);
+        tabs.setOnPageChangeListener(pageChangeListener);
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
@@ -180,20 +233,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         tabsAdapter.addTab(titleResId, TraktAddFragment.class, args);
     }
 
-    public static class SearchTabAdapter extends TabStripAdapter
-            implements ViewPager.OnPageChangeListener {
-
-        private final EditText searchBox;
-        private final View clearButton;
-
-        public SearchTabAdapter(FragmentManager fm, Context context, ViewPager pager,
-                SlidingTabLayout tabs, EditText searchBox, View clearButton) {
-            super(fm, context, pager, tabs);
-            this.searchBox = searchBox;
-            this.clearButton = clearButton;
-            tabs.setOnPageChangeListener(this);
-        }
-
+    private final ViewPager.OnPageChangeListener pageChangeListener
+            = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -202,17 +243,21 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         @Override
         public void onPageSelected(int position) {
             // only display search box if it can be used
-            boolean visible = position <= EPISODES_TAB_POSITION;
-            searchBox.setVisibility(visible ? View.VISIBLE : View.GONE);
-            // re-show clear button only if there is a search term
-            clearButton.setVisibility(visible && searchBox.length() > 0 ? View.VISIBLE : View.GONE);
+            boolean searchVisible = position <= SEARCH_TAB_POSITION;
+            searchContainer.setVisibility(searchVisible ? View.VISIBLE : View.GONE);
+            if (searchVisible) {
+                tvdbSearchVisible = position == SEARCH_TAB_POSITION;
+                searchView.setAdapter(tvdbSearchVisible ? searchHistoryAdapter : null);
+                searchView.setHint(
+                        tvdbSearchVisible ? R.string.checkin_searchhint : R.string.search);
+            }
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
 
         }
-    }
+    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -242,7 +287,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
             // setting the query automatically triggers a search
             String query = extras.getString(SearchManager.QUERY);
-            searchBar.setText(query);
+            searchView.setText(query);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
             if (data == null) {
@@ -255,7 +300,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    private void submitSearchQuery(String query) {
+    private void triggerLocalSearch(String query) {
         Bundle args = new Bundle();
         args.putString(SearchManager.QUERY, query);
 
@@ -267,11 +312,23 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
         }
 
-        submitSearchQuery(args);
+        EventBus.getDefault().postSticky(new SearchQueryEvent(args));
     }
 
-    private void submitSearchQuery(Bundle args) {
-        EventBus.getDefault().postSticky(new SearchQueryEvent(args));
+    private void triggerTvdbSearch() {
+        if (tvdbSearchVisible) {
+            searchView.dismissDropDown();
+            // extract and post query
+            String query = searchView.getText().toString().trim();
+            EventBus.getDefault().post(new SearchQuerySubmitEvent(query));
+            // update history
+            if (query.length() > 0) {
+                if (searchHistory.saveRecentSearch(query)) {
+                    searchHistoryAdapter.clear();
+                    searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
+                }
+            }
+        }
     }
 
     private void displayEpisode(String episodeTvdbId) {
@@ -352,6 +409,13 @@ public class SearchActivity extends BaseNavDrawerActivity implements
      */
     public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
         hideProgressDialog();
+    }
+
+    public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
+        if (searchHistory != null && searchHistoryAdapter != null) {
+            searchHistory.clearHistory();
+            searchHistoryAdapter.clear();
+        }
     }
 
     private void showProgressDialog() {
