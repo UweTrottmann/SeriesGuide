@@ -95,13 +95,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane);
+        setContentView(R.layout.activity_settings);
         setupActionBar();
 
         if (savedInstanceState == null) {
             Fragment f = new SettingsFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.content_frame, f);
+            ft.add(R.id.containerSettings, f);
             ft.commit();
 
             // open a sub settings screen if requested
@@ -116,7 +116,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -157,7 +159,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         Fragment f = new SettingsFragment();
         f.setArguments(args);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, f);
+        ft.replace(R.id.containerSettings, f);
         ft.addToBackStack(null);
         ft.commit();
     }
@@ -445,7 +447,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
             if (KEY_ABOUT.equals(key)) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, new AboutSettingsFragment());
+                ft.replace(R.id.containerSettings, new AboutSettingsFragment());
                 ft.addToBackStack(null);
                 ft.commit();
                 return true;
@@ -524,6 +526,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // Toggle auto-update on SyncAdapter
             if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
                 if (pref != null) {
+                    //noinspection ConstantConditions
                     SwitchPreference autoUpdatePref = (SwitchPreference) pref;
                     SgSyncAdapter.setSyncAutomatically(getActivity(), autoUpdatePref.isChecked());
                 }
