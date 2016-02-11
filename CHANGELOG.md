@@ -13,7 +13,9 @@ Version 29 *(in development)*
 * TWEAK Combined search and "Add show" screen.
 * TWEAK Wider layout for movie details on 10-inch devices in landscape.
 * TWEAK Wide layout for comments on tablets in landscape.
+* TWEAK Show the number of replies to a comment.
 * FIX Make crashes in Movies section less likely when rotating the screen multiple times.
+* NOTICE Translations re-imported to improve support for plural strings. Some strings need to be translated again.
 
 Version 28 *(2016-02-04)*
 -----------------------------
