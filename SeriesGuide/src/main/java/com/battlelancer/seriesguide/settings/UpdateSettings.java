@@ -37,7 +37,7 @@ public class UpdateSettings {
      */
     public static boolean isLargeDataOverWifiOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_ONLYWIFI, false
+                KEY_ONLYWIFI, true
         );
     }
 

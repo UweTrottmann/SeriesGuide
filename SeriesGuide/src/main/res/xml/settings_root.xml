@@ -38,7 +38,7 @@
         android:title="@string/pref_autoupdate" />
 
     <CheckBoxPreference
-        android:defaultValue="False"
+        android:defaultValue="True"
         android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
         android:title="@string/pref_updatewifionly"
         android:summary="@string/pref_updatewifionlysummary" />
