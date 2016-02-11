@@ -8,7 +8,7 @@
   <string name="search">Тражи</string>
   <string name="preferences">Подешавања</string>
   <string name="help">Помоћ</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Помоћ &amp; повратне информације</string>
   <string name="drawer_open">Отвори панел за навигацију</string>
   <string name="drawer_close">Затвори панел за навигацију</string>
   <string name="show">Серија</string>
@@ -22,7 +22,7 @@
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика епизоде</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Више опција</string>
   <string name="clear">Обриши</string>
   <string name="discard">Одбаци</string>
   <string name="save_selection">Сачувај изабрано</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
   <string name="search_within_show">Тражи унутар %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Било који језик</string>
   <string name="updated">Ажурирано на последњу верзију.</string>
   <string name="norating">непознато</string>
   <string name="unknown">непознато</string>
@@ -74,7 +74,7 @@
   <string name="lastEdit">Последње уређено // TVDb</string>
   <string name="services_watch">Гледај</string>
   <string name="services_more">Више</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
   <string name="today">данас</string>
   <string name="now">сада</string>
   <string name="daily">Дневно</string>
@@ -148,8 +148,8 @@
   <string name="checkin_searchhint">Унеси име серије</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="no_results">Нема резултата, покушајте са целим речима.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Покушајте било који језик</string>
+  <string name="action_try_again">Поушајте поново</string>
   <string name="search_error">Неуспела претрага, покушајте поново касније.</string>
   <string name="add_all">Додај све</string>
   <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
@@ -157,7 +157,7 @@
   <string name="add_error">Немогуће додати %s.</string>
   <string name="add_already_exists">%s је већ на вашој листи.</string>
   <string name="recommended">Препоручене</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Одгледано</string>
   <string name="shows_collection">Колекција</string>
   <string name="watchlist">Листа за гледање</string>
   <string name="first_list">Прва листа</string>
@@ -234,8 +234,8 @@
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
   <string name="hexagon_api_error">Није успостављен контакт са SeriesGuide Cloud. Покушајте поново касније.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">Да би користили SeriesGuide Cloud, дозволите приступ вашим налозима.</string>
+  <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
   <string name="trakt_submitqueued">Послато на тракт.</string>
   <string name="trakt_seen">%s погледано.</string>
   <string name="trakt_notseen">%s неодгледано.</string>
@@ -246,12 +246,12 @@
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Пошаљу на Trakt.</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
   <string name="trakt_error_general">Не могу да комуницирам са trakt-ом. Покушајте поново касније.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
-  <string name="trakt_account">trakt account</string>
+  <string name="trakt_account">trakt налог</string>
   <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Повежи trakt</string>
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
@@ -375,8 +375,8 @@
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
+  <string name="no_file_selected">Нема одабраних фајлова</string>
+  <string name="action_select_file">Изаберите фајл</string>
   <string name="backup_use_default_files">Use default backup files</string>
   <string name="get_started">Почни</string>
   <string name="welcome_setuplanguage">Изабери језик</string>
@@ -417,7 +417,7 @@
   <string name="action_upgrade">Откључај све опције</string>
   <string name="billing_action_subscribe">Претплати се</string>
   <string name="billing_action_pass">Купи X Pass</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%s/year, испробајте бесплатно</string>
   <string name="billing_price_pass">доживотна куповина</string>
   <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
   <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
@@ -427,7 +427,7 @@
   <string name="subscription_not_signed_in">Пријави се на свој Amazon налог!</string>
   <string name="subscription_unavailable">Претплата тренутно није могућа.</string>
   <string name="subscription_failed">Куповина није обављена.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="pass_unavailable">X Pass тренутно није доступан.</string>
   <string name="extensions">Додаци</string>
   <string name="action_extensions_configure">Подеси додатке</string>
   <string name="action_extensions_add">Додај додатак</string>
