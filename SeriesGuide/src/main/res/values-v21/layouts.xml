@@ -19,7 +19,6 @@
 
     <!-- On Lollipop and up, use CoordinatorLayouts and scrolling app bars. -->
     <item name="activity_shows" type="layout">@layout/activity_shows_v21</item>
-    <item name="activity_addshow" type="layout">@layout/activity_addshow_v21</item>
     <item name="activity_search" type="layout">@layout/activity_search_v21</item>
     <item name="activity_overview" type="layout">@layout/activity_overview_v21</item>
     <item name="activity_tabs_drawer" type="layout">@layout/activity_tabs_drawer_v21</item>
