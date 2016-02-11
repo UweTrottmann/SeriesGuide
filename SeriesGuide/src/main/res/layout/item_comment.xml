@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/shout_root"
+    android:id="@+id/containerComment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/large_padding"
     android:paddingTop="@dimen/large_padding">
 
     <ImageView
-        android:id="@+id/avatar"
+        android:id="@+id/imageViewCommentAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/large_padding"
+        android:contentDescription="@null"
         tools:src="@color/protection_dark" />
 
     <LinearLayout
-        android:id="@+id/userstrip"
+        android:id="@+id/containerCommentMeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/large_padding"
-        android:layout_toRightOf="@+id/avatar"
+        android:layout_toRightOf="@+id/imageViewCommentAvatar"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/textViewCommentUsername"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -34,7 +35,7 @@
             tools:text="sgtest" />
 
         <TextView
-            android:id="@+id/timestamp"
+            android:id="@+id/textViewCommentTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
@@ -42,21 +43,31 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/shout"
+        android:id="@+id/textViewComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userstrip"
-        android:layout_marginBottom="@dimen/large_padding"
+        android:layout_below="@+id/containerCommentMeta"
+        android:layout_marginBottom="@dimen/default_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:layout_toRightOf="@+id/avatar"
+        android:layout_toRightOf="@+id/imageViewCommentAvatar"
         android:textAppearance="@style/TextAppearance.Body"
         tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
+
+    <TextView
+        android:id="@+id/textViewCommentReplies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewComment"
+        android:layout_toRightOf="@+id/imageViewCommentAvatar"
+        android:textAppearance="@style/TextAppearance.Caption"
+        tools:text="3 replies" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/shout"
-        android:layout_toRightOf="@+id/avatar"
+        android:layout_below="@+id/textViewCommentReplies"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_toRightOf="@+id/imageViewCommentAvatar"
         android:background="?attr/sgColorDivider" />
 
 </RelativeLayout>

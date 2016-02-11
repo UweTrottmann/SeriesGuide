@@ -245,7 +245,7 @@ public class TraktCommentsFragment extends Fragment {
         if (comment.spoiler) {
             // if comment is a spoiler it is hidden, first click should reveal it
             comment.spoiler = false;
-            TextView shoutText = (TextView) v.findViewById(R.id.shout);
+            TextView shoutText = (TextView) v.findViewById(R.id.textViewComment);
             if (shoutText != null) {
                 shoutText.setText(comment.comment);
             }

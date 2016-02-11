@@ -69,6 +69,14 @@
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Be the first to comment!</string>
     <string name="refresh">Refresh</string>
+    <plurals name="replies_plural">
+        <item quantity="one">%d reply</item>
+        <item quantity="zero">%d replies</item>
+        <item quantity="two">%d replies</item>
+        <item quantity="few">%d replies</item>
+        <item quantity="many">%d replies</item>
+        <item quantity="other">%d replies</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
