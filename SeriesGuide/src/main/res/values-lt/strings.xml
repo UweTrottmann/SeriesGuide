@@ -50,10 +50,15 @@
   <string name="comments">Komentarai</string>
   <string name="shout_hint">Įveskite komentarą (Lietuvių, 5 + žodžiai)</string>
   <string name="shout_invalid">Jūsų komentaras neatitnka taisyklių!</string>
-  <string name="shout">Šaukti!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Galimas turinio atskleidimas!</string>
   <string name="no_shouts">Būkite pirmas, kuris šaukia!</string>
   <string name="refresh">Atnaujinti</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLIUTUS</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Išleidimo data</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Paskutinių serijų nėra.</string>
   <string name="only_favorites">Tik mėgstamiausi serialai</string>
   <string name="pref_infinite_scrolling">Visas kalendorius</string>
-  <string name="update_scheduled">Atnaujinimas…</string>
+  <string name="update_scheduled">Atnaujinimas&#8230;</string>
   <string name="update_no_connection">Norėdami atnaujinti prisijungti prie interneto.</string>
   <string name="update_inprogress">Vyksta atnaujinimas, pabandykite dar kartą vėliau.</string>
   <string name="season_watchcount">serijos nepažiūrėtos</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s stebimų sąraše</string>
   <string name="runtime_movies_watchlist">stebimų filmų peržiūros laikas</string>
   <plurals name="days_plural">
-        <item quantity="one">%d d.</item>
-        <item quantity="zero">%d d.</item>
-        <item quantity="two">%d d.</item>
-        <item quantity="few">%d d.</item>
-        <item quantity="many">%d d.</item>
-        <item quantity="other">%d d.</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d val.</item>
-        <item quantity="one">%d val.</item>
-        <item quantity="two">%d val.</item>
-        <item quantity="few">%d val.</item>
-        <item quantity="many">%d val.</item>
-        <item quantity="other">%d val.</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d min.</item>
-        <item quantity="one">%d min.</item>
-        <item quantity="two">%d min.</item>
-        <item quantity="few">%d min.</item>
-        <item quantity="many">%d min.</item>
-        <item quantity="other">%d min.</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Eksperimentinis!</string>
   <string name="hexagon_setup">Nustatyti SeriesGuide Cloud</string>
   <string name="hexagon_description">Prisijungti prie Cloud, kad padaryti atsargines kopijas ir sinchronizuoti savo laidas bei filmus.</string>
@@ -227,7 +223,7 @@
   <string name="hexagon_signed_in">Esate prisijungę prie SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Atsijungti</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloud nustatymas nebuvo baigtas.</string>
-  <string name="hexagon_setup_fail_auth">Netinkama "Google" paskyra.</string>
+  <string name="hexagon_setup_fail_auth">Netinkama \"Google\" paskyra.</string>
   <string name="hexagon_remove_account">Pašalinti paskyrą</string>
   <string name="hexagon_remove_account_success">Paskyra panaikinta.</string>
   <string name="hexagon_remove_account_failure">Nepavyko pašalinti paskyros.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Susieti SeriesGuide su trakt</string>
   <string name="trakt_reconnect_details">Patikrinti trakt prisijungimo duomenis</string>
   <string name="username">Vartotojo vardas</string>
-  <string name="waitplease">Sekunde, prašome…</string>
+  <string name="waitplease">Sekunde, prašome&#8230;</string>
   <string name="connect">Prisijungti</string>
   <string name="disconnect">Atsijungti</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Puikus</string>
   <string name="rating9">Tobulas</string>
   <plurals name="votes">
-        <item quantity="zero">%d balsų</item>
-        <item quantity="one">%d balsas</item>
-        <item quantity="two">%d balsai</item>
-        <item quantity="few">%d balsai</item>
-        <item quantity="many">%d balsų</item>
-        <item quantity="other">%d balsų</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Užsižymėti</string>
   <string name="checkin_hint">Įveskite žinutę (pasirinktinai)</string>
   <string name="paste_title">Įklijuoti pavadinimą</string>
@@ -303,8 +296,8 @@
   <string name="pref_onlyseasonepssummary">Ypatingos serijos pradingsta visur, išskyrus sezonų sąrašą</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Rūšiuoti sezonus pagal…</string>
-  <string name="pref_episodesorting">Rūšiuoti serijas pagal…</string>
+  <string name="pref_seasonsorting">Rūšiuoti sezonus pagal&#8230;</string>
+  <string name="pref_episodesorting">Rūšiuoti serijas pagal&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
@@ -355,10 +348,10 @@
   <string name="backup_path">Backup folder</string>
   <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Backing up database…</string>
+  <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Backup failed.</string>
-  <string name="import_inprogress">Restoring database…</string>
+  <string name="import_inprogress">Restoring database&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
@@ -412,7 +405,7 @@
   <string name="widget_background_opaque">Opaque</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Subscribe</string>

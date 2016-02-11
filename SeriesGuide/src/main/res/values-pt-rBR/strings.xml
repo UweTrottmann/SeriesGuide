@@ -37,7 +37,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">desconhecido</string>
   <string name="offline">Conecte-se a uma rede e tente novamente.</string>
-  <string name="app_not_available">Nenhum aplicativo disponível que suporte isso.</string>
+  <string name="app_not_available">Nenhum app disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toque para tentar novamente.</string>
   <string name="database_error">Não pode modificar os dados.</string>
   <string name="share">Compartilhar</string>
@@ -50,10 +50,14 @@
   <string name="comments">Comentários</string>
   <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
   <string name="shout_invalid">Seu comentário não segue as regras!</string>
-  <string name="shout">Grite!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Alerta de spoiler!</string>
   <string name="no_shouts">Seja o primeiro a gritar!</string>
   <string name="refresh">Atualizar</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">TOTAL</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de exibição</string>
@@ -110,7 +114,7 @@
   <string name="empty_filter">Remover todos os filtros</string>
   <string name="action_shows_filter_favorites">Favoritos</string>
   <string name="action_shows_filter_unwatched">Não assistidos</string>
-  <string name="action_shows_filter_upcoming">Em breve</string>
+  <string name="action_shows_filter_upcoming">Próximos</string>
   <string name="action_shows_filter_hidden">Ocultos</string>
   <string name="action_shows_sort">Ordenar séries</string>
   <string name="action_shows_sort_title">Título</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Não há episódios recentes.</string>
   <string name="only_favorites">Somente séries favoritas</string>
   <string name="pref_infinite_scrolling">Calendário infinito</string>
-  <string name="update_scheduled">Atualizando…</string>
+  <string name="update_scheduled">Atualizando&#8230;</string>
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <string name="season_watchcount">episódios não assistidos</string>
@@ -171,7 +175,7 @@
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
   <string name="movies_collection">Coleção</string>
-  <string name="movies_watchlist">Filmes a assistir</string>
+  <string name="movies_watchlist">A assistir</string>
   <string name="watchlist_add">Adicionar à lista</string>
   <string name="watchlist_remove">Remover da lista</string>
   <string name="watchlist_added">Adicionado à lista</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s na lista de filmes a assistir</string>
   <string name="runtime_movies_watchlist">Tempo de execução dos filmes na lista</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dia</item>
-        <item quantity="zero">%d dia</item>
-        <item quantity="two">%d dias</item>
-        <item quantity="few">%d dias</item>
-        <item quantity="many">%d dias</item>
-        <item quantity="other">%d dias</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d hora</item>
-        <item quantity="one">%d hora</item>
-        <item quantity="two">%d horas</item>
-        <item quantity="few">%d horas</item>
-        <item quantity="many">%d horas</item>
-        <item quantity="other">%d horas</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuto</item>
-        <item quantity="one">%d minuto</item>
-        <item quantity="two">%d minutos</item>
-        <item quantity="few">%d minutos</item>
-        <item quantity="many">%d minutos</item>
-        <item quantity="other">%d minutos</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurar SeriesGuide Cloud</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Conecte o SeriesGuide ao trakt</string>
   <string name="trakt_reconnect_details">Verifique suas credenciais do trakt</string>
   <string name="username">Usuário</string>
-  <string name="waitplease">Um momento, por favor…</string>
+  <string name="waitplease">Um momento, por favor&#8230;</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
   <string name="use_integrated_browser">Usar o navegador integrado</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Ótimo</string>
   <string name="rating9">Incrível</string>
   <plurals name="votes">
-        <item quantity="zero">%d votos</item>
-        <item quantity="one">%d votado</item>
-        <item quantity="two">%d votos</item>
-        <item quantity="few">%d votos</item>
-        <item quantity="many">%d votos</item>
-        <item quantity="other">%d Votos</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="paste_title">Colar título</string>
@@ -302,12 +290,12 @@
   <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_exactdates">Mostrar datas exatas</string>
-  <string name="pref_exactdates_summary">\"31 de Outubro\" ao invés de \"em 3 dias\"</string>
-  <string name="pref_seasonsorting">Ordenar temporadas por…</string>
-  <string name="pref_episodesorting">Ordenar episódios por…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
+  <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Idioma preferido do conteúdo</string>
   <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Para reduzir cobranças da operadora, não baixar pela rede móvel</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Sobre o SeriesGuide</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Pasta de backup</string>
   <string name="backup_version">Versão do banco de dados</string>
   <string name="backup_failed_file_access">Não foi possível fazer o backup. Um arquivo de backup não foi encontrado ou não pode ser acessado.</string>
-  <string name="backup_inprogress">Fazendo backup do banco de dados…</string>
+  <string name="backup_inprogress">Fazendo backup do banco de dados&#8230;</string>
   <string name="backup_success">Backup bem-sucedido.</string>
   <string name="backup_failed">Backup falhou.</string>
-  <string name="import_inprogress">Restaurando banco de dados…</string>
+  <string name="import_inprogress">Restaurando banco de dados&#8230;</string>
   <string name="import_failed_nosd">Não foi possível restaurar o backup. A pasta de backup não está disponível.</string>
   <string name="import_failed_nofile">Não há arquivo de backup legível.</string>
   <string name="import_failed_noread">O arquivo backup não pode ser lido.</string>
@@ -412,11 +400,11 @@
   <string name="widget_background_opaque">Opaco</string>
   <string name="dashclock_extension_label">Episódio futuro</string>
   <string name="dashclock_extension_description">Exibe o próximo episódio das suas séries do SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios…</string>
+  <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios&#8230;</string>
   <string name="onlyx">Só para quem desbloqueou o app</string>
   <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
-  <string name="billing_action_pass">Pegue o X Pass</string>
+  <string name="billing_action_pass">Adquira o X Pass</string>
   <string name="billing_price_subscribe">%s/ano, teste grátis</string>
   <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Desbloqueie todas os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>

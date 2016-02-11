@@ -50,10 +50,15 @@
   <string name="comments">Comentarii</string>
   <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>
   <string name="shout_invalid">Comentariul tău nu respectă regulile!</string>
-  <string name="shout">Părere!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-și spune părerea!</string>
   <string name="refresh">Reîmprospătare</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">Absolut</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de lansare</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Nu sunt episoade recente.</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
   <string name="pref_infinite_scrolling">Calendar infinit</string>
-  <string name="update_scheduled">Actualizare…</string>
+  <string name="update_scheduled">Actualizare&#8230;</string>
   <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <string name="season_watchcount">episoade nevizionate</string>
@@ -171,7 +176,7 @@
   <string name="action_lists_sort">Sortează lista</string>
   <string name="action_lists_reorder">Reordonaţi lista</string>
   <string name="movies_collection">Colecție</string>
-  <string name="movies_watchlist">Listă vizionate</string>
+  <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Adaugă în watchlist</string>
   <string name="watchlist_remove">Elimina din watchlist</string>
   <string name="watchlist_added">Adăugat în watchlist</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s pe lista de urmărite</string>
   <string name="runtime_movies_watchlist">Total timp vizionat listă favorite</string>
   <plurals name="days_plural">
-        <item quantity="one">%d zile</item>
-        <item quantity="zero">%d zile</item>
-        <item quantity="two">%d zile</item>
-        <item quantity="few">%d zile</item>
-        <item quantity="many">%d zile</item>
-        <item quantity="other">%d zile</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d ore</item>
-        <item quantity="one">%d ora</item>
-        <item quantity="two">%d ore</item>
-        <item quantity="few">%d ore</item>
-        <item quantity="many">%d ore</item>
-        <item quantity="other">%d ore</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minute</item>
-        <item quantity="one">%d minut</item>
-        <item quantity="two">%d minute</item>
-        <item quantity="few">%d minute</item>
-        <item quantity="many">%d minute</item>
-        <item quantity="other">%d minute</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Conectează SeriesGuide cu trakt</string>
   <string name="trakt_reconnect_details">Verifică certificările trakt</string>
   <string name="username">Nume de utilizator</string>
-  <string name="waitplease">Un moment, vă rugăm…</string>
+  <string name="waitplease">Un moment, vă rugăm&#8230;</string>
   <string name="connect">Conectează-te</string>
   <string name="disconnect">Deconectează-te</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Minunat</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-        <item quantity="zero">%d voturi</item>
-        <item quantity="one">%d vot</item>
-        <item quantity="two">%d voturi</item>
-        <item quantity="few">%d voturi</item>
-        <item quantity="many">%d voturi</item>
-        <item quantity="other">%d voturi</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Înregistrare</string>
   <string name="checkin_hint">Scrie un mesaj (opțional)</string>
   <string name="paste_title">Lipiți titlul</string>
@@ -303,18 +296,18 @@
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar de peste tot, cu excepţia celor din lista sezonului</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Sortare sezoane după…</string>
-  <string name="pref_episodesorting">Sortare episoade după…</string>
+  <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
+  <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Despre SeriesGuide</string>
   <string name="pref_traktsummary">Adăugaţi sau editaţi acreditările trakt</string>
   <string name="pref_autoaddshows">Adăugați emisiuni trakt</string>
   <string name="pref_autoaddshowssummary">Adăugați automat emisiunile după activitatea dvs. de pe trakt</string>
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
-  <string name="licence_trakt">Această aplicație foloseste date şi imagini din trakt.</string>
+  <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
   <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
   <string name="licences_and_credits">Licențe și credite</string>
   <string name="sort">Sortați după</string>
@@ -354,12 +347,12 @@
   <string name="backup_full_dump">Include toate detaliile ca descrieri, actori și evaluări.</string>
   <string name="backup_path">Fișier de arhive</string>
   <string name="backup_version">Versiunea bazei de date</string>
-  <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
+  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Baza de date se arhivează...</string>
   <string name="backup_success">Arhivare reușită.</string>
   <string name="backup_failed">Arhivare eșuată.</string>
-  <string name="import_inprogress">Restaurarea bazei de date…</string>
-  <string name="import_failed_nosd">Nu se poate restaura arhiva. Fișierul de arhivare nu este disponibil.</string>
+  <string name="import_inprogress">Restaurarea bazei de date&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Nu există o arhivă care să poată fi citită.</string>
   <string name="import_failed_noread">Arhiva nu poate fi citită.</string>
   <string name="dbupgradefailed">Arhiva poate fi prea veche sau goală. Notă: Prima data importati o arhivă înainte de 2.0 într-o versiune 1.9.x.</string>
@@ -412,7 +405,7 @@
   <string name="widget_background_opaque">Opac</string>
   <string name="dashclock_extension_label">Episodul următor</string>
   <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Afișare episod între…</string>
+  <string name="dashclock_pref_upcoming_threshold">Afișare episod între&#8230;</string>
   <string name="onlyx">Numai pentru suporteri</string>
   <string name="action_upgrade">Deblocați toate opțiunile</string>
   <string name="billing_action_subscribe">Abonează-te</string>

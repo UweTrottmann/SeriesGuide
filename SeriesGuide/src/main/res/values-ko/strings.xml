@@ -50,10 +50,13 @@
   <string name="comments">코멘트</string>
   <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
   <string name="shout_invalid">코멘트가 규칙에 어긋납니다!</string>
-  <string name="shout">외쳐! (이이)</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
   <string name="refresh">새로 고침</string>
+  <plurals name="replies_plural">
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">절대값</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">첫 방영 날짜</string>
@@ -135,7 +138,7 @@
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
   <string name="pref_infinite_scrolling">영구적인 달력</string>
-  <string name="update_scheduled">업데이트 중…</string>
+  <string name="update_scheduled">업데이트 중&#8230;</string>
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
   <string name="season_watchcount">시청하지 않았음</string>
@@ -195,29 +198,14 @@
   <string name="movies_on_watchlist">%s 와치리스트</string>
   <string name="runtime_movies_watchlist">와치리스트의 상영시간</string>
   <plurals name="days_plural">
-        <item quantity="one">%d 일</item>
-        <item quantity="zero">%d 일</item>
-        <item quantity="two">%d 일</item>
-        <item quantity="few">%d 일</item>
-        <item quantity="many">%d 일</item>
-        <item quantity="other">%d 일</item>
-    </plurals>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d 시간</item>
-        <item quantity="one">%d 시간</item>
-        <item quantity="two">%d 시간</item>
-        <item quantity="few">%d 시간</item>
-        <item quantity="many">%d 시간</item>
-        <item quantity="other">%d 시간</item>
-    </plurals>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d 분</item>
-        <item quantity="one">%d 분</item>
-        <item quantity="two">%d 분</item>
-        <item quantity="few">%d 분</item>
-        <item quantity="many">%d 분</item>
-        <item quantity="other">%d 분</item>
-    </plurals>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">실험적인 기능</string>
   <string name="hexagon_setup">시리즈가이드 클라우드 설정</string>
   <string name="hexagon_description">쇼와 영화를 백업/동기화하기 위해 클라우드에 접속</string>
@@ -279,13 +267,8 @@
   <string name="rating8">괜찮음</string>
   <string name="rating9">강추</string>
   <plurals name="votes">
-        <item quantity="zero">%d명이 투표</item>
-        <item quantity="one">%d명이 투표</item>
-        <item quantity="two">%d명이 투표</item>
-        <item quantity="few">%d명이 투표</item>
-        <item quantity="many">%d명이 투표</item>
-        <item quantity="other">%d명이 투표</item>
-    </plurals>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">체크인</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
   <string name="paste_title">제목 붙여넣기</string>
@@ -307,7 +290,7 @@
   <string name="pref_episodesorting">에피소드 정렬</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
-  <string name="pref_updatewifionlysummary">데이터 요금을 줄이기 위해 와이파이가 연결되어 있을때만 이미지를 다운받습니다</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
@@ -355,11 +338,11 @@
   <string name="backup_path">백업폴더</string>
   <string name="backup_version">데이터베이스 버전</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">데이터베이스 백업 중…</string>
+  <string name="backup_inprogress">데이터베이스 백업 중&#8230;</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
-  <string name="import_inprogress">데이터베이스 복원 중…</string>
-  <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
+  <string name="import_inprogress">데이터베이스 복원 중&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
   <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>
   <string name="dbupgradefailed">백업이 너무 오래되었거나 비어있습니다. 주의: 2.0 버전 이전의 백업은 1.9.X 버전의 앱을 설치하여 임포트하세요.</string>

@@ -37,7 +37,7 @@
   <string name="norating">無</string>
   <string name="unknown">不明</string>
   <string name="offline">Connect to a network, then try again.</string>
-  <string name="app_not_available">沒有 app 可以處理這個需求</string>
+  <string name="app_not_available">沒有應用程式可以處理此需求</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="database_error">Could not modify data.</string>
   <string name="share">Share</string>
@@ -50,10 +50,13 @@
   <string name="comments">評論</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
   <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="shout">留言</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">警告爆雷</string>
   <string name="no_shouts">成為第一個留言者</string>
   <string name="refresh">Refresh</string>
+  <plurals name="replies_plural">
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">人生必看！！！</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">播出日期</string>
@@ -195,29 +198,14 @@
   <string name="movies_on_watchlist">%s on watchlist</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-        <item quantity="one">%d day</item>
-        <item quantity="zero">%d days</item>
-        <item quantity="two">%d days</item>
-        <item quantity="few">%d days</item>
-        <item quantity="many">%d days</item>
-        <item quantity="other">%d days</item>
-    </plurals>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d hours</item>
-        <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
-        <item quantity="other">%d hours</item>
-    </plurals>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minutes</item>
-        <item quantity="one">%d minute</item>
-        <item quantity="two">%d minutes</item>
-        <item quantity="few">%d minutes</item>
-        <item quantity="many">%d minutes</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -245,7 +233,7 @@
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
-  <string name="traktcheckin_wait">等待</string>
+  <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
@@ -257,7 +245,7 @@
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">帳號</string>
-  <string name="waitplease">A moment, please…</string>
+  <string name="waitplease">A moment, please&#8230;</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +267,8 @@
   <string name="rating8">讚</string>
   <string name="rating9">好愛！！</string>
   <plurals name="votes">
-        <item quantity="zero">%d votes</item>
-        <item quantity="one">%d vote</item>
-        <item quantity="two">%d votes</item>
-        <item quantity="few">%d votes</item>
-        <item quantity="many">%d votes</item>
-        <item quantity="other">%d votes</item>
-    </plurals>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
@@ -303,8 +286,8 @@
   <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
+  <string name="pref_seasonsorting">Sort seasons by&#8230;</string>
+  <string name="pref_episodesorting">Sort episodes by&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
@@ -355,11 +338,11 @@
   <string name="backup_path">Backup folder</string>
   <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Backing up database…</string>
+  <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">備份成功。</string>
   <string name="backup_failed">備份失敗。</string>
-  <string name="import_inprogress">Restoring database…</string>
-  <string name="import_failed_nosd">無法還原備份。備份資料夾不存在。</string>
+  <string name="import_inprogress">Restoring database&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">無法讀取備份檔。</string>
   <string name="dbupgradefailed">您的備份可能太舊或者是空檔。注意：首先在1.9.x版本導入pre-2.0備份檔。</string>
@@ -412,11 +395,11 @@
   <string name="widget_background_opaque">Opaque</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Subscribe</string>
-  <string name="billing_action_pass">Get X Pass</string>
+  <string name="billing_action_pass">獲取 X Pass</string>
   <string name="billing_price_subscribe">%s/year, try for free</string>
   <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>

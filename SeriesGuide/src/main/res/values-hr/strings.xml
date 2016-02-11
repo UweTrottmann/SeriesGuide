@@ -50,10 +50,15 @@
   <string name="comments">Komentari</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
   <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="shout">Viči!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Pažnja! Spojler!</string>
   <string name="no_shouts">Budi prvi koji će povikati!</string>
   <string name="refresh">Osvježi</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">APSOLUTNO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Datum emitiranja</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Nema nedavnih epizoda.</string>
   <string name="only_favorites">Samo favoriti</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
-  <string name="update_scheduled">Ažuriranje…</string>
+  <string name="update_scheduled">Ažuriranje&#8230;</string>
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
   <string name="season_watchcount">Nepogledane epizode</string>
@@ -184,7 +189,7 @@
   <string name="movie_crew">Ekipa</string>
   <string name="action_movies_sort">Kratki filmovi</string>
   <string name="action_movies_sort_title">Naslov</string>
-  <string name="action_movies_sort_release">Datum izlaska</string>
+  <string name="action_movies_sort_release">Datum emitiranja</string>
   <string name="statistics_shows">Serije</string>
   <string name="statistics_episodes">Epizode</string>
   <string name="statistics_movies">Filmovi</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s on watchlist</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dan</item>
-        <item quantity="zero">%d dana</item>
-        <item quantity="two">%d dana</item>
-        <item quantity="few">%d dana</item>
-        <item quantity="many">%d dana</item>
-        <item quantity="other">%d dana</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d sati</item>
-        <item quantity="one">%d sat</item>
-        <item quantity="two">%d sati</item>
-        <item quantity="few">%d sati</item>
-        <item quantity="many">%d sati</item>
-        <item quantity="other">%d sati</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuta</item>
-        <item quantity="one">%d minuta</item>
-        <item quantity="two">%d minuta</item>
-        <item quantity="few">%d minuta</item>
-        <item quantity="many">%d minuta</item>
-        <item quantity="other">%d minuta</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Napravite SeriesGuide oblak.</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">Korisničko ime</string>
-  <string name="waitplease">Trenutak, molim…</string>
+  <string name="waitplease">Trenutak, molim&#8230;</string>
   <string name="connect">Povežite</string>
   <string name="disconnect">Isključi</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Odlično</string>
   <string name="rating9">Sjajno</string>
   <plurals name="votes">
-        <item quantity="zero">%d glasova</item>
-        <item quantity="one">%d glas</item>
-        <item quantity="two">%d glasova</item>
-        <item quantity="few">%d glasova</item>
-        <item quantity="many">%d glasova</item>
-        <item quantity="other">%d glasova</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Prijavi se</string>
   <string name="checkin_hint">Napiši poruku (neobavezno)</string>
   <string name="paste_title">Zalijepi naziv</string>
@@ -303,11 +296,11 @@
   <string name="pref_onlyseasonepssummary">Posebne epizode nestaju svugdje osim na popisu sezona</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Poredaj sezone prema…</string>
-  <string name="pref_episodesorting">Poredaj epizode prema…</string>
+  <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
+  <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fia</string>
-  <string name="pref_updatewifionlysummary">Kako bi smanjili troškove prenosnika,\ ne preuzimajte preko mobilnih mreža</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
   <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
@@ -355,11 +348,11 @@
   <string name="backup_path">Mapa sigurnosne kopije</string>
   <string name="backup_version">Verzija baze podataka</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Izrada sigurnosne kopije baze podataka…</string>
+  <string name="backup_inprogress">Izrada sigurnosne kopije baze podataka&#8230;</string>
   <string name="backup_success">Sigurnosna kopija uspjela.</string>
   <string name="backup_failed">Sigurnosna kopija nije uspjela.</string>
-  <string name="import_inprogress">Obnavljam bazu podataka…</string>
-  <string name="import_failed_nosd">Ne mogu vratiti sigurnosnu kopiju. Mapa za sigurnosnu kopiju nije dostupna.</string>
+  <string name="import_inprogress">Obnavljam bazu podataka&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Nema učitljive sigurnosne kopije.</string>
   <string name="import_failed_noread">Sigurnosna kopija ne može biti učitana.</string>
   <string name="dbupgradefailed">Tvoja sigurnosna kopija može biti zastarjela ili prazna. Napomena: Prvo nadogradi verziju 1.9x sa sigurnosom kopijom iz verzije programa verzije manje od 2.0.</string>

@@ -51,10 +51,14 @@
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
   <string name="shout_invalid">Din kommentar följer inte reglerna!</string>
-  <string name="shout">Ropa!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
   <string name="refresh">Ladda om</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">Fullständig</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Releasedatum</string>
@@ -136,7 +140,7 @@
   <string name="norecent">Det finns inga aktuella avsnitt.</string>
   <string name="only_favorites">Endast favoritserier</string>
   <string name="pref_infinite_scrolling">Oändlig kalender</string>
-  <string name="update_scheduled">Uppdaterar…</string>
+  <string name="update_scheduled">Uppdaterar&#8230;</string>
   <string name="update_no_connection">För att uppdatera anslut till internet.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
   <string name="season_watchcount">avsnitt ej sedda</string>
@@ -196,29 +200,17 @@
   <string name="movies_on_watchlist">%s på bevakningslistan</string>
   <string name="runtime_movies_watchlist">speltid på filmbevakningslistan</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dag</item>
-        <item quantity="zero">%d dagar</item>
-        <item quantity="two">%d dagar</item>
-        <item quantity="few">%d dagar</item>
-        <item quantity="many">%d dagar</item>
-        <item quantity="other">%d dagar</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d timmar</item>
-        <item quantity="one">%d timme</item>
-        <item quantity="two">%d timmar</item>
-        <item quantity="few">%d timmar</item>
-        <item quantity="many">%d timmar</item>
-        <item quantity="other">%d timmar</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuter</item>
-        <item quantity="one">%d minut</item>
-        <item quantity="two">%d minuter</item>
-        <item quantity="few">%d minuter</item>
-        <item quantity="many">%d minuter</item>
-        <item quantity="other">%d minuter</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">Ställa in SeriesGuide Cloud</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina serier och filmer.</string>
@@ -246,7 +238,7 @@
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
-  <string name="traktcheckin_wait">Jag väntar</string>
+  <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="trakt_success">Skickat till trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
@@ -258,7 +250,7 @@
   <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
   <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
   <string name="username">Användarnamn</string>
-  <string name="waitplease">Ett ögonblick…</string>
+  <string name="waitplease">Ett ögonblick&#8230;</string>
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
   <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
@@ -280,13 +272,9 @@
   <string name="rating8">Mycket bra</string>
   <string name="rating9">Fantastisk</string>
   <plurals name="votes">
-        <item quantity="zero">%d röster</item>
-        <item quantity="one">%d röst</item>
-        <item quantity="two">%d röster</item>
-        <item quantity="few">%d röster</item>
-        <item quantity="many">%d röster</item>
-        <item quantity="other">%d röster</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Checka in</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>
   <string name="paste_title">Klistra in titel</string>
@@ -303,12 +291,12 @@
   <string name="pref_onlyseasoneps">Dölj specialavsnitt</string>
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_exactdates">Visa exakt datum</string>
-  <string name="pref_exactdates_summary">\"31 Oktober\" istället för \"om 3 dagar\"</string>
-  <string name="pref_seasonsorting">Sortera säsonger efter…</string>
-  <string name="pref_episodesorting">Sortera avsnitt efter…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
+  <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Om SeriesGuide</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
   <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
@@ -356,10 +344,10 @@
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
   <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
-  <string name="backup_inprogress">Säkerhetskopierar databas…</string>
+  <string name="backup_inprogress">Säkerhetskopierar databas&#8230;</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
-  <string name="import_inprogress">Återställer databasen…</string>
+  <string name="import_inprogress">Återställer databasen&#8230;</string>
   <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
   <string name="import_failed_nofile">Det finns ingen läsbar backupfil.</string>
   <string name="import_failed_noread">Säkerhetskopian är oläslig.</string>
@@ -413,7 +401,7 @@
   <string name="widget_background_opaque">Solid</string>
   <string name="dashclock_extension_label">Kommande avsnitt</string>
   <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
-  <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom…</string>
+  <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom&#8230;</string>
   <string name="onlyx">Endast för supporters</string>
   <string name="action_upgrade">Lås upp alla funktioner</string>
   <string name="billing_action_subscribe">Prenumerera</string>

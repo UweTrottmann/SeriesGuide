@@ -50,10 +50,18 @@
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
   <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
-  <string name="shout">تعليق</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
   <string name="refresh">تحديث</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="zero">%d replies</item>
+    <item quantity="two">%d replies</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="many">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">مطلق</string>
   <string name="episode_number_disk">دي في دي</string>
   <string name="episode_firstaired">تاريخ الإصدار</string>
@@ -195,29 +203,29 @@
   <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
   <string name="runtime_movies_watchlist">وقت التشغيل لقائمة المشاهدة</string>
   <plurals name="days_plural">
-        <item quantity="one">%d يوم/أيام</item>
-        <item quantity="zero">%d أيام</item>
-        <item quantity="two">%d أيام</item>
-        <item quantity="few">%d أيام</item>
-        <item quantity="many">%d أيام</item>
-        <item quantity="other">%d أيام</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d ساعات</item>
-        <item quantity="one">%d ساعة</item>
-        <item quantity="two">%d ساعات</item>
-        <item quantity="few">%d ساعات</item>
-        <item quantity="many">%d ساعات</item>
-        <item quantity="other">%d ساعات</item>
-    </plurals>
+    <item quantity="zero">%d hours</item>
+    <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d دقائق</item>
-        <item quantity="one">%d دقيقة</item>
-        <item quantity="two">%d دقائق</item>
-        <item quantity="few">%d دقائق</item>
-        <item quantity="many">%d دقائق</item>
-        <item quantity="other">%d دقائق</item>
-    </plurals>
+    <item quantity="zero">%d minutes</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">تجريبي</string>
   <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>
@@ -245,7 +253,7 @@
   <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
-  <string name="traktcheckin_wait">سأنتظر</string>
+  <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="trakt_success">تم إرسالها إلى Trakt.</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
@@ -257,7 +265,7 @@
   <string name="trakt_reconnect">ربط برنامج دليل المسلسلات بحساب Trak</string>
   <string name="trakt_reconnect_details">تحقق من بيانات الأعتماد الخاصة بك في trakt</string>
   <string name="username">اسم المستخدم</string>
-  <string name="waitplease">لحظات, من فضلك…</string>
+  <string name="waitplease">لحظات, من فضلك&#8230;</string>
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
   <string name="use_integrated_browser">استخدام متصفح متكامل</string>
@@ -279,13 +287,13 @@
   <string name="rating8">ممتاز</string>
   <string name="rating9">رائع</string>
   <plurals name="votes">
-        <item quantity="zero">%d أصوات</item>
-        <item quantity="one">%d صوت</item>
-        <item quantity="two">%d أصوات</item>
-        <item quantity="few">%d أصوات</item>
-        <item quantity="many">%d أصوات</item>
-        <item quantity="other">%d أصوات</item>
-    </plurals>
+    <item quantity="zero">%d votes</item>
+    <item quantity="one">%d vote</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">أشاهده الآن</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="paste_title">إلصق عنوان</string>
@@ -302,12 +310,12 @@
   <string name="pref_onlyseasoneps">إخفاء الحلقات الخاصة</string>
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_exactdates">عرض التواريخ بشكل دقيق</string>
-  <string name="pref_exactdates_summary">\"أوكتوبر 31\" بدلا من \"خلال 3 أيام\"</string>
-  <string name="pref_seasonsorting">ترتيب المواسم حسب…</string>
-  <string name="pref_episodesorting">ترتيب الحلقات حسب…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
+  <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
-  <string name="pref_updatewifionlysummary">للحد من تكاليف الرسوم، لا تحمل البيانات بواسطة شكبة الهاتف المحمول</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">حول دليل المسلسلات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
@@ -355,11 +363,11 @@
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات…</string>
+  <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات&#8230;</string>
   <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
-  <string name="import_inprogress">استعادة قاعدة البيانات…</string>
-  <string name="import_failed_nosd">.لا يمكن استعادة النسخة الاحتياطية. مجلد النسخة الاحتياطية غير متاح</string>
+  <string name="import_inprogress">استعادة قاعدة البيانات&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">لا يوجد ملف نسخ إحتياطي للقراءة.</string>
   <string name="import_failed_noread">.ملف النسخ الاحتياطي غير قابل للقراءة</string>
   <string name="dbupgradefailed">قد تكون النسخة الاحتياطية قديمة جداً أو فارغة. ملاحظة: قم باستعادة ما قبل النسخة2.0 في النسخة 1.9.0 أولاً</string>
@@ -416,7 +424,7 @@
   <string name="onlyx">فقط للداعمين</string>
   <string name="action_upgrade">فتح كافة الميزات</string>
   <string name="billing_action_subscribe">إشتراك</string>
-  <string name="billing_action_pass">أحصل على مفتاح التفعيل</string>
+  <string name="billing_action_pass">أحصل على X Pass</string>
   <string name="billing_price_subscribe">%s بالسنة، جربه الان</string>
   <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
   <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>

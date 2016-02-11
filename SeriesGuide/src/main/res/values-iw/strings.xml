@@ -50,10 +50,14 @@
   <string name="comments">תגובות</string>
   <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
   <string name="shout_invalid">התגובה שלך לא על פי הכללים!</string>
-  <string name="shout">המלץ!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
   <string name="refresh">רענון</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">מתחילת הסדרה</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">תאריך שחרור</string>
@@ -135,7 +139,7 @@
   <string name="norecent">אין פרקים חדשים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
   <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
-  <string name="update_scheduled">מעדכן…</string>
+  <string name="update_scheduled">מעדכן&#8230;</string>
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
   <string name="season_watchcount">פרקים שלא נצפו</string>
@@ -183,8 +187,8 @@
   <string name="movie_cast">משתתפים</string>
   <string name="movie_crew">צוות</string>
   <string name="action_movies_sort">מיון סרטים</string>
-  <string name="action_movies_sort_title">שם הסרט</string>
-  <string name="action_movies_sort_release">תאריך הוצאה</string>
+  <string name="action_movies_sort_title">שם</string>
+  <string name="action_movies_sort_release">תאריך שחרור</string>
   <string name="statistics_shows">סדרות</string>
   <string name="statistics_episodes">פרקים</string>
   <string name="statistics_movies">סרטים</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s על רשימת המעקב</string>
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
-        <item quantity="one">יום אחד</item>
-        <item quantity="zero">%d ימים</item>
-        <item quantity="two">%d ימים</item>
-        <item quantity="few">%d ימים</item>
-        <item quantity="many">%d ימים</item>
-        <item quantity="other">%d ימים</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d שעות</item>
-        <item quantity="one">שעה אחת</item>
-        <item quantity="two">%d שעות</item>
-        <item quantity="few">%d שעות</item>
-        <item quantity="many">%d שעות</item>
-        <item quantity="other">%d שעות</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d דקות</item>
-        <item quantity="one">דקה אחת</item>
-        <item quantity="two">%d דקות</item>
-        <item quantity="few">%d דקות</item>
-        <item quantity="many">%d דקות</item>
-        <item quantity="other">%d דקות</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">ניסיוני!</string>
   <string name="hexagon_setup">הגדר את SeriesGuide Cloud</string>
   <string name="hexagon_description">התחבר לענן בכדי לגבות ולסנכרן את התוכניות והסרטים שלך.</string>
@@ -279,13 +271,9 @@
   <string name="rating8">טוב מאוד</string>
   <string name="rating9">מצוין</string>
   <plurals name="votes">
-        <item quantity="zero">הצבעות %d</item>
-        <item quantity="one">הצבעה %d</item>
-        <item quantity="two">הצבעות %d</item>
-        <item quantity="few">הצבעות %d</item>
-        <item quantity="many">הצבעות %d</item>
-        <item quantity="other">הצבעות %d</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">צ\'ק-אין</string>
   <string name="checkin_hint">הקלד הודעה (אופציונלי)</string>
   <string name="paste_title">הדבקת כותרת</string>
@@ -302,12 +290,12 @@
   <string name="pref_onlyseasoneps">הסתר פרקים מיוחדים</string>
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
   <string name="pref_exactdates">הצג תאריכים מדויקים</string>
-  <string name="pref_exactdates_summary">\"אוקטובר 31\"במקום\"ב 3 ימים\"</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
   <string name="pref_language">שפת תוכן מועדפת</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
-  <string name="pref_updatewifionlysummary">בכדי להפחית חיובי מפעילה סלולרית, אל תוריד באמצעות אינטרנט סלולרי</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>

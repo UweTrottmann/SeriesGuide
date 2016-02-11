@@ -50,10 +50,14 @@
   <string name="comments">Yorumlar</string>
   <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
   <string name="shout_invalid">Yorumun kurallara uygun değil!</string>
-  <string name="shout">Not!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Spoiler Uyarısı!</string>
   <string name="no_shouts">İlk not yazan ol!</string>
   <string name="refresh">Yenile</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">TOPLAM BÖLÜM SAYISI</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Yayın tarihi</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="pref_infinite_scrolling">Sonsuz takvim</string>
-  <string name="update_scheduled">Güncelleniyor…</string>
+  <string name="update_scheduled">Güncelleniyor&#8230;</string>
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <string name="season_watchcount">izlenmeyen bölümler</string>
@@ -183,7 +187,7 @@
   <string name="movie_cast">Oyuncular</string>
   <string name="movie_crew">Ekip</string>
   <string name="action_movies_sort">Filmleri sırala</string>
-  <string name="action_movies_sort_title">Eser Adı</string>
+  <string name="action_movies_sort_title">Başlık</string>
   <string name="action_movies_sort_release">Yayın tarihi</string>
   <string name="statistics_shows">Diziler</string>
   <string name="statistics_episodes">Bölümler</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s İzleme listesi</string>
   <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
   <plurals name="days_plural">
-        <item quantity="one">%d gün</item>
-        <item quantity="zero">%d gün</item>
-        <item quantity="two">%d gün</item>
-        <item quantity="few">%d gün</item>
-        <item quantity="many">%d gün</item>
-        <item quantity="other">%d gün</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d saat</item>
-        <item quantity="one">%d saat</item>
-        <item quantity="two">%d saat</item>
-        <item quantity="few">%d saat</item>
-        <item quantity="many">%d saat</item>
-        <item quantity="other">%d saat</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d dakika</item>
-        <item quantity="one">%d dakika</item>
-        <item quantity="two">%d dakika</item>
-        <item quantity="few">%d dakika</item>
-        <item quantity="many">%d dakika</item>
-        <item quantity="other">%d dakika</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">SeriesGuide ile trakt\'a bağlan</string>
   <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
   <string name="username">Kullanıcı Adı</string>
-  <string name="waitplease">Bir dakika lütfen…</string>
+  <string name="waitplease">Bir dakika lütfen&#8230;</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
   <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Harika</string>
   <string name="rating9">Süper</string>
   <plurals name="votes">
-        <item quantity="zero">%d oy</item>
-        <item quantity="one">%d oy</item>
-        <item quantity="two">%d oy</item>
-        <item quantity="few">%d oy</item>
-        <item quantity="many">%d oy</item>
-        <item quantity="other">%d oylar</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Giriş yap</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
   <string name="paste_title">Başlığı yapıştır</string>
@@ -302,17 +290,17 @@
   <string name="pref_onlyseasoneps">Özel bölümleri gizle</string>
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
-  <string name="pref_exactdates_summary">\"31 Kasım\" yerine \"3 gün içerisinde\"</string>
-  <string name="pref_seasonsorting">Sezonları sırala:…</string>
-  <string name="pref_episodesorting">Bölümleri sırala:…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Sezonları sırala:&#8230;</string>
+  <string name="pref_episodesorting">Bölümleri sırala:&#8230;</string>
   <string name="pref_language">Tercih edilen içerik dili</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
-  <string name="pref_updatewifionlysummary">Operatör veri ücretlerini azaltmak için sadece Wi-Fi kullanın</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
-  <string name="licence_tvdb">Bu uygulama kullanılan theTVDb verileri ve görselleri CC BY-NC 4.0 lisansı altındadır.</string>
+  <string name="licence_tvdb">Bu uygulama kullanılan veriler ve görseller CC BY-NC 4.0 lisansı altındaki TheTVDB verileridir.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır. TMDb ile doğrudan ilişkili, bağlantılı değildir.</string>
   <string name="licence_trakt">Bu uygulama trakt tarafından sağlanan veri ve görselleri kullanır.</string>
   <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
@@ -327,7 +315,7 @@
   <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
   <string name="pref_upcominglimit">Yaklaşan aralığı</string>
-  <string name="upcoming_upto_now">Şu anda</string>
+  <string name="upcoming_upto_now">şimdi</string>
   <string name="upcoming_upto_one_day">bir gün</string>
   <string name="upcoming_upto_three_days">3 gün</string>
   <string name="upcoming_upto_one_week">bir hafta</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
-  <string name="backup_inprogress">Veritabanı yedekleniyor…</string>
+  <string name="backup_inprogress">Veritabanı yedekleniyor&#8230;</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>
-  <string name="import_inprogress">Veri tabanı geri yükleniyor…</string>
+  <string name="import_inprogress">Veri tabanı geri yükleniyor&#8230;</string>
   <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
   <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
   <string name="import_failed_noread">Yedek dosyası okunamaz.</string>
@@ -416,7 +404,7 @@
   <string name="onlyx">Sadece destekçileri için</string>
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
-  <string name="billing_action_pass">X Pass edinin</string>
+  <string name="billing_action_pass">X Pass alın</string>
   <string name="billing_price_subscribe">%s/yıl, ücretsiz deneyin</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>

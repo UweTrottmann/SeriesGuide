@@ -50,10 +50,14 @@
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
   <string name="shout_invalid">DIn kommentar følger ikke reglerne!</string>
-  <string name="shout">Kommentar!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
   <string name="refresh">Opdater</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">Absolut</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Udgivelsesdato</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Der er ingen nylige episoder.</string>
   <string name="only_favorites">Kun favorit serier</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
-  <string name="update_scheduled">Opdaterer…</string>
+  <string name="update_scheduled">Opdaterer&#8230;</string>
   <string name="update_no_connection">Forbind til internettet for at opdatere.</string>
   <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
   <string name="season_watchcount">episoder ikke set</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s på overvågningslisten</string>
   <string name="runtime_movies_watchlist">Varig af film på overvågningslisten</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dag</item>
-        <item quantity="zero">%d dage</item>
-        <item quantity="two">%d dage</item>
-        <item quantity="few">%d dage</item>
-        <item quantity="many">%d dage</item>
-        <item quantity="other">%d dage</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d timer</item>
-        <item quantity="one">%d time</item>
-        <item quantity="two">%d timer</item>
-        <item quantity="few">%d timer</item>
-        <item quantity="many">%d timer</item>
-        <item quantity="other">%d timer</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minutter</item>
-        <item quantity="one">%d minut</item>
-        <item quantity="two">%d minutter</item>
-        <item quantity="few">%d minutter</item>
-        <item quantity="many">%d minutter</item>
-        <item quantity="other">%d minutter</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Eksperimentel!</string>
   <string name="hexagon_setup">Opsæt SeriesGuide Cloud</string>
   <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Fantastisk</string>
   <string name="rating9">Fremragende</string>
   <plurals name="votes">
-        <item quantity="zero">%d stemmer</item>
-        <item quantity="one">%d afstemning</item>
-        <item quantity="two">%d stemmer</item>
-        <item quantity="few">%d stemmer</item>
-        <item quantity="many">%d stemmer</item>
-        <item quantity="other">%d stemmer</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Tjek ind</string>
   <string name="checkin_hint">Skriv en besked (valgfrit)</string>
   <string name="paste_title">Indsæt titel</string>
@@ -303,8 +291,8 @@
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Sortér sæsoner efter…</string>
-  <string name="pref_episodesorting">Sortér afsnit efter…</string>
+  <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
+  <string name="pref_episodesorting">Sortér afsnit efter&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
@@ -327,7 +315,7 @@
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
   <string name="pref_upcominglimit">Upcoming range</string>
-  <string name="upcoming_upto_now">nu</string>
+  <string name="upcoming_upto_now">Nu</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dage</string>
   <string name="upcoming_upto_one_week">en uge</string>

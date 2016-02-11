@@ -37,7 +37,7 @@
   <string name="norating">cap</string>
   <string name="unknown">deconegut</string>
   <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>
-  <string name="app_not_available">No hi ha cap aplicació per suportar-ho.</string>
+  <string name="app_not_available">No hi ha cap aplicació per gestionar-ho.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="share">Comparteix</string>
@@ -50,10 +50,14 @@
   <string name="comments">Comentaris</string>
   <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
   <string name="shout_invalid">El teu comentari no compleix les normes!</string>
-  <string name="shout">Nota!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Revela parts de la trama!</string>
   <string name="no_shouts">Sigueu el primer a escriure!</string>
   <string name="refresh">Refresca</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de llançament</string>
@@ -110,7 +114,7 @@
   <string name="empty_filter">Desactiva tots els filtres</string>
   <string name="action_shows_filter_favorites">Preferits</string>
   <string name="action_shows_filter_unwatched">No vist</string>
-  <string name="action_shows_filter_upcoming">Pròxims</string>
+  <string name="action_shows_filter_upcoming">Propers</string>
   <string name="action_shows_filter_hidden">Ocults</string>
   <string name="action_shows_sort">Ordena sèries</string>
   <string name="action_shows_sort_title">Títol</string>
@@ -135,7 +139,7 @@
   <string name="norecent">No hi ha capítols recents.</string>
   <string name="only_favorites">Només sèries preferides</string>
   <string name="pref_infinite_scrolling">Calendari infinit</string>
-  <string name="update_scheduled">S\'està actualitzant…</string>
+  <string name="update_scheduled">S\'està actualitzant&#8230;</string>
   <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
   <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
   <string name="season_watchcount">episodis no vistos</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s a la llista de seguiment</string>
   <string name="runtime_movies_watchlist">Durada de la llista de peŀlícules</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dia</item>
-        <item quantity="zero">%d dies</item>
-        <item quantity="two">%d dies</item>
-        <item quantity="few">%d dies</item>
-        <item quantity="many">%d dies</item>
-        <item quantity="other">%d dies</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d hores</item>
-        <item quantity="one">%d hora</item>
-        <item quantity="two">%d hores</item>
-        <item quantity="few">%d hores</item>
-        <item quantity="many">%d hores</item>
-        <item quantity="other">%d hores</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuts</item>
-        <item quantity="one">%d minut</item>
-        <item quantity="two">%d minuts</item>
-        <item quantity="few">%d minuts</item>
-        <item quantity="many">%d minuts</item>
-        <item quantity="other">%d minuts</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Configureu el Cloud de SeriesGuide</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">Nom d\'usuari</string>
-  <string name="waitplease">Un moment, si us plau…</string>
+  <string name="waitplease">Un moment, si us plau&#8230;</string>
   <string name="connect">Connecta</string>
   <string name="disconnect">Desconnecta</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Molt bo</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-        <item quantity="zero">%d vots</item>
-        <item quantity="one">%d vot</item>
-        <item quantity="two">%d vots</item>
-        <item quantity="few">%d vots</item>
-        <item quantity="many">%d vots</item>
-        <item quantity="other">%d vots</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Inica sessió</string>
   <string name="checkin_hint">Escriviu un missatge (opcional)</string>
   <string name="paste_title">Enganxa el títol</string>
@@ -303,11 +291,11 @@
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Ordena les temporades per…</string>
-  <string name="pref_episodesorting">Ordena els capítols per…</string>
+  <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
+  <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
-  <string name="pref_updatewifionlysummary">No descarreguis res a través de les xarxes mòbils</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Quant a SeriesGuide</string>
   <string name="pref_traktsummary">Afegiu o editeu les vostres credencials de trakt</string>
   <string name="pref_autoaddshows">Afegeix noves sèries del trakt</string>
@@ -355,11 +343,11 @@
   <string name="backup_path">Carpeta de còpies de seguretat</string>
   <string name="backup_version">Versió de la base de dades</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">S\'està fent una còpia de seguretat de la base de dades…</string>
+  <string name="backup_inprogress">S\'està fent una còpia de seguretat de la base de dades&#8230;</string>
   <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
   <string name="backup_failed">Ha fallat la còpia de seguretat.</string>
-  <string name="import_inprogress">S\'està restaurant la base de dades…</string>
-  <string name="import_failed_nosd">No s\'ha pogut restaurar la base de dades. La carpeta amb les còpies de seguretat no està disponible.</string>
+  <string name="import_inprogress">S\'està restaurant la base de dades&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
   <string name="import_failed_noread">El fitxer amb la còpia de seguretat no té permisos de lectura.</string>
   <string name="dbupgradefailed">La còpia de seguretat és massa vella o està buida. Nota: importeu a una versió 1.9.x, en primer lloc, les còpies de seguretat anteriors a la versió 2.0.</string>
@@ -412,7 +400,7 @@
   <string name="widget_background_opaque">Opac</string>
   <string name="dashclock_extension_label">Proper episodi</string>
   <string name="dashclock_extension_description">Mostra el proper episodi de les sèries que teniu a SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins…</string>
+  <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins&#8230;</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Vull subscriure\'m</string>

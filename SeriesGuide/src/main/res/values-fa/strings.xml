@@ -37,7 +37,7 @@
   <string name="norating">N\a</string>
   <string name="unknown">نامعلوم</string>
   <string name="offline">اتصال به شبکه و سپس دوباره امتحان کنید.</string>
-  <string name="app_not_available">هیچ برنامه ای در دسترس نمیباشد.</string>
+  <string name="app_not_available">هیچ برنامه ای برای رفع این در دسترس نمیباشد.</string>
   <string name="people_empty">کسی نیست ؟ لمس صفحه برای تلاش دوباره.</string>
   <string name="database_error">قادر به تغییر داده نبوده.</string>
   <string name="share">اشتراک گذاری</string>
@@ -50,10 +50,13 @@
   <string name="comments">نظرات</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
   <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="shout">فریاد!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">طریقه هشدار!</string>
   <string name="no_shouts">اولین نفر باش.</string>
   <string name="refresh">تازه کردن</string>
+  <plurals name="replies_plural">
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">کامل</string>
   <string name="episode_number_disk">دی وی دی</string>
   <string name="episode_firstaired">تاریخ انتشار</string>
@@ -171,7 +174,7 @@
   <string name="action_lists_sort">Sort lists</string>
   <string name="action_lists_reorder">Reorder lists</string>
   <string name="movies_collection">مجموعه</string>
-  <string name="movies_watchlist">لیست تماشا</string>
+  <string name="movies_watchlist">لیست نمایش</string>
   <string name="watchlist_add">اضافه کردن به لیست تماشا</string>
   <string name="watchlist_remove">حذف از فهرست تماشا</string>
   <string name="watchlist_added">به لیست تماشا اظافه شد</string>
@@ -183,7 +186,7 @@
   <string name="movie_cast">بازیگران</string>
   <string name="movie_crew">کادر</string>
   <string name="action_movies_sort">مرتب کردن فیلم ها</string>
-  <string name="action_movies_sort_title">عنوان</string>
+  <string name="action_movies_sort_title">Title</string>
   <string name="action_movies_sort_release">تاریخ انتشار</string>
   <string name="statistics_shows">سریالها</string>
   <string name="statistics_episodes">قسمتها</string>
@@ -195,29 +198,14 @@
   <string name="movies_on_watchlist">%s در لیست تماشا</string>
   <string name="runtime_movies_watchlist">مدت زمان فیلم های لیست تماشا</string>
   <plurals name="days_plural">
-        <item quantity="one">روز %d</item>
-        <item quantity="zero">روز %d</item>
-        <item quantity="two">روز %d</item>
-        <item quantity="few">روز %d</item>
-        <item quantity="many">روز %d</item>
-        <item quantity="other">روز %d</item>
-    </plurals>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">ساعت %d</item>
-        <item quantity="one">ساعت %d</item>
-        <item quantity="two">ساعت %d</item>
-        <item quantity="few">ساعت %d</item>
-        <item quantity="many">ساعت %d</item>
-        <item quantity="other">ساعت %d</item>
-    </plurals>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d دقیقه</item>
-        <item quantity="one">%d دقیقه</item>
-        <item quantity="two">%d دقیقه</item>
-        <item quantity="few">%d دقیقه</item>
-        <item quantity="many">%d دقیقه</item>
-        <item quantity="other">%d دقیقه</item>
-    </plurals>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">تجربی!</string>
   <string name="hexagon_setup">راه اندازی ذخیره ابری SeriesGuide</string>
   <string name="hexagon_description">اتصال به ابر برای پشتیبان گیری و همگام سازی رانمایش ها و فیلم هایتان.</string>
@@ -257,7 +245,7 @@
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">Username</string>
-  <string name="waitplease">A moment, please…</string>
+  <string name="waitplease">A moment, please&#8230;</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +267,8 @@
   <string name="rating8">Great</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-        <item quantity="zero">رای ها %d</item>
-        <item quantity="one">%d vote</item>
-        <item quantity="two">رای ها %d</item>
-        <item quantity="few">رای ها %d</item>
-        <item quantity="many">رای %d</item>
-        <item quantity="other">رای ها %d</item>
-    </plurals>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_title">Paste title</string>
@@ -307,7 +290,7 @@
   <string name="pref_episodesorting">مرنب کردن قسمت ها براساس...</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">تصاویر از طریق Wi-Fi فقط</string>
-  <string name="pref_updatewifionlysummary">برای کاهش هزینه های خط موبایل، از طریق شبکه های موبایل دانلود نکنید</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">درباره SeriesGuide</string>
   <string name="pref_traktsummary">افزودن یا ویرایش اطلاعات کاربری trakt</string>
   <string name="pref_autoaddshows">اضافه کردن برنامه های  trakt</string>
@@ -355,10 +338,10 @@
   <string name="backup_path">Backup folder</string>
   <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Backing up database…</string>
+  <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Backup failed.</string>
-  <string name="import_inprogress">Restoring database…</string>
+  <string name="import_inprogress">Restoring database&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
@@ -412,7 +395,7 @@
   <string name="widget_background_opaque">Opaque</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
-  <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
+  <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Subscribe</string>

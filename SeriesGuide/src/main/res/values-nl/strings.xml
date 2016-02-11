@@ -50,10 +50,14 @@
   <string name="comments">Reacties</string>
   <string name="shout_hint">Vul een opmerking in (in het Engels, meer dan 5 woorden)</string>
   <string name="shout_invalid">Uw opmerking is niet conform de regels!</string>
-  <string name="shout">Shout!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
   <string name="refresh">Ververs</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Releasedatum</string>
@@ -110,7 +114,7 @@
   <string name="empty_filter">Alle filters verwijderen</string>
   <string name="action_shows_filter_favorites">Favorieten</string>
   <string name="action_shows_filter_unwatched">Onbekeken</string>
-  <string name="action_shows_filter_upcoming">Binnenkort</string>
+  <string name="action_shows_filter_upcoming">Eerstvolgende</string>
   <string name="action_shows_filter_hidden">Verborgen</string>
   <string name="action_shows_sort">Series sorteren</string>
   <string name="action_shows_sort_title">Titel</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
   <string name="pref_infinite_scrolling">Oneindige kalender</string>
-  <string name="update_scheduled">Bijwerken…</string>
+  <string name="update_scheduled">Bijwerken&#8230;</string>
   <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
   <string name="season_watchcount">Niet bekeken afleveringen</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s op watchlist</string>
   <string name="runtime_movies_watchlist">Looptijd van films op de watchlist</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dag</item>
-        <item quantity="zero">%d dagen</item>
-        <item quantity="two">%d dagen</item>
-        <item quantity="few">%d dagen</item>
-        <item quantity="many">%d dagen</item>
-        <item quantity="other">%d dagen</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d uren</item>
-        <item quantity="one">%d uur</item>
-        <item quantity="two">%d uren</item>
-        <item quantity="few">%d uren</item>
-        <item quantity="many">%d uren</item>
-        <item quantity="other">%d uren</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuten</item>
-        <item quantity="one">%d minuut</item>
-        <item quantity="two">%d minuten</item>
-        <item quantity="few">%d minuten</item>
-        <item quantity="many">%d minuten</item>
-        <item quantity="other">%d minuten</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Verbind SeriesGuide met trakt</string>
   <string name="trakt_reconnect_details">Controleer je trakt-inloggegevens</string>
   <string name="username">Gebruikersnaam</string>
-  <string name="waitplease">Een ogenblik geduld a.u.b.…</string>
+  <string name="waitplease">Een ogenblik geduld a.u.b.&#8230;</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Verbreken</string>
   <string name="use_integrated_browser">Gebruik de geïntegreerde browser</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Geweldig</string>
   <string name="rating9">Uitmuntend</string>
   <plurals name="votes">
-        <item quantity="zero">%d stemmen</item>
-        <item quantity="one">%d stem</item>
-        <item quantity="two">%d stemmen</item>
-        <item quantity="few">%d stemmen</item>
-        <item quantity="many">%d stemmen</item>
-        <item quantity="other">%d stemmen</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_title">Titel plakken</string>
@@ -302,19 +290,19 @@
   <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_exactdates">Juiste datum weergeven</string>
-  <string name="pref_exactdates_summary">\"October 31\" in plaats van \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
-  <string name="pref_episodesorting">Afleveringen sorteren op…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
+  <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Om datakosten te reduceren, niet downloaden over mobiele netwerken</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Over SeriesGuide</string>
   <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet onderschreven of gecertificeerd door TMDb.</string>
-  <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van Trakt.</string>
+  <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
   <string name="about_open_source">Seriesguide is geprogrammeerd met behulp van open source software.</string>
   <string name="licences_and_credits">Licenties en verantwoording</string>
   <string name="sort">Sorteren op</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Back-upmap</string>
   <string name="backup_version">Database-versie</string>
   <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
-  <string name="backup_inprogress">Gegevensbestand back-uppen…</string>
+  <string name="backup_inprogress">Gegevensbestand back-uppen&#8230;</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
-  <string name="import_inprogress">Gegevensbestand herstellen…</string>
+  <string name="import_inprogress">Gegevensbestand herstellen&#8230;</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="import_failed_nofile">Er is geen leesbaar back-upbestand.</string>
   <string name="import_failed_noread">Het back-up bestand is niet leesbaar.</string>

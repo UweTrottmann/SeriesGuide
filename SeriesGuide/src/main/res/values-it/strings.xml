@@ -37,7 +37,7 @@
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
   <string name="offline">Connettersi a una rete, quindi riprovare.</string>
-  <string name="app_not_available">Nessuna applicazione disponibile in grado di gestire questo.</string>
+  <string name="app_not_available">Nessuna app per gestirlo.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
   <string name="share">Condividi</string>
@@ -50,10 +50,14 @@
   <string name="comments">Commenti</string>
   <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
   <string name="shout_invalid">Il tuo commento non rispetta le regole!</string>
-  <string name="shout">Segnalato!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Attenzione Spoiler!</string>
   <string name="no_shouts">Sii il primo a segnalare!</string>
   <string name="refresh">Aggiorna</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ASSOLUTA</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data di rilascio</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Non ci sono episodi recenti.</string>
   <string name="only_favorites">Solo le serie preferite</string>
   <string name="pref_infinite_scrolling">Calendario perpetuo</string>
-  <string name="update_scheduled">Aggiornamento…</string>
+  <string name="update_scheduled">Aggiornamento&#8230;</string>
   <string name="update_no_connection">Per aggiornare, connettiti ad internet.</string>
   <string name="update_inprogress">Un aggiornamento è in corso, riprova più tardi.</string>
   <string name="season_watchcount">episodi non visti</string>
@@ -184,7 +188,7 @@
   <string name="movie_crew">Squadra</string>
   <string name="action_movies_sort">Ordina film</string>
   <string name="action_movies_sort_title">Titolo</string>
-  <string name="action_movies_sort_release">Data di uscita</string>
+  <string name="action_movies_sort_release">Data di rilascio</string>
   <string name="statistics_shows">Serie TV</string>
   <string name="statistics_episodes">Episodi</string>
   <string name="statistics_movies">Film</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s nella lista dei film da vedere</string>
   <string name="runtime_movies_watchlist">durata totale dei film da vedere</string>
   <plurals name="days_plural">
-        <item quantity="one">%d giorno</item>
-        <item quantity="zero">%d giorni</item>
-        <item quantity="two">%d giorni</item>
-        <item quantity="few">%d giorni</item>
-        <item quantity="many">%d giorni</item>
-        <item quantity="other">%d giorni</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d ore</item>
-        <item quantity="one">%d ora</item>
-        <item quantity="two">%d ore</item>
-        <item quantity="few">%d ore</item>
-        <item quantity="many">%d ore</item>
-        <item quantity="other">%d ore</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuti</item>
-        <item quantity="one">%d minuto</item>
-        <item quantity="two">%d minuti</item>
-        <item quantity="few">%d minuti</item>
-        <item quantity="many">%d minuti</item>
-        <item quantity="other">%d minuti</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Sperimentale!</string>
   <string name="hexagon_setup">Configura SeriesGuide Cloud</string>
   <string name="hexagon_description">Connettiti alla cloud per eseguire il backup e la sincronizzazione delle tue serie TV e dei film.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Collega SeriesGuide a trakt</string>
   <string name="trakt_reconnect_details">Controlla le tue credenziali trakt</string>
   <string name="username">Nome utente</string>
-  <string name="waitplease">Un momento, per favore…</string>
+  <string name="waitplease">Un momento, per favore&#8230;</string>
   <string name="connect">Connetti</string>
   <string name="disconnect">Disconnetti</string>
   <string name="use_integrated_browser">Utilizza il browser integrato</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Ottimo</string>
   <string name="rating9">Stupendo</string>
   <plurals name="votes">
-        <item quantity="zero">%d voti</item>
-        <item quantity="one">%d voto</item>
-        <item quantity="two">%d voti</item>
-        <item quantity="few">%d voti</item>
-        <item quantity="many">%d voti</item>
-        <item quantity="other">%d voti</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Check-in</string>
   <string name="checkin_hint">Digita un messaggio (opzionale)</string>
   <string name="paste_title">Incolla titolo</string>
@@ -302,12 +290,12 @@
   <string name="pref_onlyseasoneps">Nascondi gli episodi speciali</string>
   <string name="pref_onlyseasonepssummary">Non mostrare gli episodi speciali tranne che nella lista della stagione</string>
   <string name="pref_exactdates">Visualizza date esatte</string>
-  <string name="pref_exactdates_summary">\"31 Ottobre\" invece di \"tra 3 giorni\"</string>
-  <string name="pref_seasonsorting">Ordina stagioni per…</string>
-  <string name="pref_episodesorting">Ordina episodi per…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Ordina stagioni per&#8230;</string>
+  <string name="pref_episodesorting">Ordina episodi per&#8230;</string>
   <string name="pref_language">Lingua preferita per i contenuti</string>
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Per ridurre gli addebiti del gestore, non scaricare con la connessione mobile</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Info su SeriesGuide</string>
   <string name="pref_traktsummary">Aggiungi o modifica le tue credenziali trakt</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
@@ -327,7 +315,7 @@
   <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
   <string name="pref_upcominglimit">Configura Prossimi</string>
-  <string name="upcoming_upto_now">ora</string>
+  <string name="upcoming_upto_now">adesso</string>
   <string name="upcoming_upto_one_day">entro un giorno</string>
   <string name="upcoming_upto_three_days">entro 3 giorni</string>
   <string name="upcoming_upto_one_week">entro 1 settimana</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Cartella di Backup</string>
   <string name="backup_version">Versione Database</string>
   <string name="backup_failed_file_access">Impossibile effettuare il backup. Non è stato possibile trovare o accedere a un file di backup.</string>
-  <string name="backup_inprogress">Backup del database in corso…</string>
+  <string name="backup_inprogress">Backup del database in corso&#8230;</string>
   <string name="backup_success">Backup eseguito con successo.</string>
   <string name="backup_failed">Backup fallito.</string>
-  <string name="import_inprogress">Ripristino del database…</string>
+  <string name="import_inprogress">Ripristino del database&#8230;</string>
   <string name="import_failed_nosd">Impossibile ripristinare il backup. La cartella non è disponibile.</string>
   <string name="import_failed_nofile">Nessun file di Backup esistente.</string>
   <string name="import_failed_noread">Il file di backup è illeggibile.</string>
@@ -412,7 +400,7 @@
   <string name="widget_background_opaque">Opaco</string>
   <string name="dashclock_extension_label">Prossimi episodi</string>
   <string name="dashclock_extension_description">Mostra il prossimo episodio nella lista SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Mostra episodio entro…</string>
+  <string name="dashclock_pref_upcoming_threshold">Mostra episodio entro&#8230;</string>
   <string name="onlyx">Solo per i sostenitori</string>
   <string name="action_upgrade">Sblocca tutte le funzionalità</string>
   <string name="billing_action_subscribe">Abbonati</string>

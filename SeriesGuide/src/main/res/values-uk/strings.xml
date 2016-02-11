@@ -37,7 +37,7 @@
   <string name="norating">Немає даних</string>
   <string name="unknown">Невідомо</string>
   <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
-  <string name="app_not_available">Немає доступних програм, щоб впоратися з цим.</string>
+  <string name="app_not_available">Немає доступних застосунків для виконання даної операції.</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
   <string name="database_error">Не вдалося змінити дані.</string>
   <string name="share">Поділитись</string>
@@ -50,10 +50,15 @@
   <string name="comments">Коментарі</string>
   <string name="shout_hint">Введіть свій коментар (англійською, більше 5 слів)</string>
   <string name="shout_invalid">Ваш коментар не відповідає вимогам!</string>
-  <string name="shout">Відгук!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Увага спойлер!</string>
   <string name="no_shouts">Залиште відгук першим!</string>
   <string name="refresh">Оновити</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">Загалом</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата виходу</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
   <string name="pref_infinite_scrolling">Вічний календар</string>
-  <string name="update_scheduled">Оновлюється…</string>
+  <string name="update_scheduled">Оновлюється&#8230;</string>
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
   <string name="season_watchcount">серій не переглянуто</string>
@@ -183,8 +188,8 @@
   <string name="movie_cast">У ролях</string>
   <string name="movie_crew">Знімальна група</string>
   <string name="action_movies_sort">Сортувати фільми</string>
-  <string name="action_movies_sort_title">Назва</string>
-  <string name="action_movies_sort_release">Дата релізу</string>
+  <string name="action_movies_sort_title">Назвою</string>
+  <string name="action_movies_sort_release">Дата виходу</string>
   <string name="statistics_shows">Серіали (-ів)</string>
   <string name="statistics_episodes">Серії</string>
   <string name="statistics_movies">Фільми (-ів)</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s в списку спостереження</string>
   <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
   <plurals name="days_plural">
-        <item quantity="one">%d день</item>
-        <item quantity="zero">%d днів</item>
-        <item quantity="two">%d днів</item>
-        <item quantity="few">%d днів</item>
-        <item quantity="many">%d днів</item>
-        <item quantity="other">%d днів</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d годин</item>
-        <item quantity="one">%d година</item>
-        <item quantity="two">%d години</item>
-        <item quantity="few">%d годин</item>
-        <item quantity="many">%d годин</item>
-        <item quantity="other">%d годин</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d хвилин</item>
-        <item quantity="one">%d хвилина</item>
-        <item quantity="two">%d хвилини</item>
-        <item quantity="few">%d хвилин</item>
-        <item quantity="many">%d хвилин</item>
-        <item quantity="other">%d хвилин</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
   <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>
   <string name="username">Ім\'я користувача</string>
-  <string name="waitplease">Зачекайте хвилинку…</string>
+  <string name="waitplease">Зачекайте хвилинку&#8230;</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="use_integrated_browser">Використовувати вбудований браузер</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Дуже добре</string>
   <string name="rating9">Прекрасно</string>
   <plurals name="votes">
-        <item quantity="zero">%d голосів</item>
-        <item quantity="one">%d голос</item>
-        <item quantity="two">%d голоси</item>
-        <item quantity="few">%d голосів</item>
-        <item quantity="many">%d голосів</item>
-        <item quantity="other">%d голосів</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Зареєструвати</string>
   <string name="checkin_hint">Введіть повідомлення (необов\'язково)</string>
   <string name="paste_title">Вставити заголовок</string>
@@ -302,19 +295,19 @@
   <string name="pref_onlyseasoneps">Приховати спец. епізоди</string>
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
   <string name="pref_exactdates">Відображати точні дати</string>
-  <string name="pref_exactdates_summary">\"31 жовтня\" замість \"Через 3 дні\"</string>
-  <string name="pref_seasonsorting">Сортувати сезони за…</string>
-  <string name="pref_episodesorting">Сортувати серії за…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Сортувати сезони за&#8230;</string>
+  <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
   <string name="pref_language">Бажана мова контенту</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">Щоб знизити витрати через мобільного оператора, не завантажуйте через мобільні мережі</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Про SeriesGuide</string>
   <string name="pref_traktsummary">Додайте або змініть ваш обліковий запис на trakt.tv</string>
   <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
   <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
-  <string name="licence_tvdb">Це додаток використовує дані та зображення через TheTVDB за ліцензією CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
-  <string name="licence_trakt">Ця програма використовує дані та зображення сервісу trakt.</string>
+  <string name="licence_trakt">Ця програма використовує дані та зображення сервіса trakt.</string>
   <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
   <string name="licences_and_credits">Ліцензії та кредити</string>
   <string name="sort">Сортувати за</string>
@@ -355,10 +348,10 @@
   <string name="backup_path">Папка Бекапа</string>
   <string name="backup_version">Версія бази даних</string>
   <string name="backup_failed_file_access">Не можливо створити резервну копію. Файл бекапу не знайдено або немає доступу.</string>
-  <string name="backup_inprogress">Резервне копіювання бази даних…</string>
+  <string name="backup_inprogress">Резервне копіювання бази даних&#8230;</string>
   <string name="backup_success">Резервне копіювання пройшло успішно.</string>
   <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>
-  <string name="import_inprogress">Відновлення бази даних…</string>
+  <string name="import_inprogress">Відновлення бази даних&#8230;</string>
   <string name="import_failed_nosd">Не можливо відновити резервну копію. Папка Бекапу недоступна.</string>
   <string name="import_failed_nofile">Відсутній читабельний файл Бекапу.</string>
   <string name="import_failed_noread">Файл резервної копії не можна прочитати.</string>

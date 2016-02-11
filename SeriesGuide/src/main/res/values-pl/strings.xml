@@ -50,10 +50,15 @@
   <string name="comments">Komentarze</string>
   <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
   <string name="shout_invalid">Twój komentarz nie jest zgodny z zasadami!</string>
-  <string name="shout">Krzyk!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
   <string name="refresh">Odśwież</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">Nr w całym serialu</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data premiery</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
   <string name="pref_infinite_scrolling">Przewijaj kalendarz</string>
-  <string name="update_scheduled">Aktualizowanie…</string>
+  <string name="update_scheduled">Aktualizowanie&#8230;</string>
   <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <string name="season_watchcount">nieobejrzanych</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s na liście oglądanych</string>
   <string name="runtime_movies_watchlist">Czas wyświetlania obejrzanych filmów</string>
   <plurals name="days_plural">
-        <item quantity="one">%d dzień</item>
-        <item quantity="zero">%d dni</item>
-        <item quantity="two">%d dni</item>
-        <item quantity="few">%d dni</item>
-        <item quantity="many">%d dni</item>
-        <item quantity="other">%d dni</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d godzin</item>
-        <item quantity="one">%d godziny</item>
-        <item quantity="two">%d godziny</item>
-        <item quantity="few">%d godziny</item>
-        <item quantity="many">%d godzin</item>
-        <item quantity="other">%d godzin</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minut</item>
-        <item quantity="one">%d minuta</item>
-        <item quantity="two">%d minuty</item>
-        <item quantity="few">%d minuty</item>
-        <item quantity="many">%d minut</item>
-        <item quantity="other">%d minut</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
   <string name="trakt_reconnect_details">Sprawdź swoje poświadczenia trakt</string>
   <string name="username">Nazwa użytkownika</string>
-  <string name="waitplease">Proszę czekać…</string>
+  <string name="waitplease">Proszę czekać&#8230;</string>
   <string name="connect">Połącz</string>
   <string name="disconnect">Rozłącz</string>
   <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
@@ -279,18 +275,15 @@
   <string name="rating8">Świetny</string>
   <string name="rating9">Niesamowity</string>
   <plurals name="votes">
-        <item quantity="zero">%d głosów</item>
-        <item quantity="one">głosy: %d</item>
-        <item quantity="two">%d głosy</item>
-        <item quantity="few">%d głosów</item>
-        <item quantity="many">%d głosów</item>
-        <item quantity="other">głosów: %d</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Oglądam</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_title">Wklej tytuł</string>
-  <string name="pref_quick_checkin">Szybkie ustawianie opcji "oglądam"</string>
-  <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego "oglądam"</string>
+  <string name="pref_quick_checkin">Szybkie ustawianie opcji \"oglądam\"</string>
+  <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego \"oglądam\"</string>
   <string name="feedback">Wyślij opinię</string>
   <string name="action_open_in_browser">Otwórz w przeglądarce</string>
   <string name="prefs_category_basic">Podstawowe</string>
@@ -302,7 +295,7 @@
   <string name="pref_onlyseasoneps">Ukryj odcinki specjalne</string>
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_exactdates">Wyświetlaj dokładne daty</string>
-  <string name="pref_exactdates_summary">\"31 Październik\" zamiast \"za 3 dni\"</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
   <string name="pref_language">Preferowany język zawartości</string>
@@ -355,11 +348,11 @@
   <string name="backup_path">Folder kopii zapasowej</string>
   <string name="backup_version">Wersja bazy danych</string>
   <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
-  <string name="backup_inprogress">Tworzenie kopii bazy…</string>
+  <string name="backup_inprogress">Tworzenie kopii bazy&#8230;</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
-  <string name="import_inprogress">Przywracanie bazy…</string>
-  <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Wskazany folder jest niedostępny.</string>
+  <string name="import_inprogress">Przywracanie bazy&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Brak odczytywalnego pliku archiwum.</string>
   <string name="import_failed_noread">Plik archiwum jest nieodczytywalny.</string>
   <string name="dbupgradefailed">Kopia zapasowa jest za stara lub pusta. Uwaga: najpierw zaimportuj archiwa wersji przed 2.0 w wersji 1.9.x.</string>

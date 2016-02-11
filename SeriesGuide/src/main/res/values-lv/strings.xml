@@ -37,7 +37,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">nezināms</string>
   <string name="offline">Lūdzu pievienojies internetam, un tad mēģini vēlreiz.</string>
-  <string name="app_not_available">Nav aplikācijas, lai to izdarītu.</string>
+  <string name="app_not_available">Nav pieejama aplikācija, lai šo izdarītu.</string>
   <string name="people_empty">Neviena te nav?! Pieskaries lai mēģinātu vēlreiz.</string>
   <string name="database_error">Could not modify data.</string>
   <string name="share">Dalīties</string>
@@ -50,10 +50,15 @@
   <string name="comments">Komentāri</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
   <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="shout">Kliedz!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Spoileru brīdinājums!</string>
   <string name="no_shouts">Esi pirmais, kas kliedz!</string>
   <string name="refresh">Atsvaidzināt</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="zero">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLŪTAIS</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Raidīšanas datums</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Nav nesenu epizožu.</string>
   <string name="only_favorites">Tikai izlases seriāli</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
-  <string name="update_scheduled">Notiek atjaunināšana…</string>
+  <string name="update_scheduled">Notiek atjaunināšana&#8230;</string>
   <string name="update_no_connection">Lai atjaunināt, pieslēdzieties internetam.</string>
   <string name="update_inprogress">Notiek atjaunināšana, mēģiniet vēlreiz vēlāk.</string>
   <string name="season_watchcount">Nenoskatītās epizodes</string>
@@ -171,7 +176,7 @@
   <string name="action_lists_sort">Sort lists</string>
   <string name="action_lists_reorder">Reorder lists</string>
   <string name="movies_collection">Kolekcija</string>
-  <string name="movies_watchlist">Skatāmās filmas</string>
+  <string name="movies_watchlist">Redzamo filmu saraksts</string>
   <string name="watchlist_add">Pievienot uzraugāmo sarakstam</string>
   <string name="watchlist_remove">Noņemt no uzraugāmo saraksta</string>
   <string name="watchlist_added">Pievienots uzraugāmo sarakstam</string>
@@ -184,7 +189,7 @@
   <string name="movie_crew">Komanda</string>
   <string name="action_movies_sort">Kārtot filmas</string>
   <string name="action_movies_sort_title">Nosaukums</string>
-  <string name="action_movies_sort_release">Izlaišanas datums</string>
+  <string name="action_movies_sort_release">Raidīšanas datums</string>
   <string name="statistics_shows">Šovi</string>
   <string name="statistics_episodes">Epizodes</string>
   <string name="statistics_movies">Filmas</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s vočlistā</string>
   <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
-        <item quantity="one">%d diena</item>
-        <item quantity="zero">%d dienas</item>
-        <item quantity="two">%d dienas</item>
-        <item quantity="few">%d dienas</item>
-        <item quantity="many">%d dienas</item>
-        <item quantity="other">%d dienas</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d stundas</item>
-        <item quantity="one">%d stunda</item>
-        <item quantity="two">%d stundas</item>
-        <item quantity="few">%d stundas</item>
-        <item quantity="many">%d stundas</item>
-        <item quantity="other">%d stundas</item>
-    </plurals>
+    <item quantity="zero">%d hours</item>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minūtes</item>
-        <item quantity="one">%d minūte</item>
-        <item quantity="two">%d minūtes</item>
-        <item quantity="few">%d minūtes</item>
-        <item quantity="many">%d minūtes</item>
-        <item quantity="other">%d minūtes</item>
-    </plurals>
+    <item quantity="zero">%d minutes</item>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Lieliska</string>
   <string name="rating9">Superīga</string>
   <plurals name="votes">
-        <item quantity="zero">%d balsis</item>
-        <item quantity="one">%d balss</item>
-        <item quantity="two">%d balsis</item>
-        <item quantity="few">%d balsu</item>
-        <item quantity="many">%d balsis</item>
-        <item quantity="other">%d balsis</item>
-    </plurals>
+    <item quantity="zero">%d votes</item>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Iečekot</string>
   <string name="checkin_hint">Ierakstīt ziņu (opcionāli)</string>
   <string name="paste_title">Iekopēt nosaukumu</string>
@@ -307,7 +300,7 @@
   <string name="pref_episodesorting">Kārtot epizodes pēc...</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
-  <string name="pref_updatewifionlysummary">Lai samazinātu operatoru datu pieprasījumus, nelejuplādēt izmantojot mobilos intertīklus</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Par SeriesGuide</string>
   <string name="pref_traktsummary">Pievieno vai rediģē savu trakt informāciju</string>
   <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
@@ -355,11 +348,11 @@
   <string name="backup_path">Dublējuma mape</string>
   <string name="backup_version">Datu bāzes versija</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Notiek datu bāzes dublēšana…</string>
+  <string name="backup_inprogress">Notiek datu bāzes dublēšana&#8230;</string>
   <string name="backup_success">Dublēšana izdevās.</string>
   <string name="backup_failed">Dublēšana neizdevās.</string>
-  <string name="import_inprogress">Atjauno datu bāzi…</string>
-  <string name="import_failed_nosd">Nevar atjaunot no dublējuma. Dublējuma mape nav pieejama.</string>
+  <string name="import_inprogress">Atjauno datu bāzi&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Nav lasāma dublējuma faila.</string>
   <string name="import_failed_noread">Dublējuma fails nav lasāms.</string>
   <string name="dbupgradefailed">Jūsu dublējums var būt tukšs vai pārāk vecs. Piezīme: Importējiet dublējumus no versijām pirms 2.0 vispirms aplikācijas 1.9.x versijā.</string>

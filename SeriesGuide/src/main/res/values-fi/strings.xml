@@ -50,10 +50,14 @@
   <string name="comments">Kommentit</string>
   <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
   <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
-  <string name="shout">Huudahda!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
   <string name="refresh">Päivitä</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">TODELLINEN</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Julkaisupäivä</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
   <string name="pref_infinite_scrolling">Päättymätön kalenteri</string>
-  <string name="update_scheduled">Päivitetään…</string>
+  <string name="update_scheduled">Päivitetään&#8230;</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s seurantalistalla</string>
   <string name="runtime_movies_watchlist">seurantalistan elokuvien kesto</string>
   <plurals name="days_plural">
-        <item quantity="one">%d päivä</item>
-        <item quantity="zero">%d päivää</item>
-        <item quantity="two">%d päivää</item>
-        <item quantity="few">%d päivää</item>
-        <item quantity="many">%d päivää</item>
-        <item quantity="other">%d päivää</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d tuntia</item>
-        <item quantity="one">%d tunti</item>
-        <item quantity="two">%d tuntia</item>
-        <item quantity="few">%d tuntia</item>
-        <item quantity="many">%d tuntia</item>
-        <item quantity="other">%d tuntia</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d minuuttia</item>
-        <item quantity="one">%d minuutti</item>
-        <item quantity="two">%d minuuttia</item>
-        <item quantity="few">%d minuuttia</item>
-        <item quantity="many">%d minuuttia</item>
-        <item quantity="other">%d minuuttia</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Yhdistä SeriesGuide traktiin</string>
   <string name="trakt_reconnect_details">Tarkista trakt-käyttäjätietosi</string>
   <string name="username">Käyttäjänimi</string>
-  <string name="waitplease">Odota hetki pieni…</string>
+  <string name="waitplease">Odota hetki pieni&#8230;</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
   <string name="use_integrated_browser">Käytä integroitua selainta</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Upea</string>
   <string name="rating9">Loistava</string>
   <plurals name="votes">
-        <item quantity="zero">%d ääntä</item>
-        <item quantity="one">%d ääni</item>
-        <item quantity="two">%d ääntä</item>
-        <item quantity="few">%d ääntä</item>
-        <item quantity="many">%d ääntä</item>
-        <item quantity="other">%d ääntä</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Kuittaa</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_title">Liitä nimi</string>
@@ -302,12 +290,12 @@
   <string name="pref_onlyseasoneps">Piilota erikoisjaksot</string>
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
   <string name="pref_exactdates">Tarkat päivämäärät</string>
-  <string name="pref_exactdates_summary">\"31. lokakuuta\" sen sijaan kuin \"3 päivän kuluttua\"</string>
-  <string name="pref_seasonsorting">Lajittele kaudet…</string>
-  <string name="pref_episodesorting">Lajittele jaksot…</string>
+  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_seasonsorting">Lajittele kaudet&#8230;</string>
+  <string name="pref_episodesorting">Lajittele jaksot&#8230;</string>
   <string name="pref_language">Ensisijainen sisällön kieli</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
-  <string name="pref_updatewifionlysummary">Pienentääksesi operaattorin datamaksuja, älä lataa mobiiliverkon kautta</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt-käyttäjätietojasi</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Varmuuskopiokansio</string>
   <string name="backup_version">Tietokannan versio</string>
   <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>
-  <string name="backup_inprogress">Varmuuskopioidaan tietokantaa…</string>
+  <string name="backup_inprogress">Varmuuskopioidaan tietokantaa&#8230;</string>
   <string name="backup_success">Varmuuskopiointi onnistui.</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
-  <string name="import_inprogress">Palautetaan tietokantaa…</string>
+  <string name="import_inprogress">Palautetaan tietokantaa&#8230;</string>
   <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
   <string name="import_failed_nofile">Ei ole luettavaa varmuuskopiotiedostoa.</string>
   <string name="import_failed_noread">Varmuuskopiotiedostoa ei voi lukea.</string>

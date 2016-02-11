@@ -50,10 +50,14 @@
   <string name="comments">Коментари</string>
   <string name="shout_hint">Въведете коментар (английски, 5 + думи)</string>
   <string name="shout_invalid">Вашият коментар не е по правилата!</string>
-  <string name="shout">Мнение!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Предупреждение за издаване!</string>
   <string name="no_shouts">Напишете мнение пръв!</string>
   <string name="refresh">Опресни</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">ПОРЕДЕН</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата на издаване</string>
@@ -171,7 +175,7 @@
   <string name="action_lists_sort">Сортиране на списъци</string>
   <string name="action_lists_reorder">Преподреждане на списъци</string>
   <string name="movies_collection">Колекция</string>
-  <string name="movies_watchlist">Watchlist</string>
+  <string name="movies_watchlist">Списък за гледане</string>
   <string name="watchlist_add">Добави към списъка за гледане</string>
   <string name="watchlist_remove">Премахни от списъка за гледане</string>
   <string name="watchlist_added">Добавено към списъка за гледане</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s в плейлистата</string>
   <string name="runtime_movies_watchlist">Обща продължителност на гледаните филми</string>
   <plurals name="days_plural">
-        <item quantity="one">%d ден</item>
-        <item quantity="zero">%d дни</item>
-        <item quantity="two">%d дни</item>
-        <item quantity="few">%d дни</item>
-        <item quantity="many">%d дни</item>
-        <item quantity="other">%d дни</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d часа</item>
-        <item quantity="one">%d час</item>
-        <item quantity="two">%d часа</item>
-        <item quantity="few">%d часа</item>
-        <item quantity="many">%d часа</item>
-        <item quantity="other">%d часа</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d минути</item>
-        <item quantity="one">%d минута</item>
-        <item quantity="two">%d минути</item>
-        <item quantity="few">%d минути</item>
-        <item quantity="many">%d минути</item>
-        <item quantity="other">%d минути</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
@@ -245,7 +237,7 @@
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
   <string name="traktcheckin_cancel">Замени</string>
   <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
-  <string name="traktcheckin_wait">Ще изчакам</string>
+  <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Страхотен</string>
   <string name="rating9">Превъзходен</string>
   <plurals name="votes">
-        <item quantity="zero">%d гласа</item>
-        <item quantity="one">%d оценка</item>
-        <item quantity="two">%d гласа</item>
-        <item quantity="few">%d гласа</item>
-        <item quantity="many">%d гласове</item>
-        <item quantity="other">%d оценки</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Гледано</string>
   <string name="checkin_hint">Напиши съобщение (по избор)</string>
   <string name="paste_title">Поставете заглавие</string>
@@ -303,11 +291,11 @@
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Сортирай сезоните по…</string>
-  <string name="pref_episodesorting">Сортирай епизодите по…</string>
+  <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
+  <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Относно SeriesGuide</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt</string>
   <string name="pref_autoaddshows">Добавяне на нови trakt сериали</string>
@@ -355,11 +343,11 @@
   <string name="backup_path">Папка за архивиране</string>
   <string name="backup_version">Версията на базата данни</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Архивиране на базата данни…</string>
+  <string name="backup_inprogress">Архивиране на базата данни&#8230;</string>
   <string name="backup_success">Архивирането приключи успешно.</string>
   <string name="backup_failed">Архивирането не беше успешно.</string>
-  <string name="import_inprogress">Възстановяване на базата от данни…</string>
-  <string name="import_failed_nosd">Не може да се възстанови архив. Папката за архивиране не е налична.</string>
+  <string name="import_inprogress">Възстановяване на базата от данни&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Няма архивен файл.</string>
   <string name="import_failed_noread">Архивният файл не се чете.</string>
   <string name="dbupgradefailed">Вашият архив може би е твърде стар или празен. Забележка: Първо, внесете архиви с версия по-малка от 2.0 във 1.9.х версия.</string>

@@ -50,10 +50,15 @@
   <string name="comments">Коментари</string>
   <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>
   <string name="shout_invalid">Ваш коментар није по правилима!</string>
-  <string name="shout">Коментариши!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Пажња, Спојлер!</string>
   <string name="no_shouts">Буди први који ће коментарисати!</string>
   <string name="refresh">Освежи</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">АПСОЛУТНО</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Датум емитовања</string>
@@ -135,7 +140,7 @@
   <string name="norecent">Нема скорашњих епизода.</string>
   <string name="only_favorites">Само омиљене серије</string>
   <string name="pref_infinite_scrolling">Календар</string>
-  <string name="update_scheduled">Ажурирање…</string>
+  <string name="update_scheduled">Ажурирање&#8230;</string>
   <string name="update_no_connection">Да би сте освежили повежите се на интернет.</string>
   <string name="update_inprogress">Ажурирање је у току, покушајте поново касније.</string>
   <string name="season_watchcount">неодгледаних епизода</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s у листи</string>
   <string name="runtime_movies_watchlist">Трајање филмова у листи</string>
   <plurals name="days_plural">
-        <item quantity="one">%d дан</item>
-        <item quantity="zero">%d дана</item>
-        <item quantity="two">%d дана</item>
-        <item quantity="few">%d дана</item>
-        <item quantity="many">%d дана</item>
-        <item quantity="other">%d дана</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d сати</item>
-        <item quantity="one">%d сат</item>
-        <item quantity="two">%d сати</item>
-        <item quantity="few">%d сати</item>
-        <item quantity="many">%d сати</item>
-        <item quantity="other">%d сати</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d минута</item>
-        <item quantity="one">%d минут</item>
-        <item quantity="two">%d минута</item>
-        <item quantity="few">%d минута</item>
-        <item quantity="many">%d минута</item>
-        <item quantity="other">%d минута</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Cloud сервис</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">Корисничко име</string>
-  <string name="waitplease">Тренутак, молим…</string>
+  <string name="waitplease">Тренутак, молим&#8230;</string>
   <string name="connect">Повежи</string>
   <string name="disconnect">Прекини везу</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Одлично</string>
   <string name="rating9">Фантастично</string>
   <plurals name="votes">
-        <item quantity="zero">%d гласова</item>
-        <item quantity="one">%d глас</item>
-        <item quantity="two">%d гласова</item>
-        <item quantity="few">%d гласова</item>
-        <item quantity="many">%d гласова</item>
-        <item quantity="other">%d гласова</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Пријави гледање</string>
   <string name="checkin_hint">Унеси поруку (по избору)</string>
   <string name="paste_title">Налепи наслов</string>
@@ -303,11 +296,11 @@
   <string name="pref_onlyseasonepssummary">Специјалне епизоде ће бити видљиве само у списку сезона</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Поређај сезоне по…</string>
-  <string name="pref_episodesorting">Поређај епизоде по…</string>
+  <string name="pref_seasonsorting">Поређај сезоне по&#8230;</string>
+  <string name="pref_episodesorting">Поређај епизоде по&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>
-  <string name="pref_updatewifionlysummary">Да би сте смањили рачун, немојте учитавати слике док користите мобилну мрежу</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">О SeriesGuide-у</string>
   <string name="pref_traktsummary">Додај или измени своје trakt.tv податке</string>
   <string name="pref_autoaddshows">Додај нове серије тракта</string>
@@ -355,11 +348,11 @@
   <string name="backup_path">Фасцикла за архивирање</string>
   <string name="backup_version">Верзија базе података</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Архивирање базе података…</string>
+  <string name="backup_inprogress">Архивирање базе података&#8230;</string>
   <string name="backup_success">Архивирање успешно.</string>
   <string name="backup_failed">Архивирање неуспешно.</string>
-  <string name="import_inprogress">Обнављање архивиране базе података…</string>
-  <string name="import_failed_nosd">Враћање архиве неуспешно. Потребна фасцикла за ту радњу није доступна.</string>
+  <string name="import_inprogress">Обнављање архивиране базе података&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Не постоји читљива датотека за повраћај података.</string>
   <string name="import_failed_noread">Архивска датотека је оштећена.</string>
   <string name="dbupgradefailed">Архивирана ставка је, или стара или празна. Опаска: Архиве прво увезите у верзију 1.9.x. а затим у верзију 2.0.</string>

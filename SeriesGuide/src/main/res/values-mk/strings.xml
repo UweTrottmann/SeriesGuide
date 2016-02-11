@@ -50,10 +50,14 @@
   <string name="comments">Коментари</string>
   <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
   <string name="shout_invalid">Вашиот коментар не е по правилата!</string>
-  <string name="shout">Коментар!</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Предупредување спојлер!</string>
   <string name="no_shouts">Биди прв кој ќе коментира!</string>
   <string name="refresh">Освежи</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">АПСОЛУТНО</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Датум на емитување</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Нема скорешни епизоди.</string>
   <string name="only_favorites">Само омилени серии</string>
   <string name="pref_infinite_scrolling">Бесконечни календар</string>
-  <string name="update_scheduled">Ажурирање…</string>
+  <string name="update_scheduled">Ажурирање&#8230;</string>
   <string name="update_no_connection">За да ажурираш конектирај се на интернет.</string>
   <string name="update_inprogress">Ажурирањето е во прогрес, пробајте подоцна.</string>
   <string name="season_watchcount">негледани епизоди</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s во листа за гледање</string>
   <string name="runtime_movies_watchlist">Траење на филмови во листа</string>
   <plurals name="days_plural">
-        <item quantity="one">%d ден</item>
-        <item quantity="zero">%d денови</item>
-        <item quantity="two">%d денови</item>
-        <item quantity="few">%d денови</item>
-        <item quantity="many">%d денови</item>
-        <item quantity="other">%d денови</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d часа</item>
-        <item quantity="one">%d час</item>
-        <item quantity="two">%d часа</item>
-        <item quantity="few">%d часа</item>
-        <item quantity="many">%d часа</item>
-        <item quantity="other">%d часа</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d минути</item>
-        <item quantity="one">%d минути</item>
-        <item quantity="two">%d минути</item>
-        <item quantity="few">%d минути</item>
-        <item quantity="many">%d минути</item>
-        <item quantity="other">%d минути</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Cloud</string>
   <string name="hexagon_description">Поврзете се на cloud за да направите backup и синхронизирање на вашите серии и филмови.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">Конектирај SeriesGuide со trakt</string>
   <string name="trakt_reconnect_details">Провери го trakt профилот</string>
   <string name="username">Корисничко име</string>
-  <string name="waitplease">Момент, Ве молиме…</string>
+  <string name="waitplease">Момент, Ве молиме&#8230;</string>
   <string name="connect">Конектирај</string>
   <string name="disconnect">Исклучи</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Одлично</string>
   <string name="rating9">Фантастично</string>
   <plurals name="votes">
-        <item quantity="zero">%d гласа</item>
-        <item quantity="one">%d оценка</item>
-        <item quantity="two">%d гласа</item>
-        <item quantity="few">%d гласа</item>
-        <item quantity="many">%d гласови</item>
-        <item quantity="other">%d оценки</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Пријави гледање</string>
   <string name="checkin_hint">Напиши порака (опционално)</string>
   <string name="paste_title">Залепи наслов</string>
@@ -303,11 +291,11 @@
   <string name="pref_onlyseasonepssummary">Специјалните епизоди исчезнаа од секаде освен од листата со сезони</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">Сортирај сезоните по…</string>
-  <string name="pref_episodesorting">Сортирај по епизоди…</string>
+  <string name="pref_seasonsorting">Сортирај сезоните по&#8230;</string>
+  <string name="pref_episodesorting">Сортирај по епизоди&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Слики од Wi-Fi само</string>
-  <string name="pref_updatewifionlysummary">Да ги намали потрошувачката на интернет, не симнувајте преку мобилен или преку мрежи кој се наплаќаат</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">За SeriesGuide</string>
   <string name="pref_traktsummary">Додади или едитирај го вашиот trakt профил</string>
   <string name="pref_autoaddshows">Добавање на нови trakt серии</string>
@@ -355,11 +343,11 @@
   <string name="backup_path">Фолдер за архивирање</string>
   <string name="backup_version">Верзија на базата на податоци</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Сочување на базата со податоци…</string>
+  <string name="backup_inprogress">Сочување на базата со податоци&#8230;</string>
   <string name="backup_success">Backup заврши успешно.</string>
   <string name="backup_failed">Архивирањето не беше успешно.</string>
-  <string name="import_inprogress">Обнова на базата со податоци…</string>
-  <string name="import_failed_nosd">Backup неможе да биде обновен. Backup фолдерот не е достапен.</string>
+  <string name="import_inprogress">Обнова на базата со податоци&#8230;</string>
+  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Не постои backup фајл кој може да се прочита.</string>
   <string name="import_failed_noread">Backup фајлот неможе да се прочита.</string>
   <string name="dbupgradefailed">Вашата backup верзија може да е премногу стара или празна. Забелешка:: Import pre-2.0 backups in a 1.9.x version first.</string>
@@ -412,7 +400,7 @@
   <string name="widget_background_opaque">Видливо</string>
   <string name="dashclock_extension_label">Предстојни епизоди</string>
   <string name="dashclock_extension_description">Ги прикажува следните претстојни епизоди од вашите SeriesGuide серии.</string>
-  <string name="dashclock_pref_upcoming_threshold">Пријажи епизоди помеѓу…</string>
+  <string name="dashclock_pref_upcoming_threshold">Пријажи епизоди помеѓу&#8230;</string>
   <string name="onlyx">Само за подржувачите</string>
   <string name="action_upgrade">Отклучи ги сите нови функционалност</string>
   <string name="billing_action_subscribe">Претплати се</string>

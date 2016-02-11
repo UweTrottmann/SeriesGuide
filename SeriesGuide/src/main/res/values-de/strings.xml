@@ -50,10 +50,14 @@
   <string name="comments">Kommentare</string>
   <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>
   <string name="shout_invalid">Ihr Kommentar hält sich nicht an die Regeln!</string>
-  <string name="shout">Shout!</string>
+  <string name="action_post">Posten</string>
   <string name="isspoiler">Spoiler-Warnung!</string>
   <string name="no_shouts">Schreibe den ersten Shout!</string>
   <string name="refresh">Aktualisieren</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d Antwort</item>
+    <item quantity="other">%d Antworten</item>
+  </plurals>
   <string name="episode_number_absolute">ABSOLUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Erscheinungsdatum</string>
@@ -135,7 +139,7 @@
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
   <string name="only_favorites">Nur Serien-Favoriten</string>
   <string name="pref_infinite_scrolling">Endloser Kalender</string>
-  <string name="update_scheduled">Aktualisiert…</string>
+  <string name="update_scheduled">Aktualisiert&#8230;</string>
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
   <string name="season_watchcount">ungesehene Folgen</string>
@@ -171,7 +175,7 @@
   <string name="action_lists_sort">Listen sortieren</string>
   <string name="action_lists_reorder">Listen anordnen</string>
   <string name="movies_collection">Sammlung</string>
-  <string name="movies_watchlist">Ansehen</string>
+  <string name="movies_watchlist">Ansehen-Liste</string>
   <string name="watchlist_add">Zur Ansehen-Liste hinzufügen</string>
   <string name="watchlist_remove">Aus Ansehen-Liste entfernen</string>
   <string name="watchlist_added">Zur Ansehen-Liste hinzugefügt</string>
@@ -195,29 +199,17 @@
   <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
   <string name="runtime_movies_watchlist">Laufzeit von Filmen auf der Ansehen-Liste</string>
   <plurals name="days_plural">
-        <item quantity="one">%d Tag</item>
-        <item quantity="zero">%d Tage</item>
-        <item quantity="two">%d Tage</item>
-        <item quantity="few">%d Tage</item>
-        <item quantity="many">%d Tage</item>
-        <item quantity="other">%d Tage</item>
-    </plurals>
+    <item quantity="one">%d Tag</item>
+    <item quantity="other">%d Tage</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d Stunden</item>
-        <item quantity="one">%d Stunde</item>
-        <item quantity="two">%d Stunden</item>
-        <item quantity="few">%d Stunden</item>
-        <item quantity="many">%d Stunden</item>
-        <item quantity="other">%d Stunden</item>
-    </plurals>
+    <item quantity="one">%d Stunde</item>
+    <item quantity="other">%d Stunden</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d Minuten</item>
-        <item quantity="one">%d Minute</item>
-        <item quantity="two">%d Minuten</item>
-        <item quantity="few">%d Minuten</item>
-        <item quantity="many">%d Minuten</item>
-        <item quantity="other">%d Minuten</item>
-    </plurals>
+    <item quantity="one">%d Minute</item>
+    <item quantity="other">%d Minuten</item>
+  </plurals>
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_setup">SeriesGuide Cloud einrichten</string>
   <string name="hexagon_description">Stellen Sie eine Verbindung zur Cloud her um Ihre Serien und Filme zu sichern und zu synchronisieren.</string>
@@ -257,7 +249,7 @@
   <string name="trakt_reconnect">SeriesGuide mit trakt verbinden</string>
   <string name="trakt_reconnect_details">Überprüfen Sie Ihre trakt-Anmeldeinformationen</string>
   <string name="username">Benutzername</string>
-  <string name="waitplease">Einen Augenblick, bitte…</string>
+  <string name="waitplease">Einen Augenblick, bitte&#8230;</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
   <string name="use_integrated_browser">Integrierten Browser verwenden</string>
@@ -279,13 +271,9 @@
   <string name="rating8">Sehr gut</string>
   <string name="rating9">Hervorragend</string>
   <plurals name="votes">
-        <item quantity="zero">%d Stimmen</item>
-        <item quantity="one">%d Stimme</item>
-        <item quantity="two">%d Stimmen</item>
-        <item quantity="few">%d Stimmen</item>
-        <item quantity="many">%d Stimmen</item>
-        <item quantity="other">%d Stimmen</item>
-    </plurals>
+    <item quantity="one">%d Stimme</item>
+    <item quantity="other">%d Stimmen</item>
+  </plurals>
   <string name="checkin">Einchecken</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_title">Titel einfügen</string>
@@ -303,11 +291,11 @@
   <string name="pref_onlyseasonepssummary">Specials verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_exactdates">Genaues Datum anzeigen</string>
   <string name="pref_exactdates_summary">\"31. Oktober\" anstelle von \"in 3 Tagen\"</string>
-  <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
-  <string name="pref_episodesorting">Sortiere Folgen nach…</string>
+  <string name="pref_seasonsorting">Sortiere Staffeln nach&#8230;</string>
+  <string name="pref_episodesorting">Sortiere Folgen nach&#8230;</string>
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
-  <string name="pref_updatewifionlysummary">Downloads über Mobilfunknetze vermeiden, um Kosten für die Datenübertragung zu senken</string>
+  <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
   <string name="about">Über SeriesGuide</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt Anmeldeinformationen</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
@@ -355,10 +343,10 @@
   <string name="backup_path">Sicherungsordner</string>
   <string name="backup_version">Datenbankversion</string>
   <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
-  <string name="backup_inprogress">Sichern der Datenbank…</string>
+  <string name="backup_inprogress">Sichern der Datenbank&#8230;</string>
   <string name="backup_success">Sicherung erfolgreich.</string>
   <string name="backup_failed">Sicherung ist fehlgeschlagen.</string>
-  <string name="import_inprogress">Wiederherstellen der Datenbank…</string>
+  <string name="import_inprogress">Wiederherstellen der Datenbank&#8230;</string>
   <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
   <string name="import_failed_nofile">Keine lesbare Sicherungs-Datei vorhanden.</string>
   <string name="import_failed_noread">Die Sicherungs-Datei ist nicht lesbar.</string>
@@ -412,7 +400,7 @@
   <string name="widget_background_opaque">Undurchsichtig</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb…</string>
+  <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb&#8230;</string>
   <string name="onlyx">Nur für Unterstützer</string>
   <string name="action_upgrade">Alle Funktionen freischalten</string>
   <string name="billing_action_subscribe">Abonnieren</string>

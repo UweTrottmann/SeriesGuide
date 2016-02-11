@@ -37,7 +37,7 @@
   <string name="norating">нет данных</string>
   <string name="unknown">Неизвестно</string>
   <string name="offline">Подключитесь к сети и повторите попытку.</string>
-  <string name="app_not_available">Нет доступного приложения для обработки.</string>
+  <string name="app_not_available">Нет приложения для обработки этой команды.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="database_error">Не получается модифицирофавать данные.</string>
   <string name="share">Отправить</string>
@@ -50,10 +50,15 @@
   <string name="comments">Комментарии</string>
   <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
   <string name="shout_invalid">Ваш комментарий не соответствует правилам! </string>
-  <string name="shout">Отзыв</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">Спойлеры</string>
   <string name="no_shouts">Оставьте отзыв первым!</string>
   <string name="refresh">Обновить</string>
+  <plurals name="replies_plural">
+    <item quantity="one">%d reply</item>
+    <item quantity="few">%d replies</item>
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">НОМЕР</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата выпуска</string>
@@ -110,7 +115,7 @@
   <string name="empty_filter">Очистить фильтры</string>
   <string name="action_shows_filter_favorites">Избранное</string>
   <string name="action_shows_filter_unwatched">Непросмотренные</string>
-  <string name="action_shows_filter_upcoming">Скоро</string>
+  <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
   <string name="action_shows_filter_hidden">Скрытые</string>
   <string name="action_shows_sort">Сортировать сериалы</string>
   <string name="action_shows_sort_title">Название</string>
@@ -184,7 +189,7 @@
   <string name="movie_crew">Съёмочная группа</string>
   <string name="action_movies_sort">Сортировать фильмы</string>
   <string name="action_movies_sort_title">Название</string>
-  <string name="action_movies_sort_release">Дата выхода</string>
+  <string name="action_movies_sort_release">Дата выпуска</string>
   <string name="statistics_shows">Сериалы</string>
   <string name="statistics_episodes">Эпизоды</string>
   <string name="statistics_movies">Фильмы</string>
@@ -195,29 +200,20 @@
   <string name="movies_on_watchlist">%s в списке просмотра</string>
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
-        <item quantity="one">%d день</item>
-        <item quantity="zero">%d дней</item>
-        <item quantity="two">%d дней</item>
-        <item quantity="few">%d дней</item>
-        <item quantity="many">%d дней</item>
-        <item quantity="other">%d дней</item>
-    </plurals>
+    <item quantity="one">%d day</item>
+    <item quantity="few">%d days</item>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d часов</item>
-        <item quantity="one">%d час</item>
-        <item quantity="two">%d часа</item>
-        <item quantity="few">%d часов</item>
-        <item quantity="many">%d часов</item>
-        <item quantity="other">%d часов</item>
-    </plurals>
+    <item quantity="one">%d hour</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d минут</item>
-        <item quantity="one">%d минута</item>
-        <item quantity="two">%d минут</item>
-        <item quantity="few">%d минут</item>
-        <item quantity="many">%d минут</item>
-        <item quantity="other">%d минут</item>
-    </plurals>
+    <item quantity="one">%d minute</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
@@ -257,7 +253,7 @@
   <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
   <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
   <string name="username">Имя пользователя</string>
-  <string name="waitplease">Пожалуйста, подождите…</string>
+  <string name="waitplease">Пожалуйста, подождите&#8230;</string>
   <string name="connect">Подключиться</string>
   <string name="disconnect">Отключиться</string>
   <string name="use_integrated_browser">Использовать встроенный браузер</string>
@@ -279,13 +275,10 @@
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
-        <item quantity="zero">%d голосов</item>
-        <item quantity="one">%d голоса</item>
-        <item quantity="two">%d голосов</item>
-        <item quantity="few">%d голосов</item>
-        <item quantity="many">%d голосов</item>
-        <item quantity="other">%d голосов</item>
-    </plurals>
+    <item quantity="one">%d vote</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">Отметить</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_title">Вставить название</string>
@@ -416,7 +409,7 @@
   <string name="onlyx">Только для пожертвовавших</string>
   <string name="action_upgrade">Разблокировать все возможности</string>
   <string name="billing_action_subscribe">Подписка</string>
-  <string name="billing_action_pass">Получить X ключ</string>
+  <string name="billing_action_pass">Получить X Pass</string>
   <string name="billing_price_subscribe">%s/год, попробуйте бесплатно</string>
   <string name="billing_price_pass">Единоразовая покупка</string>
   <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>

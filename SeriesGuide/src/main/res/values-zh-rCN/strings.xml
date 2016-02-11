@@ -37,7 +37,7 @@
   <string name="norating">无评分</string>
   <string name="unknown">未知</string>
   <string name="offline">请连接到可用网络后重试。</string>
-  <string name="app_not_available">没有相关程序可用。</string>
+  <string name="app_not_available">没有程序可用。</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>
   <string name="database_error">无法修改数据：数据库操作出错。</string>
   <string name="share">分享</string>
@@ -50,10 +50,13 @@
   <string name="comments">评论</string>
   <string name="shout_hint">输入一段评论（仅英语，至少五个单词）</string>
   <string name="shout_invalid">无法提交评论：评论未遵守用户规章。</string>
-  <string name="shout">提交</string>
+  <string name="action_post">Post</string>
   <string name="isspoiler">!!!! 剧透警告 !!!!</string>
   <string name="no_shouts">抢沙发！</string>
   <string name="refresh">重新载入</string>
+  <plurals name="replies_plural">
+    <item quantity="other">%d replies</item>
+  </plurals>
   <string name="episode_number_absolute">总集数</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">首播日期</string>
@@ -110,7 +113,7 @@
   <string name="empty_filter">清除筛选条件</string>
   <string name="action_shows_filter_favorites">已被标记为喜爱</string>
   <string name="action_shows_filter_unwatched">仍有未观看剧集</string>
-  <string name="action_shows_filter_upcoming">将在时限内播出</string>
+  <string name="action_shows_filter_upcoming">即将播出</string>
   <string name="action_shows_filter_hidden">已被标记为隐藏</string>
   <string name="action_shows_sort">重新排序</string>
   <string name="action_shows_sort_title">依据节目名称</string>
@@ -135,7 +138,7 @@
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="only_favorites">仅显示喜爱节目</string>
   <string name="pref_infinite_scrolling">无限的日历</string>
-  <string name="update_scheduled">正在更新…</string>
+  <string name="update_scheduled">正在更新&#8230;</string>
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
   <string name="season_watchcount">剧集尚未观看</string>
@@ -183,8 +186,8 @@
   <string name="movie_cast">演员</string>
   <string name="movie_crew">摄制组</string>
   <string name="action_movies_sort">重新排序</string>
-  <string name="action_movies_sort_title">按名称</string>
-  <string name="action_movies_sort_release">按上映日期</string>
+  <string name="action_movies_sort_title">依据节目名称</string>
+  <string name="action_movies_sort_release">首播日期</string>
   <string name="statistics_shows">电视节目总数</string>
   <string name="statistics_episodes">剧集总数</string>
   <string name="statistics_movies">电影总数</string>
@@ -195,29 +198,14 @@
   <string name="movies_on_watchlist">%s 部待看电影</string>
   <string name="runtime_movies_watchlist">所有待看电影的总时间</string>
   <plurals name="days_plural">
-        <item quantity="one">%d 天</item>
-        <item quantity="zero">%d 天</item>
-        <item quantity="two">%d 天</item>
-        <item quantity="few">%d 天</item>
-        <item quantity="many">%d 天</item>
-        <item quantity="other">%d 天</item>
-    </plurals>
+    <item quantity="other">%d days</item>
+  </plurals>
   <plurals name="hours_plural">
-        <item quantity="zero">%d 小时</item>
-        <item quantity="one">%d 小时</item>
-        <item quantity="two">%d 小时</item>
-        <item quantity="few">%d 小时</item>
-        <item quantity="many">%d 小时</item>
-        <item quantity="other">%d 小时</item>
-    </plurals>
+    <item quantity="other">%d hours</item>
+  </plurals>
   <plurals name="minutes_plural">
-        <item quantity="zero">%d 分钟</item>
-        <item quantity="one">%d 分钟</item>
-        <item quantity="two">%d 分钟</item>
-        <item quantity="few">%d 分钟</item>
-        <item quantity="many">%d 分钟</item>
-        <item quantity="other">%d 分钟</item>
-    </plurals>
+    <item quantity="other">%d minutes</item>
+  </plurals>
   <string name="hexagon_warning">这是一个实验性功能！</string>
   <string name="hexagon_setup">设置 SeriesGuide 云服务</string>
   <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>
@@ -257,7 +245,7 @@
   <string name="trakt_reconnect">关联 SeriesGuide 与 trakt</string>
   <string name="trakt_reconnect_details">请检查 trakt 授权信息。</string>
   <string name="username">用户名</string>
-  <string name="waitplease">请稍等一段时间……</string>
+  <string name="waitplease">请稍等一段时间&#8230;&#8230;</string>
   <string name="connect">关联</string>
   <string name="disconnect">断开</string>
   <string name="use_integrated_browser">使用内置浏览器</string>
@@ -279,13 +267,8 @@
   <string name="rating8">80 - 要表扬</string>
   <string name="rating9">90 - 没缺点</string>
   <plurals name="votes">
-        <item quantity="zero">%d 个评价</item>
-        <item quantity="one">%d 个评价</item>
-        <item quantity="two">%d 个评价</item>
-        <item quantity="few">%d 个评价</item>
-        <item quantity="many">%d 个评价</item>
-        <item quantity="other">%d 个评价</item>
-    </plurals>
+    <item quantity="other">%d votes</item>
+  </plurals>
   <string name="checkin">签到</string>
   <string name="checkin_hint">输入一段文字（可选）</string>
   <string name="paste_title">粘贴名称</string>
@@ -303,11 +286,11 @@
   <string name="pref_onlyseasonepssummary">仅在季列表中显示特别剧集</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_seasonsorting">季排序依据……</string>
-  <string name="pref_episodesorting">集排序依据……</string>
+  <string name="pref_seasonsorting">季排序依据&#8230;&#8230;</string>
+  <string name="pref_episodesorting">集排序依据&#8230;&#8230;</string>
   <string name="pref_language">内容首选的语言</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
-  <string name="pref_updatewifionlysummary">节省移动数据使用量</string>
+  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">SeriesGuide</string>
   <string name="pref_traktsummary">添加或编辑 trakt 帐户信息</string>
   <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
@@ -355,10 +338,10 @@
   <string name="backup_path">备份/还原数据库的路径</string>
   <string name="backup_version">数据库版本</string>
   <string name="backup_failed_file_access">备份失败：不能访问备份文件。</string>
-  <string name="backup_inprogress">正在写入文件……</string>
+  <string name="backup_inprogress">正在写入文件&#8230;&#8230;</string>
   <string name="backup_success">备份成功。</string>
   <string name="backup_failed">备份失败。</string>
-  <string name="import_inprogress">正在还原数据库……</string>
+  <string name="import_inprogress">正在还原数据库&#8230;&#8230;</string>
   <string name="import_failed_nosd">无法还原备份，备份文件夹不可用。</string>
   <string name="import_failed_nofile">没有找到有效备份文件。</string>
   <string name="import_failed_noread">无法读取备份文件。</string>
@@ -412,7 +395,7 @@
   <string name="widget_background_opaque">0%</string>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">显示 SeriesGuide 节目单中即将播出的剧集</string>
-  <string name="dashclock_pref_upcoming_threshold">显示在此时间内播出的剧集…</string>
+  <string name="dashclock_pref_upcoming_threshold">显示在此时间内播出的剧集&#8230;</string>
   <string name="onlyx">仅限完整版</string>
   <string name="action_upgrade">解锁高级功能</string>
   <string name="billing_action_subscribe">订阅</string>
