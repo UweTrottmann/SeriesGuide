@@ -115,7 +115,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
 
         // setup listeners
         boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
-        containerSettings.setVisibility(View.VISIBLE);
+        containerSettings.setVisibility(autoBackupEnabled ? View.VISIBLE : View.GONE);
         switchAutoBackup.setChecked(autoBackupEnabled);
         switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
