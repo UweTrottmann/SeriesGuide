@@ -71,7 +71,8 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/connect" />
+            android:text="@string/connect"
+            android:textColor="?attr/colorAccent"/>
     </LinearLayout>
 
 </LinearLayout>

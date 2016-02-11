@@ -44,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="160dp"
-            tools:text="Button Positive" />
+            tools:text="Button Positive"
+            android:textColor="?attr/colorAccent" />
     </LinearLayout>
 
 </merge>
