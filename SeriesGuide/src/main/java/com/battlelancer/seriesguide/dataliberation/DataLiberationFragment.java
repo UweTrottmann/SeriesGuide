@@ -409,6 +409,6 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         //noinspection deprecation
         textView.setTextAppearance(textView.getContext(),
                 uri == null ? R.style.TextAppearance_Body_Highlight_Red
-                        : R.style.TextAppearance_Body);
+                        : R.style.TextAppearance_Body_Dim);
     }
 }

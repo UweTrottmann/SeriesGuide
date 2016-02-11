@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/inline_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/lists"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -67,7 +67,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/inline_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/movies"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -94,6 +94,7 @@
 
             <Button
                 android:id="@+id/buttonDataLibExport"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/checkBoxDataLibFullDump"
@@ -142,7 +143,7 @@
                     android:id="@+id/checkBoxDataLibLists"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/inline_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/lists"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -162,7 +163,7 @@
                     android:id="@+id/checkBoxDataLibMovies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/inline_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/movies"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -189,6 +190,7 @@
 
             <Button
                 android:id="@+id/buttonDataLibImport"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/checkBoxDataLibImportWarning"

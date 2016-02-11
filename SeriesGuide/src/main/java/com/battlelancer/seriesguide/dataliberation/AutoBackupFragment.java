@@ -65,6 +65,8 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     private static final int REQUEST_CODE_LISTS_EXPORT_URI = 4;
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 5;
 
+    private static final int PATH_TEXT_APPEARANCE = R.style.TextAppearance_Body_Dim;
+
     @Bind(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
     @Bind(R.id.containerAutoBackupSettings) View containerSettings;
     @Bind(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
@@ -376,11 +378,11 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
             String moviesFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
             textMoviesExportFile.setText(moviesFilePath);
             //noinspection deprecation
-            textShowsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textShowsExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             //noinspection deprecation
-            textListsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textListsExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             //noinspection deprecation
-            textMoviesExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textMoviesExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             buttonShowsExportFile.setVisibility(View.GONE);
             buttonListsExportFile.setVisibility(View.GONE);
             buttonMoviesExportFile.setVisibility(View.GONE);
@@ -392,6 +394,6 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         //noinspection deprecation
         textView.setTextAppearance(textView.getContext(),
                 uri == null ? R.style.TextAppearance_Body_Highlight_Red
-                        : R.style.TextAppearance_Body);
+                        : PATH_TEXT_APPEARANCE);
     }
 }
