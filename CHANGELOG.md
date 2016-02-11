@@ -5,6 +5,16 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 29 *(in development)*
+-----------------------------
+
+#### 29-beta1 *(2016-02-11)*
+
+* TWEAK Combined search and "Add show" screen.
+* TWEAK Wider layout for movie details on 10-inch devices in landscape.
+* TWEAK Wide layout for comments on tablets in landscape.
+* FIX Make crashes in Movies section less likely when rotating the screen multiple times.
+
 Version 28 *(2016-02-04)*
 -----------------------------
 
