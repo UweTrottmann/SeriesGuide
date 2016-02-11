@@ -21,6 +21,12 @@
                 android:text="@string/pref_autobackup"
                 android:textAppearance="@style/TextAppearance.Title" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pref_autobackupsummary"
+                android:textAppearance="@style/TextAppearance.Body.Dim"/>
+
             <RelativeLayout
                 android:id="@+id/containerAutoBackupSettings"
                 android:layout_width="match_parent"
