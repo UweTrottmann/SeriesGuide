@@ -50,6 +50,11 @@ font-size:2em;
 margin-top:5px;
 }
 
+.btn-link {
+  color:#6545a0;
+  font-weight:400;
+}
+
 .navbar-brand {
   font-weight:300;
   color: #eee;
