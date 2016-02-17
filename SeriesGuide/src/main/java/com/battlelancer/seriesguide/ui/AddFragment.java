@@ -161,6 +161,7 @@ public abstract class AddFragment extends Fragment {
     /**
      * Called if the user adds a new show through the dialog.
      */
+    @SuppressWarnings("unused")
     public void onEvent(AddShowEvent event) {
         adapter.notifyDataSetChanged();
     }
@@ -169,13 +170,10 @@ public abstract class AddFragment extends Fragment {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
-
-        public AddAdapter(Context context, int layout, List<SearchResult> objects) {
-            super(context, layout, objects);
+        public AddAdapter(Context context, List<SearchResult> objects) {
+            super(context, 0, objects);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
         }
 
         @Override
@@ -183,7 +181,7 @@ public abstract class AddFragment extends Fragment {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(R.layout.item_addshow, parent, false);
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
             } else {

@@ -88,7 +88,7 @@ public class TraktAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
+        adapter = new AddAdapter(getActivity(),
                 new ArrayList<SearchResult>());
 
         // load data

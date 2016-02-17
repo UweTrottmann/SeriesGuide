@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
@@ -135,7 +134,7 @@ public class TvdbAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // create adapter
-        adapter = new AddAdapter(getActivity(), R.layout.item_addshow,
+        adapter = new AddAdapter(getActivity(),
                 new ArrayList<SearchResult>());
 
         // load data
