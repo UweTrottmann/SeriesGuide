@@ -41,7 +41,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         private final String mValue;
 
-        private MediaType(String value) {
+        MediaType(String value) {
             mValue = value;
         }
 
@@ -57,7 +57,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         private final String mValue;
 
-        private PeopleType(String value) {
+        PeopleType(String value) {
             mValue = value;
         }
 

@@ -21,6 +21,6 @@ package com.battlelancer.seriesguide.enums;
  */
 public interface NetworkResult extends Result {
 
-    public int OFFLINE = -2;
+    int OFFLINE = -2;
 
 }

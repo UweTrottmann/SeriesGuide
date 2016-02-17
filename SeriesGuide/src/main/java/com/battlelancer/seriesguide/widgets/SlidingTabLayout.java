@@ -51,7 +51,7 @@ import android.widget.TextView;
 public class SlidingTabLayout extends HorizontalScrollView {
 
     public interface OnTabClickListener {
-        public void onTabClick(int position);
+        void onTabClick(int position);
     }
 
     /**

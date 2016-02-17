@@ -46,7 +46,7 @@ import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
 
-    public class ClearSearchHistoryEvent {};
+    public class ClearSearchHistoryEvent {}
 
     public static TvdbAddFragment newInstance() {
         return new TvdbAddFragment();

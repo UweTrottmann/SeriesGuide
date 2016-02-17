@@ -57,7 +57,7 @@ public class FirstRunFragment extends Fragment {
     }
 
     public interface OnFirstRunDismissedListener {
-        public void onFirstRunDismissed();
+        void onFirstRunDismissed();
     }
 
     public static boolean hasSeenFirstRunFragment(final Context context) {

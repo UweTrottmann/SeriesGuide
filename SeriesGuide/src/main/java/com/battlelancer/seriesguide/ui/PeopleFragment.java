@@ -67,7 +67,7 @@ public class PeopleFragment extends Fragment {
     private boolean mActivateOnItemClick;
 
     public interface OnShowPersonListener {
-        public void showPerson(View view, int tmdbId);
+        void showPerson(View view, int tmdbId);
     }
 
     private static OnShowPersonListener sDummyListener = new OnShowPersonListener() {

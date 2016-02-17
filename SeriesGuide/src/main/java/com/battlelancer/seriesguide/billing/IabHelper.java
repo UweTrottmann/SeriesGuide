@@ -161,7 +161,7 @@ public class IabHelper {
          *
          * @param result The result of the setup process.
          */
-        public void onIabSetupFinished(IabResult result);
+        void onIabSetupFinished(IabResult result);
     }
 
     /**
@@ -306,7 +306,7 @@ public class IabHelper {
          * @param result The result of the purchase.
          * @param info The purchase information (null if purchase failed)
          */
-        public void onIabPurchaseFinished(IabResult result, Purchase info);
+        void onIabPurchaseFinished(IabResult result, Purchase info);
     }
 
     // The listener registered on launchPurchaseFlow, which we have to call back when
@@ -595,7 +595,7 @@ public class IabHelper {
          * @param result The result of the operation.
          * @param inv The inventory.
          */
-        public void onQueryInventoryFinished(IabResult result, Inventory inv);
+        void onQueryInventoryFinished(IabResult result, Inventory inv);
     }
 
     /**

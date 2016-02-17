@@ -33,7 +33,7 @@ public class Constants {
      */
     public static final int EPISODE_UNKNOWN_RELEASE = -1;
 
-    public static enum EpisodeSorting {
+    public enum EpisodeSorting {
         LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
 
         OLDEST_FIRST(1, "oldestfirst", Episodes.NUMBER + " ASC"),
@@ -92,7 +92,7 @@ public class Constants {
         }
     }
 
-    public static enum SeasonSorting {
+    public enum SeasonSorting {
         LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " DESC"),
 
         OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " ASC");

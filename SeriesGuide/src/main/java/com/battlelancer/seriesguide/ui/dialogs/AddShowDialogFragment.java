@@ -107,7 +107,7 @@ public class AddShowDialogFragment extends DialogFragment {
 
     public interface OnAddShowListener {
 
-        public void onAddShow(SearchResult show);
+        void onAddShow(SearchResult show);
     }
 
     private interface InitBundle {

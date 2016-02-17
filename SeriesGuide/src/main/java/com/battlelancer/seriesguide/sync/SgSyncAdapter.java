@@ -77,7 +77,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         public int id;
 
-        private SyncType(int id) {
+        SyncType(int id) {
             this.id = id;
         }
 
@@ -91,17 +91,17 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         /**
          * One of {@link com.battlelancer.seriesguide.sync.SgSyncAdapter.SyncType}.
          */
-        public String SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
+        String SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
 
         /**
          * If {@link #SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show to sync.
          */
-        public String SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+        String SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
 
         /**
          * Whether the sync should occur despite time or backoff limits.
          */
-        public String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
+        String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
     }
 
     private static final int DEFAULT_SYNC_INTERVAL_MINUTES = 20;

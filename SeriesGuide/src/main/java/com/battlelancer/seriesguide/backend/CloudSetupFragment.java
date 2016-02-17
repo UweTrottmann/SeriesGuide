@@ -334,7 +334,7 @@ public class CloudSetupFragment extends Fragment {
 
         public interface OnSetupFinishedListener {
 
-            public void onSetupFinished(int resultCode);
+            void onSetupFinished(int resultCode);
         }
 
         private final Context mContext;

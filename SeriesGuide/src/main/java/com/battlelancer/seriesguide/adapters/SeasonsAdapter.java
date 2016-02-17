@@ -40,7 +40,7 @@ public class SeasonsAdapter extends CursorAdapter {
     private PopupMenuClickListener mPopupMenuClickListener;
 
     public interface PopupMenuClickListener {
-        public void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
+        void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
     }
 
     public SeasonsAdapter(Context context, Cursor c, int flags,

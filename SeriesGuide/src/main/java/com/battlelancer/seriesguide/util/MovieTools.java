@@ -89,7 +89,7 @@ public class MovieTools {
 
         public final String databaseColumn;
 
-        private Lists(String databaseColumn) {
+        Lists(String databaseColumn) {
             this.databaseColumn = databaseColumn;
         }
     }

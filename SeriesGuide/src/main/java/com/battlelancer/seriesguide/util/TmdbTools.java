@@ -34,7 +34,7 @@ public class TmdbTools {
 
         private final String value;
 
-        private ProfileImageSize(String value) {
+        ProfileImageSize(String value) {
             this.value = value;
         }
 

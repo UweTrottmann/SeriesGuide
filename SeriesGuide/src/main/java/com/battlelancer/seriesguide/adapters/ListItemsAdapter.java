@@ -37,7 +37,7 @@ import java.util.Date;
 public class ListItemsAdapter extends BaseShowsAdapter {
 
     public interface OnContextMenuClickListener {
-        public void onClick(View view, ListItemViewHolder viewHolder);
+        void onClick(View view, ListItemViewHolder viewHolder);
     }
 
     public OnContextMenuClickListener onContextMenuClickListener;

@@ -21,8 +21,8 @@ package com.battlelancer.seriesguide.enums;
  */
 public interface Result {
 
-    public int SUCCESS = 0;
+    int SUCCESS = 0;
 
-    public int ERROR = -1;
+    int ERROR = -1;
 
 }

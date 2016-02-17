@@ -21,5 +21,5 @@ package com.battlelancer.seriesguide.interfaces;
  * and {@link com.battlelancer.seriesguide.dataliberation.JsonImportTask}.
  */
 public interface OnTaskFinishedListener {
-    public void onTaskFinished();
+    void onTaskFinished();
 }

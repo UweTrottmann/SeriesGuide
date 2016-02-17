@@ -26,13 +26,13 @@ public interface ActionsFragmentContract {
      * The recommended value to delay the call to {@link #loadEpisodeActions()} from {@link
      * #loadEpisodeActionsDelayed()}.
      */
-    public static final int ACTION_LOADER_DELAY_MILLIS = 200;
+    int ACTION_LOADER_DELAY_MILLIS = 200;
 
     /**
      * Implementing fragments should load the latest episode actions with {@link
      * com.battlelancer.seriesguide.loaders.EpisodeActionsLoader}.
      */
-    abstract void loadEpisodeActions();
+    void loadEpisodeActions();
 
     /**
      * Implementing fragments should call {@link #loadEpisodeActions()} with a delay (e.g. by
@@ -47,5 +47,5 @@ public interface ActionsFragmentContract {
      * Implementing fragments should call {@link #loadEpisodeActionsDelayed()} when appropriate
      * (e.g. check {@link com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent#episodeTvdbId}).
      */
-    public abstract void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event);
+    void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event);
 }

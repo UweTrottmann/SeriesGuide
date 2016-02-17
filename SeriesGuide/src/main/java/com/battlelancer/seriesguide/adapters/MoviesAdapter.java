@@ -48,7 +48,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     private PopupMenuClickListener mPopupMenuClickListener;
 
     public interface PopupMenuClickListener {
-        public void onPopupMenuClick(View v, int movieTmdbId);
+        void onPopupMenuClick(View v, int movieTmdbId);
     }
 
     public MoviesAdapter(Context context, PopupMenuClickListener listener) {
