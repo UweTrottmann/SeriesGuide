@@ -59,8 +59,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
     private Calendar mCalendar;
 
-    public CalendarAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
+    public CalendarAdapter(Context context) {
+        super(context, null, 0);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCalendar = Calendar.getInstance();
