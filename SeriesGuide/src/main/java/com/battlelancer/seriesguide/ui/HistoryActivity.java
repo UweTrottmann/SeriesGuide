@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -28,8 +27,6 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
 import com.battlelancer.seriesguide.ui.streams.UserMovieStreamFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import timber.log.Timber;
 
 /**
