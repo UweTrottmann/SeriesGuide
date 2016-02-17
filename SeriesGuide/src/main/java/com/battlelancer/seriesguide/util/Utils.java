@@ -524,6 +524,17 @@ public class Utils {
     /**
      * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
      */
+    public static void launchWebsite(@Nullable Context context, @Nullable String url) {
+        if (context == null || TextUtils.isEmpty(url)) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        openNewDocument(context, intent, null, null);
+    }
+
+    /**
+     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
+     */
     public static void launchWebsite(@Nullable Context context, @Nullable String url,
             @NonNull String logTag, @NonNull String logItem) {
         if (context == null || TextUtils.isEmpty(url)) {
@@ -541,7 +552,7 @@ public class Utils {
      * returning to the app through the task switcher.
      */
     public static void openNewDocument(@NonNull Context context, @NonNull Intent intent,
-            @NonNull String logTag, @NonNull String logItem) {
+            @Nullable String logTag, @Nullable String logItem) {
         // launch as a new document (separate entry in task switcher)
         // or on older versions: clear from task stack when returning to app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -553,7 +564,9 @@ public class Utils {
 
         Utils.tryStartActivity(context, intent, true);
 
-        Utils.trackAction(context, logTag, logItem);
+        if (logTag != null && logItem != null) {
+            Utils.trackAction(context, logTag, logItem);
+        }
     }
 
     /**

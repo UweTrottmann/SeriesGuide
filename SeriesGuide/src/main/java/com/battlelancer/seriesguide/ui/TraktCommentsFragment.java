@@ -16,8 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -232,11 +230,11 @@ public class TraktCommentsFragment extends Fragment {
     private final AdapterView.OnItemClickListener mOnClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position, id);
+            onListItemClick((ListView) parent, v, position);
         }
     };
 
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, int position) {
         final Comment comment = (Comment) l.getItemAtPosition(position);
         if (comment == null) {
             return;
@@ -250,11 +248,8 @@ public class TraktCommentsFragment extends Fragment {
                 shoutText.setText(comment.comment);
             }
         } else {
-            // open shout or review page
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(TraktLink.comment(comment.id)));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            Utils.tryStartActivity(getActivity(), intent, true);
+            // open comment website
+            Utils.launchWebsite(getContext(), TraktLink.comment(comment.id));
         }
     }
 
