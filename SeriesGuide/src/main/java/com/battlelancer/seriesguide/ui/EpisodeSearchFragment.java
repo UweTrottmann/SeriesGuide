@@ -59,7 +59,7 @@ public class EpisodeSearchFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new SearchResultsAdapter(getActivity(), null, 0);
+        adapter = new SearchResultsAdapter(getActivity());
         setListAdapter(adapter);
     }
 

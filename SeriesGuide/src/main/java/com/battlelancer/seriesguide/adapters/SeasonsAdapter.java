@@ -43,9 +43,9 @@ public class SeasonsAdapter extends CursorAdapter {
         void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
     }
 
-    public SeasonsAdapter(Context context, Cursor c, int flags,
+    public SeasonsAdapter(Context context,
             PopupMenuClickListener listener) {
-        super(context, c, flags);
+        super(context, null, 0);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupMenuClickListener = listener;

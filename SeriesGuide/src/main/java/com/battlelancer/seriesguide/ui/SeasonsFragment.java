@@ -215,7 +215,7 @@ public class SeasonsFragment extends ListFragment implements
         getPreferences();
 
         // populate list
-        mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
+        mAdapter = new SeasonsAdapter(getActivity(), this);
         setListAdapter(mAdapter);
         // now let's get a loader or reconnect to existing one
         getLoaderManager().initLoader(OverviewActivity.SEASONS_LOADER_ID, null, this);
