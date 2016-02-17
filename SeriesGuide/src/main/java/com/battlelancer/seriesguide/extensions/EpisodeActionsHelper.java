@@ -60,7 +60,12 @@ public class EpisodeActionsHelper {
 
                 final Intent viewIntent = action.getViewIntent();
                 if (viewIntent != null) {
-                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                    } else {
+                        //noinspection deprecation
+                        viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    }
                     actionView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
