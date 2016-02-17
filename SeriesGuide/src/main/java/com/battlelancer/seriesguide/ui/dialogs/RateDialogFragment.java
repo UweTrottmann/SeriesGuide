@@ -167,6 +167,9 @@ public class RateDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         String itemType = args.getString(InitBundle.ITEM_TYPE);
+        if (itemType == null) {
+            return;
+        }
         int itemId = args.getInt(InitBundle.ITEM_ID);
         switch (itemType) {
             case ITEM_MOVIE: {
