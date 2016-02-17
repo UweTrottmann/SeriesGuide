@@ -54,7 +54,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
 
-    private NfcAdapter nfcAdapter;
+    // keep reference to adapter while activity is alive
+    @SuppressWarnings("FieldCanBeLocal") private NfcAdapter nfcAdapter;
     private int showTvdbId;
 
     @Override
@@ -81,8 +82,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setupViews(Bundle savedInstanceState) {
