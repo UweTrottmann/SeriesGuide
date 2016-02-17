@@ -126,7 +126,7 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<String, SeasonSorting>();
+        private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<>();
 
         static {
             for (SeasonSorting via : SeasonSorting.values()) {
