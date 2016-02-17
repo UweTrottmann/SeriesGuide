@@ -17,8 +17,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.uwetrottmann.tmdb.entities.Genre;
 import java.util.List;
@@ -63,11 +61,7 @@ public class TmdbTools {
     }
 
     private static void openTmdbUrl(Context context, String url, String logTag) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        Utils.tryStartActivity(context, intent, true);
-
-        Utils.trackAction(context, logTag, "TMDb");
+        Utils.launchWebsite(context, url, logTag, "TMDb");
     }
 
     private static String buildMovieUrl(int movieTmdbId) {
