@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -562,6 +563,7 @@ public class EpisodeTools {
                 // use case: user accidentally toggled watched flag
                 ActivityTools.removeActivity(mContext, mEpisodeTvdbId);
             }
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
@@ -734,7 +736,7 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute() {
-            // do nothing
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
@@ -882,6 +884,11 @@ public class EpisodeTools {
         public List<SyncSeason> getEpisodesForTrakt() {
             return buildTraktEpisodeList();
         }
+
+        @Override
+        protected void onPostExecute() {
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
+        }
     }
 
     public static class ShowCollectedType extends ShowType {
@@ -977,7 +984,7 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute() {
-            // do nothing
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
