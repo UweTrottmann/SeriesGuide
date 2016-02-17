@@ -123,6 +123,7 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         mWatchedAllEpisodes = unwatchedEpisodes == 0;
+        //noinspection ResourceType
         mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ?
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatchedAll)
@@ -165,6 +166,7 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         mCollectedAllEpisodes = uncollectedEpisodes == 0;
+        //noinspection ResourceType
         mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableCollectAll));

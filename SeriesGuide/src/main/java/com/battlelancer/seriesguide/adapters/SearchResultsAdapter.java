@@ -77,6 +77,7 @@ public class SearchResultsAdapter extends CursorAdapter {
         }
 
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
+        //noinspection ResourceType
         viewHolder.watchedStatus.setImageResource(
                 EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
                         ? Utils.resolveAttributeToResourceId(mContext.getTheme(),
