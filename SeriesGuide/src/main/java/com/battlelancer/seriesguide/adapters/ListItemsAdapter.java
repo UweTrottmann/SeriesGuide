@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
@@ -98,7 +99,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
             case 3:
                 // episodes
                 viewHolder.timeAndNetwork.setText(R.string.episode);
-                viewHolder.episode.setText(Utils.getNextEpisodeString(context,
+                viewHolder.episode.setText(TextTools.getNextEpisodeString(context,
                         cursor.getInt(Query.SHOW_NEXTTEXT),
                         cursor.getInt(Query.SHOW_NEXTAIRDATETEXT),
                         cursor.getString(Query.ITEM_TITLE)));

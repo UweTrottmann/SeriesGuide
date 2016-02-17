@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
@@ -107,7 +108,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
 
         // episode number and title
-        viewHolder.episode.setText(Utils.getNextEpisodeString(context, season, episode,
+        viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
                 cursor.getString(Query.TITLE)));
 
         // timestamp, absolute time and network

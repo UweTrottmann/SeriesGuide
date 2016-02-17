@@ -39,8 +39,8 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import java.io.IOException;
 import java.util.Date;
 import timber.log.Timber;
@@ -191,7 +191,7 @@ public class ListWidgetService extends RemoteViewsService {
             String title = dataCursor.getString(isShowQuery ?
                     ShowsQuery.EPISODE_TITLE : CalendarAdapter.Query.TITLE);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
-                    Utils.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
+                    TextTools.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
 
             // relative release time
             Date actualRelease = TimeTools.applyUserOffset(context,

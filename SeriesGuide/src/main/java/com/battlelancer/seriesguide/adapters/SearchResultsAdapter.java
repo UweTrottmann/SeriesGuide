@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.EpisodeSearchFragment.SearchQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -91,7 +92,7 @@ public class SearchResultsAdapter extends CursorAdapter {
         int season = mCursor.getInt(SearchQuery.SEASON);
         String title = mCursor.getString(SearchQuery.TITLE);
         viewHolder.episodeTitle
-                .setText(Utils.getNextEpisodeString(mContext, season, number, title));
+                .setText(TextTools.getNextEpisodeString(mContext, season, number, title));
 
         return convertView;
     }

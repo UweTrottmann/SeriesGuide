@@ -701,7 +701,7 @@ public class DBUtils {
             // STEP 3: build updated next episode values
             if (next.moveToFirst()) {
                 // next episode text, e.g. '0x12 Episode Name'
-                final String nextEpisodeString = Utils.getNextEpisodeString(context,
+                final String nextEpisodeString = TextTools.getNextEpisodeString(context,
                         next.getInt(NextEpisodesQuery.SEASON),
                         next.getInt(NextEpisodesQuery.NUMBER),
                         next.getString(NextEpisodesQuery.TITLE));

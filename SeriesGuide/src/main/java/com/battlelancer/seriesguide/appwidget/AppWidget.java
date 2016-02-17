@@ -37,8 +37,8 @@ import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import java.io.IOException;
 import java.util.Date;
 import timber.log.Timber;
@@ -126,7 +126,7 @@ public class AppWidget extends AppWidgetProvider {
                             CalendarAdapter.Query.NUMBER);
                     String title = upcomingEpisodes.getString(CalendarAdapter.Query.TITLE);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
-                            Utils.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
+                            TextTools.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
 
                     Date actualRelease = TimeTools.applyUserOffset(context,
                             upcomingEpisodes.getLong(CalendarAdapter.Query.RELEASE_TIME_MS)

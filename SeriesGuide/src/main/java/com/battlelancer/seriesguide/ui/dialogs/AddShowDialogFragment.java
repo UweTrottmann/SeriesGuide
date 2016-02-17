@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -319,7 +320,7 @@ public class AddShowDialogFragment extends DialogFragment {
         rating.setText(TraktTools.buildRatingString(show.rating));
 
         // genres
-        Utils.setValueOrPlaceholder(genres, Utils.splitAndKitTVDBStrings(show.genres));
+        Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
         // original release
         Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));

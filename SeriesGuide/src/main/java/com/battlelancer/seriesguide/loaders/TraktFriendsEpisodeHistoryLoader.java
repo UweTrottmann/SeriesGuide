@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.Friend;
@@ -132,7 +132,7 @@ public class TraktFriendsEpisodeHistoryLoader
                     displayData(
                             entry.watched_at.getMillis(),
                             entry.show.title,
-                            Utils.getNextEpisodeString(getContext(), entry.episode.season,
+                            TextTools.getNextEpisodeString(getContext(), entry.episode.season,
                                     entry.episode.number, entry.episode.title),
                             poster
                     )

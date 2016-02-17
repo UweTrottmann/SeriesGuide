@@ -21,6 +21,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 
@@ -78,7 +79,7 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
         // episode
         if (item.episode != null && item.episode.season != null && item.episode.number != null) {
-            holder.description.setText(Utils.getNextEpisodeString(getContext(), item.episode.season,
+            holder.description.setText(TextTools.getNextEpisodeString(getContext(), item.episode.season,
                     item.episode.number, item.episode.title));
         } else {
             holder.description.setText(null);

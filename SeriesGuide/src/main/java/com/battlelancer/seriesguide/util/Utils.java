@@ -63,69 +63,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import timber.log.Timber;
 
+/**
+ * Various generic helper methods that do not fit other tool categories.
+ */
 public class Utils {
 
-    /**
-     * Returns a string in format "1x01 title" or "S1E01 title" dependent on a user preference.
-     */
-    public static String getNextEpisodeString(Context context, int season, int episode,
-            String title) {
-        String result = getEpisodeNumber(context, season, episode);
-        result += " " + title;
-        return result;
-    }
-
-    /**
-     * Returns the episode number formatted according to the users preference (e.g. '1x01',
-     * 'S01E01', ...).
-     */
-    public static String getEpisodeNumber(Context context, int season, int episode) {
-        String format = DisplaySettings.getNumberFormat(context);
-        String result = String.valueOf(season);
-        if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
-            // 1x01 format
-            result += "x";
-        } else {
-            // S01E01 format
-            // make season number always two chars long
-            if (season < 10) {
-                result = "0" + result;
-            }
-            if (DisplaySettings.NUMBERFORMAT_ENGLISHLOWER.equals(format)) {
-                result = "s" + result + "e";
-            } else {
-                result = "S" + result + "E";
-            }
-        }
-
-        if (episode != -1) {
-            // make episode number always two chars long
-            if (episode < 10) {
-                result += "0";
-            }
-
-            result += episode;
-        }
-        return result;
-    }
-
-    /**
-     * Splits the string and reassembles it, separating the items with commas. The given object is
-     * returned with the new string.
-     */
-    public static String splitAndKitTVDBStrings(String tvdbstring) {
-        if (tvdbstring == null) {
-            tvdbstring = "";
-        }
-        String[] splitted = tvdbstring.split("\\|");
-        tvdbstring = "";
-        for (String item : splitted) {
-            if (tvdbstring.length() != 0) {
-                tvdbstring += ", ";
-            }
-            tvdbstring += item.trim();
-        }
-        return tvdbstring;
+    private Utils() {
+        // prevent instantiation
     }
 
     public static String getVersion(Context context) {

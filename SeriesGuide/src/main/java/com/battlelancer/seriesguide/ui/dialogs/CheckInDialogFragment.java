@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -50,7 +51,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
                 args.putInt(InitBundle.EPISODE_TVDB_ID, episodeTvdbId);
                 String episodeTitleWithNumbers = episode.getString(CheckInQuery.SHOW_TITLE)
                         + " "
-                        + Utils.getNextEpisodeString(context,
+                        + TextTools.getNextEpisodeString(context,
                         episode.getInt(CheckInQuery.SEASON),
                         episode.getInt(CheckInQuery.NUMBER),
                         episode.getString(CheckInQuery.EPISODE_TITLE));

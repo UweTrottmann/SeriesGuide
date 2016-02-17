@@ -41,7 +41,7 @@ public class ShareUtils {
     public static void shareEpisode(Activity activity, int episodeTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = activity.getString(R.string.share_checkout,
-                showTitle + " " + Utils.getNextEpisodeString(activity, seasonNumber, episodeNumber,
+                showTitle + " " + TextTools.getNextEpisodeString(activity, seasonNumber, episodeNumber,
                         episodeTitle))
                 + " " + TraktTools.buildEpisodeUrl(episodeTvdbId);
         startShareIntentChooser(activity, message, R.string.share_episode);

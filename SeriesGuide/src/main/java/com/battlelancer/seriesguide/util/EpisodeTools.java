@@ -576,7 +576,7 @@ public class EpisodeTools {
             }
 
             // show episode seen/unseen message
-            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(
                     isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -616,7 +616,7 @@ public class EpisodeTools {
 
         @Override
         public String getNotificationText() {
-            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
@@ -748,7 +748,7 @@ public class EpisodeTools {
                 return null;
             }
 
-            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(
                     isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -796,7 +796,7 @@ public class EpisodeTools {
 
         @Override
         public String getNotificationText() {
-            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }

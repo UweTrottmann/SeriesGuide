@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -403,7 +404,7 @@ public class ShowFragment extends Fragment {
                 mShowCursor.getString(ShowQuery.CONTENT_RATING));
         // genres
         Utils.setValueOrPlaceholder(mTextViewGenres,
-                Utils.splitAndKitTVDBStrings(mShowCursor.getString(ShowQuery.GENRES)));
+                TextTools.splitAndKitTVDBStrings(mShowCursor.getString(ShowQuery.GENRES)));
 
         // trakt rating
         mTextViewRatingGlobal.setText(TraktTools.buildRatingString(
