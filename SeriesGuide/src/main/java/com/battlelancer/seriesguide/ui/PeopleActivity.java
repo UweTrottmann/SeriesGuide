@@ -98,7 +98,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
             // in two-pane mode, list items should be activated when touched
             if (mTwoPane) {
-                f.setActivateOnItemClick(true);
+                f.setActivateOnItemClick();
             }
 
             getSupportFragmentManager().beginTransaction()

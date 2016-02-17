@@ -186,8 +186,8 @@ public class PeopleFragment extends Fragment {
      * Turns on activate-on-click mode. When this mode is on, list items will be given the
      * 'activated' state when touched.
      */
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
-        mActivateOnItemClick = activateOnItemClick;
+    public void setActivateOnItemClick() {
+        mActivateOnItemClick = true;
     }
 
     private void setActivatedPosition(int position) {
