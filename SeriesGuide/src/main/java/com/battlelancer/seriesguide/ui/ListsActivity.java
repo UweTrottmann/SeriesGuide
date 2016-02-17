@@ -168,6 +168,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         mTabs.setViewPager(mPager);
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(ListsChangedEvent event) {
         onListsChanged();
     }

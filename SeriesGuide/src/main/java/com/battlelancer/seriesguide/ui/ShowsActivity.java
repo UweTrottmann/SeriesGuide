@@ -415,6 +415,7 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
         showProgressDialog();
     }
@@ -422,6 +423,7 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
         hideProgressDialog();
     }

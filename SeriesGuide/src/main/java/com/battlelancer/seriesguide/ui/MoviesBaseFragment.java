@@ -165,6 +165,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
         getLoaderManager().restartLoader(getLoaderId(), null, this);
     }

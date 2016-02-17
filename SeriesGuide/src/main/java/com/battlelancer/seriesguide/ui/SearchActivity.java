@@ -400,6 +400,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     /**
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
         showProgressDialog();
     }
@@ -407,10 +408,12 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     /**
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
         hideProgressDialog();
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();
