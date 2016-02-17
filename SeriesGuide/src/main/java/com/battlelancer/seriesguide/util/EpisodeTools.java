@@ -143,8 +143,6 @@ public class EpisodeTools {
     }
 
     public static void validateFlags(int episodeFlags) {
-        boolean hasValidFlag = false;
-
         if (isUnwatched(episodeFlags)) {
             return;
         }
@@ -155,10 +153,8 @@ public class EpisodeTools {
             return;
         }
 
-        if (!hasValidFlag) {
-            throw new IllegalArgumentException(
-                    "Did not pass a valid episode flag. See EpisodeFlags class for details.");
-        }
+        throw new IllegalArgumentException(
+                "Did not pass a valid episode flag. See EpisodeFlags class for details.");
     }
 
     public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
@@ -1190,6 +1186,7 @@ public class EpisodeTools {
                 // show exists, but seasons not found
                 return false;
             }
+            //noinspection RedundantIfStatement
             if (response.not_found.episodes != null && !response.not_found.episodes.isEmpty()) {
                 // show and season exists, but episodes not found
                 return false;
