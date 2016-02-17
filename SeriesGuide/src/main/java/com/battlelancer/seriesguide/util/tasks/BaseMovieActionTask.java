@@ -134,12 +134,9 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
     }
 
     private static boolean isTraktActionSuccessful(SyncResponse response) {
-        if (response.not_found != null && response.not_found.movies != null
-                && response.not_found.movies.size() != 0) {
-            // movie was not found on trakt
-            return false;
-        }
-        return true;
+        // false if movie was not found on trakt
+        return !(response.not_found != null && response.not_found.movies != null
+                && response.not_found.movies.size() != 0);
     }
 
     protected abstract boolean doDatabaseUpdate(Context context, int movieTmdbId);
