@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -37,10 +38,12 @@ public abstract class MultiPagerAdapter extends FragmentPagerAdapter {
         mFragmentManager = fm;
     }
 
+    @SuppressLint("CommitTransaction")
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         if (getItemPosition(object) == POSITION_NONE) {
             if (mCurTransaction == null) {
+                // transaction is committed in #finishUpdate
                 mCurTransaction = mFragmentManager.beginTransaction();
             }
             mCurTransaction.remove((Fragment) object);
