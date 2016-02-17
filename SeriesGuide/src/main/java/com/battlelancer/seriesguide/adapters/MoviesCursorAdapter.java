@@ -36,8 +36,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private final int LAYOUT = R.layout.item_movie;
-
     private LayoutInflater mLayoutInflater;
 
     private final String mImageBaseUrl;
@@ -68,7 +66,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, null);
+        View v = mLayoutInflater.inflate(R.layout.item_movie, parent, false);
 
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.title = (TextView) v.findViewById(R.id.textViewMovieTitle);
