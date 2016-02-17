@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -72,7 +73,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
         // setup tabs
         mTabLayout = tabs;
         mTabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        mTabLayout.setSelectedIndicatorColors(context.getResources().getColor(R.color.white));
+        mTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(context, R.color.white));
         mTabLayout.setViewPager(mViewPager);
     }
 

@@ -38,6 +38,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -54,7 +55,6 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.google.android.gms.analytics.HitBuilders;
@@ -176,22 +176,21 @@ public class Utils {
      * text.  Use 0 if you do not want a Drawable there. The Drawables' bounds will be set to their
      * intrinsic bounds.
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
             @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
             @DrawableRes int bottom) {
-        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
             return;
         }
 
-        final Resources resources = button.getContext().getResources();
+        Context context = button.getContext();
         setCompoundDrawablesRelativeWithIntrinsicBounds(
                 button,
-                left != 0 ? resources.getDrawable(left) : null,
-                top != 0 ? resources.getDrawable(top) : null,
-                right != 0 ? resources.getDrawable(right) : null,
-                bottom != 0 ? resources.getDrawable(bottom) : null);
+                left != 0 ? ContextCompat.getDrawable(context, left) : null,
+                top != 0 ? ContextCompat.getDrawable(context, top) : null,
+                right != 0 ? ContextCompat.getDrawable(context, right) : null,
+                bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
     }
 
     /**

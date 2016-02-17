@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -634,11 +635,13 @@ public class ShowTools {
     public static void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
         view.setText(getStatus(view.getContext(), encodedStatus));
         if (encodedStatus == Status.CONTINUING) {
-            view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
-                    view.getContext().getTheme(), R.attr.sgTextColorGreen)));
+            view.setTextColor(
+                    ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
+                            view.getContext().getTheme(), R.attr.sgTextColorGreen)));
         } else {
-            view.setTextColor(view.getResources().getColor(Utils.resolveAttributeToResourceId(
-                    view.getContext().getTheme(), android.R.attr.textColorSecondary)));
+            view.setTextColor(
+                    ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
+                            view.getContext().getTheme(), android.R.attr.textColorSecondary)));
         }
     }
 }

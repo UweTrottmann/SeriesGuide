@@ -150,9 +150,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         // setup nav drawer items
         navigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
                 ? R.menu.menu_drawer_light : R.menu.menu_drawer);
-        navigationView.setItemIconTintList(getResources().getColorStateList(
+        navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
-        navigationView.setItemTextColor(getResources().getColorStateList(
+        navigationView.setItemTextColor(ContextCompat.getColorStateList(this,
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerText)));
         navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
                 R.attr.sgActivatedItemBackgroundDrawer));

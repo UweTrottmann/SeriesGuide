@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,7 +73,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
 
         mTabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
         mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
+        mTabs.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.white));
         mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override
             public void onTabClick(int position) {
