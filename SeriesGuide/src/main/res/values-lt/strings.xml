@@ -66,7 +66,7 @@
   <string name="episode_dvdnumber">DVD serija</string>
   <string name="show_actors">Aktoriai</string>
   <string name="original_release">Originalus leidimas</string>
-  <string name="show_on_network">Dabar rodo</string>
+  <string name="show_on_network">on %s</string>
   <string name="show_genres">Žanrai</string>
   <string name="show_runtime">Trukmė</string>
   <string name="show_contentrating">Turinio įvertinimas</string>
