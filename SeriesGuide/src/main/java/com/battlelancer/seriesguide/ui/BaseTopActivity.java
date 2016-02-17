@@ -114,10 +114,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // check if we should toggle the navigation drawer (app icon was touched)
-        if (toggleDrawer(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return toggleDrawer(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
