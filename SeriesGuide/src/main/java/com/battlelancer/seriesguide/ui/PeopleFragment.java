@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -44,8 +44,8 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 public class PeopleFragment extends Fragment {
 
     /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
+     * The serialization (saved instance state) Bundle key representing the activated item position.
+     * Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
@@ -124,13 +124,13 @@ public class PeopleFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         try {
-            mListener = (OnShowPersonListener) activity;
+            mListener = (OnShowPersonListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnShowPersonListener");
         }
     }
@@ -157,7 +157,8 @@ public class PeopleFragment extends Fragment {
             }
         });
 
-        getLoaderManager().initLoader(PeopleActivity.PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
+        getLoaderManager().initLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
+                mCreditsLoaderCallbacks);
     }
 
     @Override
@@ -177,12 +178,13 @@ public class PeopleFragment extends Fragment {
     }
 
     public void refresh() {
-        getLoaderManager().restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null, mCreditsLoaderCallbacks);
+        getLoaderManager().restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
+                mCreditsLoaderCallbacks);
     }
 
     /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
-     * given the 'activated' state when touched.
+     * Turns on activate-on-click mode. When this mode is on, list items will be given the
+     * 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         mActivateOnItemClick = activateOnItemClick;
