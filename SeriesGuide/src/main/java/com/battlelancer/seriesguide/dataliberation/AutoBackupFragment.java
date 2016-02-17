@@ -111,9 +111,9 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
                 : !BackupSettings.isMissingAutoBackupFile(getContext());
         textViewLastAutoBackup
                 .setText(getString(R.string.last_auto_backup, showLastBackupTime ?
-                                DateUtils.getRelativeDateTimeString(getActivity(),
-                                        lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
-                                        DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
+                        DateUtils.getRelativeDateTimeString(getActivity(),
+                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
+                                DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
         // setup listeners
         boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
@@ -138,7 +138,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                tryDataLiberationAction(REQUEST_CODE_IMPORT_AUTOBACKUP);
+                tryDataLiberationAction();
             }
         });
 
@@ -264,17 +264,17 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         setAutoBackupEnabled(true);
     }
 
-    private void tryDataLiberationAction(int requestCode) {
+    private void tryDataLiberationAction() {
         // make sure we have write permission
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // don't have it? request it, do task if granted
             requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                    requestCode);
+                    REQUEST_CODE_IMPORT_AUTOBACKUP);
             return;
         }
 
-        doDataLiberationAction(requestCode);
+        doDataLiberationAction();
     }
 
     @Override
@@ -295,7 +295,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         }
         if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doDataLiberationAction(requestCode);
+                doDataLiberationAction();
             } else {
                 if (getView() != null) {
                     Snackbar.make(getView(), R.string.dataliberation_permission_missing,
@@ -313,13 +313,11 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         containerSettings.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
     }
 
-    private void doDataLiberationAction(int requestCode) {
-        if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
-            setProgressLock(true);
+    private void doDataLiberationAction() {
+        setProgressLock(true);
 
-            importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
-            Utils.executeInOrder(importTask);
-        }
+        importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
+        Utils.executeInOrder(importTask);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
