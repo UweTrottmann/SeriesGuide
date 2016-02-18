@@ -8,6 +8,13 @@ All dates are in the European Central timezone.
 Version 29 *(in development)*
 -----------------------------
 
+#### 29-beta2 *(2016-02-18)*
+
+* TWEAK Update list widget immediately when setting episodes watched.
+* TWEAK Display episode number in notifications and DashClock extension.
+* FIX Crash due to incorrect Lithuanian translation.
+* NOTICE Latest translations from crowdin.
+
 #### 29-beta1 *(2016-02-11)*
 
 * TWEAK Combined search and "Add show" screen.
