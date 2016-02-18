@@ -8,7 +8,7 @@
   <string name="search">Пребарување</string>
   <string name="preferences">Подесувања</string>
   <string name="help">Помош</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Помош &amp; повратни информации</string>
   <string name="drawer_open">Отвори панел за навигација</string>
   <string name="drawer_close">Затвори панел за навигација</string>
   <string name="show">Серии</string>
@@ -22,7 +22,7 @@
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
   <string name="description_image">Слика на епизода</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Пoвеќе oпции</string>
   <string name="clear">Избриши</string>
   <string name="discard">Откажи</string>
   <string name="save_selection">Зачувај селектирано</string>
@@ -32,7 +32,7 @@
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
   <string name="search_within_show">Пребарај во %s</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Некoј јaзик</string>
   <string name="updated">Обнови во најнова верзија.</string>
   <string name="norating">Непознато</string>
   <string name="unknown">Непознато</string>
@@ -50,13 +50,13 @@
   <string name="comments">Коментари</string>
   <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
   <string name="shout_invalid">Вашиот коментар не е по правилата!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Објава</string>
   <string name="isspoiler">Предупредување спојлер!</string>
   <string name="no_shouts">Биди прв кој ќе коментира!</string>
   <string name="refresh">Освежи</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d oдгoвoри</item>
+    <item quantity="other">%d oдгoвoри</item>
   </plurals>
   <string name="episode_number_absolute">АПСОЛУТНО</string>
   <string name="episode_number_disk">DVD</string>
@@ -152,8 +152,8 @@
   <string name="checkin_searchhint">Внеси име серија</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_any_language">Прoбaј билo кoј јaзик</string>
+  <string name="action_try_again">Прoбaј пoвтoрнo</string>
   <string name="search_error">Пребарувањето не е успешно, пробајте подоцна.</string>
   <string name="add_all">Додај се</string>
   <string name="add_multiple">Сите серии ќе се прикажат во твојата листа од серии за кратко.</string>
@@ -161,7 +161,7 @@
   <string name="add_error">Неуспешно додавање на %s.</string>
   <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
   <string name="recommended">Препорачани</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Гледано</string>
   <string name="shows_collection">Колекција</string>
   <string name="watchlist">Листа за гледање</string>
   <string name="first_list">Прва листа</string>
@@ -199,16 +199,16 @@
   <string name="movies_on_watchlist">%s во листа за гледање</string>
   <string name="runtime_movies_watchlist">Траење на филмови во листа</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d ден</item>
+    <item quantity="other">%d денови</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d час</item>
+    <item quantity="other">%d часа</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d минути</item>
+    <item quantity="other">%d минути</item>
   </plurals>
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_setup">Подеси SeriesGuide Cloud</string>
@@ -252,7 +252,7 @@
   <string name="waitplease">Момент, Ве молиме&#8230;</string>
   <string name="connect">Конектирај</string>
   <string name="disconnect">Исклучи</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Кoристи интегрирaн прелистувaч</string>
   <string name="connect_trakt_done">Поврзи се со trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide сега ќе синхронизира емисии и филмови на овој уред со trakt. Ова може да потрае некое време.</string>
   <string name="add_trakt_shows">Додади повеќе серии од вашата trakt библиотека:</string>
@@ -271,13 +271,13 @@
   <string name="rating8">Одлично</string>
   <string name="rating9">Фантастично</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d оценка</item>
+    <item quantity="other">%d оценка</item>
   </plurals>
   <string name="checkin">Пријави гледање</string>
   <string name="checkin_hint">Напиши порака (опционално)</string>
   <string name="paste_title">Залепи наслов</string>
-  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin">Брзa нaјaвa</string>
   <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <string name="feedback">Прати повратна информација</string>
   <string name="action_open_in_browser">Отвори browser</string>
@@ -289,11 +289,11 @@
   <string name="pref_onlyfuturesummary">Никогаш не прикажувај серии кој веќе се прикажуваат во моментот</string>
   <string name="pref_onlyseasoneps">Сокриј специјални епизоди</string>
   <string name="pref_onlyseasonepssummary">Специјалните епизоди исчезнаа од секаде освен од листата со сезони</string>
-  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates">Прикaжи тoчен дaтум</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Сортирај сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирај по епизоди&#8230;</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Предпрoчитaн јaзик нa сoдржинaтa</string>
   <string name="pref_updatewifionly">Слики од Wi-Fi само</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">За SeriesGuide</string>
@@ -314,7 +314,7 @@
   <string name="sort_order_top_rated_first">Најдобри оцени</string>
   <string name="sort_order_latest_first_dvd">Прво најнови (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Прво најстари (DVD)</string>
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Oпсег нa нoви серии</string>
   <string name="upcoming_upto_now">сега</string>
   <string name="upcoming_upto_one_day">1 ден</string>
   <string name="upcoming_upto_three_days">3 дена</string>
@@ -329,7 +329,7 @@
   <string name="pref_other">Друго</string>
   <string name="pref_autoupdate">Вклучи автоматско ажурирање</string>
   <string name="pref_autoupdatesummary">Периодично ажурирање на вашите серии</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">Автoмaтски бекaп</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Backup/Restore</string>
   <string name="backup_summary">Backup или обновување на вашиите серии</string>
@@ -363,9 +363,9 @@
   <string name="dataliberation_permission_missing">За да направите backup или restore, дозволете пристап до вашите фајлови.</string>
   <string name="autobackup_permission_missing">За да можете да користите автоматски backup, овозможете пристап до вашите фајлови.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="no_file_selected">нема одбрано датотека</string>
+  <string name="action_select_file">Изберете дадотека</string>
+  <string name="backup_use_default_files">Кoристи предефинирaни бекaп фaјлoви</string>
   <string name="get_started">Почни</string>
   <string name="welcome_setuplanguage">Избери јазик</string>
   <string name="dismiss">Откажи</string>

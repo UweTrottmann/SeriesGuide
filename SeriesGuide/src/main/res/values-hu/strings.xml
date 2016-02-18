@@ -50,12 +50,12 @@
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
   <string name="shout_invalid">A megjegyzésed nem szabályszerű!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Hozzászólás</string>
   <string name="isspoiler">Spoiler veszély!</string>
   <string name="no_shouts">Szólj hozzá elsőként!</string>
   <string name="refresh">Frissítés</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
+    <item quantity="one">%d válasz</item>
     <item quantity="other">%d replies</item>
   </plurals>
   <string name="episode_number_absolute">Abszolút</string>
@@ -199,15 +199,15 @@
   <string name="movies_on_watchlist">%s a figyelőlistában</string>
   <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
+    <item quantity="one">%d nap</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
+    <item quantity="one">%d óra</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
+    <item quantity="one">%d perc</item>
     <item quantity="other">%d minutes</item>
   </plurals>
   <string name="hexagon_warning">Kísérleti fázisban!</string>
@@ -271,7 +271,7 @@
   <string name="rating8">Nagyon jó</string>
   <string name="rating9">Nagyszerű</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
+    <item quantity="one">%d szavazat</item>
     <item quantity="other">%d votes</item>
   </plurals>
   <string name="checkin">Bejelentkezés</string>
@@ -290,17 +290,17 @@
   <string name="pref_onlyseasoneps">Speciális epizódok elrejtése</string>
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
   <string name="pref_exactdates">Pontos dátumok megjelenítése</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"Október 31\" a \"3 napon belül\" helyett</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom preferált nyelve</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
   <string name="about">A SeriesGuide-ról</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitásod és adataid alapján sorozataid bekerülnek az adatbázisba</string>
-  <string name="licence_tvdb">Ez az alkalmazás a TheTVDB (CC BY-NC 4.0 licenc alatt álló) adatait és képeit használja.</string>
+  <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, CC BY-NC 4.0 licenc alatt álló adatait és képeit használja.</string>
   <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
   <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
   <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>

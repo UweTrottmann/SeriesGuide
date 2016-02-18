@@ -50,12 +50,12 @@
   <string name="comments">Комментарии</string>
   <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
   <string name="shout_invalid">Ваш комментарий не соответствует правилам! </string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Опубликовать</string>
   <string name="isspoiler">Спойлеры</string>
   <string name="no_shouts">Оставьте отзыв первым!</string>
   <string name="refresh">Обновить</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
+    <item quantity="one">%d ответ(ов)</item>
     <item quantity="few">%d replies</item>
     <item quantity="other">%d replies</item>
   </plurals>
@@ -200,17 +200,17 @@
   <string name="movies_on_watchlist">%s в списке просмотра</string>
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
+    <item quantity="one">%d д.</item>
     <item quantity="few">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
+    <item quantity="one">%d ч.</item>
     <item quantity="few">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
+    <item quantity="one">%d мин.</item>
     <item quantity="few">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
@@ -275,7 +275,7 @@
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
+    <item quantity="one">%d голос(ов)</item>
     <item quantity="few">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>

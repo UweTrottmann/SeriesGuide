@@ -300,9 +300,9 @@
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
-  <string name="licence_tvdb">Bu uygulama kullanılan veriler ve görseller CC BY-NC 4.0 lisansı altındaki TheTVDB verileridir.</string>
-  <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır. TMDb ile doğrudan ilişkili, bağlantılı değildir.</string>
-  <string name="licence_trakt">Bu uygulama trakt tarafından sağlanan veri ve görselleri kullanır.</string>
+  <string name="licence_tvdb">Bu uygulamada kullanılan theTVDb verileri ve görselleri CC BY-NC 4.0 lisansı altındadır.</string>
+  <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>
+  <string name="licence_trakt">Bu uygulama trakt tarafından veri ve görüntü kullanır.</string>
   <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
   <string name="licences_and_credits">Lisanslar ve Bilgiler</string>
   <string name="sort">Sırala</string>

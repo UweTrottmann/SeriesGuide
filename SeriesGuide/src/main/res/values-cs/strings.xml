@@ -57,7 +57,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d reply</item>
     <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d odpovědi</item>
   </plurals>
   <string name="episode_number_absolute">CELKOVĚ</string>
   <string name="episode_number_disk">DVD</string>
@@ -200,19 +200,19 @@
   <string name="movies_on_watchlist">%s z Watchlistu</string>
   <string name="runtime_movies_watchlist">Celková délka filmového watchlistu</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="few">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d den</item>
+    <item quantity="few">%d den</item>
+    <item quantity="other">%d den</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d hodina</item>
+    <item quantity="few">%d hodina</item>
+    <item quantity="other">%d hodin</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
+    <item quantity="one">%d minuta</item>
     <item quantity="few">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d minut</item>
   </plurals>
   <string name="hexagon_warning">Experimentální!</string>
   <string name="hexagon_setup">Nastavit SeriesGuide cloud</string>
@@ -241,7 +241,7 @@
   <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
   <string name="traktcheckin_cancel">Přepsat</string>
   <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
+  <string name="traktcheckin_wait">Budu čekat</string>
   <string name="trakt_success">Odesláno do trakt.tv.</string>
   <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
   <string name="trakt_error_general">Nelze se připojit na trakt.tv. Opakujte akci později.</string>
@@ -352,7 +352,7 @@
   <string name="backup_success">Zálohování bylo úspěšné.</string>
   <string name="backup_failed">Zálohování selhalo.</string>
   <string name="import_inprogress">Obnovuji databázi&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">Nelze obnovit zálohu. Záložní složka není k dispozici.</string>
   <string name="import_failed_nofile">Žádný čitelný soubor se zálohou nenalezen.</string>
   <string name="import_failed_noread">Soubor zálohy není čitelný.</string>
   <string name="dbupgradefailed">Vaše záloha je buď příliš stará nebo prázdná. Poznámka: Zálohy verze nižší než 2.0 obnovujte nejdříve ve verzi 1.9.X.</string>
