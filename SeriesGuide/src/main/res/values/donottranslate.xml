@@ -21,9 +21,9 @@
 	<string name="not_available">n/a</string>
 
     <!-- URLs -->
-    <string name="url_website">http://seriesgui.de</string>
-    <string name="help_url">http://seriesgui.de/help</string>
-    <string name="url_whypay">http://seriesgui.de/whypay</string>
+    <string name="url_website">https://seriesgui.de</string>
+    <string name="help_url">https://seriesgui.de/help</string>
+    <string name="url_whypay">https://seriesgui.de/whypay</string>
     <string name="url_credits">https://github.com/UweTrottmann/SeriesGuide/blob/master/CREDITS.txt</string>
     <string name="url_terms_tvdb">https://thetvdb.com/?tab=tos</string>
     <string name="url_creative_commons">http://creativecommons.org/licenses/by-nc/4.0/</string>
