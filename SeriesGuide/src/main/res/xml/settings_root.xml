@@ -59,7 +59,6 @@
 
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:summary="@string/pref_traktsummary"
             android:title="@string/trakt">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
@@ -97,7 +96,7 @@
             android:title="@string/prefs_category_advanced" />
 
         <Preference
-            android:key="screen_about"
+            android:key="aboutPref"
             android:title="@string/prefs_category_about" />
 
     </PreferenceCategory>

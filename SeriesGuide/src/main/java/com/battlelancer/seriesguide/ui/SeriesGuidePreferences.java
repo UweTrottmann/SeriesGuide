@@ -218,9 +218,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             } else if (settings.equals("screen_advanced")) {
                 addPreferencesFromResource(R.xml.settings_advanced);
                 setupAdvancedSettings();
-            } else if (settings.equals("screen_about")) {
-                addPreferencesFromResource(R.xml.settings_about);
-                setupAboutSettings();
             }
         }
 
@@ -389,13 +386,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                             return false;
                         }
                     });
-        }
-
-        private void setupAboutSettings() {
-            // display version number and database version in About pref
-            final String versionFinal = Utils.getVersion(getActivity());
-            findPreference(KEY_ABOUT).setSummary("v" + versionFinal + " (Database v"
-                    + SeriesGuideDatabase.DATABASE_VERSION + ")");
         }
 
         @Override
