@@ -222,8 +222,34 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupRootSettings() {
+            // Theme switcher
+            Preference themePref = findPreference(DisplaySettings.KEY_THEME);
+            if (Utils.hasAccessToX(getActivity())) {
+                themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
+                            ThemeUtils.updateTheme((String) newValue);
+
+                            // restart to apply new theme, go back to this settings screen
+                            TaskStackBuilder.create(getActivity())
+                                    .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
+                                    .addNextIntent(getActivity().getIntent())
+                                    .startActivities();
+                        }
+                        return true;
+                    }
+                });
+                setListPreferenceSummary((ListPreference) themePref);
+            } else {
+                themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
+                themePref.setSummary(R.string.onlyx);
+            }
+
             // show currently set values for list prefs
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
+            setListPreferenceSummary(
+                    (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
 
             // set current value of auto-update pref
             ((SwitchPreference) findPreference(UpdateSettings.KEY_AUTOUPDATE)).setChecked(
@@ -319,34 +345,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         }
                     });
 
-            // Theme switcher
-            Preference themePref = findPreference(DisplaySettings.KEY_THEME);
-            if (Utils.hasAccessToX(getActivity())) {
-                themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                            ThemeUtils.updateTheme((String) newValue);
-
-                            // restart to apply new theme, go back to this settings screen
-                            TaskStackBuilder.create(getActivity())
-                                    .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
-                                    .addNextIntent(getActivity().getIntent()
-                                            .putExtra(EXTRA_SETTINGS_SCREEN, SETTINGS_SCREEN_BASIC))
-                                    .startActivities();
-                        }
-                        return true;
-                    }
-                });
-                setListPreferenceSummary((ListPreference) themePref);
-            } else {
-                themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
-                themePref.setSummary(R.string.onlyx);
-            }
-
             // show currently set values for list prefs
-            setListPreferenceSummary(
-                    (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
             ListPreference offsetListPref = (ListPreference) findPreference(KEY_OFFSET);
             offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
                     offsetListPref.getEntry()));
