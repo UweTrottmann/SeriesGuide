@@ -51,7 +51,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
@@ -269,11 +268,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         boolean isChecked = (boolean) newValue;
-                        if (isChecked) {
-                            Utils.trackCustomEvent(getActivity(), TAG, "Notifications", "Enable");
-                        } else {
-                            Utils.trackCustomEvent(getActivity(), TAG, "Notifications", "Disable");
-                        }
+                        Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
+                                isChecked ? "Enable" : "Disable");
 
                         thresholdPref.setEnabled(isChecked);
                         favOnlyPref.setEnabled(isChecked);
@@ -318,13 +314,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     new OnPreferenceClickListener() {
 
                         public boolean onPreferenceClick(Preference preference) {
-                            if (((CheckBoxPreference) preference).isChecked()) {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                        "Enable");
-                            } else {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                        "Disable");
-                            }
+                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                            Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
+                                    isChecked ? "Enable" : "Disable");
                             return false;
                         }
                     });
@@ -334,13 +326,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     new OnPreferenceClickListener() {
 
                         public boolean onPreferenceClick(Preference preference) {
-                            if (((CheckBoxPreference) preference).isChecked()) {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                        "Enable");
-                            } else {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                        "Disable");
-                            }
+                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                            Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
+                                    isChecked ? "Enable" : "Disable");
                             return false;
                         }
                     });
