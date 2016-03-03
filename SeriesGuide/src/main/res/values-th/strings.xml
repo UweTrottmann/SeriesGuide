@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
-  <string name="search_within_show">ค้นหาใน %s</string>
   <string name="any_language">ภาษาใดก็ได้</string>
   <!-- Status messages -->
   <string name="updated">อัปเดตเป็นเวอร์ชันล่าสุดแล้ว</string>
@@ -320,7 +319,6 @@
   <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
   <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
   <string name="about">เกี่ยวกับ SeiresGuide</string>
-  <string name="pref_traktsummary">เพิ่มหรือแก้ไขข้อมูล trakt ของคุณ</string>
   <string name="pref_autoaddshows">เพิ่มซีรีส์ trakt ใหม่</string>
   <string name="pref_autoaddshowssummary">เพิ่มซีรีส์จากสตรีมกิจกรรม trakt ของคุณโดยอัตโนมัติ</string>
   <!-- About screen -->

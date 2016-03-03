@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
-  <string name="search_within_show">Zoek binnen %s</string>
   <string name="any_language">Elke taal</string>
   <!-- Status messages -->
   <string name="updated">Nieuwste versie is geïnstalleerd.</string>
@@ -325,7 +324,6 @@
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
   <string name="about">Over SeriesGuide</string>
-  <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
   <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <!-- About screen -->

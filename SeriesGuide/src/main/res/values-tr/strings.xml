@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
-  <string name="search_within_show">İçinde ara %s</string>
   <string name="any_language">Herhangi bir dil</string>
   <!-- Status messages -->
   <string name="updated">En son sürüme güncellendi.</string>
@@ -325,7 +324,6 @@
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
   <string name="about">SeriesGuide Hakkında</string>
-  <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
   <!-- About screen -->

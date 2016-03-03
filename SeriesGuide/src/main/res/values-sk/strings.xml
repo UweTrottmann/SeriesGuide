@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
   <string name="search_hint">Hľadať epizódy</string>
-  <string name="search_within_show">Hľadať v rámci %s</string>
   <string name="any_language">Ľubovoľný jazyk</string>
   <!-- Status messages -->
   <string name="updated">Aktualizované na najnovšiu verziu.</string>
@@ -330,7 +329,6 @@
   <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
   <string name="about">O SeriesGuide</string>
-  <string name="pref_traktsummary">Pridať/Upraviť prihlasovacie údaje</string>
   <string name="pref_autoaddshows">Pridať nové seriály z trakt.tv</string>
   <string name="pref_autoaddshowssummary">Automaticky pridať seriály z vašej aktivity na trakt.tv</string>
   <!-- About screen -->

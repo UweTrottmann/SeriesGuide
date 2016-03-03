@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Tøm søkelogg</string>
   <string name="search_hint">Søk episoder</string>
-  <string name="search_within_show">Søk innenfor %s</string>
   <string name="any_language">Alle språk</string>
   <!-- Status messages -->
   <string name="updated">Oppdatert til nyeste versjon.</string>
@@ -325,7 +324,6 @@
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
   <string name="pref_autoaddshows">Legg til nye trakt-serier</string>
   <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
   <!-- About screen -->

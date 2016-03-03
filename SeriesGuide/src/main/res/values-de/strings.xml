@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>
-  <string name="search_within_show">Durchsuche %s</string>
   <string name="any_language">Alle Sprachen</string>
   <!-- Status messages -->
   <string name="updated">Auf neueste Version aktualisiert.</string>
@@ -325,7 +324,6 @@
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt Anmeldeinformationen</string>
   <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
   <!-- About screen -->

@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
-  <string name="search_within_show">Szukaj w %s</string>
   <string name="any_language">Dowolny język</string>
   <!-- Status messages -->
   <string name="updated">Zaktualizowano do najnowszej wersji.</string>
@@ -330,7 +329,6 @@
   <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
   <string name="about">O SeriesGuide</string>
-  <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
   <!-- About screen -->

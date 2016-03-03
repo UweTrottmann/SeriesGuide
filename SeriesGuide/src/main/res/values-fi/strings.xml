@@ -36,7 +36,6 @@
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
-  <string name="search_within_show">Hae ohjelmasta %s</string>
   <string name="any_language">Millä tahansa kielellä</string>
   <!-- Status messages -->
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
@@ -325,7 +324,6 @@
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="pref_traktsummary">Lisää tai muokkaa trakt-käyttäjätietojasi</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
   <!-- About screen -->
