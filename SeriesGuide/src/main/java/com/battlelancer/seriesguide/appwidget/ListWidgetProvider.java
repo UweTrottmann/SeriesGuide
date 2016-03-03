@@ -191,7 +191,9 @@ public class ListWidgetProvider extends AppWidgetProvider {
         rv.setTextViewText(R.id.empty_view, context.getString(emptyResId));
         if (!isCompactLayout) {
             // only regular layout has text title
-            rv.setTextViewText(R.id.widgetTitle, context.getString(titleResId));
+            rv.setTextViewText(R.id.widgetTitle,
+                    DateUtils.formatDateTime(context, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME) + " "
+                            + context.getString(titleResId));
         }
 
         // app launch button

@@ -60,6 +60,7 @@ public class ListWidgetService extends RemoteViewsService {
         private Cursor dataCursor;
         private int widgetType;
         private boolean isLightTheme;
+        private long updateTime;
 
         public ListRemoteViewsFactory(Context context, Intent intent) {
             this.context = context;
@@ -136,6 +137,7 @@ public class ListWidgetService extends RemoteViewsService {
             this.dataCursor = newCursor;
             this.widgetType = widgetType;
             this.isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId);
+            updateTime = System.currentTimeMillis();
 
             if (oldCursor != null) {
                 oldCursor.close();
@@ -191,6 +193,7 @@ public class ListWidgetService extends RemoteViewsService {
             String title = dataCursor.getString(isShowQuery ?
                     ShowsQuery.EPISODE_TITLE : CalendarAdapter.Query.TITLE);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
+                    DateUtils.formatDateTime(context, updateTime, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME) + " " +
                     TextTools.getNextEpisodeString(context, seasonNumber, episodeNumber, title));
 
             // relative release time
