@@ -8,6 +8,14 @@ All dates are in the European Central timezone.
 Version 29 *(in development)*
 -----------------------------
 
+#### 29-beta3 *(2016-03-03)*
+
+* TWEAK Move appearance settings to root. Move links in about section to Advanced, link directly to About page.
+* TWEAK Use HTTPS for SeriesGuide website links, including the help page.
+* FIX Movie card layout padding is broken in watchlist and collection.
+* FIX Potential improvements to list widget not updating.
+* NOTICE Latest translations from crowdin.
+
 #### 29-beta2 *(2016-02-18)*
 
 * TWEAK Update list widget immediately when setting episodes watched.
