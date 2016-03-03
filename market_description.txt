@@ -1,10 +1,10 @@
-Manage (re-)watching your favorite TV shows and movies.
+Keep track of your favorite TV shows and movies.
 
-- Track your watched episodes, keep tabs on new releases and your media collection.
-- Check in, comment and rate with trakt to share what you are watching.
-- Sync shows and movies between devices and media centers with trakt.
-- No sign-in required, keep going without an internet connection.
+- Track your watched episodes, keep tabs on new releases and manage your media collection.
+- Connect with trakt to check in, comment, rate and to sync between devices and media centers.
+- No sign-in required, keeps working without an internet connection.
 - DashClock extension.
+- List widget.
 - Plug in extensions or build your own: http://seriesgui.de/api
 
 .....
@@ -13,7 +13,7 @@ Get the subscription to unlock all features and support SeriesGuide! You will ge
 
 http://seriesgui.de/whypay
 
-NOTE: Dates and times are limited to the first release in the country of origin. You can't watch episodes.
+NOTE: Dates and times are limited to the first release in the country of origin.
 
 This app uses data and images by TheTVDB licensed under CC BY-NC 4.0. https://thetvdb.com/?tab=tos http://creativecommons.org/licenses/by-nc/4.0/
 This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
