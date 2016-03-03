@@ -57,11 +57,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
         super.onDisabled(context);
 
         // remove the update alarm if the last widget is gone
-        PendingIntent pi = getUpdatePendingIntent(context);
-
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.cancel(pi);
-        Timber.d("onDisabled: canceled widget UPDATE alarm.");
+        if (am != null) {
+            PendingIntent pi = getUpdatePendingIntent(context);
+            am.cancel(pi);
+            Timber.d("onDisabled: canceled widget UPDATE alarm.");
+        }
     }
 
     @Override
@@ -83,6 +84,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
         if (context == null) {
             return;
         }
+        // use app context as this may be called by activities that can be destroyed
+        context = context.getApplicationContext();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         if (appWidgetManager == null) {
             return;
@@ -106,12 +109,13 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
 
         // set an alarm to update widgets every x mins if the device is awake
-        PendingIntent pi = getUpdatePendingIntent(context);
-
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
-                + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
-        Timber.d("onUpdate: scheduled widget UPDATE alarm.");
+        if (am != null) {
+            PendingIntent pi = getUpdatePendingIntent(context);
+            am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
+                    + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
+            Timber.d("onUpdate: scheduled widget UPDATE alarm.");
+        }
     }
 
     @Override
