@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2016 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,9 @@ import timber.log.Timber;
  */
 public class CloudSetupFragment extends Fragment {
 
-    private static final int REQUEST_CODE_SIGN_IN = 0;
+    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
+    private static final int REQUEST_CODE_SIGN_IN = 1;
+    private static final int REQUEST_ACCOUNT_PICKER = 2;
 
     private Button mButtonAction;
     private TextView mTextViewDescription;
@@ -203,7 +205,7 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case CloudSetupActivity.REQUEST_ACCOUNT_PICKER: {
+            case REQUEST_ACCOUNT_PICKER: {
                 if (data != null && data.getExtras() != null) {
                     String accountName = data.getExtras().getString(
                             AccountManager.KEY_ACCOUNT_NAME);
@@ -259,7 +261,7 @@ public class CloudSetupFragment extends Fragment {
         if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
             GooglePlayServicesUtil
                     .getErrorDialog(connectionStatusCode, getActivity(),
-                            CloudSetupActivity.REQUEST_GOOGLE_PLAY_SERVICES).show();
+                            REQUEST_GOOGLE_PLAY_SERVICES).show();
             setLock(true);
             return;
         }
@@ -307,7 +309,7 @@ public class CloudSetupFragment extends Fragment {
         // launch account picker
         startActivityForResult(
                 HexagonTools.getAccountCredential(getActivity()).newChooseAccountIntent(),
-                CloudSetupActivity.REQUEST_ACCOUNT_PICKER);
+                REQUEST_ACCOUNT_PICKER);
     }
 
     private void signOut() {
