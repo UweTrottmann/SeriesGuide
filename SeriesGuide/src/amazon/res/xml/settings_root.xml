@@ -50,7 +50,13 @@
 
     <PreferenceCategory android:title="@string/prefs_category_sharing">
 
-        <!-- Dropped link to Cloud setup, not available on Amazon version -->
+        <Preference
+            android:key="com.battlelancer.seriesguide.cloud"
+            android:title="@string/hexagon">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
 
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
