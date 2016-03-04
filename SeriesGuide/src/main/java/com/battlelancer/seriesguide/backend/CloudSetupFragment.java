@@ -20,6 +20,7 @@ import android.Manifest;
 import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -47,7 +48,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
@@ -71,6 +72,7 @@ public class CloudSetupFragment extends Fragment {
     private boolean mIsProgressLocked;
 
     private boolean mIsGooglePlayMissingLocked;
+    private Snackbar snackbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -256,25 +258,37 @@ public class CloudSetupFragment extends Fragment {
      * Ensure Google Play Services is up to date, if not help the user update it.
      */
     private void checkGooglePlayServicesAvailable() {
-        final int connectionStatusCode = GooglePlayServicesUtil
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int connectionStatusCode = googleApiAvailability
                 .isGooglePlayServicesAvailable(getActivity());
-        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
-            GooglePlayServicesUtil
-                    .getErrorDialog(connectionStatusCode, getActivity(),
-                            REQUEST_GOOGLE_PLAY_SERVICES).show();
+        if (googleApiAvailability.isUserResolvableError(connectionStatusCode)) {
             setLock(true);
+            googleApiAvailability.getErrorDialog(getActivity(), connectionStatusCode,
+                    REQUEST_GOOGLE_PLAY_SERVICES, new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            showGooglePlayServicesWarning();
+                        }
+                    }).show();
+        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
+            setLock(true);
+            showGooglePlayServicesWarning();
+            Timber.i("This device is not supported. Code " + connectionStatusCode);
+        } else {
+            setLock(false);
+        }
+    }
+
+    private void showGooglePlayServicesWarning() {
+        if (getView() == null) {
             return;
         }
-        if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            if (getView() != null) {
-                Snackbar.make(getView(), R.string.hexagon_google_play_missing,
-                        Snackbar.LENGTH_INDEFINITE).show();
-            }
-            Timber.i("This device is not supported.");
-            setLock(true);
-            return;
+        if (snackbar != null) {
+            snackbar.dismiss();
         }
-        setLock(false);
+        snackbar = Snackbar.make(getView(), R.string.hexagon_google_play_missing,
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
     }
 
     private void trySignIn() {
