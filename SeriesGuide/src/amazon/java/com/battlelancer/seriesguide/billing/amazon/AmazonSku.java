@@ -23,8 +23,11 @@ public enum AmazonSku {
 
     /**
      * The yearly subscription with a trial month. Unlocks access to everything.
+     *
+     * <p>{@code seriesguide-sub} is the parent SKU, the unlock all subscription. It may have
+     * multiple children with different periods. Currently we only have one yearly period.
      */
-    SERIESGUIDE_SUB("seriesguide-sub"),
+    SERIESGUIDE_SUB_YEARLY("seriesguide-sub-year"),
     /**
      * The one-time purchase. Unlocks access to everything.
      */
@@ -41,8 +44,8 @@ public enum AmazonSku {
     }
 
     public static AmazonSku fromSku(final String sku) {
-        if (SERIESGUIDE_SUB.getSku().equals(sku)) {
-            return SERIESGUIDE_SUB;
+        if (SERIESGUIDE_SUB_YEARLY.getSku().equals(sku)) {
+            return SERIESGUIDE_SUB_YEARLY;
         }
         if (SERIESGUIDE_PASS.getSku().equals(sku)) {
             return SERIESGUIDE_PASS;

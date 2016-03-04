@@ -130,7 +130,7 @@ public class AmazonBillingActivity extends BaseActivity {
     }
 
     private void subscribe() {
-        final RequestId requestId = PurchasingService.purchase(AmazonSku.SERIESGUIDE_SUB.getSku());
+        final RequestId requestId = PurchasingService.purchase(AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku());
         Timber.d("subscribe: requestId (" + requestId + ")");
     }
 
@@ -178,7 +178,7 @@ public class AmazonBillingActivity extends BaseActivity {
         if (price == null) {
             price = "--";
         }
-        if (AmazonSku.SERIESGUIDE_SUB.getSku().equals(product.getSku())) {
+        if (AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku().equals(product.getSku())) {
             if (textViewPriceSub != null) {
                 textViewPriceSub.setText(
                         getString(R.string.billing_price_subscribe, price));
