@@ -57,13 +57,13 @@
   <string name="comments">Comentários</string>
   <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
   <string name="shout_invalid">O teu comentário não está de acordo com as regras!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Publicacao</string>
   <string name="isspoiler">Alerta de \"spoiler\"!</string>
   <string name="no_shouts">Seja o primeiro a comentar!</string>
   <string name="refresh">Atualizar</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d resposta</item>
+    <item quantity="other">%d respostas</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ABSOLUTO</string>
@@ -219,16 +219,16 @@
   <string name="movies_on_watchlist">%s por ver</string>
   <string name="runtime_movies_watchlist">Duração de todos os filmes que desejas ver</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dia</item>
+    <item quantity="other">%d dias</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d hora</item>
+    <item quantity="other">%d horas</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minutos</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
@@ -295,8 +295,8 @@
   <string name="rating8">Excelente</string>
   <string name="rating9">Soberbo</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d voto</item>
+    <item quantity="other">%d votos</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Dar entrada</string>
@@ -316,13 +316,13 @@
   <string name="pref_onlyfuturesummary">Nunca mostrar episódios que já tenham estreado</string>
   <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
   <string name="pref_onlyseasonepssummary">Episódios especiais apenas na lista de temporadas</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">Exibir datas exatas</string>
+  <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"Dentro de 3 dias\"</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Linguagem Preferida</string>
   <string name="pref_updatewifionly">Actualizar imagens apenas por Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Nao utilizar dados moveis de forma a reduzir qualquer custo com operadoras</string>
   <string name="about">Sobre SeriesGuide</string>
   <string name="pref_autoaddshows">Adicionar novas séries trakt</string>
   <string name="pref_autoaddshowssummary">Adicionar séries automaticamente da tua actividade trakt</string>

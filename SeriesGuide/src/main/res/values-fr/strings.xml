@@ -57,7 +57,7 @@
   <string name="comments">Commentaires</string>
   <string name="shout_hint">Entrez un commentaire (en anglais, plus de 5 mots)</string>
   <string name="shout_invalid">Votre commentaire ne respecte pas les règles !</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Publier</string>
   <string name="isspoiler">Alerte au spoiler !</string>
   <string name="no_shouts">Soyez le premier à commenter !</string>
   <string name="refresh">Rafraîchir</string>

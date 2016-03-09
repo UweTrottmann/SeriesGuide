@@ -57,13 +57,13 @@
   <string name="comments">Commenti</string>
   <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
   <string name="shout_invalid">Il tuo commento non rispetta le regole!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Posta</string>
   <string name="isspoiler">Attenzione Spoiler!</string>
   <string name="no_shouts">Sii il primo a segnalare!</string>
   <string name="refresh">Aggiorna</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d risposta</item>
+    <item quantity="other">%d risposte</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ASSOLUTA</string>
@@ -219,16 +219,16 @@
   <string name="movies_on_watchlist">%s nella lista dei film da vedere</string>
   <string name="runtime_movies_watchlist">durata totale dei film da vedere</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d giorno</item>
+    <item quantity="other">%d giorni</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d ora</item>
+    <item quantity="other">%d ore</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minuti</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Sperimentale!</string>
@@ -295,8 +295,8 @@
   <string name="rating8">Ottimo</string>
   <string name="rating9">Stupendo</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d voto</item>
+    <item quantity="other">%d voti</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Check-in</string>
@@ -322,7 +322,7 @@
   <string name="pref_episodesorting">Ordina episodi per&#8230;</string>
   <string name="pref_language">Lingua preferita per i contenuti</string>
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Per ridurre il consumo di dati, non scaricare le copertine attraverso connessione dati</string>
   <string name="about">Info su SeriesGuide</string>
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
