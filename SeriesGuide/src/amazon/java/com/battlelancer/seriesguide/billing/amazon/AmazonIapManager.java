@@ -312,7 +312,9 @@ public class AmazonIapManager {
     private void grantPurchase(final Receipt receipt, final UserData userData) {
         final AmazonSku amazonSku = AmazonSku.fromSku(receipt.getSku());
         // Verify that the SKU is still applicable.
-        if (amazonSku != AmazonSku.SERIESGUIDE_SUB_YEARLY && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
+        // for subscriptions receipts contain the parent SKU, not the purchased period SKU
+        if (amazonSku != AmazonSku.SERIESGUIDE_SUB_PARENT
+                && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
             Timber.w("The SKU [" + receipt.getSku() + "] in the receipt is not valid anymore ");
             // if the sku is not applicable anymore, call
             // PurchasingService.notifyFulfillment with status "UNAVAILABLE"
