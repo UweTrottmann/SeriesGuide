@@ -65,34 +65,6 @@ import timber.log.Timber;
  */
 public class IabHelper {
 
-    // Are subscriptions supported?
-    boolean subscriptionsSupported = false;
-
-    // Is an asynchronous operation in progress?
-    // (only one at a time can be in progress)
-    boolean asyncInProgress = false;
-
-    // (for logging/debugging)
-    // if asyncInProgress == true, what asynchronous operation is in progress?
-    String asyncOperation = "";
-
-    @Nullable
-    Context context;
-
-    @Nullable
-    IInAppBillingService billingService;
-    @Nullable
-    ServiceConnection billingServiceConnection;
-
-    /** The request code used to launch the current purchase flow. */
-    int requestCode;
-
-    /** The item type of the current purchase flow. */
-    String purchasingItemType;
-
-    // Public key for verifying signature, in base64 encoding
-    private final String signatureBase64;
-
     // Billing response codes
     /** Success. */
     public static final int BILLING_RESPONSE_RESULT_OK = 0;
@@ -125,10 +97,12 @@ public class IabHelper {
     public static final int IABHELPER_SEND_INTENT_FAILED = -1004;
     public static final int IABHELPER_USER_CANCELLED = -1005;
     public static final int IABHELPER_UNKNOWN_PURCHASE_RESPONSE = -1006;
-    public static final int IABHELPER_MISSING_TOKEN = -1007;
+    // used with consumables
+//    public static final int IABHELPER_MISSING_TOKEN = -1007;
     public static final int IABHELPER_UNKNOWN_ERROR = -1008;
     public static final int IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE = -1009;
-    public static final int IABHELPER_INVALID_CONSUMPTION = -1010;
+    // used with consumables
+//    public static final int IABHELPER_INVALID_CONSUMPTION = -1010;
 
     // Keys for the responses from InAppBillingService
     public static final String RESPONSE_CODE = "RESPONSE_CODE";
@@ -147,7 +121,30 @@ public class IabHelper {
 
     // some fields on the getSkuDetails response bundle
     public static final String GET_SKU_DETAILS_ITEM_LIST = "ITEM_ID_LIST";
-    public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
+//    public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
+
+    @Nullable
+    private Context context;
+    @Nullable
+    private IInAppBillingService billingService;
+    @Nullable
+    private ServiceConnection billingServiceConnection;
+
+    /** Public key for verifying signature, in base64 encoding. */
+    private final String signatureBase64;
+    private boolean subscriptionsSupported = false;
+
+    // Is an asynchronous operation in progress?
+    // (only one at a time can be in progress)
+    private boolean asyncInProgress = false;
+    // (for logging/debugging)
+    // if asyncInProgress == true, what asynchronous operation is in progress?
+    private String asyncOperation = "";
+
+    /** The request code used to launch the current purchase flow. */
+    private int requestCode;
+    /** The item type of the current purchase flow. */
+    private String purchasingItemType;
 
     /**
      * Creates an instance. After creation, it will not yet be ready to use. You must perform setup
