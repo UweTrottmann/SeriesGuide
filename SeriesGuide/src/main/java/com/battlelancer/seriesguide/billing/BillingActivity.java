@@ -23,6 +23,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
@@ -60,7 +61,7 @@ public class BillingActivity extends BaseActivity {
 
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
 
-    private IabHelper mBillingHelper;
+    private IabHelper billingHelper;
 
     private View mProgressScreen;
 
@@ -94,9 +95,6 @@ public class BillingActivity extends BaseActivity {
         }
 
         setWaitMode(true);
-
-        mBillingHelper = new IabHelper(this);
-        mBillingHelper.startSetup(mBillingSetupListener);
     }
 
     @Override
@@ -154,12 +152,12 @@ public class BillingActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Timber.d("onActivityResult(" + requestCode + "," + resultCode + "," + data);
         // Have we been disposed of in the meantime? If so, quit.
-        if (mBillingHelper == null) {
+        if (billingHelper == null) {
             return;
         }
 
         // Pass on the activity result to the helper for handling
-        if (!mBillingHelper.handleActivityResult(requestCode, resultCode, data)) {
+        if (!billingHelper.handleActivityResult(requestCode, resultCode, data)) {
             // not handled, so handle it ourselves (here's where you'd
             // perform any handling of activity results not related to in-app
             // billing...
@@ -170,20 +168,27 @@ public class BillingActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
 
-        Timber.i("Disposing of IabHelper.");
-        if (mBillingHelper != null) {
-            mBillingHelper.dispose();
-        }
-        mBillingHelper = null;
+        billingHelper = new IabHelper(this);
+        billingHelper.startSetup(billingSetupListener);
     }
 
-    private IabHelper.OnIabSetupFinishedListener mBillingSetupListener
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (billingHelper != null) {
+            billingHelper.dispose();
+            billingHelper = null;
+        }
+    }
+
+    private IabHelper.OnIabSetupFinishedListener billingSetupListener
             = new IabHelper.OnIabSetupFinishedListener() {
         public void onIabSetupFinished(IabResult result) {
-            if (mBillingHelper == null) {
+            if (billingHelper == null) {
                 // disposed
                 return;
             }
@@ -199,16 +204,16 @@ public class BillingActivity extends BaseActivity {
             Timber.d("onIabSetupFinished: Successful. Querying inventory.");
             List<String> detailSkus = new ArrayList<>();
             detailSkus.add(SKU_X_SUB);
-            mBillingHelper.queryInventoryAsync(true, detailSkus, mGotInventoryListener);
+            billingHelper.queryInventoryAsync(true, detailSkus, queryInventoryFinishedListener);
         }
     };
 
     // Listener that's called when we finish querying the items and
     // subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
+    IabHelper.QueryInventoryFinishedListener queryInventoryFinishedListener
             = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            if (mBillingHelper == null) {
+            if (billingHelper == null) {
                 // disposed
                 return;
             }
@@ -237,21 +242,19 @@ public class BillingActivity extends BaseActivity {
      * the subscription for life). Also sets the current state through {@link
      * AdvancedSettings#setSupporterState(Context, boolean)}.
      */
-    public static boolean checkForSubscription(Context context, Inventory inventory) {
+    public static boolean checkForSubscription(@NonNull Context context,
+            @NonNull Inventory inventory) {
         /*
          * Check for items we own. Notice that for each purchase, we check the
          * developer payload to see if it's correct! See
          * verifyDeveloperPayload().
          */
 
-        /*
-         * Does the user have the deprecated X Upgrade in-app purchase? He gets
-         * X for life.
-         */
+        // Does the user have the deprecated X Upgrade in-app purchase? If so unlock all features.
         Purchase premiumPurchase = inventory.getPurchase(SKU_X);
         boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
 
-        // Does the user subscribe to the X features?
+        // Does the user have an active unlock all subscription?
         Purchase xSubLegacy = inventory.getPurchase(SKU_X_SUB_LEGACY);
         Purchase xSub = inventory.getPurchase(SKU_X_SUB);
         boolean isSubscribedToX = (xSubLegacy != null && verifyDeveloperPayload(xSubLegacy))
@@ -337,18 +340,18 @@ public class BillingActivity extends BaseActivity {
 
         setWaitMode(true);
 
-        mBillingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
-                mPurchaseFinishedListener, payload);
+        billingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
+                purchaseFinishedListener, payload);
     }
 
     // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+    IabHelper.OnIabPurchaseFinishedListener purchaseFinishedListener
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Timber.d("Purchase finished: " + result + ", purchase: " + purchase);
 
             // Have we been disposed of in the meantime? If so, quit.
-            if (mBillingHelper == null) {
+            if (billingHelper == null) {
                 return;
             }
 
