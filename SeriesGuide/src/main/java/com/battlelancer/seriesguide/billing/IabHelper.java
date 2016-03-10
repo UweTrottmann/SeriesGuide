@@ -43,9 +43,9 @@ import timber.log.Timber;
  * (blocking) and asynchronous (non-blocking) methods for many common in-app billing operations, as
  * well as automatic signature verification.
  *
- * <p>After instantiating, you must perform setup in order to start using the object. To perform setup,
- * call the {@link #startSetup} method and provide a listener; that listener will be notified when
- * setup is complete, after which (and not before) you may call other methods.
+ * <p>After instantiating, you must perform setup in order to start using the object. To perform
+ * setup, call the {@link #startSetup} method and provide a listener; that listener will be notified
+ * when setup is complete, after which (and not before) you may call other methods.
  *
  * <p>After setup is complete, you will typically want to request an inventory of owned items and
  * subscriptions. See {@link #queryInventory}, {@link #queryInventoryAsync} and related methods.
@@ -189,20 +189,15 @@ public class IabHelper {
         startSetup(new OnIabSetupFinishedListener() {
             @Override
             public void onIabSetupFinished(IabResult result) {
-                // TODO ut: make this superfluous (queryInventory should check if it has what it needs)
-                if (disposed) {
-                    // the caller has disposed of the helper, abort
-                    return;
-                }
-
                 if (!result.isSuccess()) {
                     // do not care about failure, will try again next time
                     dispose();
                     return;
                 }
 
+                // only query for owned items, we do not care about sku details
                 Timber.d("onIabSetupFinished: Successful. Querying inventory.");
-                queryInventoryAsync(new QueryInventoryFinishedListener() {
+                queryInventoryAsync(false, null, new QueryInventoryFinishedListener() {
                     @Override
                     public void onQueryInventoryFinished(IabResult result, Inventory inv) {
                         if (result.isFailure()) {
@@ -257,7 +252,8 @@ public class IabHelper {
     }
 
     @NonNull
-    private ServiceConnection buildServiceConnection(@NonNull final OnIabSetupFinishedListener listener) {
+    private ServiceConnection buildServiceConnection(
+            @NonNull final OnIabSetupFinishedListener listener) {
         return new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName name) {
@@ -304,14 +300,14 @@ public class IabHelper {
                     // restarted)
                     Timber.e(e, "onServiceConnected: checking billing support failed.");
                     listener.onIabSetupFinished(new IabResult(IABHELPER_REMOTE_EXCEPTION,
-                                    "RemoteException while setting up in-app billing."));
+                            "RemoteException while setting up in-app billing."));
                     return;
                 }
 
                 // success, in-app billing is possible
                 setupDone = true;
                 listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_OK,
-                                "Setup successful."));
+                        "Setup successful."));
             }
         };
     }
@@ -345,16 +341,6 @@ public class IabHelper {
         if (disposed) {
             throw new IllegalStateException("IabHelper was disposed of, so it cannot be used.");
         }
-    }
-
-    private boolean isDisposedOrNotSetup() {
-        if (disposed) {
-            logWarn("IabHelper was disposed of, so it cannot be used.");
-        }
-        if (!setupDone) {
-            logWarn("IAB helper is not set up.");
-        }
-        return disposed || !setupDone;
     }
 
     /**
@@ -603,9 +589,9 @@ public class IabHelper {
      * Ignored if null or if querySkuDetails is false.
      * @throws IabException if a problem occurs while refreshing the inventory.
      */
-    private static Inventory queryInventory(IInAppBillingService service, String packageName,
-            String signatureBase64, boolean subscriptionsSupported, boolean querySkuDetails,
-            List<String> moreItemSkus)
+    private static Inventory queryInventory(@NonNull IInAppBillingService service,
+            String packageName, String signatureBase64, boolean subscriptionsSupported,
+            boolean querySkuDetails, List<String> moreItemSkus)
             throws IabException {
         try {
             Inventory inv = new Inventory();
@@ -657,7 +643,7 @@ public class IabHelper {
          * Called to notify that an inventory query operation completed.
          *
          * @param result The result of the operation.
-         * @param inv The inventory.
+         * @param inv The inventory. Never null if the result is success.
          */
         void onQueryInventoryFinished(IabResult result, Inventory inv);
     }
@@ -673,10 +659,11 @@ public class IabHelper {
      * @param moreSkus as in {@link #queryInventory}
      * @param listener The listener to notify when the refresh operation completes.
      */
-    public void queryInventoryAsync(final boolean querySkuDetails,
-            final List<String> moreSkus,
+    public void queryInventoryAsync(final boolean querySkuDetails, final List<String> moreSkus,
             final QueryInventoryFinishedListener listener) {
-        if (isDisposedOrNotSetup()) {
+        if (context == null || billingService == null) {
+            // avoid creating a thread by doing checks here as well
+            warnQueryInventorySkipped(listener);
             return;
         }
 
@@ -684,8 +671,9 @@ public class IabHelper {
         flagStartAsync("refresh inventory");
         (new Thread(new Runnable() {
             public void run() {
-                if (isDisposedOrNotSetup()) {
+                if (context == null || billingService == null) {
                     flagEndAsync();
+                    warnQueryInventorySkipped(listener);
                     return;
                 }
 
@@ -704,7 +692,7 @@ public class IabHelper {
 
                 final IabResult result_f = result;
                 final Inventory inv_f = inv;
-                if (!disposed && listener != null) {
+                if (listener != null) {
                     handler.post(new Runnable() {
                         public void run() {
                             listener.onQueryInventoryFinished(result_f, inv_f);
@@ -715,8 +703,17 @@ public class IabHelper {
         })).start();
     }
 
-    public void queryInventoryAsync(QueryInventoryFinishedListener listener) {
-        queryInventoryAsync(true, null, listener);
+    private void warnQueryInventorySkipped(QueryInventoryFinishedListener listener) {
+        if (context == null) {
+            logWarn("queryInventoryAsync: failed, helper was disposed of.");
+        }
+        if (billingService == null) {
+            logWarn("queryInventoryAsync: failed, service not set up or disconnected.");
+        }
+        if (listener != null) {
+            listener.onQueryInventoryFinished(new IabResult(BILLING_RESPONSE_RESULT_ERROR,
+                    "Inventory refresh skipped, not set up."), null);
+        }
     }
 
     /**
@@ -818,10 +815,10 @@ public class IabHelper {
         mAsyncInProgress = false;
     }
 
-    private static int queryPurchases(IInAppBillingService service, String packageName,
-            String signatureBase64, Inventory inv, String itemType)
+    private static int queryPurchases(@NonNull IInAppBillingService service,
+            @NonNull String packageName, @NonNull String signatureBase64, @NonNull Inventory inv,
+            @NonNull String itemType)
             throws JSONException, RemoteException {
-        // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
         logDebug("Package name: " + packageName);
         boolean verificationFailed = false;
@@ -850,6 +847,10 @@ public class IabHelper {
                     RESPONSE_INAPP_PURCHASE_DATA_LIST);
             ArrayList<String> signatureList = ownedItems.getStringArrayList(
                     RESPONSE_INAPP_SIGNATURE_LIST);
+            if (ownedSkus == null || purchaseDataList == null || signatureList == null) {
+                logError("Fields returned in bundle from getPurchases() not in expected format.");
+                return IABHELPER_BAD_RESPONSE;
+            }
 
             for (int i = 0; i < purchaseDataList.size(); ++i) {
                 String purchaseData = purchaseDataList.get(i);
@@ -881,8 +882,9 @@ public class IabHelper {
         return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
     }
 
-    private static int querySkuDetails(IInAppBillingService service, String packageName,
-            String itemType, Inventory inv, List<String> moreSkus)
+    private static int querySkuDetails(@NonNull IInAppBillingService service,
+            @NonNull String packageName, @NonNull String itemType, @NonNull Inventory inv,
+            @Nullable List<String> moreSkus)
             throws RemoteException, JSONException {
         logDebug("Querying SKU details.");
         ArrayList<String> skuList = new ArrayList<>();
@@ -918,12 +920,14 @@ public class IabHelper {
 
         ArrayList<String> responseList = skuDetails.getStringArrayList(
                 RESPONSE_GET_SKU_DETAILS_LIST);
-
-        for (String thisResponse : responseList) {
-            SkuDetails d = new SkuDetails(itemType, thisResponse);
-            logDebug("Got sku details: " + d);
-            inv.addSkuDetails(d);
+        if (responseList != null) {
+            for (String thisResponse : responseList) {
+                SkuDetails d = new SkuDetails(itemType, thisResponse);
+                logDebug("Got sku details: " + d);
+                inv.addSkuDetails(d);
+            }
         }
+
         return BILLING_RESPONSE_RESULT_OK;
     }
 
