@@ -250,14 +250,11 @@ public class BillingActivity extends BaseActivity {
          * verifyDeveloperPayload().
          */
 
-        /*
-         * Does the user have the deprecated X Upgrade in-app purchase? He gets
-         * X for life.
-         */
+        // Does the user have the deprecated X Upgrade in-app purchase? If so unlock all features.
         Purchase premiumPurchase = inventory.getPurchase(SKU_X);
         boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
 
-        // Does the user subscribe to the X features?
+        // Does the user have an active unlock all subscription?
         Purchase xSubLegacy = inventory.getPurchase(SKU_X_SUB_LEGACY);
         Purchase xSub = inventory.getPurchase(SKU_X_SUB);
         boolean isSubscribedToX = (xSubLegacy != null && verifyDeveloperPayload(xSubLegacy))
@@ -344,11 +341,11 @@ public class BillingActivity extends BaseActivity {
         setWaitMode(true);
 
         billingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB, RC_REQUEST,
-                mPurchaseFinishedListener, payload);
+                purchaseFinishedListener, payload);
     }
 
     // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+    IabHelper.OnIabPurchaseFinishedListener purchaseFinishedListener
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Timber.d("Purchase finished: " + result + ", purchase: " + purchase);
