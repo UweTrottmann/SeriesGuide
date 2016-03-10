@@ -41,10 +41,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
-import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.IabHelper;
-import com.battlelancer.seriesguide.billing.IabResult;
-import com.battlelancer.seriesguide.billing.Inventory;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -64,7 +61,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import de.greenrobot.event.EventBus;
-import timber.log.Timber;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -83,7 +79,7 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int NOW_TRAKT_USER_LOADER_ID = 106;
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
 
-    private IabHelper mBillingHelper;
+    private IabHelper billingHelper;
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
@@ -274,24 +270,8 @@ public class ShowsActivity extends BaseTopActivity implements
         if (Utils.hasXpass(this)) {
             return;
         }
-        mBillingHelper = new IabHelper(this);
-        mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (mBillingHelper == null) {
-                    // disposed
-                    return;
-                }
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem. Try again next time.
-                    disposeIabHelper();
-                    return;
-                }
-
-                Timber.d("onIabSetupFinished: Successful. Querying inventory.");
-                mBillingHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
+        billingHelper = new IabHelper(this);
+        billingHelper.startSetupAndQueryInventory();
     }
 
     @Override
@@ -368,7 +348,10 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disposeIabHelper();
+        if (billingHelper != null) {
+            billingHelper.dispose();
+            billingHelper = null;
+        }
     }
 
     @Override
@@ -502,35 +485,6 @@ public class ShowsActivity extends BaseTopActivity implements
         // replace the first run fragment with a show fragment
         tabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
         tabsAdapter.notifyTabsChanged();
-    }
-
-    // Listener that's called when we finish querying the items and
-    // subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
-            = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            if (mBillingHelper == null) {
-                // disposed
-                return;
-            }
-
-            if (result.isFailure()) {
-                // do not care about failure, will try again next time
-                disposeIabHelper();
-                return;
-            }
-
-            BillingActivity.checkForSubscription(ShowsActivity.this, inventory);
-            disposeIabHelper();
-        }
-    };
-
-    private void disposeIabHelper() {
-        Timber.i("Disposing of IabHelper.");
-        if (mBillingHelper != null) {
-            mBillingHelper.dispose();
-        }
-        mBillingHelper = null;
     }
 
     /**
