@@ -5,8 +5,26 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 29 *(in development)*
+Version 29 *(2016-03-11)*
 -----------------------------
+
+* Combined search and "Add show" screen.
+* Improved layout in comments and movie details on large tablets.
+* Display episode number in notifications and DashClock extension.
+* List widget updates immediately when marking watched, in-app settings affecting it change.
+* SeriesGuide Cloud support on Amazon version if Google Play Services are available.
+
+#### 29.0.1 *(2016-03-11)*
+
+* FIX Use correct SKU to validate Amazon subscription purchases.
+* FIX Crash when trying to purchase with Google Play, but billing service is not connected any longer.
+* FIX Do not leak activity with connectivity manager (androidutils update).
+
+#### 29 *(2016-03-10)*
+
+* FEATURE Enable SeriesGuide Cloud on Amazon version if the device has Google Play Services.
+* FIX Price of subscription not displayed on Amazon version.
+* NOTICE Latest translations from crowdin.
 
 #### 29-beta3 *(2016-03-03)*
 
