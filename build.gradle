@@ -23,17 +23,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 23
-    buildToolsVersion = '23.0.2'
+    androidCompileSdkVersion = 23
+    androidBuildToolsVersion = '23.0.2'
 
     // API level 15+ -> version 15xxx
-    versionCode = 15172
-    versionName = '29-beta3'
+    androidVersionCode = 15172
+    androidVersionName = '29-beta3'
+
+    supportVersion = '23.1.1'
 }
-
-ext.libraries = [
-
-        supportv4: 'com.android.support:support-v4:23.1.1',
-        supportannotations: 'com.android.support:support-annotations:23.1.1'
-
-]

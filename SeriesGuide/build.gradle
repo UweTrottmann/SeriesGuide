@@ -20,8 +20,8 @@ def loadStringPropertyOrPlaceholder(String name) {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion project.androidCompileSdkVersion
+    buildToolsVersion project.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion 15
@@ -55,8 +55,8 @@ android {
     productFlavors {
         free {
             applicationId "com.battlelancer.seriesguide"
-            versionCode rootProject.ext.versionCode
-            versionName rootProject.ext.versionName
+            versionCode project.androidVersionCode
+            versionName project.androidVersionName
 
             manifestPlaceholders = [
                     androidBackupKey: rootProject.hasProperty("FREE.ANDROID_BACKUP_KEY")
@@ -65,13 +65,13 @@ android {
         }
         amazon {
             applicationId "com.uwetrottmann.seriesguide.amzn"
-            versionCode rootProject.ext.versionCode
-            versionName rootProject.ext.versionName
+            versionCode project.androidVersionCode
+            versionName project.androidVersionName
         }
         preview {
             applicationId "com.uwetrottmann.seriesguide.preview"
-            versionCode rootProject.ext.versionCode
-            versionName rootProject.ext.versionName + "-preview"
+            versionCode project.androidVersionCode
+            versionName project.androidVersionName + "-preview"
         }
     }
 
@@ -113,13 +113,7 @@ dependencies {
     compile project(':api')
     compile project(':libraries:drag-sort-listview')
     compile project(':libraries:stickygridheaders')
-    compile rootProject.ext.libraries.supportv4
-    compile rootProject.ext.libraries.supportannotations
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:customtabs:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+
     // https://docs.fabric.io/android/changelog.html
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
@@ -151,9 +145,19 @@ dependencies {
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
     compile 'net.danlew:android.joda:2.9.2'
 
+    // Android support libraries
+    compile "com.android.support:support-v4:$supportVersion"
+    compile "com.android.support:support-annotations:$supportVersion"
+    compile "com.android.support:appcompat-v7:$supportVersion"
+    compile "com.android.support:cardview-v7:$supportVersion"
+    compile "com.android.support:customtabs:$supportVersion"
+    compile "com.android.support:design:$supportVersion"
+    compile "com.android.support:recyclerview-v7:$supportVersion"
+
     // Google Play Services
-    compile 'com.google.android.gms:play-services-base:8.1.0'
-    compile 'com.google.android.gms:play-services-analytics:8.1.0'
+    def playServicesVersion = '8.1.0'
+    compile "com.google.android.gms:play-services-base:$playServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
@@ -169,7 +173,7 @@ dependencies {
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.61.jar')
 
     // Android unit tests
-    androidTestCompile rootProject.ext.libraries.supportannotations
+    androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
 
 }
