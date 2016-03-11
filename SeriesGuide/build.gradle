@@ -132,7 +132,9 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     // temporarily add okhttp 3 support to retrofit 1
     compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
-    compile 'com.uwetrottmann.androidutils:androidutils:2.2.0'
+    compile ('com.uwetrottmann.androidutils:androidutils:2.2.0') {
+        exclude group: 'com.android.support'
+    }
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann:tmdb-java:0.9.1'

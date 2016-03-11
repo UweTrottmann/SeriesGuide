@@ -100,7 +100,7 @@
   <string name="collect_all">Се во колеција</string>
   <string name="uncollect_all">Ништо во колекција</string>
   <string name="action_skip">Прескокни</string>
-  <string name="action_dont_skip">Немој прескокни</string>
+  <string name="action_dont_skip">Не прескокнувај</string>
   <string name="action_collection_add">Додади во колекција</string>
   <string name="action_collection_remove">Одстрани од колекција</string>
   <string name="action_collection_added">Додадено во колекција</string>

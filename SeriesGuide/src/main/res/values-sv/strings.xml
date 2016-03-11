@@ -58,13 +58,13 @@
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
   <string name="shout_invalid">Din kommentar följer inte reglerna!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Skicka</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
   <string name="refresh">Ladda om</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d svar</item>
+    <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">Fullständig</string>
@@ -220,12 +220,12 @@
   <string name="movies_on_watchlist">%s på bevakningslistan</string>
   <string name="runtime_movies_watchlist">speltid på filmbevakningslistan</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dag</item>
+    <item quantity="other">%d dagar</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d timme</item>
+    <item quantity="other">%d timmar</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minute</item>
@@ -260,7 +260,7 @@
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>
   <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
+  <string name="traktcheckin_wait">Jag väntar</string>
   <string name="trakt_success">Skickat till trakt.</string>
   <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
   <string name="trakt_error_general">Kunde inte kommunicera med trakt. Försök igen senare.</string>
@@ -296,8 +296,8 @@
   <string name="rating8">Mycket bra</string>
   <string name="rating9">Fantastisk</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d röst</item>
+    <item quantity="other">%d röster</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Checka in</string>
@@ -318,7 +318,7 @@
   <string name="pref_onlyseasoneps">Dölj specialavsnitt</string>
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_exactdates">Visa exakt datum</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"31 oktober\" istället för \"om 3 dagar\"</string>
   <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
   <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
@@ -345,7 +345,7 @@
   <string name="sort_order_latest_first_dvd">Senaste först (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Äldsta först (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Tid för kommande</string>
   <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">1 dag</string>
   <string name="upcoming_upto_three_days">3 dagar</string>
@@ -400,7 +400,7 @@
   <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
   <string name="no_file_selected">Ingen fil vald</string>
   <string name="action_select_file">Välj fil</string>
-  <string name="backup_use_default_files">Använd standard Backup filer</string>
+  <string name="backup_use_default_files">Använd förvalda backupfiler</string>
   <!-- Welcome dialog -->
   <string name="get_started">Kom igång</string>
   <string name="welcome_setuplanguage">Välj språk</string>
