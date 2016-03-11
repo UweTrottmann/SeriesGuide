@@ -32,6 +32,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,7 +57,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -496,7 +496,7 @@ public class SeasonsFragment extends ListFragment implements
                 }
             }
         };
-        AndroidUtils.executeOnPool(task, String.valueOf(getShowId()));
+        AsyncTaskCompat.executeParallel(task, String.valueOf(getShowId()));
     }
 
     public interface SeasonsQuery {

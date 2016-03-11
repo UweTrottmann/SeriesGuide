@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -64,7 +65,6 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb.entities.Credits;
 import java.util.Date;
@@ -538,7 +538,7 @@ public class ShowFragment extends Fragment {
     private void loadTraktRatings() {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
             mTraktTask = new TraktRatingsTask(getActivity(), getShowTvdbId());
-            AndroidUtils.executeOnPool(mTraktTask);
+            AsyncTaskCompat.executeParallel(mTraktTask);
         }
     }
 

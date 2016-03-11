@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -140,7 +141,7 @@ public class EpisodeTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int episodeTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new RateEpisodeTask(context, rating, episodeTvdbId));
+        AsyncTaskCompat.executeParallel(new RateEpisodeTask(context, rating, episodeTvdbId));
     }
 
     public static void validateFlags(int episodeFlags) {
@@ -217,7 +218,7 @@ public class EpisodeTools {
      * Run the task on the thread pool.
      */
     private static void execute(@NonNull Context context, @NonNull FlagType type) {
-        AndroidUtils.executeOnPool(
+        AsyncTaskCompat.executeParallel(
                 new EpisodeFlagTask(context.getApplicationContext(), type)
         );
     }
@@ -1236,7 +1237,7 @@ public class EpisodeTools {
             EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
 
             // update latest episode for the changed show
-            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(mContext),
+            AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(mContext),
                     mType.getShowTvdbId());
 
             // display success message

@@ -19,12 +19,12 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should
@@ -89,7 +89,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void checkInTrakt(String message) {
-        AndroidUtils.executeOnPool(
+        AsyncTaskCompat.executeParallel(
                 new TraktTask(getActivity()).checkInEpisode(
                         getArguments().getInt(InitBundle.EPISODE_TVDB_ID),
                         getArguments().getString(InitBundle.ITEM_TITLE),

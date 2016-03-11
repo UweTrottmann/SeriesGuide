@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -281,11 +282,11 @@ public class ShowTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int showTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new RateShowTask(context, rating, showTvdbId));
+        AsyncTaskCompat.executeParallel(new RateShowTask(context, rating, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {
-        AndroidUtils.executeOnPool(
+        AsyncTaskCompat.executeParallel(
                 new ShowsUploadTask(mContext, show)
         );
     }

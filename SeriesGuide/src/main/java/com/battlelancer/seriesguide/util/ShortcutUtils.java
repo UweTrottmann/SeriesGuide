@@ -16,15 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
-import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.OverviewFragment;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Transformation;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
@@ -35,9 +26,15 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-
+import android.support.v4.os.AsyncTaskCompat;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.OverviewFragment;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Transformation;
 import java.io.IOException;
-
 import timber.log.Timber;
 
 import static android.graphics.Shader.TileMode;
@@ -114,7 +111,7 @@ public final class ShortcutUtils {
             }
         };
         // Do all the above async
-        AndroidUtils.executeOnPool(shortCutTask);
+        AsyncTaskCompat.executeParallel(shortCutTask);
     }
 
     /** A {@link Transformation} used to draw a {@link Bitmap} with round corners */
@@ -145,12 +142,15 @@ public final class ShortcutUtils {
 
             // Picasso requires the original Bitmap to be recycled if we aren't returning it
             source.recycle();
+            //noinspection UnusedAssignment
             source = null;
 
             // Release any references to avoid memory leaks
             p.setShader(null);
             c.setBitmap(null);
+            //noinspection UnusedAssignment
             p = null;
+            //noinspection UnusedAssignment
             c = null;
             return transformed;
         }

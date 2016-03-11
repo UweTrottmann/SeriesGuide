@@ -21,6 +21,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -145,7 +146,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for an episode?
         int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
             );
             return;
@@ -154,7 +155,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
@@ -163,7 +164,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for a show?
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
         if (showTvdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
             );
         }

@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -72,7 +73,6 @@ import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
@@ -574,7 +574,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
             mTraktTask = new TraktRatingsTask(getActivity(), mShowTvdbId, getEpisodeTvdbId(),
                     mSeasonNumber, mEpisodeNumber);
-            AndroidUtils.executeOnPool(mTraktTask);
+            AsyncTaskCompat.executeParallel(mTraktTask);
         }
     }
 
