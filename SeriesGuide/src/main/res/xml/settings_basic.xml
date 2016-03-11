@@ -36,19 +36,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_appearance">
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/themeSelection"
-            android:entryValues="@array/themeSelectionData"
-            android:key="com.battlelancer.seriesguide.theme"
-            android:title="@string/pref_theme" />
-        <ListPreference
-            android:defaultValue="default"
-            android:entries="@array/numbers"
-            android:entryValues="@array/numberData"
-            android:key="numberformat"
-            android:title="@string/pref_number" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

@@ -366,7 +366,7 @@ public class TheTVDB {
      * Fetches episodes for the given show from TVDb, adds database ops for them. Then adds all
      * information to the database.
      */
-    private static boolean getEpisodesAndUpdateDatabase(Context context, Show show,
+    private static void getEpisodesAndUpdateDatabase(Context context, Show show,
             String language, final ArrayList<ContentProviderOperation> batch)
             throws TvdbException {
         // get ops for episodes of this show
@@ -383,8 +383,6 @@ public class TheTVDB {
 
         // insert all new episodes in bulk
         context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
-
-        return true;
     }
 
     /**

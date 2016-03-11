@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -37,7 +38,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import de.greenrobot.event.EventBus;
@@ -125,7 +125,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AndroidUtils.executeOnPool(new TraktTask(context, args));
+                            AsyncTaskCompat.executeParallel(new TraktTask(context, args));
                         } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
                             Toast.makeText(context, r.error, Toast.LENGTH_LONG).show();
@@ -133,7 +133,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     }
                 };
 
-                AndroidUtils.executeOnPool(cancelCheckinTask);
+                AsyncTaskCompat.executeParallel(cancelCheckinTask);
             }
         });
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {

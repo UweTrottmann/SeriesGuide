@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -66,12 +67,12 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
@@ -249,7 +250,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
             ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
-                    Utils.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
+                    TextTools.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
                             mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
             Utils.trackAction(getActivity(), TAG, "Add to calendar");
             return true;
@@ -389,15 +390,15 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
         // guest stars
         Utils.setLabelValueOrHide(mLabelGuestStars, mGuestStars,
-                Utils.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
+                TextTools.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
         );
         // DVD episode number
         Utils.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
         // directors
-        Utils.setValueOrPlaceholder(mDirectors, Utils.splitAndKitTVDBStrings(cursor
+        Utils.setValueOrPlaceholder(mDirectors, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.DIRECTORS)));
         // writers
-        Utils.setValueOrPlaceholder(mWriters, Utils.splitAndKitTVDBStrings(cursor
+        Utils.setValueOrPlaceholder(mWriters, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.WRITERS)));
 
         // last TVDb edit date
@@ -573,7 +574,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
             mTraktTask = new TraktRatingsTask(getActivity(), mShowTvdbId, getEpisodeTvdbId(),
                     mSeasonNumber, mEpisodeNumber);
-            AndroidUtils.executeOnPool(mTraktTask);
+            AsyncTaskCompat.executeParallel(mTraktTask);
         }
     }
 

@@ -16,13 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -147,7 +146,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for an episode?
         int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
             );
             return;
@@ -156,7 +155,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
@@ -165,7 +164,7 @@ public class TraktCommentsFragment extends Fragment {
         // comment for a show?
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
         if (showTvdbId != 0) {
-            AndroidUtils.executeOnPool(
+            AsyncTaskCompat.executeParallel(
                     new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
             );
         }
@@ -232,11 +231,11 @@ public class TraktCommentsFragment extends Fragment {
     private final AdapterView.OnItemClickListener mOnClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position, id);
+            onListItemClick((ListView) parent, v, position);
         }
     };
 
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, int position) {
         final Comment comment = (Comment) l.getItemAtPosition(position);
         if (comment == null) {
             return;
@@ -245,16 +244,13 @@ public class TraktCommentsFragment extends Fragment {
         if (comment.spoiler) {
             // if comment is a spoiler it is hidden, first click should reveal it
             comment.spoiler = false;
-            TextView shoutText = (TextView) v.findViewById(R.id.shout);
+            TextView shoutText = (TextView) v.findViewById(R.id.textViewComment);
             if (shoutText != null) {
                 shoutText.setText(comment.comment);
             }
         } else {
-            // open shout or review page
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(TraktLink.comment(comment.id)));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            Utils.tryStartActivity(getActivity(), intent, true);
+            // open comment website
+            Utils.launchWebsite(getContext(), TraktLink.comment(comment.id));
         }
     }
 

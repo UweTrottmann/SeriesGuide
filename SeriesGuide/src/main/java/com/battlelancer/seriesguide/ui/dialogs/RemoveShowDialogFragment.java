@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -103,7 +103,7 @@ public class RemoveShowDialogFragment extends DialogFragment {
 
         EventBus.getDefault().register(this);
 
-        AndroidUtils.executeOnPool(new GetShowTitleTask(getActivity()), showTvdbId);
+        AsyncTaskCompat.executeParallel(new GetShowTitleTask(getActivity()), showTvdbId);
     }
 
     @Override

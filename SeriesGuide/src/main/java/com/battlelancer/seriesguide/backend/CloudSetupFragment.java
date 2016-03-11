@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2016 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import android.Manifest;
 import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -47,7 +48,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
@@ -56,7 +57,9 @@ import timber.log.Timber;
  */
 public class CloudSetupFragment extends Fragment {
 
-    private static final int REQUEST_CODE_SIGN_IN = 0;
+    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
+    private static final int REQUEST_CODE_SIGN_IN = 1;
+    private static final int REQUEST_ACCOUNT_PICKER = 2;
 
     private Button mButtonAction;
     private TextView mTextViewDescription;
@@ -69,6 +72,7 @@ public class CloudSetupFragment extends Fragment {
     private boolean mIsProgressLocked;
 
     private boolean mIsGooglePlayMissingLocked;
+    private Snackbar snackbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -203,7 +207,7 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case CloudSetupActivity.REQUEST_ACCOUNT_PICKER: {
+            case REQUEST_ACCOUNT_PICKER: {
                 if (data != null && data.getExtras() != null) {
                     String accountName = data.getExtras().getString(
                             AccountManager.KEY_ACCOUNT_NAME);
@@ -254,25 +258,37 @@ public class CloudSetupFragment extends Fragment {
      * Ensure Google Play Services is up to date, if not help the user update it.
      */
     private void checkGooglePlayServicesAvailable() {
-        final int connectionStatusCode = GooglePlayServicesUtil
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int connectionStatusCode = googleApiAvailability
                 .isGooglePlayServicesAvailable(getActivity());
-        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
-            GooglePlayServicesUtil
-                    .getErrorDialog(connectionStatusCode, getActivity(),
-                            CloudSetupActivity.REQUEST_GOOGLE_PLAY_SERVICES).show();
+        if (googleApiAvailability.isUserResolvableError(connectionStatusCode)) {
             setLock(true);
+            googleApiAvailability.getErrorDialog(getActivity(), connectionStatusCode,
+                    REQUEST_GOOGLE_PLAY_SERVICES, new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            showGooglePlayServicesWarning();
+                        }
+                    }).show();
+        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
+            setLock(true);
+            showGooglePlayServicesWarning();
+            Timber.i("This device is not supported. Code " + connectionStatusCode);
+        } else {
+            setLock(false);
+        }
+    }
+
+    private void showGooglePlayServicesWarning() {
+        if (getView() == null) {
             return;
         }
-        if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            if (getView() != null) {
-                Snackbar.make(getView(), R.string.hexagon_google_play_missing,
-                        Snackbar.LENGTH_INDEFINITE).show();
-            }
-            Timber.i("This device is not supported.");
-            setLock(true);
-            return;
+        if (snackbar != null) {
+            snackbar.dismiss();
         }
-        setLock(false);
+        snackbar = Snackbar.make(getView(), R.string.hexagon_google_play_missing,
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
     }
 
     private void trySignIn() {
@@ -307,7 +323,7 @@ public class CloudSetupFragment extends Fragment {
         // launch account picker
         startActivityForResult(
                 HexagonTools.getAccountCredential(getActivity()).newChooseAccountIntent(),
-                CloudSetupActivity.REQUEST_ACCOUNT_PICKER);
+                REQUEST_ACCOUNT_PICKER);
     }
 
     private void signOut() {
@@ -334,7 +350,7 @@ public class CloudSetupFragment extends Fragment {
 
         public interface OnSetupFinishedListener {
 
-            public void onSetupFinished(int resultCode);
+            void onSetupFinished(int resultCode);
         }
 
         private final Context mContext;

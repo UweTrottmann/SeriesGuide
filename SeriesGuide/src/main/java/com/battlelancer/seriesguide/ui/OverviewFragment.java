@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -70,12 +71,12 @@ import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
 import java.util.Date;
@@ -346,7 +347,7 @@ public class OverviewFragment extends Fragment implements
         ShareUtils.suggestCalendarEvent(
                 getActivity(),
                 showCursor.getString(ShowQuery.SHOW_TITLE),
-                Utils.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
+                TextTools.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
                         episodeTitle),
                 currentEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                 showCursor.getInt(ShowQuery.SHOW_RUNTIME)
@@ -705,7 +706,7 @@ public class OverviewFragment extends Fragment implements
                 episode.getDouble(EpisodeQuery.DVD_NUMBER));
         // guest stars
         isShowingMeta |= Utils.setLabelValueOrHide(labelGuestStars, textGuestStars,
-                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+                TextTools.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
         // hide divider if no meta is visible
         dividerEpisodeMeta.setVisibility(isShowingMeta ? View.VISIBLE : View.GONE);
 
@@ -841,7 +842,7 @@ public class OverviewFragment extends Fragment implements
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         traktRatingsTask = new TraktRatingsTask(getActivity(), showTvdbId, episodeTvdbId,
                 seasonNumber, episodeNumber);
-        AndroidUtils.executeOnPool(traktRatingsTask);
+        AsyncTaskCompat.executeParallel(traktRatingsTask);
     }
 
     private void populateShowViews(@NonNull Cursor show) {

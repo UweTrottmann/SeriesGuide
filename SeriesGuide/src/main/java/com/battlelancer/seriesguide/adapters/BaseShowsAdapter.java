@@ -36,7 +36,7 @@ import java.util.Date;
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
     public interface OnContextMenuClickListener {
-        public void onClick(View view, ShowViewHolder viewHolder);
+        void onClick(View view, ShowViewHolder viewHolder);
     }
 
     private OnContextMenuClickListener onContextMenuClickListener;

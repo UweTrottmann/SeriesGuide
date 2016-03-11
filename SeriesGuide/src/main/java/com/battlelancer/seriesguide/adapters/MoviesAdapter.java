@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,6 @@ import java.util.List;
  */
 public class MoviesAdapter extends ArrayAdapter<Movie> {
 
-    private static int LAYOUT = R.layout.item_movie;
-
     private LayoutInflater mInflater;
 
     private String mImageBaseUrl;
@@ -48,11 +47,11 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     private PopupMenuClickListener mPopupMenuClickListener;
 
     public interface PopupMenuClickListener {
-        public void onPopupMenuClick(View v, int movieTmdbId);
+        void onPopupMenuClick(View v, int movieTmdbId);
     }
 
     public MoviesAdapter(Context context, PopupMenuClickListener listener) {
-        super(context, LAYOUT);
+        super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupMenuClickListener = listener;
 
@@ -66,6 +65,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // A ViewHolder keeps references to children views to avoid
@@ -73,7 +73,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(LAYOUT, null);
+            // do not use parent layout params to avoid padding issues
+            convertView = mInflater.inflate(R.layout.item_movie, null);
 
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);

@@ -27,10 +27,12 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -139,12 +141,10 @@ public class EpisodeTools {
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int episodeTvdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new RateEpisodeTask(context, rating, episodeTvdbId));
+        AsyncTaskCompat.executeParallel(new RateEpisodeTask(context, rating, episodeTvdbId));
     }
 
     public static void validateFlags(int episodeFlags) {
-        boolean hasValidFlag = false;
-
         if (isUnwatched(episodeFlags)) {
             return;
         }
@@ -155,10 +155,8 @@ public class EpisodeTools {
             return;
         }
 
-        if (!hasValidFlag) {
-            throw new IllegalArgumentException(
-                    "Did not pass a valid episode flag. See EpisodeFlags class for details.");
-        }
+        throw new IllegalArgumentException(
+                "Did not pass a valid episode flag. See EpisodeFlags class for details.");
     }
 
     public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
@@ -220,7 +218,7 @@ public class EpisodeTools {
      * Run the task on the thread pool.
      */
     private static void execute(@NonNull Context context, @NonNull FlagType type) {
-        AndroidUtils.executeOnPool(
+        AsyncTaskCompat.executeParallel(
                 new EpisodeFlagTask(context.getApplicationContext(), type)
         );
     }
@@ -566,6 +564,7 @@ public class EpisodeTools {
                 // use case: user accidentally toggled watched flag
                 ActivityTools.removeActivity(mContext, mEpisodeTvdbId);
             }
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
@@ -576,7 +575,7 @@ public class EpisodeTools {
             }
 
             // show episode seen/unseen message
-            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(
                     isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -616,7 +615,7 @@ public class EpisodeTools {
 
         @Override
         public String getNotificationText() {
-            String number = Utils.getEpisodeNumber(mContext, mSeason, mEpisode);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, mEpisode);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
@@ -738,7 +737,7 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute() {
-            // do nothing
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
@@ -748,7 +747,7 @@ public class EpisodeTools {
                 return null;
             }
 
-            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(
                     isWatched(mEpisodeFlag) ? R.string.trakt_seen
                             : R.string.trakt_notseen,
@@ -796,7 +795,7 @@ public class EpisodeTools {
 
         @Override
         public String getNotificationText() {
-            String number = Utils.getEpisodeNumber(mContext, mSeason, -1);
+            String number = TextTools.getEpisodeNumber(mContext, mSeason, -1);
             return mContext.getString(mEpisodeFlag == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
         }
@@ -885,6 +884,11 @@ public class EpisodeTools {
         @Override
         public List<SyncSeason> getEpisodesForTrakt() {
             return buildTraktEpisodeList();
+        }
+
+        @Override
+        protected void onPostExecute() {
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
     }
 
@@ -981,7 +985,7 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute() {
-            // do nothing
+            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(mContext);
         }
 
         @Override
@@ -1190,6 +1194,7 @@ public class EpisodeTools {
                 // show exists, but seasons not found
                 return false;
             }
+            //noinspection RedundantIfStatement
             if (response.not_found.episodes != null && !response.not_found.episodes.isEmpty()) {
                 // show and season exists, but episodes not found
                 return false;
@@ -1232,7 +1237,7 @@ public class EpisodeTools {
             EventBus.getDefault().post(new EpisodeActionCompletedEvent(mType));
 
             // update latest episode for the changed show
-            AndroidUtils.executeOnPool(new LatestEpisodeUpdateTask(mContext),
+            AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(mContext),
                     mType.getShowTvdbId());
 
             // display success message

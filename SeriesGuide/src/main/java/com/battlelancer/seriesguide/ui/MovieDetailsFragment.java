@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -130,7 +129,6 @@ public class MovieDetailsFragment extends Fragment {
     @Bind(R.id.buttonMovieComments) Button mCommentsButton;
     @Bind(R.id.progressBar) View mProgressBar;
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -154,9 +152,10 @@ public class MovieDetailsFragment extends Fragment {
         mCrewView.setVisibility(View.GONE);
 
         // poster background transparency
-        if (AndroidUtils.isJellyBeanOrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mMoviePosterBackground.setImageAlpha(30);
         } else {
+            //noinspection deprecation
             mMoviePosterBackground.setAlpha(30);
         }
 

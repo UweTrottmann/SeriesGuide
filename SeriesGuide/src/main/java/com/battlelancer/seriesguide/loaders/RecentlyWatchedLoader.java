@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
                 NowAdapter.NowItem item = new NowAdapter.NowItem().displayData(
                         timestamp,
                         episodeQuery.getString(6),
-                        Utils.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
+                        TextTools.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
                                 episodeQuery.getInt(2), episodeQuery.getString(1)),
                         episodeQuery.getString(7)
                 ).tvdbIds(episodeTvdbId, episodeQuery.getInt(5)).recentlyWatchedLocal();

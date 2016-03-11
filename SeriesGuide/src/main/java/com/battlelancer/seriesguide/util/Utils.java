@@ -38,6 +38,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -54,7 +55,6 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.google.android.gms.analytics.HitBuilders;
@@ -63,69 +63,13 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import timber.log.Timber;
 
+/**
+ * Various generic helper methods that do not fit other tool categories.
+ */
 public class Utils {
 
-    /**
-     * Returns a string in format "1x01 title" or "S1E01 title" dependent on a user preference.
-     */
-    public static String getNextEpisodeString(Context context, int season, int episode,
-            String title) {
-        String result = getEpisodeNumber(context, season, episode);
-        result += " " + title;
-        return result;
-    }
-
-    /**
-     * Returns the episode number formatted according to the users preference (e.g. '1x01',
-     * 'S01E01', ...).
-     */
-    public static String getEpisodeNumber(Context context, int season, int episode) {
-        String format = DisplaySettings.getNumberFormat(context);
-        String result = String.valueOf(season);
-        if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
-            // 1x01 format
-            result += "x";
-        } else {
-            // S01E01 format
-            // make season number always two chars long
-            if (season < 10) {
-                result = "0" + result;
-            }
-            if (DisplaySettings.NUMBERFORMAT_ENGLISHLOWER.equals(format)) {
-                result = "s" + result + "e";
-            } else {
-                result = "S" + result + "E";
-            }
-        }
-
-        if (episode != -1) {
-            // make episode number always two chars long
-            if (episode < 10) {
-                result += "0";
-            }
-
-            result += episode;
-        }
-        return result;
-    }
-
-    /**
-     * Splits the string and reassembles it, separating the items with commas. The given object is
-     * returned with the new string.
-     */
-    public static String splitAndKitTVDBStrings(String tvdbstring) {
-        if (tvdbstring == null) {
-            tvdbstring = "";
-        }
-        String[] splitted = tvdbstring.split("\\|");
-        tvdbstring = "";
-        for (String item : splitted) {
-            if (tvdbstring.length() != 0) {
-                tvdbstring += ", ";
-            }
-            tvdbstring += item.trim();
-        }
-        return tvdbstring;
+    private Utils() {
+        // prevent instantiation
     }
 
     public static String getVersion(Context context) {
@@ -232,22 +176,21 @@ public class Utils {
      * text.  Use 0 if you do not want a Drawable there. The Drawables' bounds will be set to their
      * intrinsic bounds.
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
             @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
             @DrawableRes int bottom) {
-        if (AndroidUtils.isJellyBeanMR1OrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
             return;
         }
 
-        final Resources resources = button.getContext().getResources();
+        Context context = button.getContext();
         setCompoundDrawablesRelativeWithIntrinsicBounds(
                 button,
-                left != 0 ? resources.getDrawable(left) : null,
-                top != 0 ? resources.getDrawable(top) : null,
-                right != 0 ? resources.getDrawable(right) : null,
-                bottom != 0 ? resources.getDrawable(bottom) : null);
+                left != 0 ? ContextCompat.getDrawable(context, left) : null,
+                top != 0 ? ContextCompat.getDrawable(context, top) : null,
+                right != 0 ? ContextCompat.getDrawable(context, right) : null,
+                bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
     }
 
     /**
@@ -580,6 +523,17 @@ public class Utils {
     /**
      * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
      */
+    public static void launchWebsite(@Nullable Context context, @Nullable String url) {
+        if (context == null || TextUtils.isEmpty(url)) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        openNewDocument(context, intent, null, null);
+    }
+
+    /**
+     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
+     */
     public static void launchWebsite(@Nullable Context context, @Nullable String url,
             @NonNull String logTag, @NonNull String logItem) {
         if (context == null || TextUtils.isEmpty(url)) {
@@ -597,7 +551,7 @@ public class Utils {
      * returning to the app through the task switcher.
      */
     public static void openNewDocument(@NonNull Context context, @NonNull Intent intent,
-            @NonNull String logTag, @NonNull String logItem) {
+            @Nullable String logTag, @Nullable String logItem) {
         // launch as a new document (separate entry in task switcher)
         // or on older versions: clear from task stack when returning to app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -609,7 +563,9 @@ public class Utils {
 
         Utils.tryStartActivity(context, intent, true);
 
-        Utils.trackAction(context, logTag, logItem);
+        if (logTag != null && logItem != null) {
+            Utils.trackAction(context, logTag, logItem);
+        }
     }
 
     /**

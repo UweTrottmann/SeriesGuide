@@ -59,7 +59,7 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case CONTEXT_COLLECTION_REMOVE_ID: {
-                        MovieTools.removeFromCollection(getActivity(), movieTmdbId);
+                        MovieTools.removeFromCollection(getContext(), movieTmdbId);
                         return true;
                     }
                 }
@@ -71,9 +71,9 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), Movies.CONTENT_URI,
+        return new CursorLoader(getContext(), Movies.CONTENT_URI,
                 MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_COLLECTION, null,
-                MoviesDistillationSettings.getSortQuery(getActivity()));
+                MoviesDistillationSettings.getSortQuery(getContext()));
     }
 
     @Override

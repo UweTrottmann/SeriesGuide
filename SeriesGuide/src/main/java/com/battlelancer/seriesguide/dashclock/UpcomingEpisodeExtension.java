@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
@@ -57,9 +58,13 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                 if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
 
-                    // title of first show
-                    String expandedTitle = upcomingEpisodes.getString(
-                            CalendarAdapter.Query.SHOW_TITLE);
+                    // title and episode of first show, like 'Title 1x01'
+                    String expandedTitle = TextTools.getShowWithEpisodeNumber(
+                            getApplicationContext(),
+                            upcomingEpisodes.getString(CalendarAdapter.Query.SHOW_TITLE),
+                            upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER),
+                            upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON)
+                    );
 
                     // get the actual release time
                     Date actualRelease = TimeTools.applyUserOffset(this, releaseTime);
@@ -93,7 +98,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     publishUpdate(new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_notification)
-                                    // 'Fri\n15:00'
+                            // 'Fri\n15:00'
                             .status(releaseDay + "\n" + absoluteTime)
                             .expandedTitle(expandedTitle)
                             .expandedBody(expandedBody.toString())

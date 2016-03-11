@@ -33,6 +33,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -49,6 +50,7 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -379,13 +381,14 @@ public class NotificationService extends IntentService {
             upcomingEpisodes.moveToPosition(notifyPositions.get(0));
 
             final String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
-            tickerText = getString(R.string.upcoming_show, showTitle);
-            contentTitle = showTitle
-                    + " "
-                    + Utils.getEpisodeNumber(
+            // show title and number, like 'Show 1x01'
+            contentTitle = TextTools.getShowWithEpisodeNumber(
                     this,
+                    showTitle,
                     upcomingEpisodes.getInt(NotificationQuery.SEASON),
-                    upcomingEpisodes.getInt(NotificationQuery.NUMBER));
+                    upcomingEpisodes.getInt(NotificationQuery.NUMBER)
+            );
+            tickerText = getString(R.string.upcoming_show, contentTitle);
 
             // "8:00 PM on Network"
             final String releaseTime = TimeTools.formatToLocalTime(this, TimeTools
@@ -468,9 +471,14 @@ public class NotificationService extends IntentService {
 
                     final SpannableStringBuilder lineText = new SpannableStringBuilder();
 
-                    // show title
-                    String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
-                    lineText.append(TextUtils.isEmpty(showTitle) ? "" : showTitle);
+                    // show title and number, like 'Show 1x01'
+                    String title = TextTools.getShowWithEpisodeNumber(
+                            this,
+                            upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE),
+                            upcomingEpisodes.getInt(NotificationQuery.SEASON),
+                            upcomingEpisodes.getInt(NotificationQuery.NUMBER)
+                    );
+                    lineText.append(title);
                     lineText.setSpan(new StyleSpan(Typeface.BOLD), 0, lineText.length(), 0);
 
                     lineText.append(" ");
@@ -525,7 +533,7 @@ public class NotificationService extends IntentService {
         nb.setContentText(contentText);
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
-        nb.setColor(getResources().getColor(R.color.accent_primary));
+        nb.setColor(ContextCompat.getColor(this, R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Timber.d("Setting delete intent with episode time: " + latestAirtime);

@@ -23,6 +23,8 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -65,7 +67,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import android.support.annotation.NonNull;
 import retrofit.RetrofitError;
 import timber.log.Timber;
 
@@ -89,7 +90,7 @@ public class MovieTools {
 
         public final String databaseColumn;
 
-        private Lists(String databaseColumn) {
+        Lists(String databaseColumn) {
             this.databaseColumn = databaseColumn;
         }
     }
@@ -108,11 +109,11 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new AddMovieToCollectionTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(context, movieTmdbId));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new AddMovieToWatchlistTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -135,11 +136,11 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new RemoveMovieFromCollectionTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(context, movieTmdbId));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -160,6 +161,7 @@ public class MovieTools {
         }
 
         // if movie will not be in any list and is not watched, remove it completely
+        //noinspection SimplifiableIfStatement
         if (!isInOtherList && deleteMovieIfUnwatched(context, movieTmdbId)) {
             return true;
         } else {
@@ -169,11 +171,11 @@ public class MovieTools {
     }
 
     public static void watchedMovie(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new SetMovieWatchedTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(context, movieTmdbId));
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
-        AndroidUtils.executeOnPool(new SetMovieUnwatchedTask(context, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(context, movieTmdbId));
     }
 
     /**
@@ -200,7 +202,7 @@ public class MovieTools {
      * to trakt.
      */
     public static void rate(Context context, int movieTmdbId, Rating rating) {
-        AndroidUtils.executeOnPool(new RateMovieTask(context, rating, movieTmdbId));
+        AsyncTaskCompat.executeParallel(new RateMovieTask(context, rating, movieTmdbId));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -439,6 +441,10 @@ public class MovieTools {
             long currentTime = System.currentTimeMillis();
             DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(context));
             HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
+            if (localMovies == null) {
+                Timber.e("fromHexagon: querying for local movies failed.");
+                return false;
+            }
 
             if (hasMergedMovies) {
                 Timber.d("fromHexagon: downloading movies changed since " + lastSyncTime);
@@ -611,7 +617,12 @@ public class MovieTools {
             Set<Integer> moviesNotOnTraktCollection = new HashSet<>();
             Set<Integer> moviesNotOnTraktWatchlist = new HashSet<>();
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-            for (Integer tmdbId : getMovieTmdbIdsAsSet(context)) {
+            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
+            if (localMovies == null) {
+                Timber.e("syncMoviesWithTrakt: querying local movies failed");
+                return UpdateResult.INCOMPLETE;
+            }
+            for (Integer tmdbId : localMovies) {
                 // is local movie in trakt collection or watchlist?
                 boolean inCollection = collection.remove(tmdbId);
                 boolean inWatchlist = watchlist.remove(tmdbId);

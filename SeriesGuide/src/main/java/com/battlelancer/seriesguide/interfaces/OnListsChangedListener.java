@@ -22,5 +22,5 @@ package com.battlelancer.seriesguide.interfaces;
  * renamed).
  */
 public interface OnListsChangedListener {
-    public void onListsChanged();
+    void onListsChanged();
 }

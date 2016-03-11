@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -103,7 +104,7 @@ public class TraktCredentials {
         nb.setContentIntent(intent);
 
         nb.setAutoCancel(true);
-        nb.setColor(mContext.getResources().getColor(R.color.accent_primary));
+        nb.setColor(ContextCompat.getColor(mContext, R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_HIGH);
         nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 

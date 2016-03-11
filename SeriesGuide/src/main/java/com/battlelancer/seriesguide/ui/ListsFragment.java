@@ -162,6 +162,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         }
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
         // sort order has changed, reload lists
         getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);

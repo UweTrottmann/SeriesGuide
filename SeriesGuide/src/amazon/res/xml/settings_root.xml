@@ -39,7 +39,7 @@
         android:title="@string/pref_autoupdate" />
 
     <CheckBoxPreference
-        android:defaultValue="False"
+        android:defaultValue="True"
         android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
         android:title="@string/pref_updatewifionly"
         android:summary="@string/pref_updatewifionlysummary" />
@@ -50,11 +50,16 @@
 
     <PreferenceCategory android:title="@string/prefs_category_sharing">
 
-        <!-- Dropped link to Cloud setup, not available on Amazon version -->
+        <Preference
+            android:key="com.battlelancer.seriesguide.cloud"
+            android:title="@string/hexagon">
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
 
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:summary="@string/pref_traktsummary"
             android:title="@string/trakt">
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
@@ -81,6 +86,21 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_appearance">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/themeSelection"
+            android:entryValues="@array/themeSelectionData"
+            android:key="com.battlelancer.seriesguide.theme"
+            android:title="@string/pref_theme" />
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/numbers"
+            android:entryValues="@array/numberData"
+            android:key="numberformat"
+            android:title="@string/pref_number" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_other">
 
         <Preference
@@ -92,7 +112,7 @@
             android:title="@string/prefs_category_advanced" />
 
         <Preference
-            android:key="screen_about"
+            android:key="aboutPref"
             android:title="@string/prefs_category_about" />
 
     </PreferenceCategory>

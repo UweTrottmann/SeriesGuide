@@ -22,8 +22,8 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +84,7 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
                         .displayData(
                                 query.getLong(4),
                                 query.getString(6),
-                                Utils.getNextEpisodeString(getContext(), query.getInt(3),
+                                TextTools.getNextEpisodeString(getContext(), query.getInt(3),
                                         query.getInt(2),
                                         query.getString(1)),
                                 query.getString(8)

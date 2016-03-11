@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.tmdb.Tmdb;
 import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 public class SgTmdb extends Tmdb {
 

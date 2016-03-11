@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -101,7 +102,8 @@ public class RateDialogFragment extends DialogFragment {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.dialog_trakt_rate, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.dialog_trakt_rate,
+                null);
 
         // rating buttons from 1 (worst) to 10 (best)
         layout.findViewById(R.id.weaksauce).setOnClickListener(new View.OnClickListener() {
@@ -165,6 +167,9 @@ public class RateDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         String itemType = args.getString(InitBundle.ITEM_TYPE);
+        if (itemType == null) {
+            return;
+        }
         int itemId = args.getInt(InitBundle.ITEM_ID);
         switch (itemType) {
             case ITEM_MOVIE: {

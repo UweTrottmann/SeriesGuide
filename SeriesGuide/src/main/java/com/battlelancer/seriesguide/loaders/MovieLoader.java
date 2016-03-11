@@ -120,7 +120,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
     private interface MovieQuery {
 
-        public String[] PROJECTION = {
+        String[] PROJECTION = {
                 Movies.TITLE, // 0
                 Movies.OVERVIEW,
                 Movies.RELEASED_UTC_MS,

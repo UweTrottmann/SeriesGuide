@@ -127,7 +127,7 @@ public class EpisodesFragment extends ListFragment
         }
         mLastCheckedItemId = -1;
 
-        mAdapter = new EpisodesAdapter(getActivity(), null, 0, this, this);
+        mAdapter = new EpisodesAdapter(getActivity(), this, this);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, mLoaderCallbacks);

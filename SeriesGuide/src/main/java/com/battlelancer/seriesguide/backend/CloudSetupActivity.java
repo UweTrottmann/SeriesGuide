@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2016 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
- * Prepares for Hexagon setup by checking Google Play services availability.
+ * Hosts {@link CloudSetupFragment} to setup hexagon.
  */
 public class CloudSetupActivity extends BaseActivity {
-
-    public static final String TAG = "Hexagon";
-
-    protected static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
-
-    protected static final int REQUEST_ACCOUNT_PICKER = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

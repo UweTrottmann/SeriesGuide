@@ -40,7 +40,6 @@
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
     <string name="search_hint">Search episodes</string>
-    <string name="search_within_show">Search within %s</string>
     <string name="any_language">Any language</string>
 
     <!-- Status messages -->
@@ -65,10 +64,18 @@
     <string name="comments">Comments</string>
     <string name="shout_hint">Type a comment (English, 5+ words)</string>
     <string name="shout_invalid">Your comment does not follow the rules!</string>
-    <string name="shout">Shout!</string>
+    <string name="action_post">Post</string>
     <string name="isspoiler">Spoiler alert!</string>
-    <string name="no_shouts">Be the first to shout!</string>
+    <string name="no_shouts">Be the first to comment!</string>
     <string name="refresh">Refresh</string>
+    <plurals name="replies_plural">
+        <item quantity="one">%d reply</item>
+        <item quantity="zero">%d replies</item>
+        <item quantity="two">%d replies</item>
+        <item quantity="few">%d replies</item>
+        <item quantity="many">%d replies</item>
+        <item quantity="other">%d replies</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
@@ -365,7 +372,6 @@
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
     <string name="about">About SeriesGuide</string>
-    <string name="pref_traktsummary">Add or edit your trakt credentials</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 

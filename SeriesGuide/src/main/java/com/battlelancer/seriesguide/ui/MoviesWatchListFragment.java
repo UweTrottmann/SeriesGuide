@@ -58,7 +58,7 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case CONTEXT_WATCHLIST_REMOVE_ID: {
-                        MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
+                        MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
                         return true;
                     }
                 }
@@ -70,9 +70,9 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
 
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
-        return new CursorLoader(getActivity(), Movies.CONTENT_URI,
+        return new CursorLoader(getContext(), Movies.CONTENT_URI,
                 MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
-                MoviesDistillationSettings.getSortQuery(getActivity()));
+                MoviesDistillationSettings.getSortQuery(getContext()));
     }
 
     @Override

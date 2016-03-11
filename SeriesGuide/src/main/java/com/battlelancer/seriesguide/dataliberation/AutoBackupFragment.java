@@ -65,6 +65,8 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     private static final int REQUEST_CODE_LISTS_EXPORT_URI = 4;
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 5;
 
+    private static final int PATH_TEXT_APPEARANCE = R.style.TextAppearance_Body_Dim;
+
     @Bind(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
     @Bind(R.id.containerAutoBackupSettings) View containerSettings;
     @Bind(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
@@ -109,13 +111,13 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
                 : !BackupSettings.isMissingAutoBackupFile(getContext());
         textViewLastAutoBackup
                 .setText(getString(R.string.last_auto_backup, showLastBackupTime ?
-                                DateUtils.getRelativeDateTimeString(getActivity(),
-                                        lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
-                                        DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
+                        DateUtils.getRelativeDateTimeString(getActivity(),
+                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
+                                DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
 
         // setup listeners
         boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
-        containerSettings.setVisibility(View.VISIBLE);
+        containerSettings.setVisibility(autoBackupEnabled ? View.VISIBLE : View.GONE);
         switchAutoBackup.setChecked(autoBackupEnabled);
         switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -136,7 +138,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                tryDataLiberationAction(REQUEST_CODE_IMPORT_AUTOBACKUP);
+                tryDataLiberationAction();
             }
         });
 
@@ -262,17 +264,17 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         setAutoBackupEnabled(true);
     }
 
-    private void tryDataLiberationAction(int requestCode) {
+    private void tryDataLiberationAction() {
         // make sure we have write permission
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // don't have it? request it, do task if granted
             requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                    requestCode);
+                    REQUEST_CODE_IMPORT_AUTOBACKUP);
             return;
         }
 
-        doDataLiberationAction(requestCode);
+        doDataLiberationAction();
     }
 
     @Override
@@ -293,7 +295,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         }
         if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doDataLiberationAction(requestCode);
+                doDataLiberationAction();
             } else {
                 if (getView() != null) {
                     Snackbar.make(getView(), R.string.dataliberation_permission_missing,
@@ -311,13 +313,11 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         containerSettings.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
     }
 
-    private void doDataLiberationAction(int requestCode) {
-        if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
-            setProgressLock(true);
+    private void doDataLiberationAction() {
+        setProgressLock(true);
 
-            importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
-            Utils.executeInOrder(importTask);
-        }
+        importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
+        Utils.executeInOrder(importTask);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -376,11 +376,11 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
             String moviesFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
             textMoviesExportFile.setText(moviesFilePath);
             //noinspection deprecation
-            textShowsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textShowsExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             //noinspection deprecation
-            textListsExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textListsExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             //noinspection deprecation
-            textMoviesExportFile.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            textMoviesExportFile.setTextAppearance(getContext(), PATH_TEXT_APPEARANCE);
             buttonShowsExportFile.setVisibility(View.GONE);
             buttonListsExportFile.setVisibility(View.GONE);
             buttonMoviesExportFile.setVisibility(View.GONE);
@@ -392,6 +392,6 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         //noinspection deprecation
         textView.setTextAppearance(textView.getContext(),
                 uri == null ? R.style.TextAppearance_Body_Highlight_Red
-                        : R.style.TextAppearance_Body);
+                        : PATH_TEXT_APPEARANCE);
     }
 }

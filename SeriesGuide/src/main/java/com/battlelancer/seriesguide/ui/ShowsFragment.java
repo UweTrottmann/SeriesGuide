@@ -28,7 +28,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -54,7 +53,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
@@ -101,7 +99,7 @@ public class ShowsFragment extends Fragment implements
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddActivity.class));
+                startActivityAddShows();
             }
         });
         v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
@@ -171,6 +169,10 @@ public class ShowsFragment extends Fragment implements
     }
 
     private void updateEmptyView() {
+        if (getView() == null) {
+            return;
+        }
+
         View oldEmptyView = mGrid.getEmptyView();
 
         View emptyView;
@@ -252,32 +254,32 @@ public class ShowsFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
-            startActivity(new Intent(getActivity(), AddActivity.class));
+            startActivityAddShows();
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_favorites) {
             mIsFilterFavorites = !mIsFilterFavorites;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites,
-                    item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites
+            );
 
             Utils.trackAction(getActivity(), TAG, "Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             mIsFilterUnwatched = !mIsFilterUnwatched;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched,
-                    item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched
+            );
 
             Utils.trackAction(getActivity(), TAG, "Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             mIsFilterUpcoming = !mIsFilterUpcoming;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming,
-                    item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming
+            );
 
             Utils.trackAction(getActivity(), TAG, "Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             mIsFilterHidden = !mIsFilterHidden;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden, item);
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden);
 
             Utils.trackAction(getActivity(), TAG, "Filter Hidden");
             return true;
@@ -347,14 +349,14 @@ public class ShowsFragment extends Fragment implements
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
-                    mIsSortFavoritesFirst, item);
+                    mIsSortFavoritesFirst);
 
             Utils.trackAction(getActivity(), TAG, "Sort Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
             mIsSortIgnoreArticles = !mIsSortIgnoreArticles;
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                    mIsSortIgnoreArticles, item);
+                    mIsSortIgnoreArticles);
             // refresh all list widgets
             ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
 
@@ -365,7 +367,7 @@ public class ShowsFragment extends Fragment implements
         }
     }
 
-    private void changeSortOrFilter(String key, boolean state, MenuItem item) {
+    private void changeSortOrFilter(String key, boolean state) {
         // already start loading, do not need to wait on saving prefs
         getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
 
@@ -517,6 +519,11 @@ public class ShowsFragment extends Fragment implements
             }
         }
     };
+
+    private void startActivityAddShows() {
+        startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+    }
 
     private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
             = new BaseShowsAdapter.OnContextMenuClickListener() {

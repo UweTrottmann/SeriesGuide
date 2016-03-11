@@ -41,7 +41,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         private final String mValue;
 
-        private MediaType(String value) {
+        MediaType(String value) {
             mValue = value;
         }
 
@@ -57,7 +57,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         private final String mValue;
 
-        private PeopleType(String value) {
+        PeopleType(String value) {
             mValue = value;
         }
 
@@ -98,7 +98,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
             // in two-pane mode, list items should be activated when touched
             if (mTwoPane) {
-                f.setActivateOnItemClick(true);
+                f.setActivateOnItemClick();
             }
 
             getSupportFragmentManager().beginTransaction()

@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.Window;
@@ -51,7 +52,7 @@ public class PersonActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(
-                    getResources().getDrawable(R.drawable.background_actionbar_gradient));
+                    ContextCompat.getDrawable(this, R.drawable.background_actionbar_gradient));
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }

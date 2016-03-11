@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,7 +41,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 import java.util.Locale;
 
@@ -159,7 +159,7 @@ public class StatsFragment extends Fragment {
     private void loadStats() {
         cleanupStatsTask();
         statsTask = new StatsTask(getActivity());
-        AndroidUtils.executeOnPool(statsTask);
+        AsyncTaskCompat.executeParallel(statsTask);
     }
 
     private void cleanupStatsTask() {

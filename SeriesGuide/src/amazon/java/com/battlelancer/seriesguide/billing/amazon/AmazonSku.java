@@ -22,9 +22,19 @@ package com.battlelancer.seriesguide.billing.amazon;
 public enum AmazonSku {
 
     /**
-     * The yearly subscription with a trial month. Unlocks access to everything.
+     * The unlock all subscription parent SKU.
+     *
+     * <p>This SKU is used in receipts (the actual purchased period SKU is NOT used, instead the
+     * purchase and cancel date of the receipt are populated).
      */
-    SERIESGUIDE_SUB("seriesguide-sub"),
+    SERIESGUIDE_SUB_PARENT("seriesguide-sub"),
+    /**
+     * The unlock all subscription yearly period SKU with a trial month.
+     *
+     * <p>{@code seriesguide-sub} is the parent SKU, the unlock all subscription. It may have
+     * multiple children with different periods. Currently we only have one yearly period.
+     */
+    SERIESGUIDE_SUB_YEARLY("seriesguide-sub-year"),
     /**
      * The one-time purchase. Unlocks access to everything.
      */
@@ -41,8 +51,11 @@ public enum AmazonSku {
     }
 
     public static AmazonSku fromSku(final String sku) {
-        if (SERIESGUIDE_SUB.getSku().equals(sku)) {
-            return SERIESGUIDE_SUB;
+        if (SERIESGUIDE_SUB_PARENT.getSku().equals(sku)) {
+            return SERIESGUIDE_SUB_PARENT;
+        }
+        if (SERIESGUIDE_SUB_YEARLY.getSku().equals(sku)) {
+            return SERIESGUIDE_SUB_YEARLY;
         }
         if (SERIESGUIDE_PASS.getSku().equals(sku)) {
             return SERIESGUIDE_PASS;

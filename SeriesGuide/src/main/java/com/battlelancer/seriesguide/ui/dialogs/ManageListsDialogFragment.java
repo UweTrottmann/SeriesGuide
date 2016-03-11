@@ -222,7 +222,7 @@ public class ManageListsDialogFragment extends DialogFragment implements
             }
         }
 
-        mAdapter = new ListsAdapter(getActivity(), null, 0);
+        mAdapter = new ListsAdapter(getActivity());
         mListView.setAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
@@ -268,8 +268,8 @@ public class ManageListsDialogFragment extends DialogFragment implements
 
         private SparseBooleanArray mCheckedItems;
 
-        public ListsAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
+        public ListsAdapter(Context context) {
+            super(context, null, 0);
             mInflater = LayoutInflater.from(context);
             mCheckedItems = new SparseBooleanArray();
         }

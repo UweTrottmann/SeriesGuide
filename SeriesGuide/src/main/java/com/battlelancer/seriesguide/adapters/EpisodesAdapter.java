@@ -54,9 +54,9 @@ public class EpisodesAdapter extends CursorAdapter {
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
-    public EpisodesAdapter(Context context, Cursor c, int flags, PopupMenuClickListener listener,
+    public EpisodesAdapter(Context context, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
-        super(context, c, flags);
+        super(context, null, 0);
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopupMenuClickListener = listener;

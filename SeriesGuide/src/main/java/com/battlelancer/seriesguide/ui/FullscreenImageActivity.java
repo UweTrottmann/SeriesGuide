@@ -38,6 +38,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  */
 public class FullscreenImageActivity extends BaseActivity {
 
+    private static final int DELAY_100_MS = 100;
+
     public interface InitBundle {
         String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
     }
@@ -118,7 +120,7 @@ public class FullscreenImageActivity extends BaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        delayedHide(100);
+        delayedHide();
     }
 
     @Override
@@ -157,8 +159,8 @@ public class FullscreenImageActivity extends BaseActivity {
      * Schedules a call to hide() in [delay] milliseconds, canceling any previously scheduled
      * calls.
      */
-    private void delayedHide(int delayMillis) {
+    private void delayedHide() {
         mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        mHideHandler.postDelayed(mHideRunnable, DELAY_100_MS);
     }
 }

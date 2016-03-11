@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -158,7 +160,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // setup tabs
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodeDetails);
         tabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
-        tabs.setSelectedIndicatorColors(getResources().getColor(
+        tabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
                 SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue ? R.color.white
                         : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
         tabs.setViewPager(pager);
@@ -262,7 +264,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return Utils.getEpisodeNumber(mContext, episode.seasonNumber, episode.episodeNumber);
+            return TextTools.getEpisodeNumber(mContext, episode.seasonNumber, episode.episodeNumber);
         }
 
         public void updateEpisodeList(ArrayList<Episode> list) {

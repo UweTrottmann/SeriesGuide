@@ -32,6 +32,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,7 +57,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -123,6 +123,7 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         mWatchedAllEpisodes = unwatchedEpisodes == 0;
+        //noinspection ResourceType
         mButtonWatchedAll.setImageResource(mWatchedAllEpisodes ?
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatchedAll)
@@ -165,6 +166,7 @@ public class SeasonsFragment extends ListFragment implements
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         mCollectedAllEpisodes = uncollectedEpisodes == 0;
+        //noinspection ResourceType
         mButtonCollectedAll.setImageResource(mCollectedAllEpisodes ? R.drawable.ic_collected_all
                 : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableCollectAll));
@@ -213,7 +215,7 @@ public class SeasonsFragment extends ListFragment implements
         getPreferences();
 
         // populate list
-        mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
+        mAdapter = new SeasonsAdapter(getActivity(), this);
         setListAdapter(mAdapter);
         // now let's get a loader or reconnect to existing one
         getLoaderManager().initLoader(OverviewActivity.SEASONS_LOADER_ID, null, this);
@@ -494,7 +496,7 @@ public class SeasonsFragment extends ListFragment implements
                 }
             }
         };
-        AndroidUtils.executeOnPool(task, String.valueOf(getShowId()));
+        AsyncTaskCompat.executeParallel(task, String.valueOf(getShowId()));
     }
 
     public interface SeasonsQuery {

@@ -54,7 +54,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
 
-    private NfcAdapter nfcAdapter;
+    // keep reference to adapter while activity is alive
+    @SuppressWarnings("FieldCanBeLocal") private NfcAdapter nfcAdapter;
     private int showTvdbId;
 
     @Override
@@ -81,8 +82,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setupViews(Bundle savedInstanceState) {
@@ -172,7 +175,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                     // send show TVDB id
                     return new NdefMessage(new NdefRecord[] {
                             createMimeRecord(
-                                    Constants.ANDROID_BEAM_NDEF_MIME_TYPE,
                                     String.valueOf(showTvdbId).getBytes())
                     });
                 }
@@ -180,8 +182,9 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                 /**
                  * Creates a custom MIME type encapsulated in an NDEF record
                  */
-                public NdefRecord createMimeRecord(String mimeType, byte[] payload) {
-                    byte[] mimeBytes = mimeType.getBytes(Charset.forName("US-ASCII"));
+                public NdefRecord createMimeRecord(byte[] payload) {
+                    byte[] mimeBytes = Constants.ANDROID_BEAM_NDEF_MIME_TYPE.getBytes(
+                            Charset.forName("US-ASCII"));
                     return new NdefRecord(
                             NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
                 }

@@ -51,7 +51,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
@@ -95,13 +94,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane);
+        setContentView(R.layout.activity_settings);
         setupActionBar();
 
         if (savedInstanceState == null) {
             Fragment f = new SettingsFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.content_frame, f);
+            ft.add(R.id.containerSettings, f);
             ft.commit();
 
             // open a sub settings screen if requested
@@ -116,7 +115,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -157,7 +158,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         Fragment f = new SettingsFragment();
         f.setArguments(args);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, f);
+        ft.replace(R.id.containerSettings, f);
         ft.addToBackStack(null);
         ft.commit();
     }
@@ -216,15 +217,38 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             } else if (settings.equals("screen_advanced")) {
                 addPreferencesFromResource(R.xml.settings_advanced);
                 setupAdvancedSettings();
-            } else if (settings.equals("screen_about")) {
-                addPreferencesFromResource(R.xml.settings_about);
-                setupAboutSettings();
             }
         }
 
         private void setupRootSettings() {
+            // Theme switcher
+            Preference themePref = findPreference(DisplaySettings.KEY_THEME);
+            if (Utils.hasAccessToX(getActivity())) {
+                themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
+                            ThemeUtils.updateTheme((String) newValue);
+
+                            // restart to apply new theme, go back to this settings screen
+                            TaskStackBuilder.create(getActivity())
+                                    .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
+                                    .addNextIntent(getActivity().getIntent())
+                                    .startActivities();
+                        }
+                        return true;
+                    }
+                });
+                setListPreferenceSummary((ListPreference) themePref);
+            } else {
+                themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
+                themePref.setSummary(R.string.onlyx);
+            }
+
             // show currently set values for list prefs
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
+            setListPreferenceSummary(
+                    (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
 
             // set current value of auto-update pref
             ((SwitchPreference) findPreference(UpdateSettings.KEY_AUTOUPDATE)).setChecked(
@@ -244,11 +268,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         boolean isChecked = (boolean) newValue;
-                        if (isChecked) {
-                            Utils.trackCustomEvent(getActivity(), TAG, "Notifications", "Enable");
-                        } else {
-                            Utils.trackCustomEvent(getActivity(), TAG, "Notifications", "Disable");
-                        }
+                        Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
+                                isChecked ? "Enable" : "Disable");
 
                         thresholdPref.setEnabled(isChecked);
                         favOnlyPref.setEnabled(isChecked);
@@ -293,13 +314,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     new OnPreferenceClickListener() {
 
                         public boolean onPreferenceClick(Preference preference) {
-                            if (((CheckBoxPreference) preference).isChecked()) {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                        "Enable");
-                            } else {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                        "Disable");
-                            }
+                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                            Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
+                                    isChecked ? "Enable" : "Disable");
                             return false;
                         }
                     });
@@ -309,45 +326,14 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     new OnPreferenceClickListener() {
 
                         public boolean onPreferenceClick(Preference preference) {
-                            if (((CheckBoxPreference) preference).isChecked()) {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                        "Enable");
-                            } else {
-                                Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                        "Disable");
-                            }
+                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                            Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
+                                    isChecked ? "Enable" : "Disable");
                             return false;
                         }
                     });
 
-            // Theme switcher
-            Preference themePref = findPreference(DisplaySettings.KEY_THEME);
-            if (Utils.hasAccessToX(getActivity())) {
-                themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                            ThemeUtils.updateTheme((String) newValue);
-
-                            // restart to apply new theme, go back to this settings screen
-                            TaskStackBuilder.create(getActivity())
-                                    .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
-                                    .addNextIntent(getActivity().getIntent()
-                                            .putExtra(EXTRA_SETTINGS_SCREEN, SETTINGS_SCREEN_BASIC))
-                                    .startActivities();
-                        }
-                        return true;
-                    }
-                });
-                setListPreferenceSummary((ListPreference) themePref);
-            } else {
-                themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
-                themePref.setSummary(R.string.onlyx);
-            }
-
             // show currently set values for list prefs
-            setListPreferenceSummary(
-                    (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
             ListPreference offsetListPref = (ListPreference) findPreference(KEY_OFFSET);
             offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
                     offsetListPref.getEntry()));
@@ -387,13 +373,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                             return false;
                         }
                     });
-        }
-
-        private void setupAboutSettings() {
-            // display version number and database version in About pref
-            final String versionFinal = Utils.getVersion(getActivity());
-            findPreference(KEY_ABOUT).setSummary("v" + versionFinal + " (Database v"
-                    + SeriesGuideDatabase.DATABASE_VERSION + ")");
         }
 
         @Override
@@ -445,7 +424,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
             if (KEY_ABOUT.equals(key)) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, new AboutSettingsFragment());
+                ft.replace(R.id.containerSettings, new AboutSettingsFragment());
                 ft.addToBackStack(null);
                 ft.commit();
                 return true;
@@ -524,6 +503,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // Toggle auto-update on SyncAdapter
             if (UpdateSettings.KEY_AUTOUPDATE.equals(key)) {
                 if (pref != null) {
+                    //noinspection ConstantConditions
                     SwitchPreference autoUpdatePref = (SwitchPreference) pref;
                     SgSyncAdapter.setSyncAutomatically(getActivity(), autoUpdatePref.isChecked());
                 }

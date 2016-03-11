@@ -20,6 +20,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -143,7 +144,8 @@ public class PersonFragment extends Fragment {
                     TmdbTools.buildProfileImageUrl(getActivity(), person.profile_path,
                             TmdbTools.ProfileImageSize.H632))
                     .placeholder(
-                            new ColorDrawable(getResources().getColor(R.color.protection_dark)))
+                            new ColorDrawable(
+                                    ContextCompat.getColor(getContext(), R.color.protection_dark)))
                     .into(mImageHeadshot);
         }
 

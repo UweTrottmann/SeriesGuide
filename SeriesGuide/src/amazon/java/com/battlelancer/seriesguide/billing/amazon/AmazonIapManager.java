@@ -222,7 +222,7 @@ public class AmazonIapManager {
     }
 
     protected void enablePurchaseForSkus(final Map<String, Product> productData) {
-        Product product = productData.get(AmazonSku.SERIESGUIDE_SUB.getSku());
+        Product product = productData.get(AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku());
         if (product != null) {
             subscriptionAvailable = true;
             EventBus.getDefault().post(new AmazonIapProductEvent(product));
@@ -239,7 +239,7 @@ public class AmazonIapManager {
         // * Item not available for this country
         // * Item pulled off from Appstore by developer
         // * Item pulled off from Appstore by Amazon
-        if (unavailableSkus.contains(AmazonSku.SERIESGUIDE_SUB.toString())) {
+        if (unavailableSkus.contains(AmazonSku.SERIESGUIDE_SUB_YEARLY.toString())) {
             subscriptionAvailable = false;
             EventBus.getDefault()
                     .post(new AmazonIapMessageEvent(R.string.subscription_unavailable));
@@ -312,7 +312,9 @@ public class AmazonIapManager {
     private void grantPurchase(final Receipt receipt, final UserData userData) {
         final AmazonSku amazonSku = AmazonSku.fromSku(receipt.getSku());
         // Verify that the SKU is still applicable.
-        if (amazonSku != AmazonSku.SERIESGUIDE_SUB && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
+        // for subscriptions receipts contain the parent SKU, not the purchased period SKU
+        if (amazonSku != AmazonSku.SERIESGUIDE_SUB_PARENT
+                && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
             Timber.w("The SKU [" + receipt.getSku() + "] in the receipt is not valid anymore ");
             // if the sku is not applicable anymore, call
             // PurchasingService.notifyFulfillment with status "UNAVAILABLE"

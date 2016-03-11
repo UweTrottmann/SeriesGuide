@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
@@ -36,8 +37,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private final int LAYOUT = R.layout.item_movie;
-
     private LayoutInflater mLayoutInflater;
 
     private final String mImageBaseUrl;
@@ -47,7 +46,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
     private PopupMenuClickListener mPopupMenuClickListener;
 
     public interface PopupMenuClickListener {
-        public void onPopupMenuClick(View v, int movieTmdbId);
+        void onPopupMenuClick(View v, int movieTmdbId);
     }
 
     public MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener) {
@@ -68,7 +67,8 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(LAYOUT, null);
+        // do not use parent layout params to avoid padding issues
+        @SuppressLint("InflateParams") View v = mLayoutInflater.inflate(R.layout.item_movie, null);
 
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.title = (TextView) v.findViewById(R.id.textViewMovieTitle);

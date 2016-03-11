@@ -21,7 +21,7 @@ package com.battlelancer.seriesguide.enums;
  */
 public interface TraktResult extends NetworkResult {
 
-    public int AUTH_ERROR = -3;
-    public int API_ERROR = -4;
+    int AUTH_ERROR = -3;
+    int API_ERROR = -4;
 
 }

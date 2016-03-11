@@ -123,7 +123,7 @@ public class CalendarFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        mAdapter = new CalendarAdapter(getActivity(), null, 0);
+        mAdapter = new CalendarAdapter(getActivity());
         boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
         mAdapter.setIsShowingHeaders(!infiniteScrolling);
 

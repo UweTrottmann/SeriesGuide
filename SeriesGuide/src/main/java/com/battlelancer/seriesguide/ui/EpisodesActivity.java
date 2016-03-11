@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBar;
@@ -196,12 +197,13 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             // setup view pager
             mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, true);
             mPager = (ViewPager) pager;
+            //noinspection ConstantConditions
             mPager.setAdapter(mAdapter);
 
             // setup tabs
             mTabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodes);
             mTabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
-            mTabs.setSelectedIndicatorColors(getResources().getColor(
+            mTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
                     SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
                             ? R.color.white
                             : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));

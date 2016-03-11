@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2015 Uwe Trottmann
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2016 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -29,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/toolbar" />
+            <include layout="@layout/toolbar_search" />
 
             <com.battlelancer.seriesguide.widgets.SlidingTabLayout
-                android:id="@+id/tabsAddShows"
+                android:id="@+id/tabsSearch"
                 style="@style/Widget.SeriesGuide.TabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -40,7 +42,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/pagerAddShows"
+            android:id="@+id/pagerSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />

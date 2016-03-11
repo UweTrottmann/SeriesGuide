@@ -39,6 +39,13 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
         if (intent == null || intent.getData() == null) {
             return;
         }
+        String action = intent.getAction();
+        if (!Intent.ACTION_PACKAGE_CHANGED.equals(action)
+                || !Intent.ACTION_PACKAGE_REPLACED.equals(action)
+                || !Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
+            // action does not match, ignore the intent
+            return;
+        }
 
         String changedPackage = intent.getData().getSchemeSpecificPart();
         ExtensionManager extensionManager = ExtensionManager.getInstance(context);

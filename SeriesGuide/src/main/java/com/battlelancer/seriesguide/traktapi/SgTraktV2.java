@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 /**
  * Custom {@link com.uwetrottmann.trakt.v2.TraktV2} which uses our shared {@link

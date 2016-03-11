@@ -61,10 +61,11 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
             convertView = mInflater.inflate(R.layout.item_comment, parent, false);
 
             holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.shout = (TextView) convertView.findViewById(R.id.shout);
-            holder.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+            holder.username = (TextView) convertView.findViewById(R.id.textViewCommentUsername);
+            holder.comment = (TextView) convertView.findViewById(R.id.textViewComment);
+            holder.timestamp = (TextView) convertView.findViewById(R.id.textViewCommentTimestamp);
+            holder.replies = (TextView) convertView.findViewById(R.id.textViewCommentReplies);
+            holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewCommentAvatar);
 
             convertView.setTag(holder);
         } else {
@@ -82,16 +83,17 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
                 avatarPath = comment.user.images.avatar.full;
             }
         }
-        holder.name.setText(name);
+        holder.username.setText(name);
         ServiceUtils.loadWithPicasso(getContext(), avatarPath)
                 .into(holder.avatar);
 
         if (comment.spoiler) {
-            holder.shout.setText(R.string.isspoiler);
-            holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Body_Highlight_Red);
+            holder.comment.setText(R.string.isspoiler);
+            holder.comment.setTextAppearance(getContext(),
+                    R.style.TextAppearance_Body_Highlight_Red);
         } else {
-            holder.shout.setText(comment.comment);
-            holder.shout.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            holder.comment.setText(comment.comment);
+            holder.comment.setTextAppearance(getContext(), R.style.TextAppearance_Body);
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(
@@ -99,16 +101,23 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         holder.timestamp.setText(timestamp);
 
+        if (comment.replies == null || comment.replies <= 0) {
+            // no replies
+            holder.replies.setVisibility(View.GONE);
+        } else {
+            holder.replies.setVisibility(View.VISIBLE);
+            holder.replies.setText(getContext().getResources()
+                    .getQuantityString(R.plurals.replies_plural, comment.replies, comment.replies));
+        }
+
         return convertView;
     }
 
     static class ViewHolder {
-        TextView name;
-
-        TextView shout;
-
+        TextView username;
+        TextView comment;
         TextView timestamp;
-
+        TextView replies;
         ImageView avatar;
     }
 }

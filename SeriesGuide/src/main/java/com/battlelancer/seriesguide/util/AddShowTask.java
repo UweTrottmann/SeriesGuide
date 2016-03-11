@@ -50,15 +50,13 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     public class OnShowAddedEvent {
         private String message;
-        private int toastLength;
 
-        public OnShowAddedEvent(String message, int toastLength) {
+        public OnShowAddedEvent(String message) {
             this.message = message;
-            this.toastLength = toastLength;
         }
 
         public void handle(Context context) {
-            Toast.makeText(context, message, toastLength).show();
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -230,26 +228,20 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return;
             case ADD_ALREADYEXISTS:
                 event = new OnShowAddedEvent(
-                        context.getString(R.string.add_already_exists, currentShowName),
-                        Toast.LENGTH_LONG
-                );
+                        context.getString(R.string.add_already_exists, currentShowName));
                 break;
             case ADD_ERROR:
                 event = new OnShowAddedEvent(
-                        context.getString(R.string.add_error, currentShowName),
-                        Toast.LENGTH_LONG);
+                        context.getString(R.string.add_error, currentShowName));
                 break;
             case ADD_OFFLINE:
-                event = new OnShowAddedEvent(context.getString(R.string.offline),
-                        Toast.LENGTH_LONG);
+                event = new OnShowAddedEvent(context.getString(R.string.offline));
                 break;
             case ADD_TRAKT_API_ERROR:
-                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_general),
-                        Toast.LENGTH_LONG);
+                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_general));
                 break;
             case ADD_TRAKT_AUTH_ERROR:
-                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_credentials),
-                        Toast.LENGTH_LONG);
+                event = new OnShowAddedEvent(context.getString(R.string.trakt_error_credentials));
                 break;
         }
 

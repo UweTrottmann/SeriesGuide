@@ -20,11 +20,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +118,7 @@ public class TaskManager {
         if (!isAddTaskRunning()
                 && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mBackupTask = new JsonExportTask(mContext, null, null, false, true);
-            AndroidUtils.executeOnPool(mBackupTask);
+            AsyncTaskCompat.executeParallel(mBackupTask);
         }
     }
 
@@ -130,7 +130,7 @@ public class TaskManager {
         if (mNextEpisodeUpdateTask == null
                 || mNextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             mNextEpisodeUpdateTask = new LatestEpisodeUpdateTask(mContext);
-            AndroidUtils.executeOnPool(mNextEpisodeUpdateTask);
+            AsyncTaskCompat.executeParallel(mNextEpisodeUpdateTask);
         }
     }
 }

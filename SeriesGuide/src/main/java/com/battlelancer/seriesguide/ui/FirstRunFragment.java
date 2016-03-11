@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -50,14 +50,15 @@ public class FirstRunFragment extends Fragment {
 
     protected static final String TAG = "First Run";
 
-    private OnFirstRunDismissedListener mListener;
+    private Spinner spinner;
+    private OnFirstRunDismissedListener dismissedListener;
 
     public static FirstRunFragment newInstance() {
         return new FirstRunFragment();
     }
 
     public interface OnFirstRunDismissedListener {
-        public void onFirstRunDismissed();
+        void onFirstRunDismissed();
     }
 
     public static boolean hasSeenFirstRunFragment(final Context context) {
@@ -68,46 +69,23 @@ public class FirstRunFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_firstrun, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_firstrun, container, false);
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            mListener = (OnFirstRunDismissedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFirstRunDismissedListener");
-        }
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        spinner = ButterKnife.findById(view, R.id.welcome_setuplanguage);
 
         // add button
-        getView().findViewById(R.id.buttonFirstRunAddShow)
+        view.findViewById(R.id.buttonFirstRunAddShow)
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), AddActivity.class));
+                        startActivityAddShows();
                         setFirstRunDismissed();
                         Utils.trackClick(getActivity(), TAG, "Add show");
                     }
                 });
 
-        // language chooser
-        Spinner spinner = (Spinner) getView().findViewById(R.id.welcome_setuplanguage);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.languages, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
-
         // trakt connect button
-        getView().findViewById(R.id.buttonFirstRunTrakt).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.buttonFirstRunTrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
@@ -116,7 +94,7 @@ public class FirstRunFragment extends Fragment {
         });
 
         // restore backup button
-        getView().findViewById(R.id.buttonFirstRunRestore)
+        view.findViewById(R.id.buttonFirstRunRestore)
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -126,7 +104,7 @@ public class FirstRunFragment extends Fragment {
                 });
 
         // dismiss button
-        View buttonDismiss = getView().findViewById(R.id.buttonFirstRunDismiss);
+        View buttonDismiss = view.findViewById(R.id.buttonFirstRunDismiss);
         CheatSheet.setup(buttonDismiss);
         buttonDismiss.setOnClickListener(new OnClickListener() {
             @Override
@@ -135,6 +113,32 @@ public class FirstRunFragment extends Fragment {
                 setFirstRunDismissed();
             }
         });
+
+        return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            dismissedListener = (OnFirstRunDismissedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnFirstRunDismissedListener");
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // language chooser
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.languages, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
 
         setHasOptionsMenu(true);
     }
@@ -154,10 +158,15 @@ public class FirstRunFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_add) {
-            startActivity(new Intent(getActivity(), AddActivity.class));
+            startActivityAddShows();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startActivityAddShows() {
+        startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
     }
 
     private void setFirstRunDismissed() {
@@ -166,7 +175,7 @@ public class FirstRunFragment extends Fragment {
         prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).apply();
 
         // display shows fragment again, better use an interface!
-        mListener.onFirstRunDismissed();
+        dismissedListener.onFirstRunDismissed();
     }
 
     public class OnLanguageSelectedListener implements OnItemSelectedListener {
@@ -182,5 +191,4 @@ public class FirstRunFragment extends Fragment {
             // Do nothing.
         }
     }
-
 }

@@ -89,20 +89,20 @@ public class DBUtils {
 
     interface UnwatchedQuery {
 
-        static final String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[] {
                 Episodes._ID
         };
 
-        static final String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
+        String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + " !=-1 AND " + Episodes.FIRSTAIREDMS + "<=?";
 
-        static final String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
+        String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + ">?";
 
-        static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
+        String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
                 + Episodes.FIRSTAIREDMS + "=-1";
 
-        static final String SKIPPED_SELECTION = Episodes.WATCHED + "=" + EpisodeFlags.SKIPPED;
+        String SKIPPED_SELECTION = Episodes.WATCHED + "=" + EpisodeFlags.SKIPPED;
     }
 
     /**
@@ -701,7 +701,7 @@ public class DBUtils {
             // STEP 3: build updated next episode values
             if (next.moveToFirst()) {
                 // next episode text, e.g. '0x12 Episode Name'
-                final String nextEpisodeString = Utils.getNextEpisodeString(context,
+                final String nextEpisodeString = TextTools.getNextEpisodeString(context,
                         next.getInt(NextEpisodesQuery.SEASON),
                         next.getInt(NextEpisodesQuery.NUMBER),
                         next.getString(NextEpisodesQuery.TITLE));
