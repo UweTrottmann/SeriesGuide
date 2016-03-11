@@ -55,9 +55,7 @@ public class AboutSettingsFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         // display version number and database version
-        final String versionFinal = Utils.getVersion(getActivity());
-        textVersion.setText(
-                "v" + versionFinal + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")");
+        textVersion.setText(Utils.getVersionString(getContext()));
 
         buttonWebsite.setOnClickListener(urlButtonClickListener);
         buttonTvdbTerms.setOnClickListener(urlButtonClickListener);

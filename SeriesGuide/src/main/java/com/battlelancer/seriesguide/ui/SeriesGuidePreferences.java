@@ -245,6 +245,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 themePref.setSummary(R.string.onlyx);
             }
 
+            // display version as About summary
+            findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
+
             // show currently set values for list prefs
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
             setListPreferenceSummary(

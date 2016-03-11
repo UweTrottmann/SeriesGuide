@@ -52,6 +52,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -81,6 +82,14 @@ public class Utils {
             version = "UnknownVersion";
         }
         return version;
+    }
+
+    /**
+     * Return a version string like "v42 (Database v42)".
+     */
+    public static String getVersionString(Context context) {
+        return "v" + getVersion(context)
+                + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")";
     }
 
     /**
