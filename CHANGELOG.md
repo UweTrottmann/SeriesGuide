@@ -14,6 +14,10 @@ Version 29 *(2016-03-11)*
 * List widget updates immediately when marking watched, in-app settings affecting it change.
 * SeriesGuide Cloud support on Amazon version if Google Play Services are available.
 
+#### 29.0.2 *(2016-03-12)*
+
+* FIX Season and episode number are flipped in DashClock extension.
+
 #### 29.0.1 *(2016-03-11)*
 
 * FIX Use correct SKU to validate Amazon subscription purchases.
