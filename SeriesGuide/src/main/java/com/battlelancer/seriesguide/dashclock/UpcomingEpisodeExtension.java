@@ -62,8 +62,8 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     String expandedTitle = TextTools.getShowWithEpisodeNumber(
                             getApplicationContext(),
                             upcomingEpisodes.getString(CalendarAdapter.Query.SHOW_TITLE),
-                            upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER),
-                            upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON)
+                            upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON),
+                            upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER)
                     );
 
                     // get the actual release time
