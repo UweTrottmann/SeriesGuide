@@ -53,27 +53,31 @@ public class ListWidgetProvider extends AppWidgetProvider {
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
 
     @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-
-        // remove the update alarm if the last widget is gone
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (am != null) {
-            PendingIntent pi = getUpdatePendingIntent(context);
-            am.cancel(pi);
-            Timber.d("onDisabled: canceled widget UPDATE alarm.");
+    public void onReceive(Context context, Intent intent) {
+        if (context == null || intent == null) {
+            // check for null as super.onReceive does not
+            // we only need to guard here as other methods are only called by super.onReceive
+            return;
         }
-    }
-
-    @Override
-    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        super.onReceive(context, intent);
 
         // check if we received our update alarm
         if (UPDATE.equals(intent.getAction())) {
             // trigger refresh of list widgets
             Timber.d("onReceive: received widget UPDATE alarm.");
             notifyAllAppWidgetsViewDataChanged(context);
+        } else {
+            super.onReceive(context, intent);
+        }
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        // remove the update alarm if the last widget is gone
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (am != null) {
+            PendingIntent pi = getUpdatePendingIntent(context);
+            am.cancel(pi);
+            Timber.d("onDisabled: canceled widget UPDATE alarm.");
         }
     }
 
@@ -101,8 +105,6 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-
         // update all added list widgets
         for (int appWidgetId : appWidgetIds) {
             onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null);
@@ -126,7 +128,6 @@ public class ListWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, rv);
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static RemoteViews buildRemoteViews(Context context, AppWidgetManager appWidgetManager,
             int appWidgetId) {
         // setup intent pointing to RemoteViewsService providing the views for the collection
@@ -225,9 +226,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
      * Based on the widget size determines whether to use a compact layout. Defaults to false on ICS
      * and below.
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private static boolean isCompactLayout(AppWidgetManager appWidgetManager, int appWidgetId) {
-        if (AndroidUtils.isJellyBeanOrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
             return minHeight < DIP_THRESHOLD_COMPACT_LAYOUT;
