@@ -137,7 +137,7 @@ dependencies {
     }
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    compile 'com.uwetrottmann:tmdb-java:0.9.1'
+    compile 'com.uwetrottmann:tmdb-java:0.10.1'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     compile ('com.uwetrottmann:trakt-java:4.5.4') {
         exclude group: 'org.json', module: 'json'
