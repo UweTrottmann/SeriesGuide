@@ -279,14 +279,6 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onStart();
 
         setDrawerSelectedItem(R.id.navigation_item_shows);
-        if (!AppSettings.hasSeenNavDrawer(this)) {
-            // introduce the nav drawer
-            openNavDrawer();
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putBoolean(AppSettings.KEY_HAS_SEEN_NAV_DRAWER, true)
-                    .apply();
-        }
 
         // check for running show removal worker
         Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);

@@ -30,6 +30,7 @@ public class AppSettings {
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
+    @SuppressWarnings("unused") @Deprecated
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
     public static final String KEY_LAST_STATS_REPORT = "timeLastStatsReport";
@@ -55,14 +56,6 @@ public class AppSettings {
     public static boolean isGaAppOptOut(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_GOOGLEANALYTICS, false);
-    }
-
-    /**
-     * Whether the user was shown the nav drawer for this app.
-     */
-    public static boolean hasSeenNavDrawer(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_HAS_SEEN_NAV_DRAWER, false);
     }
 
     /**
