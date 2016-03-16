@@ -54,7 +54,13 @@ public class AppWidget extends AppWidgetProvider {
     private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
 
     @Override
-    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+    public void onReceive(Context context, Intent intent) {
+        if (context == null || intent == null) {
+            // check for null as super.onReceive does not
+            // we only need to guard here as other methods are only called by super.onReceive
+            return;
+        }
+
         if (REFRESH.equals(intent.getAction())) {
             context.startService(createUpdateIntent(context));
         } else {

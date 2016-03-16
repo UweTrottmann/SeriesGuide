@@ -84,17 +84,6 @@ public class BillingActivity extends BaseActivity {
         setupActionBar();
 
         setupViews();
-
-        // do not query IAB if user has key
-        boolean hasUpgrade = Utils.hasXpass(this);
-        updateViewStates(hasUpgrade);
-        // no need to go further if user has a key
-        if (hasUpgrade) {
-            setWaitMode(false);
-            return;
-        }
-
-        setWaitMode(true);
     }
 
     @Override
@@ -171,8 +160,17 @@ public class BillingActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        billingHelper = new IabHelper(this);
-        billingHelper.startSetup(billingSetupListener);
+        // do not query IAB if user has key
+        boolean hasUpgrade = Utils.hasXpass(this);
+        updateViewStates(hasUpgrade);
+        if (hasUpgrade) {
+            setWaitMode(false);
+        } else {
+            setWaitMode(true);
+
+            billingHelper = new IabHelper(this);
+            billingHelper.startSetup(billingSetupListener);
+        }
     }
 
     @Override
