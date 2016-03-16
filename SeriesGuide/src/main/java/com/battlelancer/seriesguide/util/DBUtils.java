@@ -22,10 +22,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
@@ -59,6 +61,15 @@ public class DBUtils {
     public static final String UNKNOWN_NEXT_RELEASE_DATE = String.valueOf(Long.MAX_VALUE);
 
     private static final int SMALL_BATCH_SIZE = 50;
+
+    /**
+     * Currently simply show a toast with the error message.
+     */
+    public static void displayDatabaseError(Context context, SQLiteException e) {
+        Toast.makeText(context,
+                context.getString(R.string.app_name) + " database error. " + e.getMessage(),
+                Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * Maps a {@link java.lang.Boolean} object to an int value to store in the database.
@@ -622,12 +633,19 @@ public class DBUtils {
      */
     public static long updateLatestEpisode(Context context, Integer showTvdbIdToUpdate) {
         // get a list of shows and their last watched episodes
-        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI_WITH_LAST_EPISODE,
-                LastWatchedEpisodeQuery.PROJECTION,
-                showTvdbIdToUpdate != null ?
-                        Qualified.SHOWS_ID + "=" + showTvdbIdToUpdate : null,
-                null, null
-        );
+        Cursor shows;
+        try {
+            shows = context.getContentResolver().query(Shows.CONTENT_URI_WITH_LAST_EPISODE,
+                    LastWatchedEpisodeQuery.PROJECTION,
+                    showTvdbIdToUpdate != null ?
+                            Qualified.SHOWS_ID + "=" + showTvdbIdToUpdate : null,
+                    null, null
+            );
+        } catch (SQLiteException e) {
+            shows = null;
+            Timber.e(e, "updateLatestEpisode: show query failed.");
+            displayDatabaseError(context, e);
+        }
         if (shows == null) {
             // abort completely on query failure
             Timber.e("Failed to update next episode values");
@@ -688,10 +706,17 @@ public class DBUtils {
                         releaseTime, number, season, releaseTime
                 };
             }
-            final Cursor next = context.getContentResolver()
-                    .query(Episodes.buildEpisodesOfShowUri(showTvdbId),
-                            NextEpisodesQuery.PROJECTION, nextEpisodeSelection, selectionArgs,
-                            NextEpisodesQuery.SORTORDER);
+            Cursor next;
+            try {
+                next = context.getContentResolver()
+                        .query(Episodes.buildEpisodesOfShowUri(showTvdbId),
+                                NextEpisodesQuery.PROJECTION, nextEpisodeSelection, selectionArgs,
+                                NextEpisodesQuery.SORTORDER);
+            } catch (SQLiteException e) {
+                next = null;
+                Timber.e(e, "updateLatestEpisode: next episode query failed.");
+                displayDatabaseError(context, e);
+            }
             if (next == null) {
                 // abort completely on query failure
                 Timber.e("Failed to update next episode values");
@@ -809,6 +834,9 @@ public class DBUtils {
         } catch (RemoteException e) {
             // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);
+        } catch (SQLiteException e) {
+            Timber.e(e, "applyBatch: failed, database error.");
+            displayDatabaseError(context, e);
         }
     }
 
