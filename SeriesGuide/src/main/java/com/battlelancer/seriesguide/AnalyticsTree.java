@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.text.TextUtils;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
@@ -127,5 +128,12 @@ public class AnalyticsTree extends Timber.DebugTree {
 
         // finally log to crashlytics
         Crashlytics.log(level + "/" + tag + ": " + message);
+
+        // track some non-fatal exceptions with crashlytics
+        if (priority == Log.ERROR) {
+            if (t instanceof SQLiteException) {
+                Crashlytics.logException(t);
+            }
+        }
     }
 }

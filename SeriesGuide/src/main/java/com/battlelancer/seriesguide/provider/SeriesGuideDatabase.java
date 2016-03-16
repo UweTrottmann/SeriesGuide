@@ -21,8 +21,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -1080,20 +1082,75 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Drops the current {@link Tables#EPISODES_SEARCH} table and re-creates it with current data
      * from {@link Tables#EPISODES}.
      */
-    public static void rebuildFtsTableImpl(SQLiteDatabase db) {
-        db.beginTransaction();
+    public static void rebuildFtsTable(SQLiteDatabase db) {
+        if (!recreateFtsTable(db)) {
+            return;
+        }
+
         try {
-            db.execSQL("drop table if exists " + Tables.EPISODES_SEARCH);
-            db.execSQL(CREATE_SEARCH_TABLE);
-            db.execSQL("INSERT INTO " + Tables.EPISODES_SEARCH + "(docid," + Episodes.TITLE + ","
-                    + Episodes.OVERVIEW + ")" + " select " + Episodes._ID + "," + Episodes.TITLE
-                    + "," + Episodes.OVERVIEW + " from " + Tables.EPISODES + ";");
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+            db.beginTransaction();
+            try {
+                db.execSQL(
+                        "INSERT INTO " + Tables.EPISODES_SEARCH
+                                + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
+                                + " select " + Episodes._ID + "," + Episodes.TITLE
+                                + "," + Episodes.OVERVIEW
+                                + " from " + Tables.EPISODES + ";");
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            Timber.e(e, "rebuildFtsTable: failed to populate table.");
+            // try to build a basic table with only episode titles
+            rebuildBasicFtsTable(db);
         }
     }
 
+    private static boolean recreateFtsTable(SQLiteDatabase db) {
+        try {
+            db.beginTransaction();
+            try {
+                db.execSQL("drop table if exists " + Tables.EPISODES_SEARCH);
+                db.execSQL(CREATE_SEARCH_TABLE);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+            return true;
+        } catch (SQLiteException e) {
+            Timber.e(e, "recreateFtsTable: failed.");
+            return false;
+        }
+    }
+
+    /**
+     * Similar to {@link #rebuildFtsTable(SQLiteDatabase)}. However only inserts the episode title,
+     * not the overviews to conserve space.
+     */
+    private static void rebuildBasicFtsTable(SQLiteDatabase db) {
+        if (!recreateFtsTable(db)) {
+            return;
+        }
+
+        try {
+            db.beginTransaction();
+            try {
+                db.execSQL(
+                        "INSERT INTO " + Tables.EPISODES_SEARCH
+                                + "(docid," + Episodes.TITLE + ")"
+                                + " select " + Episodes._ID + "," + Episodes.TITLE
+                                + " from " + Tables.EPISODES + ";");
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            Timber.e(e, "rebuildBasicFtsTable: failed to populate table.");
+        }
+    }
+
+    @Nullable
     public static Cursor search(String selection, String[] selectionArgs, SQLiteDatabase db) {
         // select
         // _id,episodetitle,episodedescription,number,season,watched,seriestitle
@@ -1189,9 +1246,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         // search for anything starting with the given search term
         selectionArgs[0] = "\"" + searchTerm + "*\"";
 
-        return db.rawQuery(query.toString(), selectionArgs);
+        try {
+            return db.rawQuery(query.toString(), selectionArgs);
+        } catch (SQLiteException e) {
+            Timber.e(e, "search: failed, database error.");
+            return null;
+        }
     }
 
+    @Nullable
     public static Cursor getSuggestions(String searchTerm, SQLiteDatabase db) {
         String query = "select _id," + Episodes.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_1 + "," + Shows.TITLE + " as "
@@ -1212,10 +1275,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             searchTerm = searchTerm.replace("\"", "");
         }
 
-        // search for anything starting with the given search term
-        return db.rawQuery(query, new String[] {
-                "\"" + searchTerm + "*\""
-        });
+        try {
+            // search for anything starting with the given search term
+            return db.rawQuery(query, new String[] {
+                    "\"" + searchTerm + "*\""
+            });
+        } catch (SQLiteException e) {
+            Timber.e(e, "getSuggestions: failed, database error.");
+            return null;
+        }
     }
 
     /**
