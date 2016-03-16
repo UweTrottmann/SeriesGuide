@@ -157,7 +157,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Google Play Services
-    def playServicesVersion = '8.1.0'
+    def playServicesVersion = '8.4.0'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
 
