@@ -252,7 +252,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.rebuildFtsTableImpl(db);
+                SeriesGuideDatabase.rebuildFtsTable(db);
                 return null;
             }
             case EPISODESEARCH: {
