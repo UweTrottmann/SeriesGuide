@@ -49,6 +49,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -56,6 +58,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -240,6 +243,22 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         NotificationSettings.getLatestToIncludeTresholdValue(getActivity()));
             } else {
                 notifications.setSummary(R.string.pref_notificationssummary);
+            }
+
+            // SeriesGuide Cloud link
+            Preference cloud = findPreference("com.battlelancer.seriesguide.cloud");
+            if (hasAccessToX && HexagonTools.isSignedIn(getActivity())) {
+                cloud.setSummary(HexagonSettings.getAccountName(getActivity()));
+            } else {
+                cloud.setSummary(R.string.hexagon_description);
+            }
+
+            // trakt link
+            Preference trakt = findPreference("com.battlelancer.seriesguide.trakt.connect");
+            if (TraktCredentials.get(getActivity()).hasCredentials()) {
+                trakt.setSummary(TraktCredentials.get(getActivity()).getUsername());
+            } else {
+                trakt.setSummary(null);
             }
 
             // Theme switcher
