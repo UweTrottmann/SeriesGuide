@@ -195,7 +195,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
-        public static final String SETTINGS_SCREEN_BASIC = "screen_basic";
+        public static final String KEY_SCREEN_BASIC = "screen_basic";
+        private static final String KEY_SCREEN_NOTIFICATIONS = "screen_notifications";
+        private static final String KEY_SCREEN_ADVANCED = "screen_advanced";
 
         private static final int REQUEST_CODE_RINGTONE = 0;
 
@@ -208,22 +210,41 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             if (settings == null) {
                 addPreferencesFromResource(R.xml.settings_root);
                 setupRootSettings();
-            } else if (settings.equals(SETTINGS_SCREEN_BASIC)) {
+            } else if (settings.equals(KEY_SCREEN_BASIC)) {
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings();
-            } else if (settings.equals("screen_notifications")) {
+            } else if (settings.equals(KEY_SCREEN_NOTIFICATIONS)) {
                 addPreferencesFromResource(R.xml.settings_notifications);
                 setupNotificationSettings();
-            } else if (settings.equals("screen_advanced")) {
+            } else if (settings.equals(KEY_SCREEN_ADVANCED)) {
                 addPreferencesFromResource(R.xml.settings_advanced);
                 setupAdvancedSettings();
             }
         }
 
         private void setupRootSettings() {
+            // display version as About summary
+            findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
+        }
+
+        private void updateRootSettings() {
+            // unlock all link
+            Preference unlock = findPreference("com.battlelancer.seriesguide.upgrade");
+            boolean hasAccessToX = Utils.hasAccessToX(getActivity());
+            unlock.setSummary(hasAccessToX ? getString(R.string.upgrade_success) : null);
+
+            // notifications link
+            Preference notifications = findPreference(KEY_SCREEN_NOTIFICATIONS);
+            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(getActivity())) {
+                notifications.setSummary(
+                        NotificationSettings.getLatestToIncludeTresholdValue(getActivity()));
+            } else {
+                notifications.setSummary(R.string.pref_notificationssummary);
+            }
+
             // Theme switcher
             Preference themePref = findPreference(DisplaySettings.KEY_THEME);
-            if (Utils.hasAccessToX(getActivity())) {
+            if (hasAccessToX) {
                 themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -244,9 +265,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 themePref.setOnPreferenceChangeListener(sNoOpChangeListener);
                 themePref.setSummary(R.string.onlyx);
             }
-
-            // display version as About summary
-            findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
 
             // show currently set values for list prefs
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
@@ -381,6 +399,14 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         @Override
         public void onStart() {
             super.onStart();
+
+            // update some summary values on the root page
+            String settings = getArguments() == null ? null
+                    : getArguments().getString(EXTRA_SETTINGS_SCREEN);
+            if (settings == null) {
+                updateRootSettings();
+            }
+
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             prefs.registerOnSharedPreferenceChangeListener(this);
