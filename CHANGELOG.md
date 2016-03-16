@@ -14,6 +14,12 @@ Version 29 *(2016-03-11)*
 * List widget updates immediately when marking watched, in-app settings affecting it change.
 * SeriesGuide Cloud support on Amazon version if Google Play Services are available.
 
+#### 29.0.3 *(2016-03-16)*
+
+* FIX Do not crash on some common database problems and display a message instead.
+* FIX Crash when starting purchase of subscription if inventory has not been checked.
+* FIX Widget providers crash if the received context or intent are null.
+
 #### 29.0.2 *(2016-03-12)*
 
 * FIX Season and episode number are flipped in DashClock extension.
