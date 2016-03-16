@@ -208,7 +208,11 @@ public abstract class AddFragment extends Fragment {
             holder.description.setText(item.overview);
             if (item.poster != null) {
                 holder.poster.setVisibility(View.VISIBLE);
-                ServiceUtils.loadWithPicasso(getContext(), item.poster).into(holder.poster);
+                ServiceUtils.loadWithPicasso(getContext(), item.poster)
+                        .centerCrop()
+                        .resizeDimen(R.dimen.show_poster_add_width, R.dimen.show_poster_add_height)
+                        .error(R.drawable.ic_image_missing)
+                        .into(holder.poster);
             } else {
                 holder.poster.setVisibility(View.GONE);
             }

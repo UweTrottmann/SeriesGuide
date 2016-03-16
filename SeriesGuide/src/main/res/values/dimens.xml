@@ -46,6 +46,8 @@
     <dimen name="show_poster_height">100dp</dimen>
     <dimen name="show_poster_small_width">68dp</dimen>
     <dimen name="show_poster_small_height">100dp</dimen>
+    <dimen name="show_poster_add_width">60dp</dimen>
+    <dimen name="show_poster_add_height">88dp</dimen>
 
     <!-- Episode images -->
     <dimen name="imagecontainer_height">180dp</dimen>

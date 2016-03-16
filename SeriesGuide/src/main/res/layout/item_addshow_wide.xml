@@ -16,8 +16,8 @@
             android:layout_width="100dp"
             android:layout_height="147dp"
             android:layout_alignParentLeft="true"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
             tools:src="@color/background_dim" />
 
         <TextView
