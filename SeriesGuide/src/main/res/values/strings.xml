@@ -36,6 +36,7 @@
     <string name="action_display_all">Show all</string>
     <string name="web_search">Web search</string>
     <string name="add_to_homescreen">Shortcut</string>
+    <string name="action_open">Open</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>

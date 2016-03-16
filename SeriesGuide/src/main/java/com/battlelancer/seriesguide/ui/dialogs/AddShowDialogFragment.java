@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,8 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.AddFragment;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -62,8 +65,6 @@ public class AddShowDialogFragment extends DialogFragment {
     public static final String TAG = "AddShowDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";
     private static final String KEY_SHOW_LANGUAGE = "show_language";
-
-    private SearchResult mShow;
 
     /**
      * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
@@ -114,8 +115,6 @@ public class AddShowDialogFragment extends DialogFragment {
         String SEARCH_RESULT = "search_result";
     }
 
-    private OnAddShowListener mListener;
-
     @Bind(R.id.textViewAddTitle) TextView title;
     @Bind(R.id.textViewAddShowMeta) TextView showmeta;
     @Bind(R.id.textViewAddDescription) TextView overview;
@@ -140,15 +139,18 @@ public class AddShowDialogFragment extends DialogFragment {
         }
     };
 
-    @Bind(R.id.buttonPositive) Button mButtonPositive;
-    @Bind(R.id.buttonNegative) Button mButtonNegative;
-    @Bind(R.id.progressBarAdd) View mProgressBar;
+    @Bind(R.id.buttonPositive) Button buttonPositive;
+    @Bind(R.id.buttonNegative) Button buttonNegative;
+    @Bind(R.id.progressBarAdd) View progressBar;
+
+    private OnAddShowListener addShowListener;
+    private SearchResult displayedShow;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnAddShowListener) activity;
+            addShowListener = (OnAddShowListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnAddShowListener");
         }
@@ -158,8 +160,8 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mShow = getArguments().getParcelable(InitBundle.SEARCH_RESULT);
-        if (mShow == null || mShow.tvdbid <= 0) {
+        displayedShow = getArguments().getParcelable(InitBundle.SEARCH_RESULT);
+        if (displayedShow == null || displayedShow.tvdbid <= 0) {
             // invalid TVDb id
             dismiss();
             return;
@@ -176,25 +178,14 @@ public class AddShowDialogFragment extends DialogFragment {
         ButterKnife.bind(this, v);
 
         // buttons
-        mButtonNegative.setText(R.string.dismiss);
-        mButtonNegative.setOnClickListener(new OnClickListener() {
+        buttonNegative.setText(R.string.dismiss);
+        buttonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        mButtonPositive.setText(R.string.action_shows_add);
-        mButtonPositive.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mShow.isAdded = true;
-                EventBus.getDefault().post(new AddFragment.AddShowEvent());
-
-                mListener.onAddShow(mShow);
-                dismiss();
-            }
-        });
-        mButtonPositive.setEnabled(false);
+        buttonPositive.setVisibility(View.GONE);
 
         ButterKnife.apply(labelViews, VISIBLE, false);
 
@@ -209,8 +200,8 @@ public class AddShowDialogFragment extends DialogFragment {
 
         // load show details
         Bundle args = new Bundle();
-        args.putInt(KEY_SHOW_TVDBID, mShow.tvdbid);
-        args.putString(KEY_SHOW_LANGUAGE, mShow.language);
+        args.putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid);
+        args.putString(KEY_SHOW_LANGUAGE, displayedShow.language);
         getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
                 mShowLoaderCallbacks);
     }
@@ -264,14 +255,34 @@ public class AddShowDialogFragment extends DialogFragment {
             return;
         }
         if (result.isAdded) {
-            // already added, prevent adding
-            mButtonPositive.setVisibility(View.GONE);
+            // already added, offer to open show instead
+            buttonPositive.setText(R.string.action_open);
+            buttonPositive.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), OverviewActivity.class).putExtra(
+                            OverviewFragment.InitBundle.SHOW_TVDBID, displayedShow.tvdbid));
+                    dismiss();
+                }
+            });
         } else {
-            mButtonPositive.setEnabled(true);
+            // not added, offer to add
+            buttonPositive.setText(R.string.action_shows_add);
+            buttonPositive.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    displayedShow.isAdded = true;
+                    EventBus.getDefault().post(new AddFragment.AddShowEvent());
+
+                    addShowListener.onAddShow(displayedShow);
+                    dismiss();
+                }
+            });
         }
+        buttonPositive.setVisibility(View.VISIBLE);
 
         // store title for add task
-        mShow.title = show.title;
+        displayedShow.title = show.title;
 
         // title, overview
         title.setText(show.title);
@@ -329,11 +340,11 @@ public class AddShowDialogFragment extends DialogFragment {
         Utils.loadTvdbShowPoster(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
-        mButtonPositive.setEnabled(true);
+        buttonPositive.setEnabled(true);
         ButterKnife.apply(labelViews, VISIBLE, true);
     }
 
     private void showProgressBar(boolean isVisible) {
-        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }
