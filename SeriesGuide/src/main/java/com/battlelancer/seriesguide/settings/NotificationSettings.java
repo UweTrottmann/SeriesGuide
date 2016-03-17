@@ -53,7 +53,7 @@ public class NotificationSettings {
 
     public static boolean isNotificationsEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_ENABLED, false);
+                .getBoolean(KEY_ENABLED, true);
     }
 
     public static boolean isNotifyAboutFavoritesOnly(Context context) {
