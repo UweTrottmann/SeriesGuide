@@ -144,8 +144,9 @@ dependencies {
         exclude group: 'joda-time', module: 'joda-time'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'jp.wasabeef:picasso-transformations:1.0.2@aar'
-    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3@aar'
+    // https://github.com/wasabeef/picasso-transformations/blob/master/CHANGELOG.md
+    compile 'jp.wasabeef:picasso-transformations:2.0.0@aar'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0@aar'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
     compile 'net.danlew:android.joda:2.9.2'
 
