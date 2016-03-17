@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostrar tudo</string>
   <string name="web_search">Pesquisa na Web</string>
   <string name="add_to_homescreen">Atalho</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>

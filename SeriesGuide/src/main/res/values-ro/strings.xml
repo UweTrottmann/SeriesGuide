@@ -33,6 +33,7 @@
   <string name="action_display_all">Arată tot</string>
   <string name="web_search">Căutare pe web</string>
   <string name="add_to_homescreen">Scurtătură</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>

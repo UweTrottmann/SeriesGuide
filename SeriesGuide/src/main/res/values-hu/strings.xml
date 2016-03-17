@@ -33,6 +33,7 @@
   <string name="action_display_all">Összes megjelenítése</string>
   <string name="web_search">Internetes keresés</string>
   <string name="add_to_homescreen">Parancsikon</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>

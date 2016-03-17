@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostra-ho tot</string>
   <string name="web_search">Cerca web</string>
   <string name="add_to_homescreen">Drecera</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>

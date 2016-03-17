@@ -33,6 +33,7 @@
   <string name="action_display_all">Afficher tout</string>
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>

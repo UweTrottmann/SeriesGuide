@@ -33,6 +33,7 @@
   <string name="action_display_all">显示全部</string>
   <string name="web_search">网页搜索</string>
   <string name="add_to_homescreen">置于桌面</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>

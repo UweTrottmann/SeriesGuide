@@ -33,6 +33,7 @@
   <string name="action_display_all">Прикажи све</string>
   <string name="web_search">Веб претрага</string>
   <string name="add_to_homescreen">Пречица</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>

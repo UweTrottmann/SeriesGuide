@@ -33,6 +33,7 @@
   <string name="action_display_all">Покажи всички</string>
   <string name="web_search">Търсене в мрежата</string>
   <string name="add_to_homescreen">Пряк път</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>

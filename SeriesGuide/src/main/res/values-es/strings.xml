@@ -33,6 +33,7 @@
   <string name="action_display_all">Ver todos</string>
   <string name="web_search">Búsqueda en la web</string>
   <string name="add_to_homescreen">Acceso directo</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>

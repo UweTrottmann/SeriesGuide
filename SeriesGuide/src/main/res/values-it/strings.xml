@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostra tutti</string>
   <string name="web_search">Ricerca Web</string>
   <string name="add_to_homescreen">Aggiungi alla Home</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>

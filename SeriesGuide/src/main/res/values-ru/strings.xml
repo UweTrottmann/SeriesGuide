@@ -33,6 +33,7 @@
   <string name="action_display_all">Показать все</string>
   <string name="web_search">Веб-поиск</string>
   <string name="add_to_homescreen">Ярлык</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>

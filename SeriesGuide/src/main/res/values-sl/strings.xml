@@ -33,6 +33,7 @@
   <string name="action_display_all">Pokaži vse</string>
   <string name="web_search">Spletno iskanje</string>
   <string name="add_to_homescreen">Bližnjica</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="search_hint">Iskanje epizode</string>

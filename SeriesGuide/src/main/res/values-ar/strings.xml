@@ -33,6 +33,7 @@
   <string name="action_display_all">عرض الكل</string>
   <string name="web_search">البحث في الويب</string>
   <string name="add_to_homescreen">إختصار</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>

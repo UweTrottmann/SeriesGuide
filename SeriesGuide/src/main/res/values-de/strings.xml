@@ -33,6 +33,7 @@
   <string name="action_display_all">Alle anzeigen</string>
   <string name="web_search">Web-Suche</string>
   <string name="add_to_homescreen">Verknüpfung</string>
+  <string name="action_open">Öffnen</string>
   <!-- Search -->
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>

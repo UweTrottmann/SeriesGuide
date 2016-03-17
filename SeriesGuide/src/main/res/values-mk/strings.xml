@@ -33,6 +33,7 @@
   <string name="action_display_all">Прикажи се</string>
   <string name="web_search">Веб пребарување</string>
   <string name="add_to_homescreen">Shortcut</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
