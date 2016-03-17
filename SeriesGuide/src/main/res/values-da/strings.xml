@@ -57,7 +57,7 @@
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
   <string name="shout_invalid">DIn kommentar følger ikke reglerne!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Indlæg</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
   <string name="refresh">Opdater</string>
@@ -247,8 +247,8 @@
   <string name="hexagon_remove_account_confirmation">At fjerne din konto vil slette alle film og serier fra SeriesGuide Cloud. Sørg for at fjerne den på andre tilsluttede enheder.</string>
   <string name="hexagon_api_error">Kunne ikke tale med SeriesGuide Cloud. Prøv igen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_permission_missing">For at bruge SeriesGuide Cloud, tillad adgang til dine kontoer.</string>
+  <string name="hexagon_google_play_missing">For at bruge SeriesGuide Cloud, er Google Play-tjenester påkrævet.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Gemmer i trakt.</string>
   <string name="trakt_seen">%s set.</string>
@@ -263,8 +263,8 @@
   <string name="trakt_success">Sendt til trakt.</string>
   <string name="trakt_error_credentials">Noget gik galt. Kontroller venligt dine legitimationsoplysninger og prøv igen.</string>
   <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Prøv igen senere.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
+  <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt konto</string>
   <string name="trakt_connect_instructions">På den næste skærm log ind på trakt eller opret en ny konto, derefter lad SeriesGuide få adgang til din trakt konto.</string>
@@ -302,8 +302,8 @@
   <string name="checkin">Tjek ind</string>
   <string name="checkin_hint">Skriv en besked (valgfrit)</string>
   <string name="paste_title">Indsæt titel</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Hurtig check-in</string>
+  <string name="pref_quick_checkin_summary">Spørg ikke om en check-in besked</string>
   <!-- Help -->
   <string name="feedback">Send feedback</string>
   <string name="action_open_in_browser">Åben i browser</string>
@@ -316,11 +316,11 @@
   <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
   <string name="pref_onlyseasoneps">Gem specielle episoder</string>
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
-  <string name="pref_exactdates">Display exact dates</string>
+  <string name="pref_exactdates">Vis nøjagtige datoer</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
   <string name="pref_episodesorting">Sortér afsnit efter&#8230;</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Foretrukket indholdssprog</string>
   <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
   <string name="about">Om SeriesGuide</string>
@@ -362,8 +362,8 @@
   <string name="pref_other">Andet</string>
   <string name="pref_autoupdate">Slå automatisk opdatering til</string>
   <string name="pref_autoupdatesummary">Opdater dine serier periodisk</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackup">Automatisk Sikkerhedskopiering</string>
+  <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
   <string name="pref_number">Talformat</string>
@@ -391,15 +391,15 @@
   <string name="import_button">Gendan</string>
   <string name="backup_question">Dette vil overskrive den nuværende backup fil i backup mappen!</string>
   <string name="import_question">Den nuværende oversigt over tv-serier vil gå tabt! Vær sikker på backup filen er placeret i backup mappen.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Jeg forstår at mine nuværende serier, lister og film vil blive erstattet!</string>
   <string name="last_auto_backup">Sidste automatiske backup: %s</string>
   <string name="restore_auto_backup">Gendan automatisk backup</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">For at sikkerhedskopiere eller gendanne, tillad adgang til dine filer.</string>
+  <string name="autobackup_permission_missing">For at bruge automatisk sikkerhedskopiering, tillad adgang til dine filer.</string>
+  <string name="autobackup_files_missing">For at bruge automatisk sikkerhedskopiering, vælg gyldige sikkerhedskopifiler.</string>
   <string name="no_file_selected">Ingen fil valgt</string>
   <string name="action_select_file">Vælg fil</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="backup_use_default_files">Brug standard sikkerhedskopifiler</string>
   <!-- Welcome dialog -->
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Vælg sprog</string>

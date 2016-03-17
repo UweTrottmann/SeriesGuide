@@ -9,7 +9,7 @@
   <string name="search">جستجو</string>
   <string name="preferences">تنظیمات</string>
   <string name="help">راهنما</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">راهنما و بازخورد</string>
   <string name="drawer_open">باز کردن کشو ی ناوبری</string>
   <string name="drawer_close">بستن کشو ی ناوبری</string>
   <!-- Media items -->
@@ -25,18 +25,18 @@
   <string name="description_overview">بررسی اجمالی</string>
   <string name="description_poster">نمایش پوستر</string>
   <string name="description_image">تصویر قسمت</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">گزینه‌های بیشتر</string>
   <!-- Actions -->
   <string name="clear">حذف</string>
   <string name="discard">نپذیرفتن</string>
   <string name="save_selection">ذخیره انتخاب</string>
   <string name="action_display_all">نمایش همه</string>
-  <string name="web_search">Web search</string>
-  <string name="add_to_homescreen">Shortcut</string>
+  <string name="web_search">جستجو در وب</string>
+  <string name="add_to_homescreen">میانبر</string>
   <!-- Search -->
   <string name="clear_search_history">تاریخچه جستجو را پاک کنید</string>
   <string name="search_hint">جستجوی قسمتها</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">به هر زبانی</string>
   <!-- Status messages -->
   <string name="updated">به آخرین نسخه به روز.</string>
   <string name="norating">N\a</string>
@@ -51,18 +51,18 @@
   <string name="share_episode">اشتراک قسمت</string>
   <string name="share_movie">اشتراک فیلم</string>
   <string name="share_checkout">اتمام %s</string>
-  <string name="addtocalendar">Add to calendar</string>
-  <string name="addtocalendar_failed">Can not create a calendar event.</string>
+  <string name="addtocalendar">اضافه کردن به تقویم</string>
+  <string name="addtocalendar_failed">موفق به افزودن رویداد به تقویم نشدیم.</string>
   <!-- Comments -->
   <string name="comments">نظرات</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="action_post">Post</string>
+  <string name="shout_hint">نظر دهید (به انگلیسی، بیشتر از ۵ کلمه)</string>
+  <string name="shout_invalid">نظر شما مطابق قوانین نیست!</string>
+  <string name="action_post">ارسال</string>
   <string name="isspoiler">طریقه هشدار!</string>
   <string name="no_shouts">اولین نفر باش.</string>
   <string name="refresh">تازه کردن</string>
   <plurals name="replies_plural">
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d پاسخ</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">کامل</string>
