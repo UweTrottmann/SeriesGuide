@@ -5,10 +5,12 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 30 *(in development)*
------------------------------
+Version 30
+----------
+*(in development)*
 
-#### 30-beta1 *(2016-03-17)*
+#### 30-beta1
+*(2016-03-17)*
 
 * TWEAK Offer to open shows in add dialog that are already added to SeriesGuide.
 * TWEAK Display pieces of information right in the root settings screen. Like the curren supporter state
@@ -57,14 +59,16 @@ Version 29 *(2016-03-11)*
 * FIX Potential improvements to list widget not updating.
 * NOTICE Latest translations from crowdin.
 
-#### 29-beta2 *(2016-02-18)*
+#### 29-beta2
+*(2016-02-18)*
 
 * TWEAK Update list widget immediately when setting episodes watched.
 * TWEAK Display episode number in notifications and DashClock extension.
 * FIX Crash due to incorrect Lithuanian translation.
 * NOTICE Latest translations from crowdin.
 
-#### 29-beta1 *(2016-02-11)*
+#### 29-beta1
+*(2016-02-11)*
 
 * TWEAK Combined search and "Add show" screen.
 * TWEAK Wider layout for movie details on 10-inch devices in landscape.
