@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 30 *(in development)*
+-----------------------------
+
+#### 30-beta1 *(2016-03-17)*
+
+* TWEAK Offer to open shows in add dialog that are already added to SeriesGuide.
+* TWEAK Display pieces of information right in the root settings screen. Like the curren supporter state
+  or signed-in account names.
+* TWEAK Clean up the first run experience. Do not show the nav drawer, show the auto backup
+  permission warning only after Getting Started is dismissed.
+* TWEAK Display placeholder in search screen if posters are not or could not be loaded.
+* NOTICE Latest translations from crowdin.
+
 Version 29 *(2016-03-11)*
 -----------------------------
 
