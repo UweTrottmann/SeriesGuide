@@ -13,7 +13,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 License
 -------
 
-    Copyright 2010-2016 Uwe Trottmann
+    Copyright 2010 Uwe Trottmann
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,4 +28,4 @@ License
     limitations under the License.
 
 
- [1]: http://seriesgui.de
+ [1]: https://seriesgui.de
