@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,13 +63,26 @@ public class DBUtils {
 
     private static final int SMALL_BATCH_SIZE = 50;
 
+    public static class DatabaseErrorEvent {
+
+        private final String message;
+
+        public DatabaseErrorEvent(String message) {
+            this.message = message;
+        }
+
+        public void handle(Context context) {
+            Toast.makeText(context,
+                    context.getString(R.string.app_name) + " database error. (" + message + ")",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /**
-     * Currently simply show a toast with the error message.
+     * Post an event to simply show a toast with the error message.
      */
-    public static void displayDatabaseError(Context context, SQLiteException e) {
-        Toast.makeText(context,
-                context.getString(R.string.app_name) + " database error. " + e.getMessage(),
-                Toast.LENGTH_SHORT).show();
+    public static void postDatabaseError(SQLiteException e) {
+        EventBus.getDefault().post(new DatabaseErrorEvent(e.getMessage()));
     }
 
     /**
@@ -644,7 +658,7 @@ public class DBUtils {
         } catch (SQLiteException e) {
             shows = null;
             Timber.e(e, "updateLatestEpisode: show query failed.");
-            displayDatabaseError(context, e);
+            postDatabaseError(e);
         }
         if (shows == null) {
             // abort completely on query failure
@@ -715,7 +729,7 @@ public class DBUtils {
             } catch (SQLiteException e) {
                 next = null;
                 Timber.e(e, "updateLatestEpisode: next episode query failed.");
-                displayDatabaseError(context, e);
+                postDatabaseError(e);
             }
             if (next == null) {
                 // abort completely on query failure
@@ -836,7 +850,7 @@ public class DBUtils {
             throw new RuntimeException("Problem applying batch operation", e);
         } catch (SQLiteException e) {
             Timber.e(e, "applyBatch: failed, database error.");
-            displayDatabaseError(context, e);
+            postDatabaseError(e);
         }
     }
 

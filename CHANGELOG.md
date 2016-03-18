@@ -29,6 +29,10 @@ Version 29 *(2016-03-11)*
 * List widget updates immediately when marking watched, in-app settings affecting it change.
 * SeriesGuide Cloud support on Amazon version if Google Play Services are available.
 
+#### 29.0.4 *(2016-03-18)*
+
+* FIX Database error message crashes the app.
+
 #### 29.0.3 *(2016-03-16)*
 
 * FIX Do not crash on some common database problems and display a message instead.
