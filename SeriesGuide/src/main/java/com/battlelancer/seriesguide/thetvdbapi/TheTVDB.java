@@ -47,6 +47,8 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.thetvdb.entities.Series;
+import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -251,6 +253,43 @@ public class TheTVDB {
         }
 
         return language;
+    }
+
+    @Nullable
+    public static List<SearchResult> searchSeries(@NonNull Context context, @NonNull String query,
+            @Nullable final String language) throws TvdbException {
+        retrofit2.Response<SeriesResultsWrapper> response;
+        try {
+            response = ServiceUtils.getTheTvdb(context)
+                    .search()
+                    .series(query, null, null, language)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage(), e);
+        }
+
+        if (response.code() == 404) {
+            return null; // API returns 404 if there are no search results
+        }
+
+        ensureSuccessfulResponse(response.raw());
+
+        List<Series> tvdbResults = response.body().data;
+        if (tvdbResults == null || tvdbResults.size() == 0) {
+            return null; // no results from tvdb
+        }
+
+        // parse into our data format
+        List<SearchResult> results = new ArrayList<>(tvdbResults.size());
+        for (Series tvdbResult : tvdbResults) {
+            SearchResult result = new SearchResult();
+            result.tvdbid = tvdbResult.id;
+            result.title = tvdbResult.seriesName;
+            result.overview = tvdbResult.overview;
+            result.language = language;
+            results.add(result);
+        }
+        return results;
     }
 
     /**
@@ -781,16 +820,14 @@ public class TheTVDB {
             throw new TvdbException(e.getMessage() + " " + urlString, e);
         }
 
-        int statusCode = response.code();
-        if (statusCode == 404) {
+        if (response.code() == 404) {
             // special case: item does not exist (any longer)
-            throw new TvdbException(response.code() + " " + response.message() + " " + urlString,
+            throw new TvdbException(
+                    response.code() + " " + response.message() + " " + response.request().url(),
                     true, null);
         }
-        if (!response.isSuccessful()) {
-            // other non-2xx response
-            throw new TvdbException(response.code() + " " + response.message() + " " + urlString);
-        }
+
+        ensureSuccessfulResponse(response);
 
         try {
             final InputStream input = response.body().byteStream();
@@ -814,6 +851,15 @@ public class TheTVDB {
             }
         } catch (SAXException | IOException | AssertionError e) {
             throw new TvdbException(e.getMessage() + " " + urlString, e);
+        }
+    }
+
+    private static void ensureSuccessfulResponse(Response response)
+            throws TvdbException {
+        if (!response.isSuccessful()) {
+            // other non-2xx response
+            throw new TvdbException(
+                    response.code() + " " + response.message() + " " + response.request().url());
         }
     }
 }
