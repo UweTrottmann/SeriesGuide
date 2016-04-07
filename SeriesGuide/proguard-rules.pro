@@ -48,10 +48,19 @@
 # due to using joda-time-android tz data is included differently
 -dontwarn org.joda.time.tz.**
 
-# OkHttp has some internal stuff not available on Android.
+# OkHttp
 -dontwarn com.squareup.okhttp.internal.**
 
-# Okio has some stuff not available on Android.
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+
+# OkHttp 3
+-dontwarn okhttp3.**
+
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# Okio
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
@@ -61,12 +70,24 @@
 -dontwarn org.slf4j.**
 -dontwarn org.json.**
 
-# Retrofit has some optional dependencies we don't use.
+# Retrofit 1.X
+-dontwarn retrofit.**
 -dontwarn rx.**
--dontwarn retrofit.appengine.**
--dontwarn retrofit.client.ApacheClient$GenericEntityHttpRequest
--dontwarn retrofit.client.ApacheClient$GenericHttpRequest
--dontwarn retrofit.client.ApacheClient$TypedOutputEntity
+
+-keep class retrofit.** { *; }
+
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
+
+# Retrofit 2.X
+-dontwarn retrofit2.**
+
+-keep class retrofit2.** { *; }
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
