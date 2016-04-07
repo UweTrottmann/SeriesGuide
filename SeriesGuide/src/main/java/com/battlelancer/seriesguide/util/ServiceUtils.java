@@ -33,12 +33,14 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
+import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.tmdb.Tmdb;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import java.io.File;
@@ -55,8 +57,8 @@ public final class ServiceUtils {
 
     public static final String TAG = "Service Utils";
 
-    static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
-    static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
+    public static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
+    public static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
     private static final String API_CACHE = "api-cache";
     private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
     private static final int MAX_DISK_API_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -85,6 +87,8 @@ public final class ServiceUtils {
 
     private static Picasso sPicasso;
 
+    private static TheTvdb theTvdb;
+
     private static TraktV2 traktV2;
 
     private static TraktV2 traktV2WithAuth;
@@ -105,22 +109,22 @@ public final class ServiceUtils {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            File cacheDir = createApiCacheDir(context);
+            File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
             cachingHttpClient = builder.build();
         }
         return cachingHttpClient;
     }
 
-    static File createApiCacheDir(Context context) {
-        File cache = new File(context.getApplicationContext().getCacheDir(), API_CACHE);
+    public static File createApiCacheDir(Context context, String directoryName) {
+        File cache = new File(context.getApplicationContext().getCacheDir(), directoryName);
         if (!cache.exists()) {
             cache.mkdirs();
         }
         return cache;
     }
 
-    static long calculateApiDiskCacheSize(File dir) {
+    public static long calculateApiDiskCacheSize(File dir) {
         long size = MIN_DISK_API_CACHE_SIZE;
 
         try {
@@ -168,6 +172,17 @@ public final class ServiceUtils {
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
         }
         return requestCreator;
+    }
+
+    /**
+     * Get a {@link com.uwetrottmann.thetvdb.TheTvdb} instance.
+     */
+    @NonNull
+    public static synchronized TheTvdb getTheTvdb(Context context) {
+        if (theTvdb == null) {
+            theTvdb = new SgTheTvdb(context);
+        }
+        return theTvdb;
     }
 
     /**
