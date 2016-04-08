@@ -44,11 +44,15 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.entities.Series;
+import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResults;
 import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
+import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -92,7 +96,6 @@ public class TheTVDB {
 
     private static final String TVDB_PATH_ALL = "all/";
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
-    private static final String TVDB_EXTENSION_UNCOMPRESSED = ".xml";
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
@@ -526,100 +529,96 @@ public class TheTVDB {
     @NonNull
     private static Show downloadAndParseShow(Context context, int showTvdbId, String language)
             throws TvdbException {
-        final Show currentShow = new Show();
-        final RootElement root = new RootElement("Data");
-        final Element show = root.getChild("Series");
+        TheTvdb theTvdb = ServiceUtils.getTheTvdb(context);
+        retrofit2.Response<SeriesWrapper> response;
+        try {
+            response = theTvdb.series()
+                    .series(showTvdbId, language)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage(), e);
+        }
 
-        // set handlers for elements we want to react to
-        show.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                // NumberFormatException may be thrown, will stop parsing
-                currentShow.tvdbId = Integer.parseInt(body);
-            }
-        });
-        show.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.title = body;
-            }
-        });
-        show.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.overview = body;
-            }
-        });
-        show.getChild("Actors").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.actors = body.trim();
-            }
-        });
-        show.getChild("Genre").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.genres = body.trim();
-            }
-        });
-        show.getChild("Network").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.network = body;
-            }
-        });
-        show.getChild("Runtime").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                try {
-                    currentShow.runtime = Integer.parseInt(body);
-                } catch (NumberFormatException e) {
-                    // an hour is always a good estimate...
-                    currentShow.runtime = 60;
-                }
-            }
-        });
-        show.getChild("Status").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                if (body.length() == 10) {
-                    currentShow.status = ShowStatusExport.CONTINUING;
-                } else if (body.length() == 5) {
-                    currentShow.status = ShowStatusExport.ENDED;
-                } else {
-                    currentShow.status = ShowStatusExport.UNKNOWN;
-                }
-            }
-        });
-        show.getChild("ContentRating").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.contentRating = body;
-            }
-        });
-        show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.poster = body != null ? body.trim() : "";
-            }
-        });
-        show.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.imdbId = body.trim();
-            }
-        });
-        show.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                try {
-                    currentShow.lastEdited = Long.parseLong(body);
-                } catch (NumberFormatException e) {
-                    currentShow.lastEdited = 0;
-                }
-            }
-        });
-        show.getChild("Language").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                currentShow.language = body.trim();
-            }
-        });
+        if (response.code() == 404) {
+            // special case: item does not exist (any longer)
+            throw new TvdbException(
+                    response.code() + " " + response.message() + " showTvdbId=" + showTvdbId,
+                    true, null);
+        }
 
-        // build TVDb url, get localized content when possible
-        String url = TVDB_API_SERIES + showTvdbId + "/"
-                + (language != null ? language + TVDB_EXTENSION_UNCOMPRESSED : "");
-        downloadAndParse(context, root.getContentHandler(), url, false);
+        Series series = response.body().data;
+        Show result = new Show();
+        result.tvdbId = showTvdbId;
+        // actors are unused, are fetched from tmdb
+        // title and overview might be empty if no translation exists
+        result.title = series.seriesName;
+        result.overview = series.overview;
+        result.network = series.network;
+        result.contentRating = series.rating;
+        result.imdbId = series.imdbId;
+        result.genres = TextTools.mendTvdbStrings(series.genre);
+        result.language = language;
+        result.lastEdited = series.lastUpdated;
+        try {
+            result.runtime = Integer.parseInt(series.runtime);
+        } catch (NumberFormatException e) {
+            // an hour is always a good estimate...
+            result.runtime = 60;
+        }
+        String status = series.status;
+        if (status != null) {
+            if (status.length() == 10) {
+                result.status = ShowStatusExport.CONTINUING;
+            } else if (status.length() == 5) {
+                result.status = ShowStatusExport.ENDED;
+            } else {
+                result.status = ShowStatusExport.UNKNOWN;
+            }
+        }
 
-        return currentShow;
+        // poster
+        retrofit2.Response<SeriesImageQueryResults> posterResponse;
+        posterResponse = getSeriesPosters(theTvdb, showTvdbId, language);
+        if (posterResponse.code() == 404) {
+            // no posters for this language, fall back to default
+            posterResponse = getSeriesPosters(theTvdb, showTvdbId, null);
+        }
+
+        if (posterResponse.isSuccessful()) {
+            result.poster = getHighestRatedPoster(posterResponse.body().data);
+        }
+
+        return result;
+    }
+
+    private static retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(TheTvdb theTvdb,
+            int showTvdbId, @Nullable String language) throws TvdbException {
+        try {
+            return theTvdb.series()
+                    .imagesQuery(showTvdbId, "poster", null, null, language)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage(), e);
+        }
+    }
+
+    @Nullable
+    private static String getHighestRatedPoster(
+            List<SeriesImageQueryResults.SeriesImageQueryResult> posters) {
+        int highestRatedIndex = 0;
+        double highestRating = 0.0;
+        for (int i = 0; i < posters.size(); i++) {
+            SeriesImageQueryResults.SeriesImageQueryResult poster = posters.get(i);
+            if (poster.ratingsInfo == null || poster.ratingsInfo.average == null) {
+                continue;
+            }
+            double rating = poster.ratingsInfo.average;
+            if (rating >= highestRating) {
+                highestRating = poster.ratingsInfo.average;
+                highestRatedIndex = i;
+            }
+        }
+        return posters.get(highestRatedIndex).fileName;
     }
 
     private static ArrayList<ContentValues> fetchEpisodes(
