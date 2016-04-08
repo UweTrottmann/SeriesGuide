@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -550,8 +551,9 @@ public class TheTVDB {
         Show result = new Show();
         result.tvdbId = showTvdbId;
         // actors are unused, are fetched from tmdb
-        // title and overview might be empty if no translation exists
-        result.title = series.seriesName;
+        // title and overview might be null if no translation exists
+        result.title = TextUtils.isEmpty(series.seriesName) ?
+                context.getString(R.string.no_translation_title) : series.seriesName;
         result.overview = series.overview;
         result.network = series.network;
         result.contentRating = series.rating;
