@@ -75,8 +75,6 @@ public class Show {
 
     public String genres;
 
-    public String actors;
-
     @SerializedName("last_updated")
     public long lastUpdated;
 

@@ -145,6 +145,9 @@ public class SeriesGuideContract {
          */
         String RELEASE_COUNTRY = "series_airtime";
 
+        /**
+         * @deprecated Cast information is fetched from TMDB.
+         */
         String ACTORS = "actors";
 
         String IMDBID = "imdbid";

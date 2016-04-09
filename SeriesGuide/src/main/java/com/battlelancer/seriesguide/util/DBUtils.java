@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -35,7 +36,6 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
-import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -395,44 +395,28 @@ public class DBUtils {
     }
 
     private static final String[] SHOW_PROJECTION = new String[] {
-            Shows._ID, Shows.ACTORS, Shows.RELEASE_WEEKDAY, Shows.RELEASE_TIME, Shows.CONTENTRATING,
-            Shows.FIRST_RELEASE, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
-            Shows.RATING_GLOBAL, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
-            Shows.NEXTEPISODE, Shows.LASTEDIT, Shows.RELEASE_COUNTRY
+            Shows._ID,
+            Shows.POSTER,
+            Shows.TITLE
     };
 
     /**
-     * Returns a {@link Series} object. Might return {@code null} if there is no show with that TVDb
-     * id.
+     * Returns a {@link Show} object with only TVDB id, title and poster populated. Might return
+     * {@code null} if there is no show with that TVDb id.
      */
-    public static Series getShow(Context context, int showTvdbId) {
+    @Nullable
+    public static Show getShow(Context context, int showTvdbId) {
         Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 SHOW_PROJECTION, null,
                 null, null);
 
-        Series show = null;
+        Show show = null;
         if (details != null) {
             if (details.moveToFirst()) {
-                show = new Series();
-
-                show.setId(details.getString(0));
-                show.setActors(details.getString(1));
-                show.setAirsDayOfWeek(details.getString(2));
-                show.setAirsTime(details.getLong(3));
-                show.setContentRating(details.getString(4));
-                show.setFirstAired(details.getString(5));
-                show.setGenres(details.getString(6));
-                show.setNetwork(details.getString(7));
-                show.setOverview(details.getString(8));
-                show.setPoster(details.getString(9));
-                show.setRating(details.getString(10));
-                show.setRuntime(details.getString(11));
-                show.setTitle(details.getString(12));
-                show.setStatus(details.getInt(13));
-                show.setImdbId(details.getString(14));
-                show.setNextEpisode(details.getLong(15));
-                show.setLastEdit(details.getLong(16));
-                show.setCountry(details.getString(17));
+                show = new Show();
+                show.tvdbId = details.getInt(0);
+                show.poster = details.getString(1);
+                show.title = details.getString(2);
             }
             details.close();
         }
@@ -483,7 +467,6 @@ public class DBUtils {
         values.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
         values.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
         values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.ACTORS, show.actors);
         values.put(Shows.IMDBID, show.imdbId);
         values.put(Shows.TRAKT_ID, show.traktId);
         values.put(Shows.LASTUPDATED, System.currentTimeMillis());
