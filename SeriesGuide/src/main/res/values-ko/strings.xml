@@ -87,6 +87,7 @@
   <string name="services_watch">보기</string>
   <string name="services_more">더보기</string>
   <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">오늘</string>
   <string name="now">지금</string>

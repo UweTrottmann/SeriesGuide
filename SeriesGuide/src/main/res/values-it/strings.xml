@@ -88,6 +88,7 @@
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
   <string name="no_translation">Non c\'è nessuna descrizione tradotta in %1$s disponibile su %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">oggi</string>
   <string name="now">adesso</string>

@@ -89,6 +89,7 @@
   <string name="services_watch">Skaties</string>
   <string name="services_more">Vairāk</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>

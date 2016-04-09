@@ -92,6 +92,7 @@
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
   <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>

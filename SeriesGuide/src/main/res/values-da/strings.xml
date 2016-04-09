@@ -88,6 +88,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">Nu</string>

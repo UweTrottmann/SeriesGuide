@@ -90,6 +90,7 @@
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Več</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">danes</string>
   <string name="now">zdaj</string>

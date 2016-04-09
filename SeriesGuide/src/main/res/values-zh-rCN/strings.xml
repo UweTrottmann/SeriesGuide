@@ -87,6 +87,7 @@
   <string name="services_watch">在线观看</string>
   <string name="services_more">更多</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">今天</string>
   <string name="now">现在</string>

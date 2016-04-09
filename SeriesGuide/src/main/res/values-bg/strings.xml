@@ -89,6 +89,7 @@
   <string name="services_watch">Гледайте</string>
   <string name="services_more">Още</string>
   <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">днес</string>
   <string name="now">сега</string>

@@ -88,6 +88,7 @@
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
   <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>

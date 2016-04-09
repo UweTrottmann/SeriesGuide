@@ -88,6 +88,7 @@
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
   <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">ma</string>
   <string name="now">most</string>

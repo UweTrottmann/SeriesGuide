@@ -88,6 +88,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>

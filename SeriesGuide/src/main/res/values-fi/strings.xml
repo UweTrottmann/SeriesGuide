@@ -88,6 +88,7 @@
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
   <string name="no_translation">Ei ole saatavilla kuvausta kielelle %1$s palvelussa %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
   <string name="now">nyt</string>

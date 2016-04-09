@@ -89,6 +89,7 @@
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
   <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">nyní</string>

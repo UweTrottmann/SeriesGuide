@@ -88,6 +88,7 @@
   <string name="services_watch">Гледај</string>
   <string name="services_more">Повеќе</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">денес</string>
   <string name="now">сега</string>

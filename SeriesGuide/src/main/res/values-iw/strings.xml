@@ -88,6 +88,7 @@
   <string name="services_watch">צפה</string>
   <string name="services_more">עוד</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">היום</string>
   <string name="now">עכשיו</string>

@@ -88,6 +88,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
   <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>

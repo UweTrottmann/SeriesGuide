@@ -87,6 +87,7 @@
   <string name="services_watch">ดู</string>
   <string name="services_more">เพิ่มเติม</string>
   <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">วันนี้</string>
   <string name="now">ขณะนี้</string>

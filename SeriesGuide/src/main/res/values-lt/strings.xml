@@ -89,6 +89,7 @@
   <string name="services_watch">Žiūrėti</string>
   <string name="services_more">Daugiau</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">šiandien</string>
   <string name="now">dabar</string>

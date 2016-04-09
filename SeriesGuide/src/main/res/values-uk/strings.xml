@@ -89,6 +89,7 @@
   <string name="services_watch">Дивитися</string>
   <string name="services_more">Більше</string>
   <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>

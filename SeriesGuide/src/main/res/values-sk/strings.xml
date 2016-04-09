@@ -89,6 +89,7 @@
   <string name="services_watch">Zhliadnuť</string>
   <string name="services_more">Viac</string>
   <string name="no_translation">Na %2$s nie je dostupný žiadny popis preložený do %1$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">teraz</string>
