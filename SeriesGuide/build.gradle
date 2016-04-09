@@ -122,7 +122,7 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.jakewharton.timber:timber:4.1.1'
+    compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
