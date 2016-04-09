@@ -33,7 +33,7 @@
   <string name="action_display_all">عرض الكل</string>
   <string name="web_search">البحث في الويب</string>
   <string name="add_to_homescreen">إختصار</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">إفتح</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
@@ -58,17 +58,17 @@
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
   <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">أنشر</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
   <string name="refresh">تحديث</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="zero">%d replies</item>
-    <item quantity="two">%d replies</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d ردود</item>
+    <item quantity="zero">رد %d</item>
+    <item quantity="two">%d ردود</item>
+    <item quantity="few">%d ردود</item>
+    <item quantity="many">%d ردود</item>
+    <item quantity="other">%d ردود</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">مطلق</string>
@@ -91,7 +91,7 @@
   <string name="lastEdit">آخر تحرير//TVDb</string>
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
@@ -224,28 +224,28 @@
   <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
   <string name="runtime_movies_watchlist">وقت التشغيل لقائمة المشاهدة</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="zero">%d days</item>
-    <item quantity="two">%d days</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">يومان</item>
+    <item quantity="zero">يوم</item>
+    <item quantity="two">%d أيام</item>
+    <item quantity="few">%d أيام</item>
+    <item quantity="many">%d أيام</item>
+    <item quantity="other">%d أيام</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="zero">%d hours</item>
-    <item quantity="one">%d hour</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="zero">ساعة</item>
+    <item quantity="one">ساعتان</item>
+    <item quantity="two">%d ساعات</item>
+    <item quantity="few">%d ساعات</item>
+    <item quantity="many">%d ساعات</item>
+    <item quantity="other">%d ساعات</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="zero">%d minutes</item>
-    <item quantity="one">%d minute</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="zero">دقيقة</item>
+    <item quantity="one">دقيقتان</item>
+    <item quantity="two">%d دقائق</item>
+    <item quantity="few">%d دقائق</item>
+    <item quantity="many">%d دقائق</item>
+    <item quantity="other">%d دقائق</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">تجريبي</string>
@@ -276,12 +276,12 @@
   <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
+  <string name="traktcheckin_wait">سوف أنتظر</string>
   <string name="trakt_success">تم إرسالها إلى Trakt.</string>
   <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
   <string name="trakt_error_general">لايمكن التحدث إلى التراكت. حاول مرة أخرى.</string>
   <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">حساب Trak</string>
   <string name="trakt_connect_instructions">بالنافذة التالية سجل دخولك في Trakt أو أنشئ حساب جديد. ثم أسمح لـ SeriesGuid بالوصول إلى حساب في Trakt.</string>
@@ -312,12 +312,12 @@
   <string name="rating8">ممتاز</string>
   <string name="rating9">رائع</string>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
-    <item quantity="one">%d vote</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="zero">صوت</item>
+    <item quantity="one">صوتان</item>
+    <item quantity="two">%d أصوات</item>
+    <item quantity="few">%d أصوات</item>
+    <item quantity="many">%d أصوات</item>
+    <item quantity="other">%d أصوات</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">أشاهده الآن</string>
@@ -338,12 +338,12 @@
   <string name="pref_onlyseasoneps">إخفاء الحلقات الخاصة</string>
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_exactdates">عرض التواريخ بشكل دقيق</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"31 أكتوبر\" بدلاً من \"في 3 أيام\"</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
   <string name="about">حول دليل المسلسلات</string>
   <string name="pref_autoaddshows">إضافة المسلسلات الجديدة من موقع التراكت</string>
   <string name="pref_autoaddshowssummary">إضافة المسلسلات تلقائياً من حسابك الموجود على موقع Trakt</string>

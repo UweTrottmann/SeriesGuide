@@ -33,7 +33,7 @@
   <string name="action_display_all">Näytä kaikki</string>
   <string name="web_search">Verkkohaku</string>
   <string name="add_to_homescreen">Pikakuvake</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Avaa</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>

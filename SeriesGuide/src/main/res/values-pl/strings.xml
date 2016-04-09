@@ -33,7 +33,7 @@
   <string name="action_display_all">Pokaż wszystko</string>
   <string name="web_search">Wyszukiwarka</string>
   <string name="add_to_homescreen">Skrót</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Otwórz</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -120,7 +120,7 @@
   <string name="unfavorited">Usunięto z ulubionych</string>
   <string name="context_hide">Ukryj</string>
   <string name="context_unhide">Odkryj</string>
-  <string name="hidden">Ukryty serial</string>
+  <string name="hidden">Serial został ukryty</string>
   <string name="unhidden">Odkryty serial</string>
   <string name="action_shows_add">Dodaj serial</string>
   <string name="action_shows_filter">Filtruj seriale</string>
