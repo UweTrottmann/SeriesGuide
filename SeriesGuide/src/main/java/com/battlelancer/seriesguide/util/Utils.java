@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -301,13 +300,12 @@ public class Utils {
     }
 
     /**
-     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
+     * Tries to load the given TVDb show poster into the given {@link ImageView}
      * without any resizing or cropping. In addition sets alpha on the view.
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void loadPosterBackground(Context context, ImageView imageView,
             String posterPath) {
-        if (AndroidUtils.isJellyBeanOrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imageView.setImageAlpha(30);
         } else {
             //noinspection deprecation
@@ -422,14 +420,13 @@ public class Utils {
      * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
      * the user did not approve it for large data downloads (e.g. images).
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            if (AndroidUtils.isJellyBeanOrHigher()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 // better: only allow large data downloads over non-metered connections
                 isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
             } else {
