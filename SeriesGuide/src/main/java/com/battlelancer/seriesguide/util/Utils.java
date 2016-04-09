@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -25,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -138,20 +140,27 @@ public class Utils {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
-            PackageInfo appInfoSeriesGuide = manager
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuide = manager
                     .getPackageInfo(
                             context.getApplicationContext().getPackageName(),
                             PackageManager.GET_SIGNATURES);
 
             // Try to find the X signing key
-            PackageInfo appInfoSeriesGuideX = manager
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuideX = manager
                     .getPackageInfo(
                             "com.battlelancer.seriesguide.x",
                             PackageManager.GET_SIGNATURES);
 
-            final String ourKey = appInfoSeriesGuide.signatures[0].toCharsString();
-            final String xKey = appInfoSeriesGuideX.signatures[0].toCharsString();
-            return ourKey.equals(xKey);
+            Signature[] sgSignatures = appInfoSeriesGuide.signatures;
+            Signature[] xSignatures = appInfoSeriesGuideX.signatures;
+            if (sgSignatures.length == xSignatures.length) {
+                for (int i = 0; i < sgSignatures.length; i++) {
+                    if (!sgSignatures[i].toCharsString().equals(xSignatures[i].toCharsString())) {
+                        return false; // a signature does not match
+                    }
+                }
+                return true;
+            }
         } catch (NameNotFoundException e) {
             // Expected exception that occurs if the package is not present.
         }
@@ -300,8 +309,8 @@ public class Utils {
     }
 
     /**
-     * Tries to load the given TVDb show poster into the given {@link ImageView}
-     * without any resizing or cropping. In addition sets alpha on the view.
+     * Tries to load the given TVDb show poster into the given {@link ImageView} without any
+     * resizing or cropping. In addition sets alpha on the view.
      */
     public static void loadPosterBackground(Context context, ImageView imageView,
             String posterPath) {
