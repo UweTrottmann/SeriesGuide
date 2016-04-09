@@ -63,9 +63,8 @@
   <string name="no_shouts">Напишете мнение пръв!</string>
   <string name="refresh">Опресни</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d коментар
-%d коментара</item>
+    <item quantity="one">%d коментар</item>
+    <item quantity="other">%d коментара</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ПОРЕДЕН</string>
