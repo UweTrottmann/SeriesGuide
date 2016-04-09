@@ -584,7 +584,8 @@ public class Utils {
      * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
      */
     @SafeVarargs
-    public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
+    public static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeInOrder(
+            AsyncTask<Params, Progress, Result> task, Params... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
 }
