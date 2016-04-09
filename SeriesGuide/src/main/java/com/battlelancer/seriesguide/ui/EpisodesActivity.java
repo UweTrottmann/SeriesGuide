@@ -33,8 +33,8 @@ import android.view.View;
 import android.widget.ImageView;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -162,7 +162,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        final Series show = DBUtils.getShow(this, mShowId);
+        final Show show = DBUtils.getShow(this, mShowId);
         if (show == null) {
             finish();
             return;
@@ -192,7 +192,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (mDualPane) {
             // set the pager background
             Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
-                    show.getPoster());
+                    show.poster);
 
             // setup view pager
             mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, true);
@@ -227,9 +227,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         updateShowDelayed(mShowId);
     }
 
-    private void setupActionBar(Series show) {
+    private void setupActionBar(Show show) {
         // setup ActionBar
-        String showTitle = show.getTitle();
+        String showTitle = show.title;
         String seasonString = SeasonTools.getSeasonString(this, mSeasonNumber);
         setTitle(showTitle + " " + seasonString);
         ActionBar actionBar = getSupportActionBar();

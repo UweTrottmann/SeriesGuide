@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
-import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -402,22 +401,22 @@ public class DBUtils {
     };
 
     /**
-     * Returns a {@link Series} object. Might return {@code null} if there is no show with that TVDb
-     * id.
+     * Returns a {@link Show} object with only TVDB id, title and poster populated. Might return
+     * {@code null} if there is no show with that TVDb id.
      */
     @Nullable
-    public static Series getShow(Context context, int showTvdbId) {
+    public static Show getShow(Context context, int showTvdbId) {
         Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 SHOW_PROJECTION, null,
                 null, null);
 
-        Series show = null;
+        Show show = null;
         if (details != null) {
             if (details.moveToFirst()) {
-                show = new Series();
-                show.setId(details.getString(0));
-                show.setPoster(details.getString(1));
-                show.setTitle(details.getString(2));
+                show = new Show();
+                show.tvdbId = details.getInt(0);
+                show.poster = details.getString(1);
+                show.title = details.getString(2);
             }
             details.close();
         }
