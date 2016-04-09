@@ -9,6 +9,15 @@ Version 30
 ----------
 *(in development)*
 
+#### 30-beta2
+*(2016-04-09)*
+
+* TWEAK Use TVDB API v2 to search for shows (non-English, not any), fetch show info (not episodes).
+  If no show title and overview translation exists English will no longer be used as a fallback.
+  A placeholder title and overview is show instead.
+* FIX Database error message crashes the app.
+* NOTICE Latest translations from crowdin.
+
 #### 30-beta1
 *(2016-03-17)*
 
