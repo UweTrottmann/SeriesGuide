@@ -364,7 +364,7 @@ public class Utils {
     public static void trackView(Context context, String screenName) {
         Tracker tracker = Analytics.getTracker(context);
         tracker.setScreenName(screenName);
-        tracker.send(new HitBuilders.AppViewBuilder().build());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     /**
