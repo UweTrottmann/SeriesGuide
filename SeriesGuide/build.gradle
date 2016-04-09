@@ -146,7 +146,7 @@ dependencies {
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    compile 'net.danlew:android.joda:2.9.2'
+    compile 'net.danlew:android.joda:2.9.3'
 
     // Android support libraries
     compile "com.android.support:support-v4:$supportVersion"
