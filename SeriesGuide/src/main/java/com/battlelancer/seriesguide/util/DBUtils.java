@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -395,16 +396,16 @@ public class DBUtils {
     }
 
     private static final String[] SHOW_PROJECTION = new String[] {
-            Shows._ID, Shows.ACTORS, Shows.RELEASE_WEEKDAY, Shows.RELEASE_TIME, Shows.CONTENTRATING,
-            Shows.FIRST_RELEASE, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
-            Shows.RATING_GLOBAL, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
-            Shows.NEXTEPISODE, Shows.LASTEDIT, Shows.RELEASE_COUNTRY
+            Shows._ID,
+            Shows.POSTER,
+            Shows.TITLE
     };
 
     /**
      * Returns a {@link Series} object. Might return {@code null} if there is no show with that TVDb
      * id.
      */
+    @Nullable
     public static Series getShow(Context context, int showTvdbId) {
         Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 SHOW_PROJECTION, null,
@@ -414,25 +415,9 @@ public class DBUtils {
         if (details != null) {
             if (details.moveToFirst()) {
                 show = new Series();
-
                 show.setId(details.getString(0));
-                show.setActors(details.getString(1));
-                show.setAirsDayOfWeek(details.getString(2));
-                show.setAirsTime(details.getLong(3));
-                show.setContentRating(details.getString(4));
-                show.setFirstAired(details.getString(5));
-                show.setGenres(details.getString(6));
-                show.setNetwork(details.getString(7));
-                show.setOverview(details.getString(8));
-                show.setPoster(details.getString(9));
-                show.setRating(details.getString(10));
-                show.setRuntime(details.getString(11));
-                show.setTitle(details.getString(12));
-                show.setStatus(details.getInt(13));
-                show.setImdbId(details.getString(14));
-                show.setNextEpisode(details.getLong(15));
-                show.setLastEdit(details.getLong(16));
-                show.setCountry(details.getString(17));
+                show.setPoster(details.getString(1));
+                show.setTitle(details.getString(2));
             }
             details.close();
         }
