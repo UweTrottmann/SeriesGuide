@@ -16,11 +16,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +34,9 @@ import com.battlelancer.seriesguide.util.Utils;
 /**
  * Displays information about the app, the developer and licence information about content and
  * libraries.
+ *
+ * <p>Note: this is a platform, not a support library fragment so it can be used right within {@link
+ * SeriesGuidePreferences}.
  */
 public class AboutSettingsFragment extends Fragment {
 
@@ -54,7 +57,7 @@ public class AboutSettingsFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         // display version number and database version
-        textVersion.setText(Utils.getVersionString(getContext()));
+        textVersion.setText(Utils.getVersionString(getActivity()));
 
         buttonWebsite.setOnClickListener(urlButtonClickListener);
         buttonTvdbTerms.setOnClickListener(urlButtonClickListener);
