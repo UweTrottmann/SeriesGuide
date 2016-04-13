@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -54,7 +55,6 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb.entities.Movie;
 
 /**
@@ -84,7 +84,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
         // setup grid view
         // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
+        ViewCompat.setNestedScrollingEnabled(resultsGridView,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
         resultsGridView.setEmptyView(emptyView);
         resultsGridView.setOnItemClickListener(this);
 
@@ -151,8 +152,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         // setup search history
         if (searchHistory == null || searchHistoryAdapter == null) {
             searchHistory = new SearchHistory(getContext(), SearchSettings.KEY_SUFFIX_TMDB);
-            searchHistoryAdapter = new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+            searchHistoryAdapter = new ArrayAdapter<>(getContext(), R.layout.item_dropdown,
+                    searchHistory.getSearchHistory());
             searchBox.setAdapter(searchHistoryAdapter);
         }
 
