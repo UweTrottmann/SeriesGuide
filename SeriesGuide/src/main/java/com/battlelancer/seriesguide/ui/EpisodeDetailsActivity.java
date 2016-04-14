@@ -353,7 +353,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return createViewFromResource(position, convertView, parent, R.layout.item_dropdown);
+            return createViewFromResource(position, convertView, parent,
+                    android.R.layout.simple_spinner_dropdown_item);
         }
 
         @NonNull
