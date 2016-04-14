@@ -51,7 +51,7 @@
     </style>
 
     <style name="TextAppearance.Menu">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:textSize">@dimen/text_size_menu_sg</item>
     </style>
 
     <style name="TextAppearance.Button">

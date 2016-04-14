@@ -25,7 +25,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/background"
+            android:id="@+id/imageViewEpisodeDetailsBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
@@ -48,7 +48,7 @@
                     android:background="@color/transparent"
                     app:elevation="0dp">
 
-                    <include layout="@layout/toolbar_transparent" />
+                    <include layout="@layout/toolbar_transparent_with_spinner" />
 
                     <com.battlelancer.seriesguide.widgets.SlidingTabLayout
                         android:id="@+id/tabsEpisodeDetails"

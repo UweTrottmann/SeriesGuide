@@ -30,11 +30,6 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="TextAppearance.Menu">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
     <style name="TextAppearance.Button">
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>

@@ -16,17 +16,13 @@
   ~ limitations under the License.
   -->
 
-<!-- Currently duplicates the selectable item background, but hell, it works -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
+    style="?android:attr/spinnerItemStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:gravity="center_vertical"
-    android:minHeight="48dp"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
     android:singleLine="true"
-    android:textAppearance="@style/TextAppearance.Menu"
-    tools:text="Sample Item" />
+    android:textAppearance="@style/TextAppearance.Title"
+    tools:text="Selected spinner item" />
