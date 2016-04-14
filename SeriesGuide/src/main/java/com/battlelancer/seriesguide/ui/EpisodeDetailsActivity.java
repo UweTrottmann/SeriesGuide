@@ -20,23 +20,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import com.battlelancer.seriesguide.Constants;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.loaders.SeasonEpisodesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -52,10 +56,19 @@ import java.util.ArrayList;
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     protected static final String TAG = "Episode Details";
+    private static final int LOADER_EPISODE_ID = 100;
+    private static final int LOADER_SEASON_ID = 101;
+    private static final String ARGS_SEASON_TVDB_ID = "seasonTvdbId";
+    private static final String ARGS_SEASON_NUMBER = "seasonNumber";
 
-    private int mSeasonId;
+    private ImageView imageViewBackground;
+    private SlidingTabLayout tabs;
+    private ViewPager viewPager;
 
-    private int mShowId;
+    private boolean canSafelyCommit;
+    private int episodeTvdbId;
+    private int seasonTvdbId;
+    private int showTvdbId;
 
     /**
      * Data which has to be passed when creating this activity. All Bundle extras are integer.
@@ -68,15 +81,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        canSafelyCommit = true;
+
         setContentView(R.layout.activity_episode);
         setupActionBar();
         setupNavDrawer();
 
         setupViews();
-
-        if (mShowId != 0) {
-            updateShowDelayed(mShowId);
-        }
     }
 
     @Override
@@ -86,96 +97,41 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupViews() {
-        // get episode id
-        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
-        if (episodeId == 0) {
-            // nothing to display
+        episodeTvdbId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, -1);
+        if (episodeTvdbId == -1) {
+            // have nothing to display, give up.
             finish();
             return;
         }
 
-        // get show and season id, poster path
-        final Cursor episode = getContentResolver().query(
-                Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID, Shows.TITLE,
-                        Episodes.SEASON
-                }, null, null, null
-        );
-        if (episode == null || !episode.moveToFirst()) {
-            // nothing to display
-            if (episode != null) {
-                episode.close();
-            }
-            finish();
-            return;
-        }
-
-        int seasonNumber = episode.getInt(4);
-        setupActionBar(episode.getString(3), SeasonTools.getSeasonString(this, seasonNumber));
-
-        // set show poster as background
-        Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
-                episode.getString(1));
-
-        mShowId = episode.getInt(2);
-        mSeasonId = episode.getInt(0);
-        episode.close();
-
-        // get episodes of season
-        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
-        Cursor episodesOfSeason = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER
-                }, null, null, sortOrder.query()
-        );
-
-        ArrayList<Episode> episodes = new ArrayList<>();
-        int startPosition = 0;
-        if (episodesOfSeason != null) {
-            int i = 0;
-            while (episodesOfSeason.moveToNext()) {
-                Episode ep = new Episode();
-                int curEpisodeId = episodesOfSeason.getInt(0);
-                // look for episode to show initially
-                if (curEpisodeId == episodeId) {
-                    startPosition = i;
-                }
-                ep.episodeId = curEpisodeId;
-                ep.episodeNumber = episodesOfSeason.getInt(1);
-                ep.seasonNumber = seasonNumber;
-                episodes.add(ep);
-                i++;
-            }
-            episodesOfSeason.close();
-        }
-
-        // setup adapter
-        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes, false);
-
-        // setup view pager
-        ViewPager pager = (ViewPager) findViewById(R.id.pagerEpisodeDetails);
-        pager.setAdapter(adapter);
+        imageViewBackground = ButterKnife.findById(this, R.id.imageViewEpisodeDetailsBackground);
+        tabs = ButterKnife.findById(this, R.id.tabsEpisodeDetails);
+        viewPager = ButterKnife.findById(this, R.id.pagerEpisodeDetails);
 
         // setup tabs
-        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodeDetails);
         tabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
                 SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue ? R.color.white
                         : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-        tabs.setViewPager(pager);
 
-        // set current item
-        pager.setCurrentItem(startPosition, false);
+        // start loading data
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        getSupportLoaderManager().initLoader(LOADER_EPISODE_ID, args, episodeLoaderCallbacks);
     }
 
-    private void setupActionBar(String showTitle, String season) {
-        setTitle(getString(R.string.episodes) + " " + showTitle + " " + season);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(showTitle);
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        canSafelyCommit = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        canSafelyCommit = false;
     }
 
     @Override
@@ -183,7 +139,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             Intent upIntent = new Intent(this, EpisodesActivity.class);
-            upIntent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, mSeasonId);
+            upIntent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, seasonTvdbId);
             if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                 // This activity is not part of the application's task, so
                 // create a new task with a synthesized back stack.
@@ -192,7 +148,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         .addNextIntent(new Intent(this, ShowsActivity.class))
                         .addNextIntent(
                                 new Intent(this, OverviewActivity.class).putExtra(
-                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId)
+                                        OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId)
                         )
                         .addNextIntent(upIntent)
                         .startActivities();
@@ -210,6 +166,117 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    interface EpisodeQuery {
+        String[] PROJECTION = new String[] {
+                Shows.REF_SHOW_ID,
+                Shows.TITLE,
+                Shows.POSTER,
+                Seasons.REF_SEASON_ID,
+                Episodes.SEASON
+        };
+        int SHOW_TVDB_ID = 0;
+        int SHOW_TITLE = 1;
+        int SHOW_POSTER = 2;
+        int SEASON_TVDB_ID = 3;
+        int SEASON_NUMBER = 4;
+    }
+
+    private LoaderManager.LoaderCallbacks<Cursor> episodeLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
+            return new CursorLoader(EpisodeDetailsActivity.this,
+                    Episodes.buildEpisodeWithShowUri(String.valueOf(episodeTvdbId)),
+                    EpisodeQuery.PROJECTION, null, null, null);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            populateBasicInfo(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            // do nothing, keep existing data
+        }
+    };
+
+    private void populateBasicInfo(@Nullable Cursor episodeQuery) {
+        if (episodeQuery == null || !episodeQuery.moveToFirst()) {
+            finish();
+            return;
+        }
+
+        int seasonNumber = episodeQuery.getInt(EpisodeQuery.SEASON_NUMBER);
+        setupActionBar(episodeQuery.getString(EpisodeQuery.SHOW_TITLE),
+                SeasonTools.getSeasonString(this, seasonNumber));
+
+        // set show poster as background
+        Utils.loadPosterBackground(this, imageViewBackground,
+                episodeQuery.getString(EpisodeQuery.SHOW_POSTER));
+
+        showTvdbId = episodeQuery.getInt(EpisodeQuery.SHOW_TVDB_ID);
+        seasonTvdbId = episodeQuery.getInt(EpisodeQuery.SEASON_TVDB_ID);
+
+        if (showTvdbId != 0) {
+            updateShowDelayed(showTvdbId);
+        }
+
+        // load episodes of the whole season
+        Bundle args = new Bundle();
+        args.putInt(ARGS_SEASON_TVDB_ID, seasonTvdbId);
+        args.putInt(ARGS_SEASON_NUMBER, seasonNumber);
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        getSupportLoaderManager().initLoader(LOADER_SEASON_ID, args, seasonLoaderCallbacks);
+    }
+
+    private void setupActionBar(String showTitle, String season) {
+        setTitle(getString(R.string.episodes) + " " + showTitle + " " + season);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(showTitle);
+        }
+    }
+
+    private LoaderManager.LoaderCallbacks<SeasonEpisodesLoader.Result> seasonLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<SeasonEpisodesLoader.Result>() {
+        @Override
+        public Loader<SeasonEpisodesLoader.Result> onCreateLoader(int id, Bundle args) {
+            int seasonTvdbId = args.getInt(ARGS_SEASON_TVDB_ID);
+            int seasonNumber = args.getInt(ARGS_SEASON_NUMBER);
+            int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
+            return new SeasonEpisodesLoader(EpisodeDetailsActivity.this, seasonTvdbId, seasonNumber,
+                    episodeTvdbId);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<SeasonEpisodesLoader.Result> loader,
+                SeasonEpisodesLoader.Result data) {
+            populateSeason(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<SeasonEpisodesLoader.Result> loader) {
+            // do nothing, keep existing data
+        }
+    };
+
+    private void populateSeason(SeasonEpisodesLoader.Result data) {
+        if (!canSafelyCommit) {
+            return; // view pager commits fragment ops, can not do that after onPause, give up.
+        }
+
+        // setup adapter
+        EpisodePagerAdapter adapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                data.episodes, false);
+        viewPager.setAdapter(adapter);
+        tabs.setViewPager(viewPager);
+        // set current item
+        viewPager.setCurrentItem(data.requestedEpisodeIndex, false);
     }
 
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
@@ -264,7 +331,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return TextTools.getEpisodeNumber(mContext, episode.seasonNumber, episode.episodeNumber);
+            return TextTools.getEpisodeNumber(mContext, episode.seasonNumber,
+                    episode.episodeNumber);
         }
 
         public void updateEpisodeList(ArrayList<Episode> list) {
