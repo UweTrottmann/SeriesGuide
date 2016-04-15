@@ -195,6 +195,7 @@
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="action_lists_sort">Sortează lista</string>
   <string name="action_lists_reorder">Reordonaţi lista</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Colecție</string>
   <string name="movies_watchlist">Watchlist</string>

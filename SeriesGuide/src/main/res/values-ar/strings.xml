@@ -198,6 +198,7 @@
   <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
   <string name="action_lists_sort">ترتيب القوائم</string>
   <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعة</string>
   <string name="movies_watchlist">قائمة المشاهدة</string>

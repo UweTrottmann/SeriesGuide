@@ -193,6 +193,7 @@
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="action_lists_sort">排序清單</string>
   <string name="action_lists_reorder">重新排序清單</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">待看清單</string>

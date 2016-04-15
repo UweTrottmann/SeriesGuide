@@ -194,6 +194,7 @@
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
   <string name="action_lists_sort">Sorter lister</string>
   <string name="action_lists_reorder">Omarrangér lister</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>

@@ -195,6 +195,7 @@
   <string name="list_empty">Можете да додате серије, сезоне или епизоде на ову листу.</string>
   <string name="action_lists_sort">Листе за сортирање</string>
   <string name="action_lists_reorder">Поново сортирајте листе</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Колекција</string>
   <string name="movies_watchlist">Листа за гледање</string>

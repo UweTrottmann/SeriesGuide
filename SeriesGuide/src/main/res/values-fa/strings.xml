@@ -193,6 +193,7 @@
   <string name="list_empty">می‌توانید نمایش‌ها، فصل‌ها یا قسمت‌هایی به این فهرست بیفزایید.</string>
   <string name="action_lists_sort">چینش فهرست‌ها</string>
   <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعه</string>
   <string name="movies_watchlist">قهرست تماشا</string>

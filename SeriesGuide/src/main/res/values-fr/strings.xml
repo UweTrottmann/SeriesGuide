@@ -194,6 +194,7 @@
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="action_lists_sort">Trier les listes</string>
   <string name="action_lists_reorder">Réorganiser les listes</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Liste à voir</string>

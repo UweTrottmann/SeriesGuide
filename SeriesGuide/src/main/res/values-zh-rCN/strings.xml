@@ -193,6 +193,7 @@
   <string name="list_empty">请将节目或剧集添加到列表</string>
   <string name="action_lists_sort">列表排序</string>
   <string name="action_lists_reorder">重新排序</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">收藏</string>
   <string name="movies_watchlist">待看列表</string>

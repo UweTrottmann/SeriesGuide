@@ -195,6 +195,7 @@
   <string name="list_empty">Tu vari pievienot šovus, sezonas vai epizodes šim sarakstam.</string>
   <string name="action_lists_sort">Sort lists</string>
   <string name="action_lists_reorder">Reorder lists</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcija</string>
   <string name="movies_watchlist">Redzamo filmu saraksts</string>

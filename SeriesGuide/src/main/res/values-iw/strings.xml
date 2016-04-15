@@ -194,6 +194,7 @@
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="action_lists_sort">מיין רשימה</string>
   <string name="action_lists_reorder">סדר מחדש רשימות</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>

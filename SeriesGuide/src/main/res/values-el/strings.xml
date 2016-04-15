@@ -194,6 +194,7 @@
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
   <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>

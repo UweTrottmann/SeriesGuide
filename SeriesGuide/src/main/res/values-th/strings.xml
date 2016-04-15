@@ -193,6 +193,7 @@
   <string name="list_empty">คุณสามารถเพิ่มซีรีส์, ซีซั่น หรือตอนมายังรายการนี้</string>
   <string name="action_lists_sort">เรียงรายการ</string>
   <string name="action_lists_reorder">เรียงรายการใหม่</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">คลังเก็บ</string>
   <string name="movies_watchlist">อยากดู</string>

@@ -194,6 +194,7 @@
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
   <string name="action_lists_sort">Sorteer lijst</string>
   <string name="action_lists_reorder">Lijst opnieuw ordenen</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Collectie</string>
   <string name="movies_watchlist">Watchlist</string>

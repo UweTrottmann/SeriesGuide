@@ -195,6 +195,7 @@
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
   <string name="action_lists_sort">Třídit seznamy</string>
   <string name="action_lists_reorder">Uspořádat seznamy</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Sbírka</string>
   <string name="movies_watchlist">Chci vidět</string>

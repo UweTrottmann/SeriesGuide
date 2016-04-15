@@ -194,6 +194,7 @@
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
   <string name="action_lists_sort">Listeyi sırala</string>
   <string name="action_lists_reorder">Listeleri tekrar sırala</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Koleksiyon</string>
   <string name="movies_watchlist">İzleme listesi</string>

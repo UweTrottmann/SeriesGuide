@@ -195,6 +195,7 @@
   <string name="list_empty">К списку можно добавить сериалы, сезоны или серии.</string>
   <string name="action_lists_sort">Отсортировать списки</string>
   <string name="action_lists_reorder">Сортировка списков</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>

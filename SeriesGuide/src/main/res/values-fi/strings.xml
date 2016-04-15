@@ -194,6 +194,7 @@
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="action_lists_sort">Lajittele listat</string>
   <string name="action_lists_reorder">Järjestä listat uudelleen</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
@@ -452,7 +453,7 @@
   <string name="billing_price_subscribe">%s/vuosi, kokeile ilmaiseksi</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
-  <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
+  <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia</string>
   <string name="billing_learn_more">Miksi maksaisit? Opi lisää.</string>
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
