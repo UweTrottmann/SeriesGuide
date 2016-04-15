@@ -23,12 +23,11 @@
 
         <Button
             android:id="@+id/buttonPositive"
-            style="?android:attr/borderlessButtonStyle"
+            style="?attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="160dp"
-            tools:text="Button Positive"
-            android:textColor="?attr/colorAccent" />
+            tools:text="Button Positive" />
     </LinearLayout>
 
 </merge>

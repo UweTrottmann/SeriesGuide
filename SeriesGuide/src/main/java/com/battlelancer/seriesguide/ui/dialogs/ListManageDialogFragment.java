@@ -21,18 +21,19 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -73,9 +74,11 @@ public class ListManageDialogFragment extends DialogFragment {
         newFragment.show(ft, "listmanagedialog");
     }
 
-    private EditText mTitle;
-    private OnListsChangedListener mListener;
-    private Button mButtonNegative;
+    @Bind(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
+    private EditText editTextName;
+    @Bind(R.id.buttonNegative) Button buttonNegative;
+    @Bind(R.id.buttonPositive) Button buttonPositive;
+    private OnListsChangedListener listsChangedListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,18 +92,14 @@ public class ListManageDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
+        ButterKnife.bind(this, layout);
 
-        // title
-        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
-        mTitle.setFilters(new InputFilter[] {
-                new CharAndDigitInputFilter()
-        });
+        editTextName = textInputLayoutName.getEditText();
 
         // buttons
-        mButtonNegative = (Button) layout.findViewById(R.id.buttonNegative);
-        mButtonNegative.setEnabled(false);
-        mButtonNegative.setText(R.string.list_remove);
-        mButtonNegative.setOnClickListener(new OnClickListener() {
+        buttonNegative.setEnabled(false);
+        buttonNegative.setText(R.string.list_remove);
+        buttonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // remove list and items
@@ -113,30 +112,29 @@ public class ListManageDialogFragment extends DialogFragment {
                         });
 
                 // remove tab from view pager
-                mListener.onListsChanged();
+                listsChangedListener.onListsChanged();
 
                 dismiss();
             }
         });
-        Button buttonPositive = (Button) layout.findViewById(R.id.buttonPositive);
         buttonPositive.setText(android.R.string.ok);
         buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // prevent whitespaces/empty names
-                if (mTitle.getText().toString().trim().length() == 0) {
+                if (editTextName == null) {
                     return;
                 }
 
                 // update title
                 String listId = getArguments().getString("listid");
                 ContentValues values = new ContentValues();
-                values.put(Lists.NAME, mTitle.getText().toString());
+                values.put(Lists.NAME, editTextName.getText().toString());
                 getActivity().getContentResolver().update(Lists.buildListUri(listId), values, null,
                         null);
 
                 // refresh view pager
-                mListener.onListsChanged();
+                listsChangedListener.onListsChanged();
 
                 dismiss();
             }
@@ -150,7 +148,7 @@ public class ListManageDialogFragment extends DialogFragment {
         super.onAttach(activity);
 
         try {
-            mListener = (OnListsChangedListener) activity;
+            listsChangedListener = (OnListsChangedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnListsChangedListener");
@@ -184,8 +182,12 @@ public class ListManageDialogFragment extends DialogFragment {
             dismiss();
             return;
         }
-        mTitle.setText(list.getString(0));
+        String listName = list.getString(0);
         list.close();
+        editTextName.setText(listName);
+        editTextName.addTextChangedListener(
+                new AddListDialogFragment.ListNameTextWatcher(getContext(), textInputLayoutName,
+                        buttonPositive, listName));
 
         // do only allow removing if this is NOT the last list
         Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
@@ -194,26 +196,9 @@ public class ListManageDialogFragment extends DialogFragment {
                 }, null, null, null);
         if (lists != null) {
             if (lists.getCount() > 1) {
-                mButtonNegative.setEnabled(true);
+                buttonNegative.setEnabled(true);
             }
             lists.close();
-        }
-    }
-
-    /**
-     * Restricts text input to characters and digits preventing any special characters.
-     */
-    public static class CharAndDigitInputFilter implements InputFilter {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
-                int dstart, int dend) {
-            for (int i = start; i < end; i++) {
-                if (!(Character.isLetterOrDigit(source.charAt(i))
-                        || Character.isWhitespace(source.charAt(i)))) {
-                    return "";
-                }
-            }
-            return null;
         }
     }
 }

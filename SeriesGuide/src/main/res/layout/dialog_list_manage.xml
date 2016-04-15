@@ -5,27 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <FrameLayout
         style="@style/DefaultPadding.DialogContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/dialog_min_width">
 
-        <TextView
-            android:id="@+id/textViewListManageDialogTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:text="@string/list_manage"
-            android:textAppearance="@style/TextAppearance.Title" />
-
-        <EditText
-            android:id="@+id/editTextListManageListTitle"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutListManageListName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewListManageDialogTitle"
-            android:hint="@string/list_title_hint"
-            android:inputType="text" />
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/list_title_hint" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </FrameLayout>
 
     <include layout="@layout/dialog_buttons" />
 
