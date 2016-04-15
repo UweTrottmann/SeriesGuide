@@ -9,6 +9,18 @@ Version 30
 ----------
 *(in development)*
 
+#### 30-beta3
+*(2016-04-15)*
+
+* FEATURE On phones: switch seasons from the top of the episode details screen.
+* TWEAK If a show title and description are not translated, fall back to the default translation and
+  add a note to the description that no translation is available.
+* TWEAK Allow any list name as long as it is not empty or the same as an existing list. No more
+  special or latin character restrictions.
+* FIX Crash when viewing About on devices with Android 5.1 or older.
+* FIX Recent search suggestions drop down is colored gray on the light theme.
+* NOTICE Latest translations from crowdin.
+
 #### 30-beta2
 *(2016-04-09)*
 
