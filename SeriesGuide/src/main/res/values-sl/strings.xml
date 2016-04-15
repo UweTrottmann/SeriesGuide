@@ -25,7 +25,7 @@
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Več možnosti</string>
   <!-- Actions -->
   <string name="clear">Zbriši</string>
   <string name="discard">Zavrzi</string>
@@ -33,7 +33,7 @@
   <string name="action_display_all">Pokaži vse</string>
   <string name="web_search">Spletno iskanje</string>
   <string name="add_to_homescreen">Bližnjica</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Odpri</string>
   <!-- Search -->
   <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="search_hint">Iskanje epizode</string>
@@ -58,7 +58,7 @@
   <string name="comments">Komentarji</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
   <string name="shout_invalid">Your comment does not follow the rules!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Objavi</string>
   <string name="isspoiler">Pozor! Razkrita vsebina!</string>
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
   <string name="refresh">Osveži</string>
@@ -142,7 +142,7 @@
   <!-- Now -->
   <string name="now_tab">Zdaj</string>
   <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
+  <string name="released_today">Objavljeno danes</string>
   <string name="friends_recently">Vaši trakt prijatelji</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
@@ -208,7 +208,7 @@
   <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
   <string name="trailer">Predlogled</string>
   <string name="movie_cast">Cast</string>
-  <string name="movie_crew">Crew</string>
+  <string name="movie_crew">Zasedba</string>
   <string name="action_movies_sort">Sort movies</string>
   <string name="action_movies_sort_title">Naslov</string>
   <string name="action_movies_sort_release">Datum izdaje</string>
@@ -241,19 +241,19 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Preizkusno!</string>
   <string name="hexagon_setup">Nastavitev SeriesGuide oblaka</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
+  <string name="hexagon_warning_lists">Seznami niso vključeni.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signed_in">Povezani ste v SeriesGuide oblak.</string>
   <string name="hexagon_signout">Izpis</string>
   <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
   <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
-  <string name="hexagon_remove_account">Remove account</string>
+  <string name="hexagon_remove_account">Odstrani račun</string>
   <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
+  <string name="hexagon_remove_account_failure">Računa ni bilo mogoče odstraniti.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
   <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
