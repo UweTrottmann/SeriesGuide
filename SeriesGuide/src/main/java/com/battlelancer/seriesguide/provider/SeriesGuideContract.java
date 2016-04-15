@@ -19,11 +19,12 @@ package com.battlelancer.seriesguide.provider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ParserUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -797,8 +798,9 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListId(String name) {
-            return ParserUtils.sanitizeId(name);
+        public static String generateListId(@NonNull String name) {
+            String uriEncodedId = Uri.encode(name);
+            return TextUtils.isEmpty(uriEncodedId) ? "default" : uriEncodedId;
         }
     }
 
@@ -852,12 +854,12 @@ public class SeriesGuideContract {
         }
 
         public static String generateListItemId(int itemTvdbId, int type, String listId) {
-            return ParserUtils.sanitizeId(itemTvdbId + "-" + type + "-" + listId);
+            return itemTvdbId + "-" + type + "-" + listId;
         }
 
         public static String generateListItemIdWildcard(int itemTvdbId, int type) {
             // The SQL % wildcard is added by the content provider
-            return ParserUtils.sanitizeId(itemTvdbId + "-" + type + "-");
+            return itemTvdbId + "-" + type + "-";
         }
     }
 
