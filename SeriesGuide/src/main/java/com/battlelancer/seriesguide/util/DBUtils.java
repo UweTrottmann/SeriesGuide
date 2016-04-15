@@ -448,11 +448,14 @@ public class DBUtils {
      *
      * <p> If the show is new, sets some default values and the (TheTVDB) id.
      */
-    public static ContentProviderOperation buildShowOp(Show show, boolean isNew) {
+    public static ContentProviderOperation buildShowOp(Context context, Show show, boolean isNew) {
         ContentValues values = new ContentValues();
 
         // values for new and existing shows
-        values.put(Shows.TITLE, show.title);
+        // if in any case the title is empty, show a place holder
+        values.put(Shows.TITLE,
+                TextUtils.isEmpty(show.title) ? context.getString(R.string.no_translation_title)
+                        : show.title);
         values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.POSTER, show.poster);

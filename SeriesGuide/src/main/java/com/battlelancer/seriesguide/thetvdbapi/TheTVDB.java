@@ -43,13 +43,13 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.entities.Series;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResults;
 import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
@@ -164,7 +164,7 @@ public class TheTVDB {
 
         // get episodes from TVDb and do database update
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(DBUtils.buildShowOp(show, true));
+        batch.add(DBUtils.buildShowOp(context, show, true));
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
         getEpisodesAndUpdateDatabase(context, show, show.language, batch);
@@ -231,7 +231,7 @@ public class TheTVDB {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = getShowDetails(context, showTvdbId, language);
-        batch.add(DBUtils.buildShowOp(show, false));
+        batch.add(DBUtils.buildShowOp(context, show, false));
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
@@ -434,7 +434,7 @@ public class TheTVDB {
      */
     @NonNull
     private static Show getShowDetailsWithHexagon(@NonNull Context context, int showTvdbId,
-            @Nullable String language) throws TvdbException {
+            @NonNull String language) throws TvdbException {
         // try to get show properties from hexagon
         com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
         try {
@@ -477,7 +477,7 @@ public class TheTVDB {
      */
     @NonNull
     public static Show getShowDetails(@NonNull Context context, int showTvdbId,
-            @Nullable String language) throws TvdbException {
+            @NonNull String language) throws TvdbException {
         // try to get some details from trakt
         com.uwetrottmann.trakt.v2.entities.Show traktShow = null;
         try {
@@ -525,42 +525,47 @@ public class TheTVDB {
     }
 
     /**
-     * Get a show from TVDb.
+     * Get a show from TVDb. Tries to fetch in the desired language, but will fall back to the
+     * default entry if no translation exists. The returned entity will still have its <b>language
+     * property set to the desired language</b>, which might not be the language of the actual
+     * content.
      */
     @NonNull
-    private static Show downloadAndParseShow(Context context, int showTvdbId, String language)
-            throws TvdbException {
-        TheTvdb theTvdb = ServiceUtils.getTheTvdb(context);
-        retrofit2.Response<SeriesWrapper> response;
-        try {
-            response = theTvdb.series()
-                    .series(showTvdbId, language)
-                    .execute();
-        } catch (IOException e) {
-            throw new TvdbException(e.getMessage(), e);
+    private static Show downloadAndParseShow(@NonNull Context context, int showTvdbId,
+            @NonNull String desiredLanguage) throws TvdbException {
+        com.uwetrottmann.thetvdb.services.Series seriesService = ServiceUtils.getTheTvdb(context)
+                .series();
+
+        Series series = getSeries(seriesService, showTvdbId, desiredLanguage);
+        // title is null if no translation exists
+        boolean noTranslation = TextUtils.isEmpty(series.seriesName);
+        if (noTranslation) {
+            // try to fetch default entry
+            series = getSeries(seriesService, showTvdbId, null);
         }
 
-        if (response.code() == 404) {
-            // special case: item does not exist (any longer)
-            throw new TvdbException(
-                    response.code() + " " + response.message() + " showTvdbId=" + showTvdbId,
-                    true, null);
-        }
-
-        Series series = response.body().data;
         Show result = new Show();
         result.tvdbId = showTvdbId;
         // actors are unused, are fetched from tmdb
-        // title and overview might be null if no translation exists
-        result.title = TextUtils.isEmpty(series.seriesName) ?
-                context.getString(R.string.no_translation_title) : series.seriesName;
-        result.overview = series.overview;
+        result.title = series.seriesName;
         result.network = series.network;
         result.contentRating = series.rating;
         result.imdbId = series.imdbId;
         result.genres = TextTools.mendTvdbStrings(series.genre);
-        result.language = language;
+        result.language = desiredLanguage; // requested language, might not be the content language.
         result.lastEdited = series.lastUpdated;
+        if (noTranslation || TextUtils.isEmpty(series.overview)) {
+            // add note about non-translated or non-existing overview
+            String untranslatedOverview = series.overview;
+            result.overview = context.getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(context, desiredLanguage),
+                    context.getString(R.string.tvdb));
+            if (!TextUtils.isEmpty(untranslatedOverview)) {
+                result.overview += "\n\n" + untranslatedOverview;
+            }
+        } else {
+            result.overview = series.overview;
+        }
         try {
             result.runtime = Integer.parseInt(series.runtime);
         } catch (NumberFormatException e) {
@@ -580,10 +585,10 @@ public class TheTVDB {
 
         // poster
         retrofit2.Response<SeriesImageQueryResults> posterResponse;
-        posterResponse = getSeriesPosters(theTvdb, showTvdbId, language);
+        posterResponse = getSeriesPosters(seriesService, showTvdbId, desiredLanguage);
         if (posterResponse.code() == 404) {
             // no posters for this language, fall back to default
-            posterResponse = getSeriesPosters(theTvdb, showTvdbId, null);
+            posterResponse = getSeriesPosters(seriesService, showTvdbId, null);
         }
 
         if (posterResponse.isSuccessful()) {
@@ -593,10 +598,36 @@ public class TheTVDB {
         return result;
     }
 
-    private static retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(TheTvdb theTvdb,
+    @NonNull
+    private static Series getSeries(
+            @NonNull com.uwetrottmann.thetvdb.services.Series seriesService, int showTvdbId,
+            @Nullable String language) throws TvdbException {
+        retrofit2.Response<SeriesWrapper> response;
+        try {
+            response = seriesService
+                    .series(showTvdbId, language)
+                    .execute();
+        } catch (IOException e) {
+            throw new TvdbException(e.getMessage(), e);
+        }
+
+        if (response.code() == 404) {
+            // special case: item does not exist (any longer)
+            throw new TvdbException(
+                    response.code() + " " + response.message() + " showTvdbId=" + showTvdbId,
+                    true, null);
+        }
+
+        ensureSuccessfulResponse(response.raw());
+
+        return response.body().data;
+    }
+
+    private static retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(
+            @NonNull com.uwetrottmann.thetvdb.services.Series seriesService,
             int showTvdbId, @Nullable String language) throws TvdbException {
         try {
-            return theTvdb.series()
+            return seriesService
                     .imagesQuery(showTvdbId, "poster", null, null, language)
                     .execute();
         } catch (IOException e) {
