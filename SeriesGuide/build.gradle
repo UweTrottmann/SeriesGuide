@@ -136,7 +136,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile 'com.uwetrottmann.photoview:library:1.2.4'
-    compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.0.1'
+    compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.1.1'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann:tmdb-java:0.10.1'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md

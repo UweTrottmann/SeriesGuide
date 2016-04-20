@@ -21,9 +21,6 @@ import android.content.SharedPreferences;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.thetvdb.TheTvdb;
-import java.io.File;
-import java.util.concurrent.TimeUnit;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
 /**
@@ -33,11 +30,8 @@ import okhttp3.OkHttpClient;
  */
 public class SgTheTvdb extends TheTvdb {
 
-    private static final String CACHE_DIRECTORY = "thetvdb-cache";
     private static final String PREFERENCE_FILE = "thetvdb-prefs";
     private static final String KEY_JSON_WEB_TOKEN = "token";
-
-    private static OkHttpClient cachingHttpClient;
 
     private final Context context;
     private final SharedPreferences preferences;
@@ -62,15 +56,6 @@ public class SgTheTvdb extends TheTvdb {
 
     @Override
     protected synchronized OkHttpClient okHttpClient() {
-        if (cachingHttpClient == null) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            setOkHttpClientDefaults(builder);
-            builder.connectTimeout(ServiceUtils.CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            builder.readTimeout(ServiceUtils.READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            File cacheDir = ServiceUtils.createApiCacheDir(context, CACHE_DIRECTORY);
-            builder.cache(new Cache(cacheDir, ServiceUtils.calculateApiDiskCacheSize(cacheDir)));
-            cachingHttpClient = builder.build();
-        }
-        return cachingHttpClient;
+        return ServiceUtils.getCachingOkHttpClient(context);
     }
 }

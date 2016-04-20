@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
+import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -61,7 +62,7 @@ public final class ServiceUtils {
     public static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
     private static final String API_CACHE = "api-cache";
     private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
-    private static final int MAX_DISK_API_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
+    private static final int MAX_DISK_API_CACHE_SIZE = 20 * 1024 * 1024; // 20MB
 
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
@@ -109,6 +110,8 @@ public final class ServiceUtils {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
+            builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
             cachingHttpClient = builder.build();

@@ -54,6 +54,7 @@ import com.uwetrottmann.thetvdb.entities.Series;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResults;
 import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
 import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
+import com.uwetrottmann.thetvdb.services.SeriesService;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -533,8 +534,7 @@ public class TheTVDB {
     @NonNull
     private static Show downloadAndParseShow(@NonNull Context context, int showTvdbId,
             @NonNull String desiredLanguage) throws TvdbException {
-        com.uwetrottmann.thetvdb.services.Series seriesService = ServiceUtils.getTheTvdb(context)
-                .series();
+        SeriesService seriesService = ServiceUtils.getTheTvdb(context).series();
 
         Series series = getSeries(seriesService, showTvdbId, desiredLanguage);
         // title is null if no translation exists
@@ -599,8 +599,7 @@ public class TheTVDB {
     }
 
     @NonNull
-    private static Series getSeries(
-            @NonNull com.uwetrottmann.thetvdb.services.Series seriesService, int showTvdbId,
+    private static Series getSeries(@NonNull SeriesService seriesService, int showTvdbId,
             @Nullable String language) throws TvdbException {
         retrofit2.Response<SeriesWrapper> response;
         try {
@@ -624,8 +623,8 @@ public class TheTVDB {
     }
 
     private static retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(
-            @NonNull com.uwetrottmann.thetvdb.services.Series seriesService,
-            int showTvdbId, @Nullable String language) throws TvdbException {
+            @NonNull SeriesService seriesService, int showTvdbId, @Nullable String language)
+            throws TvdbException {
         try {
             return seriesService
                     .imagesQuery(showTvdbId, "poster", null, null, language)
