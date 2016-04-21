@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
@@ -45,7 +47,8 @@ import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
 
-    public class ClearSearchHistoryEvent {}
+    public class ClearSearchHistoryEvent {
+    }
 
     public static TvdbAddFragment newInstance() {
         return new TvdbAddFragment();
@@ -133,9 +136,10 @@ public class TvdbAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // create adapter
-        adapter = new AddAdapter(getActivity(),
-                new ArrayList<SearchResult>());
+        // create adapter, add trakt watchlist menu if connected to trakt
+        adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(),
+                TraktCredentials.get(getActivity()).hasCredentials() ? showMenuClickListener
+                        : null, true);
 
         // load data
         Bundle args = new Bundle();
@@ -146,6 +150,25 @@ public class TvdbAddFragment extends AddFragment {
         // enable menu
         setHasOptionsMenu(true);
     }
+
+    private AddAdapter.OnContextMenuClickListener showMenuClickListener
+            = new AddAdapter.OnContextMenuClickListener() {
+        @Override
+        public void onClick(View view, int showTvdbId) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.add_dialog_popup_menu);
+
+            // only support adding shows to watchlist
+            popupMenu.getMenu()
+                    .findItem(R.id.menu_action_show_watchlist_remove)
+                    .setVisible(false);
+
+            popupMenu.setOnMenuItemClickListener(
+                    new TraktAddFragment.AddItemMenuItemClickListener(view.getContext(),
+                            showTvdbId));
+            popupMenu.show();
+        }
+    };
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
