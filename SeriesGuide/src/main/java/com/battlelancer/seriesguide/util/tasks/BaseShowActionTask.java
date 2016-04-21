@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
@@ -27,6 +28,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Sync;
+import de.greenrobot.event.EventBus;
 
 public abstract class BaseShowActionTask extends BaseActionTask {
 
@@ -80,6 +82,15 @@ public abstract class BaseShowActionTask extends BaseActionTask {
         }
 
         return SUCCESS;
+    }
+
+    @Override
+    protected void onPostExecute(Integer result) {
+        super.onPostExecute(result);
+
+        if (result == SUCCESS) {
+            EventBus.getDefault().post(new ShowTools.ShowChangedEvent(showTvdbId));
+        }
     }
 
     private static boolean isTraktActionSuccessful(SyncResponse response) {

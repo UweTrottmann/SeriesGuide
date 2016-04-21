@@ -180,6 +180,16 @@ public class TraktAddFragment extends AddFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onEventMainThread(
+            @SuppressWarnings("UnusedParameters") ShowTools.ShowChangedEvent event) {
+        int listType = getListType();
+        if (listType == TYPE_WATCHLIST) {
+            // reload watchlist if a show was removed
+            getLoaderManager().restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
+                    mTraktAddCallbacks);
+        }
+    }
+
     @Override
     protected void setupEmptyView(EmptyView emptyView) {
         emptyView.setButtonClickListener(new View.OnClickListener() {

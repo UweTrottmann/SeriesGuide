@@ -60,6 +60,14 @@ import timber.log.Timber;
  */
 public class ShowTools {
 
+    public static class ShowChangedEvent {
+        public int showTvdbId;
+
+        public ShowChangedEvent(int showTvdbId) {
+            this.showTvdbId = showTvdbId;
+        }
+    }
+
     /**
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
