@@ -38,7 +38,9 @@ import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
@@ -57,6 +59,14 @@ import timber.log.Timber;
  * Common activities and tools useful when interacting with shows.
  */
 public class ShowTools {
+
+    public static class ShowChangedEvent {
+        public int showTvdbId;
+
+        public ShowChangedEvent(int showTvdbId) {
+            this.showTvdbId = showTvdbId;
+        }
+    }
 
     /**
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
@@ -279,10 +289,24 @@ public class ShowTools {
     }
 
     /**
+     * Add a show to the users trakt watchlist.
+     */
+    public static void addToWatchlist(Context context, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(context, showTvdbId));
+    }
+
+    /**
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int showTvdbId, Rating rating) {
         AsyncTaskCompat.executeParallel(new RateShowTask(context, rating, showTvdbId));
+    }
+
+    /**
+     * Remove a show from the users trakt watchlist.
+     */
+    public static void removeFromWatchlist(Context context, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(context, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {
