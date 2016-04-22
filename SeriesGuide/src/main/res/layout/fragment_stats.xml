@@ -121,7 +121,8 @@
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true"
-            tools:text="61 days 13 hours 29 minutes" />
+            tools:text="61 days 13 hours 29 minutes"
+            tools:ignore="UnusedAttribute" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsEpisodesRuntime"
@@ -196,7 +197,8 @@
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true"
-            tools:text="61 days 13 hours 29 minutes" />
+            tools:text="61 days 13 hours 29 minutes"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/labelStatsMoviesWatchlistRuntime"
