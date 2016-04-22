@@ -52,7 +52,8 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/no_nextepisode"
-            android:textColor="@color/black_87" />
+            android:textColor="@color/black_87"
+            tools:ignore="UnusedAttribute" />
     </LinearLayout>
 
 </FrameLayout>
