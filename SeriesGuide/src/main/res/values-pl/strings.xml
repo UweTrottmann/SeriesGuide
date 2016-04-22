@@ -89,7 +89,7 @@
   <string name="services_watch">Oglądaj</string>
   <string name="services_more">Więcej</string>
   <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Nie przetłumaczone</string>
   <!-- Date and Time -->
   <string name="today">dziś</string>
   <string name="now">teraz</string>
@@ -195,7 +195,7 @@
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="action_lists_sort">Sortowanie list</string>
   <string name="action_lists_reorder">Zmień kolejność list</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcja</string>
   <string name="movies_watchlist">Lista obejrzanych</string>
@@ -263,7 +263,7 @@
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
-  <string name="checkin_canceled_success_trakt">%s odznaczono jako oglądane na trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już oglądasz inny odcinek lub film. Należy zmienić wybór lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>

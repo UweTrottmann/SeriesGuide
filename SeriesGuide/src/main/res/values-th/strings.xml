@@ -33,7 +33,7 @@
   <string name="action_display_all">แสดงทั้งหมด</string>
   <string name="web_search">ค้นเว็บ</string>
   <string name="add_to_homescreen">ทางลัด</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">เปิด</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -87,7 +87,7 @@
   <string name="services_watch">ดู</string>
   <string name="services_more">เพิ่มเติม</string>
   <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">ยังไม่ถูกแปล</string>
   <!-- Date and Time -->
   <string name="today">วันนี้</string>
   <string name="now">ขณะนี้</string>
@@ -193,7 +193,7 @@
   <string name="list_empty">คุณสามารถเพิ่มซีรีส์, ซีซั่น หรือตอนมายังรายการนี้</string>
   <string name="action_lists_sort">เรียงรายการ</string>
   <string name="action_lists_reorder">เรียงรายการใหม่</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
   <!-- Movies -->
   <string name="movies_collection">คลังเก็บ</string>
   <string name="movies_watchlist">อยากดู</string>

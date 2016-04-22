@@ -294,7 +294,7 @@
   <string name="rating8">عالی</string>
   <string name="rating9">معرکه</string>
   <plurals name="votes">
-    <item quantity="other">‫%Id رأی</item>
+    <item quantity="other">%d رأی</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">ثبت</string>

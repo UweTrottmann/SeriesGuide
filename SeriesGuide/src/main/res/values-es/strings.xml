@@ -194,7 +194,7 @@
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
   <!-- Movies -->
   <string name="movies_collection">Colección</string>
   <string name="movies_watchlist">Lista de visualización</string>
@@ -222,7 +222,7 @@
   <string name="movies_on_watchlist">%s en la lista de visualización</string>
   <string name="runtime_movies_watchlist">duración de películas en lista de visualización</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
+    <item quantity="one">%d día</item>
     <item quantity="other">%d días</item>
   </plurals>
   <plurals name="hours_plural">

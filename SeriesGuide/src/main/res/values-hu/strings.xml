@@ -194,7 +194,7 @@
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is hozzá adhatsz ehhez a listához.</string>
   <string name="action_lists_sort">Listák rendezése</string>
   <string name="action_lists_reorder">Listák újrarendezése</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
   <!-- Movies -->
   <string name="movies_collection">Gyűjtemény</string>
   <string name="movies_watchlist">Figyelőlista</string>

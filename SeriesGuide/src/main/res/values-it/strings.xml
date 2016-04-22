@@ -33,7 +33,7 @@
   <string name="action_display_all">Mostra tutti</string>
   <string name="web_search">Ricerca Web</string>
   <string name="add_to_homescreen">Aggiungi alla Home</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Aperto</string>
   <!-- Search -->
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
@@ -88,7 +88,7 @@
   <string name="services_watch">Guarda</string>
   <string name="services_more">Altro</string>
   <string name="no_translation">Non c\'è nessuna descrizione tradotta in %1$s disponibile su %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Non tradotto</string>
   <!-- Date and Time -->
   <string name="today">oggi</string>
   <string name="now">adesso</string>
@@ -194,7 +194,7 @@
   <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
   <string name="action_lists_sort">Ordina le liste</string>
   <string name="action_lists_reorder">Riordina le liste</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Una lista con questo nome esiste già</string>
   <!-- Movies -->
   <string name="movies_collection">Collezione</string>
   <string name="movies_watchlist">Da vedere</string>

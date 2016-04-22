@@ -261,7 +261,7 @@
   <string name="checkin_success_trakt">Провери во %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Откажано чекирање на trakt.</string>
   <string name="traktcheckin_cancel">Замени</string>
-  <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте % s и обидете се повторно.</string>
+  <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте %s и обидете се повторно.</string>
   <string name="traktcheckin_wait">Ќе почекам</string>
   <string name="trakt_success">Прати на trakt.</string>
   <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>

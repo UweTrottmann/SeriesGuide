@@ -194,7 +194,7 @@
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="action_lists_sort">Lajittele listat</string>
   <string name="action_lists_reorder">Järjestä listat uudelleen</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
   <!-- Movies -->
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
