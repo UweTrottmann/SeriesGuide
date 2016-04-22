@@ -9,6 +9,15 @@ Version 30
 ----------
 *(in development)*
 
+#### 30-beta4
+*(2016-04-22)*
+
+* FEATURE In search screen: add option to add shows to trakt watchlist. Support removing shows from
+  trakt watchlist.
+* FIX Potential fix of search table creation failing in some situations.
+* FIX Crash due to broken Persian and Polish translation.
+* NOTICE Latest translations from crowdin.
+
 #### 30-beta3
 *(2016-04-15)*
 
