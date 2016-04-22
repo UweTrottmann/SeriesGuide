@@ -85,7 +85,8 @@
                 android:layout_marginBottom="@dimen/large_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:background="?attr/sgColorDivider" />
+                android:background="?attr/sgColorDivider"
+                tools:ignore="UnknownIdInLayout" />
 
             <TextView
                 android:id="@+id/textViewMovieDescription"
@@ -122,7 +123,8 @@
                 android:layout_below="@+id/containerRatings"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:background="?attr/sgColorDivider" />
+                android:background="?attr/sgColorDivider"
+                tools:ignore="UnknownIdInLayout" />
 
             <TextView
                 android:id="@+id/textViewMovieGenresLabel"
