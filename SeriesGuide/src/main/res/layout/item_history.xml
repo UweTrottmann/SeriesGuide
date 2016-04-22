@@ -83,6 +83,7 @@
             android:layout_height="32dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:contentDescription="@null"
             android:paddingBottom="@dimen/inline_padding"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"

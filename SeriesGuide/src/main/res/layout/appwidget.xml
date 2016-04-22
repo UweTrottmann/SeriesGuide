@@ -30,6 +30,7 @@
             android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:background="@drawable/appwidget_button_center"
+            android:contentDescription="@string/refresh"
             android:padding="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_action_reload" />

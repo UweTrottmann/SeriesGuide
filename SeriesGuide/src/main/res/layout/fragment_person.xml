@@ -33,6 +33,7 @@
                 android:id="@+id/imageViewPersonHeadshot"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/person_headshot_large_height"
+                android:contentDescription="@null"
                 android:scaleType="centerCrop"
                 android:src="@color/protection_dark" />
 
