@@ -49,7 +49,8 @@
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
             android:authorities="${applicationId}.provider"
-            android:exported="true" >
+            android:exported="true"
+            tools:ignore="ExportedContentProvider">
         </provider>
 
         <!-- Launch activity -->
