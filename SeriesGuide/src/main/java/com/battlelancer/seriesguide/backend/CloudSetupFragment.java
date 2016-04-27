@@ -61,17 +61,18 @@ public class CloudSetupFragment extends Fragment {
     private static final int REQUEST_CODE_SIGN_IN = 1;
     private static final int REQUEST_ACCOUNT_PICKER = 2;
 
-    private Button mButtonAction;
-    private TextView mTextViewDescription;
-    private ProgressBar mProgressBar;
-    private Button mButtonRemoveAccount;
-    private TextView mTextViewWarning;
+    private Button buttonAction;
+    private TextView textViewDescription;
+    private TextView textViewUsername;
+    private ProgressBar progressBar;
+    private Button buttonRemoveAccount;
+    private TextView textViewWarning;
 
-    private HexagonSetupTask mHexagonSetupTask;
+    private HexagonSetupTask hexagonSetupTask;
 
-    private boolean mIsProgressLocked;
+    private boolean isProgressLocked;
 
-    private boolean mIsGooglePlayMissingLocked;
+    private boolean isGooglePlayMissingLocked;
     private Snackbar snackbar;
 
     @Override
@@ -90,12 +91,13 @@ public class CloudSetupFragment extends Fragment {
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
 
-        mTextViewDescription = (TextView) v.findViewById(R.id.textViewCloudDescription);
-        mTextViewWarning = ButterKnife.findById(v, R.id.textViewCloudWarnings);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarCloud);
-        mButtonAction = (Button) v.findViewById(R.id.buttonCloudAction);
-        mButtonRemoveAccount = ButterKnife.findById(v, R.id.buttonCloudRemoveAccount);
-        mButtonRemoveAccount.setOnClickListener(new View.OnClickListener() {
+        textViewDescription = (TextView) v.findViewById(R.id.textViewCloudDescription);
+        textViewUsername = ButterKnife.findById(v, R.id.textViewCloudUsername);
+        textViewWarning = ButterKnife.findById(v, R.id.textViewCloudWarnings);
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBarCloud);
+        buttonAction = (Button) v.findViewById(R.id.buttonCloudAction);
+        buttonRemoveAccount = ButterKnife.findById(v, R.id.buttonCloudRemoveAccount);
+        buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment f = new RemoveCloudAccountDialogFragment();
@@ -113,34 +115,35 @@ public class CloudSetupFragment extends Fragment {
         updateViewStates();
 
         // lock down UI if task is still running
-        if (mHexagonSetupTask != null
-                && mHexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (hexagonSetupTask != null
+                && hexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
             setProgressLock(true); // prevent duplicate tasks
         }
     }
 
     private void updateViewStates() {
         // setup not in progress
-        mProgressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         // warn about changes in behavior with trakt
         String warning = getString(R.string.hexagon_warning_lists);
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             warning += "\n" + getString(R.string.hexagon_warning_trakt);
         }
-        mTextViewWarning.setText(warning);
+        textViewWarning.setText(warning);
 
         // not signed in?
         if (!HexagonTools.isSignedIn(getActivity())) {
             // did try to setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(getActivity())) {
                 // show error message
-                mTextViewDescription.setText(R.string.hexagon_setup_incomplete);
+                textViewDescription.setText(R.string.hexagon_setup_incomplete);
             } else {
-                mTextViewDescription.setText(R.string.hexagon_description);
+                textViewDescription.setText(R.string.hexagon_description);
             }
+            textViewUsername.setVisibility(View.GONE);
             // enable sign-in
-            mButtonAction.setText(R.string.hexagon_signin);
-            mButtonAction.setOnClickListener(new View.OnClickListener() {
+            buttonAction.setText(R.string.hexagon_signin);
+            buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // restrict access to supporters
@@ -152,55 +155,57 @@ public class CloudSetupFragment extends Fragment {
                 }
             });
             // disable account removal
-            mButtonRemoveAccount.setVisibility(View.GONE);
+            buttonRemoveAccount.setVisibility(View.GONE);
             return;
         }
 
         // signed in!
+        textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
+        textViewUsername.setVisibility(View.VISIBLE);
 
         // enable sign-out
-        mTextViewDescription.setText(R.string.hexagon_signed_in);
-        mButtonAction.setText(R.string.hexagon_signout);
-        mButtonAction.setOnClickListener(new View.OnClickListener() {
+        textViewDescription.setText(R.string.hexagon_signed_in);
+        buttonAction.setText(R.string.hexagon_signout);
+        buttonAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
             }
         });
         // enable account removal
-        mButtonRemoveAccount.setVisibility(View.VISIBLE);
+        buttonRemoveAccount.setVisibility(View.VISIBLE);
     }
 
     /**
      * Disables the action button and shows a progress bar.
      */
     private void setProgressLock(boolean isLocked) {
-        mIsProgressLocked = isLocked;
-        mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+        isProgressLocked = isLocked;
+        progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
 
         // always disable if no Google Play services available
-        if (mIsGooglePlayMissingLocked) {
-            mButtonAction.setEnabled(false);
+        if (isGooglePlayMissingLocked) {
+            buttonAction.setEnabled(false);
             return;
         }
-        mButtonAction.setEnabled(!isLocked);
-        mButtonRemoveAccount.setEnabled(!isLocked);
+        buttonAction.setEnabled(!isLocked);
+        buttonRemoveAccount.setEnabled(!isLocked);
     }
 
     /**
      * Disables the action button.
      */
     private void setLock(boolean isLocked) {
-        mIsGooglePlayMissingLocked = isLocked;
+        isGooglePlayMissingLocked = isLocked;
 
         // always disable if ongoing progress
-        if (mIsProgressLocked) {
-            mButtonAction.setEnabled(false);
-            mButtonRemoveAccount.setEnabled(false);
+        if (isProgressLocked) {
+            buttonAction.setEnabled(false);
+            buttonRemoveAccount.setEnabled(false);
             return;
         }
-        mButtonAction.setEnabled(!isLocked);
-        mButtonRemoveAccount.setEnabled(!isLocked);
+        buttonAction.setEnabled(!isLocked);
+        buttonRemoveAccount.setEnabled(!isLocked);
     }
 
     @Override
@@ -239,11 +244,11 @@ public class CloudSetupFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if (mHexagonSetupTask != null
-                && mHexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
-            mHexagonSetupTask.cancel(true);
+        if (hexagonSetupTask != null
+                && hexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
+            hexagonSetupTask.cancel(true);
         }
-        mHexagonSetupTask = null;
+        hexagonSetupTask = null;
 
         super.onDestroy();
     }
@@ -273,7 +278,7 @@ public class CloudSetupFragment extends Fragment {
         } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
             setLock(true);
             showGooglePlayServicesWarning();
-            Timber.i("This device is not supported. Code " + connectionStatusCode);
+            Timber.i("This device is not supported. Code %s", connectionStatusCode);
         } else {
             setLock(false);
         }
@@ -336,8 +341,8 @@ public class CloudSetupFragment extends Fragment {
     private void setupHexagon(String accountName) {
         setProgressLock(true);  // prevent duplicate tasks
 
-        mHexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener);
-        mHexagonSetupTask.execute(accountName);
+        hexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener);
+        hexagonSetupTask.execute(accountName);
     }
 
     private static class HexagonSetupTask extends AsyncTask<String, Void, Integer> {
