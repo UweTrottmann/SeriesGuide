@@ -273,7 +273,6 @@
 
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental!</string>
-    <string name="hexagon_setup">Set up SeriesGuide Cloud</string>
     <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
     <string name="hexagon_warning_lists">Lists are not included.</string>
     <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
