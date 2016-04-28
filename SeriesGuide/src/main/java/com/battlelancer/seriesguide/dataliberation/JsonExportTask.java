@@ -382,9 +382,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
             show.language = shows.getString(ShowsQuery.LANGUAGE);
-            if (TextUtils.isEmpty(show.language)) {
-                show.language = DisplaySettings.LANGUAGE_EN;
-            }
             show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
             show.release_weekday = shows.getInt(ShowsQuery.RELEASE_WEEKDAY);
             show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
