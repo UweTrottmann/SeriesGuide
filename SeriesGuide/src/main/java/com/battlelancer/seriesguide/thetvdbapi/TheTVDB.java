@@ -431,31 +431,21 @@ public class TheTVDB {
 
     /**
      * Like {@link #getShowDetails(Context, int, String)}, but if signed in and available adds
-     * properties and prefers the language stored on Hexagon.
+     * properties stored on Hexagon.
      */
     @NonNull
     private static Show getShowDetailsWithHexagon(@NonNull Context context, int showTvdbId,
             @NonNull String language) throws TvdbException {
-        // try to get show properties from hexagon
+        // get show info from TVDb and trakt
+        Show show = getShowDetails(context, showTvdbId, language);
+
+        // if available, restore properties from hexagon
         com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
         try {
             hexagonShow = ShowTools.Download.showFromHexagon(context, showTvdbId);
         } catch (IOException e) {
             throw new TvdbException("Failed to download show properties from Hexagon.");
         }
-
-        // override with language stored on hexagon: more likely to be the desired one
-        if (hexagonShow != null) {
-            String hexagonShowLanguage = hexagonShow.getLanguage();
-            if (!TextUtils.isEmpty(hexagonShowLanguage)) {
-                language = hexagonShowLanguage;
-            }
-        }
-
-        // get show info from TVDb and trakt
-        Show show = getShowDetails(context, showTvdbId, language);
-
-        // if available, restore properties from hexagon
         if (hexagonShow != null) {
             if (hexagonShow.getIsFavorite() != null) {
                 show.favorite = hexagonShow.getIsFavorite();

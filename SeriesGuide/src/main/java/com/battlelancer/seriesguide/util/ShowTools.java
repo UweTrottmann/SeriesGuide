@@ -427,7 +427,7 @@ public class ShowTools {
             DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(context));
 
             if (hasMergedShows) {
-                Timber.d("fromHexagon: downloading changed shows since " + lastSyncTime);
+                Timber.d("fromHexagon: downloading changed shows since %s", lastSyncTime);
             } else {
                 Timber.d("fromHexagon: downloading all shows");
             }
@@ -519,6 +519,7 @@ public class ShowTools {
                     if (!newShows.containsKey(show.getTvdbId())) {
                         SearchResult item = new SearchResult();
                         item.tvdbid = show.getTvdbId();
+                        item.language = show.getLanguage();
                         item.title = "";
                         newShows.put(show.getTvdbId(), item);
                     }
