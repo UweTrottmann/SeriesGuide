@@ -826,6 +826,7 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
+        public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
         public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
         public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
         public static final String SELECTION_EPISODES = ListItems.TYPE + "="

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -42,8 +43,112 @@ import timber.log.Timber;
 public class ListsTools {
 
     private static final int LISTS_MAX_BATCH_SIZE = 10;
+    private static final String[] SELECTION_ARG = new String[1];
+
+    interface Query {
+        String[] PROJECTION_LIST = new String[] {
+                SeriesGuideContract.Lists.LIST_ID,
+                SeriesGuideContract.Lists.NAME,
+                SeriesGuideContract.Lists.ORDER
+        };
+        int LIST_ID = 0;
+        int NAME = 1;
+        int ORDER = 2;
+
+        String[] PROJECTION_LIST_ITEMS = new String[] {
+                SeriesGuideContract.ListItems.LIST_ITEM_ID
+        };
+        int LIST_ITEM_ID = 0;
+    }
 
     private ListsTools() {
+    }
+
+    public static boolean uploadAllToHexagon(Context context) {
+        Timber.d("uploadAllToHexagon: all lists.");
+
+        SgListList listsWrapper = new SgListList();
+        List<SgList> lists = new ArrayList<>(LISTS_MAX_BATCH_SIZE);
+        listsWrapper.setLists(lists);
+
+        Cursor listsQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Lists.CONTENT_URI,
+                        Query.PROJECTION_LIST, null, null, null);
+        if (listsQuery == null) {
+            return false; // query failed
+        }
+
+        while (listsQuery.moveToNext()) {
+            SgList list = new SgList();
+            lists.add(list);
+            // add list properties
+            String listId = listsQuery.getString(Query.LIST_ID);
+            list.setListId(listId);
+            list.setName(listsQuery.getString(Query.NAME));
+            int order = listsQuery.getInt(Query.ORDER);
+            if (order != 0) {
+                list.setOrder(order);
+            }
+            // add list items
+            List<SgListItem> listItems = getListItems(context, listId);
+            if (listItems != null) {
+                list.setListItems(listItems);
+            }
+
+            if (lists.size() == LISTS_MAX_BATCH_SIZE || listsQuery.isLast()) {
+                if (!doUploadSomeLists(context, listsWrapper)) {
+                    return false; // part upload failed, next sync will try again
+                }
+            }
+        }
+        listsQuery.close();
+
+        return true;
+    }
+
+    @Nullable
+    private static List<SgListItem> getListItems(Context context, String listId) {
+        SELECTION_ARG[0] = listId;
+        Cursor query = context.getContentResolver()
+                .query(SeriesGuideContract.ListItems.CONTENT_URI,
+                        Query.PROJECTION_LIST_ITEMS,
+                        SeriesGuideContract.ListItems.SELECTION_LIST,
+                        SELECTION_ARG, null);
+        if (query == null) {
+            return null; // query failed
+        }
+
+        int itemCount = query.getCount();
+        if (itemCount == 0) {
+            query.close();
+            Timber.d("getListItems: no lists to upload.");
+            return null; // no items in this list
+        }
+
+        List<SgListItem> items = new ArrayList<>(itemCount);
+        while (query.moveToNext()) {
+            SgListItem item = new SgListItem();
+            item.setListItemId(query.getString(Query.LIST_ITEM_ID));
+            items.add(item);
+        }
+
+        query.close();
+
+        return items;
+    }
+
+    private static boolean doUploadSomeLists(Context context, SgListList listsWrapper) {
+        Lists listsService = HexagonTools.getListsService(context);
+        if (listsService == null) {
+            return false; // no longer signed in
+        }
+        try {
+            listsService.save(listsWrapper).execute();
+        } catch (IOException e) {
+            Timber.e(e, "uploadAllToHexagon: failed for lists.");
+            return false;
+        }
+        return true;
     }
 
     public static boolean downloadFromHexagon(Context context, boolean hasMergedLists) {
@@ -63,7 +168,7 @@ public class ListsTools {
             try {
                 Lists listsService = HexagonTools.getListsService(context);
                 if (listsService == null) {
-                    return false; // not signed in
+                    return false; // no longer signed in
                 }
 
                 Lists.Get request = listsService.get().setLimit(LISTS_MAX_BATCH_SIZE);
@@ -174,7 +279,7 @@ public class ListsTools {
      *
      * @return null if there was an error, empty list if there are no lists.
      */
-    public static HashSet<String> getListIds(Context context) {
+    private static HashSet<String> getListIds(Context context) {
         Cursor query = context.getContentResolver().query(SeriesGuideContract.Lists.CONTENT_URI,
                 new String[] { SeriesGuideContract.Lists.LIST_ID }, null, null, null);
         if (query == null) {

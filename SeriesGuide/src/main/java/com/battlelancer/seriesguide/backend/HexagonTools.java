@@ -360,24 +360,21 @@ public class HexagonTools {
     private static boolean syncLists(Context context) {
         boolean hasMergedLists = HexagonSettings.hasMergedLists(context);
 
-        boolean downloadSuccessful = ListsTools.downloadFromHexagon(context, hasMergedLists);
-        if (!downloadSuccessful) {
+        if (!ListsTools.downloadFromHexagon(context, hasMergedLists)) {
             return false;
         }
 
         if (hasMergedLists) {
             // TODO ut: remove lists that have been removed
         } else {
-            // TODO ut: upload all lists on initial data merge
-        }
-
-        boolean addingSuccessful = false;
-        if (!hasMergedLists) {
-            // ensure all missing lists from Hexagon are added before merge is complete
-            if (!addingSuccessful) {
+            // upload all lists on initial data merge
+            if (!ListsTools.uploadAllToHexagon(context)) {
                 return false;
             }
-            // set movies as merged
+        }
+
+        if (!hasMergedLists) {
+            // set lists as merged
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
                     .putBoolean(HexagonSettings.KEY_MERGED_LISTS, true)

@@ -177,7 +177,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
-                    Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
+                    ListItems.SELECTION_LIST + " AND " + Shows.REF_SHOW_ID + ">0",
                     new String[] {
                             listId
                     }, ListsDistillationSettings.getSortQuery(getActivity())
