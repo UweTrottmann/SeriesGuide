@@ -21,11 +21,14 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -65,6 +68,13 @@ public class ListsTools {
     }
 
     private ListsTools() {
+    }
+
+    public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
+            @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
+        AsyncTaskCompat.executeParallel(
+                new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
+                        removeFromTheseLists));
     }
 
     public static boolean uploadAllToHexagon(Context context) {
