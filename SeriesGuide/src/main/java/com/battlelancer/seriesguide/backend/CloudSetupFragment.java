@@ -385,21 +385,7 @@ public class CloudSetupFragment extends Fragment {
                 return FAILURE_AUTH;
             }
 
-            // set all shows as not merged with Hexagon
-            ContentValues values = new ContentValues();
-            values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, false);
-            mContext.getContentResolver().update(SeriesGuideContract.Shows.CONTENT_URI, values,
-                    null, null);
-
-            // reset sync related properties
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-                    mContext).edit();
-            editor.putBoolean(HexagonSettings.KEY_MERGED_SHOWS, false);
-            editor.putBoolean(HexagonSettings.KEY_MERGED_MOVIES, false);
-            editor.remove(HexagonSettings.KEY_LAST_SYNC_EPISODES);
-            editor.remove(HexagonSettings.KEY_LAST_SYNC_SHOWS);
-            editor.remove(HexagonSettings.KEY_LAST_SYNC_MOVIES);
-            if (!editor.commit()) {
+            if (!HexagonSettings.resetSyncState(mContext)) {
                 return FAILURE;
             }
 

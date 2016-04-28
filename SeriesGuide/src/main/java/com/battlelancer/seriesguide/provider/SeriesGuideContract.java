@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -860,6 +861,24 @@ public class SeriesGuideContract {
         public static String generateListItemIdWildcard(int itemTvdbId, int type) {
             // The SQL % wildcard is added by the content provider
             return itemTvdbId + "-" + type + "-";
+        }
+
+        @Nullable
+        public static String[] splitListItemId(@NonNull String listItemId) {
+            String[] brokenUpId = listItemId.split("-", 3);
+            if (brokenUpId.length != 3) {
+                return null;
+            }
+            return brokenUpId;
+        }
+
+        /**
+         * Checks if the given type index is one of {@link ListItemTypes}.
+         */
+        public static boolean isValidItemType(int type) {
+            return type == ListItemTypes.SHOW
+                    || type == ListItemTypes.SEASON
+                    || type == ListItemTypes.EPISODE;
         }
     }
 

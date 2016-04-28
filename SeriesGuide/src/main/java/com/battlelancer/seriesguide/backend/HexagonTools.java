@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -39,6 +40,7 @@ import com.google.api.client.json.JsonFactory;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
+import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import java.util.HashMap;
@@ -61,6 +63,7 @@ public class HexagonTools {
     private static Shows sShowsService;
     private static Episodes sEpisodesService;
     private static Movies sMoviesService;
+    private static Lists sListsService;
 
     /**
      * Creates and returns a new instance for this hexagon service or null if not signed in.
@@ -129,6 +132,24 @@ public class HexagonTools {
             sMoviesService = CloudEndpointUtils.updateBuilder(builder).build();
         }
         return sMoviesService;
+    }
+
+    /**
+     * Returns the instance for this hexagon service or null if not signed in.
+     */
+    @Nullable
+    public static synchronized Lists getListsService(Context context) {
+        GoogleAccountCredential credential = getAccountCredential(context);
+        if (credential.getSelectedAccountName() == null) {
+            return null;
+        }
+        if (sListsService == null) {
+            Lists.Builder builder = new Lists.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, credential
+            );
+            sListsService = CloudEndpointUtils.updateBuilder(builder).build();
+        }
+        return sListsService;
     }
 
     /**
@@ -201,16 +222,20 @@ public class HexagonTools {
 
         //// EPISODES
         boolean syncEpisodesSuccessful = syncEpisodes(context);
-        Timber.d("syncWithHexagon: episode sync "
-                + (syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED"));
+        Timber.d("syncWithHexagon: episode sync %s",
+                syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// SHOWS
         boolean syncShowsSuccessful = syncShows(context, existingShows, newShows);
-        Timber.d("syncWithHexagon: show sync " + (syncShowsSuccessful ? "SUCCESSFUL" : "FAILED"));
+        Timber.d("syncWithHexagon: show sync %s", syncShowsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// MOVIES
         boolean syncMoviesSuccessful = syncMovies(context);
-        Timber.d("syncWithHexagon: movie sync " + (syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED"));
+        Timber.d("syncWithHexagon: movie sync %s", syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED");
+
+        //// LISTS
+        boolean syncListsSuccessful = syncLists(context);
+        Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         Timber.d("syncWithHexagon: syncing...DONE");
         return syncEpisodesSuccessful && syncShowsSuccessful && syncMoviesSuccessful;
@@ -330,5 +355,35 @@ public class HexagonTools {
         }
 
         return addingSuccessful;
+    }
+
+    private static boolean syncLists(Context context) {
+        boolean hasMergedLists = HexagonSettings.hasMergedLists(context);
+
+        boolean downloadSuccessful = ListsTools.downloadFromHexagon(context, hasMergedLists);
+        if (!downloadSuccessful) {
+            return false;
+        }
+
+        if (hasMergedLists) {
+            // TODO ut: remove lists that have been removed
+        } else {
+            // TODO ut: upload all lists on initial data merge
+        }
+
+        boolean addingSuccessful = false;
+        if (!hasMergedLists) {
+            // ensure all missing lists from Hexagon are added before merge is complete
+            if (!addingSuccessful) {
+                return false;
+            }
+            // set movies as merged
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putBoolean(HexagonSettings.KEY_MERGED_LISTS, true)
+                    .commit();
+        }
+
+        return true;
     }
 }
