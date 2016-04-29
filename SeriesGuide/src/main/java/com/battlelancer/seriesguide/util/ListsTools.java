@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListIds;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
 import java.io.IOException;
@@ -77,8 +78,80 @@ public class ListsTools {
                         removeFromTheseLists));
     }
 
+    public static boolean removeListsRemovedOnHexagon(Context context) {
+        Timber.d("removeListsRemovedOnHexagon");
+        HashSet<String> localListIds = getListIds(context);
+        if (localListIds == null) {
+            return false; // query failed
+        }
+        if (localListIds.size() <= 1) {
+            return true; // one or no list, can not remove any list
+        }
+
+        // get list of ids of lists on hexagon
+        List<String> hexagonListIds = new ArrayList<>(localListIds.size());
+        String cursor = null;
+        do {
+            try {
+                Lists listsService = HexagonTools.getListsService(context);
+                if (listsService == null) {
+                    return false; // no longer signed in
+                }
+
+                Lists.GetIds request = listsService.getIds();
+                if (!TextUtils.isEmpty(cursor)) {
+                    request.setCursor(cursor);
+                }
+
+                SgListIds response = request.execute();
+                if (response == null) {
+                    Timber.d("removeListsRemovedOnHexagon: failed, response is null.");
+                    return false;
+                }
+
+                List<String> listIds = response.getListIds();
+                if (listIds == null || listIds.size() == 0) {
+                    break; // empty response, assume we got all ids
+                }
+                hexagonListIds.addAll(listIds);
+
+                cursor = response.getCursor();
+            } catch (IOException e) {
+                Timber.e(e, "removeListsRemovedOnHexagon: failed to download lists.");
+                return false;
+            }
+        } while (!TextUtils.isEmpty(cursor)); // fetch next batch
+
+        if (hexagonListIds.size() <= 1) {
+            return true; // one or no list on hexagon, can not remove any list
+        }
+
+        // exclude any lists that are on hexagon
+        for (String listId : hexagonListIds) {
+            localListIds.remove(listId);
+        }
+
+        // remove any list not on hexagon
+        if (localListIds.size() > 0) {
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+            for (String listId : localListIds) {
+                batch.add(ContentProviderOperation
+                        .newDelete(SeriesGuideContract.Lists.buildListUri(listId))
+                        .build());
+            }
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e(e, "removeListsRemovedOnHexagon: deleting lists failed.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static boolean uploadAllToHexagon(Context context) {
-        Timber.d("uploadAllToHexagon: all lists.");
+        Timber.d("uploadAllToHexagon");
 
         SgListList listsWrapper = new SgListList();
         List<SgList> lists = new ArrayList<>(LISTS_MAX_BATCH_SIZE);

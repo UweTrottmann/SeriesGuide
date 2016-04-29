@@ -365,7 +365,10 @@ public class HexagonTools {
         }
 
         if (hasMergedLists) {
-            // TODO ut: remove lists that have been removed
+            // on regular syncs, remove lists gone from hexagon
+            if (!ListsTools.removeListsRemovedOnHexagon(context)) {
+                return false;
+            }
         } else {
             // upload all lists on initial data merge
             if (!ListsTools.uploadAllToHexagon(context)) {
