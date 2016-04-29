@@ -27,7 +27,6 @@ import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
@@ -42,7 +41,7 @@ import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.Li
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.
  */
-public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
+public class ListsActivity extends BaseTopActivity {
 
     public static class ListsChangedEvent {
     }
@@ -160,17 +159,16 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         ListManageDialogFragment.show(listId, getSupportFragmentManager());
     }
 
-    @Override
-    public void onListsChanged() {
+    @SuppressWarnings("UnusedParameters")
+    public void onEventMainThread(ListsChangedEvent event) {
+        onListsChanged();
+    }
+
+    private void onListsChanged() {
         // refresh list adapter
         mListsAdapter.onListsChanged();
         // update tabs
         mTabs.setViewPager(mPager);
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    public void onEventMainThread(ListsChangedEvent event) {
-        onListsChanged();
     }
 
     private void changeSortOrder(int sortOrderId) {

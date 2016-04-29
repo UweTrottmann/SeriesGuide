@@ -28,8 +28,11 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveListTask;
+import com.battlelancer.seriesguide.util.tasks.RenameListTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -70,6 +73,19 @@ public class ListsTools {
     }
 
     private ListsTools() {
+    }
+
+    public static void addList(@NonNull Context context, @NonNull String listName) {
+        AsyncTaskCompat.executeParallel(new AddListTask(context, listName));
+    }
+
+    public static void renameList(@NonNull Context context, @NonNull String listId,
+            @NonNull String listName) {
+        AsyncTaskCompat.executeParallel(new RenameListTask(context, listId, listName));
+    }
+
+    public static void removeList(@NonNull Context context, @NonNull String listId) {
+        AsyncTaskCompat.executeParallel(new RemoveListTask(context, listId));
     }
 
     public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,

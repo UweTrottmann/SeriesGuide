@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -40,8 +38,8 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.HashSet;
 
@@ -57,7 +55,6 @@ public class AddListDialogFragment extends DialogFragment {
     @Bind(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
     @Bind(R.id.buttonNegative) Button buttonNegative;
     @Bind(R.id.buttonPositive) Button buttonPositive;
-    private OnListsChangedListener listsChangedListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,13 +96,7 @@ public class AddListDialogFragment extends DialogFragment {
 
                 // add list
                 String listName = editTextName.getText().toString();
-                ContentValues values = new ContentValues();
-                values.put(Lists.LIST_ID, Lists.generateListId(listName));
-                values.put(Lists.NAME, listName);
-                getActivity().getContentResolver().insert(Lists.CONTENT_URI, values);
-
-                // refresh view pager
-                listsChangedListener.onListsChanged();
+                ListsTools.addList(getContext(), listName);
 
                 dismiss();
             }
@@ -113,18 +104,6 @@ public class AddListDialogFragment extends DialogFragment {
         buttonPositive.setEnabled(false);
 
         return layout;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            listsChangedListener = (OnListsChangedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnListsChangedListener");
-        }
     }
 
     @Override
