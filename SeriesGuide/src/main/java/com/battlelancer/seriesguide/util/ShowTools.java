@@ -106,7 +106,7 @@ public class ShowTools {
                 return NetworkResult.OFFLINE;
             }
             // send to cloud
-            sendIsRemoved(showTvdbId, true);
+            sendIsRemoved(showTvdbId);
         }
 
         // remove database entries in stages, so if an earlier stage fails, user can at least try again
@@ -167,15 +167,25 @@ public class ShowTools {
     }
 
     /**
-     * Sets the isRemoved flag of the given show on Hexagon.
-     *
-     * @param isRemoved If true, the show will not be auto-added on any device connected to
-     * Hexagon.
+     * Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and updates
+     * the language, so the show will be auto-added on other connected devices.
      */
-    public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
+    public void sendIsAdded(int showTvdbId, @NonNull String language) {
         Show show = new Show();
         show.setTvdbId(showTvdbId);
-        show.setIsRemoved(isRemoved);
+        show.setLanguage(language);
+        show.setIsRemoved(false);
+        uploadShowAsync(show);
+    }
+
+    /**
+     * Sets the isRemoved flag of the given show on Hexagon, so the show will not be auto-added on
+     * any device connected to Hexagon.
+     */
+    public void sendIsRemoved(int showTvdbId) {
+        Show show = new Show();
+        show.setTvdbId(showTvdbId);
+        show.setIsRemoved(true);
         uploadShowAsync(show);
     }
 

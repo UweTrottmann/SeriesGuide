@@ -152,25 +152,23 @@ public class TheTVDB {
      * @return True, if the show and its episodes were added to the database.
      */
     public static boolean addShow(@NonNull Context context, int showTvdbId,
-            @NonNull String language, @NonNull List<BaseShow> traktWatched,
+            @Nullable String language, @NonNull List<BaseShow> traktWatched,
             @NonNull List<BaseShow> traktCollection) throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
-        // get show info from TVDb and trakt
-        // if available, restore properties from hexagon
+        // get show and determine the language to use
         Show show = getShowDetailsWithHexagon(context, showTvdbId, language);
+        language = show.language;
 
-        // get episodes from TVDb and do database update
+        // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(context, show, true));
-        // get episodes in the language as returned in the TVDB show entry
-        // the show might not be available in the desired language
-        getEpisodesAndUpdateDatabase(context, show, show.language, batch);
+        getEpisodesAndUpdateDatabase(context, show, language, batch);
 
-        // download episode flags...
+        // restore episode flags...
         if (HexagonTools.isSignedIn(context)) {
             // ...from Hexagon
             boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
@@ -183,8 +181,8 @@ public class TheTVDB {
                         .update(Shows.buildShowUri(showTvdbId), values, null, null);
             }
 
-            // remove any isRemoved flag on Hexagon
-            ShowTools.get(context).sendIsRemoved(showTvdbId, false);
+            // flag show to be auto-added (again), send (new) language to Hexagon
+            ShowTools.get(context).sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
             storeTraktFlags(context, traktWatched, showTvdbId, true);
@@ -435,18 +433,29 @@ public class TheTVDB {
      */
     @NonNull
     private static Show getShowDetailsWithHexagon(@NonNull Context context, int showTvdbId,
-            @NonNull String language) throws TvdbException {
-        // get show info from TVDb and trakt
-        Show show = getShowDetails(context, showTvdbId, language);
-
-        // if available, restore properties from hexagon
+            @Nullable String language) throws TvdbException {
+        // check for show on hexagon
         com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
         try {
             hexagonShow = ShowTools.Download.showFromHexagon(context, showTvdbId);
         } catch (IOException e) {
             throw new TvdbException("Failed to download show properties from Hexagon.");
         }
+
+        // if no language is given, try to get the language stored on hexagon
+        if (language == null && hexagonShow != null) {
+            language = hexagonShow.getLanguage();
+        }
+        // if we still have no language, use the users default language
+        if (TextUtils.isEmpty(language)) {
+            language = DisplaySettings.getContentLanguage(context);
+        }
+
+        // get show info from TVDb and trakt
+        Show show = getShowDetails(context, showTvdbId, language);
+
         if (hexagonShow != null) {
+            // restore properties from hexagon
             if (hexagonShow.getIsFavorite() != null) {
                 show.favorite = hexagonShow.getIsFavorite();
             }
