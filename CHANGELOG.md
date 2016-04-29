@@ -9,6 +9,15 @@ Version 30
 ----------
 *(in development)*
 
+#### 30-beta5
+*(2016-04-29)*
+
+* FEATURE Lists are synced with SeriesGuide Cloud.
+* TWEAK When adding a show the chosen language is synced with Cloud.
+* FIX Do not set the default language to English when exporting shows. Instead specify no language,
+  so when importing the user preferred language is used.
+* NOTICE Latest translations from crowdin.
+
 #### 30-beta4
 *(2016-04-22)*
 
