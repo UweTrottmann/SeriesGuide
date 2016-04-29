@@ -299,31 +299,37 @@ public class ListsTools {
     }
 
     private static boolean doListsDatabaseUpdate(Context context, List<SgList> lists,
-            HashSet<String> localListIds, boolean removeMissingListItems) {
+            HashSet<String> localListIds, boolean hasMergedLists) {
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (SgList list : lists) {
             // add or update the list
             String listId = list.getListId();
-            ContentProviderOperation.Builder builder;
+            ContentProviderOperation.Builder builder = null;
             if (localListIds.contains(listId)) {
                 // update
-                builder = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Lists.buildListUri(listId));
+                if (hasMergedLists) {
+                    // only overwrite name and order if data was already merged
+                    // use case: user disconnected for a while, changed lists, then reconnects
+                    builder = ContentProviderOperation
+                            .newUpdate(SeriesGuideContract.Lists.buildListUri(listId));
+                }
             } else {
                 // insert
                 builder = ContentProviderOperation
                         .newInsert(SeriesGuideContract.Lists.CONTENT_URI)
                         .withValue(SeriesGuideContract.Lists.LIST_ID, listId);
             }
-            builder.withValue(SeriesGuideContract.Lists.NAME, list.getName());
-            if (list.getOrder() != null) {
-                builder.withValue(SeriesGuideContract.Lists.ORDER, list.getOrder());
+            if (builder != null) {
+                builder.withValue(SeriesGuideContract.Lists.NAME, list.getName());
+                if (list.getOrder() != null) {
+                    builder.withValue(SeriesGuideContract.Lists.ORDER, list.getOrder());
+                }
+                batch.add(builder.build());
             }
-            batch.add(builder.build());
 
             // keep track of items not in the list on hexagon
             HashSet<String> listItemsToRemove = null;
-            if (removeMissingListItems) {
+            if (hasMergedLists) {
                 listItemsToRemove = getListItemIds(context, listId);
                 if (listItemsToRemove == null) {
                     return false; // list item query failed
@@ -359,13 +365,13 @@ public class ListsTools {
                             .withValue(SeriesGuideContract.Lists.LIST_ID, listId);
                     batch.add(builder.build());
 
-                    if (removeMissingListItems) {
+                    if (hasMergedLists) {
                         // do not remove this list item
                         listItemsToRemove.remove(listItemId);
                     }
                 }
             }
-            if (removeMissingListItems) {
+            if (hasMergedLists) {
                 // remove items no longer in the list
                 for (String listItemId : listItemsToRemove) {
                     builder = ContentProviderOperation
