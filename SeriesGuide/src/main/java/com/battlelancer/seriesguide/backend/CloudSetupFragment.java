@@ -18,15 +18,12 @@ package com.battlelancer.seriesguide.backend;
 
 import android.Manifest;
 import android.accounts.AccountManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -42,7 +39,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
@@ -125,11 +121,8 @@ public class CloudSetupFragment extends Fragment {
         // setup not in progress
         progressBar.setVisibility(View.GONE);
         // warn about changes in behavior with trakt
-        String warning = getString(R.string.hexagon_warning_lists);
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
-            warning += "\n" + getString(R.string.hexagon_warning_trakt);
-        }
-        textViewWarning.setText(warning);
+        textViewWarning.setVisibility(
+                TraktCredentials.get(getActivity()).hasCredentials() ? View.VISIBLE : View.GONE);
 
         // not signed in?
         if (!HexagonTools.isSignedIn(getActivity())) {
