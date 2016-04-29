@@ -184,7 +184,7 @@ public class ListsTools {
                     return false; // no longer signed in
                 }
 
-                Lists.Get request = listsService.get().setLimit(LISTS_MAX_BATCH_SIZE);
+                Lists.Get request = listsService.get();
                 if (hasMergedLists) {
                     request.setUpdatedSince(lastSyncTime);
                 }
