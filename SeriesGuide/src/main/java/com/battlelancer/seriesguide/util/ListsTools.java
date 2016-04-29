@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveListTask;
 import com.battlelancer.seriesguide.util.tasks.RenameListTask;
+import com.battlelancer.seriesguide.util.tasks.ReorderListsTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -86,6 +87,11 @@ public class ListsTools {
 
     public static void removeList(@NonNull Context context, @NonNull String listId) {
         AsyncTaskCompat.executeParallel(new RemoveListTask(context, listId));
+    }
+
+    public static void reorderLists(@NonNull Context context,
+            @NonNull List<String> listIdsInOrder) {
+        AsyncTaskCompat.executeParallel(new ReorderListsTask(context, listIdsInOrder));
     }
 
     public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
