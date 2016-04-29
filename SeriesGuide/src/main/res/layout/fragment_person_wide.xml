@@ -68,7 +68,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/default_padding"
+                android:paddingBottom="@dimen/large_padding"
                 android:paddingLeft="@dimen/large_padding"
                 android:paddingRight="@dimen/keyline"
                 android:paddingTop="@dimen/large_padding">
