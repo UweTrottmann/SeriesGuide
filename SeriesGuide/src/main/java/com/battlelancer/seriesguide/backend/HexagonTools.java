@@ -238,7 +238,10 @@ public class HexagonTools {
         Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         Timber.d("syncWithHexagon: syncing...DONE");
-        return syncEpisodesSuccessful && syncShowsSuccessful && syncMoviesSuccessful;
+        return syncEpisodesSuccessful
+                && syncShowsSuccessful
+                && syncMoviesSuccessful
+                && syncListsSuccessful;
     }
 
     private static boolean syncEpisodes(Context context) {
