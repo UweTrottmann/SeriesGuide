@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
   <string name="hexagon_warning_lists">Listele nu sunt incluse.</string>
   <string name="hexagon_warning_trakt">Când folosiți SeriesGuide Cloud, schimbarile pe trakt nu se vor sincroniza în SeriesGuide.</string>

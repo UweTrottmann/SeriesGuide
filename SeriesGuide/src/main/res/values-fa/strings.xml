@@ -33,7 +33,7 @@
   <string name="action_display_all">نمایش همه</string>
   <string name="web_search">جست‌وجوی وب</string>
   <string name="add_to_homescreen">میان‌بر</string>
-  <string name="action_open">گشودن</string>
+  <string name="action_open">باز کردن</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -47,8 +47,8 @@
   <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
   <!-- Sharing -->
-  <string name="share">هم‌رسانی</string>
-  <string name="share_show">هم‌رسانی نمایش</string>
+  <string name="share">اشتراک گذاری</string>
+  <string name="share_show">اشتراک گذاری نمایش</string>
   <string name="share_episode">هم‌رسانی قسمت</string>
   <string name="share_movie">هم‌رسانی فیلم</string>
   <string name="share_checkout">بررسی %s</string>
@@ -193,7 +193,7 @@
   <string name="list_empty">می‌توانید نمایش‌ها، فصل‌ها یا قسمت‌هایی به این فهرست بیفزایید.</string>
   <string name="action_lists_sort">چینش فهرست‌ها</string>
   <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعه</string>
   <string name="movies_watchlist">قهرست تماشا</string>
@@ -231,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">تجربی!</string>
-  <string name="hexagon_setup">راه اندازی ابروارهٔ سریزگاید</string>
   <string name="hexagon_description">وصل شدن به ابرواره برای پشتیبان گیری و هم‌گام سازی نمایش‌ها و فیلم‌هایتان.</string>
   <string name="hexagon_warning_lists">فهرست‌ها گنجانده نشده‌اند.</string>
   <string name="hexagon_warning_trakt">هنگام استفاده از ابروارهٔ سریزگاید، تغییرات روی ترکت با سریزگاید هم‌گام نخواهند شد.</string>

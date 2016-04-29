@@ -231,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">實驗性</string>
-  <string name="hexagon_setup">設置 SeriesGuide Cloud</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">清單不包括在內。</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>

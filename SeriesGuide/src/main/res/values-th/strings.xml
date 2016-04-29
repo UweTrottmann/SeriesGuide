@@ -231,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">การทดลอง!</string>
-  <string name="hexagon_setup">ตั้งค่า SeriesGuide Cloud</string>
   <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
   <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
   <string name="hexagon_warning_trakt">เมื่อใช้ SeriesGuide Cloud, การเปลี่ยนแปลงบน trakt จะไม่ซิงค์มายัง SeriesGuide</string>

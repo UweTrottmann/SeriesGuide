@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentinis!</string>
-  <string name="hexagon_setup">Nustatyti SeriesGuide Cloud</string>
   <string name="hexagon_description">Prisijungti prie Cloud, kad padaryti atsargines kopijas ir sinchronizuoti savo laidas bei filmus.</string>
   <string name="hexagon_warning_lists">Sąrašai neįtraukiami.</string>
   <string name="hexagon_warning_trakt">Naudojant SeriesGuide Cloud, trakt pakeitimai nebus sinchronizuojami su SeriesGuide.</string>

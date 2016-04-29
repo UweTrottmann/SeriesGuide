@@ -231,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">这是一个实验性功能！</string>
-  <string name="hexagon_setup">设置 SeriesGuide 云服务</string>
   <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>
   <string name="hexagon_warning_lists">注意：列表不包括在备份或同步中。</string>
   <string name="hexagon_warning_trakt">当使用 SeriesGuide 云服务时，trakt 上的更改将不会自动同步到 SeriesGuide。</string>

@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">ניסיוני!</string>
-  <string name="hexagon_setup">הגדר את SeriesGuide Cloud</string>
   <string name="hexagon_description">התחבר לענן בכדי לגבות ולסנכרן את התוכניות והסרטים שלך.</string>
   <string name="hexagon_warning_lists">רשימות אינן כלולות.</string>
   <string name="hexagon_warning_trakt">בעת השימוש בענן SeriesGuide, השינויים המתבצעים ב-Trakt לא יסתכרנו עם SeriesGuide.</string>

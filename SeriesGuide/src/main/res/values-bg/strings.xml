@@ -194,7 +194,7 @@
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
   <string name="action_lists_sort">Сортиране на списъци</string>
   <string name="action_lists_reorder">Преподреждане на списъци</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Списък с това име вече съществува</string>
   <!-- Movies -->
   <string name="movies_collection">Колекция</string>
   <string name="movies_watchlist">Списък за гледане</string>
@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално!</string>
-  <string name="hexagon_setup">Създаване на SeriesGuide облак</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
   <string name="hexagon_warning_lists">Списъци не са включени.</string>
   <string name="hexagon_warning_trakt">Когато използваш SeriesGuide Cloud, промени към trakt няма да се синхронизират със SeriesGuide.</string>
@@ -278,7 +277,7 @@
   <string name="waitplease">Един момент, моля...</string>
   <string name="connect">Свързване</string>
   <string name="disconnect">Прекъсване на връзката</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Използвай вградения четец</string>
   <string name="connect_trakt_done">Свързани сте с trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide ще синхронизира сериалите и филмите на това устройство с trakt. Това може да отнеме известно време.</string>
   <string name="add_trakt_shows">Добавете още сериали от вашата trakt библиотека:</string>
@@ -319,11 +318,11 @@
   <string name="pref_onlyfuturesummary">Не показвай вече излъчвани епизоди</string>
   <string name="pref_onlyseasoneps">Скрий специалните епизоди</string>
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates">Показване на точните дати</string>
+  <string name="pref_exactdates_summary">\"31 октомври\" вместо \"след 3 дни\"</string>
   <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Предпочитан език на съдържанието</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <string name="about">Относно SeriesGuide</string>
@@ -333,8 +332,8 @@
   <string name="licence_tvdb">Това приложение ползва данни и изображения от TheTVDB лицензиран под  CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
   <string name="licence_trakt">Това приложение използва данни и изображения от trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="about_open_source">SeriesGuide е построена чрез използване на софтуер с отворен код.</string>
+  <string name="licences_and_credits">Лицензии и кредити</string>
   <!-- Sort -->
   <string name="sort">Подреди по</string>
   <string name="action_sort_ignore_articles">Игнорирай статии</string>

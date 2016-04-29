@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
-  <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
   <string name="hexagon_warning_lists">Δεν συμπεριλαμβάνονται λίστες.</string>
   <string name="hexagon_warning_trakt">Όταν χρησιμοποιείτε το SeriesGuide cloud, οι αλλαγές στο trakt δεν συγχρονίζονται στο SeriesGuide.</string>

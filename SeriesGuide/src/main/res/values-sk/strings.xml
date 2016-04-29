@@ -195,7 +195,7 @@
   <string name="list_empty">Do tohto zoznamu môžete pridať seriály, série alebo epizódy.</string>
   <string name="action_lists_sort">Zoradiť zoznamy</string>
   <string name="action_lists_reorder">zoradiť zoznamy</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
   <!-- Movies -->
   <string name="movies_collection">Zbierka</string>
   <string name="movies_watchlist">Chcem vidieť</string>
@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentálne!</string>
-  <string name="hexagon_setup">Nastaviť SeriesGuide Cloud</string>
   <string name="hexagon_description">Pripojte sa ku cloudu pre zálohovanie a synchronizovanie seriálov a filmov.</string>
   <string name="hexagon_warning_lists">Zoznamy nie su zahrnuté</string>
   <string name="hexagon_warning_trakt">Pri použití SeriesGuide Cloudu sa zmeny vykonané v Trakte nebudú synchronizovať so SeriesGuide.</string>

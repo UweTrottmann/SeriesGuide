@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Deneysel!</string>
-  <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
   <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
   <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>

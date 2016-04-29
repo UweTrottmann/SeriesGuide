@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
-  <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
   <string name="hexagon_warning_lists">Listoja ei sisällytetä.</string>
   <string name="hexagon_warning_trakt">Käyttäessäsi SeriesGuide Cloud -palvelua, tekemäsi muutokset trakt-palvelussa eivät synkronoidu SeriesGuideen.</string>

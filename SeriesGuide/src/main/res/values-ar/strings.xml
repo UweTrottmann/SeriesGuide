@@ -251,7 +251,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">تجريبي</string>
-  <string name="hexagon_setup">إعداد التخزين السحابي لدليل المسلسلات</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>
   <string name="hexagon_warning_lists">القوائم غير متوفرة.</string>
   <string name="hexagon_warning_trakt">عندمة تستعمل سحابة SeriesGuide إي تغييرات في موقع trakt لن يتم مزامنتها في SeriesGuide.</string>

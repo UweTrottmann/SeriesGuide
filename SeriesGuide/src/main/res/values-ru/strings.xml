@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
-  <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
   <string name="hexagon_warning_trakt">При использовании SeriesGuide Cloud, изменения на trakt.tv не будут синхронизироваться с SeriesGuide.</string>

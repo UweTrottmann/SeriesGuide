@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>
-  <string name="hexagon_setup">Opsæt SeriesGuide Cloud</string>
   <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
   <string name="hexagon_warning_lists">Listerne er ikke inkluderet.</string>
   <string name="hexagon_warning_trakt">Når du bruger SeriesGuide Cloud, vil ændringer på trakt ikke synkroniseres til SeriesGuide.</string>

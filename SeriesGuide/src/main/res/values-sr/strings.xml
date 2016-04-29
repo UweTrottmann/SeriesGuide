@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално!</string>
-  <string name="hexagon_setup">Подеси SeriesGuide Cloud сервис</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
   <string name="hexagon_warning_lists">Листе нису укључене.</string>
   <string name="hexagon_warning_trakt">Коришћењем SeriesGudie Cloud, промене на trakt-у се неће синхронизовати у SeriesGuide.</string>

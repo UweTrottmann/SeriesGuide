@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
-  <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
   <string name="hexagon_warning_lists">A listákat nem tartalmazza.</string>
   <string name="hexagon_warning_trakt">A SeriesGuide Cloud használatakor a trakton végzett változások nem szinkronizálódnak a SeriesGuide alkalmazásba.</string>

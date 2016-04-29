@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperymentalne!</string>
-  <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
   <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
   <string name="hexagon_warning_trakt">Podczas korzystania z chmury SeriesGuide, zmiany na trakt nie są pobierane do SeriesGuide.</string>
@@ -263,7 +262,7 @@
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
-  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Anulowano oznaczenie jako oglądane na trakt.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już oglądasz inny odcinek lub film. Należy zmienić wybór lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>

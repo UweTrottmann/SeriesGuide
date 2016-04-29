@@ -235,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
   <string name="hexagon_warning_lists">Listas no incluidas.</string>
   <string name="hexagon_warning_trakt">Al usar SeriesGuide cloud,  los cambios en trakt no serán sincronizados en SeriesGuide.</string>

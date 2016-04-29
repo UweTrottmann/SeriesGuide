@@ -239,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментальна!</string>
-  <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
   <string name="hexagon_warning_lists">Списки не включено.</string>
   <string name="hexagon_warning_trakt">Під час використання хмари SeriesGuide, зміни на  trakt не будуть синхронізуватись з SeriesGuide.</string>
