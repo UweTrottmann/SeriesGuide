@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -76,6 +77,10 @@ public class ListsTools {
         AsyncTaskCompat.executeParallel(
                 new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
                         removeFromTheseLists));
+    }
+
+    public static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
+        AsyncTaskCompat.executeParallel(new RemoveListItemTask(context, listItemId));
     }
 
     public static boolean removeListsRemovedOnHexagon(Context context) {

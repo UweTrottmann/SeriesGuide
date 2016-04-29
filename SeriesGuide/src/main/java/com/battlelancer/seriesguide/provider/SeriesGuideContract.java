@@ -864,6 +864,10 @@ public class SeriesGuideContract {
             return itemTvdbId + "-" + type + "-";
         }
 
+        /**
+         * Splits the id into the parts used to create it with {@link #generateListItemId(int, int,
+         * String)}.
+         */
         @Nullable
         public static String[] splitListItemId(@NonNull String listItemId) {
             String[] brokenUpId = listItemId.split("-", 3);
