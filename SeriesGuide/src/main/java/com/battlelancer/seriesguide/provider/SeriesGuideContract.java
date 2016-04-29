@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -825,6 +826,7 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
+        public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
         public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
         public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
         public static final String SELECTION_EPISODES = ListItems.TYPE + "="
@@ -860,6 +862,28 @@ public class SeriesGuideContract {
         public static String generateListItemIdWildcard(int itemTvdbId, int type) {
             // The SQL % wildcard is added by the content provider
             return itemTvdbId + "-" + type + "-";
+        }
+
+        /**
+         * Splits the id into the parts used to create it with {@link #generateListItemId(int, int,
+         * String)}.
+         */
+        @Nullable
+        public static String[] splitListItemId(@NonNull String listItemId) {
+            String[] brokenUpId = listItemId.split("-", 3);
+            if (brokenUpId.length != 3) {
+                return null;
+            }
+            return brokenUpId;
+        }
+
+        /**
+         * Checks if the given type index is one of {@link ListItemTypes}.
+         */
+        public static boolean isValidItemType(int type) {
+            return type == ListItemTypes.SHOW
+                    || type == ListItemTypes.SEASON
+                    || type == ListItemTypes.EPISODE;
         }
     }
 

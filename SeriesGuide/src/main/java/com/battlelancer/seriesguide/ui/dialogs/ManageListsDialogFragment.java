@@ -17,10 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,11 +50,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.ArrayList;
-import timber.log.Timber;
+import java.util.List;
 
 /**
  * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
@@ -112,13 +109,10 @@ public class ManageListsDialogFragment extends DialogFragment implements
         addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add item to selected lists
-                int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-                int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+                // add item to selected lists, remove from previously selected lists
                 SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
-
-                final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
+                List<String> addToTheseLists = new ArrayList<>();
+                List<String> removeFromTheseLists = new ArrayList<>();
                 for (int position = 0; position < mAdapter.getCount(); position++) {
                     final Cursor listEntry = (Cursor) mAdapter.getItem(position);
 
@@ -127,34 +121,19 @@ public class ManageListsDialogFragment extends DialogFragment implements
                     boolean isListChecked = checkedLists.get(position);
 
                     String listId = listEntry.getString(ListsQuery.LIST_ID);
-                    String listItemId = ListItems.generateListItemId(itemTvdbId, itemType, listId);
-
                     if (wasListChecked && !isListChecked) {
                         // remove from list
-                        batch.add(ContentProviderOperation.newDelete(
-                                ListItems.buildListItemUri(listItemId)).build());
+                        removeFromTheseLists.add(listId);
                     } else if (!wasListChecked && isListChecked) {
                         // add to list
-                        ContentValues values = new ContentValues();
-                        values.put(ListItems.LIST_ITEM_ID, listItemId);
-                        values.put(ListItems.ITEM_REF_ID, itemTvdbId);
-                        values.put(ListItems.TYPE, itemType);
-                        values.put(Lists.LIST_ID, listId);
-                        batch.add(ContentProviderOperation.newInsert(ListItems.CONTENT_URI)
-                                .withValues(values)
-                                .build());
+                        addToTheseLists.add(listId);
                     }
                 }
 
-                // apply ops
-                try {
-                    DBUtils.applyInSmallBatches(getActivity(), batch);
-                } catch (OperationApplicationException e) {
-                    Timber.e(e, "Applying list changes failed");
-                }
-
-                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
-                        null);
+                int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+                int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+                ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType, addToTheseLists,
+                        removeFromTheseLists);
 
                 dismiss();
             }

@@ -39,10 +39,10 @@ import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import de.greenrobot.event.EventBus;
@@ -177,7 +177,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
-                    Lists.LIST_ID + "=? AND " + Shows.REF_SHOW_ID + ">0",
+                    ListItems.SELECTION_LIST + " AND " + Shows.REF_SHOW_ID + ">0",
                     new String[] {
                             listId
                     }, ListsDistillationSettings.getSortQuery(getActivity())
@@ -235,10 +235,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
-                    context.getContentResolver()
-                            .delete(ListItems.buildListItemUri(itemId), null, null);
-                    context.getContentResolver()
-                            .notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+                    ListsTools.removeListItem(context, itemId);
                     Utils.trackContextMenu(context, TAG, "Remove from list");
                     return true;
                 }

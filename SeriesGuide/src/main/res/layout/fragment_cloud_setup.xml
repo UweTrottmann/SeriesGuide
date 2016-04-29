@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hexagon_warning_lists"
+            android:text="@string/hexagon_warning_trakt"
             android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
 
         <Button
