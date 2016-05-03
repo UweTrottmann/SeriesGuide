@@ -336,6 +336,16 @@ public class ShowsFragment extends Fragment implements
 
             Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
+        } else if (itemId == R.id.menu_action_shows_sort_network) {
+            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.NETWORK_ID) {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.NETWORK_REVERSE_ID;
+            } else {
+                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.NETWORK_ID;
+            }
+            changeSort();
+
+            fireTrackerEventAction("Sort Network");
+            return true;
         } else if (itemId == R.id.menu_action_shows_sort_episode) {
             if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
                 mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
