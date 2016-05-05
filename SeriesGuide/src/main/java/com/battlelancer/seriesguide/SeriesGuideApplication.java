@@ -74,6 +74,7 @@ public class SeriesGuideApplication extends Application {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
         } else {
+            Timber.plant(new Timber.DebugTree());
             // crash and error reporting
             Timber.plant(new AnalyticsTree(this));
             if (!Fabric.isInitialized()) {
