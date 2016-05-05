@@ -48,6 +48,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
 /**
@@ -111,6 +112,9 @@ public final class ServiceUtils {
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+            builder.addNetworkInterceptor(loggingInterceptor);
             builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
