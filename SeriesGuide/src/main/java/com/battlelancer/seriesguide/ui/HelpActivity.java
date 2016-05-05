@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.LogCatCollector;
 import com.battlelancer.seriesguide.util.Utils;
 import java.util.Locale;
 
@@ -46,10 +47,12 @@ public class HelpActivity extends BaseActivity {
         // include app version in subject
         intent.putExtra(Intent.EXTRA_SUBJECT,
                 "SeriesGuide " + Utils.getVersion(context) + " Feedback");
+        // get latest logcat output
+        String logCat = LogCatCollector.collectLogCat();
         // and hardware and Android info in body
         intent.putExtra(Intent.EXTRA_TEXT,
                 Build.MANUFACTURER.toUpperCase(Locale.US) + " " + Build.MODEL + ", Android "
-                        + Build.VERSION.RELEASE + "\n\n");
+                        + Build.VERSION.RELEASE + "\n\nLast 100 lines of logcat:\n" + logCat);
 
         return Intent.createChooser(intent, context.getString(R.string.feedback));
     }
