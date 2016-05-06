@@ -334,7 +334,7 @@
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Ta aplikacja korzysta z danych i zdjęć z serwisu TheTVDB  na licencji CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Ta aplikacja korzysta z danych i zdjęć z serwisu TheTVDB na licencji CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Ten produkt używa interfejsu API TMDb, ale nie jest zatwierdzony lub poświadczony przez TMDb.</string>
   <string name="licence_trakt">Ta aplikacja korzysta z danych i zdjęć z trakt.</string>
   <string name="about_open_source">SeriesGuide jest zbudowany przy użyciu oprogramowania open source.</string>

@@ -25,7 +25,7 @@
   <string name="description_overview">Apžvalga</string>
   <string name="description_poster">Rodyti plakatą</string>
   <string name="description_image">Serijos paveikslas</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Kiti nustatymai</string>
   <!-- Actions -->
   <string name="clear">Išvalyti</string>
   <string name="discard">Atmesti</string>
@@ -33,7 +33,7 @@
   <string name="action_display_all">Rodyti viską</string>
   <string name="web_search">Paieška žiniatinklyje</string>
   <string name="add_to_homescreen">Nuoroda</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Atidaryti</string>
   <!-- Search -->
   <string name="clear_search_history">Išvalyti paieškos istoriją</string>
   <string name="search_hint">Ieškoti serijų</string>
@@ -58,14 +58,14 @@
   <string name="comments">Komentarai</string>
   <string name="shout_hint">Įveskite komentarą (Lietuvių, 5 + žodžiai)</string>
   <string name="shout_invalid">Jūsų komentaras neatitnka taisyklių!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Paskelbti</string>
   <string name="isspoiler">Galimas turinio atskleidimas!</string>
   <string name="no_shouts">Būkite pirmas, kuris šaukia!</string>
   <string name="refresh">Atnaujinti</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d atsakymas</item>
+    <item quantity="few">%d atsakymai</item>
+    <item quantity="other">%d atsakymų</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ABSOLIUTUS</string>
@@ -89,7 +89,7 @@
   <string name="services_watch">Žiūrėti</string>
   <string name="services_more">Daugiau</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Nėra išversta</string>
   <!-- Date and Time -->
   <string name="today">šiandien</string>
   <string name="now">dabar</string>
@@ -173,7 +173,7 @@
   <string name="add_empty">Nėra serialų.</string>
   <string name="no_results">Rezultatų nėra, pabandykite įvesti pilnus žodžius.</string>
   <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
+  <string name="action_try_again">Bandykite dar kartą</string>
   <string name="search_error">Paieška nepavyko, bandykite dar kartą vėliau.</string>
   <string name="add_all">Pridėti visus</string>
   <string name="add_multiple">Visi serialai netrukus atsiras jūsų serialų sąraše.</string>
@@ -347,19 +347,19 @@
   <string name="sort_order_oldest_first">Oldest first</string>
   <string name="sort_order_unwatched_first">Unwatched first</string>
   <string name="sort_order_alphabetical">A–Z</string>
-  <string name="sort_order_top_rated_first">Top rated</string>
+  <string name="sort_order_top_rated_first">Aukščiausiai įvertinti</string>
   <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
   <!-- Upcoming thresholds -->
   <string name="pref_upcominglimit">Upcoming range</string>
   <string name="upcoming_upto_now">dabar</string>
-  <string name="upcoming_upto_one_day">1 day</string>
-  <string name="upcoming_upto_three_days">3 days</string>
-  <string name="upcoming_upto_one_week">1 week</string>
-  <string name="upcoming_upto_two_weeks">2 weeks</string>
-  <string name="upcoming_upto_one_month">1 month</string>
+  <string name="upcoming_upto_one_day">1 diena</string>
+  <string name="upcoming_upto_three_days">3 dienos</string>
+  <string name="upcoming_upto_one_week">1 savaitė</string>
+  <string name="upcoming_upto_two_weeks">2 savaitės</string>
+  <string name="upcoming_upto_one_month">1 mėnuo</string>
   <!-- Additional DashClock extension upcoming thresholds -->
-  <string name="upcoming_upto_one_hour">1 hour</string>
+  <string name="upcoming_upto_one_hour">1 valanda</string>
   <string name="upcoming_upto_six_hours">6 hours</string>
   <string name="upcoming_upto_half_day">12 hours</string>
   <!-- Appearance settings -->
@@ -386,10 +386,10 @@
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful.</string>
-  <string name="backup_failed">Backup failed.</string>
-  <string name="import_inprogress">Restoring database&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-  <string name="import_failed_nofile">There is no readable backup file.</string>
+  <string name="backup_failed">Nepavyko padaryti atsarginės kopijos.</string>
+  <string name="import_inprogress">Atkurti duomenų bazę...</string>
+  <string name="import_failed_nosd">Negalima atkurti atsarginės kopijos. Nėra atsarginių kopijų aplanko.</string>
+  <string name="import_failed_nofile">Atsarginis failas nepasiekiamas.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>
   <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="import_success">Backup successfully restored.</string>
@@ -405,7 +405,7 @@
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
   <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
+  <string name="action_select_file">Pasirinkite failą</string>
   <string name="backup_use_default_files">Use default backup files</string>
   <!-- Welcome dialog -->
   <string name="get_started">Get started</string>
@@ -416,18 +416,18 @@
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s %2$s</string>
-  <string name="more">%s more</string>
+  <string name="more">%s daugiau</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
-  <string name="pref_notificationssummary">Notify about new episodes</string>
+  <string name="pref_notificationssummary">Pranešti apie naujas serijas</string>
   <string name="pref_notifyfavonly">Favorites only</string>
   <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Melodija</string>
   <string name="pref_vibrate">Vibravimas</string>
   <string name="pref_vibratesummary">Vibruoti, kai rodomas pranešimas</string>
-  <string name="pref_notifications_treshold">When to notify</string>
+  <string name="pref_notifications_treshold">Kada išsiųsti notifikaciją</string>
   <!-- Notification thresholds -->
-  <string name="notification_release_exact">on air</string>
+  <string name="notification_release_exact">rodo</string>
   <string name="notification_release_earlier_five">5 min in advance</string>
   <string name="notification_release_earlier_ten">10 min in advance</string>
   <string name="notification_release_earlier_hour">1 hour in advance</string>
