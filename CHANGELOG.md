@@ -7,7 +7,16 @@ All dates are in the European Central timezone.
 
 Version 30
 ----------
-*(in development)*
+*(2016-05-06)*
+
+* On phones: switch seasons from the top of the episode details screen.
+* Lists are synced with SeriesGuide Cloud.
+* In search screen: add option to add shows to trakt watchlist. Support removing shows from trakt watchlist.
+
+#### 30
+*(2016-05-06)*
+
+* NOTICE Latest translations from crowdin.
 
 #### 30-beta5
 *(2016-04-29)*
