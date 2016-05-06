@@ -70,12 +70,12 @@ public class SeriesGuideApplication extends Application {
         super.onCreate();
 
         // logging setup
-        if (BuildConfig.DEBUG) {
+        if (AppSettings.isLogcatOutputEnabled(this)) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
-        } else {
-            Timber.plant(new Timber.DebugTree());
-            // crash and error reporting
+        }
+        if (!BuildConfig.DEBUG){
+            // crash and error reporting on release builds
             Timber.plant(new AnalyticsTree(this));
             if (!Fabric.isInitialized()) {
                 Fabric.with(this, new Crashlytics());

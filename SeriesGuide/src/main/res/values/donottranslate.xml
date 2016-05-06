@@ -55,6 +55,10 @@
     <string name="pref_communitysummary">Share ideas, discuss changes or report problems (English)</string>
     <string name="pref_suggest_features">Suggest improvements</string>
     <string name="pref_suggest_featuressummary">Suggest and vote on future improvements (English)</string>
+    <string name="pref_debug_logging">Debug logging</string>
+    <string name="pref_debug_logging_summary">Enables logcat output. Includes logs in feedback emails. App restart required.</string>
+    <string name="pref_network_logging">Network request logging</string>
+    <string name="pref_network_logging_summary">Logs network request headers. App restart required.</string>
 
     <!-- Themes -->
     <string name="theme_default">SeriesGuide</string>

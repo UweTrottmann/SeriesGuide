@@ -22,7 +22,7 @@
 
     <Preference
         android:summary="@string/pref_translatesummary"
-        android:title="@string/pref_translate" >
+        android:title="@string/pref_translate">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="http://crowdin.net/project/seriesguide-translations/invite" />
@@ -30,7 +30,7 @@
 
     <Preference
         android:summary="@string/pref_communitysummary"
-        android:title="@string/pref_community" >
+        android:title="@string/pref_community">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="https://plus.google.com/communities/103447253937737054097" />
@@ -38,10 +38,27 @@
 
     <Preference
         android:summary="@string/pref_suggest_featuressummary"
-        android:title="@string/pref_suggest_features" >
+        android:title="@string/pref_suggest_features">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="http://seriesguide.uservoice.com" />
     </Preference>
+
+    <PreferenceCategory android:title="Logging">
+
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="logcatOutput"
+            android:summary="@string/pref_debug_logging_summary"
+            android:title="@string/pref_debug_logging" />
+
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="networkLogging"
+            android:dependency="logcatOutput"
+            android:summary="@string/pref_network_logging_summary"
+            android:title="@string/pref_network_logging" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

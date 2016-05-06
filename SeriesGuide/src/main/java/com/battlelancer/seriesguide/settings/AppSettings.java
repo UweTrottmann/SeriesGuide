@@ -35,6 +35,10 @@ public class AppSettings {
 
     public static final String KEY_LAST_STATS_REPORT = "timeLastStatsReport";
 
+    public static final String KEY_LOGCAT_OUTPUT_ENABLED = "logcatOutput";
+
+    public static final String KEY_NETWORK_LOGGING_ENABLED = "networkLogging";
+
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
      * installs.
@@ -75,5 +79,22 @@ public class AppSettings {
         }
 
         return shouldReport;
+    }
+
+    /**
+     * Whether the app should plant a {@link timber.log.Timber.DebugTree}. Always true on debug
+     * builds.
+     */
+    public static boolean isLogcatOutputEnabled(Context context) {
+        return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_LOGCAT_OUTPUT_ENABLED, false);
+    }
+
+    /**
+     * Whether the app should log network request headers to logcat.
+     */
+    public static boolean isNetworkRequestLoggingEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_NETWORK_LOGGING_ENABLED, false);
     }
 }

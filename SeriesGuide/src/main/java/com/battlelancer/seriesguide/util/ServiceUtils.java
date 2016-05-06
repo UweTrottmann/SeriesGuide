@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
@@ -112,9 +113,11 @@ public final class ServiceUtils {
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-            builder.addNetworkInterceptor(loggingInterceptor);
+            if (AppSettings.isNetworkRequestLoggingEnabled(context)) {
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+                builder.addNetworkInterceptor(loggingInterceptor);
+            }
             builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
