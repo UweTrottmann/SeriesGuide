@@ -34,7 +34,7 @@ import android.view.View;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
@@ -242,12 +242,10 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     private void launchSearch() {
         // refine search with the show's title
-        final Series show = DBUtils.getShow(this, showTvdbId);
+        Show show = DBUtils.getShow(this, showTvdbId);
         if (show != null) {
-            final String showTitle = show.getTitle();
-
             Bundle appSearchData = new Bundle();
-            appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, showTitle);
+            appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, show.title);
 
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(SearchManager.APP_DATA, appSearchData);

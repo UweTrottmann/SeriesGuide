@@ -168,12 +168,21 @@ public abstract class AddFragment extends Fragment {
 
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
-        private LayoutInflater mLayoutInflater;
+        public interface OnContextMenuClickListener {
+            void onClick(View view, int showTvdbId);
+        }
 
-        public AddAdapter(Context context, List<SearchResult> objects) {
+        private final OnContextMenuClickListener menuClickListener;
+        private final boolean hideContextMenuIfAdded;
+        private final LayoutInflater inflater;
+
+        public AddAdapter(Context context, List<SearchResult> objects,
+                OnContextMenuClickListener menuClickListener,
+                boolean hideContextMenuIfAdded) {
             super(context, 0, objects);
-            mLayoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.menuClickListener = menuClickListener;
+            this.hideContextMenuIfAdded = hideContextMenuIfAdded;
+            inflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -181,18 +190,25 @@ public abstract class AddFragment extends Fragment {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(R.layout.item_addshow, parent, false);
-                holder = new ViewHolder(convertView);
+                convertView = inflater.inflate(R.layout.item_addshow, parent, false);
+                holder = new ViewHolder(convertView, menuClickListener);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
             final SearchResult item = getItem(position);
+            holder.showTvdbId = item.tvdbid;
 
+            // hide context menu if not useful
+            holder.buttonContextMenu.setVisibility(menuClickListener == null ||
+                    (hideContextMenuIfAdded && item.isAdded) ? View.GONE : View.VISIBLE);
             // display added indicator instead of add button if already added that show
             holder.addbutton.setVisibility(item.isAdded ? View.GONE : View.VISIBLE);
             holder.addedIndicator.setVisibility(item.isAdded ? View.VISIBLE : View.GONE);
+            String showTitle = item.title;
+            holder.addedIndicator.setContentDescription(
+                    getContext().getString(R.string.add_already_exists, showTitle));
             holder.addbutton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -204,11 +220,15 @@ public abstract class AddFragment extends Fragment {
             });
 
             // set text properties immediately
-            holder.title.setText(item.title);
+            holder.title.setText(showTitle);
             holder.description.setText(item.overview);
             if (item.poster != null) {
                 holder.poster.setVisibility(View.VISIBLE);
-                ServiceUtils.loadWithPicasso(getContext(), item.poster).into(holder.poster);
+                ServiceUtils.loadWithPicasso(getContext(), item.poster)
+                        .centerCrop()
+                        .resizeDimen(R.dimen.show_poster_add_width, R.dimen.show_poster_add_height)
+                        .error(R.drawable.ic_image_missing)
+                        .into(holder.poster);
             } else {
                 holder.poster.setVisibility(View.GONE);
             }
@@ -218,18 +238,31 @@ public abstract class AddFragment extends Fragment {
 
         static class ViewHolder {
 
+            public int showTvdbId;
+
             public TextView title;
             public TextView description;
             public ImageView poster;
             public View addbutton;
             public View addedIndicator;
+            public ImageView buttonContextMenu;
 
-            public ViewHolder(View view) {
+            public ViewHolder(View view,
+                    final OnContextMenuClickListener contextMenuClickListener) {
                 title = (TextView) view.findViewById(R.id.textViewAddTitle);
                 description = (TextView) view.findViewById(R.id.textViewAddDescription);
                 poster = (ImageView) view.findViewById(R.id.imageViewAddPoster);
                 addbutton = view.findViewById(R.id.viewAddButton);
                 addedIndicator = view.findViewById(R.id.imageViewAddedIndicator);
+                buttonContextMenu = (ImageView) view.findViewById(R.id.buttonItemAddMore);
+                buttonContextMenu.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (contextMenuClickListener != null) {
+                            contextMenuClickListener.onClick(v, showTvdbId);
+                        }
+                    }
+                });
             }
         }
     }

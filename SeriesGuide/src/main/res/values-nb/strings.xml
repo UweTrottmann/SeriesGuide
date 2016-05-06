@@ -33,6 +33,7 @@
   <string name="action_display_all">Vis alle</string>
   <string name="web_search">Nettsøk</string>
   <string name="add_to_homescreen">Snarvei</string>
+  <string name="action_open">Åpne</string>
   <!-- Search -->
   <string name="clear_search_history">Tøm søkelogg</string>
   <string name="search_hint">Søk episoder</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mer</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nå</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
   <string name="action_lists_sort">Sorter lister</string>
   <string name="action_lists_reorder">Omorganiser lister</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvåkningsliste</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentell!</string>
-  <string name="hexagon_setup">Sett opp SeriesGuide Cloud</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
   <string name="hexagon_warning_lists">Lister er ikke inkludert.</string>
   <string name="hexagon_warning_trakt">Når du bruker SeriesGuide Cloud, synkroniseres ikke endringer på trakt med SeriesGuide.</string>

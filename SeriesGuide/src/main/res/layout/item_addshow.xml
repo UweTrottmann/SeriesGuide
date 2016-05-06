@@ -22,9 +22,9 @@
                 android:id="@+id/imageViewAddPoster"
                 android:layout_width="60dp"
                 android:layout_height="88dp"
-                android:scaleType="centerCrop"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/appwidget_bg" />
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                tools:src="@drawable/ic_image_missing" />
 
             <TextView
                 android:id="@+id/textViewAddTitle"
@@ -57,6 +57,15 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/buttonItemAddMore"
+            android:layout_width="48dp"
+            android:layout_height="88dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/description_menu_overflow"
+            android:scaleType="centerInside"
+            android:src="?attr/drawableDropdown" />
+
+        <ImageView
             android:id="@+id/viewAddButton"
             android:layout_width="48dp"
             android:layout_height="88dp"
@@ -65,13 +74,14 @@
             android:scaleType="centerInside"
             android:src="?attr/drawableAddIcon" />
 
+        <!-- Content description is set in code. -->
         <ImageView
             android:id="@+id/imageViewAddedIndicator"
             android:layout_width="48dp"
             android:layout_height="88dp"
+            android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="?attr/drawableWatched"
-            android:visibility="gone" />
+            android:src="?attr/drawableWatched" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

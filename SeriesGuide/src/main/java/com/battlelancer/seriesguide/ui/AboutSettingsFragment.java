@@ -29,12 +29,14 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Displays information about the app, the developer and licence information about content and
  * libraries.
+ *
+ * <p>Note: this is a platform, not a support library fragment so it can be used right within {@link
+ * SeriesGuidePreferences}.
  */
 public class AboutSettingsFragment extends Fragment {
 
@@ -55,9 +57,7 @@ public class AboutSettingsFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         // display version number and database version
-        final String versionFinal = Utils.getVersion(getActivity());
-        textVersion.setText(
-                "v" + versionFinal + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")");
+        textVersion.setText(Utils.getVersionString(getActivity()));
 
         buttonWebsite.setOnClickListener(urlButtonClickListener);
         buttonTvdbTerms.setOnClickListener(urlButtonClickListener);

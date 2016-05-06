@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -52,6 +53,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -81,6 +83,14 @@ public class Utils {
             version = "UnknownVersion";
         }
         return version;
+    }
+
+    /**
+     * Return a version string like "v42 (Database v42)".
+     */
+    public static String getVersionString(Context context) {
+        return "v" + getVersion(context)
+                + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")";
     }
 
     /**
@@ -130,20 +140,27 @@ public class Utils {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
-            PackageInfo appInfoSeriesGuide = manager
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuide = manager
                     .getPackageInfo(
                             context.getApplicationContext().getPackageName(),
                             PackageManager.GET_SIGNATURES);
 
             // Try to find the X signing key
-            PackageInfo appInfoSeriesGuideX = manager
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuideX = manager
                     .getPackageInfo(
                             "com.battlelancer.seriesguide.x",
                             PackageManager.GET_SIGNATURES);
 
-            final String ourKey = appInfoSeriesGuide.signatures[0].toCharsString();
-            final String xKey = appInfoSeriesGuideX.signatures[0].toCharsString();
-            return ourKey.equals(xKey);
+            Signature[] sgSignatures = appInfoSeriesGuide.signatures;
+            Signature[] xSignatures = appInfoSeriesGuideX.signatures;
+            if (sgSignatures.length == xSignatures.length) {
+                for (int i = 0; i < sgSignatures.length; i++) {
+                    if (!sgSignatures[i].toCharsString().equals(xSignatures[i].toCharsString())) {
+                        return false; // a signature does not match
+                    }
+                }
+                return true;
+            }
         } catch (NameNotFoundException e) {
             // Expected exception that occurs if the package is not present.
         }
@@ -292,13 +309,12 @@ public class Utils {
     }
 
     /**
-     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
-     * without any resizing or cropping. In addition sets alpha on the view.
+     * Tries to load the given TVDb show poster into the given {@link ImageView} without any
+     * resizing or cropping. In addition sets alpha on the view.
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void loadPosterBackground(Context context, ImageView imageView,
             String posterPath) {
-        if (AndroidUtils.isJellyBeanOrHigher()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imageView.setImageAlpha(30);
         } else {
             //noinspection deprecation
@@ -357,7 +373,7 @@ public class Utils {
     public static void trackView(Context context, String screenName) {
         Tracker tracker = Analytics.getTracker(context);
         tracker.setScreenName(screenName);
-        tracker.send(new HitBuilders.AppViewBuilder().build());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     /**
@@ -413,14 +429,13 @@ public class Utils {
      * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
      * the user did not approve it for large data downloads (e.g. images).
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            if (AndroidUtils.isJellyBeanOrHigher()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 // better: only allow large data downloads over non-metered connections
                 isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
             } else {
@@ -575,7 +590,8 @@ public class Utils {
      * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
      */
     @SafeVarargs
-    public static <T> AsyncTask executeInOrder(AsyncTask<T, ?, ?> task, T... args) {
+    public static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeInOrder(
+            AsyncTask<Params, Progress, Result> task, Params... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
 }

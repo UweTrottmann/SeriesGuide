@@ -33,6 +33,7 @@
   <string name="action_display_all">Ver todos</string>
   <string name="web_search">Búsqueda en la web</string>
   <string name="add_to_homescreen">Acceso directo</string>
+  <string name="action_open">Abierto</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
@@ -57,13 +58,13 @@
   <string name="comments">Comentarios</string>
   <string name="shout_hint">Escribe un comentario (Inglés, +5 palabras)</string>
   <string name="shout_invalid">Su comentario no sigue las reglas!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Publicar</string>
   <string name="isspoiler">¡Alerta de spoiler!</string>
   <string name="no_shouts">¡Sé el primero en gritar!</string>
   <string name="refresh">Actualizar</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d respuesta</item>
+    <item quantity="other">%d respuestas</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ABSOLUTO</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Más</string>
   <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
+  <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
   <!-- Movies -->
   <string name="movies_collection">Colección</string>
   <string name="movies_watchlist">Lista de visualización</string>
@@ -219,20 +222,19 @@
   <string name="movies_on_watchlist">%s en la lista de visualización</string>
   <string name="runtime_movies_watchlist">duración de películas en lista de visualización</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d día</item>
+    <item quantity="other">%d días</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="other">%d horas</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minutos</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurar SeriesGuide cloud</string>
   <string name="hexagon_description">Conéctate a la nube para hacer copias de seguridad y sincronizar tus series y películas.</string>
   <string name="hexagon_warning_lists">Listas no incluidas.</string>
   <string name="hexagon_warning_trakt">Al usar SeriesGuide cloud,  los cambios en trakt no serán sincronizados en SeriesGuide.</string>
@@ -260,7 +262,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado.</string>
   <string name="traktcheckin_cancel">Reemplazar</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
+  <string name="traktcheckin_wait">Voy a esperar</string>
   <string name="trakt_success">Enviado a trakt.</string>
   <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
   <string name="trakt_error_general">No es posible conectar con trakt. Inténtalo más tarde.</string>
@@ -296,8 +298,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="rating8">Mejor</string>
   <string name="rating9">Muy Bueno</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d voto</item>
+    <item quantity="other">%d votos</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Check-in</string>
@@ -318,12 +320,12 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_onlyseasoneps">Ocultar episodios especiales</string>
   <string name="pref_onlyseasonepssummary">Los episodios de las series se ocultarán excepto de la lista de temporadas</string>
   <string name="pref_exactdates">Mostrar fechas exactas</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"El 31 de octubre\" en lugar de \"en 3 días\"</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episodios por&#8230;</string>
   <string name="pref_language">Lenguaje preferido para el contenido</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
   <string name="about">Acerca de SeriesGuide</string>
   <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
   <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
@@ -382,7 +384,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="backup_success">Copia de seguridad correcta.</string>
   <string name="backup_failed">Falló la copia de seguridad.</string>
   <string name="import_inprogress">Restaurando base de datos&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de la copia de seguridad no está disponible.</string>
   <string name="import_failed_nofile">No hay ningún archivo de copia de seguridad legible.</string>
   <string name="import_failed_noread">El archivo de copia de seguridad no es legible.</string>
   <string name="dbupgradefailed">La copia de seguridad puede ser demasiado viejo o estar vacía. Nota: Importar primero pre-2.0 backups en una versión 1.9.</string>

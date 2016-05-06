@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -31,6 +32,7 @@ import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -178,10 +180,22 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
         });
 
+        // manually retrieve the auto complete view popup background to override the theme
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.autoCompleteTextViewStyle, outValue, true);
+        int[] attributes = new int[] { android.R.attr.popupBackground };
+        TypedArray a = getTheme().obtainStyledAttributes(outValue.data, attributes);
+        if (a.hasValue(0)) {
+            searchView.setDropDownBackgroundDrawable(a.getDrawable(0));
+        }
+        a.recycle();
+
         // setup search history (only used by TVDb search)
         searchHistory = new SearchHistory(this, SearchSettings.KEY_SUFFIX_THETVDB);
         searchHistoryAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, searchHistory.getSearchHistory());
+                SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
+                        ? R.layout.item_dropdown_light : R.layout.item_dropdown,
+                searchHistory.getSearchHistory());
         searchView.setThreshold(1);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override

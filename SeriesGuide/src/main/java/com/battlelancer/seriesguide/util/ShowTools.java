@@ -38,7 +38,9 @@ import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
@@ -57,6 +59,14 @@ import timber.log.Timber;
  * Common activities and tools useful when interacting with shows.
  */
 public class ShowTools {
+
+    public static class ShowChangedEvent {
+        public int showTvdbId;
+
+        public ShowChangedEvent(int showTvdbId) {
+            this.showTvdbId = showTvdbId;
+        }
+    }
 
     /**
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
@@ -96,7 +106,7 @@ public class ShowTools {
                 return NetworkResult.OFFLINE;
             }
             // send to cloud
-            sendIsRemoved(showTvdbId, true);
+            sendIsRemoved(showTvdbId);
         }
 
         // remove database entries in stages, so if an earlier stage fails, user can at least try again
@@ -157,15 +167,25 @@ public class ShowTools {
     }
 
     /**
-     * Sets the isRemoved flag of the given show on Hexagon.
-     *
-     * @param isRemoved If true, the show will not be auto-added on any device connected to
-     * Hexagon.
+     * Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and updates
+     * the language, so the show will be auto-added on other connected devices.
      */
-    public void sendIsRemoved(int showTvdbId, boolean isRemoved) {
+    public void sendIsAdded(int showTvdbId, @NonNull String language) {
         Show show = new Show();
         show.setTvdbId(showTvdbId);
-        show.setIsRemoved(isRemoved);
+        show.setLanguage(language);
+        show.setIsRemoved(false);
+        uploadShowAsync(show);
+    }
+
+    /**
+     * Sets the isRemoved flag of the given show on Hexagon, so the show will not be auto-added on
+     * any device connected to Hexagon.
+     */
+    public void sendIsRemoved(int showTvdbId) {
+        Show show = new Show();
+        show.setTvdbId(showTvdbId);
+        show.setIsRemoved(true);
         uploadShowAsync(show);
     }
 
@@ -279,10 +299,24 @@ public class ShowTools {
     }
 
     /**
+     * Add a show to the users trakt watchlist.
+     */
+    public static void addToWatchlist(Context context, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(context, showTvdbId));
+    }
+
+    /**
      * Store the rating for the given episode in the database and send it to trakt.
      */
     public static void rate(Context context, int showTvdbId, Rating rating) {
         AsyncTaskCompat.executeParallel(new RateShowTask(context, rating, showTvdbId));
+    }
+
+    /**
+     * Remove a show from the users trakt watchlist.
+     */
+    public static void removeFromWatchlist(Context context, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(context, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {
@@ -403,7 +437,7 @@ public class ShowTools {
             DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(context));
 
             if (hasMergedShows) {
-                Timber.d("fromHexagon: downloading changed shows since " + lastSyncTime);
+                Timber.d("fromHexagon: downloading changed shows since %s", lastSyncTime);
             } else {
                 Timber.d("fromHexagon: downloading all shows");
             }
@@ -495,6 +529,7 @@ public class ShowTools {
                     if (!newShows.containsKey(show.getTvdbId())) {
                         SearchResult item = new SearchResult();
                         item.tvdbid = show.getTvdbId();
+                        item.language = show.getLanguage();
                         item.title = "";
                         newShows.put(show.getTvdbId(), item);
                     }

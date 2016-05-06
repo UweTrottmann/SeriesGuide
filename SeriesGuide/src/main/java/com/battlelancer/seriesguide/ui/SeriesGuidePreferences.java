@@ -49,6 +49,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -56,6 +58,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -195,7 +198,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
-        public static final String SETTINGS_SCREEN_BASIC = "screen_basic";
+        public static final String KEY_SCREEN_BASIC = "screen_basic";
+        private static final String KEY_SCREEN_NOTIFICATIONS = "screen_notifications";
+        private static final String KEY_SCREEN_ADVANCED = "screen_advanced";
 
         private static final int REQUEST_CODE_RINGTONE = 0;
 
@@ -208,22 +213,57 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             if (settings == null) {
                 addPreferencesFromResource(R.xml.settings_root);
                 setupRootSettings();
-            } else if (settings.equals(SETTINGS_SCREEN_BASIC)) {
+            } else if (settings.equals(KEY_SCREEN_BASIC)) {
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings();
-            } else if (settings.equals("screen_notifications")) {
+            } else if (settings.equals(KEY_SCREEN_NOTIFICATIONS)) {
                 addPreferencesFromResource(R.xml.settings_notifications);
                 setupNotificationSettings();
-            } else if (settings.equals("screen_advanced")) {
+            } else if (settings.equals(KEY_SCREEN_ADVANCED)) {
                 addPreferencesFromResource(R.xml.settings_advanced);
                 setupAdvancedSettings();
             }
         }
 
         private void setupRootSettings() {
+            // display version as About summary
+            findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
+        }
+
+        private void updateRootSettings() {
+            // unlock all link
+            Preference unlock = findPreference("com.battlelancer.seriesguide.upgrade");
+            boolean hasAccessToX = Utils.hasAccessToX(getActivity());
+            unlock.setSummary(hasAccessToX ? getString(R.string.upgrade_success) : null);
+
+            // notifications link
+            Preference notifications = findPreference(KEY_SCREEN_NOTIFICATIONS);
+            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(getActivity())) {
+                notifications.setSummary(
+                        NotificationSettings.getLatestToIncludeTresholdValue(getActivity()));
+            } else {
+                notifications.setSummary(R.string.pref_notificationssummary);
+            }
+
+            // SeriesGuide Cloud link
+            Preference cloud = findPreference("com.battlelancer.seriesguide.cloud");
+            if (hasAccessToX && HexagonTools.isSignedIn(getActivity())) {
+                cloud.setSummary(HexagonSettings.getAccountName(getActivity()));
+            } else {
+                cloud.setSummary(R.string.hexagon_description);
+            }
+
+            // trakt link
+            Preference trakt = findPreference("com.battlelancer.seriesguide.trakt.connect");
+            if (TraktCredentials.get(getActivity()).hasCredentials()) {
+                trakt.setSummary(TraktCredentials.get(getActivity()).getUsername());
+            } else {
+                trakt.setSummary(null);
+            }
+
             // Theme switcher
             Preference themePref = findPreference(DisplaySettings.KEY_THEME);
-            if (Utils.hasAccessToX(getActivity())) {
+            if (hasAccessToX) {
                 themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -378,6 +418,14 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         @Override
         public void onStart() {
             super.onStart();
+
+            // update some summary values on the root page
+            String settings = getArguments() == null ? null
+                    : getArguments().getString(EXTRA_SETTINGS_SCREEN);
+            if (settings == null) {
+                updateRootSettings();
+            }
+
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             prefs.registerOnSharedPreferenceChangeListener(this);

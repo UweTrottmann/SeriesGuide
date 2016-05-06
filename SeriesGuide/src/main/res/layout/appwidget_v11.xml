@@ -51,7 +51,8 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:text="@string/no_nextepisode" />
+            android:text="@string/no_nextepisode"
+            tools:ignore="UnusedAttribute" />
     </LinearLayout>
 
 </FrameLayout>

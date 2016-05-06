@@ -17,10 +17,12 @@
 package com.battlelancer.seriesguide.backend.settings;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 
 public class HexagonSettings {
 
@@ -39,6 +41,9 @@ public class HexagonSettings {
     public static final String KEY_MERGED_MOVIES
             = "com.battlelancer.seriesguide.hexagon.v2.merged.movies";
 
+    public static final String KEY_MERGED_LISTS
+            = "com.battlelancer.seriesguide.hexagon.v2.merged.lists";
+
     public static final String KEY_LAST_SYNC_SHOWS
             = "com.battlelancer.seriesguide.hexagon.v2.lastsync.shows";
 
@@ -47,6 +52,9 @@ public class HexagonSettings {
 
     public static final String KEY_LAST_SYNC_MOVIES
             = "com.battlelancer.seriesguide.hexagon.v2.lastsync.movies";
+
+    public static final String KEY_LAST_SYNC_LISTS
+            = "com.battlelancer.seriesguide.hexagon.v2.lastsync.lists";
 
     /**
      * Returns the account name used for authenticating against Hexagon, or null if not signed in.
@@ -66,29 +74,68 @@ public class HexagonSettings {
     }
 
     public static void setSetupCompleted(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, true).commit();
+        setSetupState(context, true);
     }
 
     public static void setSetupIncomplete(Context context) {
+        setSetupState(context, false);
+    }
+
+    private static void setSetupState(Context context, boolean complete) {
         PreferenceManager.getDefaultSharedPreferences(context)
-                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, false).commit();
+                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, complete).commit();
+    }
+
+    /**
+     * Reset the sync state of shows, episodes, movies and lists so a data merge is triggered when
+     * next syncing with Hexagon.
+     *
+     * @return If the sync settings reset was committed successfully.
+     */
+    public static boolean resetSyncState(Context context) {
+        // set all shows as not merged with Hexagon
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, false);
+        context.getContentResolver()
+                .update(SeriesGuideContract.Shows.CONTENT_URI, values, null, null);
+
+        // reset sync properties
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)
+                .edit();
+        editor.putBoolean(HexagonSettings.KEY_MERGED_SHOWS, false);
+        editor.putBoolean(HexagonSettings.KEY_MERGED_MOVIES, false);
+        editor.putBoolean(HexagonSettings.KEY_MERGED_LISTS, false);
+        editor.remove(HexagonSettings.KEY_LAST_SYNC_EPISODES);
+        editor.remove(HexagonSettings.KEY_LAST_SYNC_SHOWS);
+        editor.remove(HexagonSettings.KEY_LAST_SYNC_MOVIES);
+        editor.remove(HexagonSettings.KEY_LAST_SYNC_LISTS);
+        return editor.commit();
     }
 
     /**
      * Whether shows in the local database have been merged with those on Hexagon.
      */
     public static boolean hasMergedShows(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_MERGED_SHOWS, false);
+        return hasMerged(context, KEY_MERGED_SHOWS);
     }
 
     /**
      * Whether movies in the local database have been merged with those on Hexagon.
      */
     public static boolean hasMergedMovies(Context context) {
+        return hasMerged(context, KEY_MERGED_MOVIES);
+    }
+
+    /**
+     * Whether lists in the local database have been merged with those on Hexagon.
+     */
+    public static boolean hasMergedLists(Context context) {
+        return hasMerged(context, KEY_MERGED_LISTS);
+    }
+
+    private static boolean hasMerged(Context context, String key) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_MERGED_MOVIES, false);
+                .getBoolean(key, false);
     }
 
     /**
@@ -101,40 +148,30 @@ public class HexagonSettings {
                 .commit();
     }
 
-    @SuppressLint("CommitPrefEdits")
     public static long getLastEpisodesSyncTime(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        long lastSync = prefs.getLong(KEY_LAST_SYNC_EPISODES, 0);
-        if (lastSync == 0) {
-            lastSync = System.currentTimeMillis();
-            prefs.edit().putLong(KEY_LAST_SYNC_EPISODES, lastSync).commit();
-        }
-
-        return lastSync;
+        return getLastSyncTime(context, KEY_LAST_SYNC_EPISODES);
     }
 
-    @SuppressLint("CommitPrefEdits")
     public static long getLastShowsSyncTime(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return getLastSyncTime(context, KEY_LAST_SYNC_SHOWS);
+    }
 
-        long lastSync = prefs.getLong(KEY_LAST_SYNC_SHOWS, 0);
-        if (lastSync == 0) {
-            lastSync = System.currentTimeMillis();
-            prefs.edit().putLong(KEY_LAST_SYNC_SHOWS, lastSync).commit();
-        }
+    public static long getLastMoviesSyncTime(Context context) {
+        return getLastSyncTime(context, KEY_LAST_SYNC_MOVIES);
+    }
 
-        return lastSync;
+    public static long getLastListsSyncTime(Context context) {
+        return getLastSyncTime(context, KEY_LAST_SYNC_LISTS);
     }
 
     @SuppressLint("CommitPrefEdits")
-    public static long getLastMoviesSyncTime(Context context) {
+    private static long getLastSyncTime(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        long lastSync = prefs.getLong(KEY_LAST_SYNC_MOVIES, 0);
+        long lastSync = prefs.getLong(key, 0);
         if (lastSync == 0) {
-            lastSync = System.currentTimeMillis();
-            prefs.edit().putLong(KEY_LAST_SYNC_MOVIES, lastSync).commit();
+            lastSync = System.currentTimeMillis(); // not synced yet, then last time is now!
+            prefs.edit().putLong(key, lastSync).commit();
         }
 
         return lastSync;

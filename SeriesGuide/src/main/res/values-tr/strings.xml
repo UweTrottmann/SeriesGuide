@@ -33,6 +33,7 @@
   <string name="action_display_all">Tümünü göster</string>
   <string name="web_search">Web araması</string>
   <string name="add_to_homescreen">Kısayol</string>
+  <string name="action_open">Açık</string>
   <!-- Search -->
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">İzle</string>
   <string name="services_more">Daha</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
+  <string name="no_translation_title">Çevrilmedi</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
   <string name="action_lists_sort">Listeyi sırala</string>
   <string name="action_lists_reorder">Listeleri tekrar sırala</string>
+  <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
   <!-- Movies -->
   <string name="movies_collection">Koleksiyon</string>
   <string name="movies_watchlist">İzleme listesi</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Deneysel!</string>
-  <string name="hexagon_setup">SeriesGuide Bulut Hizmetini ayarla</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
   <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
   <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>

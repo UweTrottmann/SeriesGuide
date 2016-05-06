@@ -1091,7 +1091,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.beginTransaction();
             try {
                 db.execSQL(
-                        "INSERT INTO " + Tables.EPISODES_SEARCH
+                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
                                 + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
                                 + " select " + Episodes._ID + "," + Episodes.TITLE
                                 + "," + Episodes.OVERVIEW
@@ -1137,7 +1137,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.beginTransaction();
             try {
                 db.execSQL(
-                        "INSERT INTO " + Tables.EPISODES_SEARCH
+                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
                                 + "(docid," + Episodes.TITLE + ")"
                                 + " select " + Episodes._ID + "," + Episodes.TITLE
                                 + " from " + Tables.EPISODES + ";");

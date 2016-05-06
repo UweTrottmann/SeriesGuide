@@ -33,6 +33,7 @@
   <string name="action_display_all">Прикажи се</string>
   <string name="web_search">Веб пребарување</string>
   <string name="add_to_homescreen">Shortcut</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Гледај</string>
   <string name="services_more">Повеќе</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">денес</string>
   <string name="now">сега</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Можете да додате серија, сезона или епизода на оваа листа.</string>
   <string name="action_lists_sort">Листа за сортирање</string>
   <string name="action_lists_reorder">Поново сортирајте листа</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Колекција</string>
   <string name="movies_watchlist">Листа за гледање</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално!</string>
-  <string name="hexagon_setup">Подеси SeriesGuide Cloud</string>
   <string name="hexagon_description">Поврзете се на cloud за да направите backup и синхронизирање на вашите серии и филмови.</string>
   <string name="hexagon_warning_lists">Листи не се вклучени.</string>
   <string name="hexagon_warning_trakt">Кога се користи SeriesGuide Cloud, промените на trakt нема да се синхронизираат во SeriesGuide.</string>
@@ -258,7 +260,7 @@
   <string name="checkin_success_trakt">Провери во %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Откажано чекирање на trakt.</string>
   <string name="traktcheckin_cancel">Замени</string>
-  <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте % s и обидете се повторно.</string>
+  <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте %s и обидете се повторно.</string>
   <string name="traktcheckin_wait">Ќе почекам</string>
   <string name="trakt_success">Прати на trakt.</string>
   <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>

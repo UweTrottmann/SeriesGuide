@@ -33,6 +33,7 @@
   <string name="action_display_all">Zobrazit vše</string>
   <string name="web_search">Webové vyhledávání</string>
   <string name="add_to_homescreen">Odkaz</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
   <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">nyní</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
   <string name="action_lists_sort">Třídit seznamy</string>
   <string name="action_lists_reorder">Uspořádat seznamy</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Sbírka</string>
   <string name="movies_watchlist">Chci vidět</string>
@@ -236,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentální!</string>
-  <string name="hexagon_setup">Nastavit SeriesGuide cloud</string>
   <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
   <string name="hexagon_warning_lists">Neobsahuje vaše seznamy.</string>
   <string name="hexagon_warning_trakt">Pokud používáte SeriesGuide cloud, změny na trakt.tv se nebudou synchronizovat do SeriesGuide.</string>

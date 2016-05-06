@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostrar tudo</string>
   <string name="web_search">Pesquisa Web</string>
   <string name="add_to_homescreen">Atalho</string>
+  <string name="action_open">Abrir</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episódios</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
   <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Podes adicionar séries, temporadas ou episódios a esta lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Colecção</string>
   <string name="movies_watchlist">Desejo Ver</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurar a SeriesGuide Cloud</string>
   <string name="hexagon_description">Conecta-te ao servidor para criar uma cópia de segurança e sincronizar as tuas séries e filmes.</string>
   <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
   <string name="hexagon_warning_trakt">Ao usar o servidor SeriesGuide, as alterações no trakt não serão sincronizadas para o SeriesGuide.</string>

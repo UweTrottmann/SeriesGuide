@@ -67,7 +67,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        if (result == SUCCESS) {
+        if (result == SUCCESS && getSuccessTextResId() != 0) {
             // success!
             Toast.makeText(context, getSuccessTextResId(), Toast.LENGTH_SHORT).show();
             return;

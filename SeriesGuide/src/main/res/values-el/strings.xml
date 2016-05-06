@@ -33,6 +33,7 @@
   <string name="action_display_all">Εμφάνιση όλων</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
   <string name="add_to_homescreen">Συντόμευση</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Παρακολουθήστε</string>
   <string name="services_more">Περισσότερα</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
   <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
-  <string name="hexagon_setup">Ρυθμίστε το SeriesGuide cloud</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
   <string name="hexagon_warning_lists">Δεν συμπεριλαμβάνονται λίστες.</string>
   <string name="hexagon_warning_trakt">Όταν χρησιμοποιείτε το SeriesGuide cloud, οι αλλαγές στο trakt δεν συγχρονίζονται στο SeriesGuide.</string>

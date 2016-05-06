@@ -4,7 +4,7 @@ Contributing
 #### Would you like to contribute code?
 
 1. [Fork SeriesGuide][11]. See further setup instructions below.
-2. Create a new branch (for example using `git checkout -b descriptive-branch-name master`) and make [great commits + messages][10].
+2. Create a new branch ([using GitHub][14] or the command `git checkout -b descriptive-branch-name dev`) and make [great commits + messages][10].
 3. [Start a pull request][6]. Reference [existing issues][7] when possible.
 
 #### No code!
@@ -16,7 +16,8 @@ Contributing
 Repository structure
 --------------------
 
-This repository contains one main development branch, `master`. Its tags are released as [SeriesGuide][1] on Google Play.
+- `dev`, the main development and [test release][2] branch.
+- `master`, the stable release branch. Always the latest [stable version][1] of SeriesGuide.
 
 Setup
 -----
@@ -53,7 +54,7 @@ apiKey=0
 
 Now build any variant of the **free flavor**, for developing probably `freeDebug` (flavor + build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.
 
- [1]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
+ [1]: https://seriesgui.de
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
  [3]: http://tools.android.com/tech-docs/new-build-system/user-guide
  [4]: https://crowdin.com/project/seriesguide-translations
@@ -64,6 +65,7 @@ Now build any variant of the **free flavor**, for developing probably `freeDebug
  [9]: https://seriesguide.uservoice.com
  [10]: http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message
  [11]: https://github.com/UweTrottmann/SeriesGuide/fork
- [12]: http://seriesgui.de/help
+ [12]: https://seriesgui.de/help
  [13]: https://get.fabric.io/crashlytics
+ [14]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/
  

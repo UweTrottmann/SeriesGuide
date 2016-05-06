@@ -16,9 +16,9 @@
             android:layout_width="100dp"
             android:layout_height="147dp"
             android:layout_alignParentLeft="true"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription"
-            tools:src="@color/background_dim" />
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            tools:src="@drawable/ic_image_missing" />
 
         <TextView
             android:id="@+id/textViewAddTitle"
@@ -49,18 +49,22 @@
             android:textAppearance="@style/TextAppearance.Body"
             tools:text="Some awesome\nthree-line\ndescription" />
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/dividerItemAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewAddDescription"
             android:layout_toRightOf="@+id/imageViewAddPoster"
-            android:orientation="vertical">
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="?attr/drawableDivider" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="?attr/drawableDivider" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dividerItemAdd"
+            android:layout_toRightOf="@+id/imageViewAddPoster"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/viewAddButton"
@@ -71,13 +75,22 @@
                 android:focusable="false"
                 android:text="@string/action_shows_add" />
 
+            <!-- Content description is set in code. -->
             <ImageView
                 android:id="@+id/imageViewAddedIndicator"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:contentDescription="@null"
                 android:scaleType="centerInside"
-                android:src="?attr/drawableWatched"
-                android:visibility="gone" />
+                android:src="?attr/drawableWatched" />
+
+            <ImageView
+                android:id="@+id/buttonItemAddMore"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/description_menu_overflow"
+                android:src="?attr/drawableDropdown" />
 
         </LinearLayout>
 

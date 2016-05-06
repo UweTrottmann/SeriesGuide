@@ -33,6 +33,7 @@
   <string name="action_display_all">Показати все</string>
   <string name="web_search">Веб пошук</string>
   <string name="add_to_homescreen">Ярлик</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Очистити історію пошуку</string>
   <string name="search_hint">Пошук серій</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Дивитися</string>
   <string name="services_more">Більше</string>
   <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">Ви можете додавати серіали, сезони або серії до цього списку.</string>
   <string name="action_lists_sort">Сортувати списки</string>
   <string name="action_lists_reorder">Впорядкувати список</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Колекція</string>
   <string name="movies_watchlist">Список перегляду</string>
@@ -236,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментальна!</string>
-  <string name="hexagon_setup">Встановити хмару SeriesGuide</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
   <string name="hexagon_warning_lists">Списки не включено.</string>
   <string name="hexagon_warning_trakt">Під час використання хмари SeriesGuide, зміни на  trakt не будуть синхронізуватись з SeriesGuide.</string>

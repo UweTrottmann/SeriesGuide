@@ -23,6 +23,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import java.util.regex.Pattern;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import retrofit.RetrofitError;
@@ -33,10 +34,20 @@ import timber.log.Timber;
  * Always drops debug and verbose logs.
  */
 public class AnalyticsTree extends Timber.DebugTree {
+
+    private static final Pattern TMDB_V3_API_KEY = Pattern.compile("api_key=([^&]*)");
+
     private final Context context;
 
     public AnalyticsTree(Context context) {
         this.context = context.getApplicationContext();
+    }
+
+    private static String sanitizeTmdbUrls(String s) {
+        if (s == null) {
+            return null;
+        }
+        return TMDB_V3_API_KEY.matcher(s).replaceAll("api_key=<key-removed>");
     }
 
     @Override
@@ -59,12 +70,12 @@ public class AnalyticsTree extends Timber.DebugTree {
                     Utils.trackCustomEvent(context,
                             "Network Request Error",
                             tag + ": " + message,
-                            e.getResponse().getStatus() + " " + e.getUrl());
+                            e.getResponse().getStatus() + " " + sanitizeTmdbUrls(e.getUrl()));
                 } else if (e.getKind() == RetrofitError.Kind.CONVERSION) {
                     Utils.trackCustomEvent(context,
                             "Request Conversion Error",
                             tag + ": " + message,
-                            e.getResponse().getStatus() + " " + e.getUrl());
+                            e.getResponse().getStatus() + " " + sanitizeTmdbUrls(e.getUrl()));
                 }
                 return;
             } else if (t instanceof TvdbException) {

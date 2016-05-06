@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostrar tudo</string>
   <string name="web_search">Pesquisa na Web</string>
   <string name="add_to_homescreen">Atalho</string>
+  <string name="action_open">Abrir</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Assistir</string>
   <string name="services_more">Mais</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
+  <string name="no_translation_title">Não traduzido</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -147,7 +149,7 @@
   <string name="user_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em algumas séries!</string>
   <string name="user_movie_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em alguns filmes!</string>
   <!-- Calendar -->
-  <string name="upcoming">Próximos</string>
+  <string name="upcoming">Em breve</string>
   <string name="recent">Recente</string>
   <string name="noupcoming">Não há próximos episódios.</string>
   <string name="norecent">Não há episódios recentes.</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Você pode adicionar séries, temporadas ou episódios na lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
+  <string name="error_name_already_exists">Já existe uma lista com este nome</string>
   <!-- Movies -->
   <string name="movies_collection">Coleção</string>
   <string name="movies_watchlist">A assistir</string>
@@ -207,7 +210,7 @@
   <string name="movie_crew">Equipe</string>
   <string name="action_movies_sort">Ordenar filmes</string>
   <string name="action_movies_sort_title">Título</string>
-  <string name="action_movies_sort_release">Data de exibição</string>
+  <string name="action_movies_sort_release">Data de lançamento</string>
   <!-- Statistics -->
   <string name="statistics_shows">Séries</string>
   <string name="statistics_episodes">Episódios</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurar SeriesGuide Cloud</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
   <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
   <string name="hexagon_warning_trakt">Quando estiver usando o SeriesGuide Cloud, mudanças no trakt não irão sincronizar com o SeriesGuide.</string>
@@ -327,9 +329,9 @@
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
   <string name="pref_autoaddshowssummary">Adiciona automaticamente séries do seu fluxo de atividades do trakt</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Este app usa dados e imagens do TheTVDB licenciado sob CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Este app usa dados e imagens por TheTVDB licenciado sob a CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este produto usa a API TMDb mas não é endossado ou certificado pelo TMDb.</string>
-  <string name="licence_trakt">Este app usa dados e imagens do trakt.</string>
+  <string name="licence_trakt">Este app usa dados e imagens por trakt.</string>
   <string name="about_open_source">SeriesGuide foi construído usando um software de código aberto.</string>
   <string name="licences_and_credits">Licenças e créditos</string>
   <!-- Sort -->
@@ -345,7 +347,7 @@
   <string name="sort_order_oldest_first_dvd">Mais antigos primeiro (DVD)</string>
   <!-- Upcoming thresholds -->
   <string name="pref_upcominglimit">Intervalo dos próximos episódios</string>
-  <string name="upcoming_upto_now">agora</string>
+  <string name="upcoming_upto_now">Agora</string>
   <string name="upcoming_upto_one_day">1 dia</string>
   <string name="upcoming_upto_three_days">3 dias</string>
   <string name="upcoming_upto_one_week">1 semana</string>

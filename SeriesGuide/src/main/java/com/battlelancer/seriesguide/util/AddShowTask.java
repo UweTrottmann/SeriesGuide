@@ -147,7 +147,6 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             }
         }
 
-        String defaultLanguage = DisplaySettings.getContentLanguage(context);
         int result;
         boolean addedAtLeastOneShow = false;
         boolean failedMergingShows = false;
@@ -170,9 +169,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = addQueue.removeFirst();
 
             try {
-                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid,
-                        nextShow.language == null ? defaultLanguage : nextShow.language, watched,
-                        collection);
+                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid, nextShow.language,
+                        watched, collection);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
@@ -188,7 +186,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
             currentShowName = nextShow.title;
             publishProgress(result);
-            Timber.d("Finished adding show. (Result code: " + result + ")");
+            Timber.d("Finished adding show. (Result code: %s)", result);
         }
 
         isFinishedAddingShows = true;

@@ -33,6 +33,7 @@
   <string name="action_display_all">Arată tot</string>
   <string name="web_search">Căutare pe web</string>
   <string name="add_to_homescreen">Scurtătură</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Vezi</string>
   <string name="services_more">Mai mult</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="action_lists_sort">Sortează lista</string>
   <string name="action_lists_reorder">Reordonaţi lista</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Colecție</string>
   <string name="movies_watchlist">Watchlist</string>
@@ -236,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configurează SeriesGuide Cloud</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
   <string name="hexagon_warning_lists">Listele nu sunt incluse.</string>
   <string name="hexagon_warning_trakt">Când folosiți SeriesGuide Cloud, schimbarile pe trakt nu se vor sincroniza în SeriesGuide.</string>

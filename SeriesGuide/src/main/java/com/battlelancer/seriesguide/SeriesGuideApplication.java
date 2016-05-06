@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 import timber.log.Timber;
@@ -91,7 +90,6 @@ public class SeriesGuideApplication extends Application {
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
         if (BuildConfig.DEBUG) {
             GoogleAnalytics.getInstance(this).setDryRun(true);
-            GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         }
         // Initialize tracker
         Analytics.getTracker(this);

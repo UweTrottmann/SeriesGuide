@@ -382,9 +382,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
             show.language = shows.getString(ShowsQuery.LANGUAGE);
-            if (TextUtils.isEmpty(show.language)) {
-                show.language = DisplaySettings.LANGUAGE_EN;
-            }
             show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
             show.release_weekday = shows.getInt(ShowsQuery.RELEASE_WEEKDAY);
             show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
@@ -404,7 +401,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 show.rating = shows.getDouble(ShowsQuery.RATING_GLOBAL);
                 show.rating_votes = shows.getInt(ShowsQuery.RATING_VOTES);
                 show.genres = shows.getString(ShowsQuery.GENRES);
-                show.actors = shows.getString(ShowsQuery.ACTORS);
                 show.lastUpdated = shows.getLong(ShowsQuery.LAST_UPDATED);
                 show.lastEdited = shows.getLong(ShowsQuery.LAST_EDITED);
             }
@@ -635,7 +631,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RATING_GLOBAL,
                 Shows.RATING_VOTES,
                 Shows.GENRES,
-                Shows.ACTORS,
                 Shows.LASTUPDATED,
                 Shows.LASTEDIT
         };
@@ -666,9 +661,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int RATING_GLOBAL = 20;
         int RATING_VOTES = 21;
         int GENRES = 22;
-        int ACTORS = 23;
-        int LAST_UPDATED = 24;
-        int LAST_EDITED = 25;
+        int LAST_UPDATED = 23;
+        int LAST_EDITED = 24;
     }
 
     public interface EpisodesQuery {

@@ -16,8 +16,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.content.ContentProviderOperation;
-import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -33,15 +31,12 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsAdapter;
 import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
-import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * Dialog to reorder lists using a vertical list with drag handles. Currently not accessibility or
@@ -129,22 +124,13 @@ public class ListsReorderDialogFragment extends DialogFragment {
             return;
         }
 
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (int position = 0; position < adapter.getCount(); position++) {
+        int count = adapter.getCount();
+        List<String> listIdsInOrder = new ArrayList<>(count);
+        for (int position = 0; position < count; position++) {
             OrderedListsLoader.OrderedList list = adapter.getItem(position);
-            batch.add(ContentProviderOperation.newUpdate(
-                    SeriesGuideContract.Lists.buildListUri(list.id))
-                    .withValue(SeriesGuideContract.Lists.ORDER, position)
-                    .build());
+            listIdsInOrder.add(list.id);
         }
-
-        try {
-            DBUtils.applyInSmallBatches(getActivity(), batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "drop: failed to save reordered lists.");
-        }
-
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
+        ListsTools.reorderLists(getContext(), listIdsInOrder);
     }
 
     private LoaderManager.LoaderCallbacks<List<OrderedListsLoader.OrderedList>> listsLoaderCallbacks

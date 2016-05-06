@@ -129,7 +129,12 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 }
             } else {
                 try {
-                    results = TheTVDB.searchShow(getContext(), query, language);
+                    if (TextUtils.isEmpty(language)) {
+                        // use the v1 API to do an any language search not supported by v2
+                        results = TheTVDB.searchShow(getContext(), query, null);
+                    } else {
+                        results = TheTVDB.searchSeries(getContext(), query, language);
+                    }
                     markLocalShows(getContext(), results);
                 } catch (TvdbException e) {
                     Timber.e(e, "Searching show failed");
@@ -141,9 +146,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         return buildResultSuccess(results, R.string.no_results);
     }
 
-    private static void markLocalShows(Context context, List<SearchResult> results) {
+    private static void markLocalShows(Context context, @Nullable List<SearchResult> results) {
         HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(context);
-        if (localShows == null) {
+        if (localShows == null || results == null) {
             return;
         }
 

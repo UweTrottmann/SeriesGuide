@@ -33,6 +33,7 @@
   <string name="action_display_all">Pokaż wszystko</string>
   <string name="web_search">Wyszukiwarka</string>
   <string name="add_to_homescreen">Skrót</string>
+  <string name="action_open">Otwórz</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Oglądaj</string>
   <string name="services_more">Więcej</string>
   <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
+  <string name="no_translation_title">Nie przetłumaczone</string>
   <!-- Date and Time -->
   <string name="today">dziś</string>
   <string name="now">teraz</string>
@@ -119,7 +121,7 @@
   <string name="unfavorited">Usunięto z ulubionych</string>
   <string name="context_hide">Ukryj</string>
   <string name="context_unhide">Odkryj</string>
-  <string name="hidden">Ukryty serial</string>
+  <string name="hidden">Serial został ukryty</string>
   <string name="unhidden">Odkryty serial</string>
   <string name="action_shows_add">Dodaj serial</string>
   <string name="action_shows_filter">Filtruj seriale</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="action_lists_sort">Sortowanie list</string>
   <string name="action_lists_reorder">Zmień kolejność list</string>
+  <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcja</string>
   <string name="movies_watchlist">Lista obejrzanych</string>
@@ -236,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperymentalne!</string>
-  <string name="hexagon_setup">Skonfiguruj SeriesGuide w chmurze</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
   <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
   <string name="hexagon_warning_trakt">Podczas korzystania z chmury SeriesGuide, zmiany na trakt nie są pobierane do SeriesGuide.</string>
@@ -260,7 +262,7 @@
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
-  <string name="checkin_canceled_success_trakt">%s odznaczono jako oglądane na trakt.</string>
+  <string name="checkin_canceled_success_trakt">Anulowano oznaczenie jako oglądane na trakt.</string>
   <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">Już oglądasz inny odcinek lub film. Należy zmienić wybór lub zaczekać %s i spróbować ponownie.</string>
   <string name="traktcheckin_wait">Poczekam</string>
@@ -332,7 +334,7 @@
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Ta aplikacja korzysta z danych i zdjęć z serwisu TheTVDB  na licencji CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Ta aplikacja korzysta z danych i zdjęć z serwisu TheTVDB na licencji CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Ten produkt używa interfejsu API TMDb, ale nie jest zatwierdzony lub poświadczony przez TMDb.</string>
   <string name="licence_trakt">Ta aplikacja korzysta z danych i zdjęć z trakt.</string>
   <string name="about_open_source">SeriesGuide jest zbudowany przy użyciu oprogramowania open source.</string>

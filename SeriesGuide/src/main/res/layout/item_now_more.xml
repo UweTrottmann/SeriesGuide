@@ -30,6 +30,7 @@
         android:layout_height="24dp"
         android:layout_marginLeft="@dimen/keyline"
         android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@null"
         android:src="?attr/drawableArrowRight" />
 
     <TextView

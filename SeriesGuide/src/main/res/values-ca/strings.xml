@@ -33,6 +33,7 @@
   <string name="action_display_all">Mostra-ho tot</string>
   <string name="web_search">Cerca web</string>
   <string name="add_to_homescreen">Drecera</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Veure</string>
   <string name="services_more">Més</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
   <string name="action_lists_sort">Ordena les llistes</string>
   <string name="action_lists_reorder">Reordenar les llistes</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Coŀlecció</string>
   <string name="movies_watchlist">Llista de seguiment</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Configureu el Cloud de SeriesGuide</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
   <string name="hexagon_warning_lists">Les llistes no hi són incloses.</string>
   <string name="hexagon_warning_trakt">Quan utilitzeu el Cloud de SeriesGuide, els canvis que efectueu a trakt no se sincronitzaran a SeriesGuide.</string>

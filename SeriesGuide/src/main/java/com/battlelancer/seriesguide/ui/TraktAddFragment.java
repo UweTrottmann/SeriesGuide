@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v4.app.LoaderManager;
@@ -26,10 +27,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import de.greenrobot.event.EventBus;
@@ -87,16 +90,65 @@ public class TraktAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // setup adapter
-        adapter = new AddAdapter(getActivity(),
-                new ArrayList<SearchResult>());
+        // setup adapter, enable context menu only for recommendations and watchlist
+        int listType = getListType();
+        adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(),
+                listType == TYPE_RECOMMENDED || listType == TYPE_WATCHLIST ? showMenuClickListener
+                        : null, listType != TYPE_WATCHLIST);
 
         // load data
-        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + getListType(), null,
+        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
                 mTraktAddCallbacks);
 
         // add menu options
         setHasOptionsMenu(true);
+    }
+
+    private AddAdapter.OnContextMenuClickListener showMenuClickListener
+            = new AddAdapter.OnContextMenuClickListener() {
+        @Override
+        public void onClick(View view, int showTvdbId) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.add_dialog_popup_menu);
+
+            int listType = getListType();
+            if (listType == TYPE_RECOMMENDED) {
+                popupMenu.getMenu()
+                        .findItem(R.id.menu_action_show_watchlist_remove)
+                        .setVisible(false);
+            } else if (listType == TYPE_WATCHLIST) {
+                popupMenu.getMenu().findItem(R.id.menu_action_show_watchlist_add).setVisible(false);
+            }
+
+            popupMenu.setOnMenuItemClickListener(
+                    new AddItemMenuItemClickListener(view.getContext(), showTvdbId));
+            popupMenu.show();
+        }
+    };
+
+    public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        private final Context context;
+        private final int showTvdbId;
+
+        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
+            this.context = context;
+            this.showTvdbId = showTvdbId;
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_action_show_watchlist_add) {
+                ShowTools.addToWatchlist(context, showTvdbId);
+                return true;
+            }
+            if (itemId == R.id.menu_action_show_watchlist_remove) {
+                ShowTools.removeFromWatchlist(context, showTvdbId);
+                return true;
+            }
+            return false;
+        }
     }
 
     @Override
@@ -126,6 +178,16 @@ public class TraktAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onEventMainThread(
+            @SuppressWarnings("UnusedParameters") ShowTools.ShowChangedEvent event) {
+        int listType = getListType();
+        if (listType == TYPE_WATCHLIST) {
+            // reload watchlist if a show was removed
+            getLoaderManager().restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
+                    mTraktAddCallbacks);
+        }
     }
 
     @Override

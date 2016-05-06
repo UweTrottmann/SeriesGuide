@@ -33,6 +33,7 @@
   <string name="action_display_all">Показать все</string>
   <string name="web_search">Веб-поиск</string>
   <string name="add_to_homescreen">Ярлык</string>
+  <string name="action_open">Открыть</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Смотреть</string>
   <string name="services_more">Подробнее</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
+  <string name="no_translation_title">Не переведено</string>
   <!-- Date and Time -->
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">К списку можно добавить сериалы, сезоны или серии.</string>
   <string name="action_lists_sort">Отсортировать списки</string>
   <string name="action_lists_reorder">Сортировка списков</string>
+  <string name="error_name_already_exists">Список с таким именем уже существует</string>
   <!-- Movies -->
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>
@@ -220,23 +223,22 @@
   <string name="movies_on_watchlist">%s в списке просмотра</string>
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
-    <item quantity="one">%d д.</item>
+    <item quantity="one">%d день</item>
     <item quantity="few">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d ч.</item>
+    <item quantity="one">%d час</item>
     <item quantity="few">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d мин.</item>
+    <item quantity="one">%d минута</item>
     <item quantity="few">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
-  <string name="hexagon_setup">Настройка SeriesGuide Cloud</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
   <string name="hexagon_warning_trakt">При использовании SeriesGuide Cloud, изменения на trakt.tv не будут синхронизироваться с SeriesGuide.</string>
@@ -264,7 +266,7 @@
   <string name="traktcheckin_cancel">Отменить</string>
   <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
   <string name="traktcheckin_wait">Согласен</string>
-  <string name="trakt_success">Отправить в trakt.</string>
+  <string name="trakt_success">Отправлено в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
   <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
   <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
@@ -299,9 +301,9 @@
   <string name="rating8">Прекрасно</string>
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
-    <item quantity="one">%d голос(ов)</item>
+    <item quantity="one">%d голос</item>
     <item quantity="few">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Отметить</string>

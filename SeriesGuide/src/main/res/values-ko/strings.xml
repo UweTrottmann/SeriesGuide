@@ -33,10 +33,11 @@
   <string name="action_display_all">모두 보기</string>
   <string name="web_search">웹 검색</string>
   <string name="add_to_homescreen">바로가기</string>
+  <string name="action_open">열기</string>
   <!-- Search -->
   <string name="clear_search_history">검색기록 지우기</string>
   <string name="search_hint">에피소드 검색</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">모든 언어</string>
   <!-- Status messages -->
   <string name="updated">최신버전으로 업데이트 완료.</string>
   <string name="norating">n/a</string>
@@ -57,12 +58,12 @@
   <string name="comments">코멘트</string>
   <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
   <string name="shout_invalid">코멘트가 규칙에 어긋납니다!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">게시</string>
   <string name="isspoiler">스포일러 경고!</string>
   <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
   <string name="refresh">새로 고침</string>
   <plurals name="replies_plural">
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d개 리플</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">절대값</string>
@@ -85,7 +86,8 @@
   <string name="lastEdit">마지막 편집 // TVDb</string>
   <string name="services_watch">보기</string>
   <string name="services_more">더보기</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">오늘</string>
   <string name="now">지금</string>
@@ -168,7 +170,7 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
-  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_any_language">아무 언어나 시도</string>
   <string name="action_try_again">재시도</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_all">모두 추가</string>
@@ -191,6 +193,7 @@
   <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
   <string name="action_lists_sort">목록 정렬</string>
   <string name="action_lists_reorder">목록 재정렬</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">컬렉션</string>
   <string name="movies_watchlist">관심목록</string>
@@ -218,17 +221,16 @@
   <string name="movies_on_watchlist">%s 와치리스트</string>
   <string name="runtime_movies_watchlist">와치리스트의 상영시간</string>
   <plurals name="days_plural">
-    <item quantity="other">%d days</item>
+    <item quantity="other">%d일</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="other">%d hours</item>
+    <item quantity="other">%d시간</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d분</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">실험적인 기능</string>
-  <string name="hexagon_setup">시리즈가이드 클라우드 설정</string>
   <string name="hexagon_description">쇼와 영화를 백업/동기화하기 위해 클라우드에 접속</string>
   <string name="hexagon_warning_lists">리스트는 포함되지 않습니다.</string>
   <string name="hexagon_warning_trakt">SeriesGuide 클라우드 사용시 trakt의 변경사항은 SeriesGuide와 동기화 되지 않습니다.</string>
@@ -259,8 +261,8 @@
   <string name="trakt_success">trakt로 전송하였습니다.</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
+  <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt 계정</string>
   <string name="trakt_connect_instructions">다음 화면에서 trakt에 로그인하거나 새계정을 만들 수 있습니다. 그렇게 하면 SeriesGuide 가 trakt 에 접근할 수 있습니다.</string>
@@ -271,7 +273,7 @@
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">내부 웹브라우저 사용</string>
   <string name="connect_trakt_done">trakt에 연결되었습니다!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide는 당신의 쇼와 영화들을 trakt에 지금 동기화합니다. 때로는 시간이 걸릴 수도 있습니다.</string>
   <string name="add_trakt_shows">라이브러리에 있는 쇼 추가:</string>
@@ -291,14 +293,14 @@
   <string name="rating8">괜찮음</string>
   <string name="rating9">강추</string>
   <plurals name="votes">
-    <item quantity="other">%d votes</item>
+    <item quantity="other">%d명이 투표</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">체크인</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
   <string name="paste_title">제목 붙여넣기</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">빠른 체크인</string>
+  <string name="pref_quick_checkin_summary">체크인 메세지 묻지 않기</string>
   <!-- Help -->
   <string name="feedback">사용자 의견 보내기</string>
   <string name="action_open_in_browser">브라우저에서 열기</string>
@@ -312,12 +314,12 @@
   <string name="pref_onlyseasoneps">스페셜 에피소드 숨기기</string>
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
   <string name="pref_exactdates">정확한 날짜를 표시합니다.</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"10월 31일\" 대신 \"3일안에\"</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">선호하는 컨텐츠 언어</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
@@ -325,8 +327,8 @@
   <string name="licence_tvdb">이 앱은 CC BY NC 4.0에 의거한 TheTVDB 사용자의 데이터와 이미지를 활용합니다.</string>
   <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증된 프로그램이 아닙니다. (비공식 앱 입니다)</string>
   <string name="licence_trakt">이 앱은 trakt 의 데이터와 이미지를 활용합니다.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="about_open_source">SeriesGuide는 오픈소스 소프트웨어를 활용합니다.</string>
+  <string name="licences_and_credits">라이센스 및 크레딧</string>
   <!-- Sort -->
   <string name="sort">정렬 기준</string>
   <string name="action_sort_ignore_articles">무시하기</string>
@@ -339,7 +341,7 @@
   <string name="sort_order_latest_first_dvd">내림차순 (DVD)</string>
   <string name="sort_order_oldest_first_dvd">오름차순 (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">방영예정 날짜</string>
   <string name="upcoming_upto_now">지금</string>
   <string name="upcoming_upto_one_day">1일</string>
   <string name="upcoming_upto_three_days">3일</string>
@@ -358,7 +360,7 @@
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
   <string name="pref_autoupdatesummary">주기적으로 쇼 업데이트</string>
   <string name="pref_autobackup">자동 백업</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackupsummary">매주 쇼, 리스트 및 영화를 백업합니다.</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_number">에피소드 표시 형식</string>
@@ -371,12 +373,12 @@
   <string name="backup_full_dump">설명, 배우 및 등급과 같은 모든 메타데이터를 포함합니다.</string>
   <string name="backup_path">백업폴더</string>
   <string name="backup_version">데이터베이스 버전</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">백업 실패. 백업 파일이 없거나 접근할 수 없습니다.</string>
   <string name="backup_inprogress">데이터베이스 백업 중&#8230;</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
   <string name="import_inprogress">데이터베이스 복원 중&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
   <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
   <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>
   <string name="dbupgradefailed">백업이 너무 오래되었거나 비어있습니다. 주의: 2.0 버전 이전의 백업은 1.9.X 버전의 앱을 설치하여 임포트하세요.</string>
@@ -386,12 +388,12 @@
   <string name="import_button">복원</string>
   <string name="backup_question">이 백업 폴더에 현재 백업 파일을 덮어쓰게 됩니다!</string>
   <string name="import_question">현재의 쇼 목록 손실 될 것입니다! 백업 폴더 안에 백업 파일이 있는지 확인하세요.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">현재 앱에 저장한 쇼 목록이 삭제될 수 있습니다!</string>
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">백업 및 복원하기 위해서는 파일 액세스를 허용해야 합니다.</string>
+  <string name="autobackup_permission_missing">자동 백업을 하기위해서는 파일 액세스를 허용해야 합니다.</string>
+  <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
   <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
   <string name="action_select_file">파일 선택</string>
   <string name="backup_use_default_files">기본 백업 파일 사용</string>

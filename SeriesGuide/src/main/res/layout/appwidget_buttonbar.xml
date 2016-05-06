@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:background="@drawable/appwidget_button_center"
         android:clickable="true"
+        android:contentDescription="@string/app_name"
         android:focusable="true"
         android:padding="5dp"
         android:src="@drawable/ic_launcher" />
@@ -21,6 +22,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/appwidget_button_center"
+        android:contentDescription="@string/refresh"
         android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_action_reload" />

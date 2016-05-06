@@ -148,7 +148,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         // only continue if we are allowed to write to external storage
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            onShowAutoBackupPermissionWarning();
+            // only show warning if the user is done with first run
+            if (FirstRunFragment.hasSeenFirstRunFragment(this)) {
+                onShowAutoBackupPermissionWarning();
+            }
             return false;
         }
 

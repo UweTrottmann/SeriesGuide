@@ -33,6 +33,7 @@
   <string name="action_display_all">Összes megjelenítése</string>
   <string name="web_search">Internetes keresés</string>
   <string name="add_to_homescreen">Parancsikon</string>
+  <string name="action_open">Megnyit</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Figyelés</string>
   <string name="services_more">Több</string>
   <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
+  <string name="no_translation_title">Nincs lefordítva</string>
   <!-- Date and Time -->
   <string name="today">ma</string>
   <string name="now">most</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is hozzá adhatsz ehhez a listához.</string>
   <string name="action_lists_sort">Listák rendezése</string>
   <string name="action_lists_reorder">Listák újrarendezése</string>
+  <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
   <!-- Movies -->
   <string name="movies_collection">Gyűjtemény</string>
   <string name="movies_watchlist">Figyelőlista</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
-  <string name="hexagon_setup">SeriesGuide Cloud beállítása</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
   <string name="hexagon_warning_lists">A listákat nem tartalmazza.</string>
   <string name="hexagon_warning_trakt">A SeriesGuide Cloud használatakor a trakton végzett változások nem szinkronizálódnak a SeriesGuide alkalmazásba.</string>

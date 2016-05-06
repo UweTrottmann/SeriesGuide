@@ -5,6 +5,69 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 30
+----------
+*(2016-05-06)*
+
+* On phones: switch seasons from the top of the episode details screen.
+* Lists are synced with SeriesGuide Cloud.
+* In search screen: add option to add shows to trakt watchlist. Support removing shows from trakt watchlist.
+
+#### 30
+*(2016-05-06)*
+
+* NOTICE Latest translations from crowdin.
+
+#### 30-beta5
+*(2016-04-29)*
+
+* FEATURE Lists are synced with SeriesGuide Cloud.
+* TWEAK When adding a show the chosen language is synced with Cloud.
+* FIX Do not set the default language to English when exporting shows. Instead specify no language,
+  so when importing the user preferred language is used.
+* NOTICE Latest translations from crowdin.
+
+#### 30-beta4
+*(2016-04-22)*
+
+* FEATURE In search screen: add option to add shows to trakt watchlist. Support removing shows from
+  trakt watchlist.
+* FIX Potential fix of search table creation failing in some situations.
+* FIX Crash due to broken Persian and Polish translation.
+* NOTICE Latest translations from crowdin.
+
+#### 30-beta3
+*(2016-04-15)*
+
+* FEATURE On phones: switch seasons from the top of the episode details screen.
+* TWEAK If a show title and description are not translated, fall back to the default translation and
+  add a note to the description that no translation is available.
+* TWEAK Allow any list name as long as it is not empty or the same as an existing list. No more
+  special or latin character restrictions.
+* FIX Crash when viewing About on devices with Android 5.1 or older.
+* FIX Recent search suggestions drop down is colored gray on the light theme.
+* NOTICE Latest translations from crowdin.
+
+#### 30-beta2
+*(2016-04-09)*
+
+* TWEAK Use TVDB API v2 to search for shows (non-English, not any), fetch show info (not episodes).
+  If no show title and overview translation exists English will no longer be used as a fallback.
+  A placeholder title and overview is show instead.
+* FIX Database error message crashes the app.
+* NOTICE Latest translations from crowdin.
+
+#### 30-beta1
+*(2016-03-17)*
+
+* TWEAK Offer to open shows in add dialog that are already added to SeriesGuide.
+* TWEAK Display pieces of information right in the root settings screen. Like the current supporter
+  state or signed-in account names.
+* TWEAK Clean up the first run experience. Do not show the nav drawer, show the auto backup
+  permission warning only after Getting Started is dismissed.
+* TWEAK Display placeholder in search screen if posters are not or could not be loaded.
+* NOTICE Latest translations from crowdin.
+
 Version 29 *(2016-03-11)*
 -----------------------------
 
@@ -48,14 +111,16 @@ Version 29 *(2016-03-11)*
 * FIX Potential improvements to list widget not updating.
 * NOTICE Latest translations from crowdin.
 
-#### 29-beta2 *(2016-02-18)*
+#### 29-beta2
+*(2016-02-18)*
 
 * TWEAK Update list widget immediately when setting episodes watched.
 * TWEAK Display episode number in notifications and DashClock extension.
 * FIX Crash due to incorrect Lithuanian translation.
 * NOTICE Latest translations from crowdin.
 
-#### 29-beta1 *(2016-02-11)*
+#### 29-beta1
+*(2016-02-11)*
 
 * TWEAK Combined search and "Add show" screen.
 * TWEAK Wider layout for movie details on 10-inch devices in landscape.

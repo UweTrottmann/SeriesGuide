@@ -17,26 +17,24 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -44,11 +42,13 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class ListManageDialogFragment extends DialogFragment {
 
+    private static final String ARG_LIST_ID = "listId";
+
     public static ListManageDialogFragment newInstance(String listId) {
         ListManageDialogFragment f = new ListManageDialogFragment();
 
         Bundle args = new Bundle();
-        args.putString("listid", listId);
+        args.putString(ARG_LIST_ID, listId);
         f.setArguments(args);
 
         return f;
@@ -73,9 +73,12 @@ public class ListManageDialogFragment extends DialogFragment {
         newFragment.show(ft, "listmanagedialog");
     }
 
-    private EditText mTitle;
-    private OnListsChangedListener mListener;
-    private Button mButtonNegative;
+    @Bind(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
+    private EditText editTextName;
+    @Bind(R.id.buttonNegative) Button buttonNegative;
+    @Bind(R.id.buttonPositive) Button buttonPositive;
+
+    private String listId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,78 +86,47 @@ public class ListManageDialogFragment extends DialogFragment {
 
         // hide title, use custom theme
         setStyle(STYLE_NO_TITLE, 0);
+
+        listId = getArguments().getString(ARG_LIST_ID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
+        ButterKnife.bind(this, layout);
 
-        // title
-        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
-        mTitle.setFilters(new InputFilter[] {
-                new CharAndDigitInputFilter()
-        });
+        editTextName = textInputLayoutName.getEditText();
 
         // buttons
-        mButtonNegative = (Button) layout.findViewById(R.id.buttonNegative);
-        mButtonNegative.setEnabled(false);
-        mButtonNegative.setText(R.string.list_remove);
-        mButtonNegative.setOnClickListener(new OnClickListener() {
+        buttonNegative.setEnabled(false);
+        buttonNegative.setText(R.string.list_remove);
+        buttonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // remove list and items
-                String listId = getArguments().getString("listid");
-                getActivity().getContentResolver().delete(Lists.buildListUri(listId), null,
-                        null);
-                getActivity().getContentResolver().delete(ListItems.CONTENT_URI,
-                        Lists.LIST_ID + "=?", new String[] {
-                                listId
-                        });
-
-                // remove tab from view pager
-                mListener.onListsChanged();
+                ListsTools.removeList(getContext(), listId);
 
                 dismiss();
             }
         });
-        Button buttonPositive = (Button) layout.findViewById(R.id.buttonPositive);
         buttonPositive.setText(android.R.string.ok);
         buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // prevent whitespaces/empty names
-                if (mTitle.getText().toString().trim().length() == 0) {
+                if (editTextName == null) {
                     return;
                 }
 
                 // update title
-                String listId = getArguments().getString("listid");
-                ContentValues values = new ContentValues();
-                values.put(Lists.NAME, mTitle.getText().toString());
-                getActivity().getContentResolver().update(Lists.buildListUri(listId), values, null,
-                        null);
-
-                // refresh view pager
-                mListener.onListsChanged();
+                String listName = editTextName.getText().toString();
+                ListsTools.renameList(getContext(), listId, listName);
 
                 dismiss();
             }
         });
 
         return layout;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            mListener = (OnListsChangedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnListsChangedListener");
-        }
     }
 
     @Override
@@ -168,7 +140,6 @@ public class ListManageDialogFragment extends DialogFragment {
         super.onActivityCreated(arg0);
 
         // pre-populate list title
-        String listId = getArguments().getString("listid");
         final Cursor list = getActivity().getContentResolver()
                 .query(Lists.buildListUri(listId), new String[] {
                         Lists.NAME
@@ -184,8 +155,12 @@ public class ListManageDialogFragment extends DialogFragment {
             dismiss();
             return;
         }
-        mTitle.setText(list.getString(0));
+        String listName = list.getString(0);
         list.close();
+        editTextName.setText(listName);
+        editTextName.addTextChangedListener(
+                new AddListDialogFragment.ListNameTextWatcher(getContext(), textInputLayoutName,
+                        buttonPositive, listName));
 
         // do only allow removing if this is NOT the last list
         Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
@@ -194,26 +169,9 @@ public class ListManageDialogFragment extends DialogFragment {
                 }, null, null, null);
         if (lists != null) {
             if (lists.getCount() > 1) {
-                mButtonNegative.setEnabled(true);
+                buttonNegative.setEnabled(true);
             }
             lists.close();
-        }
-    }
-
-    /**
-     * Restricts text input to characters and digits preventing any special characters.
-     */
-    public static class CharAndDigitInputFilter implements InputFilter {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
-                int dstart, int dend) {
-            for (int i = start; i < end; i++) {
-                if (!(Character.isLetterOrDigit(source.charAt(i))
-                        || Character.isWhitespace(source.charAt(i)))) {
-                    return "";
-                }
-            }
-            return null;
         }
     }
 }

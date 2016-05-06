@@ -17,14 +17,17 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.Activity;
-import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,11 +35,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnListsChangedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndDigitInputFilter;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
+import java.util.HashSet;
 
 /**
  * Displays a dialog to add a new list to lists.
@@ -47,8 +52,9 @@ public class AddListDialogFragment extends DialogFragment {
         return new AddListDialogFragment();
     }
 
-    private EditText mTitle;
-    private OnListsChangedListener mListener;
+    @Bind(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
+    @Bind(R.id.buttonNegative) Button buttonNegative;
+    @Bind(R.id.buttonPositive) Button buttonPositive;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,20 +65,20 @@ public class AddListDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
-
-        // set alternate dialog title
-        ((TextView) layout.findViewById(R.id.textViewListManageDialogTitle)).setText(R.string.list_add);
+        ButterKnife.bind(this, layout);
 
         // title
-        mTitle = (EditText) layout.findViewById(R.id.editTextListManageListTitle);
-        mTitle.setFilters(new InputFilter[] {
-                new CharAndDigitInputFilter()
-        });
+        final EditText editTextName = textInputLayoutName.getEditText();
+        if (editTextName != null) {
+            editTextName.addTextChangedListener(
+                    new ListNameTextWatcher(getContext(),
+                            textInputLayoutName, buttonPositive, null));
+        }
 
         // buttons
-        Button buttonNegative = (Button) layout.findViewById(R.id.buttonNegative);
         buttonNegative.setText(android.R.string.cancel);
         buttonNegative.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,42 +86,24 @@ public class AddListDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-        Button buttonPositive = (Button) layout.findViewById(R.id.buttonPositive);
         buttonPositive.setText(R.string.list_add);
         buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTitle.getText().length() == 0) {
+                if (editTextName == null) {
                     return;
                 }
 
                 // add list
-                String listName = mTitle.getText().toString();
-                ContentValues values = new ContentValues();
-                values.put(Lists.LIST_ID, Lists.generateListId(listName));
-                values.put(Lists.NAME, listName);
-                getActivity().getContentResolver().insert(Lists.CONTENT_URI, values);
-
-                // refresh view pager
-                mListener.onListsChanged();
+                String listName = editTextName.getText().toString();
+                ListsTools.addList(getContext(), listName);
 
                 dismiss();
             }
         });
+        buttonPositive.setEnabled(false);
 
         return layout;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            mListener = (OnListsChangedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnListsChangedListener");
-        }
     }
 
     @Override
@@ -124,9 +112,15 @@ public class AddListDialogFragment extends DialogFragment {
         Utils.trackView(getActivity(), "Add List Dialog");
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.unbind(this);
+    }
+
     /**
-     * Display a dialog which allows to edit the title of this list or remove
-     * it.
+     * Display a dialog which allows to edit the title of this list or remove it.
      */
     public static void showAddListDialog(FragmentManager fm) {
         // DialogFragment.show() will take care of adding the fragment
@@ -142,5 +136,68 @@ public class AddListDialogFragment extends DialogFragment {
         // Create and show the dialog.
         DialogFragment newFragment = AddListDialogFragment.newInstance();
         newFragment.show(ft, "addlistdialog");
+    }
+
+    /**
+     * Disables the given button if the watched text has only whitespace or the list name is already
+     * used. Does currently not protect against a new list resulting in the same list id (if
+     * inserted just resets the properties of the existing list).
+     */
+    public static class ListNameTextWatcher implements TextWatcher {
+        private Context context;
+        private TextInputLayout textInputLayoutName;
+        private TextView buttonPositive;
+        private final HashSet<String> listNames;
+        @Nullable
+        private String currentName;
+
+        public ListNameTextWatcher(Context context, TextInputLayout textInputLayoutName,
+                TextView buttonPositive, @Nullable String currentName) {
+            this.context = context;
+            this.textInputLayoutName = textInputLayoutName;
+            this.buttonPositive = buttonPositive;
+            this.currentName = currentName;
+            Cursor listNameQuery = context.getContentResolver()
+                    .query(Lists.CONTENT_URI, new String[] { Lists._ID, Lists.NAME }, null, null,
+                            null);
+            listNames = new HashSet<>();
+            if (listNameQuery != null) {
+                while (listNameQuery.moveToNext()) {
+                    listNames.add(listNameQuery.getString(1));
+                }
+                listNameQuery.close();
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String name = s.toString().trim();
+            if (name.length() == 0) {
+                buttonPositive.setEnabled(false);
+                return;
+            }
+            if (currentName != null && currentName.equals(name)) {
+                buttonPositive.setEnabled(true);
+                return;
+            }
+            if (listNames.contains(name)) {
+                textInputLayoutName.setError(
+                        context.getString(R.string.error_name_already_exists));
+                textInputLayoutName.setErrorEnabled(true);
+                buttonPositive.setEnabled(false);
+            } else {
+                textInputLayoutName.setError(null);
+                textInputLayoutName.setErrorEnabled(false);
+                buttonPositive.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
     }
 }

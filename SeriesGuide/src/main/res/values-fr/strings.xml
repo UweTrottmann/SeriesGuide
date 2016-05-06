@@ -33,6 +33,7 @@
   <string name="action_display_all">Afficher tout</string>
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="action_lists_sort">Trier les listes</string>
   <string name="action_lists_reorder">Réorganiser les listes</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Liste à voir</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Expérimental !</string>
-  <string name="hexagon_setup">Configurer le cloud SeriesGuide</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
   <string name="hexagon_warning_lists">Les listes ne sont pas incluses.</string>
   <string name="hexagon_warning_trakt">En utilisant le cloud SeriesGuide, les changements sur trakt ne seront pas synchronisés vers SeriesGuide.</string>

@@ -120,24 +120,25 @@ dependencies {
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.jakewharton.timber:timber:3.1.0'
+    compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // temporarily add okhttp 3 support to picasso
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     // temporarily add okhttp 3 support to retrofit 1
-    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
+    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.1.0'
     compile ('com.uwetrottmann.androidutils:androidutils:2.2.0') {
         exclude group: 'com.android.support'
     }
     compile 'com.uwetrottmann.photoview:library:1.2.4'
+    compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.2.0'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    compile 'com.uwetrottmann:tmdb-java:0.9.1'
+    compile 'com.uwetrottmann:tmdb-java:0.10.1'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     compile ('com.uwetrottmann:trakt-java:4.5.4') {
         exclude group: 'org.json', module: 'json'
@@ -145,7 +146,7 @@ dependencies {
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    compile 'net.danlew:android.joda:2.9.2'
+    compile 'net.danlew:android.joda:2.9.3'
 
     // Android support libraries
     compile "com.android.support:support-v4:$supportVersion"
@@ -157,7 +158,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Google Play Services
-    def playServicesVersion = '8.1.0'
+    def playServicesVersion = '8.4.0'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
 

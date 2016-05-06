@@ -10,8 +10,8 @@
   <string name="preferences">Asetukset</string>
   <string name="help">Ohjeet</string>
   <string name="help_and_feedback">Ohje ja palaute</string>
-  <string name="drawer_open">Avaa sivuvalikko</string>
-  <string name="drawer_close">Sulje sivuvalikko</string>
+  <string name="drawer_open">Avaa vetopaneeli</string>
+  <string name="drawer_close">Sulje vetopaneeli</string>
   <!-- Media items -->
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
@@ -33,6 +33,7 @@
   <string name="action_display_all">Näytä kaikki</string>
   <string name="web_search">Verkkohaku</string>
   <string name="add_to_homescreen">Pikakuvake</string>
+  <string name="action_open">Avaa</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
@@ -87,6 +88,7 @@
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
   <string name="no_translation">Ei ole saatavilla kuvausta kielelle %1$s palvelussa %2$s.</string>
+  <string name="no_translation_title">Ei käännetty</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
   <string name="now">nyt</string>
@@ -192,6 +194,7 @@
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="action_lists_sort">Lajittele listat</string>
   <string name="action_lists_reorder">Järjestä listat uudelleen</string>
+  <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
   <!-- Movies -->
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
@@ -232,7 +235,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
-  <string name="hexagon_setup">Määritä SeriesGuide Cloud</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
   <string name="hexagon_warning_lists">Listoja ei sisällytetä.</string>
   <string name="hexagon_warning_trakt">Käyttäessäsi SeriesGuide Cloud -palvelua, tekemäsi muutokset trakt-palvelussa eivät synkronoidu SeriesGuideen.</string>
@@ -450,7 +452,7 @@
   <string name="billing_price_subscribe">%s/vuosi, kokeile ilmaiseksi</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
-  <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
+  <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia</string>
   <string name="billing_learn_more">Miksi maksaisit? Opi lisää.</string>
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>

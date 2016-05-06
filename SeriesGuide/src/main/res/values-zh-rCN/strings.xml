@@ -33,6 +33,7 @@
   <string name="action_display_all">显示全部</string>
   <string name="web_search">网页搜索</string>
   <string name="add_to_homescreen">置于桌面</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
@@ -86,6 +87,7 @@
   <string name="services_watch">在线观看</string>
   <string name="services_more">更多</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">今天</string>
   <string name="now">现在</string>
@@ -191,6 +193,7 @@
   <string name="list_empty">请将节目或剧集添加到列表</string>
   <string name="action_lists_sort">列表排序</string>
   <string name="action_lists_reorder">重新排序</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">收藏</string>
   <string name="movies_watchlist">待看列表</string>
@@ -228,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">这是一个实验性功能！</string>
-  <string name="hexagon_setup">设置 SeriesGuide 云服务</string>
   <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>
   <string name="hexagon_warning_lists">注意：列表不包括在备份或同步中。</string>
   <string name="hexagon_warning_trakt">当使用 SeriesGuide 云服务时，trakt 上的更改将不会自动同步到 SeriesGuide。</string>

@@ -9,7 +9,7 @@
   <string name="search">Zoeken</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Hulp &amp; Terugkoppeling</string>
   <string name="drawer_open">Navigatiedrawer openen</string>
   <string name="drawer_close">Navigatiedrawer sluiten</string>
   <!-- Media items -->
@@ -33,6 +33,7 @@
   <string name="action_display_all">Toon alles</string>
   <string name="web_search">Zoeken op het web</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -55,7 +56,7 @@
   <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
   <!-- Comments -->
   <string name="comments">Reacties</string>
-  <string name="shout_hint">Vul een opmerking in (in het Engels, meer dan 5 woorden)</string>
+  <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
   <string name="shout_invalid">Uw opmerking is niet conform de regels!</string>
   <string name="action_post">Verzenden</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
@@ -86,7 +87,8 @@
   <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="services_watch">Bekijken</string>
   <string name="services_more">Meer</string>
-  <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
+  <string name="no_translation">Er is geen be schrijving vertaald naar %1$s beschikbaar op %2$s.</string>
+  <string name="no_translation_title">Niet vertaald</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>
@@ -112,8 +114,8 @@
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
-  <string name="context_favorite">Favoriet</string>
-  <string name="context_unfavorite">Geen favoriet</string>
+  <string name="context_favorite">Toevoegen aan favorieten</string>
+  <string name="context_unfavorite">Verwijderen uit favorieten</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
   <string name="context_hide">Verbergen</string>
@@ -138,14 +140,14 @@
   <!-- Now -->
   <string name="now_tab">Nu</string>
   <string name="recently_watched">Laatst gekeken</string>
-  <string name="released_today">Vandaag uitgebracht.</string>
+  <string name="released_today">Vandaag uitgebracht</string>
   <string name="friends_recently">Je Trakt contacten</string>
-  <string name="now_empty">Nog niets, kijk eerst wat series.</string>
+  <string name="now_empty">Nog niets, kijk eerst wat series!</string>
   <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
   <!-- History -->
   <string name="user_stream">Geschiedenis</string>
   <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
-  <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
+  <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
   <!-- Calendar -->
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
@@ -176,7 +178,7 @@
   <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
   <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
   <string name="add_error">Kan %s niet toevoegen.</string>
-  <string name="add_already_exists">%s is al in uw lijst weergeven.</string>
+  <string name="add_already_exists">%s staat al in uw lijst.</string>
   <string name="recommended">Aanbevolen</string>
   <string name="watched_shows">Bekeken</string>
   <string name="shows_collection">Collectie</string>
@@ -191,10 +193,11 @@
   <string name="list_item_remove">Verwijderen uit lijst</string>
   <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
   <string name="action_lists_sort">Sorteer lijst</string>
-  <string name="action_lists_reorder">Lijst opnieuw ordenen</string>
+  <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
+  <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
   <!-- Movies -->
   <string name="movies_collection">Collectie</string>
-  <string name="movies_watchlist">Watchlist</string>
+  <string name="movies_watchlist">Lijst</string>
   <string name="watchlist_add">Toevoegen aan watchlist</string>
   <string name="watchlist_remove">Verwijderen van watchlist</string>
   <string name="watchlist_added">Toegevoegd aan watchlist</string>
@@ -228,11 +231,10 @@
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minuut</item>
-    <item quantity="other">%d minuten</item>
+    <item quantity="other">%d minuut</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimenteel!</string>
-  <string name="hexagon_setup">SeriesGuide Cloud instellen</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
   <string name="hexagon_warning_lists">Exclusief lijsten.</string>
   <string name="hexagon_warning_trakt">Als je SeriesGuide cloud gebruikt, worden aanpassingen in trakt niet teruggesynchroniseerd met SeriesGuide.</string>
@@ -328,7 +330,7 @@
   <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <!-- About screen -->
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet onderschreven of gecertificeerd door TMDb.</string>
+  <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
   <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
   <string name="about_open_source">Seriesguide is geprogrammeerd met behulp van open source software.</string>
   <string name="licences_and_credits">Licenties en verantwoording</string>

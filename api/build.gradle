@@ -18,8 +18,8 @@ apply plugin: "java"
 apply plugin: "maven"
 apply plugin: "signing"
 
-jar.baseName = "seriesguide-api"
 group = "com.uwetrottmann.seriesguide"
+archivesBaseName = "seriesguide-api"
 version = "1.2.0"
 
 // load properties file
@@ -37,6 +37,8 @@ compileJava {
 }
 
 task generateJavadoc(type: Javadoc) {
+    // do not fail due to exclude being broken https://discuss.gradle.org/t/javadoc-exclusion-question/11875
+    failOnError false
     source = sourceSets.main.allJava
     exclude "**/constants/**"
     title = "SeriesGuide API"
@@ -52,18 +54,15 @@ task generateJavadoc(type: Javadoc) {
 
 task javadocJar(type: Jar, dependsOn: generateJavadoc) {
     classifier = "javadoc"
-    baseName = jar.baseName
-    from javadoc.destinationDir
+    from javadoc
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
+task sourcesJar(type: Jar) {
     classifier = "sources"
-    baseName = jar.baseName
     from sourceSets.main.allSource
 }
 
 artifacts {
-    archives jar
     archives sourcesJar
     archives javadocJar
 }
@@ -106,7 +105,7 @@ uploadArchives {
                     developer {
                         id "uwetrottmann"
                         name "Uwe Trottmann"
-                        email "uwe.trottmann@gmail.com"
+                        url "http://uwetrottmann.com"
                     }
                 }
 

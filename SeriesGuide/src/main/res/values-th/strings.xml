@@ -33,6 +33,7 @@
   <string name="action_display_all">แสดงทั้งหมด</string>
   <string name="web_search">ค้นเว็บ</string>
   <string name="add_to_homescreen">ทางลัด</string>
+  <string name="action_open">เปิด</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -86,6 +87,7 @@
   <string name="services_watch">ดู</string>
   <string name="services_more">เพิ่มเติม</string>
   <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
+  <string name="no_translation_title">ยังไม่ถูกแปล</string>
   <!-- Date and Time -->
   <string name="today">วันนี้</string>
   <string name="now">ขณะนี้</string>
@@ -191,6 +193,7 @@
   <string name="list_empty">คุณสามารถเพิ่มซีรีส์, ซีซั่น หรือตอนมายังรายการนี้</string>
   <string name="action_lists_sort">เรียงรายการ</string>
   <string name="action_lists_reorder">เรียงรายการใหม่</string>
+  <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
   <!-- Movies -->
   <string name="movies_collection">คลังเก็บ</string>
   <string name="movies_watchlist">อยากดู</string>
@@ -228,7 +231,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">การทดลอง!</string>
-  <string name="hexagon_setup">ตั้งค่า SeriesGuide Cloud</string>
   <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
   <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
   <string name="hexagon_warning_trakt">เมื่อใช้ SeriesGuide Cloud, การเปลี่ยนแปลงบน trakt จะไม่ซิงค์มายัง SeriesGuide</string>

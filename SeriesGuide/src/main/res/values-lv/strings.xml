@@ -33,6 +33,7 @@
   <string name="action_display_all">Uzrādīt visu</string>
   <string name="web_search">Web meklēšana</string>
   <string name="add_to_homescreen">Shortcut</string>
+  <string name="action_open">Open</string>
   <!-- Search -->
   <string name="clear_search_history">Dzēst meklēšanas vēsturi</string>
   <string name="search_hint">Meklēt epizodēs</string>
@@ -88,6 +89,7 @@
   <string name="services_watch">Skaties</string>
   <string name="services_more">Vairāk</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
+  <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>
@@ -193,6 +195,7 @@
   <string name="list_empty">Tu vari pievienot šovus, sezonas vai epizodes šim sarakstam.</string>
   <string name="action_lists_sort">Sort lists</string>
   <string name="action_lists_reorder">Reorder lists</string>
+  <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcija</string>
   <string name="movies_watchlist">Redzamo filmu saraksts</string>
@@ -236,7 +239,6 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental!</string>
-  <string name="hexagon_setup">Uzstādi SeriesGuide mākoni</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
   <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>

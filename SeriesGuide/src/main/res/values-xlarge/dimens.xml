@@ -8,6 +8,8 @@
 
     <dimen name="show_poster_width">102dp</dimen>
     <dimen name="show_poster_height">150dp</dimen>
+    <dimen name="show_poster_add_width">100dp</dimen>
+    <dimen name="show_poster_add_height">147dp</dimen>
 
     <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="addpager_width">600dp</dimen>

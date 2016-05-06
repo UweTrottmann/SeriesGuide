@@ -391,7 +391,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
         showValues.put(Shows.RATING_VOTES, show.rating_votes);
         showValues.put(Shows.GENRES, show.genres);
-        showValues.put(Shows.ACTORS, show.actors);
         if (show.lastUpdated > System.currentTimeMillis()) {
             show.lastUpdated = 0;
         }
