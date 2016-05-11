@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Ausstrahlungszeit um %s Stunden verschieben</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
-  <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Anonyme Nutzungs-Statistiken an einen Google-Dienst senden</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Alle Meta-Daten wie Beschreibungen, Schauspieler und Bewertungen mit einschließen.</string>
   <string name="backup_path">Sicherungsordner</string>

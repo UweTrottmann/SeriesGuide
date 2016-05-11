@@ -428,7 +428,7 @@
     <string name="pref_offsetsummary">Offset air times by %s hours</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
-    <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
 
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
