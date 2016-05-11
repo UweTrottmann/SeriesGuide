@@ -13,6 +13,12 @@ Version 30
 * Lists are synced with SeriesGuide Cloud.
 * In search screen: add option to add shows to trakt watchlist. Support removing shows from trakt watchlist.
 
+#### 30.0.1
+*(2016-05-11)*
+
+* FIX Send automatically created first list to Cloud as well.
+* TWEAK "Images via Wi-Fi only" is disabled by default again.
+
 #### 30
 *(2016-05-06)*
 
