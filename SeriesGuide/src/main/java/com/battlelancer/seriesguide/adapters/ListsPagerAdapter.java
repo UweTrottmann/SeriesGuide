@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
+import com.battlelancer.seriesguide.util.ListsTools;
 
 /**
  * Returns {@link ListsFragment}s for every list in the database, makes sure there is always at
@@ -48,13 +49,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         // precreate first list
         if (mLists != null && mLists.getCount() == 0) {
             String listName = mContext.getString(R.string.first_list);
-
-            ContentValues values = new ContentValues();
-            values.put(Lists.LIST_ID, Lists.generateListId(listName));
-            values.put(Lists.NAME, listName);
-            mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
-
-            onListsChanged();
+            ListsTools.addList(context, listName);
         }
     }
 
