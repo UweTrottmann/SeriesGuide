@@ -99,10 +99,9 @@ android {
             }
         }
         debug {
-            // currently only obfuscating a small portion for compatibility reasons
             // enable for shrinking to stay well below the 65k method limit
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-rules-debug.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             pseudoLocalesEnabled true
         }

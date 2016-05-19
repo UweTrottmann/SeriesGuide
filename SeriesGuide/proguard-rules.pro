@@ -7,6 +7,9 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
+# Currently no need to obfuscate anything
+-dontobfuscate
+
 # Output unused code so we may optimize it
 -printusage unused.txt
 
@@ -20,12 +23,7 @@
 # Android Support libaries
 # Google Play services (also brings its own proguard config)
 # Guava, added through google-api-client-android
--keep,allowobfuscation class !android.support.**, !com.google.ads.**, !com.google.android.gms.**, !com.google.common.**  { *; }
-
-# Only obfuscate android.support.v7.internal.view.menu.**
-# to avoid problem on Samsung 4.2.2 devices with appcompat v21
-# see https://code.google.com/p/android/issues/detail?id=78377
--keep,allowshrinking class !android.support.v7.internal.view.menu.** { *; }
+-keep class !android.support.**, !com.google.ads.**, !com.google.android.gms.**, !com.google.common.**  { *; }
 
 # Ignore notes about reflection use in support library
 -dontnote android.support.**
