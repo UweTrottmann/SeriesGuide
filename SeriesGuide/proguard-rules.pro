@@ -9,42 +9,51 @@
 
 # Currently no need to obfuscate anything
 -dontobfuscate
-
 # Output unused code so we may optimize it
 -printusage unused.txt
-
-# Keep source file and line numbers for better crash logs
--keepattributes SourceFile,LineNumberTable
-
-# Avoid throws declarations getting removed from retrofit service definitions
--keepattributes Exceptions
-
-# Only shrink specific packages
-# Android Support libaries
-# Google Play services (also brings its own proguard config)
-# Guava, added through google-api-client-android
--keep class !android.support.**, !com.google.ads.**, !com.google.android.gms.**, !com.google.common.**  { *; }
 
 # Ignore notes about reflection use in support library
 -dontnote android.support.**
 
-# Ignore some warnings
+# Do not shrink any of this apps code (unused code should be deleted instead)
+-keep class com.battlelancer.** { *; }
+# Do not shrink any of our own libraries
+-keep class com.uwetrottmann.** { *; }
+
 # Amazon IAP library
 -dontwarn com.amazon.**
+-keep class com.amazon.** { *; }
+#-keepattributes *Annotation* // already in default config
 
-# ButterKnife
+# ButterKnife 7
 -dontwarn butterknife.internal.**
+
+-keep class butterknife.** { *; }
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+# Crashlytics 2.+
+-keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.android.**
+-keepattributes SourceFile, LineNumberTable
+#-keepattributes *Annotation* // already in default config
+
+# EventBus
+# Keep onEvent methods
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
 
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
 # Gson specific classes
 -dontwarn sun.misc.Unsafe
-
-# joda-time has some annotations we don't care about.
--dontwarn org.joda.convert.**
-# due to using joda-time-android tz data is included differently
--dontwarn org.joda.time.tz.**
 
 # OkHttp
 -dontwarn com.squareup.okhttp.internal.**
@@ -73,7 +82,6 @@
 -dontwarn rx.**
 
 -keep class retrofit.** { *; }
-
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }
@@ -82,10 +90,14 @@
 -dontwarn retrofit2.**
 
 -keep class retrofit2.** { *; }
-
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
+
+# Avoid throws declarations getting removed from retrofit service definitions.
+-keepattributes Exceptions
+# If your rest service methods throw custom exceptions, because you've defined an ErrorHandler.
+-keepattributes Signature
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
