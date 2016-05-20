@@ -17,8 +17,14 @@
 
 # Do not shrink any of this apps code (unused code should be deleted instead)
 -keep class com.battlelancer.** { *; }
-# Do not shrink any of our own libraries
--keep class com.uwetrottmann.** { *; }
+
+# Cloud Endpoints libraries
+# Needed to keep generic types and @Key annotations accessed via reflection
+-keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
+
+-keepclassmembers class * {
+  @com.google.api.client.util.Key <fields>;
+}
 
 # Amazon IAP library
 -dontwarn com.amazon.**
