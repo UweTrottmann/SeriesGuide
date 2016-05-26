@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should
@@ -78,13 +77,6 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         int NUMBER = 1;
         int EPISODE_TITLE = 2;
         int SHOW_TITLE = 3;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), "Show Check-In Dialog");
     }
 
     @Override

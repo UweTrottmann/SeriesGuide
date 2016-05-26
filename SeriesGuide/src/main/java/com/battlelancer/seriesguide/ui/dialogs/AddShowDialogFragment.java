@@ -207,13 +207,6 @@ public class AddShowDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), "Add Dialog");
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 

@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 
 /**
@@ -87,12 +86,6 @@ public class RateDialogFragment extends DialogFragment {
         f.setArguments(args);
 
         return f;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Rate Dialog");
     }
 
     @NonNull

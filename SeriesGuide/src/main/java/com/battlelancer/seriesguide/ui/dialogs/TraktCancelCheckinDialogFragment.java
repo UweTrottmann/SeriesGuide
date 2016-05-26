@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.traktapi.Response;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import de.greenrobot.event.EventBus;
@@ -60,12 +59,6 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         f.setArguments(traktTaskData);
         f.mWait = waitInMinutes;
         return f;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Cancel Check-In Dialog");
     }
 
     @NonNull

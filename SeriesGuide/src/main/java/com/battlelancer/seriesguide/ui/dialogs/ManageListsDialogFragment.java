@@ -52,7 +52,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -205,12 +204,6 @@ public class ManageListsDialogFragment extends DialogFragment implements
         mListView.setAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Manage Lists Dialog");
     }
 
     @Override
