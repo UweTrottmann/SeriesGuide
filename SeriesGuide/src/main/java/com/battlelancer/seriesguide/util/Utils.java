@@ -368,15 +368,6 @@ public class Utils {
     }
 
     /**
-     * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
-     */
-    public static void trackView(Context context, String screenName) {
-        Tracker tracker = Analytics.getTracker(context);
-        tracker.setScreenName(screenName);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
-
-    /**
      * Track a custom event that does not fit the {@link #trackAction(android.content.Context,
      * String, String)}, {@link #trackContextMenu(android.content.Context, String, String)} or
      * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important

@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Provides a user interface to connect or create a trakt account.
@@ -80,7 +79,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         super.onStart();
 
         updateViews();
-        Utils.trackView(getActivity(), "Connect Trakt Credentials");
     }
 
     private void updateViews() {

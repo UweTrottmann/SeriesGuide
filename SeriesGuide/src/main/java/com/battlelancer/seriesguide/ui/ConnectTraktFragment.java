@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Tells about trakt and how it integrates with SeriesGuide, allows to proceed to entering
@@ -72,11 +71,5 @@ public class ConnectTraktFragment extends Fragment {
         // show hexagon + trakt conflict warning
         getView().findViewById(R.id.textViewTraktInfoHexagonWarning)
                 .setVisibility(HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Connect Trakt Intro");
     }
 }
