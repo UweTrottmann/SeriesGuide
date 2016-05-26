@@ -254,6 +254,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
                 ParcelFileDescriptor pfd = context.getContentResolver()
                         .openFileDescriptor(backupFileUri, "w");
+                if (pfd == null) {
+                    return ERROR_FILE_ACCESS;
+                }
                 FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
 
                 if (type == BACKUP_SHOWS) {

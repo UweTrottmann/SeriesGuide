@@ -51,7 +51,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import timber.log.Timber;
@@ -214,6 +213,10 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 pfd = context.getContentResolver().openFileDescriptor(backupFileUri, "r");
             } catch (FileNotFoundException | SecurityException e) {
                 Timber.e(e, "Backup file not found.");
+                return ERROR_FILE_ACCESS;
+            }
+            if (pfd == null) {
+                Timber.e("File descriptor is null.");
                 return ERROR_FILE_ACCESS;
             }
 
@@ -510,38 +513,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         };
     }
 
-    private int importLists(File importPath) {
-        File backupLists = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_LISTS);
-        if (!backupLists.exists() || !backupLists.canRead()) {
-            // Skip lists if the file is not accessible
-            return SUCCESS;
-        }
-
-        // Access JSON from backup folder to create new database
-        try {
-            InputStream in = new FileInputStream(backupLists);
-
-            Gson gson = new Gson();
-
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                List list = gson.fromJson(reader, List.class);
-                addListToDatabase(list);
-            }
-
-            reader.endArray();
-            reader.close();
-        } catch (JsonParseException | IOException | IllegalStateException e) {
-            // the given Json might not be valid or unreadable
-            Timber.e(e, "JSON lists import failed");
-            return ERROR;
-        }
-
-        return SUCCESS;
-    }
-
     private void addListToDatabase(List list) {
         // Insert the list
         ContentValues values = new ContentValues();
@@ -579,39 +550,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         ContentValues[] itemsArray = new ContentValues[items.size()];
         context.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
-    }
-
-    private int importMovies(File importPath) {
-        context.getContentResolver().delete(Movies.CONTENT_URI, null, null);
-        File backupMovies = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
-        if (!backupMovies.exists() || !backupMovies.canRead()) {
-            // Skip movies if the file is not available
-            return SUCCESS;
-        }
-
-        // Access JSON from backup folder to create new database
-        try {
-            InputStream in = new FileInputStream(backupMovies);
-
-            Gson gson = new Gson();
-
-            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                Movie movie = gson.fromJson(reader, Movie.class);
-                addMovieToDatabase(movie);
-            }
-
-            reader.endArray();
-            reader.close();
-        } catch (JsonParseException | IOException | IllegalStateException e) {
-            // the given Json might not be valid or unreadable
-            Timber.e(e, "JSON movies import failed");
-            return ERROR;
-        }
-
-        return SUCCESS;
     }
 
     private void addMovieToDatabase(Movie movie) {
