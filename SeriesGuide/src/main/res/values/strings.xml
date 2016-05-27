@@ -60,6 +60,7 @@
     <string name="share_checkout">Check out %s</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
+    <string name="links">Links</string>
 
     <!-- Comments -->
     <string name="comments">Comments</string>
