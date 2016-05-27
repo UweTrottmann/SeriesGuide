@@ -60,8 +60,9 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.entities.Videos;
+import com.uwetrottmann.tmdb2.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
 
@@ -319,7 +320,7 @@ public class MovieDetailsFragment extends Fragment {
          * Get everything from TMDb. Also get additional rating from trakt.
          */
         final Ratings traktRatings = mMovieDetails.traktRatings();
-        final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        final Movie tmdbMovie = mMovieDetails.tmdbMovie();
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
         final boolean isWatched = mMovieDetails.isWatched;

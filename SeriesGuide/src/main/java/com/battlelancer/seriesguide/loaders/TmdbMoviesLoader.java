@@ -20,15 +20,16 @@ import android.content.Context;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.Tmdb;
-import com.uwetrottmann.tmdb.entities.Movie;
-import com.uwetrottmann.tmdb.entities.MovieResultsPage;
+import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
+import java.io.IOException;
 import java.util.List;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import retrofit2.Response;
 
 /**
  * Loads a list of movies from TMDb.
@@ -58,22 +59,32 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         List<Movie> results = null;
-
+        String action = null;
         try {
-            MovieResultsPage page;
+            Response<MovieResultsPage> response;
 
             if (TextUtils.isEmpty(mQuery)) {
-                page = tmdb.moviesService().nowPlaying(null, languageCode);
+                action = "get now playing movies";
+                response = tmdb.moviesService()
+                        .nowPlaying(null, languageCode)
+                        .execute();
             } else {
-                page = tmdb.searchService()
-                        .movie(mQuery, null, languageCode, false, null, null, null);
+                action = "search for movies";
+                response = tmdb.searchService()
+                        .movie(mQuery, null, languageCode, false, null, null, null)
+                        .execute();
             }
 
-            if (page != null) {
-                results = page.results;
+            if (response.isSuccessful()) {
+                MovieResultsPage page = response.body();
+                if (page != null) {
+                    results = page.results;
+                }
+            } else {
+                SgTmdb.trackFailedRequest(getContext(), action, response);
             }
-        } catch (RetrofitError e) {
-            Timber.e(e, "Loading movies from TMDb failed.");
+        } catch (IOException e) {
+            SgTmdb.trackFailedRequest(getContext(), action, e);
             // only check for connection here to allow hitting the response cache
             return new Result(null,
                     AndroidUtils.isNetworkConnected(getContext()) ? R.string.search_error

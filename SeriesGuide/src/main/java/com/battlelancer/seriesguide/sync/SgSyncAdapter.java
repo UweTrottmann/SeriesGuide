@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -51,17 +52,19 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb.entities.Configuration;
+import com.uwetrottmann.tmdb2.entities.Configuration;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import retrofit.RetrofitError;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -260,7 +263,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         final boolean syncImmediately = extras.getBoolean(SyncInitBundle.SYNC_IMMEDIATE, false);
         final SyncType syncType = SyncType.from(
                 extras.getInt(SyncInitBundle.SYNC_TYPE, SyncType.DELTA.id));
-        Timber.i("Syncing..." + syncType + (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
+        Timber.i("Syncing...%s%s", syncType, (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
@@ -401,7 +404,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // There could have been new episodes added after an update
         Utils.runNotificationService(getContext());
 
-        Timber.i("Syncing..." + resultCode.toString());
+        Timber.i("Syncing...%s", resultCode.toString());
     }
 
     /**
@@ -439,16 +442,22 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
         try {
-            Configuration config = ServiceUtils.getTmdb(context)
-                    .configurationService().configuration();
-            if (config != null && config.images != null
-                    && !TextUtils.isEmpty(config.images.secure_base_url)) {
-                prefs.edit()
-                        .putString(TmdbSettings.KEY_TMDB_BASE_URL, config.images.secure_base_url)
-                        .apply();
+            Response<Configuration> response = ServiceUtils.getTmdb(context)
+                    .configurationService().configuration().execute();
+            if (response.isSuccessful()) {
+                Configuration config = response.body();
+                if (config != null && config.images != null
+                        && !TextUtils.isEmpty(config.images.secure_base_url)) {
+                    prefs.edit()
+                            .putString(TmdbSettings.KEY_TMDB_BASE_URL,
+                                    config.images.secure_base_url)
+                            .apply();
+                }
+            } else {
+                SgTmdb.trackFailedRequest(context, "get config", response);
             }
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading TMDb config failed");
+        } catch (IOException e) {
+            SgTmdb.trackFailedRequest(context, "get config", e);
         }
     }
 
@@ -585,7 +594,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
-        Timber.d("performTraktEpisodeSync: success, last sync at " + currentTime);
+        Timber.d("performTraktEpisodeSync: success, last sync at %s", currentTime);
 
         editor.commit();
 

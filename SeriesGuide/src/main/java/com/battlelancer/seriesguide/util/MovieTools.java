@@ -24,8 +24,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -33,6 +35,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
@@ -43,7 +46,8 @@ import com.battlelancer.seriesguide.util.tasks.SetMovieWatchedTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
-import com.uwetrottmann.tmdb.services.MoviesService;
+import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
@@ -68,6 +72,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import retrofit.RetrofitError;
+import retrofit2.Response;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
@@ -105,7 +110,7 @@ public class MovieTools {
                                 + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
                                 + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST,
                         null);
-        Timber.d("deleteUnusedMovies: removed " + rowsDeleted + " movies");
+        Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
@@ -262,7 +267,8 @@ public class MovieTools {
             values.put(SeriesGuideContract.Movies.POSTER, details.tmdbMovie().poster_path);
             values.put(SeriesGuideContract.Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
             values.put(SeriesGuideContract.Movies.RATING_TMDB, details.tmdbMovie().vote_average);
-            values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, details.tmdbMovie().vote_count);
+            values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB,
+                    details.tmdbMovie().vote_count);
             // if there is no release date, store Long.MAX as it is likely in the future
             // also helps correctly sorting movies by release date
             Date releaseDate = details.tmdbMovie().release_date;
@@ -397,7 +403,7 @@ public class MovieTools {
         int rowsDeleted = context.getContentResolver()
                 .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
                         SeriesGuideContract.Movies.SELECTION_UNWATCHED, null);
-        Timber.d("deleteMovieIfUnwatched: deleted " + rowsDeleted + " movie");
+        Timber.d("deleteMovieIfUnwatched: deleted %s movies", rowsDeleted);
         return rowsDeleted > 0;
     }
 
@@ -447,7 +453,7 @@ public class MovieTools {
             }
 
             if (hasMergedMovies) {
-                Timber.d("fromHexagon: downloading movies changed since " + lastSyncTime);
+                Timber.d("fromHexagon: downloading movies changed since %s", lastSyncTime);
             } else {
                 Timber.d("fromHexagon: downloading all movies");
             }
@@ -663,7 +669,7 @@ public class MovieTools {
             // apply collection and watchlist updates to existing movies
             try {
                 DBUtils.applyInSmallBatches(context, batch);
-                Timber.d("syncMoviesWithTrakt: updated " + batch.size());
+                Timber.d("syncMoviesWithTrakt: updated %s", batch.size());
             } catch (OperationApplicationException e) {
                 Timber.e(e, "syncMoviesWithTrakt: database updates failed");
                 return UpdateResult.INCOMPLETE;
@@ -729,8 +735,8 @@ public class MovieTools {
         public static UpdateResult addMovies(@NonNull Context context,
                 @NonNull Set<Integer> newCollectionMovies,
                 @NonNull Set<Integer> newWatchlistMovies) {
-            Timber.d("addMovies: " + newCollectionMovies.size() + " to collection, "
-                    + newWatchlistMovies.size() + " to watchlist");
+            Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
+                    newWatchlistMovies.size());
 
             // build a single list of tmdb ids
             Set<Integer> newMovies = new HashSet<>();
@@ -757,11 +763,11 @@ public class MovieTools {
                 }
 
                 // download movie data
-                MovieDetails movieDetails = getMovieDetails(traktSearch, traktMovies, tmdbMovies,
-                        languageCode, tmdbId);
+                MovieDetails movieDetails = getMovieDetails(context, traktSearch, traktMovies,
+                        tmdbMovies, languageCode, tmdbId);
                 if (movieDetails.tmdbMovie() == null) {
                     // skip if minimal values failed to load
-                    Timber.d("addMovies: downloaded movie " + tmdbId + " incomplete, skipping");
+                    Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
                     continue;
                 }
 
@@ -787,9 +793,7 @@ public class MovieTools {
 
         /**
          * Download movie data from trakt and TMDb. If you plan on calling this multiple times, use
-         * {@link #getMovieDetails(com.uwetrottmann.trakt.v2.services.Search,
-         * com.uwetrottmann.trakt.v2.services.Movies, com.uwetrottmann.tmdb.services.MoviesService,
-         * String, int)} instead.
+         * {@link #getMovieDetails(Context, Search, Movies, MoviesService, String, int)} instead.
          */
         public static MovieDetails getMovieDetails(Context context, int movieTmdbId) {
             // trakt
@@ -801,7 +805,8 @@ public class MovieTools {
             MoviesService tmdbMovies = ServiceUtils.getTmdb(context).moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
 
-            return getMovieDetails(traktSearch, traktMovies, tmdbMovies, languageCode, movieTmdbId);
+            return getMovieDetails(context, traktSearch, traktMovies, tmdbMovies, languageCode,
+                    movieTmdbId);
         }
 
         /**
@@ -810,8 +815,9 @@ public class MovieTools {
          * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on
          * auth errors.
          */
-        public static MovieDetails getMovieDetails(Search traktSearch, Movies traktMovies,
-                MoviesService tmdbMovies, String languageCode, int movieTmdbId) {
+        public static MovieDetails getMovieDetails(Context context, Search traktSearch,
+                Movies traktMovies, MoviesService tmdbMovies, String languageCode,
+                int movieTmdbId) {
             MovieDetails details = new MovieDetails();
 
             // load ratings from trakt
@@ -821,7 +827,7 @@ public class MovieTools {
             }
 
             // load summary from tmdb
-            details.tmdbMovie(loadSummaryFromTmdb(tmdbMovies, languageCode, movieTmdbId));
+            details.tmdbMovie(loadSummaryFromTmdb(context, tmdbMovies, languageCode, movieTmdbId));
 
             return details;
         }
@@ -835,29 +841,48 @@ public class MovieTools {
             }
         }
 
-        private static com.uwetrottmann.tmdb.entities.Movie loadSummaryFromTmdb(
+        @Nullable
+        private static com.uwetrottmann.tmdb2.entities.Movie loadSummaryFromTmdb(Context context,
                 MoviesService moviesService, String languageCode, int movieTmdbId) {
-            try {
-                com.uwetrottmann.tmdb.entities.Movie movie = moviesService.summary(movieTmdbId,
-                        languageCode, null);
-                if (movie != null && TextUtils.isEmpty(movie.overview)) {
-                    // fall back to English if TMDb has no localized text
-                    movie = moviesService.summary(movieTmdbId, null, null);
-                }
+            // try to get local movie summary
+            Movie movie = getMovieSummary(context, moviesService, "get local movie summary",
+                    languageCode, movieTmdbId);
+            if (movie != null && !TextUtils.isEmpty(movie.overview)) {
                 return movie;
-            } catch (RetrofitError e) {
-                Timber.e(e, "Loading TMDb movie summary failed");
-                return null;
             }
+
+            // fall back to default language if TMDb has no localized text
+            movie = getMovieSummary(context, moviesService, "get default movie summary", null,
+                    movieTmdbId);
+            if (movie != null) {
+                // add note about non-translated or non-existing overview
+                String untranslatedOverview = movie.overview;
+                movie.overview = context.getString(R.string.no_translation,
+                        LanguageTools.getLanguageStringForCode(context, languageCode),
+                        context.getString(R.string.tmdb));
+                if (!TextUtils.isEmpty(untranslatedOverview)) {
+                    movie.overview += "\n\n" + untranslatedOverview;
+                }
+            }
+            return movie;
         }
 
-        private static void buildMovieDeleteOps(Set<Integer> moviesToRemove,
-                ArrayList<ContentProviderOperation> batch) {
-            for (Integer movieTmdbId : moviesToRemove) {
-                ContentProviderOperation op = ContentProviderOperation
-                        .newDelete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId)).build();
-                batch.add(op);
+        @Nullable
+        private static Movie getMovieSummary(@NonNull Context context,
+                @NonNull MoviesService moviesService, @NonNull String action,
+                @Nullable String language, int movieTmdbId) {
+            try {
+                Response<Movie> response = moviesService.summary(movieTmdbId, language, null)
+                        .execute();
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else {
+                    SgTmdb.trackFailedRequest(context, action, response);
+                }
+            } catch (IOException e) {
+                SgTmdb.trackFailedRequest(context, action, e);
             }
+            return null;
         }
     }
 
@@ -996,9 +1021,8 @@ public class MovieTools {
                 return UpdateResult.INCOMPLETE;
             }
 
-            Timber.d("toTrakt: success, uploaded "
-                    + moviesToCollect.size() + " to collection, "
-                    + moviesToWatchlist.size() + " to watchlist");
+            Timber.d("toTrakt: success, uploaded %s to collection, %s to watchlist",
+                    moviesToCollect.size(), moviesToWatchlist.size());
             return UpdateResult.SUCCESS;
         }
     }

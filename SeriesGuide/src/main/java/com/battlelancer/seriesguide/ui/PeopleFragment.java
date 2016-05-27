@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Credits;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 /**

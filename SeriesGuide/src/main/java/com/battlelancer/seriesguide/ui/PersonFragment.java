@@ -41,7 +41,7 @@ import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb.entities.Person;
+import com.uwetrottmann.tmdb2.entities.Person;
 
 /**
  * Displays details about a crew or cast member and their work.
