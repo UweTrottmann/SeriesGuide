@@ -61,12 +61,6 @@
 # Gson specific classes
 -dontwarn sun.misc.Unsafe
 
-# OkHttp
--dontwarn com.squareup.okhttp.internal.**
-
--keep class com.squareup.okhttp.** { *; }
--keep interface com.squareup.okhttp.** { *; }
-
 # OkHttp 3
 -dontwarn okhttp3.**
 
@@ -82,6 +76,10 @@
 -dontwarn javax.servlet.http.**
 -dontwarn org.slf4j.**
 -dontwarn org.json.**
+
+# Picasso
+# Using with OkHttp 3 downloader, but has references to OkHttp2
+-dontwarn com.squareup.picasso.OkHttpDownloader
 
 # Retrofit 1.X
 -dontwarn retrofit.**
