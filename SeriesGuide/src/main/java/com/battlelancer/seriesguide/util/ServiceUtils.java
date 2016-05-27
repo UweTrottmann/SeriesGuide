@@ -36,6 +36,8 @@ import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
@@ -95,6 +97,7 @@ public final class ServiceUtils {
     private static TraktV2 traktV2WithAuth;
 
     private static Tmdb tmdb;
+    private static com.uwetrottmann.tmdb2.Tmdb tmdb2;
 
     /* This class is never initialized */
     private ServiceUtils() {
@@ -110,6 +113,7 @@ public final class ServiceUtils {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            builder.addInterceptor(new SgTmdbInterceptor(context));
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
             builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
@@ -197,6 +201,17 @@ public final class ServiceUtils {
             tmdb = new SgTmdb(context).setApiKey(BuildConfig.TMDB_API_KEY);
         }
         return tmdb;
+    }
+
+    /**
+     * Get a tmdb-java instance with our API key set.
+     */
+    @NonNull
+    public static synchronized com.uwetrottmann.tmdb2.Tmdb getTmdb2(Context context) {
+        if (tmdb2 == null) {
+            tmdb2 = new SgTmdb2(context, BuildConfig.TMDB_API_KEY);
+        }
+        return tmdb2;
     }
 
     /**
