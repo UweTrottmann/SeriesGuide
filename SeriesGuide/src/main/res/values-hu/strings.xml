@@ -54,6 +54,7 @@
   <string name="share_checkout">Nézd meg: %s</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>

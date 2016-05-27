@@ -54,6 +54,7 @@
   <string name="share_checkout">Empfehle %s</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentare</string>
   <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>

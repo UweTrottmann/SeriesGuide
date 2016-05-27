@@ -54,6 +54,7 @@
   <string name="share_checkout">Check out %s</string>
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">評論</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>

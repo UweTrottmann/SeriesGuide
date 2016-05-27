@@ -54,6 +54,7 @@
   <string name="share_checkout">Tsekkaa %s</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentit</string>
   <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>

@@ -55,6 +55,7 @@
   <string name="share_checkout">Kolla in %s</string>
   <string name="addtocalendar">Lägg till i kalendern</string>
   <string name="addtocalendar_failed">Kan inte lägga till i kalendern. </string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>

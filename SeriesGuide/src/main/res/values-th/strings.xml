@@ -54,6 +54,7 @@
   <string name="share_checkout">ลองดู %s</string>
   <string name="addtocalendar">เพิ่มในปฏิทิน</string>
   <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">ความคิดเห็น</string>
   <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>

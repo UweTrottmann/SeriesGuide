@@ -54,6 +54,7 @@
   <string name="share_checkout">Odjava %s</string>
   <string name="addtocalendar">Dodaj u kalendar</string>
   <string name="addtocalendar_failed">Ne mogu stvoriti događaj u kalendaru.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentari</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>

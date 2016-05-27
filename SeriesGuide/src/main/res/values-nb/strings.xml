@@ -54,6 +54,7 @@
   <string name="share_checkout">Sjekk ut %s</string>
   <string name="addtocalendar">Legg til i kalender</string>
   <string name="addtocalendar_failed">Kan ikke opprette en kalenderhendelse.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar på engelsk. (Minst 5 ord)</string>

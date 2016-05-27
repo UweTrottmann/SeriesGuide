@@ -54,6 +54,7 @@
   <string name="share_checkout">Κάντε Check out για το %s</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Σχόλια</string>
   <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>

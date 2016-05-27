@@ -54,6 +54,7 @@
   <string name="share_checkout">בדוק את %s</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">תגובות</string>
   <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>

@@ -54,6 +54,7 @@
   <string name="share_checkout">Şuna gözatın: %s</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Yorumlar</string>
   <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>

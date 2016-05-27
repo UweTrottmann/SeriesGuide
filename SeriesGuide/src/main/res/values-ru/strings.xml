@@ -54,6 +54,7 @@
   <string name="share_checkout">Проверить %s</string>
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Комментарии</string>
   <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>

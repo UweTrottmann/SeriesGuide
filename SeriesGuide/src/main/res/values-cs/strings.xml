@@ -54,6 +54,7 @@
   <string name="share_checkout">Čekuj %s</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
   <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentáře</string>
   <string name="shout_hint">Napište komentář (andlicky,5 a více slov)</string>

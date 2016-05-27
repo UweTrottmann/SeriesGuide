@@ -54,6 +54,7 @@
   <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">نظرها</string>
   <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>

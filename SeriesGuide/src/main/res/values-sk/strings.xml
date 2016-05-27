@@ -54,6 +54,7 @@
   <string name="share_checkout">Odhlásiť %s</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentáre</string>
   <string name="shout_hint">Napíšte komentár (Anglicky, 5 a viac slov)</string>

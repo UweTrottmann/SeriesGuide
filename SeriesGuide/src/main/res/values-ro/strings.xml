@@ -54,6 +54,7 @@
   <string name="share_checkout">Verifica %s</string>
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Comentarii</string>
   <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>

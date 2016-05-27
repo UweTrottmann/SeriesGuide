@@ -54,6 +54,7 @@
   <string name="share_checkout">Uitchecken %s</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Reacties</string>
   <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>

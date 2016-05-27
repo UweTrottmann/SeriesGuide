@@ -54,6 +54,7 @@
   <string name="share_checkout">تتحق من %s</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>

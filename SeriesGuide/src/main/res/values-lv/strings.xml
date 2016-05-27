@@ -54,6 +54,7 @@
   <string name="share_checkout">Iečeko %s</string>
   <string name="addtocalendar">Pievienot kalendāram</string>
   <string name="addtocalendar_failed">Nevar radīt kalendāru pasākumu.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentāri</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>

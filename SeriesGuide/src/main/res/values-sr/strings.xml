@@ -54,6 +54,7 @@
   <string name="share_checkout">Погледај %s</string>
   <string name="addtocalendar">Додај у календар</string>
   <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Коментари</string>
   <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>

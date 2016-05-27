@@ -54,6 +54,7 @@
   <string name="share_checkout">Peržiūrėti %s</string>
   <string name="addtocalendar">Pridėti į kalendorių</string>
   <string name="addtocalendar_failed">Negalima sukurti kalendoriaus įvykio.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentarai</string>
   <string name="shout_hint">Įveskite komentarą (Lietuvių, 5 + žodžiai)</string>

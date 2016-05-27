@@ -54,6 +54,7 @@
   <string name="share_checkout">Dóna un cop d\'ull a %s</string>
   <string name="addtocalendar">Afegeix al calendari</string>
   <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Comentaris</string>
   <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
