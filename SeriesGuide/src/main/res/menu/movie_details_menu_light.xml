@@ -21,12 +21,12 @@
 
     <item
         android:id="@+id/menu_open_youtube"
-        android:icon="@drawable/ic_action_movie_inverse"
+        android:icon="@drawable/ic_movie_black_24dp"
         android:title="@string/trailer"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_movie_share"
-        android:icon="@drawable/ic_action_share_inverse"
+        android:icon="@drawable/ic_share_black_24dp"
         android:title="@string/share_movie"
         app:showAsAction="ifRoom" />
     <item

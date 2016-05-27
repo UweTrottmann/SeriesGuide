@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/menu_open_youtube"
-        android:icon="@drawable/ic_action_movie"
+        android:icon="@drawable/ic_movie_white_24dp"
         android:title="@string/trailer"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_movie_share"
-        android:icon="@drawable/ic_action_share"
+        android:icon="@drawable/ic_share_white_24dp"
         android:title="@string/share_movie"
         app:showAsAction="ifRoom" />
     <item
