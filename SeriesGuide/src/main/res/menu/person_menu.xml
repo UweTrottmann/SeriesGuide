@@ -20,12 +20,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_action_person_tmdb"
-        android:title="@string/tmdb"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_action_person_web_search"
-        android:title="@string/web_search"
-        app:showAsAction="never" />
+        android:id="@+id/menu_person_links"
+        android:icon="@drawable/ic_explore_white_24dp"
+        android:title="@string/links"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_action_person_tmdb"
+                android:title="@string/tmdb"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_action_person_web_search"
+                android:title="@string/web_search"
+                app:showAsAction="never" />
+        </menu>
+    </item>
 
 </menu>
