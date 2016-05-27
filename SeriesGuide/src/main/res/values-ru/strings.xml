@@ -8,7 +8,7 @@
   <string name="statistics">Статистика</string>
   <string name="search">Поиск</string>
   <string name="preferences">Настройки</string>
-  <string name="help">Справка</string>
+  <string name="help">Помощь</string>
   <string name="help_and_feedback">Помощь и обратная связь</string>
   <string name="drawer_open">Открыть навигационную панель</string>
   <string name="drawer_close">Закрыть навигационную панель</string>
@@ -70,7 +70,7 @@
   <!-- Metadata -->
   <string name="episode_number_absolute">НОМЕР</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Дата выпуска</string>
+  <string name="episode_firstaired">Дата выхода</string>
   <string name="episode_firstaired_unknown">Дата выхода неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актёры</string>
@@ -142,7 +142,7 @@
   <string name="now_tab">Сейчас</string>
   <string name="recently_watched">Недавно просмотренные</string>
   <string name="released_today">Вышедшие сегодня</string>
-  <string name="friends_recently">Ваши Trakt друзья</string>
+  <string name="friends_recently">Ваши друзья с Trakt</string>
   <string name="now_empty">Ничего нового. Посмотрите другие сериалы!</string>
   <string name="now_movies_empty">Ничего нового. Посмотрите несколько фильмов!</string>
   <!-- History -->
@@ -230,12 +230,12 @@
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
     <item quantity="few">%d hours</item>
-    <item quantity="other">%d часов</item>
+    <item quantity="other">%d часа/часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
     <item quantity="few">%d minutes</item>
-    <item quantity="other">%d минут</item>
+    <item quantity="other">%d минут/минуты</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
@@ -303,7 +303,7 @@
   <plurals name="votes">
     <item quantity="one">%d голос</item>
     <item quantity="few">%d votes</item>
-    <item quantity="other">%d голосов</item>
+    <item quantity="other">%d голоса/ов</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Отметить</string>
@@ -334,9 +334,9 @@
   <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
   <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Это приложение использует данные и картинки сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
-  <string name="licence_trakt">Это приложение использует данные и картинки сервиса Trakt.</string>
+  <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
   <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>
   <string name="licences_and_credits">Лицензии и кредиты</string>
   <!-- Sort -->
@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Смещение времени эфира на %s часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
-  <string name="pref_ganalyticssummary">Отслеживать использование функций приложения, чтобы улучшить SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включить все данные: описания, актеры и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>

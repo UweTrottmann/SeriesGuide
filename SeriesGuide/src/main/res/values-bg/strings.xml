@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Преместване на часовете за излъчване с %s часа</string>
   <string name="clear_cache">Изчисти кеша на изображенията</string>
   <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-  <string name="pref_ganalyticssummary">Записва данни за използването, с цел подобряване на SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
   <string name="backup_path">Папка за архивиране</string>

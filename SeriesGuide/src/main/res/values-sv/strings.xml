@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
-  <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>

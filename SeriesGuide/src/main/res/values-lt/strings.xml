@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val.</string>
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
-  <string name="pref_ganalyticssummary">Seka funkcijų naudojimą, siekiant pagerint SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>

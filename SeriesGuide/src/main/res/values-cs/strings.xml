@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Posunout vysílací čas o %s hodin</string>
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
-  <string name="pref_ganalyticssummary">Sledovat užívání aplikace pro zlepšování SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnout také metadata jako popisy, herci nebo hodnocení.</string>
   <string name="backup_path">Složka se zálohou</string>

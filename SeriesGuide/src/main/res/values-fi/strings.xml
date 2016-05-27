@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
-  <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Sisällytä kaikki metatiedot, kuten kuvaukset, näyttelijät ja arvosanat.</string>
   <string name="backup_path">Varmuuskopiokansio</string>
@@ -453,7 +453,7 @@
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia</string>
-  <string name="billing_learn_more">Miksi maksaisit? Opi lisää.</string>
+  <string name="billing_learn_more">Miksi maksaisit? Lue lisää.</string>
   <string name="subscription_expired">Tilaus vanhentunut</string>
   <string name="subscription_expired_details">X-ominaisuustilauksesi on vanhentunut.</string>
   <!-- Amazon In-App Billing -->

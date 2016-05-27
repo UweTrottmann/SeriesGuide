@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Compensare timp de difuzare cu %s ore</string>
   <string name="clear_cache">Șterge imaginile din cache</string>
   <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
-  <string name="pref_ganalyticssummary">Urmărește utilizarea opțiunilor pentru a ajuta la îmbunătățirea SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include toate detaliile ca descrieri, actori și evaluări.</string>
   <string name="backup_path">Fișier de arhive</string>

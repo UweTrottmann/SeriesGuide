@@ -181,7 +181,7 @@
   <string name="recommended">توصیه می شود</string>
   <string name="watched_shows">تماشا شده</string>
   <string name="shows_collection">مجموعه</string>
-  <string name="watchlist">قهرست تماشا</string>
+  <string name="watchlist">فهرست تماشا</string>
   <!-- Lists -->
   <string name="first_list">فهرست نخست</string>
   <string name="list_add">افزودن فهرست</string>
@@ -196,7 +196,7 @@
   <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعه</string>
-  <string name="movies_watchlist">قهرست تماشا</string>
+  <string name="movies_watchlist">فهرست تماشا</string>
   <string name="watchlist_add">افزودن به فهرست تماشا</string>
   <string name="watchlist_remove">حذف از فهرست تماشا</string>
   <string name="watchlist_added">به فهرست تماشا افزوده شد</string>
@@ -368,7 +368,7 @@
   <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %s ساعت</string>
   <string name="clear_cache">پاک سازی انباره‌های تصویر</string>
   <string name="clear_cache_summary">برداشتن تمام تصویرهای انبار شده از افزاره‌تان</string>
-  <string name="pref_ganalyticssummary">استفاده از ویژگی‌ها را برای کمک به بهبود سریزگاید، درگیری می‌کند</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">گنجاندن تمامی فراداده‌ها چون توضیحات، بازیگران و نمره‌ها.</string>
   <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>

@@ -368,7 +368,7 @@
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除所有节目的截图和海报</string>
-  <string name="pref_ganalyticssummary">发送匿名的使用情况报告</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
   <string name="backup_path">备份/还原数据库的路径</string>

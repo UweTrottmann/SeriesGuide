@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
   <string name="clear_cache">Usuń bufor obrazów</string>
   <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-  <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Uwzględnij wszystkie meta dane, takie jak opisy, aktorzy i oceny.</string>
   <string name="backup_path">Folder kopii zapasowej</string>

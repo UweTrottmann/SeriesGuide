@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %s ώρες</string>
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-  <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Περιλαμβάνει όλα τα μετα-δεδομένα όπως περιγραφές, ηθοποιούς και βαθμολογίες.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>

@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Pas uitzendtijd aan met %s uren</string>
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
-  <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
   <string name="backup_path">Back-upmap</string>

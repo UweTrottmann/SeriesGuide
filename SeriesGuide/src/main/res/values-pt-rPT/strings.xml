@@ -88,7 +88,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Mais</string>
   <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Por traduzir</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -194,9 +194,9 @@
   <string name="list_empty">Podes adicionar séries, temporadas ou episódios a esta lista.</string>
   <string name="action_lists_sort">Ordenar listas</string>
   <string name="action_lists_reorder">Reordenar listas</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Uma lista com este nome já existe</string>
   <!-- Movies -->
-  <string name="movies_collection">Colecção</string>
+  <string name="movies_collection">Coleção</string>
   <string name="movies_watchlist">Desejo Ver</string>
   <string name="watchlist_add">Adicionar aos que desejo ver</string>
   <string name="watchlist_remove">Apagar dos que desejo ver</string>
@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Equilibrar tempo da exibição por %s horas</string>
   <string name="clear_cache">Apagar imagens da Cache</string>
   <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
-  <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclui todos os meta-dados como descrições, actores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>

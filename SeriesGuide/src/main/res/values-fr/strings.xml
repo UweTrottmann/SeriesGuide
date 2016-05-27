@@ -33,7 +33,7 @@
   <string name="action_display_all">Afficher tout</string>
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Ouvert</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -88,7 +88,7 @@
   <string name="services_watch">Regarder</string>
   <string name="services_more">Plus</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Non traduit</string>
   <!-- Date and Time -->
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
@@ -194,7 +194,7 @@
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="action_lists_sort">Trier les listes</string>
   <string name="action_lists_reorder">Réorganiser les listes</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
   <!-- Movies -->
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Liste à voir</string>
@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Décalage de %s heures</string>
   <string name="clear_cache">Vider le cache d\'images</string>
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
-  <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
   <string name="backup_path">Dossier de sauvegarde</string>

@@ -368,7 +368,7 @@
   <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="clear_cache">清除圖片暫存檔</string>
   <string name="clear_cache_summary">從您的設備中刪除所有戰存的圖片</string>
-  <string name="pref_ganalyticssummary">紀錄追蹤功能以改善SeriesGuide和使用者的使用體驗</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">備份資料夾</string>

@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Nobīdīt raidlaikus %s stundas</string>
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
-  <string name="pref_ganalyticssummary">Saglabā datus par funkciju lietošanu, lai palīdzētu uzlabot SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>
   <string name="backup_path">Dublējuma mape</string>

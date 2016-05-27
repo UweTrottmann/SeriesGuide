@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Зсув ефірного часу на %s годин</string>
   <string name="clear_cache">Очистити кеш зображень</string>
   <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
-  <string name="pref_ganalyticssummary">Відслідковувати використання функцій, щоб допомогти покращити SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включити усі мета-дані такі як опис, актори та рейтинги.</string>
   <string name="backup_path">Папка Бекапа</string>

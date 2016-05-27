@@ -368,7 +368,7 @@
   <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %s ชั่วโมง</string>
   <string name="clear_cache">ลบแคชรูปภาพ</string>
   <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
-  <string name="pref_ganalyticssummary">ติดตามการใช้งานคุณสมบัติเพื่อปรับปรุง SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">รวมข้อมูลทั้งหมด เช่น รายละเอียด, นักแสดง และการจัดอันดับ</string>
   <string name="backup_path">โฟลเดอร์สำรองข้อมูล</string>

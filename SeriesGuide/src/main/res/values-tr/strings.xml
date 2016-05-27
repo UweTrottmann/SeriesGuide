@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
   <string name="clear_cache">Resim önbelleğini temizle</string>
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
-  <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
   <string name="backup_path">Yedekleme klasörü</string>

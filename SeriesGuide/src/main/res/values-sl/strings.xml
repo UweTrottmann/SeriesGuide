@@ -383,7 +383,7 @@
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
   <string name="clear_cache">Izbriši predp. slik</string>
   <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
-  <string name="pref_ganalyticssummary">Sledenje uporabe funkcij za izboljšanje SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup mapa</string>

@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-  <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>

@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
   <string name="clear_cache">Tøm hurtiglageret</string>
   <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
-  <string name="pref_ganalyticssummary">Overvåker bruken av funksjoner for å forbedre SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
   <string name="backup_path">Sikkerhetskopimappe</string>

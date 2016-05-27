@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-  <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">כלול את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
   <string name="backup_path">תיקיית גיבוי</string>

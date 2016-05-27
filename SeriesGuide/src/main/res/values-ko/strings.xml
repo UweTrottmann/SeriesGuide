@@ -170,7 +170,7 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
-  <string name="action_try_any_language">아무 언어나 시도</string>
+  <string name="action_try_any_language">모든 언어로 시도</string>
   <string name="action_try_again">재시도</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_all">모두 추가</string>
@@ -193,7 +193,7 @@
   <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
   <string name="action_lists_sort">목록 정렬</string>
   <string name="action_lists_reorder">목록 재정렬</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
   <!-- Movies -->
   <string name="movies_collection">컬렉션</string>
   <string name="movies_watchlist">관심목록</string>
@@ -368,7 +368,7 @@
   <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
   <string name="clear_cache">이미지 캐쉬 삭제</string>
   <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
-  <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">설명, 배우 및 등급과 같은 모든 메타데이터를 포함합니다.</string>
   <string name="backup_path">백업폴더</string>

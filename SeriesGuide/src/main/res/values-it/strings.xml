@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
   <string name="clear_cache">Rimuovi le immagini nella cache</string>
   <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
-  <string name="pref_ganalyticssummary">Tieni traccia del tipo di utilizzo per aiutare a migliorare SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Includere tutti i metadati come descrizioni, attori e voti.</string>
   <string name="backup_path">Cartella di Backup</string>

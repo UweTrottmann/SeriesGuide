@@ -378,7 +378,7 @@
   <string name="pref_offsetsummary">Razlika u emitiranju %s sati</string>
   <string name="clear_cache">Očisti predmemoriju slika</string>
   <string name="clear_cache_summary">Ukloni sve slike iz predmemorije tvog uređaja</string>
-  <string name="pref_ganalyticssummary">Prati korištenje mogućnosti zbog poboljšanja SeriesGuide-a</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Uključi sve meta-podatke kao što su opisi, glumci i ocjene.</string>
   <string name="backup_path">Mapa sigurnosne kopije</string>

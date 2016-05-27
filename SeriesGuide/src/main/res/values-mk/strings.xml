@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Опсег на временски %s саати</string>
   <string name="clear_cache">Избриши кеширани слики</string>
   <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
-  <string name="pref_ganalyticssummary">Го следи користењето на функции, за да се помогне во подобрувањето на SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Вклучи ги сите метаподатоци како описи, актери и рејтинзи.</string>
   <string name="backup_path">Фолдер за архивирање</string>

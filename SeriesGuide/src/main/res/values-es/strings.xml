@@ -88,7 +88,7 @@
   <string name="services_watch">Ver</string>
   <string name="services_more">Más</string>
   <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Sin traducir</string>
   <!-- Date and Time -->
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
@@ -226,7 +226,7 @@
     <item quantity="other">%d días</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
+    <item quantity="one">%d hora</item>
     <item quantity="other">%d horas</item>
   </plurals>
   <plurals name="minutes_plural">
@@ -374,7 +374,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_offsetsummary">Ajustar %s horas los tiempos de emisión</string>
   <string name="clear_cache">Limpiar el caché de imágenes</string>
   <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
-  <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Incluir todos los metadatos como descripciones, actores y calificaciones.</string>
   <string name="backup_path">Carpeta de respaldo</string>

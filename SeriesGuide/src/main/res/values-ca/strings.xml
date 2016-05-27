@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>
   <string name="clear_cache">Buida la memòria cau d\'imatges</string>
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
-  <string name="pref_ganalyticssummary">Recopila informació sobre la utilització de les diverses característiques per ajudar a millorar l\'aplicació</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclou tota la informació disponible, com ara descripcions, actors i puntuacions.</string>
   <string name="backup_path">Carpeta de còpies de seguretat</string>

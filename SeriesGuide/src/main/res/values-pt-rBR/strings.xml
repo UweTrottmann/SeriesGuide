@@ -373,7 +373,7 @@
   <string name="pref_offsetsummary">Deslocar horário de exibição em %s horas</string>
   <string name="clear_cache">Apagar cache de imagens</string>
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
-  <string name="pref_ganalyticssummary">Coleta dados de uso para ajudar a melhorar o SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Incluir todas os meta-dados como descrições, atores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>

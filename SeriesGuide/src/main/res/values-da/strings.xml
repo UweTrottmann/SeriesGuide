@@ -33,7 +33,7 @@
   <string name="action_display_all">Vis alle</string>
   <string name="web_search">Websøgning</string>
   <string name="add_to_homescreen">Genvej</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Åben</string>
   <!-- Search -->
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
@@ -63,8 +63,8 @@
   <string name="no_shouts">Vær den første til at kommentere!</string>
   <string name="refresh">Opdater</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d svar</item>
+    <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">Absolut</string>
@@ -88,7 +88,7 @@
   <string name="services_watch">Se</string>
   <string name="services_more">Mere</string>
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Ikke oversat</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">Nu</string>
@@ -194,7 +194,7 @@
   <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
   <string name="action_lists_sort">Sorter lister</string>
   <string name="action_lists_reorder">Omarrangér lister</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">En liste med dette navn eksisterer allerede</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
@@ -222,16 +222,16 @@
   <string name="movies_on_watchlist">%s på overvågningslisten</string>
   <string name="runtime_movies_watchlist">Varig af film på overvågningslisten</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dag</item>
+    <item quantity="other">%d dage</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d time</item>
+    <item quantity="other">%d timer</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="other">%d minutter</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>
@@ -297,8 +297,8 @@
   <string name="rating8">Fantastisk</string>
   <string name="rating9">Fremragende</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d stemme</item>
+    <item quantity="other">%d stemmer</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Tjek ind</string>
@@ -319,7 +319,7 @@
   <string name="pref_onlyseasoneps">Skjul specielle episoder</string>
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
   <string name="pref_exactdates">Vis nøjagtige datoer</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"31. oktober\" i stedet for \"om 3 dage\"</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
   <string name="pref_episodesorting">Sortér afsnit efter&#8230;</string>
   <string name="pref_language">Foretrukket indholdssprog</string>
@@ -333,7 +333,7 @@
   <string name="licence_themoviedb">Dette produkt bruger TMDb API\'EN men er ikke godkendt eller certificeret af TMDb.</string>
   <string name="licence_trakt">Denne app bruger data og billeder af Trakt.</string>
   <string name="about_open_source">SeriesGuide er lavet ved hjælp af open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licences_and_credits">Licenser og credits</string>
   <!-- Sort -->
   <string name="sort">Sorter efter</string>
   <string name="action_sort_ignore_articles">Ignorer artikler</string>
@@ -373,12 +373,12 @@
   <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>
   <string name="clear_cache">Nulstil cache til billeder</string>
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
-  <string name="pref_ganalyticssummary">Spor brugen af funktioner, for at hjælpe med at forbedre SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluder alt meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
   <string name="backup_path">Backup mappe</string>
   <string name="backup_version">Database version</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Kan ikke foretage backup. En backup-fil kan ikke findes eller tilgåes.</string>
   <string name="backup_inprogress">Sikkerhedskopierer databasen</string>
   <string name="backup_success">Backup gennemført.</string>
   <string name="backup_failed">Backup mislykkedes.</string>
