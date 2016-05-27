@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.Tmdb;
@@ -53,7 +53,7 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
 
     @Override
     public Credits loadInBackground() {
-        Tmdb tmdb = ServiceUtils.getTmdb2(getContext());
+        Tmdb tmdb = ServiceUtils.getTmdb(getContext());
 
         if (findTmdbId && !findShowTmdbId(tmdb)) {
             return null; // failed to find the show on TMDb
@@ -69,10 +69,10 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                SgTmdb2.trackFailedRequest(getContext(), "get show credits", response);
+                SgTmdb.trackFailedRequest(getContext(), "get show credits", response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(getContext(), "get show credits", e);
+            SgTmdb.trackFailedRequest(getContext(), "get show credits", e);
         }
 
         return null;
@@ -92,10 +92,10 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
                     Timber.d("Downloading show credits failed: show not on TMDb");
                 }
             } else {
-                SgTmdb2.trackFailedRequest(getContext(), "find tvdb show", response);
+                SgTmdb.trackFailedRequest(getContext(), "find tvdb show", response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(getContext(), "find tvdb show", e);
+            SgTmdb.trackFailedRequest(getContext(), "find tvdb show", e);
         }
 
         return false;

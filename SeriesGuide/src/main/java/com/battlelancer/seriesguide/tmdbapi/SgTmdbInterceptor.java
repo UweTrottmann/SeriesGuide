@@ -38,6 +38,6 @@ public class SgTmdbInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return TmdbInterceptor.handleIntercept(chain, ServiceUtils.getTmdb2(context).apiKey());
+        return TmdbInterceptor.handleIntercept(chain, ServiceUtils.getTmdb(context).apiKey());
     }
 }

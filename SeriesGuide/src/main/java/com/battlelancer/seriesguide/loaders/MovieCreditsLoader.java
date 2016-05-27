@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -39,17 +39,17 @@ public class MovieCreditsLoader extends GenericSimpleLoader<Credits> {
     @Override
     public Credits loadInBackground() {
         try {
-            Response<Credits> response = ServiceUtils.getTmdb2(getContext())
+            Response<Credits> response = ServiceUtils.getTmdb(getContext())
                     .moviesService()
                     .credits(mTmdbId)
                     .execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                SgTmdb2.trackFailedRequest(getContext(), "get movie credits", response);
+                SgTmdb.trackFailedRequest(getContext(), "get movie credits", response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(getContext(), "get movie credits", e);
+            SgTmdb.trackFailedRequest(getContext(), "get movie credits", e);
         }
 
         return null;

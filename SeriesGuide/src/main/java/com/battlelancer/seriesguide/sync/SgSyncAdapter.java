@@ -43,7 +43,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -442,7 +442,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
         try {
-            Response<Configuration> response = ServiceUtils.getTmdb2(context)
+            Response<Configuration> response = ServiceUtils.getTmdb(context)
                     .configurationService().configuration().execute();
             if (response.isSuccessful()) {
                 Configuration config = response.body();
@@ -454,10 +454,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             .apply();
                 }
             } else {
-                SgTmdb2.trackFailedRequest(context, "get config", response);
+                SgTmdb.trackFailedRequest(context, "get config", response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(context, "get config", e);
+            SgTmdb.trackFailedRequest(context, "get config", e);
         }
     }
 

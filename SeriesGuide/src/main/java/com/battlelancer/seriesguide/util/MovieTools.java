@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
@@ -750,7 +750,7 @@ public class MovieTools {
             TraktV2 trakt = ServiceUtils.getTraktV2(context);
             Search traktSearch = trakt.search();
             Movies traktMovies = trakt.movies();
-            MoviesService tmdbMovies = ServiceUtils.getTmdb2(context).moviesService();
+            MoviesService tmdbMovies = ServiceUtils.getTmdb(context).moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
             List<MovieDetails> movies = new LinkedList<>();
 
@@ -802,7 +802,7 @@ public class MovieTools {
             Search traktSearch = trakt.search();
 
             // TMDb
-            MoviesService tmdbMovies = ServiceUtils.getTmdb2(context).moviesService();
+            MoviesService tmdbMovies = ServiceUtils.getTmdb(context).moviesService();
             String languageCode = DisplaySettings.getContentLanguage(context);
 
             return getMovieDetails(context, traktSearch, traktMovies, tmdbMovies, languageCode,
@@ -877,10 +877,10 @@ public class MovieTools {
                 if (response.isSuccessful()) {
                     return response.body();
                 } else {
-                    SgTmdb2.trackFailedRequest(context, action, response);
+                    SgTmdb.trackFailedRequest(context, action, response);
                 }
             } catch (IOException e) {
-                SgTmdb2.trackFailedRequest(context, action, e);
+                SgTmdb.trackFailedRequest(context, action, e);
             }
             return null;
         }

@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
@@ -45,7 +45,7 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
     @Override
     public Videos.Video loadInBackground() {
-        MoviesService movieService = ServiceUtils.getTmdb2(getContext()).moviesService();
+        MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
 
         // try to get a local trailer
         Videos.Video trailer = getTrailer(movieService,
@@ -67,10 +67,10 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
             if (response.isSuccessful()) {
                 return extractTrailer(response.body());
             } else {
-                SgTmdb2.trackFailedRequest(getContext(), action, response);
+                SgTmdb.trackFailedRequest(getContext(), action, response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(getContext(), action, e);
+            SgTmdb.trackFailedRequest(getContext(), action, e);
         }
         return null;
     }

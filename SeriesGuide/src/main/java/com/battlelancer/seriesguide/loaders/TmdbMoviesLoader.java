@@ -20,7 +20,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -55,7 +55,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     @Override
     public Result loadInBackground() {
-        Tmdb tmdb = ServiceUtils.getTmdb2(getContext());
+        Tmdb tmdb = ServiceUtils.getTmdb(getContext());
         String languageCode = DisplaySettings.getContentLanguage(getContext());
 
         List<Movie> results = null;
@@ -81,10 +81,10 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                     results = page.results;
                 }
             } else {
-                SgTmdb2.trackFailedRequest(getContext(), action, response);
+                SgTmdb.trackFailedRequest(getContext(), action, response);
             }
         } catch (IOException e) {
-            SgTmdb2.trackFailedRequest(getContext(), action, e);
+            SgTmdb.trackFailedRequest(getContext(), action, e);
             // only check for connection here to allow hitting the response cache
             return new Result(null,
                     AndroidUtils.isNetworkConnected(getContext()) ? R.string.search_error
