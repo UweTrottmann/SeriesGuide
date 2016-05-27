@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 31
+----------
+*(in development)*
+
+#### 31-beta1
+*(2016-05-27)*
+
+* TWEAK Add note if no translation of a movie description is available.
+* TWEAK Move person and movie links to new links menu item with distinct "explore" icon.
+* TWEAK Updated pricing for the "Unlock All Subscription". Note: "X Pass" pricing was updated as well.
+* TWEAK Reduced the size of the app.
+* NOTICE Latest translations from crowdin.
+
 Version 30
 ----------
 *(2016-05-06)*
