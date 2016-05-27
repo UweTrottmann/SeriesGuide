@@ -18,13 +18,12 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.trakt.v2.TraktV2;
-import retrofit.RestAdapter;
+import okhttp3.OkHttpClient;
 
 /**
- * Custom {@link com.uwetrottmann.trakt.v2.TraktV2} which uses our shared {@link
- * com.squareup.okhttp.OkHttpClient} instance.
+ * Custom {@link com.uwetrottmann.trakt.v2.TraktV2} which uses our shared {@link OkHttpClient}
+ * instance.
  */
 public class SgTraktV2 extends TraktV2 {
 
@@ -35,8 +34,7 @@ public class SgTraktV2 extends TraktV2 {
     }
 
     @Override
-    protected RestAdapter.Builder newRestAdapterBuilder() {
-        return new RestAdapter.Builder().setClient(
-                new Ok3Client(ServiceUtils.getCachingOkHttpClient(context)));
+    protected OkHttpClient getOkHttpClient() {
+        return ServiceUtils.getCachingOkHttpClient(context);
     }
 }

@@ -76,8 +76,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
             OAuthClientRequest request = TraktV2.getAuthorizationRequest(
                     BuildConfig.TRAKT_CLIENT_ID,
                     BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
-                    state,
-                    null);
+                    state);
             return request.getLocationUri();
         } catch (OAuthSystemException e) {
             Timber.e(e, "Building auth request failed.");
