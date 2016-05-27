@@ -18,13 +18,18 @@ package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.Tmdb;
 import okhttp3.OkHttpClient;
+import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * Custom {@link Tmdb} which uses the app OkHttp instance.
  */
 public class SgTmdb2 extends Tmdb {
+
+    private static final String TAG_TMDB_ERROR = "TMDB Error";
 
     private final Context context;
 
@@ -41,5 +46,18 @@ public class SgTmdb2 extends Tmdb {
     @Override
     protected synchronized OkHttpClient okHttpClient() {
         return ServiceUtils.getCachingOkHttpClient(context);
+    }
+
+    public static void trackFailedRequest(Context context, String action, Response response) {
+        Utils.trackCustomEvent(context, TAG_TMDB_ERROR, action,
+                response.code() + " " + response.message());
+        // log like "action: 404 not found"
+        Timber.e("%s: %s %s", action, response.code(), response.message());
+    }
+
+    public static void trackFailedRequest(Context context, String action, Throwable throwable) {
+        Utils.trackCustomEvent(context, TAG_TMDB_ERROR, action, throwable.getMessage());
+        // log like "action: Unable to resolve host"
+        Timber.e(throwable, "%s: %s", action, throwable.getMessage());
     }
 }

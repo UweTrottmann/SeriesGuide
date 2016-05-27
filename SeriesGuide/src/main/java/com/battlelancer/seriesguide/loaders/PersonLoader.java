@@ -17,11 +17,12 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.entities.Person;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import com.uwetrottmann.tmdb2.entities.Person;
+import java.io.IOException;
+import retrofit2.Response;
 
 /**
  * Loads details of a crew or cast member from TMDb.
@@ -37,10 +38,19 @@ public class PersonLoader extends GenericSimpleLoader<Person> {
 
     @Override
     public Person loadInBackground() {
+        Response<Person> response;
         try {
-            return ServiceUtils.getTmdb(getContext()).personService().summary(mTmdbId);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Could not load person summary from TMDB");
+            response = ServiceUtils.getTmdb2(getContext())
+                    .personService()
+                    .summary(mTmdbId)
+                    .execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                SgTmdb2.trackFailedRequest(getContext(), "get person summary", response);
+            }
+        } catch (IOException e) {
+            SgTmdb2.trackFailedRequest(getContext(), "get person summary", e);
         }
 
         return null;

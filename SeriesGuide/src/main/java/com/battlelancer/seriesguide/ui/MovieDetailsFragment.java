@@ -60,8 +60,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.entities.Videos;
+import com.uwetrottmann.tmdb2.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import de.greenrobot.event.EventBus;
 

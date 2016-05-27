@@ -66,7 +66,7 @@ import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Credits;
 import java.util.Date;
 import timber.log.Timber;
 

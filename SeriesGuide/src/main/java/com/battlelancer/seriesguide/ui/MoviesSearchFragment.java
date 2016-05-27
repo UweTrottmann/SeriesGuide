@@ -55,7 +55,7 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.uwetrottmann.tmdb.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.Movie;
 
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.

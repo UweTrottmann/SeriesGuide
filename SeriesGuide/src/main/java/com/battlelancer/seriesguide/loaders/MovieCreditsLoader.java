@@ -17,12 +17,12 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.services.MoviesService;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import com.uwetrottmann.tmdb2.entities.Credits;
+import java.io.IOException;
+import retrofit2.Response;
 
 /**
  * Loads movie credits from TMDb.
@@ -39,10 +39,17 @@ public class MovieCreditsLoader extends GenericSimpleLoader<Credits> {
     @Override
     public Credits loadInBackground() {
         try {
-            MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
-            return movieService.credits(mTmdbId);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading movie credits failed");
+            Response<Credits> response = ServiceUtils.getTmdb2(getContext())
+                    .moviesService()
+                    .credits(mTmdbId)
+                    .execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                SgTmdb2.trackFailedRequest(getContext(), "get movie credits", response);
+            }
+        } catch (IOException e) {
+            SgTmdb2.trackFailedRequest(getContext(), "get movie credits", e);
         }
 
         return null;

@@ -17,13 +17,17 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb2;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb.entities.Videos;
-import com.uwetrottmann.tmdb.services.MoviesService;
-import retrofit.RetrofitError;
+import com.uwetrottmann.tmdb2.entities.Videos;
+import com.uwetrottmann.tmdb2.services.MoviesService;
+import java.io.IOException;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -41,27 +45,38 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
     @Override
     public Videos.Video loadInBackground() {
-        MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
+        MoviesService movieService = ServiceUtils.getTmdb2(getContext()).moviesService();
 
-        Videos videos;
-        try {
-            // try local trailer first
-            videos = movieService.videos(mTmdbId, DisplaySettings.getContentLanguage(getContext()));
-            Videos.Video trailer = extractTrailer(videos);
-            if (trailer != null) {
-                return trailer;
-            }
-
-            // fall back to default
-            videos = movieService.videos(mTmdbId, null);
-            return extractTrailer(videos);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Downloading movie trailers failed");
-            return null;
+        // try to get a local trailer
+        Videos.Video trailer = getTrailer(movieService,
+                DisplaySettings.getContentLanguage(getContext()), "get local movie trailer");
+        if (trailer != null) {
+            return trailer;
         }
+        Timber.d("Did not find a local movie trailer.");
+
+        // fall back to default language trailer
+        return getTrailer(movieService, null, "get default movie trailer");
     }
 
-    private Videos.Video extractTrailer(Videos videos) {
+    @Nullable
+    private Videos.Video getTrailer(@NonNull MoviesService movieService, @Nullable String language,
+            @NonNull String action) {
+        try {
+            Response<Videos> response = movieService.videos(mTmdbId, language).execute();
+            if (response.isSuccessful()) {
+                return extractTrailer(response.body());
+            } else {
+                SgTmdb2.trackFailedRequest(getContext(), action, response);
+            }
+        } catch (IOException e) {
+            SgTmdb2.trackFailedRequest(getContext(), action, e);
+        }
+        return null;
+    }
+
+    @Nullable
+    private Videos.Video extractTrailer(@Nullable Videos videos) {
         if (videos == null || videos.results == null || videos.results.size() == 0) {
             return null;
         }
