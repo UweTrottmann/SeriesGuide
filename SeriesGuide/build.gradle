@@ -27,6 +27,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
 
+        vectorDrawables.useSupportLibrary = true
+
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
         buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
