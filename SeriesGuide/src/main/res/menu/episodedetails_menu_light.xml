@@ -21,7 +21,7 @@
 
     <item
         android:id="@+id/menu_share"
-        android:icon="@drawable/ic_action_share_inverse"
+        android:icon="@drawable/ic_share_black_24dp"
         android:title="@string/share_episode"
         app:showAsAction="ifRoom" />
 
