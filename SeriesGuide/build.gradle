@@ -138,6 +138,7 @@ dependencies {
     compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.2.0'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann:tmdb-java:0.10.1'
+    compile 'com.uwetrottmann.tmdb2:tmdb-java:1.0.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     compile ('com.uwetrottmann:trakt-java:4.5.4') {
         exclude group: 'org.json', module: 'json'
