@@ -23,6 +23,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import com.google.api.client.http.HttpResponseException;
 import java.util.regex.Pattern;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -110,6 +111,14 @@ public class AnalyticsTree extends Timber.DebugTree {
                         "OAuth Error",
                         tag + ": " + message,
                         e.getMessage());
+                return;
+            } else if (t instanceof HttpResponseException) {
+                // log Cloud errors
+                HttpResponseException e = (HttpResponseException) t;
+                Utils.trackCustomEvent(context,
+                        "Hexagon Error",
+                        tag + ": " + message,
+                        e.getStatusCode() + ": " + e.getStatusMessage());
                 return;
             }
         }
