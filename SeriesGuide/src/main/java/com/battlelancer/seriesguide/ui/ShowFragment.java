@@ -511,16 +511,14 @@ public class ShowFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits);
+            PeopleListHelper.populateShowCast(getActivity(), mCastContainer, credits, TAG);
         }
 
         if (credits.crew == null || credits.crew.size() == 0) {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits);
+            PeopleListHelper.populateShowCrew(getActivity(), mCrewContainer, credits, TAG);
         }
     }
 
