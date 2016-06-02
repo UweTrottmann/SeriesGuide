@@ -1280,7 +1280,7 @@ public class EpisodeTools {
             long currentTime = System.currentTimeMillis();
             DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
 
-            Timber.d("flagsFromHexagon: downloading changed episode flags since " + lastSyncTime);
+            Timber.d("flagsFromHexagon: downloading changed episode flags since %s", lastSyncTime);
 
             while (hasMoreEpisodes) {
                 try {
@@ -1311,7 +1311,7 @@ public class EpisodeTools {
                         hasMoreEpisodes = false;
                     }
                 } catch (IOException e) {
-                    Timber.e(e, "flagsFromHexagon: failed to download changed episode flags");
+                    HexagonTools.trackFailedRequest(context, "get updated episodes", e);
                     return false;
                 }
 
@@ -1370,7 +1370,7 @@ public class EpisodeTools {
          * @return Whether the download was successful and all changes were applied to the database.
          */
         public static boolean flagsFromHexagon(Context context, int showTvdbId) {
-            Timber.d("flagsFromHexagon: downloading episode flags for show " + showTvdbId);
+            Timber.d("flagsFromHexagon: downloading episode flags for show %s", showTvdbId);
             List<Episode> episodes;
             boolean hasMoreEpisodes = true;
             String cursor = null;
@@ -1412,8 +1412,7 @@ public class EpisodeTools {
                         hasMoreEpisodes = false;
                     }
                 } catch (IOException e) {
-                    Timber.e(e, "flagsFromHexagon: failed to download episode flags for show "
-                            + showTvdbId);
+                    HexagonTools.trackFailedRequest(context, "get episodes of show", e);
                     return false;
                 }
 
@@ -1457,8 +1456,9 @@ public class EpisodeTools {
                 try {
                     DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
-                    Timber.e(e, "flagsFromHexagon: failed to apply episode flag updates for show "
-                            + showTvdbId);
+                    Timber.e(e,
+                            "flagsFromHexagon: failed to apply episode flag updates for show %s",
+                            showTvdbId);
                     return false;
                 }
             }
@@ -1493,7 +1493,7 @@ public class EpisodeTools {
          * @return Whether the upload was successful.
          */
         public static boolean flagsToHexagon(Context context, int showTvdbId) {
-            Timber.d("flagsToHexagon: uploading episode flags for show " + showTvdbId);
+            Timber.d("flagsToHexagon: uploading episode flags for show %s", showTvdbId);
 
             // query for watched, skipped or collected episodes
             Cursor query = context.getContentResolver()
@@ -1545,8 +1545,7 @@ public class EpisodeTools {
                         episodesService.save(episodeList).execute();
                     } catch (IOException e) {
                         // abort
-                        Timber.e(e, "flagsToHexagon: failed to upload episode flags for show "
-                                + showTvdbId);
+                        HexagonTools.trackFailedRequest(context, "save episodes of show", e);
                         query.close();
                         return false;
                     }
@@ -1573,8 +1572,7 @@ public class EpisodeTools {
                 }
                 episodesService.save(episodes).execute();
             } catch (IOException e) {
-                Timber.e(e, "flagsToHexagon: failed to upload episodes for show "
-                        + episodes.getShowTvdbId());
+                HexagonTools.trackFailedRequest(context, "save episodes", e);
                 return false;
             }
 

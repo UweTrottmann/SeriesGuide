@@ -36,7 +36,6 @@ import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * Base class for executing movie actions.
@@ -83,7 +82,7 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
                 }
                 moviesService.save(movieList).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to upload movie to hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "save movie", e);
                 return ERROR_HEXAGON_API;
             }
         }

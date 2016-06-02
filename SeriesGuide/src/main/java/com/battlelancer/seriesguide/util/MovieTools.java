@@ -494,7 +494,7 @@ public class MovieTools {
                         hasMoreMovies = false;
                     }
                 } catch (IOException e) {
-                    Timber.e(e, "fromHexagon: failed to download movies");
+                    HexagonTools.trackFailedRequest(context, "get movies", e);
                     return false;
                 }
 
@@ -921,7 +921,7 @@ public class MovieTools {
                 }
                 moviesService.save(movieList).execute();
             } catch (IOException e) {
-                Timber.e(e, "toHexagon: failed to upload movies");
+                HexagonTools.trackFailedRequest(context, "save movies", e);
                 return false;
             }
 

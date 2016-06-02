@@ -383,7 +383,7 @@ public class ShowTools {
                 }
                 showsService.save(showList).execute();
             } catch (IOException e) {
-                Timber.e(e, "toHexagon: failed to upload shows");
+                HexagonTools.trackFailedRequest(context, "save shows", e);
                 return false;
             }
 
@@ -478,7 +478,7 @@ public class ShowTools {
                         hasMoreShows = false;
                     }
                 } catch (IOException e) {
-                    Timber.e(e, "fromHexagon: failed to download shows");
+                    HexagonTools.trackFailedRequest(context, "get shows", e);
                     return false;
                 }
 

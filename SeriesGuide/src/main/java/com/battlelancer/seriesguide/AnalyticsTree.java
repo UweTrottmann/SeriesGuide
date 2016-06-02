@@ -112,14 +112,6 @@ public class AnalyticsTree extends Timber.DebugTree {
                         tag + ": " + message,
                         e.getMessage());
                 return;
-            } else if (t instanceof HttpResponseException) {
-                // log Cloud errors
-                HttpResponseException e = (HttpResponseException) t;
-                Utils.trackCustomEvent(context,
-                        "Hexagon Error",
-                        tag + ": " + message,
-                        e.getStatusCode() + ": " + e.getStatusMessage());
-                return;
             }
         }
 

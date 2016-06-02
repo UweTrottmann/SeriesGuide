@@ -25,7 +25,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
-import timber.log.Timber;
 
 /**
  * Task to remove a list.
@@ -60,7 +59,7 @@ public class RemoveListTask extends BaseActionTask {
             try {
                 listsService.remove(listId).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to remove list from hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "remove list", e);
                 return ERROR_HEXAGON_API;
             }
         }

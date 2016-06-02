@@ -439,6 +439,7 @@ public class TheTVDB {
         try {
             hexagonShow = ShowTools.Download.showFromHexagon(context, showTvdbId);
         } catch (IOException e) {
+            HexagonTools.trackFailedRequest(context, "get show details", e);
             throw new TvdbException("getShowDetailsWithHexagon: " + e.getMessage(), e);
         }
 

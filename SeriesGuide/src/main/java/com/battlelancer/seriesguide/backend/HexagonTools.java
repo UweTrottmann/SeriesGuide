@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -45,6 +46,7 @@ import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import de.greenrobot.event.EventBus;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -57,6 +59,7 @@ import timber.log.Timber;
  */
 public class HexagonTools {
 
+    private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
 
@@ -66,6 +69,21 @@ public class HexagonTools {
     private static Episodes sEpisodesService;
     private static Movies sMoviesService;
     private static Lists sListsService;
+
+    public static void trackFailedRequest(Context context, String action, IOException e) {
+        if (e instanceof HttpResponseException) {
+            HttpResponseException responseException = (HttpResponseException) e;
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
+                    responseException.getStatusCode() + " " + responseException.getStatusMessage());
+            // log like "action: 404 not found"
+            Timber.e("%s: %s %s", action, responseException.getStatusCode(),
+                    responseException.getStatusMessage());
+        } else {
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action, e.getMessage());
+            // log like "action: Unable to resolve host"
+            Timber.e("%s: %s", action, e.getMessage());
+        }
+    }
 
     /**
      * Creates and returns a new instance for this hexagon service or null if not signed in.

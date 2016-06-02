@@ -28,7 +28,6 @@ import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * Task to remove an item from a single list (basically delete the list item).
@@ -73,7 +72,7 @@ public class RemoveListItemTask extends BaseActionTask {
             try {
                 listsService.removeItems(wrapper).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to remove item from lists on hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "remove list item", e);
                 return ERROR_HEXAGON_API;
             }
         }
