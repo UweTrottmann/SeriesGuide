@@ -488,6 +488,7 @@ public class MovieDetailsFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 

@@ -450,6 +450,7 @@ public class ShowFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
@@ -543,7 +544,7 @@ public class ShowFragment extends Fragment {
     }
 
     private static void changeShowLanguage(Context context, int showTvdbId, String languageCode) {
-        Timber.d("Changing show language to " + languageCode);
+        Timber.d("Changing show language to %s", languageCode);
         ShowTools.get(context).storeLanguage(showTvdbId, languageCode);
     }
 

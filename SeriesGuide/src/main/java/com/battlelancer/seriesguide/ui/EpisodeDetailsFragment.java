@@ -564,6 +564,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
@@ -632,11 +633,11 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                         return;
                     }
                     if (data == null) {
-                        Timber.e("onLoadFinished: did not receive valid actions for "
-                                + getEpisodeTvdbId());
+                        Timber.e("onLoadFinished: did not receive valid actions for %s",
+                                getEpisodeTvdbId());
                     } else {
-                        Timber.d("onLoadFinished: received " + data.size() + " actions for "
-                                + getEpisodeTvdbId());
+                        Timber.d("onLoadFinished: received %s actions for %s", data.size(),
+                                getEpisodeTvdbId());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
                             mActionsContainer, data);
