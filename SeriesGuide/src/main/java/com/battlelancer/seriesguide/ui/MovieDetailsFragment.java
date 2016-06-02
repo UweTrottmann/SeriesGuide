@@ -488,6 +488,7 @@ public class MovieDetailsFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
@@ -510,8 +511,7 @@ public class MovieDetailsFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateMovieCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits);
+            PeopleListHelper.populateMovieCast(getActivity(), mCastContainer, credits, TAG);
         }
 
         // crew members
@@ -519,8 +519,7 @@ public class MovieDetailsFragment extends Fragment {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateMovieCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits);
+            PeopleListHelper.populateMovieCrew(getActivity(), mCrewContainer, credits, TAG);
         }
     }
 

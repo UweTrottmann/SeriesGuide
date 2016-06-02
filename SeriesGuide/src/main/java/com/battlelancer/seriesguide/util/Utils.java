@@ -373,10 +373,10 @@ public class Utils {
      * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
      * status information.
      */
-    public static void trackCustomEvent(Context context, String tag, String action,
+    public static void trackCustomEvent(Context context, String category, String action,
             String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction(action)
                 .setLabel(label)
                 .build());
@@ -385,9 +385,9 @@ public class Utils {
     /**
      * Track an action event, e.g. when an action item is clicked.
      */
-    public static void trackAction(Context context, String tag, String label) {
+    public static void trackAction(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Action Item")
                 .setLabel(label)
                 .build());
@@ -396,9 +396,9 @@ public class Utils {
     /**
      * Track a context menu event, e.g. when a context item is clicked.
      */
-    public static void trackContextMenu(Context context, String tag, String label) {
+    public static void trackContextMenu(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Context Item")
                 .setLabel(label)
                 .build());
@@ -408,9 +408,9 @@ public class Utils {
      * Track a generic click that does not fit {@link #trackAction(android.content.Context, String,
      * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
      */
-    public static void trackClick(Context context, String tag, String label) {
+    public static void trackClick(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Click")
                 .setLabel(label)
                 .build());

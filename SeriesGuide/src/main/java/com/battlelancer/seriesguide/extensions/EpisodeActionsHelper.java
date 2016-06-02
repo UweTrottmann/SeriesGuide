@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +38,13 @@ public class EpisodeActionsHelper {
 
     /**
      * Replaces all child views of the given {@link android.view.ViewGroup} with a {@link
-     * android.widget.TextView} per action plus one linking to {@link
-     * com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity}. Sets up {@link
-     * android.view.View.OnClickListener} if {@link com.battlelancer.seriesguide.api.Action#getViewIntent()}
+     * android.widget.TextView} per action plus one linking to {@link com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity}.
+     * Sets up {@link android.view.View.OnClickListener} if {@link com.battlelancer.seriesguide.api.Action#getViewIntent()}
      * of an  {@link com.battlelancer.seriesguide.api.Action} is not null.
      */
-    public static void populateEpisodeActions(LayoutInflater layoutInflater,
-            ViewGroup actionsContainer, List<Action> data) {
+    public static void populateEpisodeActions(@NonNull LayoutInflater layoutInflater,
+            @Nullable ViewGroup actionsContainer, @Nullable List<Action> data,
+            @NonNull final String logCategory) {
         if (actionsContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateEpisodeActions: action view container gone, aborting");
@@ -95,6 +97,7 @@ public class EpisodeActionsHelper {
                 } else {
                     v.getContext().startActivity(intent);
                 }
+                Utils.trackAction(v.getContext(), logCategory, "Manage extensions");
             }
         });
         actionsContainer.addView(configureView);

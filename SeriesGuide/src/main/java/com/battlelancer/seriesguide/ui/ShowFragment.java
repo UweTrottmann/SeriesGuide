@@ -450,6 +450,7 @@ public class ShowFragment extends Fragment {
                                 .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                 .toBundle()
                 );
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
@@ -510,16 +511,14 @@ public class ShowFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits);
+            PeopleListHelper.populateShowCast(getActivity(), mCastContainer, credits, TAG);
         }
 
         if (credits.crew == null || credits.crew.size() == 0) {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits);
+            PeopleListHelper.populateShowCrew(getActivity(), mCrewContainer, credits, TAG);
         }
     }
 
@@ -543,7 +542,7 @@ public class ShowFragment extends Fragment {
     }
 
     private static void changeShowLanguage(Context context, int showTvdbId, String languageCode) {
-        Timber.d("Changing show language to " + languageCode);
+        Timber.d("Changing show language to %s", languageCode);
         ShowTools.get(context).storeLanguage(showTvdbId, languageCode);
     }
 

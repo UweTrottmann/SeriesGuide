@@ -751,6 +751,7 @@ public class OverviewFragment extends Fragment implements
                                     .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
                                     .toBundle()
                     );
+                    Utils.trackAction(v.getContext(), TAG, "Comments");
                 }
             }
         });
@@ -927,18 +928,16 @@ public class OverviewFragment extends Fragment implements
                     if (data == null) {
                         Timber.e("onLoadFinished: did not receive valid actions");
                     } else {
-                        Timber.d("onLoadFinished: received " + data.size() + " actions");
+                        Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            data);
+                            containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            null);
+                            containerActions, null, TAG);
                 }
             };
 }
