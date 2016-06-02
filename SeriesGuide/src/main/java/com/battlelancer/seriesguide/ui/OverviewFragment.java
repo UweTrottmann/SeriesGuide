@@ -931,15 +931,13 @@ public class OverviewFragment extends Fragment implements
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            data);
+                            containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            null);
+                            containerActions, null, TAG);
                 }
             };
 }

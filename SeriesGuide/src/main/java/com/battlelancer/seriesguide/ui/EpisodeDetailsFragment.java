@@ -640,7 +640,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                                 getEpisodeTvdbId());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            mActionsContainer, data);
+                            mActionsContainer, data, TAG);
                 }
 
                 @Override
