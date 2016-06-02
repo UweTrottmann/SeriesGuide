@@ -1290,8 +1290,7 @@ public class EpisodeTools {
                     }
 
                     Episodes.Get request = episodesService.get()
-                            .setUpdatedSince(lastSyncTime)
-                            .setLimit(EPISODE_MAX_BATCH_SIZE);
+                            .setUpdatedSince(lastSyncTime); // use default server limit
                     if (!TextUtils.isEmpty(cursor)) {
                         request.setCursor(cursor);
                     }
@@ -1393,8 +1392,7 @@ public class EpisodeTools {
 
                     // build request
                     Episodes.Get request = episodesService.get()
-                            .setShowTvdbId(showTvdbId)
-                            .setLimit(EPISODE_MAX_BATCH_SIZE);
+                            .setShowTvdbId(showTvdbId); // use default server limit
                     if (!TextUtils.isEmpty(cursor)) {
                         request.setCursor(cursor);
                     }

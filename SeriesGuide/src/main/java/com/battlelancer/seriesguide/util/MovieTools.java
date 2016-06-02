@@ -79,8 +79,6 @@ import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
 
-    private static final int MOVIES_MAX_BATCH_SIZE = 100;
-
     public static class MovieChangedEvent {
         public int movieTmdbId;
 
@@ -473,7 +471,7 @@ public class MovieTools {
                     }
 
                     com.uwetrottmann.seriesguide.backend.movies.Movies.Get request
-                            = moviesService.get().setLimit(MOVIES_MAX_BATCH_SIZE);
+                            = moviesService.get();  // use default server limit
                     if (hasMergedMovies) {
                         request.setUpdatedSince(lastSyncTime);
                     }

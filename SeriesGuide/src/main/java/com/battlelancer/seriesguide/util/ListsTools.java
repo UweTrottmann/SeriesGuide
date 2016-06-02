@@ -284,7 +284,7 @@ public class ListsTools {
                     return false; // no longer signed in
                 }
 
-                Lists.Get request = listsService.get();
+                Lists.Get request = listsService.get(); // use default server limit
                 if (hasMergedLists) {
                     request.setUpdatedSince(lastSyncTime);
                 }

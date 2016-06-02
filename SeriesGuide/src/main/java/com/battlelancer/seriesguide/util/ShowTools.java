@@ -77,8 +77,6 @@ public class ShowTools {
         int UNKNOWN = -1;
     }
 
-    private static final int SHOWS_MAX_BATCH_SIZE = 100;
-
     private static ShowTools _instance;
 
     private final Context mContext;
@@ -455,7 +453,7 @@ public class ShowTools {
                         return false;
                     }
 
-                    Shows.Get request = showsService.get().setLimit(SHOWS_MAX_BATCH_SIZE);
+                    Shows.Get request = showsService.get(); // use default server limit
                     if (hasMergedShows) {
                         // only get changed shows (otherwise returns all)
                         request.setUpdatedSince(lastSyncTime);
