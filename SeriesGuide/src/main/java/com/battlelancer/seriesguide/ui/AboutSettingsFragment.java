@@ -96,6 +96,6 @@ public class AboutSettingsFragment extends Fragment {
     }
 
     private void viewUrl(@StringRes int urlResId) {
-        Utils.launchWebsite(getActivity(), getString(urlResId), "About", "Terms site");
+        Utils.launchWebsite(getActivity(), getString(urlResId));
     }
 }
