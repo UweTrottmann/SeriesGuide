@@ -42,6 +42,11 @@ public class SgTrakt extends TraktV2 {
     }
 
     @Override
+    public String accessToken() {
+        return TraktCredentials.get(context).getAccessToken();
+    }
+
+    @Override
     protected synchronized OkHttpClient okHttpClient() {
         return ServiceUtils.getCachingOkHttpClient(context);
     }
