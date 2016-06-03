@@ -73,9 +73,10 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 if (response.isSuccessful()) {
                     shows = response.body();
                 } else {
-                    SgTrakt.trackFailedRequest(getContext(), action, response);
-                    if (SgTrakt.isUnauthorized(response)) {
+                    if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
+                    } else {
+                        SgTrakt.trackFailedRequest(getContext(), action, response);
                     }
                 }
             } else {
@@ -96,10 +97,10 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 if (response.isSuccessful()) {
                     extractShows(response.body(), shows);
                 } else {
-                    SgTrakt.trackFailedRequest(getContext(), action, response);
-                    if (SgTrakt.isUnauthorized(response)) {
+                    if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     }
+                    SgTrakt.trackFailedRequest(getContext(), action, response);
                 }
             }
         } catch (IOException e) {

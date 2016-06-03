@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import okhttp3.OkHttpClient;
+import retrofit2.Response;
 
 /**
  * Extends {@link TraktV2} to use our own caching OkHttp client and {@link
@@ -51,20 +52,30 @@ public class SgTrakt extends TraktV2 {
         return ServiceUtils.getCachingOkHttpClient(context);
     }
 
+    /**
+     * Check if the request was unauthorized.
+     *
+     * @see #isUnauthorized(Context, Response)
+     */
     public static boolean isUnauthorized(retrofit2.Response response) {
         return response.code() == 401;
     }
 
-    public static void trackFailedRequest(Context context, String action,
-            retrofit2.Response response) {
-        if (isUnauthorized(response)) {
+    /**
+     * Returns if the request was not authorized. If it was, also calls {@link
+     * TraktCredentials#setCredentialsInvalid()} to notify the user.
+     */
+    public static boolean isUnauthorized(Context context, retrofit2.Response response) {
+        if (response.code() == 401) {
             // current access token is invalid, remove it and notify user to re-connect
             TraktCredentials.get(context).setCredentialsInvalid();
+            return true;
+        } else {
+            return false;
         }
-        trackFailedRequestNoAuthCheck(context, action, response);
     }
 
-    public static void trackFailedRequestNoAuthCheck(Context context, String action,
+    public static void trackFailedRequest(Context context, String action,
             retrofit2.Response response) {
         Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response);
     }

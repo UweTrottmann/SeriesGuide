@@ -24,34 +24,29 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.CheckinResponse;
-import com.battlelancer.seriesguide.traktapi.Response;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.Comment;
-import com.uwetrottmann.trakt.v2.entities.Episode;
-import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
-import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
-import com.uwetrottmann.trakt.v2.entities.Movie;
-import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
-import com.uwetrottmann.trakt.v2.entities.MovieIds;
-import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Checkin;
-import com.uwetrottmann.trakt.v2.services.Comments;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.CheckinError;
+import com.uwetrottmann.trakt5.entities.Comment;
+import com.uwetrottmann.trakt5.entities.Episode;
+import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt5.entities.EpisodeIds;
+import com.uwetrottmann.trakt5.entities.Movie;
+import com.uwetrottmann.trakt5.entities.MovieCheckin;
+import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.Show;
+import com.uwetrottmann.trakt5.entities.ShowIds;
+import com.uwetrottmann.trakt5.entities.SyncEpisode;
+import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.services.Comments;
 import de.greenrobot.event.EventBus;
+import java.io.IOException;
 import org.joda.time.DateTime;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
-public class TraktTask extends AsyncTask<Void, Void, Response> {
+public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private static final String APP_VERSION = "SeriesGuide " + BuildConfig.VERSION_NAME;
 
@@ -76,6 +71,31 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         String MESSAGE = "message";
 
         String ISSPOILER = "isspoiler";
+    }
+
+    /**
+     * trakt response status class.
+     */
+    public static class TraktResponse {
+        public boolean succesful;
+        public String message;
+
+        public TraktResponse(boolean successful, String message) {
+            this.succesful = successful;
+            this.message = message;
+        }
+    }
+
+    /**
+     * trakt checkin response status class.
+     */
+    public static class CheckinBlockedResponse extends TraktResponse {
+        public int waitTimeMin;
+
+        public CheckinBlockedResponse(int waitTimeMin) {
+            super(false, null);
+            this.waitTimeMin = waitTimeMin;
+        }
     }
 
     public static class TraktActionCompleteEvent {
@@ -212,71 +232,44 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     @Override
-    protected Response doInBackground(Void... params) {
+    protected TraktResponse doInBackground(Void... params) {
         // we need this value in onPostExecute, so preserve it here
         mAction = TraktAction.valueOf(mArgs.getString(InitBundle.TRAKTACTION));
 
         // check for network connection
         if (!AndroidUtils.isNetworkConnected(mContext)) {
-            Response r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.offline);
-            return r;
+            return new TraktResponse(false, mContext.getString(R.string.offline));
         }
 
-        // get authenticated trakt
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(mContext);
-        if (trakt == null) {
-            // no valid credentials
-            Response r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_credentials);
-            return r;
+        // check for credentials
+        if (!TraktCredentials.get(mContext).hasCredentials()) {
+            return new TraktResponse(false, mContext.getString(R.string.trakt_error_credentials));
         }
+
+        // get trakt
+        TraktV2 trakt = ServiceUtils.getTrakt(mContext);
 
         // last chance to abort
         if (isCancelled()) {
             return null;
         }
 
-        Response r = null;
-        try {
-            switch (mAction) {
-                case CHECKIN_EPISODE:
-                case CHECKIN_MOVIE: {
-                    return doCheckInAction(trakt.checkin());
-                }
-                case COMMENT: {
-                    return doCommentAction(trakt.comments());
-                }
+        switch (mAction) {
+            case CHECKIN_EPISODE:
+            case CHECKIN_MOVIE: {
+                return doCheckInAction(ServiceUtils.getTrakt(mContext));
             }
-        } catch (RetrofitError e) {
-            Timber.e(e, mAction.toString() + " failed");
-            r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_general);
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(mContext).setCredentialsInvalid();
-            r = new Response();
-            r.status = TraktStatus.FAILURE;
-            r.error = mContext.getString(R.string.trakt_error_credentials);
-        } catch (CheckinInProgressException e) {
-            CheckinResponse checkinResponse = new CheckinResponse();
-            checkinResponse.status = TraktStatus.FAILURE;
-            DateTime expiresAt = e.getExpiresAt();
-            checkinResponse.wait = expiresAt == null ? -1
-                    : (int) ((expiresAt.getMillis() - System.currentTimeMillis()) / 1000);
-            r = checkinResponse;
+            case COMMENT: {
+                return doCommentAction(trakt.comments());
+            }
+            default:
+                return null;
         }
-
-        return r;
     }
 
-    private Response doCheckInAction(Checkin traktCheckin)
-            throws CheckinInProgressException, OAuthUnauthorizedException {
-        Response r = new Response();
-
+    private TraktResponse doCheckInAction(TraktV2 trakt) {
         try {
+            retrofit2.Response response;
             String message = mArgs.getString(InitBundle.MESSAGE);
             switch (mAction) {
                 case CHECKIN_EPISODE: {
@@ -286,7 +279,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                             .message(message)
                             .build();
 
-                    traktCheckin.checkin(checkin);
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
                 case CHECKIN_MOVIE: {
@@ -296,58 +289,72 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                             .message(message)
                             .build();
 
-                    traktCheckin.checkin(checkin);
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
+                default:
+                    throw new IllegalArgumentException("check-in action unknown.");
             }
 
-            r.status = TraktStatus.SUCCESS;
-            r.message = mContext.getString(R.string.checkin_success_trakt,
-                    mArgs.getString(InitBundle.TITLE));
-        } catch (RetrofitError e) {
-            // check if item user wants to check into does exist on trakt
-            if (e.getKind() == RetrofitError.Kind.HTTP && e.getResponse().getStatus() == 404) {
-                r.status = TraktStatus.FAILURE;
-                r.error = mContext.getString(R.string.trakt_error_not_exists);
+            if (response.isSuccessful()) {
+                return new TraktResponse(true, mContext.getString(R.string.checkin_success_trakt,
+                        mArgs.getString(InitBundle.TITLE)));
             } else {
-                throw e;
+                // check if the user wants to check-in, but there is already a check-in in progress
+                CheckinError checkinError = trakt.checkForCheckinError(response);
+                if (checkinError != null) {
+                    DateTime expiresAt = checkinError.expires_at;
+                    int waitTimeMin = expiresAt == null ? -1
+                            : (int) ((expiresAt.getMillis() - System.currentTimeMillis()) / 1000);
+                    return new CheckinBlockedResponse(waitTimeMin);
+                }
+                // check if item does not exist on trakt (yet)
+                else if (response.code() == 404) {
+                    return new TraktResponse(false,
+                            mContext.getString(R.string.trakt_error_not_exists));
+                } else if (SgTrakt.isUnauthorized(mContext, response)) {
+                    return new TraktResponse(false,
+                            mContext.getString(R.string.trakt_error_credentials));
+                } else {
+                    SgTrakt.trackFailedRequest(mContext, "check-in", response);
+                }
             }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(mContext, "check-in", e);
         }
 
-        return r;
+        // return generic failure message
+        return new TraktResponse(false, mContext.getString(R.string.trakt_error_general));
     }
 
-    private Response doCommentAction(Comments traktComments) throws OAuthUnauthorizedException {
-        Response r = new Response();
-
+    private TraktResponse doCommentAction(Comments traktComments) {
         try {
             // post comment
-            Comment postedComment = traktComments.post(buildComment());
-
-            if (postedComment != null && postedComment.id != null) {
-                r.status = TraktStatus.SUCCESS;
-            } else {
-                r.status = TraktStatus.FAILURE;
-                r.error = mContext.getString(R.string.trakt_error_general);
-            }
-        } catch (RetrofitError e) {
-            // check if comment failed validation or item does not exist on trakt
-            if (e.getKind() == RetrofitError.Kind.HTTP) {
-                int status = e.getResponse().getStatus();
-                r.status = TraktStatus.FAILURE;
-                if (status == 422) {
-                    r.error = mContext.getString(R.string.shout_invalid);
-                } else if (status == 404) {
-                    r.error = mContext.getString(R.string.trakt_error_not_exists);
-                } else {
-                    throw e;
+            retrofit2.Response<Comment> response = traktComments.post(buildComment()).execute();
+            if (response.isSuccessful()) {
+                Comment postedComment = response.body();
+                if (postedComment.id != null) {
+                    return new TraktResponse(true, null);
                 }
             } else {
-                throw e;
+                // check if comment failed validation or item does not exist on trakt
+                if (response.code() == 422) {
+                    return new TraktResponse(false, mContext.getString(R.string.shout_invalid));
+                } else if (response.code() == 404) {
+                    return new TraktResponse(false, mContext.getString(R.string.shout_invalid));
+                } else if (SgTrakt.isUnauthorized(mContext, response)) {
+                    return new TraktResponse(false,
+                            mContext.getString(R.string.trakt_error_credentials));
+                } else {
+                    SgTrakt.trackFailedRequest(mContext, "post comment", response);
+                }
             }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(mContext, "post comment", e);
         }
 
-        return r;
+        // return generic failure message
+        return new TraktResponse(false, mContext.getString(R.string.trakt_error_general));
     }
 
     private Comment buildComment() {
@@ -380,32 +387,32 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     @Override
-    protected void onPostExecute(Response r) {
+    protected void onPostExecute(TraktResponse r) {
         if (r == null) {
             // unknown error
             return;
         }
 
-        if (TraktStatus.SUCCESS.equals(r.status)) {
+        if (r.succesful) {
             // all good
             EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, true, r.message));
         } else {
             // special handling of blocked check-ins
             if (mAction == TraktAction.CHECKIN_EPISODE
                     || mAction == TraktAction.CHECKIN_MOVIE) {
-                if (r instanceof CheckinResponse) {
-                    CheckinResponse checkinResponse = (CheckinResponse) r;
-                    if (checkinResponse.wait > 0) {
+                if (r instanceof CheckinBlockedResponse) {
+                    CheckinBlockedResponse checkinBlockedResponse = (CheckinBlockedResponse) r;
+                    if (checkinBlockedResponse.waitTimeMin > 0) {
                         // looks like a check in is already in progress
                         EventBus.getDefault().post(
-                                new TraktCheckInBlockedEvent(mArgs, checkinResponse.wait));
+                                new TraktCheckInBlockedEvent(mArgs, checkinBlockedResponse.waitTimeMin));
                         return;
                     }
                 }
             }
 
             // well, something went wrong
-            EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, false, r.error));
+            EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, false, r.message));
         }
     }
 }
