@@ -23,6 +23,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +38,6 @@ import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt.v2.TraktV2;
-import android.support.annotation.NonNull;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -48,6 +49,7 @@ import timber.log.Timber;
 public class TraktCredentials {
 
     private static final String KEY_USERNAME = "com.battlelancer.seriesguide.traktuser";
+    private static final String KEY_DISPLAYNAME = "com.battlelancer.seriesguide.traktuser.name";
 
     private static TraktCredentials _instance;
 
@@ -68,7 +70,7 @@ public class TraktCredentials {
         mContext = context.getApplicationContext();
         mUsername = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getString(KEY_USERNAME, null);
-        mHasCredentials = !TextUtils.isEmpty(getUsername()) && !TextUtils.isEmpty(getAccessToken());
+        mHasCredentials = !TextUtils.isEmpty(getAccessToken());
     }
 
     /**
@@ -158,20 +160,40 @@ public class TraktCredentials {
     }
 
     /**
-     * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
-     * an exception.
+     * Stores the given access token.
      */
-    public synchronized void setCredentials(@NonNull String username, @NonNull String accessToken) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(accessToken)) {
-            throw new IllegalArgumentException("Username or access token is null or empty.");
+    public synchronized void storeAccessToken(@NonNull String accessToken) {
+        if (TextUtils.isEmpty(accessToken)) {
+            throw new IllegalArgumentException("Access token is null or empty.");
         }
-        mHasCredentials = setUsername(username) && setAccessToken(accessToken);
+        mHasCredentials = setAccessToken(accessToken);
+    }
+
+    /**
+     * Stores the given user name and display name.
+     */
+    public synchronized boolean storeUsername(@NonNull String username,
+            @Nullable String displayname) {
+        if (TextUtils.isEmpty(username)) {
+            throw new IllegalArgumentException("Username is null or empty.");
+        }
+        return setUsername(username)
+                && !TextUtils.isEmpty(displayname) && setDisplayname(displayname);
     }
 
     private boolean setUsername(String username) {
         mUsername = username;
-        return PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                .putString(KEY_USERNAME, username).commit();
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit()
+                .putString(KEY_USERNAME, username)
+                .commit();
+    }
+
+    private boolean setDisplayname(String displayname) {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit()
+                .putString(KEY_DISPLAYNAME, displayname)
+                .commit();
     }
 
     private boolean setAccessToken(String accessToken) {

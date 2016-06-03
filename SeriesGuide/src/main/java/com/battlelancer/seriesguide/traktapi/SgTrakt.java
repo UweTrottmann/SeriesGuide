@@ -61,6 +61,11 @@ public class SgTrakt extends TraktV2 {
             // current access token is invalid, remove it and notify user to re-connect
             TraktCredentials.get(context).setCredentialsInvalid();
         }
+        trackFailedRequestNoAuthCheck(context, action, response);
+    }
+
+    public static void trackFailedRequestNoAuthCheck(Context context, String action,
+            retrofit2.Response response) {
         Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response);
     }
 
