@@ -18,8 +18,10 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import okhttp3.OkHttpClient;
 
@@ -28,6 +30,8 @@ import okhttp3.OkHttpClient;
  * com.battlelancer.seriesguide.settings.TraktCredentials} to store user credentials.
  */
 public class SgTrakt extends TraktV2 {
+
+    private static String TAG_TRAKT_ERROR = "trakt Error";
 
     private final Context context;
 
@@ -40,5 +44,22 @@ public class SgTrakt extends TraktV2 {
     @Override
     protected synchronized OkHttpClient okHttpClient() {
         return ServiceUtils.getCachingOkHttpClient(context);
+    }
+
+    public static boolean isUnauthorized(retrofit2.Response response) {
+        return response.code() == 401;
+    }
+
+    public static void trackFailedRequest(Context context, String action,
+            retrofit2.Response response) {
+        if (isUnauthorized(response)) {
+            // current access token is invalid, remove it and notify user to re-connect
+            TraktCredentials.get(context).setCredentialsInvalid();
+        }
+        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response);
+    }
+
+    public static void trackFailedRequest(Context context, String action, Throwable throwable) {
+        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, throwable);
     }
 }
