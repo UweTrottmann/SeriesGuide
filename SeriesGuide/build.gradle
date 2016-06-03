@@ -145,6 +145,10 @@ dependencies {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
     }
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.0.0-SNAPSHOT') {
+        exclude group: 'org.json', module: 'json'
+        exclude group: 'joda-time', module: 'joda-time'
+    }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
     compile 'net.danlew:android.joda:2.9.3'
