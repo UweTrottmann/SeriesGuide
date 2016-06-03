@@ -37,6 +37,8 @@ import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTraktV2;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
@@ -91,6 +93,8 @@ public final class ServiceUtils {
 
     private static TheTvdb theTvdb;
 
+    private static com.uwetrottmann.trakt5.TraktV2 trakt;
+
     private static TraktV2 traktV2;
 
     private static TraktV2 traktV2WithAuth;
@@ -102,8 +106,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Returns this apps {@link OkHttpClient} with enabled response cache.
-     * Should be used with API calls.
+     * Returns this apps {@link OkHttpClient} with enabled response cache. Should be used with API
+     * calls.
      */
     @NonNull
     public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
@@ -113,6 +117,7 @@ public final class ServiceUtils {
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.addInterceptor(new SgTmdbInterceptor(context));
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
+            builder.addNetworkInterceptor(new SgTraktInterceptor(context));
             builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
@@ -166,8 +171,7 @@ public final class ServiceUtils {
      *
      * <p>If {@link Utils#isAllowedLargeDataConnection} is false, will set {@link
      * com.squareup.picasso.NetworkPolicy#OFFLINE} (which will set {@link
-     * com.squareup.okhttp.CacheControl#FORCE_CACHE} on requests) to skip the network and accept
-     * stale images.
+     * okhttp3.CacheControl#FORCE_CACHE} on requests) to skip the network and accept stale images.
      */
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
@@ -213,6 +217,19 @@ public final class ServiceUtils {
             traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
         }
         return traktV2;
+    }
+
+    /**
+     * Get a {@link TraktV2} service manager with just the API key set. NO user auth data.
+     *
+     * @return A {@link TraktV2} instance.
+     */
+    @NonNull
+    public static synchronized com.uwetrottmann.trakt5.TraktV2 getTrakt(Context context) {
+        if (trakt == null) {
+            trakt = new SgTrakt(context);
+        }
+        return trakt;
     }
 
     /**
