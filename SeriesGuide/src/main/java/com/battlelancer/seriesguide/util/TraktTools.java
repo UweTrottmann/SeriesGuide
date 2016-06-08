@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
@@ -497,7 +496,7 @@ public class TraktTools {
 
                 // apply database updates, if initial sync upload diff
                 long startTime = System.currentTimeMillis();
-                int resultCode = syncWatchedTraktShows(context, remoteShows, localShows,
+                int resultCode = processWatchedShowsTrakt(context, remoteShows, localShows,
                         isInitialSync);
                 Timber.d("applyEpisodeFlagChanges took %s ms",
                         System.currentTimeMillis() - startTime);
@@ -562,10 +561,11 @@ public class TraktTools {
         return SUCCESS;
     }
 
-    private static int syncWatchedTraktShows(Context context, List<BaseShow> remoteShows,
+    private static int processWatchedShowsTrakt(Context context, List<BaseShow> remoteShows,
             HashSet<Integer> localShows, boolean isInitialSync) {
         HashMap<Integer, BaseShow> watchedShowsTrakt = buildWatchedShowsTrakt(remoteShows);
 
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (Integer localShow : localShows) {
             if (watchedShowsTrakt.containsKey(localShow)) {
                 // show watched on trakt
@@ -580,14 +580,20 @@ public class TraktTools {
                     // TODO ut: upload all watched episodes
                 } else {
                     // set all episodes of show not watched
-                    ContentValues values = new ContentValues();
-                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
-                    context.getContentResolver().update(
-                            SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow), values,
-                            null, null);
+                    batch.add(ContentProviderOperation.newUpdate(
+                            SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow))
+                            .withValue(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED)
+                            .build());
                 }
             }
         }
+
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "Setting shows unwatched failed.");
+        }
+
         return SUCCESS;
     }
 
@@ -604,6 +610,7 @@ public class TraktTools {
         if (localSeasonsQuery == null) {
             return false;
         }
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         while (localSeasonsQuery.moveToNext()) {
             String seasonId = localSeasonsQuery.getString(0);
             int seasonNumber = localSeasonsQuery.getInt(1);
@@ -620,15 +627,21 @@ public class TraktTools {
                     // TODO ut: upload all watched episodes
                 } else {
                     // set all episodes of season not watched
-                    ContentValues values = new ContentValues();
-                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
-                    context.getContentResolver().update(
-                            SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonId), values,
-                            null, null);
+                    batch.add(ContentProviderOperation.newUpdate(
+                            SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonId))
+                            .withValue(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED)
+                            .build());
                 }
             }
         }
         localSeasonsQuery.close();
+
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "Setting seasons unwatched failed.");
+        }
+
         return true;
     }
 
@@ -646,6 +659,7 @@ public class TraktTools {
         if (localEpisodesQuery == null) {
             return false;
         }
+        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         while (localEpisodesQuery.moveToNext()) {
             int episodeId = localEpisodesQuery.getInt(0);
             int episodeNumber = localEpisodesQuery.getInt(1);
@@ -655,11 +669,10 @@ public class TraktTools {
                 // episode watched on trakt
                 if (!isWatched) {
                     // set as watched
-                    ContentValues values = new ContentValues();
-                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED);
-                    context.getContentResolver().update(
-                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId), values,
-                            null, null);
+                    batch.add(ContentProviderOperation.newUpdate(
+                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
+                            .withValue(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED)
+                            .build());
                 }
             } else {
                 // episode not watched on trakt
@@ -667,15 +680,21 @@ public class TraktTools {
                     // TODO ut: upload to trakt
                 } else {
                     // set as not watched
-                    ContentValues values = new ContentValues();
-                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
-                    context.getContentResolver().update(
-                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId), values,
-                            null, null);
+                    batch.add(ContentProviderOperation.newUpdate(
+                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
+                            .withValue(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED)
+                            .build());
                 }
             }
         }
         localEpisodesQuery.close();
+
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "Setting episodes watched and unwatched failed.");
+        }
+
         return true;
     }
 
