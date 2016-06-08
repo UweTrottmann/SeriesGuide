@@ -17,11 +17,13 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
@@ -54,6 +56,7 @@ import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -493,8 +496,11 @@ public class TraktTools {
                 }
 
                 // apply database updates, if initial sync upload diff
-                int resultCode = applyEpisodeFlagChanges(context, traktSync, remoteShows,
-                        localShows, Flag.WATCHED, isInitialSync);
+                long startTime = System.currentTimeMillis();
+                int resultCode = syncWatchedTraktShows(context, remoteShows, localShows,
+                        isInitialSync);
+                Timber.d("applyEpisodeFlagChanges took %s ms",
+                        System.currentTimeMillis() - startTime);
                 if (resultCode < 0) {
                     // upload failed, abort
                     return resultCode;
@@ -554,6 +560,165 @@ public class TraktTools {
         }
 
         return SUCCESS;
+    }
+
+    private static int syncWatchedTraktShows(Context context, List<BaseShow> remoteShows,
+            HashSet<Integer> localShows, boolean isInitialSync) {
+        HashMap<Integer, BaseShow> watchedShowsTrakt = buildWatchedShowsTrakt(remoteShows);
+
+        for (Integer localShow : localShows) {
+            if (watchedShowsTrakt.containsKey(localShow)) {
+                // show watched on trakt
+                BaseShow watchedShowTrakt = watchedShowsTrakt.get(localShow);
+                if (!processWatchedSeasonsTrakt(context, isInitialSync, localShow,
+                        watchedShowTrakt)) {
+                    return FAILED;
+                }
+            } else {
+                // show not watched on trakt
+                if (isInitialSync) {
+                    // TODO ut: upload all watched episodes
+                } else {
+                    // set all episodes of show not watched
+                    ContentValues values = new ContentValues();
+                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
+                    context.getContentResolver().update(
+                            SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow), values,
+                            null, null);
+                }
+            }
+        }
+        return SUCCESS;
+    }
+
+    private static boolean processWatchedSeasonsTrakt(Context context, boolean isInitialSync,
+            Integer localShow, BaseShow watchedShowTrakt) {
+        HashMap<Integer, BaseSeason> watchedSeasonsTrakt = buildWatchedSeasonsTrakt(
+                watchedShowTrakt.seasons);
+
+        Cursor localSeasonsQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Seasons.buildSeasonsOfShowUri(localShow),
+                        new String[] { SeriesGuideContract.Seasons._ID,
+                                SeriesGuideContract.Seasons.COMBINED }, null, null,
+                        null);
+        if (localSeasonsQuery == null) {
+            return false;
+        }
+        while (localSeasonsQuery.moveToNext()) {
+            String seasonId = localSeasonsQuery.getString(0);
+            int seasonNumber = localSeasonsQuery.getInt(1);
+            if (watchedSeasonsTrakt.containsKey(seasonNumber)) {
+                // season watched on trakt
+                BaseSeason watchedSeasonTrakt = watchedSeasonsTrakt.get(seasonNumber);
+                if (!processWatchedEpisodesTrakt(context, isInitialSync, seasonId,
+                        watchedSeasonTrakt)) {
+                    return false;
+                }
+            } else {
+                // season not watched on trakt
+                if (isInitialSync) {
+                    // TODO ut: upload all watched episodes
+                } else {
+                    // set all episodes of season not watched
+                    ContentValues values = new ContentValues();
+                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
+                    context.getContentResolver().update(
+                            SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonId), values,
+                            null, null);
+                }
+            }
+        }
+        localSeasonsQuery.close();
+        return true;
+    }
+
+    private static boolean processWatchedEpisodesTrakt(Context context, boolean isInitialSync,
+            String seasonId, BaseSeason watchedSeasonTrakt) {
+        HashSet<Integer> watchedEpisodesTrakt = buildWatchedEpisodesTrakt(
+                watchedSeasonTrakt.episodes);
+
+        Cursor localEpisodesQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
+                        seasonId), new String[] {
+                        SeriesGuideContract.Episodes._ID,
+                        SeriesGuideContract.Episodes.NUMBER,
+                        SeriesGuideContract.Episodes.WATCHED }, null, null, null);
+        if (localEpisodesQuery == null) {
+            return false;
+        }
+        while (localEpisodesQuery.moveToNext()) {
+            int episodeId = localEpisodesQuery.getInt(0);
+            int episodeNumber = localEpisodesQuery.getInt(1);
+            boolean isWatched = EpisodeTools.isWatched(
+                    localEpisodesQuery.getInt(2));
+            if (watchedEpisodesTrakt.contains(episodeNumber)) {
+                // episode watched on trakt
+                if (!isWatched) {
+                    // set as watched
+                    ContentValues values = new ContentValues();
+                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED);
+                    context.getContentResolver().update(
+                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId), values,
+                            null, null);
+                }
+            } else {
+                // episode not watched on trakt
+                if (isInitialSync) {
+                    // TODO ut: upload to trakt
+                } else {
+                    // set as not watched
+                    ContentValues values = new ContentValues();
+                    values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED);
+                    context.getContentResolver().update(
+                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId), values,
+                            null, null);
+                }
+            }
+        }
+        localEpisodesQuery.close();
+        return true;
+    }
+
+    @NonNull
+    private static HashMap<Integer, BaseShow> buildWatchedShowsTrakt(List<BaseShow> remoteShows) {
+        HashMap<Integer, BaseShow> watchedShowsTrakt = new HashMap<>(remoteShows.size());
+        for (BaseShow watchedShowTrakt : remoteShows) {
+            if (watchedShowTrakt.show == null
+                    || watchedShowTrakt.show.ids == null
+                    || watchedShowTrakt.show.ids.tvdb == null
+                    || watchedShowTrakt.seasons == null
+                    || watchedShowTrakt.seasons.isEmpty()) {
+                continue; // trakt show misses required data, skip.
+            }
+            watchedShowsTrakt.put(watchedShowTrakt.show.ids.tvdb, watchedShowTrakt);
+        }
+        return watchedShowsTrakt;
+    }
+
+    @NonNull
+    private static HashMap<Integer, BaseSeason> buildWatchedSeasonsTrakt(List<BaseSeason> seasons) {
+        HashMap<Integer, BaseSeason> watchedSeasonsTrakt = new HashMap<>(seasons.size());
+        for (BaseSeason watchedSeasonTrakt : seasons) {
+            if (watchedSeasonTrakt.number == null
+                    || watchedSeasonTrakt.episodes == null
+                    || watchedSeasonTrakt.episodes.isEmpty()) {
+                continue; // trakt season misses required data, skip.
+            }
+            watchedSeasonsTrakt.put(watchedSeasonTrakt.number, watchedSeasonTrakt);
+        }
+        return watchedSeasonsTrakt;
+    }
+
+    @NonNull
+    private static HashSet<Integer> buildWatchedEpisodesTrakt(List<BaseEpisode> episodes) {
+        HashSet<Integer> watchedEpisodesTrakt = new HashSet<>(episodes.size());
+        for (BaseEpisode watchedEpisodeTrakt : episodes) {
+            if (watchedEpisodeTrakt.number == null) {
+                continue; // trakt episode misses required data, skip.
+            }
+            watchedEpisodesTrakt.add(watchedEpisodeTrakt.number);
+        }
+        return watchedEpisodesTrakt;
     }
 
     private static int applyEpisodeFlagChanges(Context context, Sync traktSync,
