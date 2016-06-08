@@ -498,7 +498,7 @@ public class TraktTools {
                 long startTime = System.currentTimeMillis();
                 int resultCode = processWatchedShowsTrakt(context, remoteShows, localShows,
                         isInitialSync);
-                Timber.d("applyEpisodeFlagChanges took %s ms",
+                Timber.d("processWatchedShowsTrakt took %s ms",
                         System.currentTimeMillis() - startTime);
                 if (resultCode < 0) {
                     // upload failed, abort
@@ -534,8 +534,11 @@ public class TraktTools {
                 }
 
                 // apply database updates,  if initial sync upload diff
+                long startTime = System.currentTimeMillis();
                 int resultCode = applyEpisodeFlagChanges(context, traktSync, remoteShows,
                         localShows, Flag.COLLECTED, isInitialSync);
+                Timber.d("processCollectedShowsTrakt took %s ms",
+                        System.currentTimeMillis() - startTime);
                 if (resultCode < 0) {
                     // upload failed, abort
                     return resultCode;
