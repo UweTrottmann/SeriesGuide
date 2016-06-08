@@ -83,7 +83,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktAddFragment.TYPE_WATCHED) {
                     action = "load watched shows";
-                    response = trakt.sync().watchedShows(Extended.IMAGES).execute();
+                    response = trakt.sync().watchedShows(Extended.NOSEASONSIMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
                     response = trakt.sync().collectionShows(Extended.IMAGES).execute();
