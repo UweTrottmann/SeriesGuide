@@ -30,12 +30,10 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
-import com.uwetrottmann.trakt.v2.entities.BaseSeason;
-import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.LastActivity;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -43,17 +41,22 @@ import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SearchResult;
 import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncSeason;
-import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.IdType;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.services.Search;
-import com.uwetrottmann.trakt.v2.services.Sync;
+import com.uwetrottmann.trakt5.entities.BaseEpisode;
+import com.uwetrottmann.trakt5.entities.BaseSeason;
+import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.ShowIds;
+import com.uwetrottmann.trakt5.entities.SyncEpisode;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.entities.SyncSeason;
+import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.services.Sync;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,6 +66,7 @@ import java.util.Locale;
 import java.util.Set;
 import org.joda.time.DateTime;
 import retrofit.RetrofitError;
+import retrofit2.Response;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
@@ -477,39 +481,45 @@ public class TraktTools {
             return FAILED;
         }
 
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return FAILED_CREDENTIALS;
         }
-        Sync traktSync = trakt.sync();
+        Sync traktSync = ServiceUtils.getTrakt(context).sync();
 
         // watched episodes
         if (isInitialSync || activity.watched_at.isAfter(
                 TraktSettings.getLastEpisodesWatchedAt(context))) {
+            List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
-                List<BaseShow> remoteShows = traktSync.watchedShows(Extended.DEFAULT_MIN);
-                if (remoteShows == null) {
-                    Timber.e("downloadEpisodeFlags: null watched response");
-                    return FAILED_API;
+                Response<List<BaseShow>> response
+                        = traktSync.watchedShows(com.uwetrottmann.trakt5.enums.Extended.DEFAULT_MIN)
+                        .execute();
+                if (response.isSuccessful()) {
+                    watchedShowsTrakt = response.body();
+                } else {
+                    if (SgTrakt.isUnauthorized(context, response)) {
+                        return FAILED_CREDENTIALS;
+                    }
+                    SgTrakt.trackFailedRequest(context, "get watched shows", response);
                 }
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, "get watched shows", e);
+            }
 
-                // apply database updates, if initial sync upload diff
-                long startTime = System.currentTimeMillis();
-                int resultCode = processWatchedShowsTrakt(context, remoteShows, localShows,
-                        isInitialSync);
-                Timber.d("processWatchedShowsTrakt took %s ms",
-                        System.currentTimeMillis() - startTime);
-                if (resultCode < 0) {
-                    // upload failed, abort
-                    return resultCode;
-                }
-            } catch (RetrofitError e) {
-                Timber.e(e, "downloadEpisodeFlags: watched download failed");
+            if (watchedShowsTrakt == null) {
                 return FAILED_API;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
-                return FAILED_CREDENTIALS;
+            }
+
+            // apply database updates, if initial sync upload diff
+            long startTime = System.currentTimeMillis();
+            int result = processWatchedShowsTrakt(context, traktSync, watchedShowsTrakt, localShows,
+                    isInitialSync);
+            Timber.d("processWatchedShowsTrakt took %s ms",
+                    System.currentTimeMillis() - startTime);
+            if (result < SUCCESS) {
+                // upload failed, abort
+                return result;
             }
 
             // store new last activity time
@@ -525,30 +535,41 @@ public class TraktTools {
         // collected episodes
         if (isInitialSync || activity.collected_at.isAfter(
                 TraktSettings.getLastEpisodesCollectedAt(context))) {
+            List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
-                List<BaseShow> remoteShows = traktSync.collectionShows(Extended.DEFAULT_MIN);
-                if (remoteShows == null) {
-                    Timber.e("downloadEpisodeFlags: null collected response");
-                    return FAILED_API;
+                Response<List<BaseShow>> response = traktSync.collectionShows(
+                        com.uwetrottmann.trakt5.enums.Extended.DEFAULT_MIN).execute();
+                if (response.isSuccessful()) {
+                    collectedShowsTrakt = response.body();
+                } else {
+                    if (SgTrakt.isUnauthorized(context, response)) {
+                        return FAILED_CREDENTIALS;
+                    }
+                    SgTrakt.trackFailedRequest(context, "get collected shows", response);
                 }
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, "get collected shows", e);
+            }
 
-                // apply database updates,  if initial sync upload diff
-                long startTime = System.currentTimeMillis();
-                int resultCode = applyEpisodeFlagChanges(context, traktSync, remoteShows,
-                        localShows, Flag.COLLECTED, isInitialSync);
-                Timber.d("processCollectedShowsTrakt took %s ms",
-                        System.currentTimeMillis() - startTime);
-                if (resultCode < 0) {
-                    // upload failed, abort
-                    return resultCode;
-                }
-            } catch (RetrofitError e) {
-                Timber.e(e, "downloadEpisodeFlags: collected download failed");
+            if (collectedShowsTrakt == null) {
+                Timber.e("downloadEpisodeFlags: null collected response");
                 return FAILED_API;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
-                return FAILED_CREDENTIALS;
+            }
+
+            // apply database updates,  if initial sync upload diff
+            long startTime = System.currentTimeMillis();
+            int resultCode = 0;
+            try {
+                resultCode = applyEpisodeFlagChanges(context, traktSync, collectedShowsTrakt,
+                        localShows, Flag.COLLECTED, isInitialSync);
+            } catch (OAuthUnauthorizedException ignored) {
+            }
+            Timber.d("processCollectedShowsTrakt took %s ms",
+                    System.currentTimeMillis() - startTime);
+            if (resultCode < 0) {
+                // upload failed, abort
+                return resultCode;
             }
 
             // store new last activity time
@@ -564,29 +585,41 @@ public class TraktTools {
         return SUCCESS;
     }
 
-    private static int processWatchedShowsTrakt(Context context, List<BaseShow> remoteShows,
+    private static int processWatchedShowsTrakt(Context context,
+            com.uwetrottmann.trakt5.services.Sync traktSync,
+            List<BaseShow> remoteShows,
             HashSet<Integer> localShows, boolean isInitialSync) {
         HashMap<Integer, BaseShow> watchedShowsTrakt = buildWatchedShowsTrakt(remoteShows);
 
+        int uploadedShowsCount = 0;
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (Integer localShow : localShows) {
             if (watchedShowsTrakt.containsKey(localShow)) {
                 // show watched on trakt
-                BaseShow watchedShowTrakt = watchedShowsTrakt.get(localShow);
-                if (!processWatchedSeasonsTrakt(context, isInitialSync, localShow,
-                        watchedShowTrakt)) {
-                    return FAILED;
+                int result = processWatchedSeasonsTrakt(context, traktSync, isInitialSync,
+                        localShow, watchedShowsTrakt.get(localShow));
+                if (result < SUCCESS) {
+                    return result; // processing seasons failed, give up.
                 }
             } else {
                 // show not watched on trakt
-                if (isInitialSync) {
-                    // TODO ut: upload all watched episodes
-                } else {
-                    // set all episodes of show not watched
-                    batch.add(ContentProviderOperation.newUpdate(
-                            SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow))
-                            .withValue(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.UNWATCHED)
-                            .build());
+                // check if this is because the show can not be tracked with trakt (yet)
+                // some shows only exist on TheTVDB, keep state local and maybe upload in the future
+                Integer showTraktId = ShowTools.getShowTraktId(context, localShow);
+                if (showTraktId != null) {
+                    if (isInitialSync) {
+                        // upload all watched episodes of the show
+                        // do in between processing to stretch uploads over longer time periods
+                        uploadWatchedEpisodes(context, traktSync, localShow, showTraktId);
+                        uploadedShowsCount++;
+                    } else {
+                        // set all episodes of show not watched
+                        batch.add(ContentProviderOperation.newUpdate(
+                                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow))
+                                .withValue(SeriesGuideContract.Episodes.WATCHED,
+                                        EpisodeFlags.UNWATCHED)
+                                .build());
+                    }
                 }
             }
         }
@@ -597,11 +630,14 @@ public class TraktTools {
             Timber.e(e, "Setting shows unwatched failed.");
         }
 
+        if (uploadedShowsCount > 0) {
+            Timber.d("processWatchedShowsTrakt: uploaded %s complete shows.", localShows.size());
+        }
         return SUCCESS;
     }
 
-    private static boolean processWatchedSeasonsTrakt(Context context, boolean isInitialSync,
-            Integer localShow, BaseShow watchedShowTrakt) {
+    private static int processWatchedSeasonsTrakt(Context context, Sync traktSync,
+            boolean isInitialSync, int localShow, BaseShow watchedShowTrakt) {
         HashMap<Integer, BaseSeason> watchedSeasonsTrakt = buildWatchedSeasonsTrakt(
                 watchedShowTrakt.seasons);
 
@@ -611,23 +647,27 @@ public class TraktTools {
                                 SeriesGuideContract.Seasons.COMBINED }, null, null,
                         null);
         if (localSeasonsQuery == null) {
-            return false;
+            return FAILED;
         }
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        List<SyncSeason> syncSeasons = new ArrayList<>();
         while (localSeasonsQuery.moveToNext()) {
             String seasonId = localSeasonsQuery.getString(0);
             int seasonNumber = localSeasonsQuery.getInt(1);
             if (watchedSeasonsTrakt.containsKey(seasonNumber)) {
                 // season watched on trakt
-                BaseSeason watchedSeasonTrakt = watchedSeasonsTrakt.get(seasonNumber);
                 if (!processWatchedEpisodesTrakt(context, isInitialSync, seasonId,
-                        watchedSeasonTrakt)) {
-                    return false;
+                        watchedSeasonsTrakt.get(seasonNumber), syncSeasons)) {
+                    return FAILED;
                 }
             } else {
                 // season not watched on trakt
                 if (isInitialSync) {
-                    // TODO ut: upload all watched episodes
+                    // schedule all watched episodes of this season for upload
+                    SyncSeason syncSeason = buildSyncSeason(context, seasonId, seasonNumber);
+                    if (syncSeason != null) {
+                        syncSeasons.add(syncSeason);
+                    }
                 } else {
                     // set all episodes of season not watched
                     batch.add(ContentProviderOperation.newUpdate(
@@ -645,11 +685,20 @@ public class TraktTools {
             Timber.e(e, "Setting seasons unwatched failed.");
         }
 
-        return true;
+        if (syncSeasons.size() > 0) {
+            // upload watched episodes for this show
+            Integer showTraktId = ShowTools.getShowTraktId(context, localShow);
+            if (showTraktId == null) {
+                return FAILED; // show should have a trakt id, give up
+            }
+            return uploadWatchedEpisodes(context, traktSync, showTraktId, syncSeasons);
+        } else {
+            return SUCCESS;
+        }
     }
 
     private static boolean processWatchedEpisodesTrakt(Context context, boolean isInitialSync,
-            String seasonId, BaseSeason watchedSeasonTrakt) {
+            String seasonId, BaseSeason watchedSeasonTrakt, List<SyncSeason> syncSeasons) {
         HashSet<Integer> watchedEpisodesTrakt = buildWatchedEpisodesTrakt(
                 watchedSeasonTrakt.episodes);
 
@@ -662,7 +711,8 @@ public class TraktTools {
         if (localEpisodesQuery == null) {
             return false;
         }
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        List<SyncEpisode> syncEpisodes = new ArrayList<>();
         while (localEpisodesQuery.moveToNext()) {
             int episodeId = localEpisodesQuery.getInt(0);
             int episodeNumber = localEpisodesQuery.getInt(1);
@@ -680,7 +730,8 @@ public class TraktTools {
             } else {
                 // episode not watched on trakt
                 if (isInitialSync) {
-                    // TODO ut: upload to trakt
+                    // upload to trakt
+                    syncEpisodes.add(new SyncEpisode().number(episodeNumber));
                 } else {
                     // set as not watched
                     batch.add(ContentProviderOperation.newUpdate(
@@ -696,6 +747,12 @@ public class TraktTools {
             DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
             Timber.e(e, "Setting episodes watched and unwatched failed.");
+        }
+
+        if (syncEpisodes.size() > 0) {
+            syncSeasons.add(new SyncSeason()
+                    .number(watchedSeasonTrakt.number)
+                    .episodes(syncEpisodes));
         }
 
         return true;
@@ -780,7 +837,7 @@ public class TraktTools {
         // will skip shows that do not have a trakt id (e.g. can not be tracked with trakt, yet)
         switch (flag) {
             case WATCHED:
-                return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
+//                return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
             case COLLECTED:
                 return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
         }
@@ -888,10 +945,10 @@ public class TraktTools {
                 try {
                     switch (flag) {
                         case WATCHED:
-                            traktSync.addItemsToWatchedHistory(syncItems);
+//                            traktSync.addItemsToWatchedHistory(syncItems);
                             break;
                         case COLLECTED:
-                            traktSync.addItemsToCollection(syncItems);
+//                            traktSync.addItemsToCollection(syncItems);
                             break;
                     }
                 } catch (RetrofitError e) {
@@ -1046,59 +1103,65 @@ public class TraktTools {
     }
 
     /**
-     * Uploads all watched episodes for the given shows to trakt.
+     * Uploads all watched episodes for the given show to trakt.
      *
      * @return Any of the {@link TraktTools} result codes.
      */
-    private static int uploadWatchedEpisodes(Context context, Sync traktSync,
-            HashSet<Integer> localShows) throws OAuthUnauthorizedException {
-        // loop through given shows
-        SyncShow syncShow = new SyncShow();
-        SyncItems syncItems = new SyncItems().shows(syncShow);
-        for (int showTvdbId : localShows) {
-            // check if the show has a trakt id (e.g. is on trakt)
-            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
-            if (showTraktId == null) {
-                // has no valid trakt id, skip upload
-                continue;
-            }
-
-            syncShow.id(ShowIds.trakt(showTraktId));
-
-            // query for watched episodes
-            Cursor localEpisodes = context.getContentResolver().query(
-                    SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                    EpisodesQuery.PROJECTION,
-                    SeriesGuideContract.Episodes.SELECTION_WATCHED,
-                    null,
-                    SeriesGuideContract.Episodes.SORT_SEASON_ASC);
-            if (localEpisodes == null) {
-                Timber.e("uploadWatchedEpisodes: query failed");
-                return FAILED;
-            }
-
-            // build a list of watched episodes
-            List<SyncSeason> episodesToUpload = new LinkedList<>();
-            buildEpisodeList(localEpisodes, episodesToUpload);
-            localEpisodes.close();
-
-            if (episodesToUpload.size() == 0) {
-                // nothing to upload for this show
-                continue;
-            }
-
-            // upload
-            try {
-                syncShow.seasons = episodesToUpload;
-                traktSync.addItemsToWatchedHistory(syncItems);
-            } catch (RetrofitError e) {
-                Timber.e(e, "uploadWatchedEpisodes: upload failed");
-                return FAILED_API;
-            }
+    private static int uploadWatchedEpisodes(Context context, Sync traktSync, int showTvdbId,
+            int showTraktId) {
+        // query for watched episodes
+        Cursor localEpisodes = context.getContentResolver().query(
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                EpisodesQuery.PROJECTION,
+                SeriesGuideContract.Episodes.SELECTION_WATCHED,
+                null,
+                SeriesGuideContract.Episodes.SORT_SEASON_ASC);
+        if (localEpisodes == null) {
+            Timber.e("uploadWatchedEpisodes: query failed");
+            return FAILED;
         }
 
-        Timber.d("uploadWatchedEpisodes: uploaded " + localShows.size() + " shows");
-        return SUCCESS;
+        // build a list of watched episodes
+        List<SyncSeason> syncSeasons = new LinkedList<>();
+        buildEpisodeList(localEpisodes, syncSeasons);
+        localEpisodes.close();
+
+        if (syncSeasons.size() == 0) {
+            return SUCCESS; // nothing to upload for this show
+        }
+
+        return uploadWatchedEpisodes(context, traktSync, showTraktId, syncSeasons);
+    }
+
+    /**
+     * Uploads all watched episodes for the given show to trakt.
+     *
+     * @return Any of the {@link TraktTools} result codes.
+     */
+    private static int uploadWatchedEpisodes(Context context, Sync traktSync, int showTraktId,
+            List<SyncSeason> syncSeasons) {
+        SyncShow syncShow = new SyncShow();
+        syncShow.id(ShowIds.trakt(showTraktId));
+        syncShow.seasons = syncSeasons;
+
+        // upload
+        SyncItems syncItems = new SyncItems().shows(syncShow);
+        try {
+            Response<SyncResponse> response = traktSync.addItemsToWatchedHistory(syncItems)
+                    .execute();
+            if (response.isSuccessful()) {
+                return SUCCESS;
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return FAILED_CREDENTIALS;
+                }
+                SgTrakt.trackFailedRequest(context, "add show to watched", response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "add show to watched", e);
+        }
+
+        return FAILED_API;
     }
 
     /**
@@ -1121,6 +1184,38 @@ public class TraktTools {
             // add episode
             currentSeason.episodes.add(new SyncEpisode().number(episode));
         }
+    }
+
+    /**
+     * Returns a list of flagged episodes of a season that are not included in the given set.
+     * Packaged ready for upload to trakt in a {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}.
+     */
+    private static SyncSeason buildSyncSeason(Context context, String seasonTvdbId,
+            int seasonNumber) {
+        // query for flagged episodes of the given season
+        Cursor watchedEpisodesQuery = context.getContentResolver().query(
+                SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
+                new String[] { SeriesGuideContract.Episodes.NUMBER },
+                SeriesGuideContract.Episodes.SELECTION_WATCHED,
+                null,
+                SeriesGuideContract.Episodes.SORT_NUMBER_ASC);
+        if (watchedEpisodesQuery == null) {
+            // query failed
+            return null;
+        }
+
+        List<SyncEpisode> syncEpisodes = new ArrayList<>();
+        while (watchedEpisodesQuery.moveToNext()) {
+            int episodeNumber = watchedEpisodesQuery.getInt(0);
+            syncEpisodes.add(new SyncEpisode().number(episodeNumber));
+        }
+        watchedEpisodesQuery.close();
+
+        if (syncEpisodes.size() == 0) {
+            return null; // no episodes watched
+        }
+
+        return new SyncSeason().number(seasonNumber).episodes(syncEpisodes);
     }
 
     public static String buildShowUrl(int showTvdbId) {
