@@ -477,25 +477,36 @@ public class TraktTools {
      * will be removed prior to getting the actual flags from trakt (season by season).
      * @return Any of the {@link TraktTools} result codes.
      */
-    public static int syncEpisodeFlags(Context context, HashSet<Integer> localShows,
-            LastActivityMore activity, boolean isInitialSync) {
-        if (activity.collected_at == null) {
-            Timber.e("downloadEpisodeFlags: null collected_at");
-            return FAILED;
-        }
-        if (activity.watched_at == null) {
-            Timber.e("downloadEpisodeFlags: null watched_at");
-            return FAILED;
-        }
-
+    public static int syncEpisodeFlags(Context context, @NonNull HashSet<Integer> localShows,
+            @NonNull LastActivityMore activity, boolean isInitialSync) {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return FAILED_CREDENTIALS;
         }
-        Sync traktSync = ServiceUtils.getTrakt(context).sync();
 
         // watched episodes
+        Sync traktSync = ServiceUtils.getTrakt(context).sync();
+        int result = syncWatchedEpisodes(context, traktSync, localShows, activity.watched_at,
+                isInitialSync);
+        if (result < SUCCESS) {
+            return result; // failed to process watched episodes, give up.
+        }
+
+        // collected episodes
+        result = syncCollectedEpisodes(context, traktSync, localShows, activity.collected_at,
+                isInitialSync);
+        return result;
+    }
+
+    private static int syncWatchedEpisodes(Context context, Sync traktSync,
+            @NonNull HashSet<Integer> localShows, @Nullable DateTime watchedAt,
+            boolean isInitialSync) {
+        if (watchedAt == null) {
+            Timber.e("syncWatchedEpisodes: null watched_at");
+            return FAILED;
+        }
+
         long lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context);
-        if (isInitialSync || activity.watched_at.isAfter(lastWatchedAt)) {
+        if (isInitialSync || watchedAt.isAfter(lastWatchedAt)) {
             List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
@@ -522,7 +533,7 @@ public class TraktTools {
             long startTime = System.currentTimeMillis();
             int result = processTraktShows(context, traktSync, watchedShowsTrakt, localShows,
                     isInitialSync, Flag.WATCHED);
-            Timber.d("processWatchedShowsTrakt took %s ms",
+            Timber.d("syncWatchedEpisodes: processing took %s ms",
                     System.currentTimeMillis() - startTime);
             if (result < SUCCESS) {
                 return result; // failed to process watched episodes, give up.
@@ -531,16 +542,27 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT,
-                            activity.watched_at.getMillis())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT, watchedAt.getMillis())
                     .apply();
 
-            Timber.d("downloadEpisodeFlags: success for watched");
+            Timber.d("syncWatchedEpisodes: success");
+        } else {
+            Timber.d("syncWatchedEpisodes: no changes since %tF %tT", lastWatchedAt,
+                    lastWatchedAt);
+        }
+        return SUCCESS;
+    }
+
+    private static int syncCollectedEpisodes(Context context, Sync traktSync,
+            @NonNull HashSet<Integer> localShows, @Nullable DateTime collectedAt,
+            boolean isInitialSync) {
+        if (collectedAt == null) {
+            Timber.e("syncCollectedEpisodes: null collected_at");
+            return FAILED;
         }
 
-        // collected episodes
         long lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context);
-        if (isInitialSync || activity.collected_at.isAfter(lastCollectedAt)) {
+        if (isInitialSync || collectedAt.isAfter(lastCollectedAt)) {
             List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
@@ -559,7 +581,6 @@ public class TraktTools {
             }
 
             if (collectedShowsTrakt == null) {
-                Timber.e("downloadEpisodeFlags: null collected response");
                 return FAILED_API;
             }
 
@@ -567,7 +588,7 @@ public class TraktTools {
             long startTime = System.currentTimeMillis();
             int result = processTraktShows(context, traktSync, collectedShowsTrakt, localShows,
                     isInitialSync, Flag.COLLECTED);
-            Timber.d("processCollectedShowsTrakt took %s ms",
+            Timber.d("syncCollectedEpisodes: processing took %s ms",
                     System.currentTimeMillis() - startTime);
             if (result < SUCCESS) {
                 return result; // failed to process collected episodes, give up.
@@ -576,13 +597,14 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT,
-                            activity.collected_at.getMillis())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT, collectedAt.getMillis())
                     .apply();
 
-            Timber.d("downloadEpisodeFlags: success for collected");
+            Timber.d("syncCollectedEpisodes: success");
+        } else {
+            Timber.d("syncCollectedEpisodes: no changes since %tF %tT", lastCollectedAt,
+                    lastCollectedAt);
         }
-
         return SUCCESS;
     }
 
@@ -605,8 +627,8 @@ public class TraktTools {
 
     private static int processTraktShows(Context context,
             com.uwetrottmann.trakt5.services.Sync traktSync,
-            List<BaseShow> remoteShows,
-            HashSet<Integer> localShows, boolean isInitialSync, Flag flag) {
+            @NonNull List<BaseShow> remoteShows,
+            @NonNull HashSet<Integer> localShows, boolean isInitialSync, Flag flag) {
         HashMap<Integer, BaseShow> traktShow = buildTraktShowsMap(remoteShows);
 
         int uploadedShowsCount = 0;
