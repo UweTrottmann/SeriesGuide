@@ -543,8 +543,7 @@ public class TraktTools {
             List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
-                Response<List<BaseShow>> response
-                        = traktSync.watchedShows(com.uwetrottmann.trakt5.enums.Extended.DEFAULT_MIN)
+                Response<List<BaseShow>> response = traktSync.watchedShows(Extended.DEFAULT_MIN)
                         .execute();
                 if (response.isSuccessful()) {
                     watchedShowsTrakt = response.body();
@@ -599,8 +598,8 @@ public class TraktTools {
             List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
-                Response<List<BaseShow>> response = traktSync.collectionShows(
-                        com.uwetrottmann.trakt5.enums.Extended.DEFAULT_MIN).execute();
+                Response<List<BaseShow>> response = traktSync.collectionShows(Extended.DEFAULT_MIN)
+                        .execute();
                 if (response.isSuccessful()) {
                     collectedShowsTrakt = response.body();
                 } else {
