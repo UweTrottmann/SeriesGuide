@@ -19,27 +19,27 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Sync;
+import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.services.Sync;
 import de.greenrobot.event.EventBus;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import retrofit.RetrofitError;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -123,28 +123,25 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             return null;
         }
 
-        // get watched episodes from trakt (only if not connected to Hexagon) once
-        List<BaseShow> collection = new ArrayList<>();
-        List<BaseShow> watched = new ArrayList<>();
-        if (!HexagonTools.isSignedIn(context)) {
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-            if (trakt != null) {
-                Timber.d("Getting watched and collected episodes from trakt.");
-                try {
-                    Sync sync = trakt.sync();
-                    collection = sync.collectionShows(Extended.DEFAULT_MIN);
-                    watched = sync.watchedShows(Extended.DEFAULT_MIN);
-                } catch (RetrofitError e) {
-                    // something went wrong, continue anyhow
-                    Timber.w(e, "Getting watched and collected episodes failed");
-                    publishProgress(ADD_TRAKT_API_ERROR);
-                    return null;
-                } catch (OAuthUnauthorizedException e) {
-                    TraktCredentials.get(context).setCredentialsInvalid();
-                    publishProgress(ADD_TRAKT_AUTH_ERROR);
-                    return null;
-                }
+        // if not connected to Hexagon, get episodes from trakt
+        HashMap<Integer, BaseShow> traktCollection = null;
+        HashMap<Integer, BaseShow> traktWatched = null;
+        if (!HexagonTools.isSignedIn(context) && TraktCredentials.get(context).hasCredentials()) {
+            Timber.d("Getting watched and collected episodes from trakt.");
+            Sync traktSync = ServiceUtils.getTrakt(context).sync();
+            // get collection
+            HashMap<Integer, BaseShow> traktShows = getTraktShows(traktSync, "get collection",
+                    true);
+            if (traktShows == null) {
+                return null; // can not get collected state from trakt, give up.
             }
+            traktCollection = traktShows;
+            // get watched
+            traktShows = getTraktShows(traktSync, "get watched", false);
+            if (traktShows == null) {
+                return null; // can not get watched state from trakt, give up.
+            }
+            traktWatched = traktShows;
         }
 
         int result;
@@ -170,7 +167,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
             try {
                 boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid, nextShow.language,
-                        watched, collection);
+                        traktCollection, traktWatched);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
@@ -246,5 +243,31 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         if (event != null) {
             EventBus.getDefault().post(event);
         }
+    }
+
+    @Nullable
+    private HashMap<Integer, BaseShow> getTraktShows(Sync traktSync, String action,
+            boolean isCollectionNotWatched) {
+        try {
+            Response<List<BaseShow>> response;
+            if (isCollectionNotWatched) {
+                response = traktSync.collectionShows(Extended.DEFAULT_MIN).execute();
+            } else {
+                response = traktSync.watchedShows(Extended.DEFAULT_MIN).execute();
+            }
+            if (response.isSuccessful()) {
+                return TraktTools.buildTraktShowsMap(response.body());
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    publishProgress(ADD_TRAKT_AUTH_ERROR);
+                    return null;
+                }
+                SgTrakt.trackFailedRequest(context, action, response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, action, e);
+        }
+        publishProgress(ADD_TRAKT_API_ERROR);
+        return null;
     }
 }

@@ -56,9 +56,8 @@ import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
 import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
 import com.uwetrottmann.thetvdb.services.SeriesService;
 import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -152,8 +151,9 @@ public class TheTVDB {
      * @return True, if the show and its episodes were added to the database.
      */
     public static boolean addShow(@NonNull Context context, int showTvdbId,
-            @Nullable String language, @NonNull List<BaseShow> traktWatched,
-            @NonNull List<BaseShow> traktCollection) throws TvdbException {
+            @Nullable String language, @Nullable HashMap<Integer, BaseShow> traktCollection,
+            @Nullable HashMap<Integer, BaseShow> traktWatched)
+            throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
@@ -185,36 +185,20 @@ public class TheTVDB {
             ShowTools.get(context).sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            storeTraktFlags(context, traktWatched, showTvdbId, true);
-            storeTraktFlags(context, traktCollection, showTvdbId, false);
+            if (!TraktTools.storeEpisodeFlags(context, traktWatched, showTvdbId,
+                    TraktTools.Flag.WATCHED)) {
+                throw new TvdbException("addShow: storing trakt watched episodes failed.");
+            }
+            if (!TraktTools.storeEpisodeFlags(context, traktCollection, showTvdbId,
+                    TraktTools.Flag.COLLECTED)) {
+                throw new TvdbException("addShow: storing trakt collected episodes failed.");
+            }
         }
 
         // calculate next episode
         DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
-    }
-
-    private static void storeTraktFlags(Context context, List<BaseShow> shows, int showTvdbId,
-            boolean isWatchedList) {
-        // try to find seen episodes from trakt of the given show
-        for (BaseShow show : shows) {
-            if (show.show == null || show.show.ids == null || show.show.ids.tvdb == null
-                    || show.show.ids.tvdb != showTvdbId) {
-                continue; // skip
-            }
-
-            try {
-                TraktTools.applyEpisodeFlagChanges(context, show,
-                        isWatchedList ? TraktTools.Flag.WATCHED : TraktTools.Flag.COLLECTED, false,
-                        null);
-            } catch (OAuthUnauthorizedException ignored) {
-                // we do not enable merging, so no trakt interaction will occur
-            }
-
-            // done, found the show we were looking for
-            return;
-        }
     }
 
     /**

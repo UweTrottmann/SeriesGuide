@@ -28,6 +28,8 @@ import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -222,10 +224,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static boolean isSyncAutomatically(Context context) {
         Account account = AccountUtils.getAccount(context);
-        if (account == null) {
-            return false;
-        }
-        return ContentResolver.getSyncAutomatically(account,
+        return account != null && ContentResolver.getSyncAutomatically(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY);
     }
 
@@ -287,6 +286,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             };
         } else {
             showsToUpdate = getShowsToUpdate(syncType, currentTime);
+            if (showsToUpdate == null) {
+                Timber.e("Syncing...ABORT_SHOW_QUERY_FAILED");
+                return;
+            }
         }
 
         // from here on we need more sophisticated abort handling, so keep track of errors
@@ -336,6 +339,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 if (HexagonTools.isSignedIn(getContext())) {
                     // sync with hexagon...
+                    Timber.d("Syncing...Hexagon");
                     boolean success = HexagonTools.syncWithHexagon(getContext(), showsExisting,
                             showsNew);
                     // don't overwrite failure
@@ -344,6 +348,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     }
                 } else {
                     // ...OR sync with trakt
+                    Timber.d("Syncing...trakt");
                     UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting,
                             currentTime);
                     // don't overwrite failure
@@ -410,26 +415,29 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Returns an array of show ids to update.
      */
+    @Nullable
     private int[] getShowsToUpdate(SyncType syncType, long currentTime) {
         switch (syncType) {
-            case FULL:
+            case FULL: {
                 // get all show IDs for a full update
-                final Cursor shows = getContext().getContentResolver().query(Shows.CONTENT_URI,
+                final Cursor showsQuery = getContext().getContentResolver().query(Shows.CONTENT_URI,
                         new String[] {
                                 Shows._ID
                         }, null, null, null
                 );
-
-                int[] showIds = new int[shows.getCount()];
-                int i = 0;
-                while (shows.moveToNext()) {
-                    showIds[i] = shows.getInt(0);
-                    i++;
+                if (showsQuery == null) {
+                    return null;
                 }
 
-                shows.close();
-
+                int[] showIds = new int[showsQuery.getCount()];
+                int i = 0;
+                while (showsQuery.moveToNext()) {
+                    showIds[i] = showsQuery.getInt(0);
+                    i++;
+                }
+                showsQuery.close();
                 return showIds;
+            }
             case DELTA:
             default:
                 // Get shows which have not been updated for a certain time.
@@ -498,7 +506,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // download show ratings
-            if (TraktTools.downloadShowRatings(context, lastActivity.shows)
+            if (TraktTools.downloadShowRatings(context, lastActivity.shows.rated_at)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -508,7 +516,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // download episode ratings
-            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes)
+            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes.rated_at)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -546,8 +554,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static LastActivities getTraktLastActivity(Context context) {
-        Timber.d("performTraktSync: get last activity");
-
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
         if (trakt == null) {
             return null;
@@ -571,7 +577,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context,
-            HashSet<Integer> localShows, LastActivityMore lastActivity, long currentTime) {
+            @NonNull HashSet<Integer> localShows, @NonNull LastActivityMore lastActivity,
+            long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
@@ -594,8 +601,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
-        Timber.d("performTraktEpisodeSync: success, last sync at %s", currentTime);
-
         editor.commit();
 
         return UpdateResult.SUCCESS;
