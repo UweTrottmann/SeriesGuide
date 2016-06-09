@@ -55,7 +55,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.EpisodeTools.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
@@ -561,9 +561,9 @@ public class SeasonsFragment extends ListFragment implements
          */
         if (isAdded()) {
             onLoadRemainingCounter();
-            if (event.mType instanceof EpisodeTools.SeasonWatchedType) {
+            if (event.flagType instanceof SeasonWatchedType) {
                 // If we can narrow it down to just one season...
-                EpisodeTools.SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
+                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.flagType;
                 Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
                         String.valueOf(seasonWatchedType.getSeasonTvdbId()));
                 t.start();

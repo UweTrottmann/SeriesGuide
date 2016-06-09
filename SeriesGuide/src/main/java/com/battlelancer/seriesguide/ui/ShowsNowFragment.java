@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -352,7 +353,7 @@ public class ShowsNowFragment extends Fragment {
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.mType instanceof EpisodeTools.EpisodeWatchedType
+        if (event.flagType instanceof EpisodeTaskTypes.EpisodeWatchedType
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
