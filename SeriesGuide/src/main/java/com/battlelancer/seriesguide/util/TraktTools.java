@@ -30,29 +30,26 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.uwetrottmann.trakt.v2.TraktLink;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseMovie;
-import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
-import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
-import com.uwetrottmann.trakt.v2.entities.RatedMovie;
-import com.uwetrottmann.trakt.v2.entities.RatedShow;
-import com.uwetrottmann.trakt.v2.entities.SearchResult;
-import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.enums.IdType;
-import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Search;
+import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
+import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.entities.RatedEpisode;
+import com.uwetrottmann.trakt5.entities.RatedMovie;
+import com.uwetrottmann.trakt5.entities.RatedShow;
+import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.IdType;
+import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +60,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.joda.time.DateTime;
-import retrofit.RetrofitError;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -127,20 +123,28 @@ public class TraktTools {
             return UpdateResult.SUCCESS;
         }
 
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return UpdateResult.INCOMPLETE;
         }
 
         // download watched movies
         List<BaseMovie> watchedMovies;
         try {
-            watchedMovies = trakt.sync().watchedMovies(Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "downloadWatchedMovies: download failed");
-            return UpdateResult.INCOMPLETE;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
+            Response<List<BaseMovie>> response = ServiceUtils.getTrakt(context)
+                    .sync()
+                    .watchedMovies(Extended.DEFAULT_MIN)
+                    .execute();
+            if (response.isSuccessful()) {
+                watchedMovies = response.body();
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return UpdateResult.INCOMPLETE;
+                }
+                SgTrakt.trackFailedRequest(context, "get watched movies", response);
+                return UpdateResult.INCOMPLETE;
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get watched movies", e);
             return UpdateResult.INCOMPLETE;
         }
         if (watchedMovies == null) {
@@ -230,20 +234,28 @@ public class TraktTools {
             return UpdateResult.SUCCESS;
         }
 
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return UpdateResult.INCOMPLETE;
         }
 
         // download rated shows
         List<RatedMovie> ratedMovies;
         try {
-            ratedMovies = trakt.sync().ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "downloadMovieRatings: download failed");
-            return UpdateResult.INCOMPLETE;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
+            Response<List<RatedMovie>> response = ServiceUtils.getTrakt(context)
+                    .sync()
+                    .ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .execute();
+            if (response.isSuccessful()) {
+                ratedMovies = response.body();
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return UpdateResult.INCOMPLETE;
+                }
+                SgTrakt.trackFailedRequest(context, "get movie ratings", response);
+                return UpdateResult.INCOMPLETE;
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get movie ratings", e);
             return UpdateResult.INCOMPLETE;
         }
         if (ratedMovies == null) {
@@ -317,20 +329,28 @@ public class TraktTools {
             return UpdateResult.SUCCESS;
         }
 
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return UpdateResult.INCOMPLETE;
         }
 
         // download rated shows
         List<RatedShow> ratedShows;
         try {
-            ratedShows = trakt.sync().ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "downloadShowRatings: download failed");
-            return UpdateResult.INCOMPLETE;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
+            Response<List<RatedShow>> response = ServiceUtils.getTrakt(context)
+                    .sync()
+                    .ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .execute();
+            if (response.isSuccessful()) {
+                ratedShows = response.body();
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return UpdateResult.INCOMPLETE;
+                }
+                SgTrakt.trackFailedRequest(context, "get show ratings", response);
+                return UpdateResult.INCOMPLETE;
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get show ratings", e);
             return UpdateResult.INCOMPLETE;
         }
         if (ratedShows == null) {
@@ -404,20 +424,29 @@ public class TraktTools {
             return UpdateResult.SUCCESS;
         }
 
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return UpdateResult.INCOMPLETE;
         }
 
         // download rated episodes
         List<RatedEpisode> ratedEpisodes;
         try {
-            ratedEpisodes = trakt.sync().ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN);
-        } catch (RetrofitError e) {
-            Timber.e(e, "downloadEpisodeRatings: download failed");
-            return UpdateResult.INCOMPLETE;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
+            Response<List<RatedEpisode>> response
+                    = ServiceUtils.getTrakt(context)
+                    .sync()
+                    .ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .execute();
+            if (response.isSuccessful()) {
+                ratedEpisodes = response.body();
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return UpdateResult.INCOMPLETE;
+                }
+                SgTrakt.trackFailedRequest(context, "get episode ratings", response);
+                return UpdateResult.INCOMPLETE;
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get episode ratings", e);
             return UpdateResult.INCOMPLETE;
         }
         if (ratedEpisodes == null) {
@@ -1084,11 +1113,21 @@ public class TraktTools {
      * errors.
      */
     public static String lookupShowTraktId(Context context, int showTvdbId) {
-        Search traktSearch = ServiceUtils.getTraktV2(context).search();
-
-        // 3 results: may be a show, season or episode (TVDb ids are not unique)
-        List<SearchResult> searchResults = traktSearch.idLookup(IdType.TVDB,
-                String.valueOf(showTvdbId), 1, 3);
+        List<SearchResult> searchResults = null;
+        try {
+            // get up to 3 results: may be a show, season or episode (TVDb ids are not unique)
+            Response<List<SearchResult>> response = ServiceUtils.getTrakt(context)
+                    .search()
+                    .idLookup(IdType.TVDB, String.valueOf(showTvdbId), 1, 3)
+                    .execute();
+            if (response.isSuccessful()) {
+                searchResults = response.body();
+            } else {
+                SgTrakt.trackFailedRequest(context, "show trakt id lookup", response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "show trakt id lookup", e);
+        }
         if (searchResults == null) {
             return null;
         }
@@ -1104,6 +1143,26 @@ public class TraktTools {
             }
         }
 
+        return null;
+    }
+
+    @Nullable
+    public static Show getShowSummary(Context context, String showTraktId) {
+        try {
+            // fetch details
+            retrofit2.Response<com.uwetrottmann.trakt5.entities.Show> response
+                    = ServiceUtils.getTrakt(context)
+                    .shows()
+                    .summary(showTraktId, Extended.FULL)
+                    .execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                SgTrakt.trackFailedRequest(context, "get show summary", response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get show summary", e);
+        }
         return null;
     }
 
