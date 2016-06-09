@@ -867,20 +867,16 @@ public class TraktTools {
     public static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
         HashMap<Integer, BaseShow> traktShowsMap = new HashMap<>(traktShows.size());
         for (BaseShow traktShow : traktShows) {
-            if (isTraktShowMissingRequiredValues(traktShow)) {
+            if (traktShow.show == null
+                    || traktShow.show.ids == null
+                    || traktShow.show.ids.tvdb == null
+                    || traktShow.seasons == null
+                    || traktShow.seasons.isEmpty()) {
                 continue; // trakt show misses required data, skip.
             }
             traktShowsMap.put(traktShow.show.ids.tvdb, traktShow);
         }
         return traktShowsMap;
-    }
-
-    public static boolean isTraktShowMissingRequiredValues(BaseShow traktShow) {
-        return traktShow.show == null
-                || traktShow.show.ids == null
-                || traktShow.show.ids.tvdb == null
-                || traktShow.seasons == null
-                || traktShow.seasons.isEmpty();
     }
 
     @NonNull
