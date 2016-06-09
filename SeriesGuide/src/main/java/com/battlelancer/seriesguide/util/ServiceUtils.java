@@ -204,12 +204,20 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get a {@link TraktV2} service manager with just the API key set. NO user auth data.
+     * Get a {@link TraktV2} service manager. If the user is connected to trakt requests will be
+     * authenticated.
      *
      * @return A {@link TraktV2} instance.
      */
     @NonNull
     public static synchronized com.uwetrottmann.trakt5.TraktV2 getTrakt(Context context) {
+        // try to refresh access token if it is about to expire or has expired
+        TraktCredentials traktCredentials = TraktCredentials.get(context);
+        if (traktCredentials.hasCredentials()
+                && TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
+            traktCredentials.refreshAccessToken();
+        }
+
         if (trakt == null) {
             trakt = new SgTrakt(context);
         }
