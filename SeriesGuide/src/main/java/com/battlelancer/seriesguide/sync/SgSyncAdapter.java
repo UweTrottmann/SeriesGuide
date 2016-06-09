@@ -28,6 +28,7 @@ import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -336,6 +337,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 if (HexagonTools.isSignedIn(getContext())) {
                     // sync with hexagon...
+                    Timber.d("Syncing...Hexagon");
                     boolean success = HexagonTools.syncWithHexagon(getContext(), showsExisting,
                             showsNew);
                     // don't overwrite failure
@@ -344,6 +346,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     }
                 } else {
                     // ...OR sync with trakt
+                    Timber.d("Syncing...trakt");
                     UpdateResult resultTrakt = performTraktSync(getContext(), showsExisting,
                             currentTime);
                     // don't overwrite failure
@@ -498,7 +501,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // download show ratings
-            if (TraktTools.downloadShowRatings(context, lastActivity.shows)
+            if (TraktTools.downloadShowRatings(context, lastActivity.shows.rated_at)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -508,7 +511,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // download episode ratings
-            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes)
+            if (TraktTools.downloadEpisodeRatings(context, lastActivity.episodes.rated_at)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
             }
@@ -546,8 +549,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static LastActivities getTraktLastActivity(Context context) {
-        Timber.d("performTraktSync: get last activity");
-
         TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
         if (trakt == null) {
             return null;
@@ -571,7 +572,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     @SuppressLint("CommitPrefEdits")
     private static UpdateResult performTraktEpisodeSync(Context context,
-            HashSet<Integer> localShows, LastActivityMore lastActivity, long currentTime) {
+            @NonNull HashSet<Integer> localShows, @NonNull LastActivityMore lastActivity,
+            long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
         boolean isInitialSync = !TraktSettings.hasMergedEpisodes(context);
 
@@ -594,8 +596,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
-        Timber.d("performTraktEpisodeSync: success, last sync at %s", currentTime);
-
         editor.commit();
 
         return UpdateResult.SUCCESS;

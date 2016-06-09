@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt.v2.TraktLink;
 import com.uwetrottmann.trakt.v2.TraktV2;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
-import com.uwetrottmann.trakt.v2.entities.LastActivity;
 import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -123,7 +122,8 @@ public class TraktTools {
         long lastWatchedAt = TraktSettings.getLastMoviesWatchedAt(context);
         if (!watchedAt.isAfter(lastWatchedAt)) {
             // not initial sync, no watched flags have changed
-            Timber.d("downloadWatchedMovies: no changes since " + lastWatchedAt);
+            Timber.d("downloadWatchedMovies: no changes since %tF %tT", lastWatchedAt,
+                    lastWatchedAt);
             return UpdateResult.SUCCESS;
         }
 
@@ -207,7 +207,8 @@ public class TraktTools {
                 .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, watchedAt.getMillis())
                 .commit();
 
-        Timber.d("downloadWatchedMovies: success, last watched_at " + watchedAt.getMillis());
+        Timber.d("downloadWatchedMovies: success, last watched_at %tF %tT", watchedAt.getMillis(),
+                watchedAt.getMillis());
         return UpdateResult.SUCCESS;
     }
 
@@ -225,7 +226,7 @@ public class TraktTools {
         long lastRatedAt = TraktSettings.getLastMoviesRatedAt(context);
         if (!ratedAt.isAfter(lastRatedAt)) {
             // not initial sync, no ratings have changed
-            Timber.d("downloadMovieRatings: no changes since " + lastRatedAt);
+            Timber.d("downloadMovieRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
         }
 
@@ -293,7 +294,8 @@ public class TraktTools {
                 .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, ratedAt.getMillis())
                 .commit();
 
-        Timber.d("downloadMovieRatings: success, last rated_at " + ratedAt.getMillis());
+        Timber.d("downloadMovieRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
+                ratedAt.getMillis());
         return UpdateResult.SUCCESS;
     }
 
@@ -302,16 +304,16 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_SHOWS_RATED_AT} to 0.
      */
-    public static UpdateResult downloadShowRatings(Context context, LastActivity activity) {
-        if (activity.rated_at == null) {
+    public static UpdateResult downloadShowRatings(Context context, @Nullable DateTime ratedAt) {
+        if (ratedAt == null) {
             Timber.e("downloadShowRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastRatedAt = TraktSettings.getLastShowsRatedAt(context);
-        if (!activity.rated_at.isAfter(lastRatedAt)) {
+        if (!ratedAt.isAfter(lastRatedAt)) {
             // not initial sync, no ratings have changed
-            Timber.d("downloadShowRatings: no changes since " + lastRatedAt);
+            Timber.d("downloadShowRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
         }
 
@@ -376,10 +378,11 @@ public class TraktTools {
         // save last rated instant
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, activity.rated_at.getMillis())
+                .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, ratedAt.getMillis())
                 .commit();
 
-        Timber.d("downloadShowRatings: success, last rated_at " + activity.rated_at.getMillis());
+        Timber.d("downloadShowRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
+                ratedAt.getMillis());
         return UpdateResult.SUCCESS;
     }
 
@@ -388,16 +391,16 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_EPISODES_RATED_AT} to 0.
      */
-    public static UpdateResult downloadEpisodeRatings(Context context, LastActivityMore activity) {
-        if (activity.rated_at == null) {
+    public static UpdateResult downloadEpisodeRatings(Context context, @Nullable DateTime ratedAt) {
+        if (ratedAt == null) {
             Timber.e("downloadEpisodeRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastRatedAt = TraktSettings.getLastEpisodesRatedAt(context);
-        if (!activity.rated_at.isAfter(lastRatedAt)) {
+        if (!ratedAt.isAfter(lastRatedAt)) {
             // not initial sync, no ratings have changed
-            Timber.d("downloadEpisodeRatings: no changes since " + lastRatedAt);
+            Timber.d("downloadEpisodeRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
         }
 
@@ -461,10 +464,11 @@ public class TraktTools {
         // save last rated instant
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, activity.rated_at.getMillis())
+                .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, ratedAt.getMillis())
                 .commit();
 
-        Timber.d("downloadEpisodeRatings: success, last rated_at " + activity.rated_at.getMillis());
+        Timber.d("downloadEpisodeRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
+                ratedAt.getMillis());
         return UpdateResult.SUCCESS;
     }
 
