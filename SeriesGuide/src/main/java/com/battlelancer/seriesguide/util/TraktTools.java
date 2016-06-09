@@ -741,6 +741,8 @@ public class TraktTools {
         }
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         List<SyncEpisode> syncEpisodes = new ArrayList<>();
+        int episodesAddFlagCount = 0;
+        int episodesRemoveFlagCount = 0;
         while (localEpisodesQuery.moveToNext()) {
             int episodeId = localEpisodesQuery.getInt(0);
             int episodeNumber = localEpisodesQuery.getInt(1);
@@ -755,6 +757,7 @@ public class TraktTools {
                             SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
                             .withValue(flag.databaseColumn, flag.flaggedValue)
                             .build());
+                    episodesAddFlagCount++;
                 }
             } else {
                 // episode not watched/collected on trakt
@@ -769,11 +772,26 @@ public class TraktTools {
                                 SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
                                 .withValue(flag.databaseColumn, flag.notFlaggedValue)
                                 .build());
+                        episodesRemoveFlagCount++;
                     }
                 }
             }
         }
+        int localEpisodeCount = localEpisodesQuery.getCount();
+        boolean addFlagToWholeSeason = episodesAddFlagCount == localEpisodeCount;
+        boolean removeFlagFromWholeSeason = episodesRemoveFlagCount == localEpisodeCount;
         localEpisodesQuery.close();
+
+        // performance improvement especially on initial syncs:
+        // if setting the whole season as (not) watched/collected, replace with single db op
+        if (addFlagToWholeSeason || removeFlagFromWholeSeason) {
+            batch.clear();
+            batch.add(ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonId))
+                    .withValue(flag.databaseColumn,
+                            addFlagToWholeSeason ? flag.flaggedValue : flag.notFlaggedValue)
+                    .build());
+        }
 
         try {
             DBUtils.applyInSmallBatches(context, batch);
