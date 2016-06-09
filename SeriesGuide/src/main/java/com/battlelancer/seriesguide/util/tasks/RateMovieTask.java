@@ -18,18 +18,15 @@ package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.uwetrottmann.trakt.v2.entities.MovieIds;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.enums.Rating;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Sync;
+import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.enums.Rating;
 import de.greenrobot.event.EventBus;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
 public class RateMovieTask extends BaseRateItemTask {
 
@@ -40,17 +37,17 @@ public class RateMovieTask extends BaseRateItemTask {
         this.movieTmdbId = movieTmdbId;
     }
 
+    @NonNull
     @Override
-    protected SyncResponse doTraktAction(Sync traktSync) throws OAuthUnauthorizedException {
-        SyncItems ratedItems = new SyncItems()
-                .movies(new SyncMovie().id(MovieIds.tmdb(movieTmdbId)).rating(getRating()));
+    protected String getTraktAction() {
+        return "rate movie";
+    }
 
-        try {
-            return traktSync.addRatings(ratedItems);
-        } catch (RetrofitError e) {
-            Timber.e(e, "doTraktAction: rating movie failed");
-            return null;
-        }
+    @Nullable
+    @Override
+    protected SyncItems buildTraktSyncItems() {
+        return new SyncItems()
+                .movies(new SyncMovie().id(MovieIds.tmdb(movieTmdbId)).rating(getRating()));
     }
 
     @Override

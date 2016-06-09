@@ -55,17 +55,14 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Configuration;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.LastActivities;
-import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt5.entities.LastActivities;
+import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import retrofit.RetrofitError;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -481,7 +478,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get last activity timestamps
-        LastActivities lastActivity = getTraktLastActivity(context);
+        LastActivities lastActivity = TraktTools.getLastActivity(context);
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
             Timber.e("performTraktSync: last activity download failed");
@@ -551,23 +548,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // download movie ratings
         return TraktTools.downloadMovieRatings(context, lastActivity.movies.rated_at);
-    }
-
-    private static LastActivities getTraktLastActivity(Context context) {
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-        if (trakt == null) {
-            return null;
-        }
-
-        try {
-            return trakt.sync().lastActivities();
-        } catch (RetrofitError e) {
-            Timber.e(e, "Failed to get trakt last activity");
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(context).setCredentialsInvalid();
-        }
-
-        return null;
     }
 
     /**

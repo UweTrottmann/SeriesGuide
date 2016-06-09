@@ -21,17 +21,19 @@ import android.database.Cursor;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.TraktCommentsFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.Comment;
-import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.Comment;
+import com.uwetrottmann.trakt5.enums.Extended;
+import java.io.IOException;
 import java.util.List;
-import retrofit.RetrofitError;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -59,74 +61,97 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
     @Override
     public Result loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTraktV2(getContext());
-        try {
-            // movie comments?
-            int movieTmdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
-            if (movieTmdbId != 0) {
-                Integer movieTraktId = MovieTools.lookupTraktId(trakt.search(), movieTmdbId);
-                if (movieTraktId == null) {
-                    return buildResultFailure(R.string.trakt_error_general);
+        // movie comments?
+        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
+        int movieTmdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
+        if (movieTmdbId != 0) {
+            Integer movieTraktId = MovieTools.lookupTraktId(getContext(), trakt.search(),
+                    movieTmdbId);
+            if (movieTraktId != null) {
+                if (movieTraktId == -1) {
+                    return buildResultFailure(R.string.trakt_error_not_exists);
                 }
-
-                List<Comment> comments = trakt.movies().comments(String.valueOf(movieTraktId), 1,
-                        PAGE_SIZE, Extended.IMAGES);
-                return buildResultSuccess(comments);
-            }
-
-            // episode comments?
-            int episodeTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID);
-            if (episodeTvdbId != 0) {
-                // look up episode number, season and show id
-                Cursor query = getContext().getContentResolver()
-                        .query(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId),
-                                new String[] { SeriesGuideContract.Episodes.SEASON,
-                                        SeriesGuideContract.Episodes.NUMBER,
-                                        SeriesGuideContract.Shows.REF_SHOW_ID }, null, null, null);
-                int season = -1;
-                int episode = -1;
-                int showTvdbId = -1;
-                if (query != null) {
-                    if (query.moveToFirst()) {
-                        season = query.getInt(0);
-                        episode = query.getInt(1);
-                        showTvdbId = query.getInt(2);
+                try {
+                    Response<List<Comment>> response = trakt.movies()
+                            .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                            .execute();
+                    if (response.isSuccessful()) {
+                        return buildResultSuccess(response.body());
+                    } else {
+                        SgTrakt.trackFailedRequest(getContext(), "get movie comments",
+                                response);
                     }
-                    query.close();
-                }
-
-                if (season != -1 && episode != -1 && showTvdbId != -1) {
-                    // look up show trakt id
-                    Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
-                    if (showTraktId == null) {
-                        return buildResultFailure(R.string.trakt_error_not_exists);
-                    }
-
-                    List<Comment> comments = trakt.episodes()
-                            .comments(String.valueOf(showTraktId), season, episode,
-                                    1, PAGE_SIZE, Extended.IMAGES);
-                    return buildResultSuccess(comments);
-                } else {
-                    Timber.e("loadInBackground: could not find episode in database");
-                    return buildResultFailure(R.string.unknown);
+                } catch (IOException e) {
+                    SgTrakt.trackFailedRequest(getContext(), "get movie comments", e);
                 }
             }
-
-            // show comments!
-            int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
-            Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
-            if (showTraktId == null) {
-                return buildResultFailure(R.string.trakt_error_not_exists);
-            }
-
-            List<Comment> comments = trakt.shows()
-                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES);
-            return buildResultSuccess(comments);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Loading comments failed");
-            return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
-                    ? R.string.trakt_error_general : R.string.offline);
+            return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
         }
+
+        // episode comments?
+        int episodeTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID);
+        if (episodeTvdbId != 0) {
+            // look up episode number, season and show id
+            Cursor query = getContext().getContentResolver()
+                    .query(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId),
+                            new String[] { SeriesGuideContract.Episodes.SEASON,
+                                    SeriesGuideContract.Episodes.NUMBER,
+                                    SeriesGuideContract.Shows.REF_SHOW_ID }, null, null, null);
+            int season = -1;
+            int episode = -1;
+            int showTvdbId = -1;
+            if (query != null) {
+                if (query.moveToFirst()) {
+                    season = query.getInt(0);
+                    episode = query.getInt(1);
+                    showTvdbId = query.getInt(2);
+                }
+                query.close();
+            }
+
+            if (season != -1 && episode != -1 && showTvdbId != -1) {
+                // look up show trakt id
+                Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
+                if (showTraktId == null) {
+                    return buildResultFailure(R.string.trakt_error_not_exists);
+                }
+                try {
+                    Response<List<Comment>> response = trakt.episodes()
+                            .comments(String.valueOf(showTraktId), season, episode,
+                                    1, PAGE_SIZE, Extended.IMAGES).execute();
+                    if (response.isSuccessful()) {
+                        return buildResultSuccess(response.body());
+                    } else {
+                        SgTrakt.trackFailedRequest(getContext(), "get episode comments", response);
+                    }
+                } catch (IOException e) {
+                    SgTrakt.trackFailedRequest(getContext(), "get episode comments", e);
+                }
+                return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
+            } else {
+                Timber.e("loadInBackground: could not find episode in database");
+                return buildResultFailure(R.string.unknown);
+            }
+        }
+
+        // show comments!
+        int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
+        Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
+        if (showTraktId == null) {
+            return buildResultFailure(R.string.trakt_error_not_exists);
+        }
+        try {
+            Response<List<Comment>> response = trakt.shows()
+                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES).execute();
+            if (response.isSuccessful()) {
+                return buildResultSuccess(response.body());
+            } else {
+                SgTrakt.trackFailedRequest(getContext(), "get show comments", response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(getContext(), "get show comments", e);
+        }
+        return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
     }
 
     private static Result buildResultSuccess(List<Comment> results) {
@@ -135,5 +160,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
     private static Result buildResultFailure(int emptyTextResId) {
         return new Result(null, emptyTextResId);
+    }
+
+    private Result buildResultFailureWithOfflineCheck(int emptyTextResId) {
+        return new Result(null,
+                AndroidUtils.isNetworkConnected(getContext()) ? emptyTextResId : R.string.offline);
     }
 }

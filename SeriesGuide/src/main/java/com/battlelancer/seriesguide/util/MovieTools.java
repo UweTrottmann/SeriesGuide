@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
@@ -48,21 +49,21 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseMovie;
-import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
-import com.uwetrottmann.trakt.v2.entities.MovieIds;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.entities.SearchResult;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.enums.IdType;
-import com.uwetrottmann.trakt.v2.enums.Rating;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Movies;
-import com.uwetrottmann.trakt.v2.services.Search;
-import com.uwetrottmann.trakt.v2.services.Sync;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.BaseMovie;
+import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.IdType;
+import com.uwetrottmann.trakt5.enums.Rating;
+import com.uwetrottmann.trakt5.services.Movies;
+import com.uwetrottmann.trakt5.services.Search;
+import com.uwetrottmann.trakt5.services.Sync;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,7 +72,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import retrofit.RetrofitError;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -405,26 +405,35 @@ public class MovieTools {
         return rowsDeleted > 0;
     }
 
-    public static Integer lookupTraktId(Search traktSearch, int movieTmdbId) {
+    /**
+     * @return {@code null} if looking up the id failed, -1 if the movie was not found or the movie
+     * id if it was found.
+     */
+    @Nullable
+    public static Integer lookupTraktId(Context context, Search traktSearch, int movieTmdbId) {
         try {
-            List<SearchResult> lookup = traktSearch.idLookup(IdType.TMDB,
-                    String.valueOf(movieTmdbId), 1, 10);
-            if (lookup == null || lookup.size() == 0) {
-                Timber.e("Finding trakt movie failed (no results)");
-                return null;
-            }
-            for (SearchResult result : lookup) {
-                // find movie (tmdb ids are not unique for tv and movies)
-                if (result.movie != null && result.movie.ids != null) {
-                    return result.movie.ids.trakt;
+            Response<List<SearchResult>> response = traktSearch.idLookup(IdType.TMDB,
+                    String.valueOf(movieTmdbId), 1, 10).execute();
+            if (response.isSuccessful()) {
+                List<SearchResult> lookup = response.body();
+                if (lookup == null || lookup.size() == 0) {
+                    Timber.e("Finding trakt movie failed (no results)");
+                    return -1;
                 }
+                for (SearchResult result : lookup) {
+                    // find movie (tmdb ids are not unique for tv and movies)
+                    if (result.movie != null && result.movie.ids != null) {
+                        return result.movie.ids.trakt;
+                    }
+                }
+                Timber.e("Finding trakt movie failed (not in results)");
+                return -1;
+            } else {
+                SgTrakt.trackFailedRequest(context, "movie trakt id lookup", response);
             }
-
-            Timber.e("Finding trakt movie failed (not in results)");
-        } catch (RetrofitError e) {
-            Timber.e(e, "Finding trakt movie failed");
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "movie trakt id lookup", e);
         }
-
         return null;
     }
 
@@ -579,8 +588,7 @@ public class MovieTools {
                 return UpdateResult.INCOMPLETE;
             }
 
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-            if (trakt == null) {
+            if (!TraktCredentials.get(context).hasCredentials()) {
                 return UpdateResult.INCOMPLETE;
             }
 
@@ -591,28 +599,50 @@ public class MovieTools {
                 return UpdateResult.SUCCESS;
             }
 
-            Sync sync = trakt.sync();
+            Sync sync = ServiceUtils.getTrakt(context).sync();
 
-            // download collection and watchlist
+            // download collection
             Set<Integer> collection;
+            try {
+                Response<List<BaseMovie>> response = sync.collectionMovies(Extended.DEFAULT_MIN)
+                        .execute();
+                if (response.isSuccessful()) {
+                    collection = buildTmdbIdSet(response.body());
+                } else {
+                    if (SgTrakt.isUnauthorized(context, response)) {
+                        return UpdateResult.INCOMPLETE;
+                    }
+                    SgTrakt.trackFailedRequest(context, "get movie collection", response);
+                    return UpdateResult.INCOMPLETE;
+                }
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, "get movie collection", e);
+                return UpdateResult.INCOMPLETE;
+            }
+            if (collection == null) {
+                Timber.e("syncMoviesWithTrakt: null collection response");
+                return UpdateResult.INCOMPLETE;
+            }
+            // download watchlist
             Set<Integer> watchlist;
             try {
-                collection = buildTmdbIdSet(sync.collectionMovies(Extended.DEFAULT_MIN));
-                if (collection == null) {
-                    Timber.e("syncMoviesWithTrakt: null collection response");
+                Response<List<BaseMovie>> response = sync.watchlistMovies(Extended.DEFAULT_MIN)
+                        .execute();
+                if (response.isSuccessful()) {
+                    watchlist = buildTmdbIdSet(response.body());
+                } else {
+                    if (SgTrakt.isUnauthorized(context, response)) {
+                        return UpdateResult.INCOMPLETE;
+                    }
+                    SgTrakt.trackFailedRequest(context, "get movie watchlist", response);
                     return UpdateResult.INCOMPLETE;
                 }
-
-                watchlist = buildTmdbIdSet(sync.watchlistMovies(Extended.DEFAULT_MIN));
-                if (watchlist == null) {
-                    Timber.e("syncMoviesWithTrakt: null watchlist response");
-                    return UpdateResult.INCOMPLETE;
-                }
-            } catch (RetrofitError e) {
-                Timber.e(e, "syncMoviesWithTrakt: download failed");
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, "get movie watchlist", e);
                 return UpdateResult.INCOMPLETE;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
+            }
+            if (watchlist == null) {
+                Timber.e("syncMoviesWithTrakt: null watchlist response");
                 return UpdateResult.INCOMPLETE;
             }
 
@@ -745,7 +775,7 @@ public class MovieTools {
                 newMovies.add(tmdbId);
             }
 
-            TraktV2 trakt = ServiceUtils.getTraktV2(context);
+            TraktV2 trakt = ServiceUtils.getTrakt(context);
             Search traktSearch = trakt.search();
             Movies traktMovies = trakt.movies();
             MoviesService tmdbMovies = ServiceUtils.getTmdb(context).moviesService();
@@ -795,7 +825,7 @@ public class MovieTools {
          */
         public static MovieDetails getMovieDetails(Context context, int movieTmdbId) {
             // trakt
-            TraktV2 trakt = ServiceUtils.getTraktV2(context);
+            TraktV2 trakt = ServiceUtils.getTrakt(context);
             Movies traktMovies = trakt.movies();
             Search traktSearch = trakt.search();
 
@@ -819,9 +849,9 @@ public class MovieTools {
             MovieDetails details = new MovieDetails();
 
             // load ratings from trakt
-            Integer movieTraktId = lookupTraktId(traktSearch, movieTmdbId);
+            Integer movieTraktId = lookupTraktId(context, traktSearch, movieTmdbId);
             if (movieTraktId != null) {
-                details.traktRatings(loadRatingsFromTrakt(traktMovies, movieTraktId));
+                details.traktRatings(loadRatingsFromTrakt(context, traktMovies, movieTraktId));
             }
 
             // load summary from tmdb
@@ -830,13 +860,19 @@ public class MovieTools {
             return details;
         }
 
-        private static Ratings loadRatingsFromTrakt(Movies traktMovies, int movieTraktId) {
+        private static Ratings loadRatingsFromTrakt(Context context, Movies traktMovies,
+                int movieTraktId) {
             try {
-                return traktMovies.ratings(String.valueOf(movieTraktId));
-            } catch (RetrofitError e) {
-                Timber.e(e, "Loading trakt movie ratings failed");
-                return null;
+                Response<Ratings> response = traktMovies.ratings(String.valueOf(movieTraktId))
+                        .execute();
+                if (response.isSuccessful()) {
+                    return response.body();
+                }
+                SgTrakt.trackFailedRequest(context, "get movie rating", response);
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, "get movie rating", e);
             }
+            return null;
         }
 
         @Nullable
@@ -959,7 +995,7 @@ public class MovieTools {
          * Checks if the given movies are in the local collection or watchlist, then uploads them to
          * the appropriate list(s) on trakt.
          */
-        public static UpdateResult toTrakt(Context context, Sync sync,
+        public static UpdateResult toTrakt(Context context, Sync traktSync,
                 Set<Integer> moviesNotOnTraktCollection, Set<Integer> moviesNotOnTraktWatchlist) {
             if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
                 // nothing to upload
@@ -1001,21 +1037,31 @@ public class MovieTools {
             moviesInLists.close();
 
             // upload
+            String action = null;
+            SyncItems items = new SyncItems();
+            Response<SyncResponse> response = null;
             try {
-                SyncItems items = new SyncItems();
                 if (moviesToCollect.size() > 0) {
+                    action = "add movies to collection";
                     items.movies(moviesToCollect);
-                    sync.addItemsToCollection(items);
+                    response = traktSync.addItemsToCollection(items).execute();
                 }
-                if (moviesToWatchlist.size() > 0) {
-                    items.movies(moviesToWatchlist);
-                    sync.addItemsToWatchlist(items);
+                if (response == null || response.isSuccessful()) {
+                    if (moviesToWatchlist.size() > 0) {
+                        action = "add movies to watchlist";
+                        items.movies(moviesToWatchlist);
+                        response = traktSync.addItemsToWatchlist(items).execute();
+                    }
                 }
-            } catch (RetrofitError e) {
-                Timber.e(e, "toTrakt: upload failed");
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(context, action, e);
                 return UpdateResult.INCOMPLETE;
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(context).setCredentialsInvalid();
+            }
+            if (response != null && !response.isSuccessful()) {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return UpdateResult.INCOMPLETE;
+                }
+                SgTrakt.trackFailedRequest(context, action, response);
                 return UpdateResult.INCOMPLETE;
             }
 

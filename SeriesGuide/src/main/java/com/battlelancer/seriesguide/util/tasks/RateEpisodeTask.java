@@ -19,18 +19,15 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.SyncSeason;
-import com.uwetrottmann.trakt.v2.entities.SyncShow;
-import com.uwetrottmann.trakt.v2.enums.Rating;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Sync;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import com.uwetrottmann.trakt5.entities.ShowIds;
+import com.uwetrottmann.trakt5.entities.SyncEpisode;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncSeason;
+import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.enums.Rating;
 
 public class RateEpisodeTask extends BaseRateItemTask {
 
@@ -41,8 +38,15 @@ public class RateEpisodeTask extends BaseRateItemTask {
         this.episodeTvdbId = episodeTvdbId;
     }
 
+    @NonNull
     @Override
-    protected SyncResponse doTraktAction(Sync traktSync) throws OAuthUnauthorizedException {
+    protected String getTraktAction() {
+        return "rate episode";
+    }
+
+    @Nullable
+    @Override
+    protected SyncItems buildTraktSyncItems() {
         int season = -1;
         int episode = -1;
         int showTvdbId = -1;
@@ -65,18 +69,11 @@ public class RateEpisodeTask extends BaseRateItemTask {
             return null;
         }
 
-        SyncItems ratedItems = new SyncItems()
+        return new SyncItems()
                 .shows(new SyncShow().id(ShowIds.tvdb(showTvdbId))
                         .seasons(new SyncSeason().number(season)
                                 .episodes(new SyncEpisode().number(episode)
                                         .rating(getRating()))));
-
-        try {
-            return traktSync.addRatings(ratedItems);
-        } catch (RetrofitError e) {
-            Timber.e(e, "doTraktAction: rating episode failed");
-            return null;
-        }
     }
 
     @Override

@@ -63,7 +63,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Ratings;
 import de.greenrobot.event.EventBus;
 
 /**

@@ -35,6 +35,7 @@ import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -1157,6 +1158,25 @@ public class TraktTools {
             }
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(context, "get show summary", e);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static LastActivities getLastActivity(Context context) {
+        try {
+            Response<LastActivities> response = ServiceUtils.getTrakt(context).sync()
+                    .lastActivities()
+                    .execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            }
+            if (SgTrakt.isUnauthorized(context, response)) {
+                return null;
+            }
+            SgTrakt.trackFailedRequest(context, "get last activity", response);
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, "get last activity", e);
         }
         return null;
     }
