@@ -20,7 +20,6 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -495,8 +494,9 @@ public class TraktTools {
         Sync traktSync = ServiceUtils.getTrakt(context).sync();
 
         // watched episodes
+        long lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context);
         if (isInitialSync || activity.watched_at.isAfter(
-                TraktSettings.getLastEpisodesWatchedAt(context))) {
+                lastWatchedAt)) {
             List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
@@ -540,8 +540,9 @@ public class TraktTools {
         }
 
         // collected episodes
+        long lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context);
         if (isInitialSync || activity.collected_at.isAfter(
-                TraktSettings.getLastEpisodesCollectedAt(context))) {
+                lastCollectedAt)) {
             List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
@@ -835,308 +836,6 @@ public class TraktTools {
             traktEpisodesMap.add(episode.number);
         }
         return traktEpisodesMap;
-    }
-
-    private static int applyEpisodeFlagChanges(Context context, Sync traktSync,
-            List<BaseShow> traktShows, HashSet<Integer> localShows, Flag flag, boolean isMerging)
-            throws OAuthUnauthorizedException {
-        HashSet<Integer> localShowsNotOnTrakt = new HashSet<>(localShows);
-
-        // loop through shows on trakt, update the ones existing locally
-        for (BaseShow traktShow : traktShows) {
-            if (traktShow.show == null || traktShow.show.ids == null
-                    || traktShow.show.ids.tvdb == null) {
-                // trakt show misses required data
-                continue;
-            }
-            if (!localShows.contains(traktShow.show.ids.tvdb)) {
-                // trakt show not in local database
-                continue;
-            }
-
-            localShowsNotOnTrakt.remove(traktShow.show.ids.tvdb);
-
-            if (traktShow.seasons == null || traktShow.seasons.isEmpty()) {
-                // trakt show has invalid episode data
-                // do not touch show
-                continue;
-            }
-
-            int resultCode = applyEpisodeFlagChanges(context, traktShow, flag, isMerging,
-                    traktSync);
-            if (resultCode < 0) {
-                // upload failed, abort
-                return resultCode;
-            }
-        }
-
-        // try to upload flags of all shows NOT on trakt
-        // will skip shows that do not have a trakt id (e.g. can not be tracked with trakt, yet)
-        switch (flag) {
-            case WATCHED:
-//                return uploadWatchedEpisodes(context, traktSync, localShowsNotOnTrakt);
-            case COLLECTED:
-                return uploadCollectedEpisodes(context, traktSync, localShowsNotOnTrakt);
-        }
-
-        return SUCCESS;
-    }
-
-    /**
-     * Flags the given episodes in the database (if they exist) and removes flags from all others
-     * for this show.
-     *
-     * @param isMerging If set, you need to supply a {@code traktSync} instance.
-     * @param traktSync If {@code isMerging} is set, needs to be NOT {@code null}.
-     */
-    public static int applyEpisodeFlagChanges(Context context, BaseShow traktShow, Flag flag,
-            boolean isMerging, @Nullable Sync traktSync)
-            throws OAuthUnauthorizedException {
-        // guarantees:
-        // show tvdb exists
-        // show has at least one season
-        // show is in local database
-
-        final int showTvdbId = traktShow.show.ids.tvdb;
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        final Uri ofShowUri = SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId);
-
-        // if not merging, clear all flags for episodes of this show
-        if (!isMerging) {
-            // op-apply is ensured as loop below will run at least once (at least one season)
-            batch.add(ContentProviderOperation
-                    .newUpdate(ofShowUri)
-                    .withSelection(flag.clearFlagSelection, null)
-                    .withValue(flag.databaseColumn, flag.notFlaggedValue)
-                    .build());
-        }
-
-        // loop through seasons and build update ops for flagged episodes
-        Set<Integer> traktFlaggedSeasonSet = new HashSet<>();
-        List<SyncSeason> syncSeasons = new LinkedList<>();
-        for (BaseSeason traktSeason : traktShow.seasons) {
-            if (traktSeason.number == null || traktSeason.episodes == null) {
-                // trakt season has no number
-                continue;
-            }
-
-            // exclude from complete season upload
-            traktFlaggedSeasonSet.add(traktSeason.number);
-
-            // loop through episodes and add flag update ops
-            Set<Integer> traktFlaggedEpisodeSet = new HashSet<>();
-            for (BaseEpisode traktEpisode : traktSeason.episodes) {
-                if (traktEpisode.number == null) {
-                    // trakt episode has no number
-                    continue;
-                }
-
-                // list as flagged on trakt
-                traktFlaggedEpisodeSet.add(traktEpisode.number);
-
-                batch.add(ContentProviderOperation
-                        .newUpdate(ofShowUri)
-                        .withSelection(SeriesGuideContract.Episodes.SEASON
-                                + "=" + traktSeason.number
-                                + " AND "
-                                + SeriesGuideContract.Episodes.NUMBER
-                                + "=" + traktEpisode.number, null)
-                        .withValue(flag.databaseColumn, flag.flaggedValue)
-                        .build());
-            }
-
-            if (isMerging) {
-                // get local flagged episodes that are not flagged on trakt
-                SyncSeason syncSeason = buildSeasonToUpload(context, showTvdbId, traktSeason.number,
-                        traktFlaggedEpisodeSet, flag);
-                if (syncSeason != null) {
-                    syncSeasons.add(syncSeason);
-                }
-            }
-
-            // apply batch of this season
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e("Applying flag changes failed: " + showTvdbId + " season: "
-                        + traktSeason.number + " column: " + flag, e);
-                // do not abort, try other seasons
-                // some episodes might be in incorrect state, but next update should fix that
-                // this includes the clear flags op failing
-            }
-            batch.clear();
-        }
-
-        // if merging: upload all local flagged episodes NOT flagged on trakt
-        if (isMerging && traktSync != null) {
-            // append local flagged episodes FOR ALL seasons NOT on trakt (== not handled above)
-            addRemainingSeasonsToUpload(context, showTvdbId, traktFlaggedSeasonSet, flag,
-                    syncSeasons);
-
-            // upload, if any
-            if (!syncSeasons.isEmpty()) {
-                Timber.d("applyEpisodeFlagChanges: upload " + syncSeasons.size() + " seasons for "
-                        + showTvdbId);
-                SyncItems syncItems = new SyncItems().shows(
-                        new SyncShow().id(ShowIds.tvdb(showTvdbId)).seasons(syncSeasons));
-                try {
-                    switch (flag) {
-                        case WATCHED:
-//                            traktSync.addItemsToWatchedHistory(syncItems);
-                            break;
-                        case COLLECTED:
-//                            traktSync.addItemsToCollection(syncItems);
-                            break;
-                    }
-                } catch (RetrofitError e) {
-                    Timber.e(e, "applyEpisodeFlagChanges: upload failed");
-                    return FAILED_API;
-                }
-            }
-        }
-
-        return SUCCESS;
-    }
-
-    private static void addRemainingSeasonsToUpload(Context context, int showTvdbId,
-            Set<Integer> traktFlaggedSeasonSet, Flag flag, List<SyncSeason> syncSeasons) {
-        // query local seasons
-        Cursor localSeasons = context.getContentResolver().query(
-                SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId),
-                new String[] { SeriesGuideContract.Seasons.COMBINED }, null, null, null);
-        if (localSeasons == null) {
-            // query failed
-            return;
-        }
-
-        // build a list of local season numbers
-        Set<Integer> localSeasonNumbers = new HashSet<>();
-        while (localSeasons.moveToNext()) {
-            localSeasonNumbers.add(localSeasons.getInt(0));
-        }
-        localSeasons.close();
-
-        // loop through local seasons and add flagged episodes
-        for (Integer localSeasonNumber : localSeasonNumbers) {
-            if (traktFlaggedSeasonSet.contains(localSeasonNumber)) {
-                // season was already processed as it is on trakt
-                continue;
-            }
-
-            SyncSeason syncSeason = buildSeasonToUpload(context, showTvdbId, localSeasonNumber,
-                    null, flag);
-            if (syncSeason != null) {
-                syncSeasons.add(syncSeason);
-            }
-        }
-    }
-
-    /**
-     * Returns a list of flagged episodes of a season that are not included in the given set.
-     * Packaged ready for upload to trakt in a {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}.
-     *
-     * @param flaggedEpisodeNumbers If {@code null}, all flagged episodes of the season are
-     * returned.
-     */
-    private static SyncSeason buildSeasonToUpload(Context context, int showTvdbId,
-            int seasonNumber, Set<Integer> flaggedEpisodeNumbers, Flag flag) {
-        // query for flagged episodes of the given season
-        String flaggedSelection;
-        switch (flag) {
-            case WATCHED:
-                flaggedSelection = SeriesGuideContract.Episodes.SELECTION_WATCHED;
-                break;
-            case COLLECTED:
-                flaggedSelection = SeriesGuideContract.Episodes.SELECTION_COLLECTED;
-                break;
-            default:
-                return null;
-        }
-
-        Cursor localSeason = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                new String[] { SeriesGuideContract.Episodes.NUMBER },
-                SeriesGuideContract.Episodes.SEASON + "=" + seasonNumber
-                        + " AND " + flaggedSelection,
-                null,
-                SeriesGuideContract.Episodes.SORT_NUMBER_ASC);
-        if (localSeason == null) {
-            // query failed
-            return null;
-        }
-
-        List<SyncEpisode> syncEpisodes = new LinkedList<>();
-        while (localSeason.moveToNext()) {
-            int episodeNumber = localSeason.getInt(0);
-            if (flaggedEpisodeNumbers == null || !flaggedEpisodeNumbers.contains(episodeNumber)) {
-                // episode NOT flagged on trakt
-                syncEpisodes.add(new SyncEpisode().number(episodeNumber));
-            }
-        }
-        localSeason.close();
-
-        if (syncEpisodes.size() == 0) {
-            // no local flagged episodes OR all local flagged episodes already flagged on trakt
-            return null;
-        }
-
-        return new SyncSeason().number(seasonNumber).episodes(syncEpisodes);
-    }
-
-    /**
-     * Uploads all collected episodes for the given shows to trakt.
-     *
-     * @return Any of the {@link TraktTools} result codes.
-     */
-    private static int uploadCollectedEpisodes(Context context, Sync traktSync,
-            HashSet<Integer> localShows) throws OAuthUnauthorizedException {
-        // loop through given shows
-        SyncShow syncShow = new SyncShow();
-        SyncItems syncItems = new SyncItems().shows(syncShow);
-        for (int showTvdbId : localShows) {
-            // check if the show has a trakt id (e.g. is on trakt)
-            Integer showTraktId = ShowTools.getShowTraktId(context, showTvdbId);
-            if (showTraktId == null) {
-                // has no valid trakt id, skip upload
-                continue;
-            }
-
-            syncShow.id(ShowIds.trakt(showTraktId));
-
-            // query for watched episodes
-            Cursor localEpisodes = context.getContentResolver()
-                    .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                            EpisodesQuery.PROJECTION,
-                            SeriesGuideContract.Episodes.SELECTION_COLLECTED,
-                            null,
-                            SeriesGuideContract.Episodes.SORT_SEASON_ASC);
-            if (localEpisodes == null) {
-                Timber.e("uploadCollectedEpisodes: query failed");
-                return FAILED;
-            }
-
-            // build a list of watched episodes
-            List<SyncSeason> episodesToUpload = new LinkedList<>();
-            buildEpisodeList(localEpisodes, episodesToUpload);
-            localEpisodes.close();
-
-            if (episodesToUpload.size() == 0) {
-                // nothing to upload for this show
-                continue;
-            }
-
-            // upload
-            try {
-                syncShow.seasons = episodesToUpload;
-                traktSync.addItemsToCollection(syncItems);
-            } catch (RetrofitError e) {
-                Timber.e(e, "uploadCollectedEpisodes: upload failed");
-                return FAILED_API;
-            }
-        }
-
-        Timber.d("uploadCollectedEpisodes: uploaded " + localShows.size() + " shows");
-        return SUCCESS;
     }
 
     /**
