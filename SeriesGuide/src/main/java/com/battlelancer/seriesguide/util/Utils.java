@@ -421,6 +421,7 @@ public class Utils {
         Utils.trackCustomEvent(context, category, action,
                 response.code() + " " + response.message());
         // log like "action: 404 not found"
+        Timber.tag(category);
         Timber.e("%s: %s %s", action, response.code(), response.message());
     }
 
@@ -428,6 +429,7 @@ public class Utils {
             Throwable throwable) {
         Utils.trackCustomEvent(context, category, action, throwable.getMessage());
         // log like "action: Unable to resolve host"
+        Timber.tag(category);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
     }
 
