@@ -495,8 +495,7 @@ public class TraktTools {
 
         // watched episodes
         long lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context);
-        if (isInitialSync || activity.watched_at.isAfter(
-                lastWatchedAt)) {
+        if (isInitialSync || activity.watched_at.isAfter(lastWatchedAt)) {
             List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
@@ -541,8 +540,7 @@ public class TraktTools {
 
         // collected episodes
         long lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context);
-        if (isInitialSync || activity.collected_at.isAfter(
-                lastCollectedAt)) {
+        if (isInitialSync || activity.collected_at.isAfter(lastCollectedAt)) {
             List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
@@ -578,7 +576,7 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT,
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT,
                             activity.collected_at.getMillis())
                     .apply();
 
