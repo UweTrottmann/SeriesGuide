@@ -23,7 +23,9 @@ import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
+import java.io.IOException;
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
 import retrofit2.Response;
 
 /**
@@ -82,5 +84,43 @@ public class SgTrakt extends TraktV2 {
 
     public static void trackFailedRequest(Context context, String action, Throwable throwable) {
         Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, throwable);
+    }
+
+    /**
+     * Executes the given call. If the call fails because auth is invalid, removes the current
+     * access token and displays a warning notification to the user.
+     */
+    public static <T> T executeCall(Context context, Call<T> call, String action) {
+        try {
+            Response<T> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                trackFailedRequest(context, action, response);
+            }
+        } catch (IOException e) {
+            trackFailedRequest(context, action, e);
+        }
+        return null;
+    }
+
+    /**
+     * Executes the given call. If the call fails because auth is invalid, removes the current
+     * access token and displays a warning notification to the user.
+     */
+    public static <T> T executeAuthenticatedCall(Context context, Call<T> call, String action) {
+        try {
+            Response<T> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                if (!isUnauthorized(context, response)) {
+                    trackFailedRequest(context, action, response);
+                }
+            }
+        } catch (IOException e) {
+            trackFailedRequest(context, action, e);
+        }
+        return null;
     }
 }

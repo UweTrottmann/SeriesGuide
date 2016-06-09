@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**
  * Creates a list of movies from a list of {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry}.
