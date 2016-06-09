@@ -29,18 +29,16 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import com.uwetrottmann.trakt5.entities.AccessToken;
+import java.io.IOException;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -119,14 +117,7 @@ public class TraktCredentials {
      * Only removes the access token, but keeps the username.
      */
     private void removeAccessToken() {
-        // clear all in-memory credentials from Trakt service manager in any case
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth();
-        if (trakt != null) {
-            trakt.setAccessToken(null);
-        }
-
         mHasCredentials = false;
-
         setAccessToken(null);
     }
 
@@ -248,26 +239,24 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            OAuthAccessTokenResponse response = TraktV2.refreshAccessToken(
-                    BuildConfig.TRAKT_CLIENT_ID,
-                    BuildConfig.TRAKT_CLIENT_SECRET,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
-                    oldRefreshToken
-            );
-            if (response != null) {
-                accessToken = response.getAccessToken();
-                refreshToken = response.getRefreshToken();
-                expiresIn = response.getExpiresIn();
+            Response<AccessToken> response = ServiceUtils.getTrakt(mContext).refreshAccessToken();
+            if (response.isSuccessful()) {
+                AccessToken token = response.body();
+                accessToken = token.access_token;
+                refreshToken = token.refresh_token;
+                expiresIn = token.expires_in;
+            } else {
+                if (!SgTrakt.isUnauthorized(response)) {
+                    SgTrakt.trackFailedRequest(mContext, "refresh access token", response);
+                }
             }
-        } catch (OAuthSystemException | OAuthProblemException e) {
-            Timber.e(e, "refreshAccessToken: network op failed");
-            setCredentialsInvalid();
-            return false;
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(mContext, "refresh access token", e);
         }
 
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
-            Timber.e("refreshAccessToken: invalid response");
+            Timber.e("refreshAccessToken: failed.");
             setCredentialsInvalid();
             return false;
         }

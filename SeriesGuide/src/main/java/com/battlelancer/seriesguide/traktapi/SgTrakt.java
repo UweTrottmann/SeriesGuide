@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.traktapi;
 import android.content.Context;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -47,6 +48,11 @@ public class SgTrakt extends TraktV2 {
     @Override
     public String accessToken() {
         return TraktCredentials.get(context).getAccessToken();
+    }
+
+    @Override
+    public String refreshToken() {
+        return TraktOAuthSettings.getRefreshToken(context);
     }
 
     @Override
