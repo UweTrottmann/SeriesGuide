@@ -37,19 +37,19 @@ import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
-import com.battlelancer.seriesguide.traktapi.SgTraktV2;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.tmdb2.Tmdb;
-import com.uwetrottmann.trakt.v2.TraktV2;
+import com.uwetrottmann.trakt5.TraktV2;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import timber.log.Timber;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -91,9 +91,7 @@ public final class ServiceUtils {
 
     private static TheTvdb theTvdb;
 
-    private static TraktV2 traktV2;
-
-    private static TraktV2 traktV2WithAuth;
+    private static TraktV2 trakt;
 
     private static Tmdb tmdb;
 
@@ -102,8 +100,8 @@ public final class ServiceUtils {
     }
 
     /**
-     * Returns this apps {@link OkHttpClient} with enabled response cache.
-     * Should be used with API calls.
+     * Returns this apps {@link OkHttpClient} with enabled response cache. Should be used with API
+     * calls.
      */
     @NonNull
     public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
@@ -113,6 +111,7 @@ public final class ServiceUtils {
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.addInterceptor(new SgTmdbInterceptor(context));
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
+            builder.addNetworkInterceptor(new SgTraktInterceptor(context));
             builder.authenticator(new AllApisAuthenticator(context));
             File cacheDir = createApiCacheDir(context, API_CACHE);
             builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
@@ -166,8 +165,7 @@ public final class ServiceUtils {
      *
      * <p>If {@link Utils#isAllowedLargeDataConnection} is false, will set {@link
      * com.squareup.picasso.NetworkPolicy#OFFLINE} (which will set {@link
-     * com.squareup.okhttp.CacheControl#FORCE_CACHE} on requests) to skip the network and accept
-     * stale images.
+     * okhttp3.CacheControl#FORCE_CACHE} on requests) to skip the network and accept stale images.
      */
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
@@ -202,65 +200,26 @@ public final class ServiceUtils {
     }
 
     /**
-     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with just the API key set. NO
-     * user auth data.
+     * Get a {@link TraktV2} service manager. If the user is connected to trakt requests will be
+     * authenticated. In addition if an existing access token is expired, tries to refresh it. So it
+     * is advisable to check {@link TraktCredentials#hasCredentials()} before using the manager for
+     * calls that require auth.
      *
-     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
+     * @return A {@link TraktV2} instance.
      */
     @NonNull
-    public static synchronized TraktV2 getTraktV2(Context context) {
-        if (traktV2 == null) {
-            traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
-        }
-        return traktV2;
-    }
-
-    /**
-     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with OAuth access token and
-     * API key set.
-     *
-     * <p>If the current access token will or is expired, tries to refresh it.
-     *
-     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance or null if there are no valid
-     * credentials.
-     */
-    @Nullable
-    public static synchronized TraktV2 getTraktV2WithAuth(Context context) {
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            Timber.e("getTraktV2WithAuth: no auth");
-            return null;
-        }
-
+    public static synchronized TraktV2 getTrakt(Context context) {
         // try to refresh access token if it is about to expire or has expired
-        if (TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
-            if (!TraktCredentials.get(context).refreshAccessToken()) {
-                return null;
-            }
-
-            // set new access token
-            if (traktV2WithAuth != null) {
-                traktV2WithAuth.setAccessToken(TraktCredentials.get(context).getAccessToken());
-            }
+        TraktCredentials traktCredentials = TraktCredentials.get(context);
+        if (traktCredentials.hasCredentials()
+                && TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
+            traktCredentials.refreshAccessToken();
         }
 
-        if (traktV2WithAuth == null) {
-            TraktV2 trakt = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
-            trakt.setAccessToken(TraktCredentials.get(context).getAccessToken());
-            traktV2WithAuth = trakt;
+        if (trakt == null) {
+            trakt = new SgTrakt(context);
         }
-
-        return traktV2WithAuth;
-    }
-
-    /**
-     * Return the existing instance of a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager
-     * with auth or {@code null}.
-     *
-     * <p>In most cases, use {@link #getTraktV2WithAuth(android.content.Context)} instead.
-     */
-    @Nullable
-    public static synchronized TraktV2 getTraktV2WithAuth() {
-        return traktV2WithAuth;
+        return trakt;
     }
 
     /**

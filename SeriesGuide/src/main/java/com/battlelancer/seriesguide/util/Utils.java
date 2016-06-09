@@ -60,9 +60,9 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -414,6 +414,23 @@ public class Utils {
                 .setAction("Click")
                 .setLabel(label)
                 .build());
+    }
+
+    public static void trackFailedRequest(Context context, String category, String action,
+            Response response) {
+        Utils.trackCustomEvent(context, category, action,
+                response.code() + " " + response.message());
+        // log like "action: 404 not found"
+        Timber.tag(category);
+        Timber.e("%s: %s %s", action, response.code(), response.message());
+    }
+
+    public static void trackFailedRequest(Context context, String category, String action,
+            Throwable throwable) {
+        Utils.trackCustomEvent(context, category, action, throwable.getMessage());
+        // log like "action: Unable to resolve host"
+        Timber.tag(category);
+        Timber.e(throwable, "%s: %s", action, throwable.getMessage());
     }
 
     /**

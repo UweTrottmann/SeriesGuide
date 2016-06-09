@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Movie;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Ratings;
 import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;

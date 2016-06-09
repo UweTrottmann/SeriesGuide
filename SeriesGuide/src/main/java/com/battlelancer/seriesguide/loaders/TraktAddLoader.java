@@ -20,23 +20,22 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.TraktAddFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.Show;
+import com.uwetrottmann.trakt5.enums.Extended;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import retrofit2.Response;
 
 /**
  * Loads either the connected trakt user's recommendations, library or watchlist.
@@ -62,34 +61,53 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     @Override
     public Result loadInBackground() {
+        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
         List<Show> shows = new LinkedList<>();
+        String action = null;
         try {
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
-            if (trakt != null) {
-                if (type == TraktAddFragment.TYPE_RECOMMENDED) {
-                    shows = trakt.recommendations().shows(Extended.IMAGES);
-                } else if (type == TraktAddFragment.TYPE_WATCHED) {
-                    List<BaseShow> watchedShows = trakt.sync().watchedShows(Extended.IMAGES);
-                    extractShows(watchedShows, shows);
+            if (type == TraktAddFragment.TYPE_RECOMMENDED) {
+                action = "load recommended shows";
+                Response<List<Show>> response = trakt.recommendations()
+                        .shows(Extended.IMAGES)
+                        .execute();
+                if (response.isSuccessful()) {
+                    shows = response.body();
+                } else {
+                    if (SgTrakt.isUnauthorized(getContext(), response)) {
+                        return buildResultFailure(R.string.trakt_error_credentials);
+                    } else {
+                        SgTrakt.trackFailedRequest(getContext(), action, response);
+                    }
+                }
+            } else {
+                Response<List<BaseShow>> response;
+                if (type == TraktAddFragment.TYPE_WATCHED) {
+                    action = "load watched shows";
+                    response = trakt.sync().watchedShows(Extended.NOSEASONSIMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
-                    List<BaseShow> collectedShows = trakt.sync().collectionShows(Extended.IMAGES);
-                    extractShows(collectedShows, shows);
+                    action = "load show collection";
+                    response = trakt.sync().collectionShows(Extended.IMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
-                    List<BaseShow> watchlistedShows = trakt.sync().watchlistShows(Extended.IMAGES);
-                    extractShows(watchlistedShows, shows);
+                    action = "load show watchlist";
+                    response = trakt.sync().watchlistShows(Extended.IMAGES).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;
                 }
+                if (response.isSuccessful()) {
+                    extractShows(response.body(), shows);
+                } else {
+                    if (SgTrakt.isUnauthorized(getContext(), response)) {
+                        return buildResultFailure(R.string.trakt_error_credentials);
+                    }
+                    SgTrakt.trackFailedRequest(getContext(), action, response);
+                }
             }
-        } catch (RetrofitError e) {
-            Timber.e(e, "Loading shows failed");
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(getContext(), action, e);
             // only check for network here to allow hitting the response cache
             return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
                     ? R.string.trakt_error_general : R.string.offline);
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(getContext()).setCredentialsInvalid();
-            return buildResultFailure(R.string.trakt_error_credentials);
         }
 
         // return empty list right away if there are no results
@@ -119,8 +137,8 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     }
 
     /**
-     * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already
-     * in the local database as added.
+     * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already in
+     * the local database as added.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
             @NonNull List<Show> traktShows) {

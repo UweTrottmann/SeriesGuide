@@ -17,7 +17,7 @@
 package com.battlelancer.seriesguide.items;
 
 import com.uwetrottmann.tmdb2.entities.Movie;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Ratings;
 
 /**
  * Holder object for trakt and TMDb entities related to a movie.

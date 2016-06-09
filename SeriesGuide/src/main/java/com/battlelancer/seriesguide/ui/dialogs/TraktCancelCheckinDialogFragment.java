@@ -31,16 +31,14 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.Response;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt5.TraktV2;
 import de.greenrobot.event.EventBus;
-import retrofit.RetrofitError;
+import java.io.IOException;
 
 /**
  * Warns about an ongoing check-in, how long it takes until it is finished. Offers to override or
@@ -78,40 +76,39 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
             @Override
             @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
-                AsyncTask<String, Void, Response> cancelCheckinTask
-                        = new AsyncTask<String, Void, Response>() {
+                AsyncTask<String, Void, String> cancelCheckinTask
+                        = new AsyncTask<String, Void, String>() {
 
                     @Override
-                    protected Response doInBackground(String... params) {
-                        Response r = new Response();
-                        r.status = TraktStatus.FAILURE;
-
-                        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(context);
-                        if (trakt == null) {
-                            // not authenticated any longer
-                            r.error = context.getString(R.string.trakt_error_credentials);
-                            return r;
+                    protected String doInBackground(String... params) {
+                        // check for credentials
+                        if (!TraktCredentials.get(context).hasCredentials()) {
+                            return context.getString(R.string.trakt_error_credentials);
                         }
 
+                        TraktV2 trakt = ServiceUtils.getTrakt(context);
                         try {
-                            retrofit.client.Response responseDelete = trakt.checkin()
-                                    .deleteActiveCheckin();
-                            if (responseDelete != null && responseDelete.getStatus() == 204) {
-                                r.status = TraktStatus.SUCCESS;
+                            retrofit2.Response<Void> response = trakt.checkin()
+                                    .deleteActiveCheckin()
+                                    .execute();
+                            if (response.isSuccessful()) {
+                                return null;
+                            } else {
+                                if (SgTrakt.isUnauthorized(context, response)) {
+                                    return context.getString(R.string.trakt_error_credentials);
+                                }
+                                SgTrakt.trackFailedRequest(context, "delete check-in", response);
                             }
-                        } catch (RetrofitError e) {
-                            r.error = context.getString(R.string.trakt_error_general);
-                        } catch (OAuthUnauthorizedException e) {
-                            TraktCredentials.get(context).setCredentialsInvalid();
-                            r.error = context.getString(R.string.trakt_error_credentials);
+                        } catch (IOException e) {
+                            SgTrakt.trackFailedRequest(context, "delete check-in", e);
                         }
 
-                        return r;
+                        return context.getString(R.string.trakt_error_general);
                     }
 
                     @Override
-                    protected void onPostExecute(Response r) {
-                        if (TraktStatus.SUCCESS.equals(r.status)) {
+                    protected void onPostExecute(String message) {
+                        if (message == null) {
                             // all good
                             Toast.makeText(context, R.string.checkin_canceled_success_trakt,
                                     Toast.LENGTH_SHORT).show();
@@ -119,9 +116,9 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                             // relaunch the trakt task which called us to
                             // try the check in again
                             AsyncTaskCompat.executeParallel(new TraktTask(context, args));
-                        } else if (TraktStatus.FAILURE.equals(r.status)) {
+                        } else {
                             // well, something went wrong
-                            Toast.makeText(context, r.error, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                         }
                     }
                 };

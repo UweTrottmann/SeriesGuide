@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktUserMovieHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
@@ -291,16 +291,16 @@ public class MoviesNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktUserMovieHistoryLoader.Result> recentlyTraktCallbacks
-            = new LoaderManager.LoaderCallbacks<TraktUserMovieHistoryLoader.Result>() {
+    private LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result> recentlyTraktCallbacks
+            = new LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>() {
         @Override
-        public Loader<TraktUserMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktUserMovieHistoryLoader(getActivity());
+        public Loader<TraktRecentMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new TraktRecentMovieHistoryLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktUserMovieHistoryLoader.Result> loader,
-                TraktUserMovieHistoryLoader.Result data) {
+        public void onLoadFinished(Loader<TraktRecentMovieHistoryLoader.Result> loader,
+                TraktRecentMovieHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -311,7 +311,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktUserMovieHistoryLoader.Result> loader) {
+        public void onLoaderReset(Loader<TraktRecentMovieHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }

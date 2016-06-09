@@ -18,16 +18,13 @@ package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.SyncShow;
-import com.uwetrottmann.trakt.v2.enums.Rating;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Sync;
-import retrofit.RetrofitError;
-import timber.log.Timber;
+import com.uwetrottmann.trakt5.entities.ShowIds;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.enums.Rating;
 
 public class RateShowTask extends BaseRateItemTask {
 
@@ -38,17 +35,17 @@ public class RateShowTask extends BaseRateItemTask {
         this.showTvdbId = showTvdbId;
     }
 
+    @NonNull
     @Override
-    protected SyncResponse doTraktAction(Sync traktSync) throws OAuthUnauthorizedException {
-        SyncItems ratedItems = new SyncItems()
-                .shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)).rating(getRating()));
+    protected String getTraktAction() {
+        return "rate show";
+    }
 
-        try {
-            return traktSync.addRatings(ratedItems);
-        } catch (RetrofitError e) {
-            Timber.e(e, "doTraktAction: rating show failed");
-            return null;
-        }
+    @Nullable
+    @Override
+    protected SyncItems buildTraktSyncItems() {
+        return new SyncItems()
+                .shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)).rating(getRating()));
     }
 
     @Override

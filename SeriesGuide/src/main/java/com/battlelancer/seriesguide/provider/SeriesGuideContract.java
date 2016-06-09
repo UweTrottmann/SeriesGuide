@@ -665,9 +665,28 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
 
-        public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
+        /**
+         * Lower season or if season is equal has to have a lower episode number. Must be watched or
+         * skipped, excludes special episodes (because their release times are spread over all
+         * seasons).
+         */
+        public static final String SELECTION_PREVIOUS_WATCHED =
+                SEASON + ">0"
+                        + " AND " + SELECTION_WATCHED_OR_SKIPPED
+                        + " AND (" + SEASON + "<? OR "
+                        + "(" + SEASON + "=? AND "
+                        + NUMBER + "<?)"
+                        + ")";
 
+        public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
         public static final String SORT_NUMBER_ASC = Episodes.NUMBER + " ASC";
+        /**
+         * Order by season, then by number, then by release time.
+         */
+        public static final String SORT_PREVIOUS_WATCHED =
+                SEASON + " DESC" + ","
+                        + NUMBER + " DESC" + ","
+                        + FIRSTAIREDMS + " DESC";
 
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();

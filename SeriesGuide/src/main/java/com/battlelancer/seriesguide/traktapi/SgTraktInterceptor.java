@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2016 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +18,27 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import okhttp3.OkHttpClient;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.TraktV2Interceptor;
+import java.io.IOException;
+import okhttp3.Interceptor;
+import okhttp3.Response;
 
 /**
- * Custom {@link com.uwetrottmann.trakt.v2.TraktV2} which uses our shared {@link OkHttpClient}
- * instance.
+ * A custom {@link com.uwetrottmann.trakt5.TraktV2Interceptor} which does not require a {@link
+ * com.uwetrottmann.trakt5.TraktV2} instance until intercepting.
  */
-public class SgTraktV2 extends TraktV2 {
+public class SgTraktInterceptor implements Interceptor {
 
     private final Context context;
 
-    public SgTraktV2(Context context) {
+    public SgTraktInterceptor(Context context) {
         this.context = context.getApplicationContext();
     }
 
     @Override
-    protected OkHttpClient getOkHttpClient() {
-        return ServiceUtils.getCachingOkHttpClient(context);
+    public Response intercept(Chain chain) throws IOException {
+        TraktV2 trakt = ServiceUtils.getTrakt(context);
+        return TraktV2Interceptor.handleIntercept(chain, trakt.apiKey(), trakt.accessToken());
     }
 }
