@@ -587,6 +587,23 @@ public class TraktTools {
         return SUCCESS;
     }
 
+    /**
+     * Similar to {@link #syncEpisodeFlags(Context, HashSet, LastActivityMore, boolean)}, but only
+     * processes a single show and only downloads watched/collected episodes from trakt.
+     */
+    public static boolean storeEpisodeFlags(Context context,
+            @Nullable HashMap<Integer, BaseShow> traktShows, int showTvdbId, @NonNull Flag flag) {
+        if (traktShows == null || traktShows.isEmpty()) {
+            return true; // no watched/collected shows on trakt, done.
+        }
+        if (!traktShows.containsKey(showTvdbId)) {
+            return true; // show is not watched/collected on trakt, done.
+        }
+        BaseShow traktShow = traktShows.get(showTvdbId);
+        return TraktTools.processTraktSeasons(context, null, false, showTvdbId, traktShow, flag)
+                == SUCCESS;
+    }
+
     private static int processTraktShows(Context context,
             com.uwetrottmann.trakt5.services.Sync traktSync,
             List<BaseShow> remoteShows,
@@ -639,8 +656,18 @@ public class TraktTools {
         return SUCCESS;
     }
 
-    private static int processTraktSeasons(Context context, Sync traktSync,
-            boolean isInitialSync, int localShow, BaseShow traktShow, Flag flag) {
+    /**
+     * Sync the watched/collected episodes of the given trakt show with the local episodes. The
+     * given show has to be watched/collected on trakt.
+     *
+     * @param isInitialSync If {@code true}, will upload watched/collected episodes that are not
+     * watched/collected on trakt. If {@code false}, will set them not watched/collected (if not
+     * skipped) to mirror the trakt episode.
+     * @param traktSync May be {@code null} if {@code isInitialSync} is set to false as no uploading
+     * may happen.
+     */
+    public static int processTraktSeasons(Context context, @Nullable Sync traktSync,
+            boolean isInitialSync, int localShow, @NonNull BaseShow traktShow, @NonNull Flag flag) {
         HashMap<Integer, BaseSeason> traktSeasons = buildTraktSeasonsMap(traktShow.seasons);
 
         Cursor localSeasonsQuery = context.getContentResolver()
@@ -765,19 +792,23 @@ public class TraktTools {
     }
 
     @NonNull
-    private static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
+    public static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
         HashMap<Integer, BaseShow> traktShowsMap = new HashMap<>(traktShows.size());
         for (BaseShow traktShow : traktShows) {
-            if (traktShow.show == null
-                    || traktShow.show.ids == null
-                    || traktShow.show.ids.tvdb == null
-                    || traktShow.seasons == null
-                    || traktShow.seasons.isEmpty()) {
+            if (isTraktShowMissingRequiredValues(traktShow)) {
                 continue; // trakt show misses required data, skip.
             }
             traktShowsMap.put(traktShow.show.ids.tvdb, traktShow);
         }
         return traktShowsMap;
+    }
+
+    public static boolean isTraktShowMissingRequiredValues(BaseShow traktShow) {
+        return traktShow.show == null
+                || traktShow.show.ids == null
+                || traktShow.show.ids.tvdb == null
+                || traktShow.seasons == null
+                || traktShow.seasons.isEmpty();
     }
 
     @NonNull
