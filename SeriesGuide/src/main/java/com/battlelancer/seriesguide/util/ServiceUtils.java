@@ -95,8 +95,6 @@ public final class ServiceUtils {
 
     private static com.uwetrottmann.trakt5.TraktV2 trakt;
 
-    private static TraktV2 traktV2;
-
     private static TraktV2 traktV2WithAuth;
 
     private static Tmdb tmdb;
@@ -203,20 +201,6 @@ public final class ServiceUtils {
             tmdb = new SgTmdb(context, BuildConfig.TMDB_API_KEY);
         }
         return tmdb;
-    }
-
-    /**
-     * Get a {@link com.uwetrottmann.trakt.v2.TraktV2} service manager with just the API key set. NO
-     * user auth data.
-     *
-     * @return A {@link com.uwetrottmann.trakt.v2.TraktV2} instance.
-     */
-    @NonNull
-    public static synchronized TraktV2 getTraktV2(Context context) {
-        if (traktV2 == null) {
-            traktV2 = new SgTraktV2(context).setApiKey(BuildConfig.TRAKT_CLIENT_ID);
-        }
-        return traktV2;
     }
 
     /**
