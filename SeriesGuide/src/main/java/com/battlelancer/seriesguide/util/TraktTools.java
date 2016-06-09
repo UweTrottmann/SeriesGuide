@@ -615,9 +615,10 @@ public class TraktTools {
                         uploadEpisodes(context, traktSync, localShow, showTraktId, flag);
                         uploadedShowsCount++;
                     } else {
-                        // set all episodes of show not watched/collected
+                        // set all watched/collected episodes of show not watched/collected
                         batch.add(ContentProviderOperation.newUpdate(
                                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(localShow))
+                                .withSelection(flag.clearFlagSelection, null)
                                 .withValue(flag.databaseColumn, flag.notFlaggedValue)
                                 .build());
                     }
@@ -670,9 +671,10 @@ public class TraktTools {
                         syncSeasons.add(syncSeason);
                     }
                 } else {
-                    // set all episodes of season not watched/collected
+                    // set all watched/collected episodes of season not watched/collected
                     batch.add(ContentProviderOperation.newUpdate(
                             SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(seasonId))
+                            .withSelection(flag.clearFlagSelection, null)
                             .withValue(flag.databaseColumn, flag.notFlaggedValue)
                             .build());
                 }
@@ -734,11 +736,14 @@ public class TraktTools {
                     // upload to trakt
                     syncEpisodes.add(new SyncEpisode().number(episodeNumber));
                 } else {
-                    // set as not watched/collected
-                    batch.add(ContentProviderOperation.newUpdate(
-                            SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
-                            .withValue(flag.databaseColumn, flag.notFlaggedValue)
-                            .build());
+                    // set as not watched/collected if it is currently watched/collected
+                    boolean isSkipped = flag == Flag.WATCHED && EpisodeTools.isSkipped(flagValue);
+                    if (!isSkipped) {
+                        batch.add(ContentProviderOperation.newUpdate(
+                                SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
+                                .withValue(flag.databaseColumn, flag.notFlaggedValue)
+                                .build());
+                    }
                 }
             }
         }
