@@ -816,18 +816,21 @@ public class TraktTools {
                 }
             } else {
                 // episode not watched/collected on trakt
-                if (isInitialSync) {
-                    // upload to trakt
-                    syncEpisodes.add(new SyncEpisode().number(episodeNumber));
-                } else {
-                    // set as not watched/collected if it is currently watched/collected
-                    boolean isSkipped = flag == Flag.WATCHED && EpisodeTools.isSkipped(flagValue);
-                    if (!isSkipped) {
-                        batch.add(ContentProviderOperation.newUpdate(
-                                SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
-                                .withValue(flag.databaseColumn, flag.notFlaggedValue)
-                                .build());
-                        episodesRemoveFlagCount++;
+                if (isFlagged) {
+                    if (isInitialSync) {
+                        // upload to trakt
+                        syncEpisodes.add(new SyncEpisode().number(episodeNumber));
+                    } else {
+                        // set as not watched/collected if it is currently watched/collected
+                        boolean isSkipped = flag == Flag.WATCHED && EpisodeTools.isSkipped(
+                                flagValue);
+                        if (!isSkipped) {
+                            batch.add(ContentProviderOperation.newUpdate(
+                                    SeriesGuideContract.Episodes.buildEpisodeUri(episodeId))
+                                    .withValue(flag.databaseColumn, flag.notFlaggedValue)
+                                    .build());
+                            episodesRemoveFlagCount++;
+                        }
                     }
                 }
             }
@@ -996,8 +999,7 @@ public class TraktTools {
     }
 
     /**
-     * Returns a list of watched/collected episodes of a season. Packaged ready for upload to trakt
-     * in a {@link com.uwetrottmann.trakt.v2.entities.SyncSeason}.
+     * Returns a list of watched/collected episodes of a season. Packaged ready for upload to trakt.
      */
     private static SyncSeason buildSyncSeason(Context context, String seasonTvdbId,
             int seasonNumber, Flag flag) {
