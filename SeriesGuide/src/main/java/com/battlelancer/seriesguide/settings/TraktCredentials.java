@@ -137,6 +137,15 @@ public class TraktCredentials {
     }
 
     /**
+     * Get the optional display name.
+     */
+    @Nullable
+    public String getDisplayName() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getString(KEY_DISPLAYNAME, null);
+    }
+
+    /**
      * Get the access token. Avoid keeping this in memory, maybe calling {@link #hasCredentials()}
      * is sufficient.
      */

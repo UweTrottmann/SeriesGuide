@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,8 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     }
 
     private void updateViews() {
-        boolean hasCredentials = TraktCredentials.get(getActivity()).hasCredentials();
+        TraktCredentials traktCredentials = TraktCredentials.get(getActivity());
+        boolean hasCredentials = traktCredentials.hasCredentials();
         if (hasCredentials) {
             if (isConnecting) {
                 // show further options after successful connection
@@ -91,7 +93,12 @@ public class ConnectTraktCredentialsFragment extends Fragment {
                 ft.replace(R.id.content_frame, f);
                 ft.commitAllowingStateLoss();
             } else {
-                username.setText(TraktCredentials.get(getActivity()).getUsername());
+                String username = traktCredentials.getUsername();
+                String displayName = traktCredentials.getDisplayName();
+                if (!TextUtils.isEmpty(displayName)) {
+                    username += " (" + displayName + ")";
+                }
+                this.username.setText(username);
                 setButtonStates(false, true);
                 setUsernameViewsStates(true);
                 setStatus(false, -1);
