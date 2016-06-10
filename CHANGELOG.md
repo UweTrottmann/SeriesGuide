@@ -9,6 +9,14 @@ Version 31
 ----------
 *(in development)*
 
+#### 31-beta2
+*(2016-06-10)*
+
+* TWEAK Rewritten trakt watched and collected episode sync. Should be faster and more reliable.
+* TWEAK Show keyboard when opening search for a show or episode (not when trying to add a show).
+* TWEAK If available, show trakt user display name in trakt settings.
+* NOTICE Latest translations from crowdin.
+
 #### 31-beta1
 *(2016-05-27)*
 
