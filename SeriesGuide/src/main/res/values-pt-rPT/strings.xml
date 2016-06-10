@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Equilibrar tempo da exibição por %s horas</string>
   <string name="clear_cache">Apagar imagens da Cache</string>
   <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclui todos os meta-dados como descrições, actores e classificações.</string>
   <string name="backup_path">Pasta de backup</string>

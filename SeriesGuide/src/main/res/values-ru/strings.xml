@@ -54,7 +54,7 @@
   <string name="share_checkout">Проверить %s</string>
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
-  <string name="links">Links</string>
+  <string name="links">Ссылки</string>
   <!-- Comments -->
   <string name="comments">Комментарии</string>
   <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
@@ -379,7 +379,7 @@
   <string name="pref_offsetsummary">Смещение времени эфира на %s часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включить все данные: описания, актеры и рейтинги.</string>
   <string name="backup_path">Папка резервного копирования</string>

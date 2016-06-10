@@ -64,6 +64,7 @@
   <string name="no_shouts">نخستین کسی باشید که نظر می‌دهد!</string>
   <string name="refresh">تازه سازی</string>
   <plurals name="replies_plural">
+    <item quantity="one">%Id پاسخ</item>
     <item quantity="other">%Id پاسخ</item>
   </plurals>
   <!-- Metadata -->
@@ -222,12 +223,15 @@
   <string name="movies_on_watchlist">%s در فهرست تماشا</string>
   <string name="runtime_movies_watchlist">زمان اجرای فیلم‌های فهرست تماشا</string>
   <plurals name="days_plural">
+    <item quantity="one">‫%Id روز</item>
     <item quantity="other">‫%Id روز</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="one">‫%Id ساعت</item>
     <item quantity="other">‫%Id ساعت</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="one">‫%Id دقیقه</item>
     <item quantity="other">‫%Id دقیقه</item>
   </plurals>
   <!-- Hexagon -->
@@ -294,6 +298,7 @@
   <string name="rating8">عالی</string>
   <string name="rating9">معرکه</string>
   <plurals name="votes">
+    <item quantity="one">%d رأی</item>
     <item quantity="other">%d رأی</item>
   </plurals>
   <!-- Check Ins -->

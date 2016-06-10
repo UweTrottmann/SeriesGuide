@@ -330,9 +330,9 @@
   <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
   <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Denne app bruger data og billeder af TheTVDB licenseret under CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Dette produkt bruger TMDb API\'EN men er ikke godkendt eller certificeret af TMDb.</string>
-  <string name="licence_trakt">Denne app bruger data og billeder af Trakt.</string>
+  <string name="licence_tvdb">Denne app bruger data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Dette produkt bruger TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
+  <string name="licence_trakt">Denne app bruger data og billeder fra trakt.</string>
   <string name="about_open_source">SeriesGuide er lavet ved hjælp af open source software.</string>
   <string name="licences_and_credits">Licenser og credits</string>
   <!-- Sort -->
@@ -347,7 +347,7 @@
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Forestående periode</string>
   <string name="upcoming_upto_now">Nu</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dage</string>
@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>
   <string name="clear_cache">Nulstil cache til billeder</string>
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Send anonyme brugsstatistikker til en Google-tjeneste</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluder alt meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
   <string name="backup_path">Backup mappe</string>

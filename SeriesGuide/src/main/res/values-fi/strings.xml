@@ -54,7 +54,7 @@
   <string name="share_checkout">Tsekkaa %s</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
-  <string name="links">Links</string>
+  <string name="links">Linkit</string>
   <!-- Comments -->
   <string name="comments">Kommentit</string>
   <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
@@ -88,7 +88,7 @@
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="services_watch">Katso</string>
   <string name="services_more">Enemmän</string>
-  <string name="no_translation">Ei ole saatavilla kuvausta kielelle %1$s palvelussa %2$s.</string>
+  <string name="no_translation">Kuvausta ei ole saatavilla %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Sisällytä kaikki metatiedot, kuten kuvaukset, näyttelijät ja arvosanat.</string>
   <string name="backup_path">Varmuuskopiokansio</string>

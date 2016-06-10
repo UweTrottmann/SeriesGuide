@@ -54,7 +54,7 @@
   <string name="share_checkout">Nie oglądam %s</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
-  <string name="links">Links</string>
+  <string name="links">Odnośniki</string>
   <!-- Comments -->
   <string name="comments">Komentarze</string>
   <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
@@ -379,7 +379,7 @@
   <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
   <string name="clear_cache">Usuń bufor obrazów</string>
   <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Uwzględnij wszystkie meta dane, takie jak opisy, aktorzy i oceny.</string>
   <string name="backup_path">Folder kopii zapasowej</string>

@@ -54,7 +54,7 @@
   <string name="share_checkout">Odhlásiť %s</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
-  <string name="links">Links</string>
+  <string name="links">Odkazy</string>
   <!-- Comments -->
   <string name="comments">Komentáre</string>
   <string name="shout_hint">Napíšte komentár (Anglicky, 5 a viac slov)</string>
@@ -379,7 +379,7 @@
   <string name="pref_offsetsummary">Posun času %s hodín</string>
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnúť metadata ako popisy, hercov alebo hodnotenie.</string>
   <string name="backup_path">Priečinok zálohy</string>

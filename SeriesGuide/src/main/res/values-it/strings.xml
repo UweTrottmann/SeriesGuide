@@ -43,7 +43,7 @@
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
   <string name="offline">Connettersi a una rete, quindi riprovare.</string>
-  <string name="app_not_available">Nessuna app per gestirlo.</string>
+  <string name="app_not_available">Nessuna app disponibile per gestirlo.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
   <!-- Sharing -->
@@ -54,7 +54,7 @@
   <string name="share_checkout">Scopri %s</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
   <string name="addtocalendar_failed">Impossibile creare un evento nel calendario.</string>
-  <string name="links">Links</string>
+  <string name="links">Collegamenti</string>
   <!-- Comments -->
   <string name="comments">Commenti</string>
   <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
   <string name="clear_cache">Rimuovi le immagini nella cache</string>
   <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Invia statistiche anonime sull\'utilizzo a un servizio Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Includere tutti i metadati come descrizioni, attori e voti.</string>
   <string name="backup_path">Cartella di Backup</string>

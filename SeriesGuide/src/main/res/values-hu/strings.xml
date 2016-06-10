@@ -54,7 +54,7 @@
   <string name="share_checkout">Nézd meg: %s</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
-  <string name="links">Links</string>
+  <string name="links">Linkek</string>
   <!-- Comments -->
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
@@ -65,7 +65,7 @@
   <string name="refresh">Frissítés</string>
   <plurals name="replies_plural">
     <item quantity="one">%d válasz</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d válasz</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">Abszolút</string>
@@ -224,15 +224,15 @@
   <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
   <plurals name="days_plural">
     <item quantity="one">%d nap</item>
-    <item quantity="other">%d days</item>
+    <item quantity="other">%d nap</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d óra</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="other">%d óra</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d perc</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d perc</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
@@ -299,7 +299,7 @@
   <string name="rating9">Nagyszerű</string>
   <plurals name="votes">
     <item quantity="one">%d szavazat</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="other">%d szavazat</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Bejelentkezés</string>
@@ -374,7 +374,7 @@
   <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>

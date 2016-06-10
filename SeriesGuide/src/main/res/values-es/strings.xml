@@ -54,7 +54,7 @@
   <string name="share_checkout">Échale un vistazo a %s</string>
   <string name="addtocalendar">Añadir al calendario</string>
   <string name="addtocalendar_failed">No se puede crear un evento de calendario.</string>
-  <string name="links">Links</string>
+  <string name="links">Enlaces</string>
   <!-- Comments -->
   <string name="comments">Comentarios</string>
   <string name="shout_hint">Escribe un comentario (Inglés, +5 palabras)</string>
@@ -375,7 +375,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_offsetsummary">Ajustar %s horas los tiempos de emisión</string>
   <string name="clear_cache">Limpiar el caché de imágenes</string>
   <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Enviar estadísticas de uso anónimas a un servicio de Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Incluir todos los metadatos como descripciones, actores y calificaciones.</string>
   <string name="backup_path">Carpeta de respaldo</string>
