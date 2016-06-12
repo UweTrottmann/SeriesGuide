@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import java.io.IOException;
 import retrofit2.Response;
@@ -235,7 +235,8 @@ public class TraktCredentials {
      * Tries to refresh the current access token. Calls {@link #setCredentialsInvalid()} on failure
      * and returns {@code false}.
      */
-    public synchronized boolean refreshAccessToken() {
+    public synchronized boolean refreshAccessToken(TraktV2 trakt) {
+        Timber.d("refreshAccessToken: time to refresh the access token.");
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
         if (TextUtils.isEmpty(oldRefreshToken)) {
@@ -248,8 +249,7 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            Response<AccessToken> response = ServiceUtils.getTraktNoTokenRefresh(mContext)
-                    .refreshAccessToken();
+            Response<AccessToken> response = trakt.refreshAccessToken();
             if (response.isSuccessful()) {
                 AccessToken token = response.body();
                 accessToken = token.access_token;
@@ -279,6 +279,7 @@ public class TraktCredentials {
             return false;
         }
 
+        Timber.d("refreshAccessToken: success.");
         return true;
     }
 }

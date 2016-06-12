@@ -38,7 +38,7 @@ public class SgTraktInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        TraktV2 trakt = ServiceUtils.getTrakt(context);
+        TraktV2 trakt = ServiceUtils.getTraktNoTokenRefresh(context);
         return TraktV2Interceptor.handleIntercept(chain, trakt.apiKey(), trakt.accessToken());
     }
 }

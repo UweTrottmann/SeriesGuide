@@ -77,7 +77,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // get access token
-        TraktV2 trakt = ServiceUtils.getTrakt(mContext);
+        TraktV2 trakt = ServiceUtils.getTraktNoTokenRefresh(mContext);
         String accessToken = null;
         String refreshToken = null;
         long expiresIn = -1;

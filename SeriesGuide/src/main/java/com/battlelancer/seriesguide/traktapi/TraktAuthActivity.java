@@ -72,7 +72,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
         try {
-            OAuthClientRequest request = ServiceUtils.getTrakt(this)
+            OAuthClientRequest request = ServiceUtils.getTraktNoTokenRefresh(this)
                     .buildAuthorizationRequest(state);
             return request.getLocationUri();
         } catch (OAuthSystemException e) {

@@ -209,14 +209,16 @@ public final class ServiceUtils {
      */
     @NonNull
     public static synchronized TraktV2 getTrakt(Context context) {
+        TraktV2 trakt = getTraktNoTokenRefresh(context);
+
         // try to refresh access token if it is about to expire or has expired
         TraktCredentials traktCredentials = TraktCredentials.get(context);
         if (traktCredentials.hasCredentials()
                 && TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
-            traktCredentials.refreshAccessToken();
+            traktCredentials.refreshAccessToken(trakt);
         }
 
-        return getTraktNoTokenRefresh(context);
+        return trakt;
     }
 
     @NonNull
