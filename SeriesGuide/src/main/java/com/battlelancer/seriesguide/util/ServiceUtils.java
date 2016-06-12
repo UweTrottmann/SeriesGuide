@@ -216,6 +216,11 @@ public final class ServiceUtils {
             traktCredentials.refreshAccessToken();
         }
 
+        return getTraktNoTokenRefresh(context);
+    }
+
+    @NonNull
+    public static synchronized TraktV2 getTraktNoTokenRefresh(Context context) {
         if (trakt == null) {
             trakt = new SgTrakt(context);
         }

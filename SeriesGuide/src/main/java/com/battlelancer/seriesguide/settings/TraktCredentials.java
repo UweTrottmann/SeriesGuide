@@ -248,7 +248,8 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            Response<AccessToken> response = ServiceUtils.getTrakt(mContext).refreshAccessToken();
+            Response<AccessToken> response = ServiceUtils.getTraktNoTokenRefresh(mContext)
+                    .refreshAccessToken();
             if (response.isSuccessful()) {
                 AccessToken token = response.body();
                 accessToken = token.access_token;
