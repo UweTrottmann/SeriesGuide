@@ -9,6 +9,11 @@ Version 31
 ----------
 *(in development)*
 
+#### 31-beta3
+*(2016-06-12)*
+
+* FIX Crash when trying to refresh trakt access token.
+
 #### 31-beta2
 *(2016-06-10)*
 
