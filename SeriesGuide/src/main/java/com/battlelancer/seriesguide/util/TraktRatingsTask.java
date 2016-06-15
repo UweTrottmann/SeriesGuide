@@ -110,9 +110,9 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
                 Ratings ratings = response.body();
                 if (ratings != null && ratings.rating != null && ratings.votes != null) {
                     if (isShowNotEpisode) {
-                        saveEpisodeRating(ratings);
-                    } else {
                         saveShowRating(ratings);
+                    } else {
+                        saveEpisodeRating(ratings);
                     }
                 }
             } else {
