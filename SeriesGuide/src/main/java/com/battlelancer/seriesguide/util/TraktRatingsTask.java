@@ -137,6 +137,11 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
         context.getContentResolver()
                 .update(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), values, null,
                         null);
+
+        // notify withshow uri as well (used by episode details view)
+        context.getContentResolver()
+                .notifyChange(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
+                        null);
     }
 
     private void saveShowRating(Ratings ratings) {
