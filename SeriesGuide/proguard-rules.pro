@@ -108,3 +108,14 @@
 -dontwarn android.net.http.AndroidHttpClient
 -dontwarn com.google.api.client.http.apache.**
 -dontwarn com.google.android.gms.internal.**
+
+## Testing
+-dontwarn android.test.**
+
+# Assertj
+-dontwarn org.assertj.core.**
+-dontwarn org.junit.**
+-dontwarn java.beans.**
+
+# joda time
+-dontwarn org.joda.time.**

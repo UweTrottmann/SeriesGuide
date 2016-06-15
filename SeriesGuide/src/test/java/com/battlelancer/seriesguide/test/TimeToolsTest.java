@@ -2,15 +2,13 @@ package com.battlelancer.seriesguide.test;
 
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeToolsTest extends TestCase {
+public class TimeToolsTest {
 
     public static final String AMERICA_NEW_YORK = "America/New_York";
     public static final String AMERICA_LOS_ANGELES = "America/Los_Angeles";
@@ -18,10 +16,7 @@ public class TimeToolsTest extends TestCase {
     public static final String GERMANY = "de";
     public static final String UNITED_STATES = "us";
 
-    public static Test suite() {
-        return new TestSuite(TimeToolsTest.class);
-    }
-
+    @Test
     public void test_parseEpisodeReleaseTime() {
         // ensure a US show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in America/New_York
@@ -40,6 +35,7 @@ public class TimeToolsTest extends TestCase {
         assertThat(episodeReleaseTime).isEqualTo(1370055600000L);
     }
 
+    @Test
     public void test_parseEpisodeReleaseTime_Country() {
         // ensure a German show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in Europe/Berlin
@@ -58,6 +54,7 @@ public class TimeToolsTest extends TestCase {
         assertThat(episodeReleaseTime).isEqualTo(1370023200000L);
     }
 
+    @Test
     public void test_parseEpisodeReleaseTime_HourPastMidnight() {
         // ensure episodes releasing in the hour past midnight are moved to the next day
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
@@ -76,6 +73,7 @@ public class TimeToolsTest extends TestCase {
         assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
     }
 
+    @Test
     public void test_parseEpisodeReleaseTime_NoHourPastMidnight() {
         // ensure episodes releasing in the hour past midnight are NOT moved to the next day
         // if it is a Netflix show

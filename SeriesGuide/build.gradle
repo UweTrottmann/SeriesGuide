@@ -104,6 +104,7 @@ android {
             // enable for shrinking to stay well below the 65k method limit
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             pseudoLocalesEnabled true
         }
@@ -147,7 +148,8 @@ dependencies {
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    compile 'net.danlew:android.joda:2.9.3'
+    def jodaTimeVersion = '2.9.3'
+    compile "net.danlew:android.joda:$jodaTimeVersion"
 
     // Android support libraries
     compile "com.android.support:support-v4:$supportVersion"
@@ -177,7 +179,10 @@ dependencies {
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.61.jar')
 
     // Android unit tests
-    androidTestCompile "com.android.support:support-annotations:$supportVersion"
-    androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
+    testCompile 'junit:junit:4.12'
+    testCompile "com.android.support:support-annotations:$supportVersion"
+    testCompile 'com.squareup.assertj:assertj-android:1.1.1'
+    // include regular joda-time to have access to the tz database without init call
+    testCompile "joda-time:joda-time:$jodaTimeVersion"
 
 }
