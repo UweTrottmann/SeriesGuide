@@ -23,7 +23,6 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import com.google.api.client.http.HttpResponseException;
 import java.util.regex.Pattern;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -36,6 +35,7 @@ import timber.log.Timber;
  */
 public class AnalyticsTree extends Timber.DebugTree {
 
+    public static final String CATEGORY_THETVDB_ERROR = "TheTVDB Error";
     private static final Pattern TMDB_V3_API_KEY = Pattern.compile("api_key=([^&]*)");
 
     private final Context context;
@@ -82,7 +82,7 @@ public class AnalyticsTree extends Timber.DebugTree {
             } else if (t instanceof TvdbException) {
                 TvdbException e = (TvdbException) t;
                 Utils.trackCustomEvent(context,
-                        "TheTVDB Error",
+                        CATEGORY_THETVDB_ERROR,
                         tag + ": " + message,
                         e.getMessage());
                 return;

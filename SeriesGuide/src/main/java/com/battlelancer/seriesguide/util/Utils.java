@@ -373,7 +373,7 @@ public class Utils {
      * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
      * status information.
      */
-    public static void trackCustomEvent(Context context, String category, String action,
+    public static void trackCustomEvent(@NonNull Context context, String category, String action,
             String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
                 .setCategory(category)

@@ -305,7 +305,8 @@ public class AddShowDialogFragment extends DialogFragment {
                     TimeTools.getShowReleaseTime(show.release_time),
                     show.release_weekday,
                     show.release_timezone,
-                    show.country);
+                    show.country,
+                    show.network);
             String day = TimeTools.formatToLocalDayOrDaily(getActivity(), release,
                     show.release_weekday);
             String time = TimeTools.formatToLocalTime(getActivity(), release);

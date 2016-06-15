@@ -28,11 +28,12 @@ public class TimeToolsTest extends TestCase {
         // so this test will likely not break if DST rules change)
         DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
                 new LocalTime(20, 0), // 20:00
                 UNITED_STATES,
+                null,
                 deviceTimeZone);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
@@ -45,11 +46,12 @@ public class TimeToolsTest extends TestCase {
         // so this test will likely not break if DST rules change)
         DateTimeZone showTimeZone = DateTimeZone.forID(EUROPE_BERLIN);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
                 new LocalTime(20, 0), // 20:00
                 GERMANY,
+                null,
                 deviceTimeZone);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
@@ -62,11 +64,29 @@ public class TimeToolsTest extends TestCase {
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
         DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
         String deviceTimeZone = AMERICA_LOS_ANGELES;
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
                 new LocalTime(0, 35), // 00:35
                 UNITED_STATES,
+                null,
+                deviceTimeZone);
+        System.out.println(
+                "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
+        assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
+    }
+
+    public void test_parseEpisodeReleaseTime_NoHourPastMidnight() {
+        // ensure episodes releasing in the hour past midnight are NOT moved to the next day
+        // if it is a Netflix show
+        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
+        String deviceTimeZone = AMERICA_LOS_ANGELES;
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
+                showTimeZone,
+                "2013-06-01", // +one day here
+                new LocalTime(0, 35), // 00:35
+                UNITED_STATES,
+                "Netflix",
                 deviceTimeZone);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));

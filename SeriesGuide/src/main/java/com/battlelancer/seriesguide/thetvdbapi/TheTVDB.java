@@ -636,7 +636,7 @@ public class TheTVDB {
      */
     private static ArrayList<ContentValues> parseEpisodes(
             final ArrayList<ContentProviderOperation> batch, String url, final Show show,
-            Context context) throws TvdbException {
+            final Context context) throws TvdbException {
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
         final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
@@ -728,8 +728,8 @@ public class TheTVDB {
         );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String releaseDate) {
-                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(showTimeZone, releaseDate,
-                        showReleaseTime, show.country, deviceTimeZone);
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
+                        releaseDate, showReleaseTime, show.country, show.network, deviceTimeZone);
                 values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
             }
         });

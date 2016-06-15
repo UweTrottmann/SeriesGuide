@@ -886,20 +886,21 @@ public class OverviewFragment extends Fragment implements
         // next release day and time
         StringBuilder timeAndNetwork = new StringBuilder();
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
+        String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
-                    show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
+                    show.getString(ShowQuery.SHOW_RELEASE_COUNTRY),
+                    network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             // "Mon 08:30"
             timeAndNetwork.append(dayString).append(" ").append(timeString);
         }
         // network
-        final String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
             if (timeAndNetwork.length() != 0) {
                 timeAndNetwork.append(" ");

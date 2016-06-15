@@ -305,13 +305,14 @@ public class ShowFragment extends Fragment {
         // next release day and time
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
         int releaseTime = mShowCursor.getInt(ShowQuery.RELEASE_TIME);
+        String network = mShowCursor.getString(ShowQuery.NETWORK);
         if (releaseTime != -1) {
             int weekDay = mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
                     mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
-                    releaseCountry);
+                    releaseCountry, network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             mTextViewReleaseTime.setText(dayString + " " + timeString);
@@ -324,7 +325,7 @@ public class ShowFragment extends Fragment {
                 getString(R.string.runtime_minutes, mShowCursor.getInt(ShowQuery.RUNTIME)));
 
         // network
-        mTextViewNetwork.setText(mShowCursor.getString(ShowQuery.NETWORK));
+        mTextViewNetwork.setText(network);
 
         // favorite button
         final boolean isFavorite = mShowCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
