@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,10 +9,19 @@
         style="@style/Page.Centered"
         android:animateLayoutChanges="true">
 
+        <com.battlelancer.seriesguide.widgets.EmptyView
+            android:id="@+id/emptyViewStats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/large_padding"
+            app:emptyViewButtonText="@string/action_try_again"
+            app:emptyViewMessage="@string/statistics_failed" />
+
         <TextView
             android:id="@+id/textViewStatsShows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/emptyViewStats"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="@string/norating"
@@ -121,8 +131,8 @@
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true"
-            tools:text="61 days 13 hours 29 minutes"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"
+            tools:text="61 days 13 hours 29 minutes" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsEpisodesRuntime"
@@ -197,8 +207,8 @@
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
             android:textIsSelectable="true"
-            tools:text="61 days 13 hours 29 minutes"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"
+            tools:text="61 days 13 hours 29 minutes" />
 
         <TextView
             android:id="@+id/labelStatsMoviesWatchlistRuntime"
