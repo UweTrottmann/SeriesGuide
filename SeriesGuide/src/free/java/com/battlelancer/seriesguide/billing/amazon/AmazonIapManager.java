@@ -29,7 +29,7 @@ public class AmazonIapManager {
     }
 
     public static AmazonIapManager get() {
-        return null;
+        return new AmazonIapManager();
     }
 
     public void requestUserDataAndPurchaseUpdates() {
