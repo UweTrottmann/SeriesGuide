@@ -86,6 +86,7 @@ public class ShowsActivity extends BaseTopActivity implements
     private ViewPager viewPager;
     private ProgressDialog mProgressDialog;
 
+    @SuppressWarnings("unused")
     public interface InitBundle {
 
         String SELECTED_TAB = "selectedtab";
