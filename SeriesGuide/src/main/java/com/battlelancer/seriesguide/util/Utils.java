@@ -537,6 +537,14 @@ public class Utils {
         return handled;
     }
 
+    public static void startActivityWithAnimation(Activity activity, Intent intent, View view) {
+        ActivityCompat.startActivity(activity, intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
+    }
+
     public static void startActivityWithTransition(Activity activity, Intent intent, View view,
             @StringRes int sharedElementNameRes) {
         Bundle activityOptions;

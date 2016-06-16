@@ -16,11 +16,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.TargetApi;
-import android.app.ActivityOptions;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +27,6 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.PeopleActivity;
 import com.battlelancer.seriesguide.ui.PersonFragment;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.CastMember;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.entities.CrewMember;
@@ -42,27 +39,27 @@ import timber.log.Timber;
  */
 public class PeopleListHelper {
 
-    public static void populateShowCast(Context context,
+    public static void populateShowCast(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
+        populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
                 logCategory);
     }
 
-    public static void populateShowCrew(Context context,
+    public static void populateShowCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
+        populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
                 logCategory);
     }
 
-    public static void populateMovieCast(Context context,
+    public static void populateMovieCast(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
+        populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
                 logCategory);
     }
 
-    public static void populateMovieCrew(Context context,
+    public static void populateMovieCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
+        populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
                 logCategory);
     }
 
@@ -70,7 +67,7 @@ public class PeopleListHelper {
      * Add views for at most three cast members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static void populateCast(Context context, ViewGroup peopleContainer, Credits credits,
+    private static void populateCast(Activity activity, ViewGroup peopleContainer, Credits credits,
             PeopleActivity.MediaType mediaType, String logCategory) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
@@ -86,11 +83,11 @@ public class PeopleListHelper {
         for (int i = 0; i < Math.min(3, cast.size()); i++) {
             CastMember castMember = cast.get(i);
 
-            View personView = createPersonView(context, inflater, peopleContainer, castMember.name,
+            View personView = createPersonView(activity, inflater, peopleContainer, castMember.name,
                     castMember.character, castMember.profile_path);
             personView.setOnClickListener(
-                    new OnPersonClickListener(mediaType, credits.id, PeopleActivity.PeopleType.CAST,
-                            castMember.id, logCategory)
+                    new OnPersonClickListener(activity, mediaType, credits.id,
+                            PeopleActivity.PeopleType.CAST, castMember.id, logCategory)
             );
 
             peopleContainer.addView(personView);
@@ -98,8 +95,8 @@ public class PeopleListHelper {
 
         if (cast.size() > 3) {
             addShowAllView(inflater, peopleContainer,
-                    new OnPersonClickListener(mediaType, credits.id, PeopleActivity.PeopleType.CAST,
-                            logCategory)
+                    new OnPersonClickListener(activity, mediaType, credits.id,
+                            PeopleActivity.PeopleType.CAST, logCategory)
             );
         }
     }
@@ -108,7 +105,7 @@ public class PeopleListHelper {
      * Add views for at most three crew members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static void populateCrew(Context context, ViewGroup peopleContainer, Credits credits,
+    private static void populateCrew(Activity activity, ViewGroup peopleContainer, Credits credits,
             PeopleActivity.MediaType mediaType, String logCategory) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
@@ -124,11 +121,11 @@ public class PeopleListHelper {
         for (int i = 0; i < Math.min(3, crew.size()); i++) {
             CrewMember castMember = crew.get(i);
 
-            View personView = createPersonView(context, inflater, peopleContainer, castMember.name,
+            View personView = createPersonView(activity, inflater, peopleContainer, castMember.name,
                     castMember.job, castMember.profile_path);
             personView.setOnClickListener(
-                    new OnPersonClickListener(mediaType, credits.id, PeopleActivity.PeopleType.CREW,
-                            castMember.id, logCategory)
+                    new OnPersonClickListener(activity, mediaType, credits.id,
+                            PeopleActivity.PeopleType.CREW, castMember.id, logCategory)
             );
 
             peopleContainer.addView(personView);
@@ -136,8 +133,8 @@ public class PeopleListHelper {
 
         if (crew.size() > 3) {
             addShowAllView(inflater, peopleContainer,
-                    new OnPersonClickListener(mediaType, credits.id, PeopleActivity.PeopleType.CREW,
-                            logCategory)
+                    new OnPersonClickListener(activity, mediaType, credits.id,
+                            PeopleActivity.PeopleType.CREW, logCategory)
             );
         }
     }
@@ -147,8 +144,9 @@ public class PeopleListHelper {
         View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
 
         // use clickable instead of activatable background
-        personView.setBackgroundResource(Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.selectableItemBackground));
+        personView.setBackgroundResource(
+                Utils.resolveAttributeToResourceId(peopleContainer.getContext().getTheme(),
+                        R.attr.selectableItemBackground));
         // support keyboard nav
         personView.setFocusable(true);
 
@@ -171,6 +169,7 @@ public class PeopleListHelper {
 
     private static class OnPersonClickListener implements View.OnClickListener {
 
+        private final Activity activity;
         private final int itemTmdbId;
         private final int personTmdbId;
         private final PeopleActivity.PeopleType peopleType;
@@ -180,17 +179,19 @@ public class PeopleListHelper {
         /**
          * Listener that will show cast or crew members for the given TMDb entity.
          */
-        public OnPersonClickListener(PeopleActivity.MediaType mediaType, int mediaTmdbId,
-                PeopleActivity.PeopleType peopleType, String logCategory) {
-            this(mediaType, mediaTmdbId, peopleType, -1, logCategory);
+        public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
+                int mediaTmdbId, PeopleActivity.PeopleType peopleType, String logCategory) {
+            this(activity, mediaType, mediaTmdbId, peopleType, -1, logCategory);
         }
 
         /**
          * Listener that will show cast or crew members for the given TMDb entity and pre-selects a
          * specific cast or crew member.
          */
-        public OnPersonClickListener(PeopleActivity.MediaType mediaType, int mediaTmdbId,
-                PeopleActivity.PeopleType peopleType, int personTmdbId, String logCategory) {
+        public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
+                int mediaTmdbId, PeopleActivity.PeopleType peopleType, int personTmdbId,
+                String logCategory) {
+            this.activity = activity;
             this.itemTmdbId = mediaTmdbId;
             this.peopleType = peopleType;
             this.mediaType = mediaType;
@@ -198,7 +199,6 @@ public class PeopleListHelper {
             this.logCategory = logCategory;
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onClick(View v) {
             Intent i = new Intent(v.getContext(), PeopleActivity.class);
@@ -206,17 +206,10 @@ public class PeopleListHelper {
             i.putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE, peopleType.toString());
             i.putExtra(PeopleActivity.InitBundle.MEDIA_TYPE, mediaType.toString());
             if (personTmdbId != -1) {
+                // showing a specific person
                 i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, personTmdbId);
             }
-
-            if (AndroidUtils.isJellyBeanOrHigher()) {
-                v.getContext()
-                        .startActivity(i,
-                                ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
-                                        v.getHeight()).toBundle());
-            } else {
-                v.getContext().startActivity(i);
-            }
+            Utils.startActivityWithAnimation(activity, i, v);
             Utils.trackAction(v.getContext(), logCategory, "Cast or crew");
         }
     }

@@ -21,8 +21,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -437,13 +435,9 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
         mImageContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
-                ActivityCompat.startActivity(getActivity(), fullscreen,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
         loadImage(imagePath);
@@ -559,11 +553,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(mEpisodeTitle,
                         getEpisodeTvdbId()
                 ));
-                ActivityCompat.startActivity(getActivity(), intent,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), intent, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });

@@ -25,8 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -632,10 +630,7 @@ public class OverviewFragment extends Fragment implements
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                             currentEpisodeTvdbId);
 
-                    ActivityCompat.startActivity(getActivity(), intent,
-                            ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                                    view.getHeight()).toBundle()
-                    );
+                    Utils.startActivityWithAnimation(getActivity(), intent, view);
                 }
             });
             containerEpisodePrimary.setFocusable(true);
@@ -746,11 +741,7 @@ public class OverviewFragment extends Fragment implements
                     i.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
                             currentEpisodeTvdbId
                     ));
-                    ActivityCompat.startActivity(getActivity(), i,
-                            ActivityOptionsCompat
-                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                    .toBundle()
-                    );
+                    Utils.startActivityWithAnimation(getActivity(), i, v);
                     Utils.trackAction(v.getContext(), TAG, "Comments");
                 }
             }

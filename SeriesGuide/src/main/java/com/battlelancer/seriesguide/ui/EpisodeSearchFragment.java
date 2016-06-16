@@ -20,8 +20,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -35,6 +33,7 @@ import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -82,9 +81,7 @@ public class EpisodeSearchFragment extends ListFragment {
         Intent i = new Intent(getActivity(), EpisodesActivity.class);
         i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) id);
 
-        ActivityCompat.startActivity(getActivity(), i,
-                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                        .toBundle());
+        Utils.startActivityWithAnimation(getActivity(), i, v);
     }
 
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {

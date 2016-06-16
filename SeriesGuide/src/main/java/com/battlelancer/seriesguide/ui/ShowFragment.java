@@ -21,8 +21,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -99,6 +97,10 @@ public class ShowFragment extends Fragment {
 
     private TraktRatingsTask mTraktTask;
 
+    @Bind(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
+
+    @Bind(R.id.containerShowPoster) View posterContainer;
+    @Bind(R.id.imageViewShowPoster) ImageView posterView;
     @Bind(R.id.textViewShowStatus) TextView mTextViewStatus;
     @Bind(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
     @Bind(R.id.textViewShowRuntime) TextView mTextViewRuntime;
@@ -446,38 +448,25 @@ public class ShowFragment extends Fragment {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
                 i.putExtras(TraktCommentsActivity.createInitBundleShow(mShowTitle,
                         getShowTvdbId()));
-                ActivityCompat.startActivity(getActivity(), i,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), i, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
         // poster, full screen poster button
-        final View posterContainer = getView().findViewById(R.id.containerShowPoster);
-        final ImageView posterView = (ImageView) posterContainer
-                .findViewById(R.id.imageViewShowPoster);
         Utils.loadPoster(getActivity(), posterView, mShowPoster);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
+                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
                         TheTVDB.buildScreenshotUrl(mShowPoster));
-                ActivityCompat.startActivity(getActivity(), fullscreen,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
 
         // background
-        ImageView background = (ImageView) getView().findViewById(
-                R.id.imageViewShowPosterBackground);
-        Utils.loadPosterBackground(getActivity(), background, mShowPoster);
+        Utils.loadPosterBackground(getActivity(), posterBackgroundView, mShowPoster);
 
         loadTraktRatings();
     }

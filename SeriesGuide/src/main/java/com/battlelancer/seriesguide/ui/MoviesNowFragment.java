@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -297,9 +295,7 @@ public class MoviesNowFragment extends Fragment {
                         R.string.transitionNameMoviePoster);
             } else {
                 // simple scale up animation if there is no shared element
-                ActivityCompat.startActivity(getActivity(), i, ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle());
+                Utils.startActivityWithAnimation(getActivity(), i, view);
             }
         }
     };

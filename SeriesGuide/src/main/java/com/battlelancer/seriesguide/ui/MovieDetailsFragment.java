@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -483,11 +481,7 @@ public class MovieDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
                 i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, mTmdbId));
-                ActivityCompat.startActivity(getActivity(), i,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), i, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
