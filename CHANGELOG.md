@@ -9,6 +9,16 @@ Version 31
 ----------
 *(in development)*
 
+#### 31-beta4
+*(2016-06-16)*
+
+* TWEAK No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
+* TWEAK Display error if calculating statistics fails.
+* TWEAK Enable full auto backup on Android 6.0 (Marshmallow) and up.
+* FIX Correctly save trakt ratings for episodes.
+* FIX Correctly display show or episode opened via view intent from other apps.
+* NOTICE Latest translations from crowdin.
+
 #### 31-beta3
 *(2016-06-12)*
 
