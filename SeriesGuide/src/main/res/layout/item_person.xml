@@ -30,7 +30,9 @@
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:contentDescription="@null"
-        android:src="@color/protection_dark" />
+        android:src="@color/protection_dark"
+        android:transitionName="@string/transitionNamePersonImage"
+        tools:targetApi="lollipop" />
 
     <LinearLayout
         android:layout_width="wrap_content"

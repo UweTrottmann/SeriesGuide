@@ -89,12 +89,9 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
         }
     }
 
-    static class ViewHolder {
-
-        TextView name;
-
-        TextView description;
-
-        ImageView headshot;
+    public static class ViewHolder {
+        public TextView name;
+        public TextView description;
+        public ImageView headshot;
     }
 }

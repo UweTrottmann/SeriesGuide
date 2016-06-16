@@ -18,12 +18,12 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
 
@@ -82,7 +82,8 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         if (savedInstanceState == null) {
             // check if we should directly show a person
-            int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, -1);
+            int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID,
+                    -1);
             if (personTmdbId != -1) {
                 showPerson(null, personTmdbId);
 
@@ -133,7 +134,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     }
 
     @Override
-    public void showPerson(View view, int tmdbId) {
+    public void showPerson(@Nullable View view, int tmdbId) {
         if (mTwoPane) {
             // show inline
             PersonFragment f = PersonFragment.newInstance(tmdbId);
@@ -146,11 +147,8 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
 
             if (view != null) {
-                ActivityCompat.startActivity(this, i,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithTransition(this, i, view,
+                        R.string.transitionNamePersonImage);
             } else {
                 startActivity(i);
             }

@@ -146,7 +146,8 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PeopleListHelper.Person person = mAdapter.getItem(position);
-                mListener.showPerson(view, person.tmdbId);
+                PeopleAdapter.ViewHolder viewHolder = (PeopleAdapter.ViewHolder) view.getTag();
+                mListener.showPerson(viewHolder.headshot, person.tmdbId);
             }
         });
 

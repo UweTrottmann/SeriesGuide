@@ -63,6 +63,7 @@
     
     <!-- Animations -->
     <string name="transitionNameMoviePoster">moviePoster</string>
+    <string name="transitionNamePersonImage">personImage</string>
 
     <!-- Season sort orders -->
     <string-array name="sesorting">
