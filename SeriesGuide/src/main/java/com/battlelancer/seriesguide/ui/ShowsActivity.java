@@ -36,6 +36,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -198,8 +199,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private void setupViews() {
         // setup floating action button for adding shows
-        FloatingActionButton buttonAddShow = (FloatingActionButton) findViewById(
-                R.id.buttonShowsAdd);
+        FloatingActionButton buttonAddShow = ButterKnife.findById(this, R.id.buttonShowsAdd);
         buttonAddShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
