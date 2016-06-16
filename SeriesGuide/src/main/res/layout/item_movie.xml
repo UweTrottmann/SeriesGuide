@@ -19,7 +19,9 @@
             android:layout_height="@dimen/movie_item_poster_height"
             android:layout_alignParentTop="true"
             android:contentDescription="@null"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:transitionName="@string/transitionNameMoviePoster"
+            tools:targetApi="lollipop" />
 
         <ImageView
             android:id="@+id/imageViewMovieItemContextMenu"
@@ -53,8 +55,8 @@
             android:layout_below="@+id/textViewMovieTitle"
             android:layout_marginLeft="@dimen/inline_padding"
             android:layout_marginRight="@dimen/inline_padding"
-            android:paddingBottom="@dimen/default_padding"
             android:ellipsize="end"
+            android:paddingBottom="@dimen/default_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="November 13, 2013" />

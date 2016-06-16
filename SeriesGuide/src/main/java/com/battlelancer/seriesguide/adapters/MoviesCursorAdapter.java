@@ -114,15 +114,11 @@ public class MoviesCursorAdapter extends CursorAdapter {
         });
     }
 
-    static class ViewHolder {
-
-        TextView title;
-
-        TextView releaseDate;
-
-        ImageView poster;
-
-        View contextMenu;
+    public static class ViewHolder {
+        public TextView title;
+        public TextView releaseDate;
+        public ImageView poster;
+        public View contextMenu;
     }
 
     public interface MoviesQuery {

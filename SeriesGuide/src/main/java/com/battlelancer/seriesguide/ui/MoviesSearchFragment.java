@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -54,6 +52,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.tmdb2.entities.Movie;
 
@@ -220,11 +219,10 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
         i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
 
-        ActivityCompat.startActivity(getActivity(), i,
-                ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle()
-        );
+        MoviesAdapter.ViewHolder viewHolder
+                = (MoviesAdapter.ViewHolder) view.getTag();
+        Utils.startActivityWithTransition(getActivity(), i, viewHolder.poster,
+                R.string.transitionNameMoviePoster);
     }
 
     @Override

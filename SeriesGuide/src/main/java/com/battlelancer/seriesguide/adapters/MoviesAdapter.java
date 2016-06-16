@@ -127,14 +127,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
     }
 
-    static class ViewHolder {
-
-        TextView title;
-
-        TextView date;
-
-        ImageView poster;
-
-        ImageView contextMenu;
+    public static class ViewHolder {
+        public TextView title;
+        public TextView date;
+        public ImageView poster;
+        public ImageView contextMenu;
     }
 }

@@ -60,6 +60,9 @@
     <string name="theme_default">SeriesGuide</string>
     <string name="theme_dark_alt">Android Dark</string>
     <string name="theme_light">SeriesGuide Light</string>
+    
+    <!-- Animations -->
+    <string name="transitionNameMoviePoster">moviePoster</string>
 
     <!-- Season sort orders -->
     <string-array name="sesorting">

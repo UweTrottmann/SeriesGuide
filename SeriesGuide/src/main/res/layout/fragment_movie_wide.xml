@@ -27,7 +27,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:contentDescription="@null"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:transitionName="@string/transitionNameMoviePoster"
+        tools:targetApi="lollipop" />
 
     <ProgressBar
         android:id="@+id/progressBar"

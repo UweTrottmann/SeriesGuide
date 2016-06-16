@@ -283,15 +283,29 @@ public class MoviesNowFragment extends Fragment {
             Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
             i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movieTmdbId);
 
-            ActivityCompat.startActivity(getActivity(), i,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                            .toBundle()
-            );
+            int viewType = adapter.getItemViewType(position);
+            if (viewType == NowAdapter.ViewType.RELEASED
+                    || viewType == NowAdapter.ViewType.FRIEND) {
+                // poster element transition
+                View posterView;
+                if (viewType == NowAdapter.ViewType.RELEASED) {
+                    posterView = view.findViewById(R.id.imageViewReleasedPoster);
+                } else {
+                    posterView = view.findViewById(R.id.imageViewFriendPoster);
+                }
+                Utils.startActivityWithTransition(getActivity(), i, posterView,
+                        R.string.transitionNameMoviePoster);
+            } else {
+                // simple scale up animation if there is no shared element
+                ActivityCompat.startActivity(getActivity(), i, ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle());
+            }
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result> recentlyTraktCallbacks
+    private LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>
+            recentlyTraktCallbacks
             = new LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>() {
         @Override
         public Loader<TraktRecentMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {

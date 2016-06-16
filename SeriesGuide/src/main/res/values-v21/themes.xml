@@ -22,17 +22,23 @@
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
 
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 can go here. -->
+
+        <item name="android:windowContentTransitions">true</item>
 
     </style>
 
