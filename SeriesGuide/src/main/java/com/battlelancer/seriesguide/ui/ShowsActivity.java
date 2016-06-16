@@ -113,7 +113,7 @@ public class ShowsActivity extends BaseTopActivity implements
         NotificationService.handleDeleteIntent(this, getIntent());
 
         // handle implicit intents from other apps
-        if (handleViewIntents()) {
+        if (handleViewIntents(getIntent())) {
             finish();
             return;
         }
@@ -139,24 +139,24 @@ public class ShowsActivity extends BaseTopActivity implements
      *
      * @return true if a show or episode is viewed directly and this activity should finish.
      */
-    private boolean handleViewIntents() {
-        String action = getIntent().getAction();
+    private boolean handleViewIntents(Intent intent) {
+        String action = intent.getAction();
         if (TextUtils.isEmpty(action)) {
             return false;
         }
 
-        Intent intent = null;
+        Intent viewIntent = null;
 
         // view an episode
         if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
-            int episodeTvdbId = getIntent().getIntExtra(Intents.EXTRA_EPISODE_TVDBID, 0);
+            int episodeTvdbId = intent.getIntExtra(Intents.EXTRA_EPISODE_TVDBID, 0);
             if (episodeTvdbId > 0 && EpisodeTools.isEpisodeExists(this, episodeTvdbId)) {
                 // episode exists, display it
-                intent = new Intent(this, EpisodesActivity.class)
+                viewIntent = new Intent(this, EpisodesActivity.class)
                         .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId);
             } else {
                 // no such episode, offer to add show
-                int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+                int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
                 if (showTvdbId > 0) {
                     AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
                 }
@@ -164,13 +164,13 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // view a show
         else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
-            int showTvdbId = getIntent().getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
+            int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
             if (showTvdbId <= 0) {
                 return false;
             }
             if (DBUtils.isShowExists(this, showTvdbId)) {
                 // show exists, display it
-                intent = new Intent(this, OverviewActivity.class)
+                viewIntent = new Intent(this, OverviewActivity.class)
                         .putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
             } else {
                 // no such show, offer to add it
@@ -178,8 +178,8 @@ public class ShowsActivity extends BaseTopActivity implements
             }
         }
 
-        if (intent != null) {
-            startActivity(intent);
+        if (viewIntent != null) {
+            startActivity(viewIntent);
             return true;
         }
 
@@ -298,7 +298,11 @@ public class ShowsActivity extends BaseTopActivity implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        setInitialTab(intent.getExtras());
+        // handle intents that just want to view a specific show/episode
+        if (!handleViewIntents(intent)) {
+            // if no special intent, restore the last selected tab
+            setInitialTab(intent.getExtras());
+        }
     }
 
     @Override
