@@ -213,6 +213,7 @@
   <string name="action_movies_sort_title">Заглавие</string>
   <string name="action_movies_sort_release">Дата на издаване</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">ТВ предавания</string>
   <string name="statistics_episodes">Епизоди</string>
   <string name="statistics_movies">Филми</string>

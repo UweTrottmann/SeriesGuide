@@ -214,6 +214,7 @@
   <string name="action_movies_sort_title">Pavadinimas</string>
   <string name="action_movies_sort_release">Išleidimo data</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Serialai</string>
   <string name="statistics_episodes">Serijos</string>
   <string name="statistics_movies">Filmai</string>

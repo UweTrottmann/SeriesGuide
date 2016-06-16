@@ -34,7 +34,7 @@
   <string name="action_display_all">Visa alla</string>
   <string name="web_search">Webbsökning</string>
   <string name="add_to_homescreen">Genväg</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Öppna</string>
   <!-- Search -->
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
@@ -55,7 +55,7 @@
   <string name="share_checkout">Kolla in %s</string>
   <string name="addtocalendar">Lägg till i kalendern</string>
   <string name="addtocalendar_failed">Kan inte lägga till i kalendern. </string>
-  <string name="links">Links</string>
+  <string name="links">Länkar</string>
   <!-- Comments -->
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
@@ -90,7 +90,7 @@
   <string name="services_watch">Titta på</string>
   <string name="services_more">Mer</string>
   <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Inte översatt</string>
   <!-- Date and Time -->
   <string name="today">idag</string>
   <string name="now">nu</string>
@@ -196,7 +196,7 @@
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
   <string name="action_lists_sort">Sortera listor</string>
   <string name="action_lists_reorder">Sortera om listor</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">En lista med det här namnet finns redan</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Bevakningslista</string>
@@ -214,6 +214,7 @@
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Releasedatum</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">serier</string>
   <string name="statistics_episodes">avsnitt</string>
   <string name="statistics_movies">filmer</string>

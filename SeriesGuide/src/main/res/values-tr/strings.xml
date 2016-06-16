@@ -54,7 +54,7 @@
   <string name="share_checkout">Şuna gözatın: %s</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
-  <string name="links">Links</string>
+  <string name="links">Bağlantılar</string>
   <!-- Comments -->
   <string name="comments">Yorumlar</string>
   <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
@@ -115,8 +115,8 @@
   <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
   <string name="delete_show">Kaldır</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="context_favorite">Favori</string>
-  <string name="context_unfavorite">Favori değil</string>
+  <string name="context_favorite">Favorilere Ekle</string>
+  <string name="context_unfavorite">Favorilerden Kaldır</string>
   <string name="favorited">Favorilere eklendi</string>
   <string name="unfavorited">Favorilerden kaldırıldı</string>
   <string name="context_hide">Gizle</string>
@@ -213,6 +213,7 @@
   <string name="action_movies_sort_title">Başlık</string>
   <string name="action_movies_sort_release">Yayın tarihi</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Diziler</string>
   <string name="statistics_episodes">Bölümler</string>
   <string name="statistics_movies">Filmler</string>
@@ -374,7 +375,7 @@
   <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
   <string name="clear_cache">Resim önbelleğini temizle</string>
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
   <string name="backup_path">Yedekleme klasörü</string>

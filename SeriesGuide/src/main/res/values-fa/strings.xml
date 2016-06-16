@@ -54,7 +54,7 @@
   <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
-  <string name="links">Links</string>
+  <string name="links">لینک ها</string>
   <!-- Comments -->
   <string name="comments">نظرها</string>
   <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
@@ -213,6 +213,7 @@
   <string name="action_movies_sort_title">عنوان</string>
   <string name="action_movies_sort_release">تاریخ انتشار</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">نمایش</string>
   <string name="statistics_episodes">قسمت</string>
   <string name="statistics_movies">فیلم</string>
@@ -374,7 +375,7 @@
   <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %s ساعت</string>
   <string name="clear_cache">پاک سازی انباره‌های تصویر</string>
   <string name="clear_cache_summary">برداشتن تمام تصویرهای انبار شده از افزاره‌تان</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">گنجاندن تمامی فراداده‌ها چون توضیحات، بازیگران و نمره‌ها.</string>
   <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>
@@ -468,7 +469,7 @@
   <string name="action_extensions_add">افزودن افزونه‌ها</string>
   <string name="action_extensions_limit">برای افزودن افزونه‌های بیش‌تر X را بگیرید</string>
   <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
-  <string name="action_extension_remove">برداشتن</string>
+  <string name="action_extension_remove">حدف</string>
   <string name="extension_amazon">جست‌وجوی آمازون</string>
   <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>
   <string name="pref_amazon_domain">پایگاه آمازون</string>

@@ -213,6 +213,7 @@
   <string name="action_movies_sort_title">Cím</string>
   <string name="action_movies_sort_release">Első adás</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
   <string name="statistics_shows">Sorozat</string>
   <string name="statistics_episodes">Epizód</string>
   <string name="statistics_movies">Filmek</string>

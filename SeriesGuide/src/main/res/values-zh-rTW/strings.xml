@@ -212,6 +212,7 @@
   <string name="action_movies_sort_title">依影集名稱</string>
   <string name="action_movies_sort_release">播出日期</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">影集</string>
   <string name="statistics_episodes">集數</string>
   <string name="statistics_movies">電影</string>

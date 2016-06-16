@@ -54,7 +54,7 @@
   <string name="share_checkout">Jette un œil sur %s</string>
   <string name="addtocalendar">Ajouter à l\'agenda</string>
   <string name="addtocalendar_failed">Impossible de créer un évènement sur l\'agenda.</string>
-  <string name="links">Links</string>
+  <string name="links">Liens</string>
   <!-- Comments -->
   <string name="comments">Commentaires</string>
   <string name="shout_hint">Entrez un commentaire (en anglais, plus de 5 mots)</string>
@@ -213,6 +213,7 @@
   <string name="action_movies_sort_title">Titre</string>
   <string name="action_movies_sort_release">Date de parution</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Séries</string>
   <string name="statistics_episodes">Épisodes</string>
   <string name="statistics_movies">Films</string>
@@ -374,7 +375,7 @@
   <string name="pref_offsetsummary">Décalage de %s heures</string>
   <string name="clear_cache">Vider le cache d\'images</string>
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Envoyer des statistiques d’utilisation anonymes à un service Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
   <string name="backup_path">Dossier de sauvegarde</string>

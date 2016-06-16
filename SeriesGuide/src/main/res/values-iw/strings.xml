@@ -65,6 +65,8 @@
   <string name="refresh">רענון</string>
   <plurals name="replies_plural">
     <item quantity="one">%d תגובה</item>
+    <item quantity="two">%d replies</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
@@ -213,6 +215,7 @@
   <string name="action_movies_sort_title">שם</string>
   <string name="action_movies_sort_release">תאריך שחרור</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">סדרות</string>
   <string name="statistics_episodes">פרקים</string>
   <string name="statistics_movies">סרטים</string>
@@ -224,14 +227,20 @@
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
     <item quantity="one">%d יום</item>
+    <item quantity="two">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d שעה</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d דקה</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
@@ -299,6 +308,8 @@
   <string name="rating9">מצוין</string>
   <plurals name="votes">
     <item quantity="one">%d הצבעה</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
   <!-- Check Ins -->
