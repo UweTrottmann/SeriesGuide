@@ -214,7 +214,7 @@
   <string name="action_movies_sort_title">Tytuł</string>
   <string name="action_movies_sort_release">Data premiery</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Nie można obliczyć statystyk.</string>
   <string name="statistics_shows">Seriale</string>
   <string name="statistics_episodes">Odcinki</string>
   <string name="statistics_movies">Filmy</string>
