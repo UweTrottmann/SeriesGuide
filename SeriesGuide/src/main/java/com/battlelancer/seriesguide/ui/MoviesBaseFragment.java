@@ -84,7 +84,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new MoviesCursorAdapter(getContext(), this);
+        adapter = new MoviesCursorAdapter(getContext(), this, getLoaderId());
         gridView.setAdapter(adapter);
 
         getLoaderManager().initLoader(getLoaderId(), null, this);

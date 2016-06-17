@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -112,6 +113,11 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
                 }
             }
         });
+
+        // set unique transition names
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.poster.setTransitionName("moviesAdapterPoster_" + position);
+        }
 
         return convertView;
     }
