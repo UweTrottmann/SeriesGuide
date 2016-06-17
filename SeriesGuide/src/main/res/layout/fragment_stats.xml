@@ -134,14 +134,6 @@
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
-        <ProgressBar
-            android:id="@+id/progressBarStatsEpisodesRuntime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewStatsEpisodesRuntime"
-            android:layout_alignTop="@+id/textViewStatsEpisodesRuntime"
-            android:layout_toRightOf="@+id/textViewStatsEpisodesRuntime" />
-
         <TextView
             android:id="@+id/labelStatsEpisodesRuntime"
             android:layout_width="wrap_content"
@@ -151,6 +143,14 @@
             android:text="@string/runtime_all_episodes"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Caption" />
+
+        <ProgressBar
+            android:id="@+id/progressBarStatsEpisodesRuntime"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:layout_below="@id/labelStatsEpisodesRuntime"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/textViewStatsMovies"
