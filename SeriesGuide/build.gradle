@@ -159,9 +159,11 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Google Play Services
-    def playServicesVersion = '8.4.0'
+    // https://developers.google.com/android/guides/releases
+    def playServicesVersion = '9.0.2'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
+    compile "com.google.android.gms:play-services-auth:$playServicesVersion"
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
