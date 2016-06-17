@@ -81,15 +81,6 @@
 # Using with OkHttp 3 downloader, but has references to OkHttp2
 -dontwarn com.squareup.picasso.OkHttpDownloader
 
-# Retrofit 1.X
--dontwarn retrofit.**
--dontwarn rx.**
-
--keep class retrofit.** { *; }
--keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
-}
-
 # Retrofit 2.X
 -dontwarn retrofit2.**
 
