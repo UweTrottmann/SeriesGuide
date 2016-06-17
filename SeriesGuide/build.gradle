@@ -122,7 +122,8 @@ dependencies {
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile 'com.google.code.gson:gson:2.6.2'
+    // https://github.com/google/gson/blob/master/CHANGELOG.md
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
