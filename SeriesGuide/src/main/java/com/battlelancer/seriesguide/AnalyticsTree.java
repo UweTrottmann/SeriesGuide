@@ -23,10 +23,8 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import java.util.regex.Pattern;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import retrofit.RetrofitError;
 import timber.log.Timber;
 
 /**
@@ -36,19 +34,11 @@ import timber.log.Timber;
 public class AnalyticsTree extends Timber.DebugTree {
 
     public static final String CATEGORY_THETVDB_ERROR = "TheTVDB Error";
-    private static final Pattern TMDB_V3_API_KEY = Pattern.compile("api_key=([^&]*)");
 
     private final Context context;
 
     public AnalyticsTree(Context context) {
         this.context = context.getApplicationContext();
-    }
-
-    private static String sanitizeTmdbUrls(String s) {
-        if (s == null) {
-            return null;
-        }
-        return TMDB_V3_API_KEY.matcher(s).replaceAll("api_key=<key-removed>");
     }
 
     @Override
@@ -62,24 +52,8 @@ public class AnalyticsTree extends Timber.DebugTree {
                 }
             }
 
-            // special treatment for retrofit and TheTVDB errors
-            if (t instanceof RetrofitError) {
-                RetrofitError e = (RetrofitError) t;
-
-                // only logging retrofit HTTP and conversion errors for now
-                if (e.getKind() == RetrofitError.Kind.HTTP) {
-                    Utils.trackCustomEvent(context,
-                            "Network Request Error",
-                            tag + ": " + message,
-                            e.getResponse().getStatus() + " " + sanitizeTmdbUrls(e.getUrl()));
-                } else if (e.getKind() == RetrofitError.Kind.CONVERSION) {
-                    Utils.trackCustomEvent(context,
-                            "Request Conversion Error",
-                            tag + ": " + message,
-                            e.getResponse().getStatus() + " " + sanitizeTmdbUrls(e.getUrl()));
-                }
-                return;
-            } else if (t instanceof TvdbException) {
+            // special treatment for some exceptions
+            if (t instanceof TvdbException) {
                 TvdbException e = (TvdbException) t;
                 Utils.trackCustomEvent(context,
                         CATEGORY_THETVDB_ERROR,
