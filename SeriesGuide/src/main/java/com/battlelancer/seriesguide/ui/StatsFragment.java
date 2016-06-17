@@ -38,7 +38,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -372,6 +371,8 @@ public class StatsFragment extends Fragment {
 
     private static class StatsTask extends AsyncTask<Void, StatsUpdateEvent, StatsUpdateEvent> {
 
+        private static final long PREVIEW_UPDATE_INTERVAL_MS = DateUtils.SECOND_IN_MILLIS;
+
         private final Context context;
 
         public StatsTask(Context context) {
@@ -418,7 +419,7 @@ public class StatsFragment extends Fragment {
 
             // calculate runtime of watched episodes per show
             long totalRuntimeMin = 0;
-            int previewCount = 0;
+            long previewTime = System.currentTimeMillis() + PREVIEW_UPDATE_INTERVAL_MS;
             for (int i = 0, size = showRuntimes.size(); i < size; i++) {
                 int showTvdbId = showRuntimes.keyAt(i);
                 long runtimeOfShowMin = showRuntimes.valueAt(i);
@@ -441,10 +442,10 @@ public class StatsFragment extends Fragment {
                 episodesWatchedOfShow.close();
 
                 totalRuntimeMin += runtimeOfEpisodesMin;
-                previewCount++;
                 // post regular update of minimum
-                if (previewCount == 25) {
-                    previewCount = 0;
+                long currentTime = System.currentTimeMillis();
+                if (currentTime > previewTime) {
+                    previewTime = currentTime + PREVIEW_UPDATE_INTERVAL_MS;
                     stats.episodesWatchedRuntime(totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS);
                     publishProgress(buildUpdate(stats));
                 }
