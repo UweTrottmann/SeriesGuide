@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -40,8 +41,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +62,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -74,6 +78,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -102,7 +107,11 @@ public class OverviewFragment extends Fragment implements
     private int showTvdbId;
     private String showTitle;
 
+    private boolean hasSetEpisodeWatched;
+
     @Bind(R.id.containerOverviewShow) View containerShow;
+    @Nullable @Bind(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
+    @Nullable @Bind(R.id.feedbackViewOverview) FeedbackView feedbackView;
     @Bind(R.id.containerOverviewEpisode) View containerEpisode;
     @Bind(R.id.containerEpisodeActions) LinearLayout containerActions;
     @Bind(R.id.background) ImageView imageBackground;
@@ -168,7 +177,7 @@ public class OverviewFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         ButterKnife.bind(this, v);
 
-        v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleShowFavorited(v);
@@ -375,6 +384,7 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void setEpisodeWatched() {
+        hasSetEpisodeWatched = true;
         changeEpisodeFlag(EpisodeFlags.WATCHED);
         Utils.trackAction(getActivity(), TAG, "Flag Watched");
     }
@@ -584,6 +594,8 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void populateEpisodeViews(Cursor episode) {
+        maybeAddFeedbackView();
+
         if (isEpisodeDataAvailable) {
             // some episode properties
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
@@ -690,6 +702,46 @@ public class OverviewFragment extends Fragment implements
                     .loadAnimation(containerEpisode.getContext(), android.R.anim.fade_in));
             containerEpisode.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void maybeAddFeedbackView() {
+        if (feedbackView != null || feedbackViewStub == null
+                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
+            return; // can or should not add feedback view
+        }
+        feedbackView = (FeedbackView) feedbackViewStub.inflate();
+        feedbackViewStub = null;
+        if (feedbackView != null) {
+            feedbackView.setCallback(new FeedbackView.Callback() {
+                @Override
+                public void onRate() {
+                    if (Utils.launchWebsite(getContext(), getString(R.string.url_store_page))) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onFeedback() {
+                    if (Utils.tryStartActivity(getContext(),
+                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onDismiss() {
+                    removeFeedbackView();
+                }
+            });
+        }
+    }
+
+    private void removeFeedbackView() {
+        if (feedbackView == null) {
+            return;
+        }
+        feedbackView.setVisibility(View.GONE);
+        AppSettings.setAskedForFeedback(getContext());
     }
 
     private void populateEpisodeDetails(Cursor episode) {
@@ -855,7 +907,7 @@ public class OverviewFragment extends Fragment implements
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
-        final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
+        final ImageButton favorited = ButterKnife.findById(getView(), R.id.imageButtonFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
         if (isFavorited) {
             favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),

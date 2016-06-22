@@ -480,4 +480,13 @@
   <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
   <!-- People -->
   <string name="person_biography">Biografie</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Gefällt Ihnen SeriesGuide?</string>
+  <string name="feedback_action_yes">Ja!</string>
+  <string name="feedback_action_notreally">Nicht wirklich</string>
+  <string name="feedback_question_rate_google">Bei Google Play bewerten?</string>
+  <string name="feedback_question_rate_amazon">Bei Amazon bewerten?</string>
+  <string name="feedback_question_feedback">Mitteilen, was ich verbessern kann?</string>
+  <string name="feedback_action_ok">OK, gern</string>
+  <string name="feedback_action_nothanks">Nein, danke</string>
 </resources>
