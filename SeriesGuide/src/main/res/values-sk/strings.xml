@@ -158,7 +158,7 @@
   <string name="only_favorites">Iba obľúbené seriály</string>
   <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
   <!-- Updating -->
-  <string name="update_scheduled">Aktualizuje sa...</string>
+  <string name="update_scheduled">Aktualizuje sa…</string>
   <string name="update_no_connection">Pre aktualizáciu sa pripojte k internetu.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <!-- Seasons -->
@@ -214,7 +214,7 @@
   <string name="action_movies_sort_title">Názov</string>
   <string name="action_movies_sort_release">Dátum odvysielania</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
   <string name="statistics_shows">Seriály</string>
   <string name="statistics_episodes">Epizódy</string>
   <string name="statistics_movies">Filmy</string>

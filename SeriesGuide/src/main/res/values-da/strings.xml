@@ -10,8 +10,8 @@
   <string name="preferences">Indstillinger</string>
   <string name="help">Hjælp</string>
   <string name="help_and_feedback">Hjælp &amp; Feedback</string>
-  <string name="drawer_open">Åben navigations skuffen</string>
-  <string name="drawer_close">Luk navigations skuffen</string>
+  <string name="drawer_open">Åbn navigationspanel</string>
+  <string name="drawer_close">Luk navigationspanel</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Episode</string>
@@ -24,25 +24,25 @@
   <!-- Descriptions -->
   <string name="description_overview">Oversigt</string>
   <string name="description_poster">Vis plakat</string>
-  <string name="description_image">Episode billede</string>
+  <string name="description_image">Episodebillede</string>
   <string name="description_menu_overflow">Flere indstillinger</string>
   <!-- Actions -->
-  <string name="clear">Slet</string>
+  <string name="clear">Ryd</string>
   <string name="discard">Kassér</string>
   <string name="save_selection">Gem markering</string>
   <string name="action_display_all">Vis alle</string>
   <string name="web_search">Websøgning</string>
   <string name="add_to_homescreen">Genvej</string>
-  <string name="action_open">Åben</string>
+  <string name="action_open">Åbn</string>
   <!-- Search -->
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
   <string name="any_language">Ethvert sprog</string>
   <!-- Status messages -->
   <string name="updated">Opdateret til nyeste version.</string>
-  <string name="norating">ikke tilgængelig</string>
-  <string name="unknown">Ukendt</string>
-  <string name="offline">Forbind til et netværk og prøv igen.</string>
+  <string name="norating">ikke relevant</string>
+  <string name="unknown">ukendt</string>
+  <string name="offline">Forbind til et netværk, og prøv igen.</string>
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
   <string name="people_empty">Ingen her?! Tryk for at prøve igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
@@ -51,15 +51,15 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
-  <string name="share_checkout">Tjek %s</string>
-  <string name="addtocalendar">Tilføj til kalender</string>
+  <string name="share_checkout">Tjek %s ud</string>
+  <string name="addtocalendar">Føj til kalender</string>
   <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
   <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
-  <string name="shout_invalid">DIn kommentar følger ikke reglerne!</string>
-  <string name="action_post">Indlæg</string>
+  <string name="shout_invalid">Din kommentar overholder ikke reglerne!</string>
+  <string name="action_post">Opret indlæg</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Vær den første til at kommentere!</string>
   <string name="refresh">Opdater</string>
@@ -68,21 +68,21 @@
     <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Absolut</string>
+  <string name="episode_number_absolute">HEL EPISODE</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Udgivelsesdato</string>
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>
-  <string name="episode_dvdnumber">DVD Episode</string>
+  <string name="episode_dvdnumber">DVD-episode</string>
   <string name="show_actors">Skuespillere</string>
-  <string name="original_release">Oprindelige version</string>
+  <string name="original_release">Originalversion</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
-  <string name="show_runtime">Spilletid</string>
-  <string name="show_contentrating">Indholdsklassifikation</string>
+  <string name="show_runtime">Varighed</string>
+  <string name="show_contentrating">Bedømmelse</string>
   <string name="show_release_times">Udgivelsestider</string>
   <string name="episode_directors">Instruktører</string>
-  <string name="episode_gueststars">Gæstestjerner</string>
-  <string name="episode_writers">Forfattere</string>
+  <string name="episode_gueststars">Gæsteskuespillere</string>
+  <string name="episode_writers">Manuskriptforfattere</string>
   <string name="show_isalive">Fortsætter</string>
   <string name="show_isnotalive">Afsluttet</string>
   <string name="lastEdit">Sidste redigering / / TVDb</string>
@@ -92,42 +92,42 @@
   <string name="no_translation_title">Ikke oversat</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
-  <string name="now">Nu</string>
-  <string name="daily">Daglig</string>
+  <string name="now">nu</string>
+  <string name="daily">Dagligt</string>
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
-  <string name="mark_all">Set alle</string>
-  <string name="unmark_all">Set ingen</string>
+  <string name="mark_all">Alle set</string>
+  <string name="unmark_all">Ingen set</string>
   <string name="mark_untilhere">Markér alle tidligere sendte episoder som set</string>
   <string name="collect_all">Alle i samling</string>
   <string name="uncollect_all">Ingen i samling</string>
   <string name="action_skip">Spring over</string>
   <string name="action_dont_skip">Spring ikke over</string>
-  <string name="action_collection_add">TIlføj til samling</string>
+  <string name="action_collection_add">Føj til samling</string>
   <string name="action_collection_remove">Fjern fra samling</string>
-  <string name="action_collection_added">TIlføjet til samling</string>
+  <string name="action_collection_added">Føjet til samling</string>
   <string name="action_collection_removed">Fjernet fra samling</string>
-  <string name="action_watched">Set</string>
-  <string name="action_unwatched">Ikke set</string>
+  <string name="action_watched">Markér som set</string>
+  <string name="action_unwatched">Markér som ikke set</string>
   <!-- Shows -->
   <string name="confirm_delete">Vil du fjerne %s?</string>
   <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
   <string name="delete_show">Fjern</string>
   <string name="no_nextepisode">ingen næste episode fundet</string>
-  <string name="context_favorite">Favorit</string>
-  <string name="context_unfavorite">Ikke favorit</string>
-  <string name="favorited">Tilføjet til favoritter</string>
+  <string name="context_favorite">Føj til favoritter</string>
+  <string name="context_unfavorite">Fjern fra favoritter</string>
+  <string name="favorited">Føjet til favoritter</string>
   <string name="unfavorited">Fjernet fra favoritter</string>
   <string name="context_hide">Skjul</string>
-  <string name="context_unhide">Vis</string>
-  <string name="hidden">Skjult tv-serie</string>
-  <string name="unhidden">Ikke-skjult serie</string>
+  <string name="context_unhide">Skjul ikke</string>
+  <string name="hidden">Flyttet til skjulte</string>
+  <string name="unhidden">Serie er synlig igen</string>
   <string name="action_shows_add">Tilføj serie</string>
   <string name="action_shows_filter">Filtrer serier</string>
   <string name="empty_filter">Fjern alle filtre</string>
   <string name="action_shows_filter_favorites">Favoritter</string>
-  <string name="action_shows_filter_unwatched">Uset</string>
+  <string name="action_shows_filter_unwatched">Ikke sete</string>
   <string name="action_shows_filter_upcoming">Kommende</string>
   <string name="action_shows_filter_hidden">Skjult</string>
   <string name="action_shows_sort">Sortér serier</string>
@@ -135,53 +135,53 @@
   <string name="action_shows_sort_episode">Næste episode</string>
   <string name="action_shows_sort_favorites">Favoritter først</string>
   <string name="updateall_yes">Opdatér (alle)</string>
-  <string name="menu_update_delta">Opdatér (forældede)</string>
-  <string name="context_updateshow">Opdatering</string>
-  <string name="context_marknext">Set næste episode</string>
+  <string name="menu_update_delta">Opdatér (kun forældede)</string>
+  <string name="context_updateshow">Opdatér</string>
+  <string name="context_marknext">Næste episode set</string>
   <!-- Now -->
   <string name="now_tab">Nu</string>
-  <string name="recently_watched">Set for nyligt</string>
+  <string name="recently_watched">Set for nylig</string>
   <string name="released_today">Udgivet i dag</string>
-  <string name="friends_recently">Dine trakt venner</string>
-  <string name="now_empty">Intet sker. Se nogle shows!</string>
-  <string name="now_movies_empty">Der sker ikke noget her. Se nogle film!</string>
+  <string name="friends_recently">Dine trakt-venner</string>
+  <string name="now_empty">Der sker intet. Se nogle serier!</string>
+  <string name="now_movies_empty">Der sker intet. Se nogle film!</string>
   <!-- History -->
   <string name="user_stream">Historik</string>
-  <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle shows!</string>
-  <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Tjek ind på nogle film!</string>
+  <string name="user_stream_empty">Ingen nylig aktivitet på trakt. Tjek nogle serier ind!</string>
+  <string name="user_movie_stream_empty">Ingen nylig aktivitet på trakt. Tjek nogle film ind!</string>
   <!-- Calendar -->
   <string name="upcoming">Kommende</string>
   <string name="recent">Nylige</string>
-  <string name="noupcoming">Der er ingen kommende episoder.</string>
-  <string name="norecent">Der er ingen nylige episoder.</string>
-  <string name="only_favorites">Kun favorit serier</string>
+  <string name="noupcoming">Ingen kommende episoder.</string>
+  <string name="norecent">Ingen nylige episoder.</string>
+  <string name="only_favorites">Kun favoritserier</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Opdaterer&#8230;</string>
   <string name="update_no_connection">Forbind til internettet for at opdatere.</string>
-  <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
+  <string name="update_inprogress">En opdatering er allerede i gang. Prøv igen senere.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episoder ikke set</string>
+  <string name="season_watchcount">ikke sete episoder</string>
   <string name="season_allwatched">Alle episoder set</string>
   <string name="season_onenotwatched">episode ikke set</string>
-  <string name="season_unaired">Ikke sendt</string>
+  <string name="season_unaired">ikke sendte</string>
   <string name="oneotherepisode">anden episode</string>
   <string name="otherepisodes">andre episoder</string>
   <string name="remaining">%s tilbage</string>
   <!-- Add show -->
   <string name="checkin_searchhint">Skriv et serienavn</string>
   <string name="add_empty">Der er ingen serier her.</string>
-  <string name="no_results">Ingen resultater, prøv komplette ord.</string>
+  <string name="no_results">Ingen resultater. Angiv fuldstændige ord.</string>
   <string name="action_try_any_language">Prøv ethvert sprog</string>
   <string name="action_try_again">Prøv igen</string>
-  <string name="search_error">Søgning mislykkedes, prøv igen senere.</string>
+  <string name="search_error">Søgning mislykkedes. Prøv igen senere.</string>
   <string name="add_all">Tilføj alle</string>
-  <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
-  <string name="add_started">%s vil blive vist i din serieliste om et kort øjeblik.</string>
+  <string name="add_multiple">Alle serier vil blive vist på din serieliste om et kort øjeblik.</string>
+  <string name="add_started">%s vil blive vist på din serieliste om et kort øjeblik.</string>
   <string name="add_error">Kunne ikke tilføje %s.</string>
-  <string name="add_already_exists">%s er allerede i din serieliste.</string>
+  <string name="add_already_exists">%s er allerede på din serieliste.</string>
   <string name="recommended">Anbefalet</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Sete</string>
   <string name="shows_collection">Samling</string>
   <string name="watchlist">Overvågningsliste</string>
   <!-- Lists -->
@@ -192,20 +192,20 @@
   <string name="list_manage">Administrer liste</string>
   <string name="list_item_manage">Administrer lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
-  <string name="list_empty">Du kan tilføje serier, sæsoner eller episoder til denne liste.</string>
+  <string name="list_empty">Du kan føje serier, sæsoner eller episoder til denne liste.</string>
   <string name="action_lists_sort">Sorter lister</string>
   <string name="action_lists_reorder">Omarrangér lister</string>
   <string name="error_name_already_exists">En liste med dette navn eksisterer allerede</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
-  <string name="watchlist_add">Tilføj overvågningsliste</string>
+  <string name="watchlist_add">Føj til overvågningsliste</string>
   <string name="watchlist_remove">Fjern fra overvågningsliste</string>
-  <string name="watchlist_added">Tilføjet til overvågningsliste</string>
+  <string name="watchlist_added">Føjet til overvågningsliste</string>
   <string name="watchlist_removed">Fjernet fra overvågningsliste</string>
   <string name="movies_search_hint">Skriv en filmtitel</string>
-  <string name="movies_collection_empty">Du har ikke tilføjet film til din samling.</string>
-  <string name="movies_watchlist_empty">Du har ikke tilføjet film til din overvågningsliste.</string>
+  <string name="movies_collection_empty">Du har ikke føjet film til din samling.</string>
+  <string name="movies_watchlist_empty">Du har ikke føjet film til din overvågningsliste.</string>
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Medvirkende</string>
   <string name="movie_crew">Besætning</string>
@@ -214,15 +214,15 @@
   <string name="action_movies_sort_release">Udgivelsesdato</string>
   <!-- Statistics -->
   <string name="statistics_failed">Kunne ikke beregne statistikker.</string>
-  <string name="statistics_shows">Serier</string>
-  <string name="statistics_episodes">Episoder</string>
-  <string name="statistics_movies">Film</string>
+  <string name="statistics_shows">serier</string>
+  <string name="statistics_episodes">episoder</string>
+  <string name="statistics_movies">film</string>
   <string name="shows_with_next">%s med kommende episoder</string>
   <string name="shows_continuing">%s fortsætter</string>
   <string name="episodes_watched">%s sete</string>
-  <string name="runtime_all_episodes">Varighed af alle sete episoder</string>
-  <string name="movies_on_watchlist">%s på overvågningslisten</string>
-  <string name="runtime_movies_watchlist">Varig af film på overvågningslisten</string>
+  <string name="runtime_all_episodes">varighed af alle sete episoder</string>
+  <string name="movies_on_watchlist">%s på overvågningsliste</string>
+  <string name="runtime_movies_watchlist">varig af film på overvågningsliste</string>
   <plurals name="days_plural">
     <item quantity="one">%d dag</item>
     <item quantity="other">%d dage</item>
@@ -237,54 +237,54 @@
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>
-  <string name="hexagon_description">Tilslut til skyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
+  <string name="hexagon_description">Opret forbindelse til netskyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
   <string name="hexagon_warning_lists">Listerne er ikke inkluderet.</string>
-  <string name="hexagon_warning_trakt">Når du bruger SeriesGuide Cloud, vil ændringer på trakt ikke synkroniseres til SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">Når du bruger SeriesGuide Cloud, vil ændringer på trakt ikke synkroniseres med SeriesGuide.</string>
   <string name="hexagon_signin">Log ind</string>
   <string name="hexagon_signed_in">Du er forbundet til SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Log ud</string>
   <string name="hexagon_setup_incomplete">Opsætning af SeriesGuide Cloud blev ikke gennemført.</string>
-  <string name="hexagon_setup_fail_auth">Der var et problem med din Google konto.</string>
+  <string name="hexagon_setup_fail_auth">Der er et problem med din Google-konto.</string>
   <string name="hexagon_remove_account">Fjern konto</string>
-  <string name="hexagon_remove_account_success">Konto udslettet.</string>
+  <string name="hexagon_remove_account_success">Konto slettet.</string>
   <string name="hexagon_remove_account_failure">Kunne ikke fjerne konto.</string>
-  <string name="hexagon_remove_account_confirmation">At fjerne din konto vil slette alle film og serier fra SeriesGuide Cloud. Sørg for at fjerne den på andre tilsluttede enheder.</string>
-  <string name="hexagon_api_error">Kunne ikke tale med SeriesGuide Cloud. Prøv igen senere.</string>
+  <string name="hexagon_remove_account_confirmation">Hvis du fjerner din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
+  <string name="hexagon_api_error">Kunne ikke kommunikere med SeriesGuide Cloud. Prøv igen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">For at bruge SeriesGuide Cloud, tillad adgang til dine kontoer.</string>
-  <string name="hexagon_google_play_missing">For at bruge SeriesGuide Cloud, er Google Play-tjenester påkrævet.</string>
+  <string name="hexagon_permission_missing">Tillad adgang til dine kontoer for at bruge SeriesGuide Cloud.</string>
+  <string name="hexagon_google_play_missing">Google Play-tjenester er påkrævet for at bruge SeriesGuide Cloud.</string>
   <!-- trakt -->
-  <string name="trakt_submitqueued">Gemmer i trakt.</string>
-  <string name="trakt_seen">%s set.</string>
-  <string name="trakt_notseen">%s ikke set.</string>
+  <string name="trakt_submitqueued">Sender til trakt.</string>
+  <string name="trakt_seen">%s sete.</string>
+  <string name="trakt_notseen">%s ikke sete.</string>
   <string name="trakt_collected">%s samlet.</string>
   <string name="trakt_notcollected">%s ikke samlet.</string>
-  <string name="checkin_success_trakt">Tjekket ind på %s på trakt.</string>
-  <string name="checkin_canceled_success_trakt">Afbrudt indtjekning på trakt.</string>
-  <string name="traktcheckin_cancel">Overskriv</string>
-  <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Overskriv den foregående indtjekning eller vent %s og prøv igen.</string>
+  <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
+  <string name="checkin_canceled_success_trakt">Indtjekning på trakt afbrudt.</string>
+  <string name="traktcheckin_cancel">Tilsidesæt</string>
+  <string name="traktcheckin_inprogress">Du har allerede tjekket en anden episode eller film ind. Overskriv den foregående indtjekning eller vent %s, og prøv igen.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="trakt_success">Sendt til trakt.</string>
-  <string name="trakt_error_credentials">Noget gik galt. Kontroller venligt dine legitimationsoplysninger og prøv igen.</string>
+  <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
   <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Prøv igen senere.</string>
   <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
   <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
   <!-- Connect trakt -->
-  <string name="trakt_account">trakt konto</string>
-  <string name="trakt_connect_instructions">På den næste skærm log ind på trakt eller opret en ny konto, derefter lad SeriesGuide få adgang til din trakt konto.</string>
+  <string name="trakt_account">trakt-konto</string>
+  <string name="trakt_connect_instructions">Log ind på trakt på det næste skærmbillede, eller opret en ny konto, og tillad derefter SeriesGuide adgang til din trakt-konto.</string>
   <string name="connect_trakt">Forbind til trakt</string>
   <string name="trakt_reconnect">Forbind SeriesGuide til trakt</string>
-  <string name="trakt_reconnect_details">Tjek dine trakt oplysninger</string>
+  <string name="trakt_reconnect_details">Kontrollér dine trakt-brugeroplysninger</string>
   <string name="username">Brugernavn</string>
   <string name="waitplease">Vent et øjeblik</string>
-  <string name="connect">Tilslut</string>
+  <string name="connect">Forbind</string>
   <string name="disconnect">Afbryd</string>
   <string name="use_integrated_browser">Brug integreret browser</string>
-  <string name="connect_trakt_done">Forbundet til trakt!</string>
+  <string name="connect_trakt_done">Forbundet med trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide vil nu synkronisere serier og film på denne enhed med trakt. Dette kan tage noget tid.</string>
-  <string name="add_trakt_shows">Tilføj serier fra dit bibliotek:</string>
-  <string name="show_library">Vis dit bibliotek</string>
-  <string name="about_trakt">trakt hjælper med at holde styr på hvilke TV-serier du ser. <a href="http://trakt.tv">Lær mere</a></string>
+  <string name="add_trakt_shows">Tilføj serier fra dit trakt-bibliotek:</string>
+  <string name="show_library">Vis dit trakt-bibliotek</string>
+  <string name="about_trakt">trakt hjælper dig med at holde styr på dine TV-serier. <a href="https://trakt.tv">Flere oplysninger</a></string>
   <!-- trakt ratings -->
   <string name="action_rate">Bedøm</string>
   <string name="your_rating">Din bedømmelse</string>
@@ -306,11 +306,11 @@
   <string name="checkin">Tjek ind</string>
   <string name="checkin_hint">Skriv en besked (valgfrit)</string>
   <string name="paste_title">Indsæt titel</string>
-  <string name="pref_quick_checkin">Hurtig check-in</string>
-  <string name="pref_quick_checkin_summary">Spørg ikke om en check-in besked</string>
+  <string name="pref_quick_checkin">Hurtig indtjekning</string>
+  <string name="pref_quick_checkin_summary">Spørg ikke om en indtjekningsbesked</string>
   <!-- Help -->
   <string name="feedback">Send feedback</string>
-  <string name="action_open_in_browser">Åben i browser</string>
+  <string name="action_open_in_browser">Åbn i browser</string>
   <!-- Settings -->
   <string name="prefs_category_basic">Grundlæggende</string>
   <string name="prefs_category_sharing">Tjenester</string>
@@ -318,45 +318,45 @@
   <string name="prefs_category_about">Om</string>
   <string name="pref_onlyfuture">Ingen sendte episoder</string>
   <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
-  <string name="pref_onlyseasoneps">Skjul specielle episoder</string>
-  <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæson listen</string>
+  <string name="pref_onlyseasoneps">Skjul særlige episoder</string>
+  <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæsonlisten</string>
   <string name="pref_exactdates">Vis nøjagtige datoer</string>
   <string name="pref_exactdates_summary">\"31. oktober\" i stedet for \"om 3 dage\"</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
-  <string name="pref_episodesorting">Sortér afsnit efter&#8230;</string>
+  <string name="pref_episodesorting">Sortér episoder efter&#8230;</string>
   <string name="pref_language">Foretrukket indholdssprog</string>
-  <string name="pref_updatewifionly">Billeder kun via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">For at begrænse dataforbrug, hent ikke billeder via mobildata</string>
+  <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
+  <string name="pref_updatewifionlysummary">Download ikke billeder via mobildata for at begrænse dataforbruget</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="pref_autoaddshows">Tilføj nye trakt serier</string>
-  <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra dine trakt aktiviteter</string>
+  <string name="pref_autoaddshows">Tilføj nye trakt-serier</string>
+  <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra din trakt-historik</string>
   <!-- About screen -->
   <string name="licence_tvdb">Denne app bruger data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produkt bruger TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
   <string name="licence_trakt">Denne app bruger data og billeder fra trakt.</string>
-  <string name="about_open_source">SeriesGuide er lavet ved hjælp af open source software.</string>
-  <string name="licences_and_credits">Licenser og credits</string>
+  <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
+  <string name="licences_and_credits">Licenser og tilkendegivelser</string>
   <!-- Sort -->
   <string name="sort">Sorter efter</string>
-  <string name="action_sort_ignore_articles">Ignorer artikler</string>
+  <string name="action_sort_ignore_articles">Ignorér artikler</string>
   <!-- Sort orders -->
   <string name="sort_order_latest_first">Seneste først</string>
   <string name="sort_order_oldest_first">Ældste først</string>
-  <string name="sort_order_unwatched_first">Usete først</string>
+  <string name="sort_order_unwatched_first">Ikke sete først</string>
   <string name="sort_order_alphabetical">A - Z</string>
-  <string name="sort_order_top_rated_first">Top bedømte</string>
+  <string name="sort_order_top_rated_first">Bedst bedømte</string>
   <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
   <!-- Upcoming thresholds -->
   <string name="pref_upcominglimit">Forestående periode</string>
-  <string name="upcoming_upto_now">Nu</string>
+  <string name="upcoming_upto_now">nu</string>
   <string name="upcoming_upto_one_day">en dag</string>
   <string name="upcoming_upto_three_days">3 dage</string>
   <string name="upcoming_upto_one_week">en uge</string>
   <string name="upcoming_upto_two_weeks">to uger</string>
   <string name="upcoming_upto_one_month">en måned</string>
   <!-- Additional DashClock extension upcoming thresholds -->
-  <string name="upcoming_upto_one_hour">time</string>
+  <string name="upcoming_upto_one_hour">1 time</string>
   <string name="upcoming_upto_six_hours">6 timer</string>
   <string name="upcoming_upto_half_day">12 timer</string>
   <!-- Appearance settings -->
@@ -366,48 +366,48 @@
   <string name="pref_other">Andet</string>
   <string name="pref_autoupdate">Slå automatisk opdatering til</string>
   <string name="pref_autoupdatesummary">Opdater dine serier periodisk</string>
-  <string name="pref_autobackup">Automatisk Sikkerhedskopiering</string>
+  <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
   <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
-  <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
+  <string name="backup_summary">Sikkerhedskopier eller gendan dine serier</string>
   <string name="pref_number">Talformat</string>
   <string name="pref_offset">Manuel tidsforskydning</string>
-  <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>
-  <string name="clear_cache">Nulstil cache til billeder</string>
+  <string name="pref_offsetsummary">Forskyd viste sendetider med %s timer</string>
+  <string name="clear_cache">Ryd gemte billeder</string>
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
   <string name="pref_ganalyticssummary">Send anonyme brugsstatistikker til en Google-tjeneste</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inkluder alt meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
-  <string name="backup_path">Backup mappe</string>
-  <string name="backup_version">Database version</string>
-  <string name="backup_failed_file_access">Kan ikke foretage backup. En backup-fil kan ikke findes eller tilgåes.</string>
+  <string name="backup_full_dump">Inkludér alle meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
+  <string name="backup_path">Sikkerhedskopieringsmappe</string>
+  <string name="backup_version">Database-version</string>
+  <string name="backup_failed_file_access">Kan ikke foretage sikkerhedskopiering. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
   <string name="backup_inprogress">Sikkerhedskopierer databasen</string>
-  <string name="backup_success">Backup gennemført.</string>
-  <string name="backup_failed">Backup mislykkedes.</string>
+  <string name="backup_success">Sikkerhedskopiering gennemført.</string>
+  <string name="backup_failed">Sikkerhedskopiering mislykkedes.</string>
   <string name="import_inprogress">Gendanner databasen</string>
-  <string name="import_failed_nosd">Kan ikke gendanne backup. Backup-mappen er ikke tilgængelig.</string>
-  <string name="import_failed_nofile">Der er ingen læselig backup fil.</string>
-  <string name="import_failed_noread">Backup filen kan ikke læses.</string>
-  <string name="dbupgradefailed">Din backup kan være for gammel eller tom. Bemærk: Importér før-2.0 backups i en 1.9.x version først.</string>
-  <string name="import_success">Gendannelse af backup lykkedes.</string>
-  <string name="import_failed">Gendannelse af backup mislykkedes.</string>
-  <string name="backup_button">Backup</string>
-  <string name="import_button">Gendan</string>
-  <string name="backup_question">Dette vil overskrive den nuværende backup fil i backup mappen!</string>
-  <string name="import_question">Den nuværende oversigt over tv-serier vil gå tabt! Vær sikker på backup filen er placeret i backup mappen.</string>
-  <string name="import_warning">Jeg forstår at mine nuværende serier, lister og film vil blive erstattet!</string>
-  <string name="last_auto_backup">Sidste automatiske backup: %s</string>
-  <string name="restore_auto_backup">Gendan automatisk backup</string>
-  <string name="dataliberation_permission_missing">For at sikkerhedskopiere eller gendanne, tillad adgang til dine filer.</string>
-  <string name="autobackup_permission_missing">For at bruge automatisk sikkerhedskopiering, tillad adgang til dine filer.</string>
-  <string name="autobackup_files_missing">For at bruge automatisk sikkerhedskopiering, vælg gyldige sikkerhedskopifiler.</string>
+  <string name="import_failed_nosd">Kan ikke gendanne sikkerhedskopiering. Sikkerhedskopieringmappen er ikke tilgængelig.</string>
+  <string name="import_failed_nofile">Der er ingen læselig sikkerhedskopieringsfil.</string>
+  <string name="import_failed_noread">Sikkerhedskopieringsfilen kan ikke læses.</string>
+  <string name="dbupgradefailed">Din sikkerhedskopi kan være for gammel eller tom. Bemærk: Importér sikkerhedskopier fra version 2.0 i version 1.9.x først.</string>
+  <string name="import_success">Gendannelse af sikkerhedskopi lykkedes.</string>
+  <string name="import_failed">Gendannelse af sikkerhedskopi mislykkedes.</string>
+  <string name="backup_button">Opret sikkerhedskopi</string>
+  <string name="import_button">Gendan sikkerhedskopi</string>
+  <string name="backup_question">Dette vil overskrive den nuværende sikkerhedskopieringsfil i sikkerhedskopieringsmappen!</string>
+  <string name="import_question">Den nuværende serieliste vil gå tabt! Vær sikker på sikkerhedskopieringsfilen er placeret i sikkerhedskopieringsmappen.</string>
+  <string name="import_warning">Jeg er indforstået med, at mine nuværende serier, lister og film vil blive erstattet!</string>
+  <string name="last_auto_backup">Seneste automatiske sikkerhedskopi: %s</string>
+  <string name="restore_auto_backup">Gendan automatisk sikkerhedskopi</string>
+  <string name="dataliberation_permission_missing">Tillad adgang til dine filer for at sikkerhedskopiere eller gendanne.</string>
+  <string name="autobackup_permission_missing">Tillad adgang til dine filer for at bruge automatisk sikkerhedskopiering.</string>
+  <string name="autobackup_files_missing">Vælg gyldige sikkerhedskopifiler for at bruge automatisk sikkerhedskopiering.</string>
   <string name="no_file_selected">Ingen fil valgt</string>
   <string name="action_select_file">Vælg fil</string>
-  <string name="backup_use_default_files">Brug standard sikkerhedskopifiler</string>
+  <string name="backup_use_default_files">Brug standardsikkerhedskopifiler</string>
   <!-- Welcome dialog -->
   <string name="get_started">Kom i gang</string>
   <string name="welcome_setuplanguage">Vælg sprog</string>
-  <string name="dismiss">Slet</string>
+  <string name="dismiss">Ignorér</string>
   <!-- Notifications -->
   <string name="upcoming_show">%s kommer snart</string>
   <string name="upcoming_episodes">Nye episoder kommer snart</string>
@@ -418,11 +418,11 @@
   <string name="pref_notifications">Underretninger</string>
   <string name="pref_notificationssummary">Underret om nye episoder</string>
   <string name="pref_notifyfavonly">Kun favoritter</string>
-  <string name="pref_notifyfavonlysummary">Modtag kun underretninger for serier markeret som favorit</string>
-  <string name="pref_ringtone">Ringetone</string>
+  <string name="pref_notifyfavonlysummary">Modtag kun underretninger for serier markeret som favoritter</string>
+  <string name="pref_ringtone">Lyd</string>
   <string name="pref_vibrate">Vibrér</string>
-  <string name="pref_vibratesummary">Vibrer også når en underretning bliver vist</string>
-  <string name="pref_notifications_treshold">Hvornår skal der komme underretninger?</string>
+  <string name="pref_vibratesummary">Vibrer også ved underretning</string>
+  <string name="pref_notifications_treshold">Underretningsfrekvens</string>
   <!-- Notification thresholds -->
   <string name="notification_release_exact">Når sendes</string>
   <string name="notification_release_earlier_five">5 min. i forvejen</string>
@@ -434,8 +434,8 @@
   <string name="largewidget">SeriesGuide (stor)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skjul sete episoder</string>
-  <string name="pref_widget_opacity">Widget baggrund</string>
-  <string name="pref_widget_type">Widget type</string>
+  <string name="pref_widget_opacity">Widget-baggrund</string>
+  <string name="pref_widget_type">Widget-type</string>
   <!-- Widget background options -->
   <string name="widget_background_transparent">Gennemsigtig</string>
   <string name="widget_background_25">25 %</string>
@@ -444,22 +444,22 @@
   <string name="widget_background_opaque">Uigennemsigtig</string>
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Kommende episode</string>
-  <string name="dashclock_extension_description">Viser de kommende episoder af dine SeriesGuide serier.</string>
-  <string name="dashclock_pref_upcoming_threshold">Vis episoder i de næste</string>
+  <string name="dashclock_extension_description">Viser de kommende episoder af dine SeriesGuide-serier.</string>
+  <string name="dashclock_pref_upcoming_threshold">Vis episoder i de næste&#8230;</string>
   <!-- Google In-App Billing -->
-  <string name="onlyx">Kun for støtterer</string>
+  <string name="onlyx">Kun for brugere, som har doneret</string>
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
   <string name="billing_price_subscribe">%s/år, prøv gratis</string>
   <string name="billing_price_pass">engangskøb</string>
-  <string name="upgrade_description">Oplås alle funktioner, herunder: underretninger, temaer og flere widget indstillinger. Hjælp mig skabe fremtidige opdateringer.</string>
-  <string name="upgrade_success">Tak for din støtte! Du har adgang til alle funktioner.</string>
+  <string name="upgrade_description">Oplås alle funktioner, herunder: underretninger, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
+  <string name="upgrade_success">Tak for din støtte! Du har nu adgang til alle funktioner.</string>
   <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
   <string name="subscription_expired">Abonnement udløbet</string>
   <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Log ind på din Amazon konto!</string>
+  <string name="subscription_not_signed_in">Log ind på din Amazon-konto!</string>
   <string name="subscription_unavailable">Abonnementet er i øjeblikket ikke tilgængeligt.</string>
   <string name="subscription_failed">Køb ikke afsluttet.</string>
   <string name="pass_unavailable">X Pass er ikke tilgængelig i øjeblikket.</string>
@@ -470,13 +470,13 @@
   <string name="action_extensions_limit">Få X for at tilføje flere udvidelser</string>
   <string name="action_extensions_search">Hent flere udvidelser</string>
   <string name="action_extension_remove">Fjern</string>
-  <string name="extension_amazon">Amazon søgning</string>
-  <string name="description_extension_amazon">Søg på din lokale Amazon side</string>
-  <string name="pref_amazon_domain">Amazon side</string>
-  <string name="extension_google_play">Google Play søgning</string>
-  <string name="description_extension_google_play">Søg på Google Play Butik</string>
-  <string name="extension_youtube">YouTube søgning</string>
-  <string name="description_extension_youtube">Søg YouTube for videoer</string>
+  <string name="extension_amazon">Amazon-søgning</string>
+  <string name="description_extension_amazon">Søg på din lokale Amazon-side</string>
+  <string name="pref_amazon_domain">Amazon-side</string>
+  <string name="extension_google_play">Google Play-søgning</string>
+  <string name="description_extension_google_play">Søg på Google Play</string>
+  <string name="extension_youtube">YouTube-søgning</string>
+  <string name="description_extension_youtube">Søg efter videoer på YouTube</string>
   <string name="description_extension_web_search">Søg efter hjemmesider og billeder</string>
   <!-- People -->
   <string name="person_biography">Biografi</string>
