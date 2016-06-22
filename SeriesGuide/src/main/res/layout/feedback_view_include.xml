@@ -16,51 +16,57 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/default_padding"
-    android:paddingLeft="@dimen/large_padding"
-    android:paddingRight="@dimen/large_padding"
-    android:paddingTop="@dimen/large_padding"
-    android:theme="@style/ThemeOverlay.WhiteAccent">
+    android:layout_margin="@dimen/default_padding"
+    app:cardBackgroundColor="?attr/colorPrimary"
+    app:cardPreventCornerOverlap="false">
 
-    <TextView
-        android:id="@+id/textViewFeedback"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Menu"
-        tools:text="Are you enjoying SeriesGuide?" />
+        android:orientation="vertical"
+        android:theme="@style/ThemeOverlay.WhiteAccent">
 
-    <android.support.v7.widget.ButtonBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:allowStacking="true">
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/buttonFeedbackNegative"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textViewFeedback"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Not really" />
+            android:padding="@dimen/large_padding"
+            android:textAppearance="@style/TextAppearance.Menu"
+            tools:text="Are you enjoying SeriesGuide?" />
 
-        <Button
-            android:id="@+id/buttonFeedbackPositive"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.ButtonBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Yes!" />
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
+            app:allowStacking="true">
 
-    </android.support.v7.widget.ButtonBarLayout>
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
-</LinearLayout>
+            <Button
+                android:id="@+id/buttonFeedbackNegative"
+                style="?attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Not really" />
+
+            <Button
+                android:id="@+id/buttonFeedbackPositive"
+                style="?attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Yes!" />
+
+        </android.support.v7.widget.ButtonBarLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -44,6 +44,7 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -176,7 +177,7 @@ public class OverviewFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         ButterKnife.bind(this, v);
 
-        v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleShowFavorited(v);
@@ -900,7 +901,7 @@ public class OverviewFragment extends Fragment implements
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
-        final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
+        final ImageButton favorited = ButterKnife.findById(getView(), R.id.imageButtonFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
         if (isFavorited) {
             favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),

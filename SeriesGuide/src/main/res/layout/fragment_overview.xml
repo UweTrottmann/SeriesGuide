@@ -44,23 +44,24 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingTop="@dimen/default_padding">
 
             <LinearLayout
                 android:id="@+id/containerOverviewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:layout_weight="1"
                     android:focusable="true"
-                    android:nextFocusDown="@+id/checkinButton">
+                    android:nextFocusDown="@+id/checkinButton"
+                    tools:ignore="RtlHardcoded">
 
                     <TextView
                         android:id="@+id/showStatus"
@@ -68,7 +69,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
                         android:textAppearance="@style/TextAppearance.Body"
                         tools:text="@string/show_isalive" />
 
@@ -78,30 +78,28 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/showStatus"
                         android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
                         android:textAppearance="@style/TextAppearance.Body"
                         android:textIsSelectable="true"
                         tools:text="Tue 5:00 AM on CBS" />
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/imageViewFavorite"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/buttonbar_button_width"
-                    android:layout_height="match_parent"
+                <ImageButton
+                    android:id="@+id/imageButtonFavorite"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
-                    android:focusable="true"
-                    android:padding="10dp"
                     android:src="?attr/drawableStar0" />
+
             </LinearLayout>
 
             <ViewStub
                 android:id="@+id/viewStubOverviewFeedback"
-                android:inflatedId="@+id/feedbackViewOverview"
-                android:layout="@layout/feedback_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inflatedId="@+id/feedbackViewOverview"
+                android:layout="@layout/feedback_view" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -126,6 +124,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginBottom="@dimen/inline_padding"
                         android:foreground="?attr/selectableItemBackground"
                         cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
                         cardview:cardPreventCornerOverlap="false">
