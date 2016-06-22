@@ -158,7 +158,7 @@
   <string name="only_favorites">Iba obľúbené seriály</string>
   <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
   <!-- Updating -->
-  <string name="update_scheduled">Aktualizuje sa…</string>
+  <string name="update_scheduled">Aktualizuje sa...</string>
   <string name="update_no_connection">Pre aktualizáciu sa pripojte k internetu.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <!-- Seasons -->
@@ -485,4 +485,13 @@
   <string name="description_extension_web_search">Hľadať webstránky a obrázky</string>
   <!-- People -->
   <string name="person_biography">Životopis</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>
