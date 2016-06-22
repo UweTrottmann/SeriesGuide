@@ -594,33 +594,7 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void populateEpisodeViews(Cursor episode) {
-        if (feedbackView == null && feedbackViewStub != null
-                && hasSetEpisodeWatched && AppSettings.shouldAskForFeedback(getContext())) {
-            feedbackView = (FeedbackView) feedbackViewStub.inflate();
-            if (feedbackView != null) {
-                feedbackView.setCallback(new FeedbackView.Callback() {
-                    @Override
-                    public void onRate() {
-                        Utils.launchWebsite(getContext(), getString(R.string.url_store_page));
-                        removeFeedbackView();
-                    }
-
-                    @Override
-                    public void onFeedback() {
-                        if (Utils.tryStartActivity(getContext(),
-                                HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
-                            removeFeedbackView();
-                        }
-                    }
-
-                    @Override
-                    public void onDismiss() {
-                        removeFeedbackView();
-                    }
-                });
-            }
-            feedbackViewStub = null;
-        }
+        maybeAddFeedbackView();
 
         if (isEpisodeDataAvailable) {
             // some episode properties
@@ -727,6 +701,38 @@ public class OverviewFragment extends Fragment implements
             containerEpisode.startAnimation(AnimationUtils
                     .loadAnimation(containerEpisode.getContext(), android.R.anim.fade_in));
             containerEpisode.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void maybeAddFeedbackView() {
+        if (feedbackView != null || feedbackViewStub == null
+                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
+            return; // can or should not add feedback view
+        }
+        feedbackView = (FeedbackView) feedbackViewStub.inflate();
+        feedbackViewStub = null;
+        if (feedbackView != null) {
+            feedbackView.setCallback(new FeedbackView.Callback() {
+                @Override
+                public void onRate() {
+                    if (Utils.launchWebsite(getContext(), getString(R.string.url_store_page))) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onFeedback() {
+                    if (Utils.tryStartActivity(getContext(),
+                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onDismiss() {
+                    removeFeedbackView();
+                }
+            });
         }
     }
 
