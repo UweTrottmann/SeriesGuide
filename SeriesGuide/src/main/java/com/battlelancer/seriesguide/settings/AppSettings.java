@@ -85,8 +85,7 @@ public class AppSettings {
 
     public static boolean shouldAskForFeedback(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        // TODO ut: remove debug flag
-        if (!BuildConfig.DEBUG && prefs.getBoolean(KEY_ASKED_FOR_FEEDBACK, false)) {
+        if (prefs.getBoolean(KEY_ASKED_FOR_FEEDBACK, false)) {
             return false; // already asked for feedback
         }
 
@@ -95,8 +94,7 @@ public class AppSettings {
                     .getPackageInfo(context.getPackageName(), 0);
             boolean installedRecently = System.currentTimeMillis()
                     < ourPackageInfo.firstInstallTime + 30 * DateUtils.DAY_IN_MILLIS;
-            // TODO ut: remove debug flag
-            if (!BuildConfig.DEBUG && installedRecently) {
+            if (installedRecently) {
                 return false; // was only installed recently
             }
         } catch (PackageManager.NameNotFoundException e) {
