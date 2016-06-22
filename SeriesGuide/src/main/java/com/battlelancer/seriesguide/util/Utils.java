@@ -82,8 +82,8 @@ public class Utils {
     public static String getVersion(Context context) {
         String version;
         try {
-            version = context.getPackageManager().getPackageInfo(context.getPackageName(),
-                    PackageManager.GET_META_DATA).versionName;
+            version = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
             version = "UnknownVersion";
         }

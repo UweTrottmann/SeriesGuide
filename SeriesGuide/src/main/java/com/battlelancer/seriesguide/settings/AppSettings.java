@@ -20,9 +20,14 @@ package com.battlelancer.seriesguide.settings;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import timber.log.Timber;
 
 public class AppSettings {
 
@@ -34,6 +39,8 @@ public class AppSettings {
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
     public static final String KEY_LAST_STATS_REPORT = "timeLastStatsReport";
+
+    public static final String KEY_ASKED_FOR_FEEDBACK = "askedForFeedback";
 
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
@@ -61,7 +68,6 @@ public class AppSettings {
     /**
      * Whether to report stats, or if this was done today already.
      */
-    @SuppressLint("CommitPrefEdits")
     public static boolean shouldReportStats(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -75,5 +81,44 @@ public class AppSettings {
         }
 
         return shouldReport;
+    }
+
+    public static boolean shouldAskForFeedback(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        // TODO ut: remove debug flag
+        if (!BuildConfig.DEBUG && prefs.getBoolean(KEY_ASKED_FOR_FEEDBACK, false)) {
+            return false; // already asked for feedback
+        }
+
+        try {
+            PackageInfo ourPackageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            boolean installedRecently = System.currentTimeMillis()
+                    < ourPackageInfo.firstInstallTime + 30 * DateUtils.DAY_IN_MILLIS;
+            // TODO ut: remove debug flag
+            if (!BuildConfig.DEBUG && installedRecently) {
+                return false; // was only installed recently
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Timber.e(e, "Failed to find our package info.");
+            return false; // failed to find our package
+        }
+
+        Cursor showsQuery = context.getContentResolver()
+                .query(SeriesGuideContract.Shows.CONTENT_URI, null, null, null, null);
+        if (showsQuery == null) {
+            return false;
+        }
+        int showsCount = showsQuery.getCount();
+        showsQuery.close();
+
+        return showsCount >= 5; // only if 5+ shows are added
+    }
+
+    public static void setAskedForFeedback(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(KEY_ASKED_FOR_FEEDBACK, true)
+                .apply();
     }
 }

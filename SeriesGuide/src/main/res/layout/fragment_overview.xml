@@ -18,13 +18,13 @@
     <View
         android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:background="?attr/sgColorSeparator" />
 
     <View
         android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:background="?attr/sgColorSeparator" />
 
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
@@ -95,6 +95,13 @@
                     android:padding="10dp"
                     android:src="?attr/drawableStar0" />
             </LinearLayout>
+
+            <ViewStub
+                android:id="@+id/viewStubOverviewFeedback"
+                android:inflatedId="@+id/feedbackViewOverview"
+                android:layout="@layout/feedback_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <FrameLayout
                 android:layout_width="match_parent"
