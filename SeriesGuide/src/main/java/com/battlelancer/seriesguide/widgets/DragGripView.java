@@ -65,6 +65,7 @@ public class DragGripView extends View {
 
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
         mGravity = a.getInteger(0, mGravity);
+        //noinspection ResourceType
         mColor = a.getColor(1, mColor);
         a.recycle();
 
