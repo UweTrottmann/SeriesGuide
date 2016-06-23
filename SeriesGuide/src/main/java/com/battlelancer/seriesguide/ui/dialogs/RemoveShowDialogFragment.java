@@ -33,7 +33,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
-import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -104,13 +103,6 @@ public class RemoveShowDialogFragment extends DialogFragment {
         EventBus.getDefault().register(this);
 
         AsyncTaskCompat.executeParallel(new GetShowTitleTask(getActivity()), showTvdbId);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), "Delete Dialog");
     }
 
     @Override

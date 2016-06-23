@@ -54,6 +54,7 @@
   <string name="share_checkout">Nézd meg: %s</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
+  <string name="links">Linkek</string>
   <!-- Comments -->
   <string name="comments">Hozzászólások</string>
   <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
@@ -64,7 +65,7 @@
   <string name="refresh">Frissítés</string>
   <plurals name="replies_plural">
     <item quantity="one">%d válasz</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d válasz</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">Abszolút</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Cím</string>
   <string name="action_movies_sort_release">Első adás</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
   <string name="statistics_shows">Sorozat</string>
   <string name="statistics_episodes">Epizód</string>
   <string name="statistics_movies">Filmek</string>
@@ -223,15 +225,15 @@
   <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
   <plurals name="days_plural">
     <item quantity="one">%d nap</item>
-    <item quantity="other">%d days</item>
+    <item quantity="other">%d nap</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d óra</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="other">%d óra</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d perc</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d perc</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
@@ -298,7 +300,7 @@
   <string name="rating9">Nagyszerű</string>
   <plurals name="votes">
     <item quantity="one">%d szavazat</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="other">%d szavazat</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Bejelentkezés</string>
@@ -373,7 +375,7 @@
   <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
   <string name="clear_cache">Képtároló törlése</string>
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-  <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
+  <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
   <string name="backup_path">Mentési mappa</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Weboldalak és képek keresése</string>
   <!-- People -->
   <string name="person_biography">Biográfia</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

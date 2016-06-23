@@ -25,8 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -42,8 +41,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -76,6 +78,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.CheatSheet;
 import de.greenrobot.event.EventBus;
@@ -104,7 +107,11 @@ public class OverviewFragment extends Fragment implements
     private int showTvdbId;
     private String showTitle;
 
+    private boolean hasSetEpisodeWatched;
+
     @Bind(R.id.containerOverviewShow) View containerShow;
+    @Nullable @Bind(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
+    @Nullable @Bind(R.id.feedbackViewOverview) FeedbackView feedbackView;
     @Bind(R.id.containerOverviewEpisode) View containerEpisode;
     @Bind(R.id.containerEpisodeActions) LinearLayout containerActions;
     @Bind(R.id.background) ImageView imageBackground;
@@ -170,7 +177,7 @@ public class OverviewFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         ButterKnife.bind(this, v);
 
-        v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleShowFavorited(v);
@@ -377,6 +384,7 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void setEpisodeWatched() {
+        hasSetEpisodeWatched = true;
         changeEpisodeFlag(EpisodeFlags.WATCHED);
         Utils.trackAction(getActivity(), TAG, "Flag Watched");
     }
@@ -586,6 +594,8 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void populateEpisodeViews(Cursor episode) {
+        maybeAddFeedbackView();
+
         if (isEpisodeDataAvailable) {
             // some episode properties
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
@@ -632,10 +642,7 @@ public class OverviewFragment extends Fragment implements
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                             currentEpisodeTvdbId);
 
-                    ActivityCompat.startActivity(getActivity(), intent,
-                            ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                                    view.getHeight()).toBundle()
-                    );
+                    Utils.startActivityWithAnimation(getActivity(), intent, view);
                 }
             });
             containerEpisodePrimary.setFocusable(true);
@@ -697,6 +704,46 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
+    private void maybeAddFeedbackView() {
+        if (feedbackView != null || feedbackViewStub == null
+                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
+            return; // can or should not add feedback view
+        }
+        feedbackView = (FeedbackView) feedbackViewStub.inflate();
+        feedbackViewStub = null;
+        if (feedbackView != null) {
+            feedbackView.setCallback(new FeedbackView.Callback() {
+                @Override
+                public void onRate() {
+                    if (Utils.launchWebsite(getContext(), getString(R.string.url_store_page))) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onFeedback() {
+                    if (Utils.tryStartActivity(getContext(),
+                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onDismiss() {
+                    removeFeedbackView();
+                }
+            });
+        }
+    }
+
+    private void removeFeedbackView() {
+        if (feedbackView == null) {
+            return;
+        }
+        feedbackView.setVisibility(View.GONE);
+        AppSettings.setAskedForFeedback(getContext());
+    }
+
     private void populateEpisodeDetails(Cursor episode) {
         // description
         populateEpisodeDescription();
@@ -746,11 +793,8 @@ public class OverviewFragment extends Fragment implements
                     i.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
                             currentEpisodeTvdbId
                     ));
-                    ActivityCompat.startActivity(getActivity(), i,
-                            ActivityOptionsCompat
-                                    .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                    .toBundle()
-                    );
+                    Utils.startActivityWithAnimation(getActivity(), i, v);
+                    Utils.trackAction(v.getContext(), TAG, "Comments");
                 }
             }
         });
@@ -863,7 +907,7 @@ public class OverviewFragment extends Fragment implements
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
-        final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
+        final ImageButton favorited = ButterKnife.findById(getView(), R.id.imageButtonFavorite);
         boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
         if (isFavorited) {
             favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -885,20 +929,21 @@ public class OverviewFragment extends Fragment implements
         // next release day and time
         StringBuilder timeAndNetwork = new StringBuilder();
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
+        String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
-                    show.getString(ShowQuery.SHOW_RELEASE_COUNTRY));
+                    show.getString(ShowQuery.SHOW_RELEASE_COUNTRY),
+                    network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             // "Mon 08:30"
             timeAndNetwork.append(dayString).append(" ").append(timeString);
         }
         // network
-        final String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
             if (timeAndNetwork.length() != 0) {
                 timeAndNetwork.append(" ");
@@ -927,18 +972,16 @@ public class OverviewFragment extends Fragment implements
                     if (data == null) {
                         Timber.e("onLoadFinished: did not receive valid actions");
                     } else {
-                        Timber.d("onLoadFinished: received " + data.size() + " actions");
+                        Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            data);
+                            containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-                            containerActions,
-                            null);
+                            containerActions, null, TAG);
                 }
             };
 }

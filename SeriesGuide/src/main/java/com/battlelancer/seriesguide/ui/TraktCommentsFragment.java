@@ -50,8 +50,8 @@ import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt.v2.TraktLink;
-import com.uwetrottmann.trakt.v2.entities.Comment;
+import com.uwetrottmann.trakt5.TraktLink;
+import com.uwetrottmann.trakt5.entities.Comment;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 

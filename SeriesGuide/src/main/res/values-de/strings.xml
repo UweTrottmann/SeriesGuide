@@ -54,6 +54,7 @@
   <string name="share_checkout">Empfehle %s</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Kommentare</string>
   <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Erscheinungsdatum</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Statistik konnte nicht berechnet werden.</string>
   <string name="statistics_shows">Serien</string>
   <string name="statistics_episodes">Folgen</string>
   <string name="statistics_movies">Filme</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
   <!-- People -->
   <string name="person_biography">Biografie</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Gefällt Ihnen SeriesGuide?</string>
+  <string name="feedback_action_yes">Ja!</string>
+  <string name="feedback_action_notreally">Nicht wirklich</string>
+  <string name="feedback_question_rate_google">Bei Google Play bewerten?</string>
+  <string name="feedback_question_rate_amazon">Bei Amazon bewerten?</string>
+  <string name="feedback_question_feedback">Mitteilen, was ich verbessern kann?</string>
+  <string name="feedback_action_ok">OK, gern</string>
+  <string name="feedback_action_nothanks">Nein, danke</string>
 </resources>

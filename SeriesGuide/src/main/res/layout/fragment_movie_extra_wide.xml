@@ -30,7 +30,9 @@
         android:layout_gravity="left"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        tools:src="#30311B92" />
+        android:transitionName="@string/transitionNameMoviePoster"
+        tools:src="#30311B92"
+        tools:targetApi="lollipop" />
 
     <ProgressBar
         android:id="@+id/progressBar"

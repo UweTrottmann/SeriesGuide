@@ -54,6 +54,7 @@
   <string name="share_checkout">Odhlásiť %s</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
+  <string name="links">Odkazy</string>
   <!-- Comments -->
   <string name="comments">Komentáre</string>
   <string name="shout_hint">Napíšte komentár (Anglicky, 5 a viac slov)</string>
@@ -213,6 +214,7 @@
   <string name="action_movies_sort_title">Názov</string>
   <string name="action_movies_sort_release">Dátum odvysielania</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
   <string name="statistics_shows">Seriály</string>
   <string name="statistics_episodes">Epizódy</string>
   <string name="statistics_movies">Filmy</string>
@@ -378,7 +380,7 @@
   <string name="pref_offsetsummary">Posun času %s hodín</string>
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
-  <string name="pref_ganalyticssummary">Sledovať používanie funkcií pre zlepšenie SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnúť metadata ako popisy, hercov alebo hodnotenie.</string>
   <string name="backup_path">Priečinok zálohy</string>
@@ -483,4 +485,13 @@
   <string name="description_extension_web_search">Hľadať webstránky a obrázky</string>
   <!-- People -->
   <string name="person_biography">Životopis</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

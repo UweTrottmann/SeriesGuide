@@ -144,7 +144,7 @@ public class ListsTools {
 
                 cursor = response.getCursor();
             } catch (IOException e) {
-                Timber.e(e, "removeListsRemovedOnHexagon: failed to download lists.");
+                HexagonTools.trackFailedRequest(context, "get list ids", e);
                 return false;
             }
         } while (!TextUtils.isEmpty(cursor)); // fetch next batch
@@ -258,7 +258,7 @@ public class ListsTools {
         try {
             listsService.save(listsWrapper).execute();
         } catch (IOException e) {
-            Timber.e(e, "uploadAllToHexagon: failed for lists.");
+            HexagonTools.trackFailedRequest(context, "save lists", e);
             return false;
         }
         return true;
@@ -284,7 +284,7 @@ public class ListsTools {
                     return false; // no longer signed in
                 }
 
-                Lists.Get request = listsService.get();
+                Lists.Get request = listsService.get(); // use default server limit
                 if (hasMergedLists) {
                     request.setUpdatedSince(lastSyncTime);
                 }
@@ -301,7 +301,7 @@ public class ListsTools {
                 cursor = response.getCursor();
                 lists = response.getLists();
             } catch (IOException e) {
-                Timber.e(e, "downloadFromHexagon: failed to download lists.");
+                HexagonTools.trackFailedRequest(context, "get lists", e);
                 return false;
             }
 

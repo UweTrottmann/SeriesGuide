@@ -21,13 +21,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.trakt.v2.TraktV2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -73,11 +72,8 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
         try {
-            OAuthClientRequest request = TraktV2.getAuthorizationRequest(
-                    BuildConfig.TRAKT_CLIENT_ID,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
-                    state,
-                    null);
+            OAuthClientRequest request = ServiceUtils.getTraktNoTokenRefresh(this)
+                    .buildAuthorizationRequest(state);
             return request.getLocationUri();
         } catch (OAuthSystemException e) {
             Timber.e(e, "Building auth request failed.");

@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -60,9 +58,10 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Credits;
-import com.uwetrottmann.tmdb.entities.Videos;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.tmdb2.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.Videos;
+import com.uwetrottmann.trakt5.entities.Ratings;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -319,7 +318,7 @@ public class MovieDetailsFragment extends Fragment {
          * Get everything from TMDb. Also get additional rating from trakt.
          */
         final Ratings traktRatings = mMovieDetails.traktRatings();
-        final com.uwetrottmann.tmdb.entities.Movie tmdbMovie = mMovieDetails.tmdbMovie();
+        final Movie tmdbMovie = mMovieDetails.tmdbMovie();
         final boolean inCollection = mMovieDetails.inCollection;
         final boolean inWatchlist = mMovieDetails.inWatchlist;
         final boolean isWatched = mMovieDetails.isWatched;
@@ -482,11 +481,8 @@ public class MovieDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
                 i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, mTmdbId));
-                ActivityCompat.startActivity(getActivity(), i,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), i, v);
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
@@ -509,8 +505,7 @@ public class MovieDetailsFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateMovieCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits);
+            PeopleListHelper.populateMovieCast(getActivity(), mCastContainer, credits, TAG);
         }
 
         // crew members
@@ -518,8 +513,7 @@ public class MovieDetailsFragment extends Fragment {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateMovieCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits);
+            PeopleListHelper.populateMovieCrew(getActivity(), mCrewContainer, credits, TAG);
         }
     }
 

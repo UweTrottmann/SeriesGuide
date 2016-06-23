@@ -54,6 +54,7 @@
   <string name="share_checkout">Dóna un cop d\'ull a %s</string>
   <string name="addtocalendar">Afegeix al calendari</string>
   <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Comentaris</string>
   <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Títol</string>
   <string name="action_movies_sort_release">Data de llançament</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Sèries</string>
   <string name="statistics_episodes">Episodis</string>
   <string name="statistics_movies">Peŀlícules</string>
@@ -373,7 +375,7 @@
   <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>
   <string name="clear_cache">Buida la memòria cau d\'imatges</string>
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
-  <string name="pref_ganalyticssummary">Recopila informació sobre la utilització de les diverses característiques per ajudar a millorar l\'aplicació</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclou tota la informació disponible, com ara descripcions, actors i puntuacions.</string>
   <string name="backup_path">Carpeta de còpies de seguretat</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Cerca llocs web i imatges</string>
   <!-- People -->
   <string name="person_biography">Biografia</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

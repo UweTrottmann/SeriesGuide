@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -304,6 +305,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             // is a TVDb or no poster
             Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
+
+            // set unique transition names
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.poster.setTransitionName("nowAdapterPoster_" + position);
+            }
         } else if (viewHolder instanceof FriendViewHolder) {
             FriendViewHolder holder = (FriendViewHolder) viewHolder;
 
@@ -346,6 +352,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.type.setVisibility(View.VISIBLE);
             } else {
                 holder.type.setVisibility(View.GONE);
+            }
+
+            // set unique transition names
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.poster.setTransitionName("nowAdapterPoster_" + position);
             }
         }
     }

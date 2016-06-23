@@ -40,7 +40,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.ListsTools;
-import com.battlelancer.seriesguide.util.Utils;
 import java.util.HashSet;
 
 /**
@@ -104,12 +103,6 @@ public class AddListDialogFragment extends DialogFragment {
         buttonPositive.setEnabled(false);
 
         return layout;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "Add List Dialog");
     }
 
     @Override

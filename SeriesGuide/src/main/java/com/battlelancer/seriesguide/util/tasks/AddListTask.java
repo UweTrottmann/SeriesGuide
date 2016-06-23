@@ -30,7 +30,6 @@ import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * Task to add a new list.
@@ -70,7 +69,7 @@ public class AddListTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to add list to hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "add list", e);
                 return ERROR_HEXAGON_API;
             }
         }

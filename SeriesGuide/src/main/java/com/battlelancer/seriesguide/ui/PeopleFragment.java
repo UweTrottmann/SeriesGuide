@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Credits;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 /**
@@ -146,7 +146,8 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PeopleListHelper.Person person = mAdapter.getItem(position);
-                mListener.showPerson(view, person.tmdbId);
+                PeopleAdapter.ViewHolder viewHolder = (PeopleAdapter.ViewHolder) view.getTag();
+                mListener.showPerson(viewHolder.headshot, person.tmdbId);
             }
         });
 

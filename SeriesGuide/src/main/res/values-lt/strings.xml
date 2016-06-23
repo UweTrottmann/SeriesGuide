@@ -54,6 +54,7 @@
   <string name="share_checkout">Peržiūrėti %s</string>
   <string name="addtocalendar">Pridėti į kalendorių</string>
   <string name="addtocalendar_failed">Negalima sukurti kalendoriaus įvykio.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentarai</string>
   <string name="shout_hint">Įveskite komentarą (Lietuvių, 5 + žodžiai)</string>
@@ -213,6 +214,7 @@
   <string name="action_movies_sort_title">Pavadinimas</string>
   <string name="action_movies_sort_release">Išleidimo data</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Serialai</string>
   <string name="statistics_episodes">Serijos</string>
   <string name="statistics_movies">Filmai</string>
@@ -378,7 +380,7 @@
   <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val.</string>
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
-  <string name="pref_ganalyticssummary">Seka funkcijų naudojimą, siekiant pagerint SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
   <string name="backup_path">Backup folder</string>
@@ -483,4 +485,13 @@
   <string name="description_extension_web_search">Search for websites and images</string>
   <!-- People -->
   <string name="person_biography">Biography</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

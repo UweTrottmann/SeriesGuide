@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2016 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,40 @@ package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.jakewharton.retrofit.Ok3Client;
-import com.uwetrottmann.tmdb.Tmdb;
-import retrofit.RestAdapter;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.tmdb2.Tmdb;
+import okhttp3.OkHttpClient;
+import retrofit2.Response;
 
+/**
+ * Custom {@link Tmdb} which uses the app OkHttp instance.
+ */
 public class SgTmdb extends Tmdb {
+
+    private static final String TAG_TMDB_ERROR = "TMDB Error";
 
     private final Context context;
 
-    public SgTmdb(Context context) {
+    /**
+     * Create a new manager instance.
+     *
+     * @param apiKey Your TMDB API key.
+     */
+    public SgTmdb(Context context, String apiKey) {
+        super(apiKey);
         this.context = context.getApplicationContext();
     }
 
     @Override
-    protected RestAdapter.Builder newRestAdapterBuilder() {
-        return new RestAdapter.Builder().setClient(
-                new Ok3Client(ServiceUtils.getCachingOkHttpClient(context)));
+    protected synchronized OkHttpClient okHttpClient() {
+        return ServiceUtils.getCachingOkHttpClient(context);
+    }
+
+    public static void trackFailedRequest(Context context, String action, Response response) {
+        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, response);
+    }
+
+    public static void trackFailedRequest(Context context, String action, Throwable throwable) {
+        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, throwable);
     }
 }

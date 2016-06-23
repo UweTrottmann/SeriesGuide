@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
-import timber.log.Timber;
 
 /**
  * Confirms whether to obliterate a SeriesGuide cloud account.
@@ -90,7 +89,7 @@ public class RemoveCloudAccountDialogFragment extends DialogFragment {
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                Timber.e(e, "Failed to remove hexagon account.");
+                HexagonTools.trackFailedRequest(mContext, "remove account", e);
                 return false;
             }
 

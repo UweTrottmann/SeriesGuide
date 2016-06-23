@@ -560,13 +560,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Timber.d("Can't downgrade from version " + oldVersion + " to " + newVersion);
+        Timber.d("Can't downgrade from version %s to %s", oldVersion, newVersion);
         onResetDatabase(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Timber.d("Upgrading from " + oldVersion + " to " + newVersion);
+        Timber.d("Upgrading from %s to %s", oldVersion, newVersion);
 
         // run necessary upgrades
         int version = oldVersion;
@@ -619,7 +619,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
 
         // drop all tables if version is not right
-        Timber.d("After upgrade at version " + version);
+        Timber.d("After upgrade at version %s", version);
         if (version != DATABASE_VERSION) {
             onResetDatabase(db);
         }
@@ -959,6 +959,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         while (shows.moveToNext()) {
             final String showId = shows.getString(0);
 
+            //noinspection deprecation
             final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED
             }, Shows.REF_SHOW_ID + "=?", new String[] {
@@ -973,8 +974,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 String deviceTimeZone = TimeZone.getDefault().getID();
                 while (episodes.moveToNext()) {
                     String firstAired = episodes.getString(1);
-                    long episodeAirtime = TimeTools.parseEpisodeReleaseDate(defaultShowTimeZone,
-                            firstAired, defaultShowReleaseTime, null, deviceTimeZone);
+                    long episodeAirtime = TimeTools.parseEpisodeReleaseDate(null,
+                            defaultShowTimeZone, firstAired, defaultShowReleaseTime, null, null,
+                            deviceTimeZone);
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {

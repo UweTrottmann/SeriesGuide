@@ -24,7 +24,8 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.trakt5.entities.Ratings;
 import java.util.Date;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
@@ -86,7 +87,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.traktRatings().votes = movieQuery.getInt(MovieQuery.RATING_VOTES_TRAKT);
         }
         if (details.tmdbMovie() == null) {
-            details.tmdbMovie(new com.uwetrottmann.tmdb.entities.Movie());
+            details.tmdbMovie(new Movie());
             details.tmdbMovie().imdb_id = movieQuery.getString(MovieQuery.IMDB_ID);
             details.tmdbMovie().title = movieQuery.getString(MovieQuery.TITLE);
             details.tmdbMovie().overview = movieQuery.getString(MovieQuery.OVERVIEW);

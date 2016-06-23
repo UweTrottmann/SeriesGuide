@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.ListsTools;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Dialog to rename or remove a list.
@@ -127,12 +126,6 @@ public class ListManageDialogFragment extends DialogFragment {
         });
 
         return layout;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), "List Manage Dialog");
     }
 
     @Override

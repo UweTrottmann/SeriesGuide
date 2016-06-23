@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -32,12 +33,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -60,9 +65,9 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -77,8 +82,8 @@ public class Utils {
     public static String getVersion(Context context) {
         String version;
         try {
-            version = context.getPackageManager().getPackageInfo(context.getPackageName(),
-                    PackageManager.GET_META_DATA).versionName;
+            version = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
             version = "UnknownVersion";
         }
@@ -368,24 +373,15 @@ public class Utils {
     }
 
     /**
-     * Track a screen view. This is commonly called in {@link android.support.v4.app.Fragment#onStart()}.
-     */
-    public static void trackView(Context context, String screenName) {
-        Tracker tracker = Analytics.getTracker(context);
-        tracker.setScreenName(screenName);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
-
-    /**
      * Track a custom event that does not fit the {@link #trackAction(android.content.Context,
      * String, String)}, {@link #trackContextMenu(android.content.Context, String, String)} or
      * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
      * status information.
      */
-    public static void trackCustomEvent(Context context, String tag, String action,
+    public static void trackCustomEvent(@NonNull Context context, String category, String action,
             String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction(action)
                 .setLabel(label)
                 .build());
@@ -394,9 +390,9 @@ public class Utils {
     /**
      * Track an action event, e.g. when an action item is clicked.
      */
-    public static void trackAction(Context context, String tag, String label) {
+    public static void trackAction(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Action Item")
                 .setLabel(label)
                 .build());
@@ -405,9 +401,9 @@ public class Utils {
     /**
      * Track a context menu event, e.g. when a context item is clicked.
      */
-    public static void trackContextMenu(Context context, String tag, String label) {
+    public static void trackContextMenu(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Context Item")
                 .setLabel(label)
                 .build());
@@ -417,12 +413,29 @@ public class Utils {
      * Track a generic click that does not fit {@link #trackAction(android.content.Context, String,
      * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
      */
-    public static void trackClick(Context context, String tag, String label) {
+    public static void trackClick(Context context, String category, String label) {
         Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(tag)
+                .setCategory(category)
                 .setAction("Click")
                 .setLabel(label)
                 .build());
+    }
+
+    public static void trackFailedRequest(Context context, String category, String action,
+            Response response) {
+        Utils.trackCustomEvent(context, category, action,
+                response.code() + " " + response.message());
+        // log like "action: 404 not found"
+        Timber.tag(category);
+        Timber.e("%s: %s %s", action, response.code(), response.message());
+    }
+
+    public static void trackFailedRequest(Context context, String category, String action,
+            Throwable throwable) {
+        Utils.trackCustomEvent(context, category, action, throwable.getMessage());
+        // log like "action: Unable to resolve host"
+        Timber.tag(category);
+        Timber.e(throwable, "%s: %s", action, throwable.getMessage());
     }
 
     /**
@@ -524,6 +537,30 @@ public class Utils {
         return handled;
     }
 
+    public static void startActivityWithAnimation(Activity activity, Intent intent, View view) {
+        ActivityCompat.startActivity(activity, intent,
+                ActivityOptionsCompat
+                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                        .toBundle()
+        );
+    }
+
+    public static void startActivityWithTransition(Activity activity, Intent intent, View view,
+            @StringRes int sharedElementNameRes) {
+        Bundle activityOptions;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // shared element transition on L+
+            activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, view,
+                    activity.getString(sharedElementNameRes)).toBundle();
+        } else {
+            // simple scale up animation pre-L
+            activityOptions = ActivityOptionsCompat
+                    .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                    .toBundle();
+        }
+        ActivityCompat.startActivity(activity, intent, activityOptions);
+    }
+
     /**
      * Resolves the given attribute to the resource id for the given theme.
      */
@@ -538,12 +575,12 @@ public class Utils {
     /**
      * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
      */
-    public static void launchWebsite(@Nullable Context context, @Nullable String url) {
+    public static boolean launchWebsite(@Nullable Context context, @Nullable String url) {
         if (context == null || TextUtils.isEmpty(url)) {
-            return;
+            return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        openNewDocument(context, intent, null, null);
+        return openNewDocument(context, intent, null, null);
     }
 
     /**
@@ -565,7 +602,7 @@ public class Utils {
      * <p>On versions before L, will instead clear the launched activity from the task stack when
      * returning to the app through the task switcher.
      */
-    public static void openNewDocument(@NonNull Context context, @NonNull Intent intent,
+    public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent,
             @Nullable String logTag, @Nullable String logItem) {
         // launch as a new document (separate entry in task switcher)
         // or on older versions: clear from task stack when returning to app
@@ -576,11 +613,13 @@ public class Utils {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         }
 
-        Utils.tryStartActivity(context, intent, true);
+        boolean handled = Utils.tryStartActivity(context, intent, true);
 
         if (logTag != null && logItem != null) {
             Utils.trackAction(context, logTag, logItem);
         }
+
+        return handled;
     }
 
     /**

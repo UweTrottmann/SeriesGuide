@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -237,7 +239,26 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             if (defaultTab < tabsAdapter.getCount()) {
                 viewPager.setCurrentItem(defaultTab);
             }
+            if (defaultTab == ADDED_TAB_POSITION || defaultTab == EPISODES_TAB_POSITION) {
+                showSoftKeyboardOnSearchView();
+            }
+        } else {
+            // also show keyboard when showing first tab (added tab)
+            showSoftKeyboardOnSearchView();
         }
+    }
+
+    private void showSoftKeyboardOnSearchView() {
+        searchView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (searchView.requestFocus()) {
+                    InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
     }
 
     private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,

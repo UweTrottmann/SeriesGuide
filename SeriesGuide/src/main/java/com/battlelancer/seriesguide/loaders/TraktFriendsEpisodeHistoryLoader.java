@@ -21,22 +21,20 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.Friend;
-import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
-import com.uwetrottmann.trakt.v2.entities.Username;
-import com.uwetrottmann.trakt.v2.enums.Extended;
-import com.uwetrottmann.trakt.v2.enums.HistoryType;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Users;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.Friend;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
+import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.services.Users;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import retrofit.RetrofitError;
-import timber.log.Timber;
 
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
@@ -50,31 +48,22 @@ public class TraktFriendsEpisodeHistoryLoader
 
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
-        if (trakt == null) {
+        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
+        if (!TraktCredentials.get(getContext()).hasCredentials()) {
             return null;
         }
         Users traktUsers = trakt.users();
 
         // get all trakt friends
-        List<Friend> friends;
-        try {
-            friends = traktUsers.friends(Username.ME, Extended.IMAGES);
-        } catch (RetrofitError e) {
-            Timber.e(e, "Failed to load trakt friends");
-            return null;
-        } catch (OAuthUnauthorizedException e) {
-            TraktCredentials.get(getContext()).setCredentialsInvalid();
-            return null;
-        }
-
+        List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
+                traktUsers.friends(Username.ME, Extended.IMAGES), "get friends");
         if (friends == null) {
             return null;
         }
 
         int size = friends.size();
         if (size == 0) {
-            return null;
+            return null; // no friends, done.
         }
 
         // estimate list size
@@ -98,22 +87,11 @@ public class TraktFriendsEpisodeHistoryLoader
             }
 
             // get last watched episode
-            List<HistoryEntry> history;
-            try {
-                history = traktUsers.history(new Username(username),
-                        HistoryType.EPISODES, 1, 1, Extended.IMAGES);
-            } catch (RetrofitError e) {
-                // abort, either lost connection or server error or other error
-                Timber.e(e, "Failed to load friend episode history");
-                return null;
-            } catch (OAuthUnauthorizedException ignored) {
-                // friend might have revoked friendship just now :(
-                continue;
-            }
-
+            List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
+                    traktUsers.history(new Username(username), HistoryType.EPISODES, 1, 1,
+                            Extended.IMAGES), "get friend episode history");
             if (history == null || history.size() == 0) {
-                // no history
-                continue;
+                continue; // no history
             }
 
             HistoryEntry entry = history.get(0);

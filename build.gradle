@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
     }
 }
@@ -27,8 +27,8 @@ ext {
     androidBuildToolsVersion = '23.0.3'
 
     // API level 15+ -> version 15xxx
-    androidVersionCode = 15186
-    androidVersionName = '30.0.1'
+    androidVersionCode = 15194
+    androidVersionName = '31'
 
-    supportVersion = '23.3.0'
+    supportVersion = '23.4.0'
 }

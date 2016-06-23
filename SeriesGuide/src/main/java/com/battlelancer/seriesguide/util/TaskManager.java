@@ -114,7 +114,7 @@ public class TaskManager {
      * com.battlelancer.seriesguide.util.TaskManager} is running a
      * {@link JsonExportTask} is scheduled in silent mode.
      */
-    public void tryBackupTask() {
+    public synchronized void tryBackupTask() {
         if (!isAddTaskRunning()
                 && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             mBackupTask = new JsonExportTask(mContext, null, null, false, true);
@@ -126,7 +126,7 @@ public class TaskManager {
      * Schedules a {@link com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask} for all shows
      * if no other one of this type is currently running.
      */
-    public void tryNextEpisodeUpdateTask() {
+    public synchronized void tryNextEpisodeUpdateTask() {
         if (mNextEpisodeUpdateTask == null
                 || mNextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             mNextEpisodeUpdateTask = new LatestEpisodeUpdateTask(mContext);

@@ -40,7 +40,8 @@
     <string name="trakt_terms">trakt terms</string>
 
     <!-- Google Play links -->
-    <string name="url_x_pass">http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>
+    <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
+    <string name="url_x_pass">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>
     <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
     <string name="url_movies_search">https://play.google.com/store/search?q=%s&amp;c=movies</string>
 
@@ -60,6 +61,10 @@
     <string name="theme_default">SeriesGuide</string>
     <string name="theme_dark_alt">Android Dark</string>
     <string name="theme_light">SeriesGuide Light</string>
+    
+    <!-- Animations -->
+    <string name="transitionNameMoviePoster">moviePoster</string>
+    <string name="transitionNamePersonImage">personImage</string>
 
     <!-- Season sort orders -->
     <string-array name="sesorting">

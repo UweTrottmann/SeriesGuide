@@ -54,6 +54,7 @@
   <string name="share_checkout">Iečeko %s</string>
   <string name="addtocalendar">Pievienot kalendāram</string>
   <string name="addtocalendar_failed">Nevar radīt kalendāru pasākumu.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Komentāri</string>
   <string name="shout_hint">Type a comment (English, 5+ words)</string>
@@ -213,6 +214,7 @@
   <string name="action_movies_sort_title">Nosaukums</string>
   <string name="action_movies_sort_release">Raidīšanas datums</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Šovi</string>
   <string name="statistics_episodes">Epizodes</string>
   <string name="statistics_movies">Filmas</string>
@@ -378,7 +380,7 @@
   <string name="pref_offsetsummary">Nobīdīt raidlaikus %s stundas</string>
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
-  <string name="pref_ganalyticssummary">Saglabā datus par funkciju lietošanu, lai palīdzētu uzlabot SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>
   <string name="backup_path">Dublējuma mape</string>
@@ -483,4 +485,13 @@
   <string name="description_extension_web_search">Meklēt lapas un bildes</string>
   <!-- People -->
   <string name="person_biography">Biography</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

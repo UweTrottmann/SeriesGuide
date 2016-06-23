@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,11 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
                 .error(R.color.protection_dark)
                 .into(viewHolder.headshot);
 
+        // set unique transition names
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + position);
+        }
+
         return convertView;
     }
 
@@ -89,12 +95,9 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
         }
     }
 
-    static class ViewHolder {
-
-        TextView name;
-
-        TextView description;
-
-        ImageView headshot;
+    public static class ViewHolder {
+        public TextView name;
+        public TextView description;
+        public ImageView headshot;
     }
 }

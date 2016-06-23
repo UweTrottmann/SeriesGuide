@@ -54,6 +54,7 @@
   <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
+  <string name="links">لینک ها</string>
   <!-- Comments -->
   <string name="comments">نظرها</string>
   <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
@@ -63,6 +64,7 @@
   <string name="no_shouts">نخستین کسی باشید که نظر می‌دهد!</string>
   <string name="refresh">تازه سازی</string>
   <plurals name="replies_plural">
+    <item quantity="one">%Id پاسخ</item>
     <item quantity="other">%Id پاسخ</item>
   </plurals>
   <!-- Metadata -->
@@ -181,7 +183,7 @@
   <string name="recommended">توصیه می شود</string>
   <string name="watched_shows">تماشا شده</string>
   <string name="shows_collection">مجموعه</string>
-  <string name="watchlist">قهرست تماشا</string>
+  <string name="watchlist">فهرست تماشا</string>
   <!-- Lists -->
   <string name="first_list">فهرست نخست</string>
   <string name="list_add">افزودن فهرست</string>
@@ -196,7 +198,7 @@
   <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعه</string>
-  <string name="movies_watchlist">قهرست تماشا</string>
+  <string name="movies_watchlist">فهرست تماشا</string>
   <string name="watchlist_add">افزودن به فهرست تماشا</string>
   <string name="watchlist_remove">حذف از فهرست تماشا</string>
   <string name="watchlist_added">به فهرست تماشا افزوده شد</string>
@@ -211,6 +213,7 @@
   <string name="action_movies_sort_title">عنوان</string>
   <string name="action_movies_sort_release">تاریخ انتشار</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">نمایش</string>
   <string name="statistics_episodes">قسمت</string>
   <string name="statistics_movies">فیلم</string>
@@ -221,12 +224,15 @@
   <string name="movies_on_watchlist">%s در فهرست تماشا</string>
   <string name="runtime_movies_watchlist">زمان اجرای فیلم‌های فهرست تماشا</string>
   <plurals name="days_plural">
+    <item quantity="one">‫%Id روز</item>
     <item quantity="other">‫%Id روز</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="one">‫%Id ساعت</item>
     <item quantity="other">‫%Id ساعت</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="one">‫%Id دقیقه</item>
     <item quantity="other">‫%Id دقیقه</item>
   </plurals>
   <!-- Hexagon -->
@@ -293,6 +299,7 @@
   <string name="rating8">عالی</string>
   <string name="rating9">معرکه</string>
   <plurals name="votes">
+    <item quantity="one">%d رأی</item>
     <item quantity="other">%d رأی</item>
   </plurals>
   <!-- Check Ins -->
@@ -368,7 +375,7 @@
   <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %s ساعت</string>
   <string name="clear_cache">پاک سازی انباره‌های تصویر</string>
   <string name="clear_cache_summary">برداشتن تمام تصویرهای انبار شده از افزاره‌تان</string>
-  <string name="pref_ganalyticssummary">استفاده از ویژگی‌ها را برای کمک به بهبود سریزگاید، درگیری می‌کند</string>
+  <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">گنجاندن تمامی فراداده‌ها چون توضیحات، بازیگران و نمره‌ها.</string>
   <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>
@@ -462,7 +469,7 @@
   <string name="action_extensions_add">افزودن افزونه‌ها</string>
   <string name="action_extensions_limit">برای افزودن افزونه‌های بیش‌تر X را بگیرید</string>
   <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
-  <string name="action_extension_remove">برداشتن</string>
+  <string name="action_extension_remove">حدف</string>
   <string name="extension_amazon">جست‌وجوی آمازون</string>
   <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>
   <string name="pref_amazon_domain">پایگاه آمازون</string>
@@ -473,4 +480,13 @@
   <string name="description_extension_web_search">جست‌وجو برای پایگاه‌های وب و تصویرها</string>
   <!-- People -->
   <string name="person_biography">زندگی‌نامه</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

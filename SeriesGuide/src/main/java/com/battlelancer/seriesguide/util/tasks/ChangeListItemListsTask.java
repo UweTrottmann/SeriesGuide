@@ -78,7 +78,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.save(wrapper).execute();
                 } catch (IOException e) {
-                    Timber.e(e, "doInBackground: failed to add item to lists on hexagon.");
+                    HexagonTools.trackFailedRequest(getContext(), "add list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }
@@ -90,7 +90,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.removeItems(wrapper).execute();
                 } catch (IOException e) {
-                    Timber.e(e, "doInBackground: failed to remove item from lists on hexagon.");
+                    HexagonTools.trackFailedRequest(getContext(), "remove list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }

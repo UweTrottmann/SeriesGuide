@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +30,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.tmdb.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
 import java.util.List;
 
@@ -113,6 +114,11 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             }
         });
 
+        // set unique transition names
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.poster.setTransitionName("moviesAdapterPoster_" + position);
+        }
+
         return convertView;
     }
 
@@ -127,14 +133,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
     }
 
-    static class ViewHolder {
-
-        TextView title;
-
-        TextView date;
-
-        ImageView poster;
-
-        ImageView contextMenu;
+    public static class ViewHolder {
+        public TextView title;
+        public TextView date;
+        public ImageView poster;
+        public ImageView contextMenu;
     }
 }

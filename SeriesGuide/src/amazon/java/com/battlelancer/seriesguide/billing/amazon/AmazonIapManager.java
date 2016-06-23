@@ -89,7 +89,7 @@ public class AmazonIapManager {
         AmazonIapManager iapManager = new AmazonIapManager(context);
         PurchasingService.registerListener(context.getApplicationContext(),
                 new AmazonPurchasingListener(iapManager));
-        Timber.i("IAP sandbox mode is: " + PurchasingService.IS_SANDBOX_MODE);
+        Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
         amazonIapManager = iapManager;
     }
 
@@ -315,7 +315,7 @@ public class AmazonIapManager {
         // for subscriptions receipts contain the parent SKU, not the purchased period SKU
         if (amazonSku != AmazonSku.SERIESGUIDE_SUB_PARENT
                 && amazonSku != AmazonSku.SERIESGUIDE_PASS) {
-            Timber.w("The SKU [" + receipt.getSku() + "] in the receipt is not valid anymore ");
+            Timber.w("The SKU [%s] in the receipt is not valid anymore", receipt.getSku());
             // if the sku is not applicable anymore, call
             // PurchasingService.notifyFulfillment with status "UNAVAILABLE"
             PurchasingService.notifyFulfillment(receipt.getReceiptId(),
@@ -331,7 +331,7 @@ public class AmazonIapManager {
         } catch (final Throwable e) {
             // If for any reason the app is not able to fulfill the purchase,
             // add your own error handling code here.
-            Timber.e("Failed to grant purchase, with error " + e.getMessage());
+            Timber.e("Failed to grant purchase, with error %s", e.getMessage());
         }
     }
 

@@ -46,7 +46,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
-import com.uwetrottmann.trakt.v2.enums.Rating;
+import com.uwetrottmann.trakt5.enums.Rating;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,8 +76,6 @@ public class ShowTools {
         int ENDED = 0;
         int UNKNOWN = -1;
     }
-
-    private static final int SHOWS_MAX_BATCH_SIZE = 100;
 
     private static ShowTools _instance;
 
@@ -385,7 +383,7 @@ public class ShowTools {
                 }
                 showsService.save(showList).execute();
             } catch (IOException e) {
-                Timber.e(e, "toHexagon: failed to upload shows");
+                HexagonTools.trackFailedRequest(context, "save shows", e);
                 return false;
             }
 
@@ -455,7 +453,7 @@ public class ShowTools {
                         return false;
                     }
 
-                    Shows.Get request = showsService.get().setLimit(SHOWS_MAX_BATCH_SIZE);
+                    Shows.Get request = showsService.get(); // use default server limit
                     if (hasMergedShows) {
                         // only get changed shows (otherwise returns all)
                         request.setUpdatedSince(lastSyncTime);
@@ -480,7 +478,7 @@ public class ShowTools {
                         hasMoreShows = false;
                     }
                 } catch (IOException e) {
-                    Timber.e(e, "fromHexagon: failed to download shows");
+                    HexagonTools.trackFailedRequest(context, "get shows", e);
                     return false;
                 }
 

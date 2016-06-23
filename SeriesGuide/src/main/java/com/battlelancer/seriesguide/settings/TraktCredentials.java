@@ -23,23 +23,22 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import android.support.annotation.NonNull;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.AccessToken;
+import java.io.IOException;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -48,6 +47,7 @@ import timber.log.Timber;
 public class TraktCredentials {
 
     private static final String KEY_USERNAME = "com.battlelancer.seriesguide.traktuser";
+    private static final String KEY_DISPLAYNAME = "com.battlelancer.seriesguide.traktuser.name";
 
     private static TraktCredentials _instance;
 
@@ -68,7 +68,7 @@ public class TraktCredentials {
         mContext = context.getApplicationContext();
         mUsername = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getString(KEY_USERNAME, null);
-        mHasCredentials = !TextUtils.isEmpty(getUsername()) && !TextUtils.isEmpty(getAccessToken());
+        mHasCredentials = !TextUtils.isEmpty(getAccessToken());
     }
 
     /**
@@ -117,14 +117,7 @@ public class TraktCredentials {
      * Only removes the access token, but keeps the username.
      */
     private void removeAccessToken() {
-        // clear all in-memory credentials from Trakt service manager in any case
-        TraktV2 trakt = ServiceUtils.getTraktV2WithAuth();
-        if (trakt != null) {
-            trakt.setAccessToken(null);
-        }
-
         mHasCredentials = false;
-
         setAccessToken(null);
     }
 
@@ -144,6 +137,15 @@ public class TraktCredentials {
     }
 
     /**
+     * Get the optional display name.
+     */
+    @Nullable
+    public String getDisplayName() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getString(KEY_DISPLAYNAME, null);
+    }
+
+    /**
      * Get the access token. Avoid keeping this in memory, maybe calling {@link #hasCredentials()}
      * is sufficient.
      */
@@ -158,20 +160,40 @@ public class TraktCredentials {
     }
 
     /**
-     * Stores the given credentials. Performs no sanitation, however, if any is null or empty throws
-     * an exception.
+     * Stores the given access token.
      */
-    public synchronized void setCredentials(@NonNull String username, @NonNull String accessToken) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(accessToken)) {
-            throw new IllegalArgumentException("Username or access token is null or empty.");
+    public synchronized void storeAccessToken(@NonNull String accessToken) {
+        if (TextUtils.isEmpty(accessToken)) {
+            throw new IllegalArgumentException("Access token is null or empty.");
         }
-        mHasCredentials = setUsername(username) && setAccessToken(accessToken);
+        mHasCredentials = setAccessToken(accessToken);
+    }
+
+    /**
+     * Stores the given user name and display name.
+     */
+    public synchronized boolean storeUsername(@NonNull String username,
+            @Nullable String displayname) {
+        if (TextUtils.isEmpty(username)) {
+            throw new IllegalArgumentException("Username is null or empty.");
+        }
+        return setUsername(username)
+                && !TextUtils.isEmpty(displayname) && setDisplayname(displayname);
     }
 
     private boolean setUsername(String username) {
         mUsername = username;
-        return PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-                .putString(KEY_USERNAME, username).commit();
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit()
+                .putString(KEY_USERNAME, username)
+                .commit();
+    }
+
+    private boolean setDisplayname(String displayname) {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit()
+                .putString(KEY_DISPLAYNAME, displayname)
+                .commit();
     }
 
     private boolean setAccessToken(String accessToken) {
@@ -213,7 +235,8 @@ public class TraktCredentials {
      * Tries to refresh the current access token. Calls {@link #setCredentialsInvalid()} on failure
      * and returns {@code false}.
      */
-    public synchronized boolean refreshAccessToken() {
+    public synchronized boolean refreshAccessToken(TraktV2 trakt) {
+        Timber.d("refreshAccessToken: time to refresh the access token.");
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
         if (TextUtils.isEmpty(oldRefreshToken)) {
@@ -226,26 +249,24 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            OAuthAccessTokenResponse response = TraktV2.refreshAccessToken(
-                    BuildConfig.TRAKT_CLIENT_ID,
-                    BuildConfig.TRAKT_CLIENT_SECRET,
-                    BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM,
-                    oldRefreshToken
-            );
-            if (response != null) {
-                accessToken = response.getAccessToken();
-                refreshToken = response.getRefreshToken();
-                expiresIn = response.getExpiresIn();
+            Response<AccessToken> response = trakt.refreshAccessToken();
+            if (response.isSuccessful()) {
+                AccessToken token = response.body();
+                accessToken = token.access_token;
+                refreshToken = token.refresh_token;
+                expiresIn = token.expires_in;
+            } else {
+                if (!SgTrakt.isUnauthorized(response)) {
+                    SgTrakt.trackFailedRequest(mContext, "refresh access token", response);
+                }
             }
-        } catch (OAuthSystemException | OAuthProblemException e) {
-            Timber.e(e, "refreshAccessToken: network op failed");
-            setCredentialsInvalid();
-            return false;
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(mContext, "refresh access token", e);
         }
 
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
-            Timber.e("refreshAccessToken: invalid response");
+            Timber.e("refreshAccessToken: failed.");
             setCredentialsInvalid();
             return false;
         }
@@ -258,6 +279,7 @@ public class TraktCredentials {
             return false;
         }
 
+        Timber.d("refreshAccessToken: success.");
         return true;
     }
 }

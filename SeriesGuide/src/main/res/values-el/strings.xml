@@ -54,6 +54,7 @@
   <string name="share_checkout">Κάντε Check out για το %s</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Σχόλια</string>
   <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Τίτλος</string>
   <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Σειρές</string>
   <string name="statistics_episodes">Επεισόδια</string>
   <string name="statistics_movies">Ταινίες</string>
@@ -373,7 +375,7 @@
   <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %s ώρες</string>
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-  <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Περιλαμβάνει όλα τα μετα-δεδομένα όπως περιγραφές, ηθοποιούς και βαθμολογίες.</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Αναζήτηση για ιστοσελίδες και εικόνες</string>
   <!-- People -->
   <string name="person_biography">Βιογραφία</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

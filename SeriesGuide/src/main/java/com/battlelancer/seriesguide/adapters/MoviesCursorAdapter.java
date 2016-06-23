@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,30 +38,32 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private LayoutInflater mLayoutInflater;
-
-    private final String mImageBaseUrl;
+    private final LayoutInflater layoutInflater;
+    private final int uniqueId;
+    private final String tmdbImageBaseUrl;
 
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
-    private PopupMenuClickListener mPopupMenuClickListener;
+    private PopupMenuClickListener popupMenuClickListener;
 
     public interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int movieTmdbId);
     }
 
-    public MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener) {
+    public MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener,
+            int uniqueId) {
         super(context, null, 0);
-        mLayoutInflater = (LayoutInflater) context
+        this.uniqueId = uniqueId;
+        layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPopupMenuClickListener = popupMenuClickListener;
+        this.popupMenuClickListener = popupMenuClickListener;
 
         // figure out which size of posters to load based on screen density
         if (DisplaySettings.isVeryHighDensityScreen(context)) {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+            tmdbImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342;
         } else {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+            tmdbImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W154;
         }
     }
@@ -68,7 +71,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // do not use parent layout params to avoid padding issues
-        @SuppressLint("InflateParams") View v = mLayoutInflater.inflate(R.layout.item_movie, null);
+        @SuppressLint("InflateParams") View v = layoutInflater.inflate(R.layout.item_movie, null);
 
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.title = (TextView) v.findViewById(R.id.textViewMovieTitle);
@@ -99,7 +102,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
         ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
-                ? null : mImageBaseUrl + posterPath)
+                ? null : tmdbImageBaseUrl + posterPath)
                 .into(holder.poster);
 
         // context menu
@@ -107,22 +110,24 @@ public class MoviesCursorAdapter extends CursorAdapter {
         holder.contextMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPopupMenuClickListener != null) {
-                    mPopupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
+                if (popupMenuClickListener != null) {
+                    popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
                 }
             }
         });
+
+        // set unique transition names
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.poster.setTransitionName(
+                    "moviesCursorAdapterPoster_" + uniqueId + "_" + cursor.getPosition());
+        }
     }
 
-    static class ViewHolder {
-
-        TextView title;
-
-        TextView releaseDate;
-
-        ImageView poster;
-
-        View contextMenu;
+    public static class ViewHolder {
+        public TextView title;
+        public TextView releaseDate;
+        public ImageView poster;
+        public View contextMenu;
     }
 
     public interface MoviesQuery {

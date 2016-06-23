@@ -54,6 +54,7 @@
   <string name="share_checkout">تتحق من %s</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
@@ -92,7 +93,7 @@
   <string name="services_watch">شاهد</string>
   <string name="services_more">المزيد</string>
   <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">غير مترجمة</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
@@ -198,7 +199,7 @@
   <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
   <string name="action_lists_sort">ترتيب القوائم</string>
   <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
   <!-- Movies -->
   <string name="movies_collection">مجموعة</string>
   <string name="movies_watchlist">قائمة المشاهدة</string>
@@ -216,6 +217,7 @@
   <string name="action_movies_sort_title">العنوان</string>
   <string name="action_movies_sort_release">تاريخ الإصدار</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">المسلسلات</string>
   <string name="statistics_episodes">الحلقات</string>
   <string name="statistics_movies">الأفلام</string>
@@ -385,7 +387,7 @@
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
   <string name="pref_autoupdatesummary">تحديث المسلسلات بشكل دوري</string>
   <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
   <string name="pref_number">تنسيق الأرقام</string>
@@ -393,17 +395,17 @@
   <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
   <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
-  <string name="pref_ganalyticssummary">تقوم هذه الأداة بتتبع استخدام الميزات للمساعدة في تحسين برنامج دليل المسلسلات</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
   <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات&#8230;</string>
   <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
   <string name="import_inprogress">استعادة قاعدة البيانات&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">لايمكن إستعادة النسخ الإحتياطي، مجلد النسخ الإحتياطي غير متوفر.</string>
   <string name="import_failed_nofile">لا يوجد ملف نسخ إحتياطي للقراءة.</string>
   <string name="import_failed_noread">.ملف النسخ الاحتياطي غير قابل للقراءة</string>
   <string name="dbupgradefailed">قد تكون النسخة الاحتياطية قديمة جداً أو فارغة. ملاحظة: قم باستعادة ما قبل النسخة2.0 في النسخة 1.9.0 أولاً</string>
@@ -413,12 +415,12 @@
   <string name="import_button">استعادة</string>
   <string name="backup_question">سوف يتم الكتابة فوق ملف النسخ الإحتياطي الحالي الموجود في مجلد النسخ الإحتياطي!</string>
   <string name="import_question">سيتم فقدان قائمة المعرض الحالي! تأكد من أن ملف النسخة الاحتياطية داخل مجلد النسخ الاحتياطي.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>
   <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
   <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">لعمل نسخ إحتياطي أو إستعادتها، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
+  <string name="autobackup_permission_missing">لإستخدام النسخ الإحتياطي التلقائي، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
+  <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
   <string name="no_file_selected">لم يتم إختيار أي ملف</string>
   <string name="action_select_file">حدد ملف</string>
   <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
@@ -498,4 +500,13 @@
   <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
   <!-- People -->
   <string name="person_biography">السيرة الذاتية</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

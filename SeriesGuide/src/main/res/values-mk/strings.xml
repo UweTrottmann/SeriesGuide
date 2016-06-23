@@ -54,6 +54,7 @@
   <string name="share_checkout">Види %s</string>
   <string name="addtocalendar">Додај во календар</string>
   <string name="addtocalendar_failed">Не може да се креира настан во календарот.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Коментари</string>
   <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Наслов</string>
   <string name="action_movies_sort_release">Датум на емитување</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Серии</string>
   <string name="statistics_episodes">Епизоди</string>
   <string name="statistics_movies">Филмови</string>
@@ -373,7 +375,7 @@
   <string name="pref_offsetsummary">Опсег на временски %s саати</string>
   <string name="clear_cache">Избриши кеширани слики</string>
   <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
-  <string name="pref_ganalyticssummary">Го следи користењето на функции, за да се помогне во подобрувањето на SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Вклучи ги сите метаподатоци како описи, актери и рејтинзи.</string>
   <string name="backup_path">Фолдер за архивирање</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Пребарај за веб страници и слики</string>
   <!-- People -->
   <string name="person_biography">Биографија</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

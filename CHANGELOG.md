@@ -5,6 +5,52 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 31
+----------
+*(2016-06-23)*
+
+* Faster and more reliable trakt watched and collected episode sync.
+* No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
+
+#### 31
+*(2016-06-23)*
+
+* TWEAK Ask long time users for feedback.
+* TWEAK Fix cut-off card shadows in show overview.
+* NOTICE Latest translations from crowdin.
+
+#### 31-beta4
+*(2016-06-16)*
+
+* TWEAK No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
+* TWEAK Display error if calculating statistics fails.
+* TWEAK Enable full auto backup on Android 6.0 (Marshmallow) and up.
+* FIX Correctly save trakt ratings for episodes.
+* FIX Correctly display show or episode opened via view intent from other apps.
+* NOTICE Latest translations from crowdin.
+
+#### 31-beta3
+*(2016-06-12)*
+
+* FIX Crash when trying to refresh trakt access token.
+
+#### 31-beta2
+*(2016-06-10)*
+
+* TWEAK Rewritten trakt watched and collected episode sync. Should be faster and more reliable.
+* TWEAK Show keyboard when opening search for a show or episode (not when trying to add a show).
+* TWEAK If available, show trakt user display name in trakt settings.
+* NOTICE Latest translations from crowdin.
+
+#### 31-beta1
+*(2016-05-27)*
+
+* TWEAK Add note if no translation of a movie description is available.
+* TWEAK Move person and movie links to new links menu item with distinct "explore" icon.
+* TWEAK Updated pricing for the "Unlock All Subscription". Note: "X Pass" pricing was updated as well.
+* TWEAK Reduced the size of the app.
+* NOTICE Latest translations from crowdin.
+
 Version 30
 ----------
 *(2016-05-06)*

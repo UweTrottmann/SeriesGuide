@@ -54,6 +54,7 @@
   <string name="share_checkout">快来看看 %s</string>
   <string name="addtocalendar">添加到日历</string>
   <string name="addtocalendar_failed">创建日历事件失败</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">评论</string>
   <string name="shout_hint">输入一段评论（仅英语，至少五个单词）</string>
@@ -211,6 +212,7 @@
   <string name="action_movies_sort_title">依据节目名称</string>
   <string name="action_movies_sort_release">首播日期</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">电视节目总数</string>
   <string name="statistics_episodes">剧集总数</string>
   <string name="statistics_movies">电影总数</string>
@@ -368,7 +370,7 @@
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除所有节目的截图和海报</string>
-  <string name="pref_ganalyticssummary">发送匿名的使用情况报告</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
   <string name="backup_path">备份/还原数据库的路径</string>
@@ -473,4 +475,13 @@
   <string name="description_extension_web_search">搜索相关网站或图片</string>
   <!-- People -->
   <string name="person_biography">生平</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

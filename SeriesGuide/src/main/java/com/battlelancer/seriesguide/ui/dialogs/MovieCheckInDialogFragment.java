@@ -38,15 +38,6 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
         return f;
     }
 
-    protected final static String TAG = "Movie Check-In Dialog";
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Utils.trackView(getActivity(), "Movie Check-In Dialog");
-    }
-
     /**
      * Start the trakt check in task.
      */

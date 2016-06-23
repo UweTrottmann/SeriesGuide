@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -42,7 +40,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktUserMovieHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
@@ -283,24 +281,36 @@ public class MoviesNowFragment extends Fragment {
             Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
             i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movieTmdbId);
 
-            ActivityCompat.startActivity(getActivity(), i,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                            .toBundle()
-            );
+            int viewType = adapter.getItemViewType(position);
+            if (viewType == NowAdapter.ViewType.RELEASED
+                    || viewType == NowAdapter.ViewType.FRIEND) {
+                // poster element transition
+                View posterView;
+                if (viewType == NowAdapter.ViewType.RELEASED) {
+                    posterView = view.findViewById(R.id.imageViewReleasedPoster);
+                } else {
+                    posterView = view.findViewById(R.id.imageViewFriendPoster);
+                }
+                Utils.startActivityWithTransition(getActivity(), i, posterView,
+                        R.string.transitionNameMoviePoster);
+            } else {
+                // simple scale up animation if there is no shared element
+                Utils.startActivityWithAnimation(getActivity(), i, view);
+            }
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktUserMovieHistoryLoader.Result> recentlyTraktCallbacks
-            = new LoaderManager.LoaderCallbacks<TraktUserMovieHistoryLoader.Result>() {
+    private LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>
+            recentlyTraktCallbacks
+            = new LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>() {
         @Override
-        public Loader<TraktUserMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktUserMovieHistoryLoader(getActivity());
+        public Loader<TraktRecentMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new TraktRecentMovieHistoryLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktUserMovieHistoryLoader.Result> loader,
-                TraktUserMovieHistoryLoader.Result data) {
+        public void onLoadFinished(Loader<TraktRecentMovieHistoryLoader.Result> loader,
+                TraktRecentMovieHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -311,7 +321,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktUserMovieHistoryLoader.Result> loader) {
+        public void onLoaderReset(Loader<TraktRecentMovieHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }

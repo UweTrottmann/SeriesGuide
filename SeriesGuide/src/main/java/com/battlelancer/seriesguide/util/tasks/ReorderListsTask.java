@@ -73,7 +73,7 @@ public class ReorderListsTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to save reordered lists to hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "reorder lists", e);
                 return ERROR_HEXAGON_API;
             }
         }

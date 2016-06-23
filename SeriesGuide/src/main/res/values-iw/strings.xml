@@ -54,6 +54,7 @@
   <string name="share_checkout">בדוק את %s</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">תגובות</string>
   <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
@@ -64,6 +65,8 @@
   <string name="refresh">רענון</string>
   <plurals name="replies_plural">
     <item quantity="one">%d תגובה</item>
+    <item quantity="two">%d replies</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
@@ -212,6 +215,7 @@
   <string name="action_movies_sort_title">שם</string>
   <string name="action_movies_sort_release">תאריך שחרור</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">סדרות</string>
   <string name="statistics_episodes">פרקים</string>
   <string name="statistics_movies">סרטים</string>
@@ -223,14 +227,20 @@
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
     <item quantity="one">%d יום</item>
+    <item quantity="two">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d שעה</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d דקה</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
@@ -298,6 +308,8 @@
   <string name="rating9">מצוין</string>
   <plurals name="votes">
     <item quantity="one">%d הצבעה</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
   <!-- Check Ins -->
@@ -373,7 +385,7 @@
   <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-  <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">כלול את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
   <string name="backup_path">תיקיית גיבוי</string>
@@ -478,4 +490,13 @@
   <string name="description_extension_web_search">חפש אתרים ותמונות</string>
   <!-- People -->
   <string name="person_biography">ביוגרפיה</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

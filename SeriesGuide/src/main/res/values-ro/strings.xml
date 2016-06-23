@@ -54,6 +54,7 @@
   <string name="share_checkout">Verifica %s</string>
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
+  <string name="links">Links</string>
   <!-- Comments -->
   <string name="comments">Comentarii</string>
   <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>
@@ -213,6 +214,7 @@
   <string name="action_movies_sort_title">Titlu</string>
   <string name="action_movies_sort_release">Data de lansare</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Could not calculate statistics.</string>
   <string name="statistics_shows">Seriale</string>
   <string name="statistics_episodes">Episoade</string>
   <string name="statistics_movies">Filme</string>
@@ -378,7 +380,7 @@
   <string name="pref_offsetsummary">Compensare timp de difuzare cu %s ore</string>
   <string name="clear_cache">Șterge imaginile din cache</string>
   <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
-  <string name="pref_ganalyticssummary">Urmărește utilizarea opțiunilor pentru a ajuta la îmbunătățirea SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include toate detaliile ca descrieri, actori și evaluări.</string>
   <string name="backup_path">Fișier de arhive</string>
@@ -483,4 +485,13 @@
   <string name="description_extension_web_search">Caută site-uri și imagini</string>
   <!-- People -->
   <string name="person_biography">Biografie</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

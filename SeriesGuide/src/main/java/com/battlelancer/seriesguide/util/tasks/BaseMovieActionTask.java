@@ -17,26 +17,28 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
-import com.uwetrottmann.trakt.v2.TraktV2;
-import com.uwetrottmann.trakt.v2.entities.MovieIds;
-import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import com.uwetrottmann.trakt.v2.services.Sync;
+import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.services.Sync;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Base class for executing movie actions.
@@ -83,15 +85,15 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
                 }
                 moviesService.save(movieList).execute();
             } catch (IOException e) {
-                Timber.e(e, "doInBackground: failed to upload movie to hexagon.");
+                HexagonTools.trackFailedRequest(getContext(), "save movie", e);
                 return ERROR_HEXAGON_API;
             }
         }
 
         // send to trakt
         if (isSendingToTrakt()) {
-            TraktV2 trakt = ServiceUtils.getTraktV2WithAuth(getContext());
-            if (trakt == null) {
+            TraktV2 trakt = ServiceUtils.getTrakt(getContext());
+            if (!TraktCredentials.get(getContext()).hasCredentials()) {
                 return ERROR_TRAKT_AUTH;
             }
 
@@ -99,21 +101,22 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
             SyncItems items = new SyncItems().movies(
                     new SyncMovie().id(MovieIds.tmdb(movieTmdbId)));
 
-            SyncResponse response;
             try {
-                response = doTraktAction(traktSync, items);
-            } catch (OAuthUnauthorizedException e) {
-                TraktCredentials.get(getContext()).setCredentialsInvalid();
-                return ERROR_TRAKT_AUTH;
-            }
-
-            if (response == null) {
-                // invalid response
+                Response<SyncResponse> response = doTraktAction(traktSync, items).execute();
+                if (response.isSuccessful()) {
+                    if (isMovieNotFound(response.body())) {
+                        return ERROR_TRAKT_API_NOT_FOUND;
+                    }
+                } else {
+                    if (SgTrakt.isUnauthorized(getContext(), response)) {
+                        return ERROR_TRAKT_AUTH;
+                    }
+                    SgTrakt.trackFailedRequest(getContext(), getTraktAction(), response);
+                    return ERROR_TRAKT_API;
+                }
+            } catch (IOException e) {
+                SgTrakt.trackFailedRequest(getContext(), getTraktAction(), e);
                 return ERROR_TRAKT_API;
-            }
-
-            if (!isTraktActionSuccessful(response)) {
-                return ERROR_TRAKT_API_NOT_FOUND;
             }
         }
 
@@ -133,10 +136,9 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
         EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
     }
 
-    private static boolean isTraktActionSuccessful(SyncResponse response) {
-        // false if movie was not found on trakt
-        return !(response.not_found != null && response.not_found.movies != null
-                && response.not_found.movies.size() != 0);
+    private static boolean isMovieNotFound(SyncResponse response) {
+        return response.not_found != null && response.not_found.movies != null
+                && response.not_found.movies.size() != 0;
     }
 
     protected abstract boolean doDatabaseUpdate(Context context, int movieTmdbId);
@@ -147,9 +149,9 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
      */
     protected abstract void setHexagonMovieProperties(Movie movie);
 
-    /**
-     * Ensure to catch {@link retrofit.RetrofitError} and return {@code null} in that case.
-     */
-    protected abstract SyncResponse doTraktAction(Sync traktSync, SyncItems items)
-            throws OAuthUnauthorizedException;
+    @NonNull
+    protected abstract String getTraktAction();
+
+    @NonNull
+    protected abstract Call<SyncResponse> doTraktAction(Sync traktSync, SyncItems items);
 }

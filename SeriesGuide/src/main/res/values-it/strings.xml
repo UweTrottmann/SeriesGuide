@@ -25,7 +25,7 @@
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
   <string name="description_image">Immagine dell\'episodio</string>
-  <string name="description_menu_overflow">Opzioni aggiuntive</string>
+  <string name="description_menu_overflow">Altre opzioni</string>
   <!-- Actions -->
   <string name="clear">Cancella</string>
   <string name="discard">Scarta</string>
@@ -43,7 +43,7 @@
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
   <string name="offline">Connettersi a una rete, quindi riprovare.</string>
-  <string name="app_not_available">Nessuna app per gestirlo.</string>
+  <string name="app_not_available">Nessuna app disponibile per gestirlo.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
   <!-- Sharing -->
@@ -54,6 +54,7 @@
   <string name="share_checkout">Scopri %s</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
   <string name="addtocalendar_failed">Impossibile creare un evento nel calendario.</string>
+  <string name="links">Collegamenti</string>
   <!-- Comments -->
   <string name="comments">Commenti</string>
   <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
@@ -212,6 +213,7 @@
   <string name="action_movies_sort_title">Titolo</string>
   <string name="action_movies_sort_release">Data di rilascio</string>
   <!-- Statistics -->
+  <string name="statistics_failed">Impossibile calcolare le statistiche.</string>
   <string name="statistics_shows">Serie TV</string>
   <string name="statistics_episodes">Episodi</string>
   <string name="statistics_movies">Film</string>
@@ -373,7 +375,7 @@
   <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
   <string name="clear_cache">Rimuovi le immagini nella cache</string>
   <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
-  <string name="pref_ganalyticssummary">Tieni traccia del tipo di utilizzo per aiutare a migliorare SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Invia statistiche anonime sull\'utilizzo a un servizio Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Includere tutti i metadati come descrizioni, attori e voti.</string>
   <string name="backup_path">Cartella di Backup</string>
@@ -396,9 +398,9 @@
   <string name="import_warning">Le mie serie attuali, liste e film verranno sostituiti!</string>
   <string name="last_auto_backup">Ultimo backup automatico: %s</string>
   <string name="restore_auto_backup">Ripristina il Backup automatico</string>
-  <string name="dataliberation_permission_missing">Per eseguire il backup o il ripristino consentire l\'accesso ai file.</string>
-  <string name="autobackup_permission_missing">Per utilizzare il backup automatico consentire l\'accesso ai file.</string>
-  <string name="autobackup_files_missing">Per utilizzare il backup automatico seleziona file di backup validi.</string>
+  <string name="dataliberation_permission_missing">Per eseguire il backup o il ripristino, consenti l\'accesso ai file.</string>
+  <string name="autobackup_permission_missing">Per utilizzare il backup automatico, consenti l\'accesso ai file.</string>
+  <string name="autobackup_files_missing">Per utilizzare il backup automatico, seleziona file di backup validi.</string>
   <string name="no_file_selected">Nessun file selezionato</string>
   <string name="action_select_file">Seleziona file</string>
   <string name="backup_use_default_files">Utilizza i file di backup predefiniti</string>
@@ -478,4 +480,13 @@
   <string name="description_extension_web_search">Ricerca di siti Web e immagini</string>
   <!-- People -->
   <string name="person_biography">Biografia</string>
+  <!-- Feedback -->
+  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_nothanks">No, thanks</string>
 </resources>

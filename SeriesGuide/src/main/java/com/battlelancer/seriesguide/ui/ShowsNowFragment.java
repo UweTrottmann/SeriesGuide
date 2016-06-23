@@ -45,7 +45,7 @@ import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktUserEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.NowSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import de.greenrobot.event.EventBus;
 import java.util.List;
@@ -352,7 +353,7 @@ public class ShowsNowFragment extends Fragment {
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.mType instanceof EpisodeTools.EpisodeWatchedType
+        if (event.flagType instanceof EpisodeTaskTypes.EpisodeWatchedType
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
@@ -456,17 +457,17 @@ public class ShowsNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktUserEpisodeHistoryLoader.Result>
+    private LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>
             recentlyTraktCallbacks
-            = new LoaderManager.LoaderCallbacks<TraktUserEpisodeHistoryLoader.Result>() {
+            = new LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>() {
         @Override
-        public Loader<TraktUserEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktUserEpisodeHistoryLoader(getActivity());
+        public Loader<TraktRecentEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new TraktRecentEpisodeHistoryLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktUserEpisodeHistoryLoader.Result> loader,
-                TraktUserEpisodeHistoryLoader.Result data) {
+        public void onLoadFinished(Loader<TraktRecentEpisodeHistoryLoader.Result> loader,
+                TraktRecentEpisodeHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -477,7 +478,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktUserEpisodeHistoryLoader.Result> loader) {
+        public void onLoaderReset(Loader<TraktRecentEpisodeHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }

@@ -21,8 +21,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -66,7 +64,7 @@ import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
-import com.uwetrottmann.tmdb.entities.Credits;
+import com.uwetrottmann.tmdb2.entities.Credits;
 import java.util.Date;
 import timber.log.Timber;
 
@@ -99,6 +97,10 @@ public class ShowFragment extends Fragment {
 
     private TraktRatingsTask mTraktTask;
 
+    @Bind(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
+
+    @Bind(R.id.containerShowPoster) View posterContainer;
+    @Bind(R.id.imageViewShowPoster) ImageView posterView;
     @Bind(R.id.textViewShowStatus) TextView mTextViewStatus;
     @Bind(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
     @Bind(R.id.textViewShowRuntime) TextView mTextViewRuntime;
@@ -305,13 +307,14 @@ public class ShowFragment extends Fragment {
         // next release day and time
         String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
         int releaseTime = mShowCursor.getInt(ShowQuery.RELEASE_TIME);
+        String network = mShowCursor.getString(ShowQuery.NETWORK);
         if (releaseTime != -1) {
             int weekDay = mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
                     mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
-                    releaseCountry);
+                    releaseCountry, network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             mTextViewReleaseTime.setText(dayString + " " + timeString);
@@ -324,7 +327,7 @@ public class ShowFragment extends Fragment {
                 getString(R.string.runtime_minutes, mShowCursor.getInt(ShowQuery.RUNTIME)));
 
         // network
-        mTextViewNetwork.setText(mShowCursor.getString(ShowQuery.NETWORK));
+        mTextViewNetwork.setText(network);
 
         // favorite button
         final boolean isFavorite = mShowCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
@@ -445,37 +448,25 @@ public class ShowFragment extends Fragment {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
                 i.putExtras(TraktCommentsActivity.createInitBundleShow(mShowTitle,
                         getShowTvdbId()));
-                ActivityCompat.startActivity(getActivity(), i,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), i, v);
+                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
 
         // poster, full screen poster button
-        final View posterContainer = getView().findViewById(R.id.containerShowPoster);
-        final ImageView posterView = (ImageView) posterContainer
-                .findViewById(R.id.imageViewShowPoster);
         Utils.loadPoster(getActivity(), posterView, mShowPoster);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fullscreen = new Intent(getActivity(), FullscreenImageActivity.class);
-                fullscreen.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
+                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
                         TheTVDB.buildScreenshotUrl(mShowPoster));
-                ActivityCompat.startActivity(getActivity(), fullscreen,
-                        ActivityOptionsCompat
-                                .makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                                .toBundle()
-                );
+                Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
 
         // background
-        ImageView background = (ImageView) getView().findViewById(
-                R.id.imageViewShowPosterBackground);
-        Utils.loadPosterBackground(getActivity(), background, mShowPoster);
+        Utils.loadPosterBackground(getActivity(), posterBackgroundView, mShowPoster);
 
         loadTraktRatings();
     }
@@ -510,16 +501,14 @@ public class ShowFragment extends Fragment {
             mCastView.setVisibility(View.GONE);
         } else {
             mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCast(getActivity(), getActivity().getLayoutInflater(),
-                    mCastContainer, credits);
+            PeopleListHelper.populateShowCast(getActivity(), mCastContainer, credits, TAG);
         }
 
         if (credits.crew == null || credits.crew.size() == 0) {
             mCrewView.setVisibility(View.GONE);
         } else {
             mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCrew(getActivity(), getActivity().getLayoutInflater(),
-                    mCrewContainer, credits);
+            PeopleListHelper.populateShowCrew(getActivity(), mCrewContainer, credits, TAG);
         }
     }
 
@@ -543,7 +532,7 @@ public class ShowFragment extends Fragment {
     }
 
     private static void changeShowLanguage(Context context, int showTvdbId, String languageCode) {
-        Timber.d("Changing show language to " + languageCode);
+        Timber.d("Changing show language to %s", languageCode);
         ShowTools.get(context).storeLanguage(showTvdbId, languageCode);
     }
 

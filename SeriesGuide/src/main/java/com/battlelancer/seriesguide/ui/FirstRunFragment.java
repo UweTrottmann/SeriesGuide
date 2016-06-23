@@ -144,12 +144,6 @@ public class FirstRunFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Utils.trackView(getActivity(), TAG);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.firstrun_menu, menu);
     }
