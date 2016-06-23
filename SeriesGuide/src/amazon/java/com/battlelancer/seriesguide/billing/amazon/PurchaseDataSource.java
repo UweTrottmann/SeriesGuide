@@ -75,7 +75,7 @@ public class PurchaseDataSource {
      */
     @Nullable
     public PurchaseRecord getEntitlementRecordByReceiptId(final String receiptId) {
-        Timber.d("getEntitlementRecordByReceiptId: receiptId (" + receiptId + ")");
+        Timber.d("getEntitlementRecordByReceiptId: receiptId (%s)", receiptId);
 
         final String where = AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID + "= ?";
         final Cursor cursor = database.query(AmazonBillingSQLiteHelper.TABLE_PURCHASES,
@@ -103,7 +103,7 @@ public class PurchaseDataSource {
      */
     @Nullable
     public PurchaseRecord getLatestEntitlementRecordBySku(String userId, String sku) {
-        Timber.d("getEntitlementRecordBySku: userId (" + userId + "), sku (" + sku + ")");
+        Timber.d("getEntitlementRecordBySku: userId (%s), sku (%s)", userId, sku);
 
         final String where = AmazonBillingSQLiteHelper.COLUMN_USER_ID + " = ? and "
                 + AmazonBillingSQLiteHelper.COLUMN_SKU + " = ?";
@@ -129,7 +129,7 @@ public class PurchaseDataSource {
      * @param userId user id used to verify the purchase record.
      */
     public final List<PurchaseRecord> getPurchaseRecords(final String userId) {
-        Timber.d("getPurchaseRecords: userId (" + userId + ")");
+        Timber.d("getPurchaseRecords: userId (%s)", userId);
 
         final String where = AmazonBillingSQLiteHelper.COLUMN_USER_ID + " = ?";
         final Cursor cursor = database.query(AmazonBillingSQLiteHelper.TABLE_PURCHASES,
@@ -146,7 +146,7 @@ public class PurchaseDataSource {
             results.add(subsRecord);
             cursor.moveToNext();
         }
-        Timber.d("getPurchaseRecords: found " + results.size() + " records");
+        Timber.d("getPurchaseRecords: found %s records", results.size());
         cursor.close();
         return results;
     }
@@ -166,8 +166,8 @@ public class PurchaseDataSource {
             final long dateFrom,
             final long dateTo,
             final String sku) {
-        Timber.d("insertOrUpdateSubscriptionRecord: receiptId (" + receiptId + "),userId (" + userId
-                + ")");
+        Timber.d("insertOrUpdateSubscriptionRecord: receiptId (%s), userId (%s)", receiptId,
+                userId);
         final String where = AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID + " = ? and "
                 + AmazonBillingSQLiteHelper.COLUMN_DATE_TO
                 + " > 0";
@@ -205,8 +205,7 @@ public class PurchaseDataSource {
      * Cancel the specified Entitlement record by setting the cancel date.
      */
     public boolean cancelEntitlement(final String receiptId, final long cancelDate) {
-        Timber.d("cancelEntitlement: receiptId (" + receiptId + "), cancelDate:(" + cancelDate
-                + ")");
+        Timber.d("cancelEntitlement: receiptId (%s), cancelDate:(%s)", receiptId, cancelDate);
 
         final String where = AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID + " = ?";
         final ContentValues values = new ContentValues();
@@ -215,7 +214,7 @@ public class PurchaseDataSource {
                 values,
                 where,
                 new String[] { receiptId });
-        Timber.d("cancelEntitlement: updated " + updated);
+        Timber.d("cancelEntitlement: updated %s", updated);
         return updated > 0;
     }
 
@@ -226,8 +225,7 @@ public class PurchaseDataSource {
      * @param cancelDate Timestamp for the cancel date
      */
     public boolean cancelSubscription(final String receiptId, final long cancelDate) {
-        Timber.d("cancelSubscription: receiptId (" + receiptId + "), cancelDate:(" + cancelDate
-                + ")");
+        Timber.d("cancelSubscription: receiptId (%s) cancelDate:(%s)", receiptId, cancelDate);
 
         final String where = AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID + " = ?";
         final ContentValues values = new ContentValues();
@@ -236,7 +234,7 @@ public class PurchaseDataSource {
                 values,
                 where,
                 new String[] { receiptId });
-        Timber.d("cancelSubscription: updated " + updated);
+        Timber.d("cancelSubscription: updated %s", updated);
         return updated > 0;
     }
 }
