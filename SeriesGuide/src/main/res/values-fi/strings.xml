@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Elämäkerta</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Pidätkö SeriesGuidesta?</string>
+  <string name="feedback_action_yes">Kyllä!</string>
+  <string name="feedback_action_notreally">En oikeastaan</string>
+  <string name="feedback_question_rate_google">Haluatko arvostella Google Play?</string>
+  <string name="feedback_question_rate_amazon">Haluatko arvostella Amazonissa?</string>
+  <string name="feedback_question_feedback">Haluatko kertoa, miten sitä vois parantaa?</string>
+  <string name="feedback_action_ok">Kyllä</string>
+  <string name="feedback_action_nothanks">Ei kiitos</string>
 </resources>

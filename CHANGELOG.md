@@ -7,7 +7,17 @@ All dates are in the European Central timezone.
 
 Version 31
 ----------
-*(in development)*
+*(2016-06-23)*
+
+* Faster and more reliable trakt watched and collected episode sync.
+* No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
+
+#### 31
+*(2016-06-23)*
+
+* TWEAK Ask long time users for feedback.
+* TWEAK Fix cut-off card shadows in show overview.
+* NOTICE Latest translations from crowdin.
 
 #### 31-beta4
 *(2016-06-16)*

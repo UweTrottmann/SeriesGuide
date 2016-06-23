@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +58,10 @@ public class AmazonBillingActivity extends BaseActivity {
     @Override
     protected void setupActionBar() {
         super.setupActionBar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setupViews() {
@@ -130,14 +134,15 @@ public class AmazonBillingActivity extends BaseActivity {
     }
 
     private void subscribe() {
-        final RequestId requestId = PurchasingService.purchase(AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku());
-        Timber.d("subscribe: requestId (" + requestId + ")");
+        final RequestId requestId = PurchasingService.purchase(
+                AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku());
+        Timber.d("subscribe: requestId (%s)", requestId);
     }
 
     private void purchasePass() {
         final RequestId requestId = PurchasingService.purchase(
                 AmazonSku.SERIESGUIDE_PASS.getSku());
-        Timber.d("purchasePass: requestId (" + requestId + ")");
+        Timber.d("purchasePass: requestId (%s)", requestId);
     }
 
     private void dismiss() {
@@ -188,7 +193,7 @@ public class AmazonBillingActivity extends BaseActivity {
         if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
             if (textViewPricePass != null) {
                 textViewPricePass.setText(
-                        price + "\n" + getString(R.string.billing_price_pass));
+                        String.format("%s\n%s", price, getString(R.string.billing_price_pass)));
             }
         }
     }

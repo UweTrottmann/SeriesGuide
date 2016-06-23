@@ -40,25 +40,22 @@ public class AmazonPurchasingListener implements PurchasingListener {
      */
     @Override
     public void onUserDataResponse(final UserDataResponse response) {
-        Timber.d("onGetUserDataResponse: requestId (" + response.getRequestId()
-                + ") userIdRequestStatus: "
-                + response.getRequestStatus()
-                + ")");
+        Timber.d("onGetUserDataResponse: requestId (%s) userIdRequestStatus: (%s)",
+                response.getRequestId(), response.getRequestStatus());
 
         final UserDataResponse.RequestStatus status = response.getRequestStatus();
         switch (status) {
             case SUCCESSFUL: {
-                Timber.d("onUserDataResponse: get user id (" + response.getUserData().getUserId()
-                        + ", marketplace ("
-                        + response.getUserData().getMarketplace()
-                        + ") ");
+                Timber.d("onUserDataResponse: get user id (%s), marketplace (%s)",
+                        response.getUserData().getUserId(),
+                        response.getUserData().getMarketplace());
                 iapManager.setAmazonUserId(response.getUserData().getUserId(),
                         response.getUserData().getMarketplace());
                 break;
             }
             case FAILED:
             case NOT_SUPPORTED: {
-                Timber.d("onUserDataResponse failed, status code is " + status);
+                Timber.d("onUserDataResponse failed, status code is %s", status);
                 iapManager.setAmazonUserId(null, null);
                 break;
             }
@@ -72,14 +69,14 @@ public class AmazonPurchasingListener implements PurchasingListener {
     @Override
     public void onProductDataResponse(final ProductDataResponse response) {
         final ProductDataResponse.RequestStatus status = response.getRequestStatus();
-        Timber.d("onProductDataResponse: RequestStatus (" + status + ")");
+        Timber.d("onProductDataResponse: RequestStatus (%s)", status);
 
         switch (status) {
             case SUCCESSFUL:
                 Timber.d(
-                        "onProductDataResponse: successful.  The item data map in this response includes the valid SKUs");
+                        "onProductDataResponse: successful. The item data map in this response includes the valid SKUs");
                 final Set<String> unavailableSkus = response.getUnavailableSkus();
-                Timber.d("onProductDataResponse: " + unavailableSkus.size() + " unavailable skus");
+                Timber.d("onProductDataResponse: %s unavailable skus", unavailableSkus.size());
                 iapManager.enablePurchaseForSkus(response.getProductData());
                 iapManager.disablePurchaseForSkus(response.getUnavailableSkus());
                 iapManager.refreshPurchasesAvailability();
@@ -100,12 +97,10 @@ public class AmazonPurchasingListener implements PurchasingListener {
      */
     @Override
     public void onPurchaseUpdatesResponse(final PurchaseUpdatesResponse response) {
-        Timber.d("onPurchaseUpdatesResponse: requestId (" + response.getRequestId()
-                + ") purchaseUpdatesResponseStatus ("
-                + response.getRequestStatus()
-                + ") userId ("
-                + response.getUserData().getUserId()
-                + ")");
+        Timber.d(
+                "onPurchaseUpdatesResponse: requestId (%s) purchaseUpdatesResponseStatus (%s) userId (%s)",
+                response.getRequestId(), response.getRequestStatus(),
+                response.getUserData().getUserId());
         final PurchaseUpdatesResponse.RequestStatus status = response.getRequestStatus();
         switch (status) {
             case SUCCESSFUL:
@@ -141,28 +136,24 @@ public class AmazonPurchasingListener implements PurchasingListener {
         final String requestId = response.getRequestId().toString();
         final String userId = response.getUserData().getUserId();
         final PurchaseResponse.RequestStatus status = response.getRequestStatus();
-        Timber.d("onPurchaseResponse: requestId (" + requestId
-                + ") userId ("
-                + userId
-                + ") purchaseRequestStatus ("
-                + status
-                + ")");
+        Timber.d("onPurchaseResponse: requestId (%s) userId (%s) purchaseRequestStatus (%s)",
+                requestId, userId, status);
 
         switch (status) {
             case SUCCESSFUL:
                 final Receipt receipt = response.getReceipt();
-                Timber.d("onPurchaseResponse: receipt json:" + receipt.toJSON());
+                Timber.d("onPurchaseResponse: receipt json: %s", receipt.toJSON());
                 iapManager.handleReceipt(receipt, response.getUserData());
                 iapManager.reloadPurchaseStatus();
                 break;
             case ALREADY_PURCHASED:
-                Timber.i("onPurchaseResponse: already purchased, "
-                        + "verify subscription purchase again");
+                Timber.i(
+                        "onPurchaseResponse: already purchased, verify subscription purchase again");
                 iapManager.reloadPurchaseStatus();
                 break;
             case INVALID_SKU:
-                Timber.d("onPurchaseResponse: invalid SKU!"
-                        + " onProductDataResponse should have disabled buy button already.");
+                Timber.d(
+                        "onPurchaseResponse: invalid SKU! onProductDataResponse should have disabled buy button already.");
                 iapManager.purchaseFailed();
                 break;
             case FAILED:

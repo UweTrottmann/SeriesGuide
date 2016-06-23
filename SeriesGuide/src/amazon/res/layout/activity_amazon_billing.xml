@@ -46,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingTitle"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/upgrade_description"
                 android:textAppearance="@style/TextAppearance.Body" />
 
@@ -54,10 +55,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingDescription"
-                android:paddingTop="@dimen/large_padding"
-                tools:text="@string/upgrade_success"
+                android:layout_marginTop="@dimen/default_padding"
                 android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="@string/upgrade_success" />
 
             <Button
                 android:id="@+id/buttonAmazonBillingSubscribe"
@@ -73,22 +74,22 @@
                 android:id="@+id/progressBarAmazonBilling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignBottom="@+id/buttonAmazonBillingSubscribe"
                 android:layout_alignTop="@+id/buttonAmazonBillingSubscribe"
-                android:layout_alignBottom="@+id/buttonAmazonBillingSubscribe" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/textViewAmazonBillingSubPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="250dp"
                 android:layout_below="@+id/buttonAmazonBillingSubscribe"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
                 android:gravity="center_horizontal"
-                tools:text="1.99 €/year, 30 day trial"
+                android:maxWidth="250dp"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                tools:text="1.99 €/year, 30 day trial" />
 
             <Button
                 android:id="@+id/buttonAmazonBillingGetPass"
@@ -104,11 +105,11 @@
                 android:id="@+id/textViewAmazonBillingPricePass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="250dp"
                 android:layout_below="@+id/buttonAmazonBillingGetPass"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/inline_padding"
                 android:gravity="center_horizontal"
+                android:maxWidth="250dp"
                 android:text="@string/billing_price_pass"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic" />
@@ -119,8 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingPricePass"
-                android:layout_marginTop="@dimen/large_padding"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/billing_learn_more" />
 
         </RelativeLayout>
