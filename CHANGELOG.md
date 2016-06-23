@@ -7,7 +7,7 @@ All dates are in the European Central timezone.
 
 Version 31
 ----------
-*(in development)*
+*(2016-06-23)*
 
 * Faster and more reliable trakt watched and collected episode sync.
 * No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
