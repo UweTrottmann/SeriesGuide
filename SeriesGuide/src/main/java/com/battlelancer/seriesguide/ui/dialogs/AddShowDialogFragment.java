@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -151,12 +151,12 @@ public class AddShowDialogFragment extends DialogFragment {
     private SearchResult displayedShow;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            addShowListener = (OnAddShowListener) activity;
+            addShowListener = (OnAddShowListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnAddShowListener");
+            throw new ClassCastException(context.toString() + " must implement OnAddShowListener");
         }
     }
 
