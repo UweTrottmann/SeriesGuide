@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.extensions;
 import android.content.ComponentName;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -178,11 +179,11 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public void onLoadFinished(Loader<List<ExtensionManager.Extension>> loader,
-                List<ExtensionManager.Extension> availableExtensions) {
-            if (availableExtensions == null || availableExtensions.size() == 0) {
+                @NonNull List<ExtensionManager.Extension> availableExtensions) {
+            if (availableExtensions.size() == 0) {
                 Timber.d("Did not find any extension");
             } else {
-                Timber.d("Found " + availableExtensions.size() + " extensions");
+                Timber.d("Found %d extensions", availableExtensions.size());
             }
 
             if (enabledExtensions == null) {
