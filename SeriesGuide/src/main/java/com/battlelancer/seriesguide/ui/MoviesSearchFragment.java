@@ -43,8 +43,9 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
@@ -64,22 +65,23 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
     private static final String SEARCH_QUERY_KEY = "search_query";
 
+    @BindView(R.id.containerMoviesSearchContent) View resultsContainer;
+    @BindView(R.id.progressBarMoviesSearch) View progressBar;
+    @BindView(R.id.gridViewMoviesSearch) GridView resultsGridView;
+    @BindView(R.id.emptyViewMoviesSearch) EmptyView emptyView;
+    @BindView(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
+    @BindView(R.id.buttonMoviesSearchClear) View clearButton;
+
     private MoviesAdapter resultsAdapter;
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
-
-    @Bind(R.id.containerMoviesSearchContent) View resultsContainer;
-    @Bind(R.id.progressBarMoviesSearch) View progressBar;
-    @Bind(R.id.gridViewMoviesSearch) GridView resultsGridView;
-    @Bind(R.id.emptyViewMoviesSearch) EmptyView emptyView;
-    @Bind(R.id.editTextMoviesSearch) AutoCompleteTextView searchBox;
-    @Bind(R.id.buttonMoviesSearchClear) View clearButton;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // setup grid view
         // enable app bar scrolling out of view only on L or higher
@@ -165,7 +167,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

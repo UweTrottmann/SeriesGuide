@@ -26,8 +26,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
@@ -59,11 +60,13 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public class CheckInDialogDismissedEvent {
     }
 
-    @Bind(R.id.editTextCheckInMessage) EditText mEditTextMessage;
-    @Bind(R.id.buttonCheckIn) View mButtonCheckIn;
-    @Bind(R.id.buttonCheckInPasteTitle) View mButtonPasteTitle;
-    @Bind(R.id.buttonCheckInClear) View mButtonClear;
-    @Bind(R.id.progressBarCheckIn) View mProgressBar;
+    @BindView(R.id.editTextCheckInMessage) EditText editTextMessage;
+    @BindView(R.id.buttonCheckIn) View buttonCheckIn;
+    @BindView(R.id.buttonCheckInPasteTitle) View buttonPasteTitle;
+    @BindView(R.id.buttonCheckInClear) View buttonClear;
+    @BindView(R.id.progressBarCheckIn) View progressBar;
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,32 +86,32 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // Paste episode button
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
         if (!TextUtils.isEmpty(itemTitle)) {
-            mButtonPasteTitle.setOnClickListener(new OnClickListener() {
+            buttonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int start = mEditTextMessage.getSelectionStart();
-                    int end = mEditTextMessage.getSelectionEnd();
-                    mEditTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
+                    int start = editTextMessage.getSelectionStart();
+                    int end = editTextMessage.getSelectionEnd();
+                    editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
                             itemTitle, 0, itemTitle.length());
                 }
             });
         }
 
         // Clear button
-        mButtonClear.setOnClickListener(new OnClickListener() {
+        buttonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditTextMessage.setText(null);
+                editTextMessage.setText(null);
             }
         });
 
         // Checkin Button
-        mButtonCheckIn.setOnClickListener(new OnClickListener() {
+        buttonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkIn();
@@ -155,7 +158,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
@@ -196,7 +199,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         }
 
         // try to check in
-        checkInTrakt(mEditTextMessage.getText().toString());
+        checkInTrakt(editTextMessage.getText().toString());
     }
 
     /**
@@ -208,10 +211,10 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
      * Disables all interactive UI elements and shows a progress indicator.
      */
     private void setProgressLock(boolean lock) {
-        mProgressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
-        mEditTextMessage.setEnabled(!lock);
-        mButtonPasteTitle.setEnabled(!lock);
-        mButtonClear.setEnabled(!lock);
-        mButtonCheckIn.setEnabled(!lock);
+        progressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
+        editTextMessage.setEnabled(!lock);
+        buttonPasteTitle.setEnabled(!lock);
+        buttonClear.setEnabled(!lock);
+        buttonCheckIn.setEnabled(!lock);
     }
 }

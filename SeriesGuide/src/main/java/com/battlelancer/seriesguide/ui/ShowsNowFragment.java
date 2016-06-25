@@ -38,8 +38,9 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
@@ -64,14 +65,15 @@ import java.util.List;
  */
 public class ShowsNowFragment extends Fragment {
 
-    @Bind(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.recyclerViewNow) RecyclerView recyclerView;
-    @Bind(R.id.emptyViewNow) TextView emptyView;
-    @Bind(R.id.containerSnackbar) View snackbar;
-    @Bind(R.id.textViewSnackbar) TextView snackbarText;
-    @Bind(R.id.buttonSnackbar) Button snackbarButton;
+    @BindView(R.id.recyclerViewNow) RecyclerView recyclerView;
+    @BindView(R.id.emptyViewNow) TextView emptyView;
+    @BindView(R.id.containerSnackbar) View snackbar;
+    @BindView(R.id.textViewSnackbar) TextView snackbarText;
+    @BindView(R.id.buttonSnackbar) Button snackbarButton;
 
+    private Unbinder unbinder;
     private NowAdapter adapter;
     private boolean isLoadingReleasedToday;
     private boolean isLoadingRecentlyWatched;
@@ -81,7 +83,7 @@ public class ShowsNowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -219,7 +221,7 @@ public class ShowsNowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

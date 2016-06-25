@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -124,7 +125,10 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md

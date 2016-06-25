@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
@@ -52,6 +53,7 @@ public class TraktAddFragment extends AddFragment {
      * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
      */
     public final static String ARG_TYPE = "traktListType";
+    private Unbinder unbinder;
 
     @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
     @Retention(RetentionPolicy.SOURCE)
@@ -78,7 +80,7 @@ public class TraktAddFragment extends AddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // set initial view states
         setProgressVisible(true, false);
@@ -178,6 +180,13 @@ public class TraktAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 
     public void onEventMainThread(

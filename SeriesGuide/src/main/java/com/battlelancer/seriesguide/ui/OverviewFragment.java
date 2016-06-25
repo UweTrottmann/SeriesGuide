@@ -48,8 +48,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -95,8 +96,45 @@ public class OverviewFragment extends Fragment implements
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
+    @BindView(R.id.containerOverviewShow) View containerShow;
+    @Nullable @BindView(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
+    @Nullable @BindView(R.id.feedbackViewOverview) FeedbackView feedbackView;
+    @BindView(R.id.containerOverviewEpisode) View containerEpisode;
+    @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
+    @BindView(R.id.background) ImageView imageBackground;
+    @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
+
+    @BindView(R.id.episodeTitle) TextView textEpisodeTitle;
+    @BindView(R.id.episodeTime) TextView textEpisodeTime;
+    @BindView(R.id.episodeInfo) TextView textEpisodeNumbers;
+    @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
+    @BindView(R.id.episode_meta_container) View containerEpisodeMeta;
+    @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
+    @BindView(R.id.progress_container) View containerProgress;
+    @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
+    @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
+    @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
+
+    @BindView(R.id.TextViewEpisodeDescription) TextView textDescription;
+    @BindView(R.id.labelDvd) View labelDvdNumber;
+    @BindView(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
+    @BindView(R.id.labelGuestStars) View labelGuestStars;
+    @BindView(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
+    @BindView(R.id.textViewRatingsValue) TextView textRating;
+    @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
+    @BindView(R.id.textViewRatingsUser) TextView textUserRating;
+
+    @BindView(R.id.buttonShowInfoIMDB) View buttonImdb;
+    @BindView(R.id.buttonTVDB) View buttonTvdb;
+    @BindView(R.id.buttonTrakt) View buttonTrakt;
+    @BindView(R.id.buttonWebSearch) View buttonWebSearch;
+    @BindView(R.id.buttonShouts) View buttonComments;
+
     private Handler handler = new Handler();
     private TraktRatingsTask traktRatingsTask;
+    private Unbinder unbinder;
 
     private boolean isEpisodeDataAvailable;
     private Cursor currentEpisodeCursor;
@@ -108,42 +146,6 @@ public class OverviewFragment extends Fragment implements
     private String showTitle;
 
     private boolean hasSetEpisodeWatched;
-
-    @Bind(R.id.containerOverviewShow) View containerShow;
-    @Nullable @Bind(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
-    @Nullable @Bind(R.id.feedbackViewOverview) FeedbackView feedbackView;
-    @Bind(R.id.containerOverviewEpisode) View containerEpisode;
-    @Bind(R.id.containerEpisodeActions) LinearLayout containerActions;
-    @Bind(R.id.background) ImageView imageBackground;
-    @Bind(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
-
-    @Bind(R.id.episodeTitle) TextView textEpisodeTitle;
-    @Bind(R.id.episodeTime) TextView textEpisodeTime;
-    @Bind(R.id.episodeInfo) TextView textEpisodeNumbers;
-    @Bind(R.id.episode_primary_container) View containerEpisodePrimary;
-    @Bind(R.id.episode_meta_container) View containerEpisodeMeta;
-    @Bind(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
-    @Bind(R.id.progress_container) View containerProgress;
-    @Bind(R.id.containerRatings) View containerRatings;
-    @Bind(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @Bind(R.id.buttonEpisodeWatched) Button buttonWatch;
-    @Bind(R.id.buttonEpisodeCollected) Button buttonCollect;
-    @Bind(R.id.buttonEpisodeSkip) Button buttonSkip;
-
-    @Bind(R.id.TextViewEpisodeDescription) TextView textDescription;
-    @Bind(R.id.labelDvd) View labelDvdNumber;
-    @Bind(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
-    @Bind(R.id.labelGuestStars) View labelGuestStars;
-    @Bind(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
-    @Bind(R.id.textViewRatingsValue) TextView textRating;
-    @Bind(R.id.textViewRatingsVotes) TextView textRatingVotes;
-    @Bind(R.id.textViewRatingsUser) TextView textUserRating;
-
-    @Bind(R.id.buttonShowInfoIMDB) View buttonImdb;
-    @Bind(R.id.buttonTVDB) View buttonTvdb;
-    @Bind(R.id.buttonTrakt) View buttonTrakt;
-    @Bind(R.id.buttonWebSearch) View buttonWebSearch;
-    @Bind(R.id.buttonShouts) View buttonComments;
 
     /**
      * All values have to be integer.
@@ -175,7 +177,7 @@ public class OverviewFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
             @Override
@@ -288,7 +290,7 @@ public class OverviewFragment extends Fragment implements
         // fragment is destroyed.
         ServiceUtils.getPicasso(getActivity()).cancelRequest(imageEpisode);
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

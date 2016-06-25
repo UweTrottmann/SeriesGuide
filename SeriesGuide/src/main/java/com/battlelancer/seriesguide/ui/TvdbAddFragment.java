@@ -32,8 +32,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
@@ -57,8 +58,9 @@ public class TvdbAddFragment extends AddFragment {
     private static final String KEY_QUERY = "searchQuery";
     private static final String KEY_LANGUAGE = "searchLanguage";
 
-    @Bind(R.id.spinnerAddTvdbLanguage) Spinner spinnerLanguage;
+    @BindView(R.id.spinnerAddTvdbLanguage) Spinner spinnerLanguage;
 
+    private Unbinder unbinder;
     private String language;
     private boolean shouldTryAnyLanguage;
     private String currentQuery;
@@ -76,7 +78,7 @@ public class TvdbAddFragment extends AddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // language chooser (Supported languages + any as first option)
         CharSequence[] languageNamesArray = getResources().getTextArray(R.array.languages);
@@ -190,6 +192,13 @@ public class TvdbAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 
     public void onEventMainThread(SearchActivity.SearchQuerySubmitEvent event) {

@@ -40,8 +40,9 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
@@ -65,30 +66,31 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 7;
     private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 8;
 
-    @Bind(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
-    @Bind(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
-    @Bind(R.id.textViewDataLibListsExportFile) TextView textListsExportFile;
-    @Bind(R.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
-    @Bind(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
-    @Bind(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
+    @BindView(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
+    @BindView(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
+    @BindView(R.id.textViewDataLibListsExportFile) TextView textListsExportFile;
+    @BindView(R.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
+    @BindView(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
+    @BindView(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
 
-    @Bind(R.id.checkBoxDataLibShows) CheckBox checkBoxShows;
-    @Bind(R.id.checkBoxDataLibLists) CheckBox checkBoxLists;
-    @Bind(R.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
-    @Bind(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
-    @Bind(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
-    @Bind(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
-    @Bind(R.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
-    @Bind(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
-    @Bind(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
+    @BindView(R.id.checkBoxDataLibShows) CheckBox checkBoxShows;
+    @BindView(R.id.checkBoxDataLibLists) CheckBox checkBoxLists;
+    @BindView(R.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
+    @BindView(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
+    @BindView(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
+    @BindView(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
+    @BindView(R.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
+    @BindView(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
+    @BindView(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
 
-    @Bind(R.id.buttonDataLibExport) Button buttonExport;
-    @Bind(R.id.buttonDataLibImport) Button buttonImport;
-    @Bind(R.id.progressBarDataLib) ProgressBar progressBar;
-    @Bind(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
-    @Bind(R.id.checkBoxDataLibImportWarning) CheckBox checkBoxImportWarning;
+    @BindView(R.id.buttonDataLibExport) Button buttonExport;
+    @BindView(R.id.buttonDataLibImport) Button buttonImport;
+    @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
+    @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
+    @BindView(R.id.checkBoxDataLibImportWarning) CheckBox checkBoxImportWarning;
 
     private AsyncTask<Void, Integer, Integer> dataLibTask;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_data_liberation, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         progressBar.setVisibility(View.GONE);
 
@@ -232,7 +234,7 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

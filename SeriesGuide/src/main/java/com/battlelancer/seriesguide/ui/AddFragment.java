@@ -32,7 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -52,10 +52,10 @@ public abstract class AddFragment extends Fragment {
     public static class AddShowEvent {
     }
 
-    @Bind(R.id.containerAddContent) View contentContainer;
-    @Bind(R.id.progressBarAdd) View progressBar;
-    @Bind(android.R.id.list) GridView resultsGridView;
-    @Bind(R.id.emptyViewAdd) EmptyView emptyView;
+    @BindView(R.id.containerAddContent) View contentContainer;
+    @BindView(R.id.progressBarAdd) View progressBar;
+    @BindView(android.R.id.list) GridView resultsGridView;
+    @BindView(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
@@ -103,13 +103,6 @@ public abstract class AddFragment extends Fragment {
         super.onStop();
 
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        ButterKnife.unbind(this);
     }
 
     protected abstract void setupEmptyView(EmptyView buttonEmptyView);

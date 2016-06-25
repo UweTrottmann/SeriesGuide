@@ -42,8 +42,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -93,53 +94,52 @@ public class ShowFragment extends Fragment {
         return f;
     }
 
-    private Cursor mShowCursor;
+    @BindView(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
 
-    private TraktRatingsTask mTraktTask;
+    @BindView(R.id.containerShowPoster) View posterContainer;
+    @BindView(R.id.imageViewShowPoster) ImageView posterView;
+    @BindView(R.id.textViewShowStatus) TextView mTextViewStatus;
+    @BindView(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
+    @BindView(R.id.textViewShowRuntime) TextView mTextViewRuntime;
+    @BindView(R.id.textViewShowNetwork) TextView mTextViewNetwork;
+    @BindView(R.id.textViewShowOverview) TextView mTextViewOverview;
+    @BindView(R.id.spinnerShowLanguage) Spinner mSpinnerLanguage;
+    @BindView(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
+    @BindView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
+    @BindView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
+    @BindView(R.id.textViewShowGenres) TextView mTextViewGenres;
+    @BindView(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
+    @BindView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
+    @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
+    @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @Bind(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
+    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
+    @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
+    @BindView(R.id.buttonShowShare) Button mButtonShare;
+    @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @BindView(R.id.containerRatings) View mButtonRate;
+    @BindView(R.id.buttonTVDB) View mButtonTvdb;
+    @BindView(R.id.buttonTrakt) View mButtonTrakt;
+    @BindView(R.id.buttonWebSearch) View mButtonWebSearch;
+    @BindView(R.id.buttonShouts) View mButtonComments;
 
-    @Bind(R.id.containerShowPoster) View posterContainer;
-    @Bind(R.id.imageViewShowPoster) ImageView posterView;
-    @Bind(R.id.textViewShowStatus) TextView mTextViewStatus;
-    @Bind(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
-    @Bind(R.id.textViewShowRuntime) TextView mTextViewRuntime;
-    @Bind(R.id.textViewShowNetwork) TextView mTextViewNetwork;
-    @Bind(R.id.textViewShowOverview) TextView mTextViewOverview;
-    @Bind(R.id.spinnerShowLanguage) Spinner mSpinnerLanguage;
-    @Bind(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
-    @Bind(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
-    @Bind(R.id.textViewShowContentRating) TextView mTextViewContentRating;
-    @Bind(R.id.textViewShowGenres) TextView mTextViewGenres;
-    @Bind(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
-    @Bind(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
-    @Bind(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
-    @Bind(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
-
-    @Bind(R.id.buttonShowInfoIMDB) View mButtonImdb;
-    @Bind(R.id.buttonShowFavorite) Button mButtonFavorite;
-    @Bind(R.id.buttonShowShare) Button mButtonShare;
-    @Bind(R.id.buttonShowShortcut) Button mButtonShortcut;
-    @Bind(R.id.containerRatings) View mButtonRate;
-    @Bind(R.id.buttonTVDB) View mButtonTvdb;
-    @Bind(R.id.buttonTrakt) View mButtonTrakt;
-    @Bind(R.id.buttonWebSearch) View mButtonWebSearch;
-    @Bind(R.id.buttonShouts) View mButtonComments;
-
-    @Bind(R.id.containerShowCast) View mCastView;
+    @BindView(R.id.containerShowCast) View mCastView;
     private LinearLayout mCastContainer;
-    @Bind(R.id.containerShowCrew) View mCrewView;
+    @BindView(R.id.containerShowCrew) View mCrewView;
     private LinearLayout mCrewContainer;
 
-    private String mShowTitle;
-    private String mShowPoster;
-    private int mSpinnerLastPosition;
+    private Unbinder unbinder;
+    private Cursor showCursor;
+    private TraktRatingsTask traktTask;
+    private String showTitle;
+    private String showPoster;
+    private int spinnerLastPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // share button
         mButtonShare.setOnClickListener(new OnClickListener() {
@@ -200,7 +200,7 @@ public class ShowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -281,7 +281,7 @@ public class ShowFragment extends Fragment {
                 return;
             }
             if (data != null && data.moveToFirst()) {
-                mShowCursor = data;
+                showCursor = data;
                 populateShow();
             }
         }
@@ -293,27 +293,27 @@ public class ShowFragment extends Fragment {
     };
 
     private void populateShow() {
-        if (mShowCursor == null) {
+        if (showCursor == null) {
             return;
         }
 
         // title
-        mShowTitle = mShowCursor.getString(ShowQuery.TITLE);
-        mShowPoster = mShowCursor.getString(ShowQuery.POSTER);
+        showTitle = showCursor.getString(ShowQuery.TITLE);
+        showPoster = showCursor.getString(ShowQuery.POSTER);
 
         // status
-        ShowTools.setStatusAndColor(mTextViewStatus, mShowCursor.getInt(ShowQuery.STATUS));
+        ShowTools.setStatusAndColor(mTextViewStatus, showCursor.getInt(ShowQuery.STATUS));
 
         // next release day and time
-        String releaseCountry = mShowCursor.getString(ShowQuery.RELEASE_COUNTRY);
-        int releaseTime = mShowCursor.getInt(ShowQuery.RELEASE_TIME);
-        String network = mShowCursor.getString(ShowQuery.NETWORK);
+        String releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY);
+        int releaseTime = showCursor.getInt(ShowQuery.RELEASE_TIME);
+        String network = showCursor.getString(ShowQuery.NETWORK);
         if (releaseTime != -1) {
-            int weekDay = mShowCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
+            int weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(releaseTime),
                     weekDay,
-                    mShowCursor.getString(ShowQuery.RELEASE_TIMEZONE),
+                    showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
                     releaseCountry, network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
@@ -324,13 +324,13 @@ public class ShowFragment extends Fragment {
 
         // runtime
         mTextViewRuntime.setText(
-                getString(R.string.runtime_minutes, mShowCursor.getInt(ShowQuery.RUNTIME)));
+                getString(R.string.runtime_minutes, showCursor.getInt(ShowQuery.RUNTIME)));
 
         // network
         mTextViewNetwork.setText(network);
 
         // favorite button
-        final boolean isFavorite = mShowCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
+        final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
         mButtonFavorite.setEnabled(true);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -350,26 +350,26 @@ public class ShowFragment extends Fragment {
         });
 
         // overview
-        String overview = mShowCursor.getString(ShowQuery.OVERVIEW);
-        if (TextUtils.isEmpty(overview) && mShowCursor != null) {
+        String overview = showCursor.getString(ShowQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview) && showCursor != null) {
             // no description available, show no translation available message
             mTextViewOverview.setText(getString(R.string.no_translation,
                     LanguageTools.getLanguageStringForCode(getContext(),
-                            mShowCursor.getString(ShowQuery.LANGUAGE)),
+                            showCursor.getString(ShowQuery.LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {
             mTextViewOverview.setText(overview);
         }
 
         // language preferred for content
-        String languageCode = mShowCursor.getString(ShowQuery.LANGUAGE);
+        String languageCode = showCursor.getString(ShowQuery.LANGUAGE);
         if (TextUtils.isEmpty(languageCode)) {
             languageCode = DisplaySettings.getContentLanguage(getContext());
         }
         final String[] languageCodes = getResources().getStringArray(R.array.languageData);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
-                mSpinnerLastPosition = i;
+                spinnerLastPosition = i;
                 mSpinnerLanguage.setSelection(i, false);
                 break;
             }
@@ -377,13 +377,13 @@ public class ShowFragment extends Fragment {
         mSpinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == mSpinnerLastPosition) {
+                if (position == spinnerLastPosition) {
                     // guard against firing after layout completes
                     // still happening on custom ROMs despite workaround described at
                     // http://stackoverflow.com/a/17336944/1000543
                     return;
                 }
-                mSpinnerLastPosition = position;
+                spinnerLastPosition = position;
                 changeShowLanguage(parent.getContext(), getShowTvdbId(), languageCodes[position]);
             }
 
@@ -398,29 +398,29 @@ public class ShowFragment extends Fragment {
         mTextViewReleaseCountry.setText(TimeTools.getCountry(getActivity(), releaseCountry));
 
         // original release
-        String firstRelease = mShowCursor.getString(ShowQuery.FIRST_RELEASE);
+        String firstRelease = showCursor.getString(ShowQuery.FIRST_RELEASE);
         Utils.setValueOrPlaceholder(mTextViewFirstRelease,
                 TimeTools.getShowReleaseYear(firstRelease));
 
         // content rating
         Utils.setValueOrPlaceholder(mTextViewContentRating,
-                mShowCursor.getString(ShowQuery.CONTENT_RATING));
+                showCursor.getString(ShowQuery.CONTENT_RATING));
         // genres
         Utils.setValueOrPlaceholder(mTextViewGenres,
-                TextTools.splitAndKitTVDBStrings(mShowCursor.getString(ShowQuery.GENRES)));
+                TextTools.splitAndKitTVDBStrings(showCursor.getString(ShowQuery.GENRES)));
 
         // trakt rating
         mTextViewRatingGlobal.setText(TraktTools.buildRatingString(
-                mShowCursor.getDouble(ShowQuery.RATING_GLOBAL)));
+                showCursor.getDouble(ShowQuery.RATING_GLOBAL)));
         mTextViewRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
-                mShowCursor.getInt(ShowQuery.RATING_VOTES)));
+                showCursor.getInt(ShowQuery.RATING_VOTES)));
 
         // user rating
         mTextViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
-                mShowCursor.getInt(ShowQuery.RATING_USER)));
+                showCursor.getInt(ShowQuery.RATING_USER)));
 
         // last edit
-        long lastEditRaw = mShowCursor.getLong(ShowQuery.LAST_EDIT_MS);
+        long lastEditRaw = showCursor.getLong(ShowQuery.LAST_EDIT_MS);
         if (lastEditRaw > 0) {
             mTextViewLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditRaw * 1000,
                     DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
@@ -429,7 +429,7 @@ public class ShowFragment extends Fragment {
         }
 
         // IMDb button
-        String imdbId = mShowCursor.getString(ShowQuery.IMDBID);
+        String imdbId = showCursor.getString(ShowQuery.IMDBID);
         ServiceUtils.setUpImdbButton(imdbId, mButtonImdb, TAG);
 
         // TVDb button
@@ -439,14 +439,14 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpTraktShowButton(mButtonTrakt, getShowTvdbId(), TAG);
 
         // web search button
-        ServiceUtils.setUpWebSearchButton(mShowTitle, mButtonWebSearch, TAG);
+        ServiceUtils.setUpWebSearchButton(showTitle, mButtonWebSearch, TAG);
 
         // shout button
         mButtonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleShow(mShowTitle,
+                i.putExtras(TraktCommentsActivity.createInitBundleShow(showTitle,
                         getShowTvdbId()));
                 Utils.startActivityWithAnimation(getActivity(), i, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
@@ -454,19 +454,19 @@ public class ShowFragment extends Fragment {
         });
 
         // poster, full screen poster button
-        Utils.loadPoster(getActivity(), posterView, mShowPoster);
+        Utils.loadPoster(getActivity(), posterView, showPoster);
         posterContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
                 intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
-                        TheTVDB.buildScreenshotUrl(mShowPoster));
+                        TheTVDB.buildScreenshotUrl(showPoster));
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
 
         // background
-        Utils.loadPosterBackground(getActivity(), posterBackgroundView, mShowPoster);
+        Utils.loadPosterBackground(getActivity(), posterBackgroundView, showPoster);
 
         loadTraktRatings();
     }
@@ -525,9 +525,9 @@ public class ShowFragment extends Fragment {
     }
 
     private void loadTraktRatings() {
-        if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktRatingsTask(getActivity(), getShowTvdbId());
-            AsyncTaskCompat.executeParallel(mTraktTask);
+        if (traktTask == null || traktTask.getStatus() == AsyncTask.Status.FINISHED) {
+            traktTask = new TraktRatingsTask(getActivity(), getShowTvdbId());
+            AsyncTaskCompat.executeParallel(traktTask);
         }
     }
 
@@ -542,12 +542,12 @@ public class ShowFragment extends Fragment {
             return;
         }
 
-        if (mShowCursor == null) {
+        if (showCursor == null) {
             return;
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getActivity(), mShowTitle, mShowPoster, getShowTvdbId());
+        ShortcutUtils.createShortcut(getActivity(), showTitle, showPoster, getShowTvdbId());
 
         // drop to home screen
         startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(
@@ -558,8 +558,8 @@ public class ShowFragment extends Fragment {
     }
 
     private void shareShow() {
-        if (mShowCursor != null) {
-            ShareUtils.shareShow(getActivity(), getShowTvdbId(), mShowTitle);
+        if (showCursor != null) {
+            ShareUtils.shareShow(getActivity(), getShowTvdbId(), showTitle);
             Utils.trackAction(getActivity(), TAG, "Share");
         }
     }

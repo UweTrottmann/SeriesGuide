@@ -43,7 +43,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
@@ -107,11 +107,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    @Bind(R.id.containerSearchBar) View searchContainer;
-    @Bind(R.id.editTextSearchBar) AutoCompleteTextView searchView;
-    @Bind(R.id.imageButtonSearchClear) View clearButton;
-    @Bind(R.id.tabsSearch) SlidingTabLayout tabs;
-    @Bind(R.id.pagerSearch) ViewPager viewPager;
+    @BindView(R.id.containerSearchBar) View searchContainer;
+    @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
+    @BindView(R.id.imageButtonSearchClear) View clearButton;
+    @BindView(R.id.tabsSearch) SlidingTabLayout tabs;
+    @BindView(R.id.pagerSearch) ViewPager viewPager;
     private ProgressDialog progressDialog;
 
     private SearchHistory searchHistory;

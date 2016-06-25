@@ -28,8 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
@@ -57,11 +58,12 @@ public class RemoveShowDialogFragment extends DialogFragment {
         f.show(fm, "dialog-remove-show");
     }
 
-    @Bind(R.id.progressBarRemove) View progressBar;
-    @Bind(R.id.textViewRemove) TextView dialogText;
-    @Bind(R.id.buttonNegative) Button negativeButton;
-    @Bind(R.id.buttonPositive) Button positiveButton;
+    @BindView(R.id.progressBarRemove) View progressBar;
+    @BindView(R.id.textViewRemove) TextView dialogText;
+    @BindView(R.id.buttonNegative) Button negativeButton;
+    @BindView(R.id.buttonPositive) Button positiveButton;
 
+    private Unbinder unbinder;
     private int showTvdbId;
 
     @Override
@@ -81,7 +83,7 @@ public class RemoveShowDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_remove, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         showProgressBar(true);
         negativeButton.setText(android.R.string.cancel);
@@ -110,7 +112,7 @@ public class RemoveShowDialogFragment extends DialogFragment {
         super.onDestroyView();
 
         EventBus.getDefault().unregister(this);
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private static class GetShowTitleTask

@@ -32,8 +32,9 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
@@ -49,34 +50,35 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 public abstract class StreamFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
-    @Bind(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout mContentContainer;
+    @BindView(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout contentContainer;
 
-    @Bind(R.id.gridViewStream) StickyGridHeadersGridView mGridView;
-    @Bind(R.id.emptyViewStream) TextView mEmptyView;
+    @BindView(R.id.gridViewStream) StickyGridHeadersGridView gridView;
+    @BindView(R.id.emptyViewStream) TextView emptyView;
 
-    private ListAdapter mAdapter;
+    private ListAdapter adapter;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stream, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
-        mContentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
-        mContentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        contentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
+        contentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshStreamWithNetworkCheck();
             }
         });
-        mContentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
+        contentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
-        mGridView.setOnItemClickListener(this);
-        mGridView.setEmptyView(mEmptyView);
-        mGridView.setAreHeadersSticky(false);
+        gridView.setOnItemClickListener(this);
+        gridView.setEmptyView(emptyView);
+        gridView.setAreHeadersSticky(false);
 
         // set initial view states
         showProgressBar(true);
@@ -90,12 +92,12 @@ public abstract class StreamFragment extends Fragment implements
 
         int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.colorAccent);
-        mContentContainer.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        contentContainer.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
-        if (mAdapter == null) {
-            mAdapter = getListAdapter();
+        if (adapter == null) {
+            adapter = getListAdapter();
         }
-        mGridView.setAdapter(mAdapter);
+        gridView.setAdapter(adapter);
 
         initializeStream();
 
@@ -106,7 +108,7 @@ public abstract class StreamFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -144,7 +146,7 @@ public abstract class StreamFragment extends Fragment implements
      * Changes the empty message.
      */
     protected void setEmptyMessage(int stringResourceId) {
-        mEmptyView.setText(stringResourceId);
+        emptyView.setText(stringResourceId);
     }
 
     /**
@@ -184,6 +186,6 @@ public abstract class StreamFragment extends Fragment implements
      * wrapping the stream view.
      */
     protected void showProgressBar(boolean isShowing) {
-        mContentContainer.setRefreshing(isShowing);
+        contentContainer.setRefreshing(isShowing);
     }
 }

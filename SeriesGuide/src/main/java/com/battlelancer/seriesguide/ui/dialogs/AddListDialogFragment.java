@@ -35,8 +35,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.ListsTools;
@@ -51,9 +52,11 @@ public class AddListDialogFragment extends DialogFragment {
         return new AddListDialogFragment();
     }
 
-    @Bind(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
-    @Bind(R.id.buttonNegative) Button buttonNegative;
-    @Bind(R.id.buttonPositive) Button buttonPositive;
+    @BindView(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
+    @BindView(R.id.buttonNegative) Button buttonNegative;
+    @BindView(R.id.buttonPositive) Button buttonPositive;
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class AddListDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
-        ButterKnife.bind(this, layout);
+        unbinder = ButterKnife.bind(this, layout);
 
         // title
         final EditText editTextName = textInputLayoutName.getEditText();
@@ -109,7 +112,7 @@ public class AddListDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     /**

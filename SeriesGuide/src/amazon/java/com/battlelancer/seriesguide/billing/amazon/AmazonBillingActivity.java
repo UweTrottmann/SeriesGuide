@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.Product;
@@ -35,14 +35,14 @@ import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
 
-    @Bind(R.id.progressBarAmazonBilling) View progressBar;
-    @Bind(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
-    @Bind(R.id.textViewAmazonBillingSubPrice) TextView textViewPriceSub;
-    @Bind(R.id.buttonAmazonBillingGetPass) Button buttonGetPass;
-    @Bind(R.id.textViewAmazonBillingPricePass) TextView textViewPricePass;
-    @Bind(R.id.textViewAmazonBillingExisting) TextView textViewIsSupporter;
-    @Bind(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
-    @Bind(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
+    @BindView(R.id.progressBarAmazonBilling) View progressBar;
+    @BindView(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
+    @BindView(R.id.textViewAmazonBillingSubPrice) TextView textViewPriceSub;
+    @BindView(R.id.buttonAmazonBillingGetPass) Button buttonGetPass;
+    @BindView(R.id.textViewAmazonBillingPricePass) TextView textViewPricePass;
+    @BindView(R.id.textViewAmazonBillingExisting) TextView textViewIsSupporter;
+    @BindView(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
+    @BindView(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

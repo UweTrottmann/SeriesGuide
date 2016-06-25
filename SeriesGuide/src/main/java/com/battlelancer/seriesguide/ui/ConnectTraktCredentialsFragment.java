@@ -26,8 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
@@ -39,12 +40,14 @@ public class ConnectTraktCredentialsFragment extends Fragment {
 
     private boolean isConnecting;
 
-    @Bind(R.id.buttonConnectTraktConnect) Button buttonConnect;
-    @Bind(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
-    @Bind(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
-    @Bind(R.id.textViewConnectTraktUsername) TextView username;
-    @Bind(R.id.progressBarConnectTrakt) View progressBar;
-    @Bind(R.id.textViewConnectTraktStatus) TextView status;
+    @BindView(R.id.buttonConnectTraktConnect) Button buttonConnect;
+    @BindView(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
+    @BindView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
+    @BindView(R.id.textViewConnectTraktUsername) TextView username;
+    @BindView(R.id.progressBarConnectTrakt) View progressBar;
+    @BindView(R.id.textViewConnectTraktStatus) TextView status;
+
+    private Unbinder unbinder;
 
     public static ConnectTraktCredentialsFragment newInstance() {
         return new ConnectTraktCredentialsFragment();
@@ -54,7 +57,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // connect button
         buttonConnect.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +118,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private void connect() {

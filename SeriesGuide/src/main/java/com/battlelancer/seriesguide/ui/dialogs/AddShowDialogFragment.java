@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,8 +36,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -115,15 +118,15 @@ public class AddShowDialogFragment extends DialogFragment {
         String SEARCH_RESULT = "search_result";
     }
 
-    @Bind(R.id.textViewAddTitle) TextView title;
-    @Bind(R.id.textViewAddShowMeta) TextView showmeta;
-    @Bind(R.id.textViewAddDescription) TextView overview;
-    @Bind(R.id.textViewAddRatingValue) TextView rating;
-    @Bind(R.id.textViewAddGenres) TextView genres;
-    @Bind(R.id.textViewAddReleased) TextView released;
-    @Bind(R.id.imageViewAddPoster) ImageView poster;
+    @BindView(R.id.textViewAddTitle) TextView title;
+    @BindView(R.id.textViewAddShowMeta) TextView showmeta;
+    @BindView(R.id.textViewAddDescription) TextView overview;
+    @BindView(R.id.textViewAddRatingValue) TextView rating;
+    @BindView(R.id.textViewAddGenres) TextView genres;
+    @BindView(R.id.textViewAddReleased) TextView released;
+    @BindView(R.id.imageViewAddPoster) ImageView poster;
 
-    @Bind({
+    @BindViews({
             R.id.textViewAddRatingValue,
             R.id.textViewAddRatingLabel,
             R.id.textViewAddRatingRange,
@@ -134,15 +137,16 @@ public class AddShowDialogFragment extends DialogFragment {
     static final ButterKnife.Setter<View, Boolean> VISIBLE
             = new ButterKnife.Setter<View, Boolean>() {
         @Override
-        public void set(View view, Boolean value, int index) {
+        public void set(@NonNull View view, Boolean value, int index) {
             view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
         }
     };
 
-    @Bind(R.id.buttonPositive) Button buttonPositive;
-    @Bind(R.id.buttonNegative) Button buttonNegative;
-    @Bind(R.id.progressBarAdd) View progressBar;
+    @BindView(R.id.buttonPositive) Button buttonPositive;
+    @BindView(R.id.buttonNegative) Button buttonNegative;
+    @BindView(R.id.progressBarAdd) View progressBar;
 
+    private Unbinder unbinder;
     private OnAddShowListener addShowListener;
     private SearchResult displayedShow;
 
@@ -175,7 +179,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // buttons
         buttonNegative.setText(R.string.dismiss);
@@ -210,7 +214,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks

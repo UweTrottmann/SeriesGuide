@@ -35,8 +35,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -86,53 +87,51 @@ public class MovieDetailsFragment extends Fragment {
 
     private static final String TAG = "Movie Details";
 
-    private int mTmdbId;
+    @BindView(R.id.contentContainerMovie) ViewGroup mContentContainer;
+    @Nullable @BindView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
 
-    private MovieDetails mMovieDetails = new MovieDetails();
+    @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
+    @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
+    @BindView(R.id.textViewMovieDescription) TextView mMovieDescription;
+    @BindView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+    @BindView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
-    private Videos.Video mTrailer;
+    @BindView(R.id.containerMovieButtons) View mButtonContainer;
+    @BindView(R.id.buttonMovieCheckIn) Button mCheckinButton;
+    @BindView(R.id.buttonMovieWatched) Button mWatchedButton;
+    @BindView(R.id.buttonMovieCollected) Button mCollectedButton;
+    @BindView(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
 
-    private String mImageBaseUrl;
+    @BindView(R.id.containerRatings) View mRatingsContainer;
+    @BindView(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
+    @BindView(R.id.textViewRatingsTmdbVotes) TextView mRatingsTmdbVotes;
+    @BindView(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
+    @BindView(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
+    @BindView(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
+    @BindView(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
 
-    @Bind(R.id.contentContainerMovie) ViewGroup mContentContainer;
-    @Nullable @Bind(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
-
-    @Bind(R.id.textViewMovieTitle) TextView mMovieTitle;
-    @Bind(R.id.textViewMovieDate) TextView mMovieReleaseDate;
-    @Bind(R.id.textViewMovieDescription) TextView mMovieDescription;
-    @Bind(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
-    @Bind(R.id.textViewMovieGenres) TextView mMovieGenres;
-
-    @Bind(R.id.containerMovieButtons) View mButtonContainer;
-    @Bind(R.id.buttonMovieCheckIn) Button mCheckinButton;
-    @Bind(R.id.buttonMovieWatched) Button mWatchedButton;
-    @Bind(R.id.buttonMovieCollected) Button mCollectedButton;
-    @Bind(R.id.buttonMovieWatchlisted) Button mWatchlistedButton;
-
-    @Bind(R.id.containerRatings) View mRatingsContainer;
-    @Bind(R.id.textViewRatingsTmdbValue) TextView mRatingsTmdbValue;
-    @Bind(R.id.textViewRatingsTmdbVotes) TextView mRatingsTmdbVotes;
-    @Bind(R.id.textViewRatingsTraktValue) TextView mRatingsTraktValue;
-    @Bind(R.id.textViewRatingsTraktVotes) TextView mRatingsTraktVotes;
-    @Bind(R.id.textViewRatingsTraktUser) TextView mRatingsTraktUserValue;
-    @Bind(R.id.textViewRatingsTraktUserLabel) View mRatingsTraktUserLabel;
-
-    @Bind(R.id.containerMovieCast) View mCastView;
+    @BindView(R.id.containerMovieCast) View mCastView;
     TextView mCastLabel;
     LinearLayout mCastContainer;
 
-    @Bind(R.id.containerMovieCrew) View mCrewView;
+    @BindView(R.id.containerMovieCrew) View mCrewView;
     TextView mCrewLabel;
     LinearLayout mCrewContainer;
 
-    @Bind(R.id.buttonMovieComments) Button mCommentsButton;
-    @Bind(R.id.progressBar) View mProgressBar;
+    @BindView(R.id.buttonMovieComments) Button mCommentsButton;
+    @BindView(R.id.progressBar) View mProgressBar;
+
+    private int tmdbId;
+    private MovieDetails movieDetails = new MovieDetails();
+    private Videos.Video trailer;
+    private String imageBaseUrl;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movie, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -165,19 +164,19 @@ public class MovieDetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mTmdbId = getArguments().getInt(InitBundle.TMDB_ID);
-        if (mTmdbId <= 0) {
+        tmdbId = getArguments().getInt(InitBundle.TMDB_ID);
+        if (tmdbId <= 0) {
             getFragmentManager().popBackStack();
             return;
         }
 
         setupViews();
 
-        mImageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
+        imageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
                 + TmdbSettings.POSTER_SIZE_SPEC_W342;
 
         Bundle args = new Bundle();
-        args.putInt(InitBundle.TMDB_ID, mTmdbId);
+        args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
                 mMovieLoaderCallbacks);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
@@ -231,14 +230,14 @@ public class MovieDetailsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        if (mMovieDetails != null) {
+        if (movieDetails != null) {
             // choose theme variant
             boolean isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light;
             inflater.inflate(
@@ -246,8 +245,8 @@ public class MovieDetailsFragment extends Fragment {
                     menu);
 
             // enable/disable actions
-            boolean isEnableShare = mMovieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
-                    mMovieDetails.tmdbMovie().title);
+            boolean isEnableShare = movieDetails.tmdbMovie() != null && !TextUtils.isEmpty(
+                    movieDetails.tmdbMovie().title);
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare);
@@ -265,13 +264,13 @@ public class MovieDetailsFragment extends Fragment {
                 playStoreItem.setVisible(isEnableShare);
             }
 
-            boolean isEnableImdb = mMovieDetails.tmdbMovie() != null
-                    && !TextUtils.isEmpty(mMovieDetails.tmdbMovie().imdb_id);
+            boolean isEnableImdb = movieDetails.tmdbMovie() != null
+                    && !TextUtils.isEmpty(movieDetails.tmdbMovie().imdb_id);
             MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
             imdbItem.setEnabled(isEnableImdb);
             imdbItem.setVisible(isEnableImdb);
 
-            boolean isEnableYoutube = mTrailer != null;
+            boolean isEnableYoutube = trailer != null;
             MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
             youtubeItem.setEnabled(isEnableYoutube);
             youtubeItem.setVisible(isEnableYoutube);
@@ -282,32 +281,32 @@ public class MovieDetailsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
-            ShareUtils.shareMovie(getActivity(), mTmdbId, mMovieDetails.tmdbMovie().title);
+            ShareUtils.shareMovie(getActivity(), tmdbId, movieDetails.tmdbMovie().title);
             Utils.trackAction(getActivity(), TAG, "Share");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
-            ServiceUtils.openImdb(mMovieDetails.tmdbMovie().imdb_id, TAG, getActivity());
+            ServiceUtils.openImdb(movieDetails.tmdbMovie().imdb_id, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_youtube) {
-            ServiceUtils.openYoutube(mTrailer.key, TAG, getActivity());
+            ServiceUtils.openYoutube(trailer.key, TAG, getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_google_play) {
-            ServiceUtils.searchGooglePlay(mMovieDetails.tmdbMovie().title, TAG,
+            ServiceUtils.searchGooglePlay(movieDetails.tmdbMovie().title, TAG,
                     getActivity());
             return true;
         }
         if (itemId == R.id.menu_open_tmdb) {
-            TmdbTools.openTmdbMovie(getActivity(), mTmdbId, TAG);
+            TmdbTools.openTmdbMovie(getActivity(), tmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
-            Utils.launchWebsite(getActivity(), TraktTools.buildMovieUrl(mTmdbId), TAG, "trakt");
+            Utils.launchWebsite(getActivity(), TraktTools.buildMovieUrl(tmdbId), TAG, "trakt");
             return true;
         }
         if (itemId == R.id.menu_action_movie_websearch) {
-            ServiceUtils.performWebSearch(getActivity(), mMovieDetails.tmdbMovie().title, TAG);
+            ServiceUtils.performWebSearch(getActivity(), movieDetails.tmdbMovie().title, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -317,12 +316,12 @@ public class MovieDetailsFragment extends Fragment {
         /**
          * Get everything from TMDb. Also get additional rating from trakt.
          */
-        final Ratings traktRatings = mMovieDetails.traktRatings();
-        final Movie tmdbMovie = mMovieDetails.tmdbMovie();
-        final boolean inCollection = mMovieDetails.inCollection;
-        final boolean inWatchlist = mMovieDetails.inWatchlist;
-        final boolean isWatched = mMovieDetails.isWatched;
-        final int rating = mMovieDetails.userRating;
+        final Ratings traktRatings = movieDetails.traktRatings();
+        final Movie tmdbMovie = movieDetails.tmdbMovie();
+        final boolean inCollection = movieDetails.inCollection;
+        final boolean inWatchlist = movieDetails.inWatchlist;
+        final boolean isWatched = movieDetails.isWatched;
+        final int rating = movieDetails.userRating;
 
         mMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);
@@ -345,7 +344,7 @@ public class MovieDetailsFragment extends Fragment {
             public void onClick(View v) {
                 // display a check-in dialog
                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(mTmdbId, title);
+                        .newInstance(tmdbId, title);
                 f.show(getFragmentManager(), "checkin-dialog");
                 Utils.trackAction(getActivity(), TAG, "Check-In");
             }
@@ -372,10 +371,10 @@ public class MovieDetailsFragment extends Fragment {
                     // disable button, will be re-enabled on data reload once action completes
                     v.setEnabled(false);
                     if (isWatched) {
-                        MovieTools.unwatchedMovie(getActivity(), mTmdbId);
+                        MovieTools.unwatchedMovie(getActivity(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
                     } else {
-                        MovieTools.watchedMovie(getActivity(), mTmdbId);
+                        MovieTools.watchedMovie(getActivity(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Watched movie");
                     }
                 }
@@ -402,10 +401,10 @@ public class MovieDetailsFragment extends Fragment {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 if (inCollection) {
-                    MovieTools.removeFromCollection(getActivity(), mTmdbId);
+                    MovieTools.removeFromCollection(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection(getActivity(), mTmdbId);
+                    MovieTools.addToCollection(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -428,10 +427,10 @@ public class MovieDetailsFragment extends Fragment {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(getActivity(), mTmdbId);
+                    MovieTools.removeFromWatchlist(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist(getActivity(), mTmdbId);
+                    MovieTools.addToWatchlist(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
@@ -480,7 +479,7 @@ public class MovieDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, mTmdbId));
+                i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, tmdbId));
                 Utils.startActivityWithAnimation(getActivity(), i, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
@@ -488,7 +487,7 @@ public class MovieDetailsFragment extends Fragment {
 
         // load poster, cache on external storage
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.loadWithPicasso(getActivity(), mImageBaseUrl + tmdbMovie.poster_path)
+            ServiceUtils.loadWithPicasso(getActivity(), imageBaseUrl + tmdbMovie.poster_path)
                     .into(mMoviePosterBackground);
         }
     }
@@ -518,7 +517,7 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     public void onEvent(MovieTools.MovieChangedEvent event) {
-        if (event.movieTmdbId != mTmdbId) {
+        if (event.movieTmdbId != tmdbId) {
             return;
         }
         // re-query some movie details to update button states
@@ -527,7 +526,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private void rateMovie() {
         if (TraktCredentials.ensureCredentials(getActivity())) {
-            RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(mTmdbId);
+            RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(tmdbId);
             newFragment.show(getFragmentManager(), "ratedialog");
             Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
         }
@@ -535,7 +534,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private void restartMovieLoader() {
         Bundle args = new Bundle();
-        args.putInt(InitBundle.TMDB_ID, mTmdbId);
+        args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
                 mMovieLoaderCallbacks);
     }
@@ -552,7 +551,7 @@ public class MovieDetailsFragment extends Fragment {
             if (!isAdded()) {
                 return;
             }
-            mMovieDetails = movieDetails;
+            MovieDetailsFragment.this.movieDetails = movieDetails;
             mProgressBar.setVisibility(View.GONE);
 
             // we need at least values from database or tmdb
@@ -584,7 +583,7 @@ public class MovieDetailsFragment extends Fragment {
                 return;
             }
             if (trailer != null) {
-                mTrailer = trailer;
+                MovieDetailsFragment.this.trailer = trailer;
                 getActivity().invalidateOptionsMenu();
             }
         }

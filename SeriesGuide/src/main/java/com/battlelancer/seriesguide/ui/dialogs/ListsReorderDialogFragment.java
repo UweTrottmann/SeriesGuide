@@ -26,8 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsAdapter;
 import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
@@ -49,17 +50,18 @@ public class ListsReorderDialogFragment extends DialogFragment {
         f.show(fragmentManager, "lists-reorder-dialog");
     }
 
-    @Bind(R.id.listViewListsReorder) DragSortListView dragSortListView;
-    @Bind(R.id.buttonNegative) Button buttonNegative;
-    @Bind(R.id.buttonPositive) Button buttonPositive;
+    @BindView(R.id.listViewListsReorder) DragSortListView dragSortListView;
+    @BindView(R.id.buttonNegative) Button buttonNegative;
+    @BindView(R.id.buttonPositive) Button buttonPositive;
 
+    private Unbinder unbinder;
     private ListsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         DragSortController controller = new DragSortController(dragSortListView,
                 R.id.dragGripViewItemList, DragSortController.ON_DOWN,
@@ -109,7 +111,7 @@ public class ListsReorderDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private void reorderList(int from, int to) {
