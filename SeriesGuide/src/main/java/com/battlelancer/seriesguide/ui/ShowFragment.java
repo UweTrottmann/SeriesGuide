@@ -317,7 +317,7 @@ public class ShowFragment extends Fragment {
                     releaseCountry, network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
-            mTextViewReleaseTime.setText(dayString + " " + timeString);
+            mTextViewReleaseTime.setText(String.format("%s %s", dayString, timeString));
         } else {
             mTextViewReleaseTime.setText(null);
         }
