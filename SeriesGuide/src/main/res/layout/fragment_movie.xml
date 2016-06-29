@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MovieDetailsActivity">
-
-    <ImageView
-        android:id="@+id/imageViewMoviePoster"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        android:transitionName="@string/transitionNameMoviePoster"
-        tools:targetApi="lollipop" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -28,34 +20,47 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:paddingBottom="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding">
+            android:paddingTop="@dimen/default_padding"
+            tools:ignore="RtlHardcoded">
+
+            <ImageView
+                android:id="@+id/imageViewMoviePoster"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="@dimen/larger_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/transitionNameMoviePoster"
+                tools:src="#F44336"
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/textViewMovieTitle"
-                style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
-                android:textAppearance="@style/TextAppearance.Headline"
+                android:layout_toRightOf="@id/imageViewMoviePoster"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/larger_padding"
+                android:textAppearance="@style/TextAppearance.Title"
                 android:textIsSelectable="true"
                 tools:text="Awesome Movie Title" />
 
             <TextView
                 android:id="@+id/textViewMovieDate"
-                style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageViewMoviePoster"
                 android:layout_below="@+id/textViewMovieTitle"
                 android:layout_marginBottom="@dimen/large_padding"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
-                android:ellipsize="end"
-                android:maxLines="1"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/larger_padding"
                 android:textAppearance="@style/TextAppearance.Caption"
                 android:textIsSelectable="true"
                 tools:text="20 Oct 2013" />

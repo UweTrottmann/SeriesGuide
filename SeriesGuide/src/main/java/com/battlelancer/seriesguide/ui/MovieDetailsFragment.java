@@ -17,12 +17,16 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +36,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +62,7 @@ import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -87,13 +93,15 @@ public class MovieDetailsFragment extends Fragment {
 
     private static final String TAG = "Movie Details";
 
+    @BindView(R.id.rootMovie) FrameLayout rootLayout;
+
     @BindView(R.id.contentContainerMovie) ViewGroup mContentContainer;
     @Nullable @BindView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
 
     @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
     @BindView(R.id.textViewMovieDescription) TextView mMovieDescription;
-    @BindView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+    @BindView(R.id.imageViewMoviePoster) ImageView mMoviePoster;
     @BindView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
     @BindView(R.id.containerMovieButtons) View mButtonContainer;
@@ -148,14 +156,6 @@ public class MovieDetailsFragment extends Fragment {
         mCrewLabel.setText(R.string.movie_crew);
         mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
         mCrewView.setVisibility(View.GONE);
-
-        // poster background transparency
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mMoviePosterBackground.setImageAlpha(30);
-        } else {
-            //noinspection deprecation
-            mMoviePosterBackground.setAlpha(30);
-        }
 
         return v;
     }
@@ -488,7 +488,21 @@ public class MovieDetailsFragment extends Fragment {
         // load poster, cache on external storage
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
             ServiceUtils.loadWithPicasso(getActivity(), imageBaseUrl + tmdbMovie.poster_path)
-                    .into(mMoviePosterBackground);
+                    .into(mMoviePoster, new Callback.EmptyCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap
+                                    = ((BitmapDrawable) mMoviePoster.getDrawable()).getBitmap();
+                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    int color = palette.getVibrantColor(Color.WHITE);
+                                    color = ColorUtils.setAlphaComponent(color, 30);
+                                    rootLayout.setBackgroundColor(color);
+                                }
+                            });
+                        }
+                    });
         }
     }
 

@@ -37,7 +37,8 @@
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/imageViewPerson"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingRight="@dimen/large_padding">
 
         <TextView
             android:id="@+id/textViewPerson"

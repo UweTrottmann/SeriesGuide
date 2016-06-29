@@ -19,7 +19,7 @@
     android:id="@+id/containerMovieButtons"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/textViewMovieDate"
+    android:layout_below="@+id/imageViewMoviePoster"
     android:layout_marginLeft="@dimen/large_padding"
     android:layout_marginRight="@dimen/large_padding"
     android:minHeight="@dimen/buttons_min_height"
