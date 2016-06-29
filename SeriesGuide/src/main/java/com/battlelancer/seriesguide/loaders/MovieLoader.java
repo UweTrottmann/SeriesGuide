@@ -22,7 +22,6 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Ratings;
@@ -45,12 +44,8 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
     @Override
     public MovieDetails loadInBackground() {
-        MovieDetails details = new MovieDetails();
-
-        // try loading from trakt and tmdb
-        if (AndroidUtils.isNetworkConnected(getContext())) {
-            details = MovieTools.Download.getMovieDetails(getContext(), mTmdbId);
-        }
+        // try loading from trakt and tmdb, this might return a cached response
+        MovieDetails details = MovieTools.Download.getMovieDetails(getContext(), mTmdbId);
 
         // update local database
         updateLocalMovie(getContext(), details, mTmdbId);
