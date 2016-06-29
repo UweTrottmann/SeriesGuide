@@ -12,6 +12,11 @@ Version 31
 * Faster and more reliable trakt watched and collected episode sync.
 * No "hour-past-midnight" correction for Netflix shows (would get moved by one day).
 
+#### 31.1
+*(2016-06-29)*
+
+* NOTICE Latest translations from crowdin.
+
 #### 31
 *(2016-06-23)*
 

@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biográfia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Tetszik a SeriesGuide?</string>
+  <string name="feedback_action_yes">Igen!</string>
+  <string name="feedback_action_notreally">Nem igazán</string>
+  <string name="feedback_question_rate_google">Értékeled a Google Playen?</string>
+  <string name="feedback_question_rate_amazon">Értékeled az Amazonon?</string>
+  <string name="feedback_question_feedback">Mondd el, hogyan javítanád.</string>
+  <string name="feedback_action_ok">Ok, miért ne</string>
+  <string name="feedback_action_nothanks">Köszönöm, nem</string>
 </resources>
