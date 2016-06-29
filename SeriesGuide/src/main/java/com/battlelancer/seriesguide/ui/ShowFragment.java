@@ -459,7 +459,9 @@ public class ShowFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
+                intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
+                        TheTVDB.buildPosterUrl(showPoster));
+                intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
                         TheTVDB.buildScreenshotUrl(showPoster));
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
             }

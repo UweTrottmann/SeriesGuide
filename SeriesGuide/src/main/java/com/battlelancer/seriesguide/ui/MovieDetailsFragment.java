@@ -101,7 +101,7 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
     @BindView(R.id.textViewMovieDescription) TextView mMovieDescription;
-    @BindView(R.id.imageViewMoviePoster) ImageView mMoviePoster;
+    @BindView(R.id.imageViewMoviePoster) ImageView movieImageView;
     @BindView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
     @BindView(R.id.containerMovieButtons) View mButtonContainer;
@@ -132,7 +132,6 @@ public class MovieDetailsFragment extends Fragment {
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
-    private String imageBaseUrl;
     private Unbinder unbinder;
 
     @Override
@@ -171,9 +170,6 @@ public class MovieDetailsFragment extends Fragment {
         }
 
         setupViews();
-
-        imageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
-                + TmdbSettings.POSTER_SIZE_SPEC_W342;
 
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
@@ -487,12 +483,14 @@ public class MovieDetailsFragment extends Fragment {
 
         // load poster, cache on external storage
         if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.loadWithPicasso(getActivity(), imageBaseUrl + tmdbMovie.poster_path)
-                    .into(mMoviePoster, new Callback.EmptyCallback() {
+            final String smallImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                    + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path;
+            ServiceUtils.loadWithPicasso(getActivity(), smallImageUrl)
+                    .into(movieImageView, new Callback.EmptyCallback() {
                         @Override
                         public void onSuccess() {
                             Bitmap bitmap
-                                    = ((BitmapDrawable) mMoviePoster.getDrawable()).getBitmap();
+                                    = ((BitmapDrawable) movieImageView.getDrawable()).getBitmap();
                             Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                 @Override
                                 public void onGenerated(Palette palette) {
@@ -503,6 +501,18 @@ public class MovieDetailsFragment extends Fragment {
                             });
                         }
                     });
+            // click listener for high resolution poster
+            movieImageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path;
+                    Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                    intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl);
+                    intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl);
+                    Utils.startActivityWithAnimation(getActivity(), intent, view);
+                }
+            });
         }
     }
 
