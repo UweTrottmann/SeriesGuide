@@ -43,7 +43,7 @@
   <string name="norating">non disponibile</string>
   <string name="unknown">sconosciuto</string>
   <string name="offline">Connettersi a una rete, quindi riprovare.</string>
-  <string name="app_not_available">Nessuna app disponibile per gestirlo.</string>
+  <string name="app_not_available">Nessuna app disponibile per gestire questo contenuto.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
   <!-- Sharing -->
@@ -150,7 +150,7 @@
   <string name="user_stream_empty">Nessuna attività su trakt. Guarda e fai il check in di qualche serie!</string>
   <string name="user_movie_stream_empty">Nessun check in su trakt. Guarda qualche film!</string>
   <!-- Calendar -->
-  <string name="upcoming">Prossimi</string>
+  <string name="upcoming">Prossimamente</string>
   <string name="recent">Recenti</string>
   <string name="noupcoming">Non c\'è nessun episodio in programma.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
@@ -331,7 +331,7 @@
   <string name="pref_autoaddshows">Aggiungi nuove serie trakt</string>
   <string name="pref_autoaddshowssummary">Aggiungi automaticamente le serie dal tuo trakt</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Questa applicazione utilizza dati e immagini di TheTVDB sotto licenza CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Questa applicazione utilizza informazioni e immagini di TheTVDB sotto licenza CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Questo prodotto utilizza l\'API di TMDb ma non è approvato o certificato da TMDb.</string>
   <string name="licence_trakt">Questa applicazione utilizza dati e immagini di trakt.</string>
   <string name="about_open_source">SeriesGuide è compilato con software open source.</string>
@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Ti stai divertendo con SeriesGuide?</string>
+  <string name="feedback_action_yes">Si!</string>
+  <string name="feedback_action_notreally">Non proprio</string>
+  <string name="feedback_question_rate_google">Vuoi valutarlo su Google Play?</string>
+  <string name="feedback_question_rate_amazon">Vuoi valutarlo su Amazon?</string>
+  <string name="feedback_question_feedback">Vuoi dirmi come migliorarlo?</string>
+  <string name="feedback_action_ok">OK, sicuro</string>
+  <string name="feedback_action_nothanks">No, grazie</string>
 </resources>
