@@ -474,7 +474,7 @@
   <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
   <string name="pref_amazon_domain">Amazon-sivusto</string>
   <string name="extension_google_play">Google Play -haku</string>
-  <string name="description_extension_google_play">Etsi Google Play -kaupasta</string>
+  <string name="description_extension_google_play">Etsi Google Play Kaupasta</string>
   <string name="extension_youtube">YouTube-haku</string>
   <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
   <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>
@@ -484,7 +484,7 @@
   <string name="feedback_question_enjoy">Pidätkö SeriesGuidesta?</string>
   <string name="feedback_action_yes">Kyllä!</string>
   <string name="feedback_action_notreally">En oikeastaan</string>
-  <string name="feedback_question_rate_google">Haluatko arvostella Google Play?</string>
+  <string name="feedback_question_rate_google">Haluatko arvostella Google Playssa?</string>
   <string name="feedback_question_rate_amazon">Haluatko arvostella Amazonissa?</string>
   <string name="feedback_question_feedback">Haluatko kertoa, miten sitä vois parantaa?</string>
   <string name="feedback_action_ok">Kyllä</string>

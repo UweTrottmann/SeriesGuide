@@ -213,7 +213,7 @@
   <string name="action_movies_sort_title">Título</string>
   <string name="action_movies_sort_release">Data de lançamento</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Não é possível calcular as estatísticas.</string>
   <string name="statistics_shows">Séries</string>
   <string name="statistics_episodes">Episódios</string>
   <string name="statistics_movies">Filmes</string>
@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Está gostando do SeriesGuide?</string>
+  <string name="feedback_action_yes">Sim!</string>
+  <string name="feedback_action_notreally">Não realmente</string>
+  <string name="feedback_question_rate_google">Avaliá-lo no Google Play?</string>
+  <string name="feedback_question_rate_amazon">Avaliá-lo no Amazon?</string>
+  <string name="feedback_question_feedback">Diga-me como melhorá-lo?</string>
+  <string name="feedback_action_ok">OK, claro</string>
+  <string name="feedback_action_nothanks">Não, obrigado</string>
 </resources>

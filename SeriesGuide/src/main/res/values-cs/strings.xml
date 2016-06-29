@@ -33,7 +33,7 @@
   <string name="action_display_all">Zobrazit vše</string>
   <string name="web_search">Webové vyhledávání</string>
   <string name="add_to_homescreen">Odkaz</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Otevřít</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -54,17 +54,17 @@
   <string name="share_checkout">Čekuj %s</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
   <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
-  <string name="links">Links</string>
+  <string name="links">Odkazy</string>
   <!-- Comments -->
   <string name="comments">Komentáře</string>
   <string name="shout_hint">Napište komentář (andlicky,5 a více slov)</string>
   <string name="shout_invalid">Váš komentář porušuje pravidla!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Odeslat</string>
   <string name="isspoiler">Vyzrazení děje!</string>
   <string name="no_shouts">Buďte první, kdo zakřičí!</string>
   <string name="refresh">Obnovit</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
+    <item quantity="one">%d odpověď</item>
     <item quantity="few">%d replies</item>
     <item quantity="other">%d odpovědi</item>
   </plurals>
@@ -90,7 +90,7 @@
   <string name="services_watch">Zhlédnout</string>
   <string name="services_more">Více</string>
   <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Nepřeloženo</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">nyní</string>
@@ -196,7 +196,7 @@
   <string name="list_empty">Do seznamu můžete přidávat seriály, celé série nebo epizody.</string>
   <string name="action_lists_sort">Třídit seznamy</string>
   <string name="action_lists_reorder">Uspořádat seznamy</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
   <!-- Movies -->
   <string name="movies_collection">Sbírka</string>
   <string name="movies_watchlist">Chci vidět</string>
@@ -214,7 +214,7 @@
   <string name="action_movies_sort_title">Titul</string>
   <string name="action_movies_sort_release">Datum vysílání</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Nelze přepočítat statistiky.</string>
   <string name="statistics_shows">Seriály</string>
   <string name="statistics_episodes">Epizody</string>
   <string name="statistics_movies">Filmy</string>
@@ -227,7 +227,7 @@
   <plurals name="days_plural">
     <item quantity="one">%d den</item>
     <item quantity="few">%d den</item>
-    <item quantity="other">%d den</item>
+    <item quantity="other">%d dní</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d hodina</item>
@@ -305,7 +305,7 @@
   <plurals name="votes">
     <item quantity="one">%d vote</item>
     <item quantity="few">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="other">%d hlasů</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Ohlásit se</string>
@@ -326,12 +326,12 @@
   <string name="pref_onlyseasoneps">Skrýt bonusové epizody</string>
   <string name="pref_onlyseasonepssummary">Bonusové epizody se budou zobrazovat pouze v seznamu série</string>
   <string name="pref_exactdates">Zobrazovat celá data</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_exactdates_summary">\"31. října\" místo \"za 3 dny\"</string>
   <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
   <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
   <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
@@ -380,7 +380,7 @@
   <string name="pref_offsetsummary">Posunout vysílací čas o %s hodin</string>
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Odeslat anonymní statistiky službě Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnout také metadata jako popisy, herci nebo hodnocení.</string>
   <string name="backup_path">Složka se zálohou</string>
@@ -486,12 +486,12 @@
   <!-- People -->
   <string name="person_biography">Biografie</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Líbí se vám SeriesGuide?</string>
+  <string name="feedback_action_yes">Ano!</string>
+  <string name="feedback_action_notreally">Ani ne</string>
+  <string name="feedback_question_rate_google">Ohodnotit v Google Play?</string>
+  <string name="feedback_question_rate_amazon">Ohodnotit na Amazonu?</string>
+  <string name="feedback_question_feedback">Řekněte mi co je třeba zlepšit?</string>
+  <string name="feedback_action_ok">Dobrá, jistě</string>
+  <string name="feedback_action_nothanks">Ne, děkuji</string>
 </resources>
