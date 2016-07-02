@@ -36,7 +36,6 @@
                     android:id="@+id/containerShowPoster"
                     android:layout_width="140dp"
                     android:layout_height="205dp"
-                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
@@ -46,6 +45,7 @@
                         android:contentDescription="@string/description_poster"
                         android:scaleType="centerCrop"
                         tools:src="@color/background_dim" />
+
                 </FrameLayout>
 
                 <ImageView

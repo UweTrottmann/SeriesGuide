@@ -101,6 +101,7 @@ public class MovieDetailsFragment extends Fragment {
     @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
     @BindView(R.id.textViewMovieDescription) TextView mMovieDescription;
+    @BindView(R.id.frameLayoutMoviePoster) FrameLayout moviePosterFrame;
     @BindView(R.id.imageViewMoviePoster) ImageView movieImageView;
     @BindView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
@@ -482,7 +483,10 @@ public class MovieDetailsFragment extends Fragment {
         });
 
         // load poster, cache on external storage
-        if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
+        if (TextUtils.isEmpty(tmdbMovie.poster_path)) {
+            moviePosterFrame.setClickable(false);
+            moviePosterFrame.setFocusable(false);
+        } else {
             final String smallImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path;
             ServiceUtils.loadWithPicasso(getActivity(), smallImageUrl)
@@ -502,7 +506,8 @@ public class MovieDetailsFragment extends Fragment {
                         }
                     });
             // click listener for high resolution poster
-            movieImageView.setOnClickListener(new OnClickListener() {
+            moviePosterFrame.setFocusable(true);
+            moviePosterFrame.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
