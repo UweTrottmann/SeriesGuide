@@ -418,7 +418,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 rateEpisode();
             }
         });
-        mRatingsContainer.setFocusable(true);
         CheatSheet.setup(mRatingsContainer, R.string.action_rate);
 
         // trakt rating

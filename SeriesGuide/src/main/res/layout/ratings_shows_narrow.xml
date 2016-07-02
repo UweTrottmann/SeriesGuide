@@ -21,6 +21,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:background="?attr/selectableItemBackground"
+    android:focusable="true"
     android:padding="@dimen/large_padding">
 
     <!-- ratings layout for narrow show details, currently only smaller font sizes -->
