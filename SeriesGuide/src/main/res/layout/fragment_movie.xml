@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
+    <!-- Margin is adjusted in code based on translucent status bar. -->
     <ScrollView
         android:id="@+id/contentContainerMovie"
         android:layout_width="match_parent"

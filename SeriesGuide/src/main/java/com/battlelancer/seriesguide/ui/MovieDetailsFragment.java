@@ -204,7 +204,7 @@ public class MovieDetailsFragment extends Fragment {
                 ViewGroup.MarginLayoutParams layoutParamsRight
                         = (ViewGroup.MarginLayoutParams) mContentContainerRight.getLayoutParams();
                 layoutParamsRight.setMargins(layoutParamsRight.leftMargin,
-                        pixelInsetTop + layoutParams.topMargin, 0, 0);
+                        pixelInsetTop + layoutParamsRight.topMargin, 0, 0);
             }
         }
     }
