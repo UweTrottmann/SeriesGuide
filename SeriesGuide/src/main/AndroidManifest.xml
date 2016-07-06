@@ -148,7 +148,9 @@
                 <data android:scheme="sgoauth" />
             </intent-filter>
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.TraktCommentsActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.TraktCommentsActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
