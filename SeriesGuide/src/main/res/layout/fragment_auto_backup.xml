@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:ignore="RtlHardcoded">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -131,25 +132,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/containerAutoBackupExportFiles"
-                    android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginTop="32dp"
                     android:text="@string/restore_auto_backup"
                     android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxAutoBackupImportWarning"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewAutoBackupLabelImport"
-                    android:text="@string/import_warning" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupLastTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/checkBoxAutoBackupImportWarning"
+                    android:layout_below="@id/textViewAutoBackupLabelImport"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:text="@string/last_auto_backup"
+                    android:text="@string/last_auto_backup" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxAutoBackupImportWarning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewAutoBackupLastTime"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="@string/import_warning"
                     android:textAppearance="@style/TextAppearance.Body.Bold" />
 
                 <Button
@@ -157,8 +159,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewAutoBackupLastTime"
-                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_below="@+id/checkBoxAutoBackupImportWarning"
                     android:enabled="false"
                     android:text="@string/restore_auto_backup" />
 
