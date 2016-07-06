@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 
@@ -44,6 +45,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @BindView(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
     @BindView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
     @BindView(R.id.textViewConnectTraktUsername) TextView username;
+    @BindView(R.id.textViewConnectTraktHexagonWarning) TextView hexagonWarning;
     @BindView(R.id.progressBarConnectTrakt) View progressBar;
     @BindView(R.id.textViewConnectTraktStatus) TextView status;
 
@@ -166,10 +168,12 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     }
 
     private void setUsernameViewsStates(boolean visible) {
-        if (username == null || usernameLabel == null) {
+        if (username == null || usernameLabel == null || hexagonWarning == null) {
             return;
         }
         username.setVisibility(visible ? View.VISIBLE : View.GONE);
         usernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        hexagonWarning.setVisibility(
+                visible && HexagonTools.isSignedIn(getContext()) ? View.VISIBLE : View.GONE);
     }
 }
