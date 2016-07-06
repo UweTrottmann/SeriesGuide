@@ -486,7 +486,7 @@
   <string name="feedback_action_notreally">En oikeastaan</string>
   <string name="feedback_question_rate_google">Haluatko arvostella Google Playssa?</string>
   <string name="feedback_question_rate_amazon">Haluatko arvostella Amazonissa?</string>
-  <string name="feedback_question_feedback">Haluatko kertoa, miten sitä vois parantaa?</string>
+  <string name="feedback_question_feedback">Haluatko kertoa, miten sitä voisi parantaa?</string>
   <string name="feedback_action_ok">Kyllä</string>
   <string name="feedback_action_nothanks">Ei kiitos</string>
 </resources>
