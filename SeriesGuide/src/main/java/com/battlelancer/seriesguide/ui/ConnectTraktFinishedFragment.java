@@ -24,6 +24,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 
@@ -32,18 +37,25 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
  */
 public class ConnectTraktFinishedFragment extends Fragment {
 
+    @BindView(R.id.textViewConnectTraktFinished) TextView syncMessageTextView;
+    @BindView(R.id.buttonShowLibrary) Button libraryButton;
+    @BindView(R.id.buttonPositive) Button closeButton;
+    @BindView(R.id.buttonNegative) Button hiddenButton;
+    private Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_trakt_finished, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
         // hide sync message if hexagon is connected (so trakt sync is disabled)
         if (HexagonTools.isSignedIn(getActivity())) {
-            v.findViewById(R.id.textViewConnectTraktFinished).setVisibility(View.GONE);
+            syncMessageTextView.setVisibility(View.GONE);
         }
 
         // library button
-        v.findViewById(R.id.buttonShowLibrary).setOnClickListener(new OnClickListener() {
+        libraryButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // open library tab
@@ -54,13 +66,22 @@ public class ConnectTraktFinishedFragment extends Fragment {
         });
 
         // close button
-        v.findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
+        closeButton.setText(R.string.dismiss);
+        closeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+        hiddenButton.setVisibility(View.GONE);
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 }

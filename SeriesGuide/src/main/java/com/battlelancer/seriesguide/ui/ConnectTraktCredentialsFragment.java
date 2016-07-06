@@ -41,8 +41,8 @@ public class ConnectTraktCredentialsFragment extends Fragment {
 
     private boolean isConnecting;
 
-    @BindView(R.id.buttonConnectTraktConnect) Button buttonConnect;
-    @BindView(R.id.buttonConnectTraktDisconnect) Button buttonDisconnect;
+    @BindView(R.id.buttonPositive) Button buttonConnect;
+    @BindView(R.id.buttonNegative) Button buttonDisconnect;
     @BindView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
     @BindView(R.id.textViewConnectTraktUsername) TextView username;
     @BindView(R.id.textViewConnectTraktHexagonWarning) TextView hexagonWarning;
@@ -62,6 +62,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
 
         // connect button
+        buttonConnect.setText(R.string.connect);
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +71,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         });
 
         // disconnect button
+        buttonDisconnect.setText(R.string.disconnect);
         buttonDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

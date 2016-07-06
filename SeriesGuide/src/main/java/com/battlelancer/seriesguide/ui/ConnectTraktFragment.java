@@ -25,7 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 
@@ -35,29 +39,29 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
  */
 public class ConnectTraktFragment extends Fragment {
 
+    @BindView(R.id.textViewAbout) TextView aboutTextView;
+    @BindView(R.id.textViewTraktInfoHexagonWarning) TextView hexagonWarningTextView;
+    @BindView(R.id.buttonNegative) Button cancelButton;
+    @BindView(R.id.buttonPositive) Button connectButton;
+    private Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_connect_trakt_info, container, false);
-    }
+        View v = inflater.inflate(R.layout.fragment_connect_trakt_info, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        connectButton.setText(R.string.connect_trakt);
+        cancelButton.setText(android.R.string.cancel);
 
-        // connect button
-        getView().findViewById(R.id.buttonConnectTrakt).setOnClickListener(new OnClickListener() {
+        // wire up buttons
+        connectButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, f);
-                ft.commit();
+                replaceWithCredentialsFragment();
             }
         });
-
-        // discard button
-        getView().findViewById(R.id.buttonDiscard).setOnClickListener(new OnClickListener() {
+        cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
@@ -65,11 +69,26 @@ public class ConnectTraktFragment extends Fragment {
         });
 
         // make learn more link clickable
-        ((TextView) getView().findViewById(R.id.textViewAbout))
-                .setMovementMethod(LinkMovementMethod.getInstance());
+        aboutTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // show hexagon + trakt conflict warning
-        getView().findViewById(R.id.textViewTraktInfoHexagonWarning)
-                .setVisibility(HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
+        hexagonWarningTextView.setVisibility(
+                HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
+
+        return v;
+    }
+
+    private void replaceWithCredentialsFragment() {
+        ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, f);
+        ft.commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 }

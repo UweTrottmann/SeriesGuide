@@ -41,7 +41,8 @@ public class AmazonBillingActivity extends BaseActivity {
     @BindView(R.id.buttonAmazonBillingGetPass) Button buttonGetPass;
     @BindView(R.id.textViewAmazonBillingPricePass) TextView textViewPricePass;
     @BindView(R.id.textViewAmazonBillingExisting) TextView textViewIsSupporter;
-    @BindView(R.id.buttonAmazonBillingDismiss) Button buttonDismiss;
+    @BindView(R.id.buttonPositive) Button dismissButton;
+    @BindView(R.id.buttonNegative) Button hiddenButton;
     @BindView(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
 
     @Override
@@ -83,12 +84,14 @@ public class AmazonBillingActivity extends BaseActivity {
             }
         });
 
-        buttonDismiss.setOnClickListener(new View.OnClickListener() {
+        dismissButton.setText(R.string.dismiss);
+        dismissButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
+        hiddenButton.setVisibility(View.GONE);
 
         buttonMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
