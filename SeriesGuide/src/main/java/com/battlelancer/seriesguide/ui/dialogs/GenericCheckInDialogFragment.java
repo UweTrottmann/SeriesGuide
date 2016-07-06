@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -60,7 +61,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public class CheckInDialogDismissedEvent {
     }
 
-    @BindView(R.id.editTextCheckInMessage) EditText editTextMessage;
+    @BindView(R.id.textInputLayoutCheckIn) TextInputLayout textInputLayout;
     @BindView(R.id.buttonCheckIn) View buttonCheckIn;
     @BindView(R.id.buttonCheckInPasteTitle) View buttonPasteTitle;
     @BindView(R.id.buttonCheckInClear) View buttonClear;
@@ -90,10 +91,14 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
 
         // Paste episode button
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
+        final EditText editTextMessage = textInputLayout.getEditText();
         if (!TextUtils.isEmpty(itemTitle)) {
             buttonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (editTextMessage == null) {
+                        return;
+                    }
                     int start = editTextMessage.getSelectionStart();
                     int end = editTextMessage.getSelectionEnd();
                     editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
@@ -106,6 +111,9 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         buttonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (editTextMessage == null) {
+                    return;
+                }
                 editTextMessage.setText(null);
             }
         });
@@ -161,6 +169,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         unbinder.unbind();
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         // done with checking in, unlock UI
         setProgressLock(false);
@@ -199,7 +208,10 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         }
 
         // try to check in
-        checkInTrakt(editTextMessage.getText().toString());
+        EditText editText = textInputLayout.getEditText();
+        if (editText != null) {
+            checkInTrakt(editText.getText().toString());
+        }
     }
 
     /**
@@ -212,7 +224,7 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
      */
     private void setProgressLock(boolean lock) {
         progressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
-        editTextMessage.setEnabled(!lock);
+        textInputLayout.setEnabled(!lock);
         buttonPasteTitle.setEnabled(!lock);
         buttonClear.setEnabled(!lock);
         buttonCheckIn.setEnabled(!lock);

@@ -33,21 +33,24 @@
                 android:layout_toRightOf="@+id/buttonCheckInPasteTitle"
                 android:text="@string/clear" />
 
-            <EditText
-                android:id="@+id/editTextCheckInMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutCheckIn"
                 android:layout_below="@id/buttonCheckInPasteTitle"
                 android:layout_marginLeft="@dimen/larger_padding"
                 android:layout_marginRight="@dimen/larger_padding"
-                android:gravity="top"
-                android:hint="@string/checkin_hint"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:maxLength="100">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <requestFocus />
-            </EditText>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/checkin_hint"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLength="100"/>
+
+            </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
 
