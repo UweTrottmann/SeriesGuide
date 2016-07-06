@@ -250,7 +250,6 @@ public class ManageListsDialogFragment extends DialogFragment implements
         public void bindView(View view, Context context, Cursor cursor) {
             CheckedTextView checkedView = (CheckedTextView) view.findViewById(android.R.id.text1);
             checkedView.setText(cursor.getString(ListsQuery.NAME));
-            checkedView.setTextAppearance(context, R.style.TextAppearance);
 
             int position = cursor.getPosition();
 
