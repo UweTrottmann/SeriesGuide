@@ -31,11 +31,12 @@
         android:layout_gravity="center" />
 
     <!-- Margin is adjusted in code based on translucent status bar. -->
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/contentContainerMovie"
         android:layout_width="360dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -179,15 +180,16 @@
                 android:layout_marginRight="@dimen/large_padding"
                 android:text="@string/comments" />
         </RelativeLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <!-- Margin is adjusted in code based on translucent status bar. -->
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/contentContainerMovieRight"
         android:layout_width="230dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="360dp"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -209,6 +211,6 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

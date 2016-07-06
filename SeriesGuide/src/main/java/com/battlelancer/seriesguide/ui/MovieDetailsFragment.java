@@ -20,12 +20,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -95,8 +100,8 @@ public class MovieDetailsFragment extends Fragment {
 
     @BindView(R.id.rootMovie) FrameLayout rootLayout;
 
-    @BindView(R.id.contentContainerMovie) ViewGroup mContentContainer;
-    @Nullable @BindView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
+    @BindView(R.id.contentContainerMovie) NestedScrollView mainContentContainer;
+    @Nullable @BindView(R.id.contentContainerMovieRight) NestedScrollView rightContentContainer;
 
     @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
@@ -185,6 +190,7 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void setupViews() {
+        final int decorationHeightPx;
         if (AndroidUtils.isKitKatOrHigher()) {
             // avoid overlap with status + action bar (adjust top margin)
             // warning: status bar not always translucent (e.g. Nexus 10)
@@ -194,18 +200,25 @@ public class MovieDetailsFragment extends Fragment {
             int pixelInsetTop = config.getPixelInsetTop(false);
 
             // action bar height is pre-set as top margin, add to it
-            ViewGroup.MarginLayoutParams layoutParams
-                    = (ViewGroup.MarginLayoutParams) mContentContainer.getLayoutParams();
-            layoutParams.setMargins(0, pixelInsetTop + layoutParams.topMargin, 0, 0);
-            mContentContainer.setLayoutParams(layoutParams);
+            decorationHeightPx = pixelInsetTop + mainContentContainer.getPaddingTop();
+            mainContentContainer.setPadding(0, decorationHeightPx, 0, 0);
 
             // dual pane layout?
-            if (mContentContainerRight != null) {
-                ViewGroup.MarginLayoutParams layoutParamsRight
-                        = (ViewGroup.MarginLayoutParams) mContentContainerRight.getLayoutParams();
-                layoutParamsRight.setMargins(layoutParamsRight.leftMargin,
-                        pixelInsetTop + layoutParamsRight.topMargin, 0, 0);
+            if (rightContentContainer != null) {
+                rightContentContainer.setPadding(0, decorationHeightPx, 0, 0);
             }
+        } else {
+            // content container has actionBarSize top padding by default
+            decorationHeightPx = mainContentContainer.getPaddingTop();
+        }
+
+        // show toolbar title and background when scrolling
+        final int defaultPaddingPx = getResources().getDimensionPixelSize(R.dimen.default_padding);
+        NestedScrollView.OnScrollChangeListener scrollChangeListener
+                = new ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx);
+        mainContentContainer.setOnScrollChangeListener(scrollChangeListener);
+        if (rightContentContainer != null) {
+            rightContentContainer.setOnScrollChangeListener(scrollChangeListener);
         }
     }
 
@@ -643,4 +656,51 @@ public class MovieDetailsFragment extends Fragment {
             // do nothing
         }
     };
+
+    private class ToolbarScrollChangeListener implements NestedScrollView.OnScrollChangeListener {
+        private final int transparentThresholdPx;
+        private final int titleThresholdPx;
+
+        private boolean transparentToolbar;
+        private boolean showTitle;
+
+        public ToolbarScrollChangeListener(int transparentThresholdPx, int titleThresholdPx) {
+            this.transparentThresholdPx = transparentThresholdPx;
+            this.titleThresholdPx = titleThresholdPx;
+            transparentToolbar = true;
+            showTitle = false;
+        }
+
+        @Override
+        public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
+                int oldScrollY) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar == null) {
+                return;
+            }
+
+            boolean shouldTransparentToolbar = scrollY < transparentThresholdPx;
+            boolean shouldShowTitle = scrollY > titleThresholdPx;
+
+            if (!transparentToolbar && shouldTransparentToolbar) {
+                actionBar.setBackgroundDrawable(null);
+            } else if (transparentToolbar && !shouldTransparentToolbar) {
+                int primaryColor = ContextCompat.getColor(v.getContext(),
+                        Utils.resolveAttributeToResourceId(v.getContext().getTheme(),
+                                R.attr.sgColorBackgroundDim));
+                actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+            }
+            if (!showTitle && shouldShowTitle) {
+                if (movieDetails != null && movieDetails.tmdbMovie() != null) {
+                    actionBar.setTitle(movieDetails.tmdbMovie().title);
+                    actionBar.setDisplayShowTitleEnabled(true);
+                }
+            } else if (showTitle && !shouldShowTitle) {
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+
+            transparentToolbar = shouldTransparentToolbar;
+            showTitle = shouldShowTitle;
+        }
+    }
 }
