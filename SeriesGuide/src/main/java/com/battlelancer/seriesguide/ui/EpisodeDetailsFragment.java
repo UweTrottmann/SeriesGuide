@@ -418,7 +418,6 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
                 rateEpisode();
             }
         });
-        mRatingsContainer.setFocusable(true);
         CheatSheet.setup(mRatingsContainer, R.string.action_rate);
 
         // trakt rating
@@ -439,7 +438,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH, imagePath);
+                intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
+                        TheTVDB.buildScreenshotUrl(imagePath));
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });

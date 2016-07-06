@@ -454,19 +454,29 @@ public class ShowFragment extends Fragment {
         });
 
         // poster, full screen poster button
-        Utils.loadPoster(getActivity(), posterView, showPoster);
-        posterContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-                intent.putExtra(FullscreenImageActivity.InitBundle.IMAGE_PATH,
-                        TheTVDB.buildScreenshotUrl(showPoster));
-                Utils.startActivityWithAnimation(getActivity(), intent, v);
-            }
-        });
+        if (TextUtils.isEmpty(showPoster)) {
+            // have no poster
+            posterContainer.setClickable(false);
+            posterContainer.setFocusable(false);
+        } else {
+            // poster and fullscreen button
+            Utils.loadPoster(getActivity(), posterView, showPoster);
+            posterContainer.setFocusable(true);
+            posterContainer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                    intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
+                            TheTVDB.buildPosterUrl(showPoster));
+                    intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
+                            TheTVDB.buildScreenshotUrl(showPoster));
+                    Utils.startActivityWithAnimation(getActivity(), intent, v);
+                }
+            });
 
-        // background
-        Utils.loadPosterBackground(getActivity(), posterBackgroundView, showPoster);
+            // poster background
+            Utils.loadPosterBackground(getActivity(), posterBackgroundView, showPoster);
+        }
 
         loadTraktRatings();
     }

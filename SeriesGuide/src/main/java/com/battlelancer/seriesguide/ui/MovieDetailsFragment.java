@@ -17,12 +17,21 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +41,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +67,7 @@ import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -87,13 +98,16 @@ public class MovieDetailsFragment extends Fragment {
 
     private static final String TAG = "Movie Details";
 
-    @BindView(R.id.contentContainerMovie) ViewGroup mContentContainer;
-    @Nullable @BindView(R.id.contentContainerMovieRight) ViewGroup mContentContainerRight;
+    @BindView(R.id.rootMovie) FrameLayout rootLayout;
+
+    @BindView(R.id.contentContainerMovie) NestedScrollView mainContentContainer;
+    @Nullable @BindView(R.id.contentContainerMovieRight) NestedScrollView rightContentContainer;
 
     @BindView(R.id.textViewMovieTitle) TextView mMovieTitle;
     @BindView(R.id.textViewMovieDate) TextView mMovieReleaseDate;
     @BindView(R.id.textViewMovieDescription) TextView mMovieDescription;
-    @BindView(R.id.imageViewMoviePoster) ImageView mMoviePosterBackground;
+    @BindView(R.id.frameLayoutMoviePoster) FrameLayout moviePosterFrame;
+    @BindView(R.id.imageViewMoviePoster) ImageView movieImageView;
     @BindView(R.id.textViewMovieGenres) TextView mMovieGenres;
 
     @BindView(R.id.containerMovieButtons) View mButtonContainer;
@@ -124,7 +138,6 @@ public class MovieDetailsFragment extends Fragment {
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
-    private String imageBaseUrl;
     private Unbinder unbinder;
 
     @Override
@@ -149,14 +162,6 @@ public class MovieDetailsFragment extends Fragment {
         mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
         mCrewView.setVisibility(View.GONE);
 
-        // poster background transparency
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mMoviePosterBackground.setImageAlpha(30);
-        } else {
-            //noinspection deprecation
-            mMoviePosterBackground.setAlpha(30);
-        }
-
         return v;
     }
 
@@ -172,9 +177,6 @@ public class MovieDetailsFragment extends Fragment {
 
         setupViews();
 
-        imageBaseUrl = TmdbSettings.getImageBaseUrl(getActivity())
-                + TmdbSettings.POSTER_SIZE_SPEC_W342;
-
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
@@ -188,6 +190,7 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void setupViews() {
+        final int decorationHeightPx;
         if (AndroidUtils.isKitKatOrHigher()) {
             // avoid overlap with status + action bar (adjust top margin)
             // warning: status bar not always translucent (e.g. Nexus 10)
@@ -197,18 +200,25 @@ public class MovieDetailsFragment extends Fragment {
             int pixelInsetTop = config.getPixelInsetTop(false);
 
             // action bar height is pre-set as top margin, add to it
-            ViewGroup.MarginLayoutParams layoutParams
-                    = (ViewGroup.MarginLayoutParams) mContentContainer.getLayoutParams();
-            layoutParams.setMargins(0, pixelInsetTop + layoutParams.topMargin, 0, 0);
-            mContentContainer.setLayoutParams(layoutParams);
+            decorationHeightPx = pixelInsetTop + mainContentContainer.getPaddingTop();
+            mainContentContainer.setPadding(0, decorationHeightPx, 0, 0);
 
             // dual pane layout?
-            if (mContentContainerRight != null) {
-                ViewGroup.MarginLayoutParams layoutParamsRight
-                        = (ViewGroup.MarginLayoutParams) mContentContainerRight.getLayoutParams();
-                layoutParamsRight.setMargins(layoutParamsRight.leftMargin,
-                        pixelInsetTop + layoutParams.topMargin, 0, 0);
+            if (rightContentContainer != null) {
+                rightContentContainer.setPadding(0, decorationHeightPx, 0, 0);
             }
+        } else {
+            // content container has actionBarSize top padding by default
+            decorationHeightPx = mainContentContainer.getPaddingTop();
+        }
+
+        // show toolbar title and background when scrolling
+        final int defaultPaddingPx = getResources().getDimensionPixelSize(R.dimen.default_padding);
+        NestedScrollView.OnScrollChangeListener scrollChangeListener
+                = new ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx);
+        mainContentContainer.setOnScrollChangeListener(scrollChangeListener);
+        if (rightContentContainer != null) {
+            rightContentContainer.setOnScrollChangeListener(scrollChangeListener);
         }
     }
 
@@ -486,9 +496,41 @@ public class MovieDetailsFragment extends Fragment {
         });
 
         // load poster, cache on external storage
-        if (!TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            ServiceUtils.loadWithPicasso(getActivity(), imageBaseUrl + tmdbMovie.poster_path)
-                    .into(mMoviePosterBackground);
+        if (TextUtils.isEmpty(tmdbMovie.poster_path)) {
+            moviePosterFrame.setClickable(false);
+            moviePosterFrame.setFocusable(false);
+        } else {
+            final String smallImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                    + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path;
+            ServiceUtils.loadWithPicasso(getActivity(), smallImageUrl)
+                    .into(movieImageView, new Callback.EmptyCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap
+                                    = ((BitmapDrawable) movieImageView.getDrawable()).getBitmap();
+                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    int color = palette.getVibrantColor(Color.WHITE);
+                                    color = ColorUtils.setAlphaComponent(color, 30);
+                                    rootLayout.setBackgroundColor(color);
+                                }
+                            });
+                        }
+                    });
+            // click listener for high resolution poster
+            moviePosterFrame.setFocusable(true);
+            moviePosterFrame.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path;
+                    Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                    intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl);
+                    intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl);
+                    Utils.startActivityWithAnimation(getActivity(), intent, view);
+                }
+            });
         }
     }
 
@@ -614,4 +656,51 @@ public class MovieDetailsFragment extends Fragment {
             // do nothing
         }
     };
+
+    private class ToolbarScrollChangeListener implements NestedScrollView.OnScrollChangeListener {
+        private final int transparentThresholdPx;
+        private final int titleThresholdPx;
+
+        private boolean transparentToolbar;
+        private boolean showTitle;
+
+        public ToolbarScrollChangeListener(int transparentThresholdPx, int titleThresholdPx) {
+            this.transparentThresholdPx = transparentThresholdPx;
+            this.titleThresholdPx = titleThresholdPx;
+            transparentToolbar = true;
+            showTitle = false;
+        }
+
+        @Override
+        public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
+                int oldScrollY) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar == null) {
+                return;
+            }
+
+            boolean shouldTransparentToolbar = scrollY < transparentThresholdPx;
+            boolean shouldShowTitle = scrollY > titleThresholdPx;
+
+            if (!transparentToolbar && shouldTransparentToolbar) {
+                actionBar.setBackgroundDrawable(null);
+            } else if (transparentToolbar && !shouldTransparentToolbar) {
+                int primaryColor = ContextCompat.getColor(v.getContext(),
+                        Utils.resolveAttributeToResourceId(v.getContext().getTheme(),
+                                R.attr.sgColorBackgroundDim));
+                actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+            }
+            if (!showTitle && shouldShowTitle) {
+                if (movieDetails != null && movieDetails.tmdbMovie() != null) {
+                    actionBar.setTitle(movieDetails.tmdbMovie().title);
+                    actionBar.setDisplayShowTitleEnabled(true);
+                }
+            } else if (showTitle && !shouldShowTitle) {
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+
+            transparentToolbar = shouldTransparentToolbar;
+            showTitle = shouldShowTitle;
+        }
+    }
 }

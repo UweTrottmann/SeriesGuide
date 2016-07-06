@@ -238,7 +238,6 @@ public class OverviewFragment extends Fragment implements
                 rateEpisode();
             }
         });
-        containerRatings.setFocusable(true);
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // hide web search button

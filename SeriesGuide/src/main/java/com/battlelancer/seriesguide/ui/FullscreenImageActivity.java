@@ -24,35 +24,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.RequestCreator;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
- * Displays a full screen image of a TV show's poster, or the image provided for a specific episode.
- * If a URI instead of a file name is provided, it will be attempted to load the image from the
- * internet.
+ * Displays an image URL full screen in a zoomable view. If a preview image URL is provided, it is
+ * shown as a placeholder until the higher resolution image loads. The preview image has to be
+ * cached by Picasso already.
  */
 public class FullscreenImageActivity extends BaseActivity {
 
-    private static final int DELAY_100_MS = 100;
+    /**
+     * Image URL that has been cached already. Will show initially before replacing with larger
+     * version.
+     */
+    public static final String EXTRA_PREVIEW_IMAGE = "PREVIEW_IMAGE";
+    public static final String EXTRA_IMAGE = "IMAGE";
 
-    public interface InitBundle {
-        String IMAGE_PATH = "fullscreenimageactivity.intent.extra.image";
-    }
+    private static final int DELAY_100_MS = 100;
 
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
-    private SystemUiHider mSystemUiHider;
+    private SystemUiHider systemUiHider;
 
     /**
      * Displays the poster or episode preview
      */
-    private PhotoView mContentView;
+    private PhotoView photoView;
 
     /**
      * {@inheritDoc}
@@ -77,43 +81,67 @@ public class FullscreenImageActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mContentView = (PhotoView) findViewById(R.id.fullscreen_content);
+        photoView = (PhotoView) findViewById(R.id.fullscreen_content);
 
-        // Load the requested image
-        String imagePath = getIntent().getStringExtra(InitBundle.IMAGE_PATH);
-        //noinspection ConstantConditions
-        if (!TextUtils.isEmpty(imagePath) && imagePath.startsWith("http")) {
-            // load from network, typically for high resolution show posters
-            ServiceUtils.loadWithPicasso(this, imagePath).into(mContentView);
-        } else {
-            // load from network or external cache, typically for episode images
-            ServiceUtils.loadWithPicasso(this, TheTVDB.buildScreenshotUrl(imagePath))
-                    .error(R.drawable.ic_image_missing)
-                    .into(mContentView, new Callback() {
+        // try to immediately show cached preview image
+        String previewImagePath = getIntent().getStringExtra(EXTRA_PREVIEW_IMAGE);
+        if (!TextUtils.isEmpty(previewImagePath)) {
+            ServiceUtils.loadWithPicasso(this, previewImagePath)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(photoView, new Callback() {
                         @Override
                         public void onSuccess() {
-                            mContentView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            loadLargeImage(true);
                         }
 
                         @Override
                         public void onError() {
-                            mContentView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            loadLargeImage(false);
                         }
                     });
+        } else {
+            loadLargeImage(false);
         }
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
-        mSystemUiHider = SystemUiHider.getInstance(this, mContentView,
+        systemUiHider = SystemUiHider.getInstance(this, photoView,
                 SystemUiHider.FLAG_FULLSCREEN);
-        mSystemUiHider.setup();
+        systemUiHider.setup();
 
-        mContentView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+        photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
             public void onViewTap(View view, float x, float y) {
-                mSystemUiHider.toggle();
+                systemUiHider.toggle();
             }
         });
+    }
+
+    private void loadLargeImage(boolean hasPreviewImage) {
+        String imagePath = getIntent().getStringExtra(EXTRA_IMAGE);
+        if (TextUtils.isEmpty(imagePath)) {
+            imagePath = null; // set to null so picasso shows error drawable
+        }
+        RequestCreator requestCreator = ServiceUtils.loadWithPicasso(this, imagePath);
+        if (hasPreviewImage) {
+            // keep showing preview image if loading full image fails
+            requestCreator.noPlaceholder().into(photoView);
+        } else {
+            // no preview image? show error image instead if loading full image fails
+            requestCreator
+                    .error(R.drawable.ic_image_missing)
+                    .into(photoView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        }
+
+                        @Override
+                        public void onError() {
+                            photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        }
+                    });
+        }
     }
 
     @Override
@@ -132,7 +160,7 @@ public class FullscreenImageActivity extends BaseActivity {
             // This ensures that the anonymous callback we have does not prevent the activity from
             // being garbage collected. It also prevents our callback from getting invoked even after the
             // activity has finished.
-            ServiceUtils.getPicasso(this).cancelRequest(mContentView);
+            ServiceUtils.getPicasso(this).cancelRequest(photoView);
         }
     }
 
@@ -151,7 +179,7 @@ public class FullscreenImageActivity extends BaseActivity {
     Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            mSystemUiHider.hide();
+            systemUiHider.hide();
         }
     };
 
