@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright 2015 Uwe Trottmann
+  ~ Copyright 2012 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,40 +16,49 @@
   ~ limitations under the License.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/divider_horizontal" />
+    <merge>
 
-    <android.support.v7.widget.ButtonBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/inline_padding"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:paddingTop="@dimen/inline_padding"
-        app:allowStacking="true">
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/buttonNegative"
-            style="?attr/buttonBarNegativeButtonStyle"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Button Negative" />
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="?attr/drawableDivider" />
 
-        <Button
-            android:id="@+id/buttonPositive"
-            style="?attr/buttonBarPositiveButtonStyle"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.ButtonBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Button Positive" />
+            android:paddingBottom="@dimen/inline_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding"
+            app:allowStacking="true">
 
-    </android.support.v7.widget.ButtonBarLayout>
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-</merge>
+            <Button
+                android:id="@+id/buttonNegative"
+                style="?attr/buttonBarNegativeButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Button Negative" />
+
+            <Button
+                android:id="@+id/buttonPositive"
+                style="?attr/buttonBarPositiveButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Button Positive" />
+
+        </android.support.v7.widget.ButtonBarLayout>
+
+    </merge>
+
+</layout>
