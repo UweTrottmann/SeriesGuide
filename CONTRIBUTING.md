@@ -1,6 +1,15 @@
 Contributing
 ============
 
+**Note:** This project is in the [public domain](UNLICENSE). If you contribute any [non-trivial][15]
+patches or translations the following applies:
+
+    I dedicate any and all copyright interest in this software to the
+    public domain. I make this dedication for the benefit of the public at
+    large and to the detriment of my heirs and successors. I intend this
+    dedication to be an overt act of relinquishment in perpetuity of all
+    present and future rights to this software under copyright law.
+
 #### Would you like to contribute code?
 
 1. [Fork SeriesGuide][11]. See further setup instructions below.
@@ -68,4 +77,5 @@ Now build any variant of the **free flavor**, for developing probably `freeDebug
  [12]: https://seriesgui.de/help
  [13]: https://get.fabric.io/crashlytics
  [14]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/
+ [15]: http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant
  

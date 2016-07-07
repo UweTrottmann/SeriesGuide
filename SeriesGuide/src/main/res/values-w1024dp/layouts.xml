@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
     <item name="activity_episodes" type="layout">@layout/activity_episodes_multipane_wide</item>
     <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
