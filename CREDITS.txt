@@ -16,9 +16,6 @@ Travis Bell for keeping TMDb in shape.
 The creators of the Google I/O app for lots of useful code patterns.
 - https://github.com/google/iosched
 
-The Oxygen Icon Theme Team for the TV Icon on which the original logo
-was based on.
-
 Matthew Altman for creating javatvdbapi which was originally used to
 access TheTVDB.
 
@@ -66,142 +63,92 @@ watching. Based on your favorites, trakt recommends additional
 shows and movies you'll enjoy!
 
 
-trakt-java (https://github.com/UweTrottmann/trakt-java)
--------------------------------------------------------
+Licensed under the Apache License, Version 2.0
+----------------------------------------------
 
-Copyright 2013 Uwe Trottmann
+Android Support Library (https://developer.android.com/topic/libraries/support-library/index.html)
+Copyright 2013 The Android Open Source Project
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+AndroidUtils (https://github.com/UweTrottmann/AndroidUtils)
+Copyright 2012 Uwe Trottmann
 
-   http://www.apache.org/licenses/LICENSE-2.0
+Apache Commons Codec
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Apache Commons IO
 
-
-tmdb-java (https://github.com/UweTrottmann/tmdb-java)
------------------------------------------------------
-
-Copyright 2013 Uwe Trottmann
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-Apache Oltu - OAuth 2.0 - Client (https://oltu.apache.org/)
------------------------------------------------------------
-
-Copyright 2010-2013 The Apache Software Foundation
-
-This product includes software developed at
-The Apache Software Foundation (http://www.apache.org/).
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Apache Oltu - OAuth 2.0 (https://oltu.apache.org/)
+Copyright 2010 The Apache Software Foundation
 
 assertj-android (https://github.com/square/assertj-android)
------------------------------------------------------------
-
 Copyright 2013 Square, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+assertj-core (https://github.com/joel-costigliola/assertj-core)
 
 butterknife (https://github.com/JakeWharton/butterknife)
---------------------------------------------------------
-
 Copyright 2013 Jake Wharton
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
 DashClock API (https://code.google.com/p/dashclock/)
-----------------------------------------------------
-
 Copyright 2013 Google Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
 drag-sort-listview (https://github.com/bauerca/drag-sort-listview)
-------------------------------------------------------------------
-
-A subclass of the Android ListView component that enables drag
-and drop re-ordering of list items.
-
 Copyright 2012 Carl Bauer
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
 EventBus (https://github.com/greenrobot/EventBus)
--------------------------------------------------
-
 Copyright 2012 Markus Junginger, greenrobot (http://greenrobot.de)
+
+google-api-client (https://github.com/google/google-api-java-client)
+
+google-http-client (https://github.com/google/google-http-java-client)
+
+google-oauth-client (https://github.com/google/google-oauth-java-client)
+
+gson (https://code.google.com/p/google-gson/)
+Copyright 2008 Google Inc.
+
+guava (https://github.com/google/guava)
+
+jackson-core (https://github.com/FasterXML/jackson-core)
+
+joda-time-android (https://github.com/dlew/joda-time-android)
+Copyright 2014 Daniel Lew
+
+joda-time (https://github.com/JodaOrg/joda-time)
+
+okhttp (https://github.com/square/okhttp)
+Copyright 2012 Square, Inc.
+
+okio (https://github.com/square/okio)
+
+picasso (https://github.com/square/picasso)
+Copyright 2013 Square, Inc.
+
+PhotoView (https://github.com/chrisbanes/PhotoView)
+Copyright 2011, 2012 Chris Banes
+
+retrofit (https://github.com/square/retrofit)
+Copyright 2013 Square, Inc.
+
+SmoothProgressBar (https://github.com/castorflex/SmoothProgressBar)
+Copyright 2014 Antoine Merle
+
+StickyGridHeaders (https://github.com/TonicArtos/StickyGridHeaders)
+Copyright 2013 Tonic Artos
+
+SystemBarTint (https://github.com/jgilfelt/SystemBarTint)
+Copyright 2013 readyState Software Limited
+
+thetvdb-java (https://github.com/UweTrottmann/thetvdb-java)
+Copyright 2013 Uwe Trottmann
+
+timber (https://github.com/JakeWharton/timber)
+Copyright 2013 Jake Wharton
+
+tmdb-java (https://github.com/UweTrottmann/tmdb-java)
+Copyright 2013 Uwe Trottmann
+
+trakt-java (https://github.com/UweTrottmann/trakt-java)
+Copyright 2013 Uwe Trottmann
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -214,6 +161,56 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+Licensed under the BSD License
+------------------------------
+
+antlr4 (https://github.com/antlr/antlr4)
+Copyright (c) 2015 Terence Parr, Sam Harwell
+
+hamcrest (https://github.com/hamcrest/JavaHamcrest)
+Copyright (c) 2000-2015 www.hamcrest.org
+
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ 3. The name of the author may not be used to endorse or promote products
+    derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+android-apt (https://bitbucket.org/hvisser/android-apt)
+-------------------------------------------------------
+
+Hugo Visser, released into the public domain.
+
+For more information, please refer to <http://unlicense.org/>
+
+
+junit (https://github.com/junit-team/junit4)
+--------------------------------------------
+
+Eclipse Public License - v 1.0 (https://www.eclipse.org/legal/epl-v10.html)
 
 
 FloatingActionButton (https://github.com/makovkastar/FloatingActionButton)
@@ -240,204 +237,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-google-gson (https://code.google.com/p/google-gson/)
-----------------------------------------------------
-
-Copyright 2008 Google Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-joda-time-android (https://github.com/dlew/joda-time-android)
--------------------------------------------------------------
-
-Copyright 2014 Daniel Lew
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-okhttp (https://github.com/square/okhttp)
------------------------------------------
-
-Copyright 2012 Square, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-picasso (https://github.com/square/picasso)
--------------------------------------------
-
-Copyright 2013 Square, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-PhotoView (https://github.com/chrisbanes/PhotoView)
-----------------------------------------------------------------------
-
-Copyright 2011, 2012 Chris Banes
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-retrofit (https://github.com/square/retrofit)
----------------------------------------------
-
-Copyright 2013 Square, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-SmoothProgressBar (https://github.com/castorflex/SmoothProgressBar)
--------------------------------------------------------------------
-
-Copyright 2014 Antoine Merle
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-support-v4 (https://developer.android.com/tools/support-library/index.html)
----------------------------------------------------------------------------
-
-Copyright 2013 The Android Open Source Project
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-StickyGridHeaders (https://github.com/TonicArtos/StickyGridHeaders)
--------------------------------------------------------------------
-
-Copyright 2013 Tonic Artos
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-SystemBarTint (https://github.com/jgilfelt/SystemBarTint)
----------------------------------------------------------
-
-Copyright 2013 readyState Software Limited
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-
-timber (https://github.com/JakeWharton/timber)
-----------------------------------------------
-
-Copyright 2013 Jake Wharton
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 
 
 Androidicons Developer set (http://www.androidicons.com/)
