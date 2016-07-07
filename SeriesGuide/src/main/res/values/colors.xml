@@ -34,7 +34,7 @@
     <color name="background_navbar">#ff1c1c1c</color>
     <color name="background_navbar_inverse">#ffffffff</color>
     <color name="background_dim">#80111111</color>
-    <color name="background_dim_inverse">#a7ffffff</color>
+    <color name="background_dim_inverse">#80ffffff</color>
     <color name="background_black">#ff000000</color>
     <color name="background_card_dark">#ff2a2a2a</color>
     <color name="background_card_light">#ffffffff</color>
