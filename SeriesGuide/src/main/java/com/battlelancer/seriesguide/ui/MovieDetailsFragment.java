@@ -28,6 +28,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -630,17 +631,18 @@ public class MovieDetailsFragment extends Fragment {
     };
 
     private class ToolbarScrollChangeListener implements NestedScrollView.OnScrollChangeListener {
-        private final int transparentThresholdPx;
+        private final int overlayThresholdPx;
         private final int titleThresholdPx;
 
-        private boolean transparentToolbar;
+        private SparseArrayCompat<Boolean> showOverlayMap;
+        private boolean showOverlay;
         private boolean showTitle;
 
-        public ToolbarScrollChangeListener(int transparentThresholdPx, int titleThresholdPx) {
-            this.transparentThresholdPx = transparentThresholdPx;
+        public ToolbarScrollChangeListener(int overlayThresholdPx, int titleThresholdPx) {
+            this.overlayThresholdPx = overlayThresholdPx;
             this.titleThresholdPx = titleThresholdPx;
-            transparentToolbar = true;
-            showTitle = false;
+            // we have determined by science that a capacity of 2 is good in our case :)
+            showOverlayMap = new SparseArrayCompat<>(2);
         }
 
         @Override
@@ -651,28 +653,37 @@ public class MovieDetailsFragment extends Fragment {
                 return;
             }
 
-            boolean shouldTransparentToolbar = scrollY < transparentThresholdPx;
-            boolean shouldShowTitle = scrollY > titleThresholdPx;
+            int viewId = v.getId();
 
-            if (!transparentToolbar && shouldTransparentToolbar) {
-                actionBar.setBackgroundDrawable(null);
-            } else if (transparentToolbar && !shouldTransparentToolbar) {
+            boolean shouldShowOverlay = scrollY > overlayThresholdPx;
+            showOverlayMap.put(viewId, shouldShowOverlay);
+            for (int i = 0; i < showOverlayMap.size(); i++) {
+                shouldShowOverlay |= showOverlayMap.valueAt(i);
+            }
+
+            if (!showOverlay && shouldShowOverlay) {
                 int primaryColor = ContextCompat.getColor(v.getContext(),
                         Utils.resolveAttributeToResourceId(v.getContext().getTheme(),
                                 R.attr.sgColorBackgroundDim));
                 actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+            } else if (showOverlay && !shouldShowOverlay) {
+                actionBar.setBackgroundDrawable(null);
             }
-            if (!showTitle && shouldShowTitle) {
-                if (movieDetails != null && movieDetails.tmdbMovie() != null) {
-                    actionBar.setTitle(movieDetails.tmdbMovie().title);
-                    actionBar.setDisplayShowTitleEnabled(true);
-                }
-            } else if (showTitle && !shouldShowTitle) {
-                actionBar.setDisplayShowTitleEnabled(false);
-            }
+            showOverlay = shouldShowOverlay;
 
-            transparentToolbar = shouldTransparentToolbar;
-            showTitle = shouldShowTitle;
+            // only main container should show/hide title
+            if (viewId == R.id.contentContainerMovie) {
+                boolean shouldShowTitle = scrollY > titleThresholdPx;
+                if (!showTitle && shouldShowTitle) {
+                    if (movieDetails != null && movieDetails.tmdbMovie() != null) {
+                        actionBar.setTitle(movieDetails.tmdbMovie().title);
+                        actionBar.setDisplayShowTitleEnabled(true);
+                    }
+                } else if (showTitle && !shouldShowTitle) {
+                    actionBar.setDisplayShowTitleEnabled(false);
+                }
+                showTitle = shouldShowTitle;
+            }
         }
     }
 }
