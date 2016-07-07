@@ -18,44 +18,35 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.databinding.FragmentConnectTraktFinishedBinding;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users trakt library.
  */
 public class ConnectTraktFinishedFragment extends Fragment {
 
-    @BindView(R.id.textViewConnectTraktFinished) TextView syncMessageTextView;
-    @BindView(R.id.buttonShowLibrary) Button libraryButton;
-    @BindView(R.id.buttonPositive) Button closeButton;
-    @BindView(R.id.buttonNegative) Button hiddenButton;
-    private Unbinder unbinder;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_connect_trakt_finished, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        FragmentConnectTraktFinishedBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_connect_trakt_finished, container, false);
 
         // hide sync message if hexagon is connected (so trakt sync is disabled)
         if (HexagonTools.isSignedIn(getActivity())) {
-            syncMessageTextView.setVisibility(View.GONE);
+            binding.textViewConnectTraktFinished.setVisibility(View.GONE);
         }
 
         // library button
-        libraryButton.setOnClickListener(new OnClickListener() {
+        binding.buttonShowLibrary.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // open library tab
@@ -66,22 +57,15 @@ public class ConnectTraktFinishedFragment extends Fragment {
         });
 
         // close button
-        closeButton.setText(R.string.dismiss);
-        closeButton.setOnClickListener(new OnClickListener() {
+        binding.buttons.buttonPositive.setText(R.string.dismiss);
+        binding.buttons.buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
-        hiddenButton.setVisibility(View.GONE);
+        binding.buttons.buttonNegative.setVisibility(View.GONE);
 
-        return v;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        unbinder.unbind();
+        return binding.getRoot();
     }
 }

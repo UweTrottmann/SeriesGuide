@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,13 +25,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 
@@ -39,17 +36,9 @@ import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
  */
 public class ConnectTraktCredentialsFragment extends Fragment {
 
+    private FragmentConnectTraktCredentialsBinding binding;
+
     private boolean isConnecting;
-
-    @BindView(R.id.buttonPositive) Button buttonConnect;
-    @BindView(R.id.buttonNegative) Button buttonDisconnect;
-    @BindView(R.id.textViewConnectTraktUsernameLabel) View usernameLabel;
-    @BindView(R.id.textViewConnectTraktUsername) TextView username;
-    @BindView(R.id.textViewConnectTraktHexagonWarning) TextView hexagonWarning;
-    @BindView(R.id.progressBarConnectTrakt) View progressBar;
-    @BindView(R.id.textViewConnectTraktStatus) TextView status;
-
-    private Unbinder unbinder;
 
     public static ConnectTraktCredentialsFragment newInstance() {
         return new ConnectTraktCredentialsFragment();
@@ -58,12 +47,12 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_connect_trakt_credentials, container, false);
 
         // connect button
-        buttonConnect.setText(R.string.connect);
-        buttonConnect.setOnClickListener(new View.OnClickListener() {
+        binding.buttons.buttonPositive.setText(R.string.connect);
+        binding.buttons.buttonPositive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 connect();
@@ -71,15 +60,15 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         });
 
         // disconnect button
-        buttonDisconnect.setText(R.string.disconnect);
-        buttonDisconnect.setOnClickListener(new View.OnClickListener() {
+        binding.buttons.buttonNegative.setText(R.string.disconnect);
+        binding.buttons.buttonNegative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 disconnect();
             }
         });
 
-        return v;
+        return binding.getRoot();
     }
 
     @Override
@@ -105,7 +94,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
                 if (!TextUtils.isEmpty(displayName)) {
                     username += " (" + displayName + ")";
                 }
-                this.username.setText(username);
+                binding.textViewConnectTraktUsername.setText(username);
                 setButtonStates(false, true);
                 setUsernameViewsStates(true);
                 setStatus(false, -1);
@@ -116,13 +105,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
             setUsernameViewsStates(false);
             setStatus(false, R.string.trakt_connect_instructions);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        unbinder.unbind();
     }
 
     private void connect() {
@@ -140,13 +122,8 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     }
 
     private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
-        // guard calls, as we might get called after the views were detached
-        if (buttonConnect != null) {
-            buttonConnect.setEnabled(connectEnabled);
-        }
-        if (buttonDisconnect != null) {
-            buttonDisconnect.setEnabled(disconnectEnabled);
-        }
+        binding.buttons.buttonPositive.setEnabled(connectEnabled);
+        binding.buttons.buttonNegative.setEnabled(disconnectEnabled);
     }
 
     /**
@@ -156,26 +133,20 @@ public class ConnectTraktCredentialsFragment extends Fragment {
      */
     private void setStatus(boolean progressVisible, int statusTextResourceId) {
         isConnecting = progressVisible;
-        // guard calls, as we might get called after the views were detached
-        if (status == null || progressBar == null) {
-            return;
-        }
-        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.INVISIBLE);
+        binding.progressBarConnectTrakt.setVisibility(
+                progressVisible ? View.VISIBLE : View.INVISIBLE);
         if (statusTextResourceId == -1) {
-            status.setVisibility(View.INVISIBLE);
+            binding.textViewConnectTraktStatus.setVisibility(View.INVISIBLE);
         } else {
-            status.setText(statusTextResourceId);
-            status.setVisibility(View.VISIBLE);
+            binding.textViewConnectTraktStatus.setText(statusTextResourceId);
+            binding.textViewConnectTraktStatus.setVisibility(View.VISIBLE);
         }
     }
 
     private void setUsernameViewsStates(boolean visible) {
-        if (username == null || usernameLabel == null || hexagonWarning == null) {
-            return;
-        }
-        username.setVisibility(visible ? View.VISIBLE : View.GONE);
-        usernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
-        hexagonWarning.setVisibility(
+        binding.textViewConnectTraktUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
+        binding.textViewConnectTraktUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        binding.textViewConnectTraktHexagonWarning.setVisibility(
                 visible && HexagonTools.isSignedIn(getContext()) ? View.VISIBLE : View.GONE);
     }
 }

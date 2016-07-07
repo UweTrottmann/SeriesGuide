@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2014 Uwe Trottmann
+ * Copyright 2013 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,13 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.databinding.FragmentConnectTraktInfoBinding;
 
 /**
  * Tells about trakt and how it integrates with SeriesGuide, allows to proceed to entering
@@ -39,29 +36,23 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
  */
 public class ConnectTraktFragment extends Fragment {
 
-    @BindView(R.id.textViewAbout) TextView aboutTextView;
-    @BindView(R.id.textViewTraktInfoHexagonWarning) TextView hexagonWarningTextView;
-    @BindView(R.id.buttonNegative) Button cancelButton;
-    @BindView(R.id.buttonPositive) Button connectButton;
-    private Unbinder unbinder;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_connect_trakt_info, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        FragmentConnectTraktInfoBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_connect_trakt_info, container, false);
 
-        connectButton.setText(R.string.connect_trakt);
-        cancelButton.setText(android.R.string.cancel);
+        binding.buttons.buttonPositive.setText(R.string.connect_trakt);
+        binding.buttons.buttonNegative.setText(android.R.string.cancel);
 
         // wire up buttons
-        connectButton.setOnClickListener(new OnClickListener() {
+        binding.buttons.buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 replaceWithCredentialsFragment();
             }
         });
-        cancelButton.setOnClickListener(new OnClickListener() {
+        binding.buttons.buttonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
@@ -69,13 +60,13 @@ public class ConnectTraktFragment extends Fragment {
         });
 
         // make learn more link clickable
-        aboutTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.textViewAbout.setMovementMethod(LinkMovementMethod.getInstance());
 
         // show hexagon + trakt conflict warning
-        hexagonWarningTextView.setVisibility(
+        binding.textViewTraktInfoHexagonWarning.setVisibility(
                 HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
 
-        return v;
+        return binding.getRoot();
     }
 
     private void replaceWithCredentialsFragment() {
@@ -83,12 +74,5 @@ public class ConnectTraktFragment extends Fragment {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, f);
         ft.commit();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        unbinder.unbind();
     }
 }
