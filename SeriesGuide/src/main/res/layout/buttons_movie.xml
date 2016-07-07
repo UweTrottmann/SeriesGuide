@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
   ~ Copyright 2014 Uwe Trottmann
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,65 +16,69 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerMovieButtons"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/frameLayoutMoviePoster"
-    android:layout_marginLeft="@dimen/large_padding"
-    android:layout_marginRight="@dimen/large_padding"
-    android:minHeight="@dimen/buttons_min_height"
-    android:orientation="horizontal"
-    tools:showIn="@layout/fragment_movie">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/buttonMovieCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:contentDescription="@string/checkin"
-        android:drawableTop="?attr/drawableCheckin"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/checkin" />
+    <LinearLayout
+        android:id="@+id/containerMovieButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frameLayoutMoviePoster"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:minHeight="@dimen/buttons_min_height"
+        android:orientation="horizontal"
+        tools:showIn="@layout/fragment_movie">
 
-    <Button
-        android:id="@+id/buttonMovieWatched"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="?attr/drawableWatch"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/action_watched" />
+        <Button
+            android:id="@+id/buttonMovieCheckIn"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/checkin"
+            android:drawableTop="?attr/drawableCheckin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/checkin" />
 
-    <Button
-        android:id="@+id/buttonMovieWatchlisted"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="?attr/drawableList"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/watchlist_add" />
+        <Button
+            android:id="@+id/buttonMovieWatched"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableWatch"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/action_watched" />
 
-    <Button
-        android:id="@+id/buttonMovieCollected"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="?attr/drawableCollect"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/action_collection_add" />
+        <Button
+            android:id="@+id/buttonMovieWatchlisted"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableList"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/watchlist_add" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonMovieCollected"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableCollect"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/action_collection_add" />
+
+    </LinearLayout>
+
+</layout>

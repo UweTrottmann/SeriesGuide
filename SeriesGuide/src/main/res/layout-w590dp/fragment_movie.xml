@@ -16,38 +16,34 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootMovie"
-    android:layout_width="970dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    tools:context=".ui.MovieDetailsFragment"
-    tools:ignore="RtlHardcoded">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <!-- Margin is adjusted in code based on translucent status bar. -->
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/contentContainerMovie"
-        android:layout_width="740dp"
+    <FrameLayout
+        android:id="@+id/rootLayoutMovie"
+        android:layout_width="590dp"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="?attr/actionBarSize">
+        android:layout_gravity="center_horizontal"
+        tools:context=".ui.MovieDetailsFragment"
+        tools:ignore="RtlHardcoded">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="horizontal">
+            android:layout_gravity="center" />
+
+        <!-- Padding is adjusted in code based on translucent status bar. -->
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/contentContainerMovie"
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="?attr/actionBarSize">
 
             <RelativeLayout
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:paddingBottom="@dimen/default_padding"
@@ -58,7 +54,7 @@
                     android:layout_width="120dp"
                     android:layout_height="180dp"
                     android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginLeft="@dimen/larger_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:foreground="?attr/selectableItemBackground">
 
@@ -99,19 +95,42 @@
                     android:textIsSelectable="true"
                     tools:text="20 Oct 2013" />
 
-                <include layout="@layout/buttons_movie" />
+                <include android:id="@+id/movieButtons" layout="@layout/buttons_movie" />
 
                 <View
-                    android:id="@+id/dividerMovie1"
+                    android:id="@+id/dividerMovie0"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/containerMovieButtons"
+                    android:layout_below="@+id/movieButtons"
+                    android:layout_marginBottom="@dimen/large_padding"
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:background="?attr/sgColorDivider"
                     tools:ignore="UnknownIdInLayout" />
 
+                <TextView
+                    android:id="@+id/textViewMovieDescription"
+                    style="@style/Block.FlowText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dividerMovie0"
+                    android:layout_marginBottom="@dimen/large_padding"
+                    android:maxWidth="400dp"
+                    android:textAppearance="@style/TextAppearance.Body"
+                    android:textIsSelectable="true"
+                    tools:text="Description for a super awesome movie..." />
+
+                <View
+                    android:id="@+id/dividerMovie1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/textViewMovieDescription"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:background="?attr/sgColorDivider" />
+
                 <include
+                    android:id="@+id/movieRatings"
                     layout="@layout/ratings_movies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,7 +141,7 @@
                     android:id="@+id/dividerMovie2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/containerRatings"
+                    android:layout_below="@+id/movieRatings"
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:background="?attr/sgColorDivider"
@@ -167,54 +186,30 @@
                     android:text="@string/comments" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textViewMovieDescription"
-                style="@style/Block.FlowText"
-                android:layout_width="wrap_content"
+        </android.support.v4.widget.NestedScrollView>
+
+        <!-- Padding is adjusted in code based on translucent status bar. -->
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/contentContainerMovieRight"
+            android:layout_width="230dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="360dp"
+            android:clipToPadding="false"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/large_padding"
-                android:maxWidth="370dp"
+                android:orientation="vertical"
                 android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding"
-                android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
-                tools:text="Description for a super awesome movie..." />
+                android:paddingTop="@dimen/large_padding">
 
-        </LinearLayout>
+                <include android:id="@+id/moviePeople" layout="@layout/cast_and_crew" />
 
-    </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
 
-    <!-- Margin is adjusted in code based on translucent status bar. -->
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/contentContainerMovieRight"
-        android:layout_width="230dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="740dp"
-        android:clipToPadding="false"
-        android:paddingTop="?attr/actionBarSize">
+        </android.support.v4.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding">
+    </FrameLayout>
 
-            <include
-                android:id="@+id/containerMovieCast"
-                layout="@layout/people_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/containerMovieCrew"
-                layout="@layout/people_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-</FrameLayout>
+</layout>
