@@ -70,7 +70,6 @@
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
-        <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
@@ -158,7 +157,6 @@
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
-        <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
@@ -258,7 +256,6 @@
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
-        <item name="drawableDivider">@drawable/divider_light</item>
         <item name="drawableStar">@drawable/ic_action_star_inverse</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>

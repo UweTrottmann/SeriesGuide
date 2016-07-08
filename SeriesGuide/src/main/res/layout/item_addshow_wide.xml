@@ -49,15 +49,13 @@
             android:textAppearance="@style/TextAppearance.Body"
             tools:text="Some awesome\nthree-line\ndescription" />
 
-        <ImageView
+        <include
             android:id="@+id/dividerItemAdd"
+            layout="@layout/divider_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_below="@+id/textViewAddDescription"
-            android:layout_toRightOf="@+id/imageViewAddPoster"
-            android:contentDescription="@null"
-            android:scaleType="fitXY"
-            android:src="?attr/drawableDivider" />
+            android:layout_toRightOf="@+id/imageViewAddPoster" />
 
         <LinearLayout
             android:layout_width="match_parent"
