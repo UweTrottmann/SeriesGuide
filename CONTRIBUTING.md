@@ -33,7 +33,7 @@ Setup
 
 This project is built with Gradle, the [Android Gradle plugin][3] and uses jar and Maven dependencies.
 
-1. Clone this repository inside your working folder.
+1. Clone this repository inside your working folder. I suggest only cloning the latest revision, like `git clone --depth=1 https://github.com/UweTrottmann/SeriesGuide.git`.
 2. Create the `gradle.properties` and `fabric.properties` files as noted below.
 3. Android Studio: import the `settings.gradle` file.
 
