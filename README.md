@@ -13,5 +13,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 License
 -------
 
-Created in 2010 by Uwe Trottmann. Released into the [public domain](UNLICENSE).
+Created by [Uwe Trottmann](http://uwetrottmann.com/contact). Except where noted otherwise, released into the [public domain](UNLICENSE).
 Do not just copy, make it better.
