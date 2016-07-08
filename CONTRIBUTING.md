@@ -31,9 +31,13 @@ Repository structure
 Setup
 -----
 
-This project is built with Gradle, the [Android Gradle plugin][3] and uses jar and Maven dependencies. Clone this repository inside your working folder. Import the `settings.gradle` file in the root folder into e.g. Android Studio. (You can also have a look at the `build.gradle` files on how the projects depend on another.)
+This project is built with Gradle, the [Android Gradle plugin][3] and uses jar and Maven dependencies.
 
-Before your first build create `gradle.properties` in the root directory (where `settings.gradle` is), add the following values (do not need to be valid if you do not plan to use that functionality):
+1. Clone this repository inside your working folder.
+2. Create the `gradle.properties` and `fabric.properties` files as noted below.
+3. Android Studio: import the `settings.gradle` file.
+
+Before your first build create `gradle.properties` in the root directory (where `settings.gradle` is) and add the following values. They do not need to be valid if you do not plan to use that functionality:
 
 ```
 # Credentials to publish the API jar
