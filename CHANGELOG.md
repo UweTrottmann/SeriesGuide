@@ -5,6 +5,21 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 32
+----------
+*(in development)*
+
+#### 32-beta1
+*(2016-07-08)*
+
+* TWEAK Movie details include poster, including full screen poster view on clicking poster.
+* TWEAK When viewing a poster full screen display the low resolution version until the full version has loaded.
+* TWEAK Keyboard is hidden by default when showing comments.
+* TWEAK Improved dialog button sizes and stacking. Other layout and design tweaks.
+* FIX Do not show full screen poster if there is no poster.
+* FIX Show movie details if they are cached even if offline.
+* NOTICE Latest translations from crowdin.
+
 Version 31
 ----------
 *(2016-06-23)*
