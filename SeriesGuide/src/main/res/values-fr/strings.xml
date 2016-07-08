@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Expérimental !</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
   <string name="hexagon_warning_lists">Les listes ne sont pas incluses.</string>
-  <string name="hexagon_warning_trakt">En utilisant le cloud SeriesGuide, les changements sur trakt ne seront pas synchronisés vers SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Connexion</string>
   <string name="hexagon_signed_in">Vous êtes connecté au cloud SeriesGuide.</string>
   <string name="hexagon_signout">Déconnexion</string>

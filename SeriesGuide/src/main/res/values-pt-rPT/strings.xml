@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_description">Conecta-te ao servidor para criar uma cópia de segurança e sincronizar as tuas séries e filmes.</string>
   <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
-  <string name="hexagon_warning_trakt">Ao usar o servidor SeriesGuide, as alterações no trakt não serão sincronizadas para o SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Entrar</string>
   <string name="hexagon_signed_in">Está ligado à SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Sair</string>

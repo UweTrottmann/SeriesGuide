@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
   <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
-  <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signed_in">SeriesGuide Bulut Hizmetine bağlısınız.</string>
   <string name="hexagon_signout">Çıkış</string>

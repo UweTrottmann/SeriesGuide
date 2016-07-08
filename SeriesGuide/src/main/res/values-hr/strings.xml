@@ -240,10 +240,10 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Experimental</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Lists are not included.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signed_in">Povezani ste sa SeriesGuide-oblakom.</string>
   <string name="hexagon_signout">Odjava</string>

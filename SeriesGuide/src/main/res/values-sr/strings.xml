@@ -243,7 +243,7 @@
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
   <string name="hexagon_warning_lists">Листе нису укључене.</string>
-  <string name="hexagon_warning_trakt">Коришћењем SeriesGudie Cloud, промене на trakt-у се неће синхронизовати у SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Пријави се</string>
   <string name="hexagon_signed_in">Повезани сте на SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Одјави се</string>

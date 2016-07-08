@@ -243,7 +243,7 @@
   <string name="hexagon_warning">Experimentální!</string>
   <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
   <string name="hexagon_warning_lists">Neobsahuje vaše seznamy.</string>
-  <string name="hexagon_warning_trakt">Pokud používáte SeriesGuide cloud, změny na trakt.tv se nebudou synchronizovat do SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Přihlásit se</string>
   <string name="hexagon_signed_in">Jste připojen na SeriesGuide cloud.</string>
   <string name="hexagon_signout">Odhlásit se</string>

@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Експериментално!</string>
   <string name="hexagon_description">Поврзете се на cloud за да направите backup и синхронизирање на вашите серии и филмови.</string>
   <string name="hexagon_warning_lists">Листи не се вклучени.</string>
-  <string name="hexagon_warning_trakt">Кога се користи SeriesGuide Cloud, промените на trakt нема да се синхронизираат во SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Пријави се</string>
   <string name="hexagon_signed_in">Вие сте конектирани во SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Одјави се</string>

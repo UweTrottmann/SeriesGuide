@@ -235,7 +235,7 @@
   <string name="hexagon_warning">การทดลอง!</string>
   <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
   <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
-  <string name="hexagon_warning_trakt">เมื่อใช้ SeriesGuide Cloud, การเปลี่ยนแปลงบน trakt จะไม่ซิงค์มายัง SeriesGuide</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">เข้าสู่ระบบ</string>
   <string name="hexagon_signed_in">คุณเชื่อมต่อกับ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_signout">ออกจากระบบ</string>

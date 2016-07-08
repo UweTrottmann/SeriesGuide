@@ -243,7 +243,7 @@
   <string name="hexagon_warning">Експериментальна!</string>
   <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
   <string name="hexagon_warning_lists">Списки не включено.</string>
-  <string name="hexagon_warning_trakt">Під час використання хмари SeriesGuide, зміни на  trakt не будуть синхронізуватись з SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Увійти</string>
   <string name="hexagon_signed_in">Ви під\'єднані до хмари SeriesGuide.</string>
   <string name="hexagon_signout">Вийти</string>

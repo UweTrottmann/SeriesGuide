@@ -247,7 +247,7 @@
   <string name="hexagon_warning">Preizkusno!</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Seznami niso vključeni.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signed_in">Povezani ste v SeriesGuide oblak.</string>
   <string name="hexagon_signout">Izpis</string>

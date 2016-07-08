@@ -243,7 +243,7 @@
   <string name="hexagon_warning">Eksperimentinis!</string>
   <string name="hexagon_description">Prisijungti prie Cloud, kad padaryti atsargines kopijas ir sinchronizuoti savo laidas bei filmus.</string>
   <string name="hexagon_warning_lists">Sąrašai neįtraukiami.</string>
-  <string name="hexagon_warning_trakt">Naudojant SeriesGuide Cloud, trakt pakeitimai nebus sinchronizuojami su SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Prisijungti</string>
   <string name="hexagon_signed_in">Esate prisijungę prie SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Atsijungti</string>

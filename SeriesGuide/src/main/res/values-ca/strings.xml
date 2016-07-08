@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
   <string name="hexagon_warning_lists">Les llistes no hi són incloses.</string>
-  <string name="hexagon_warning_trakt">Quan utilitzeu el Cloud de SeriesGuide, els canvis que efectueu a trakt no se sincronitzaran a SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Inicia la sessió</string>
   <string name="hexagon_signed_in">Esteu connectat al Cloud de SeriesGuide.</string>
   <string name="hexagon_signout">Tanca la sessió</string>

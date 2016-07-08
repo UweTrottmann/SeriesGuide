@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
   <string name="hexagon_warning_lists">Exclusief lijsten.</string>
-  <string name="hexagon_warning_trakt">Als je SeriesGuide cloud gebruikt, worden aanpassingen in trakt niet teruggesynchroniseerd met SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Log in</string>
   <string name="hexagon_signed_in">U bent verbonden met de SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Uitloggen</string>

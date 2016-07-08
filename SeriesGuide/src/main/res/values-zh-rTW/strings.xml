@@ -235,7 +235,7 @@
   <string name="hexagon_warning">實驗性</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">清單不包括在內。</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">登入</string>
   <string name="hexagon_signed_in">您已連接到 SeriesGuide Cloud。</string>
   <string name="hexagon_signout">登出</string>
