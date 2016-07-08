@@ -107,10 +107,10 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.buttonWebSearch) View mButtonWebSearch;
     @BindView(R.id.buttonShouts) View mButtonComments;
 
-    @BindView(R.id.containerShowCast) View mCastView;
-    private LinearLayout mCastContainer;
-    @BindView(R.id.containerShowCrew) View mCrewView;
-    private LinearLayout mCrewContainer;
+    @BindView(R.id.labelCast) TextView castLabel;
+    @BindView(R.id.containerCast) LinearLayout castContainer;
+    @BindView(R.id.labelCrew) TextView crewLabel;
+    @BindView(R.id.containerCrew) LinearLayout crewContainer;
 
     private Unbinder unbinder;
     private Cursor showCursor;
@@ -152,13 +152,8 @@ public class ShowFragment extends Fragment {
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
-        TextView castHeader = ButterKnife.findById(mCastView, R.id.textViewPeopleHeader);
-        castHeader.setText(R.string.movie_cast);
-        mCastContainer = ButterKnife.findById(mCastView, R.id.containerPeople);
-
-        TextView crewHeader = ButterKnife.findById(mCrewView, R.id.textViewPeopleHeader);
-        crewHeader.setText(R.string.movie_crew);
-        mCrewContainer = ButterKnife.findById(mCrewView, R.id.containerPeople);
+        setCastVisibility(false);
+        setCrewVisibility(false);
 
         // language chooser
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -486,24 +481,34 @@ public class ShowFragment extends Fragment {
 
     private void populateCredits(final Credits credits) {
         if (credits == null) {
-            mCastView.setVisibility(View.GONE);
-            mCrewView.setVisibility(View.GONE);
+            setCastVisibility(false);
+            setCrewVisibility(false);
             return;
         }
 
         if (credits.cast == null || credits.cast.size() == 0) {
-            mCastView.setVisibility(View.GONE);
+            setCastVisibility(false);
         } else {
-            mCastView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCast(getActivity(), mCastContainer, credits, TAG);
+            setCastVisibility(true);
+            PeopleListHelper.populateShowCast(getActivity(), castContainer, credits, TAG);
         }
 
         if (credits.crew == null || credits.crew.size() == 0) {
-            mCrewView.setVisibility(View.GONE);
+            setCrewVisibility(false);
         } else {
-            mCrewView.setVisibility(View.VISIBLE);
-            PeopleListHelper.populateShowCrew(getActivity(), mCrewContainer, credits, TAG);
+            setCrewVisibility(true);
+            PeopleListHelper.populateShowCrew(getActivity(), crewContainer, credits, TAG);
         }
+    }
+
+    private void setCastVisibility(boolean visible) {
+        castLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        castContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    private void setCrewVisibility(boolean visible) {
+        crewLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        crewContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private int getShowTvdbId() {

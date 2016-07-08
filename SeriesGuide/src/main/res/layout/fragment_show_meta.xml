@@ -21,14 +21,8 @@
         android:background="?attr/sgColorDivider" />
 
     <include
-        android:id="@+id/containerShowCast"
-        layout="@layout/people_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <include
-        android:id="@+id/containerShowCrew"
-        layout="@layout/people_list"
+        android:id="@+id/containerShowPeople"
+        layout="@layout/cast_and_crew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
