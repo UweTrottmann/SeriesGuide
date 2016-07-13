@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    android:id="@+id/appwidget_row"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appwidget_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="48dp"
@@ -12,7 +11,7 @@
     android:paddingRight="@dimen/widget_padding_default"
     android:paddingTop="@dimen/widget_padding_inline"
     tools:background="@android:color/holo_red_dark"
-    tools:ignore="UnusedAttribute">
+    tools:ignore="UnusedAttribute,RtlHardcoded">
 
     <ImageView
         android:id="@+id/widgetPoster"
@@ -36,6 +35,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="@dimen/widget_text_large"
+        tools:ignore="RtlSymmetry"
         tools:text="2 Broke Girls" />
 
     <TextView
@@ -50,6 +50,7 @@
         android:singleLine="true"
         android:textColor="@color/white_70"
         android:textSize="@dimen/widget_text_large"
+        tools:ignore="RtlSymmetry"
         tools:text="2x13 If The Time Ever Comes" />
 
     <TextView
@@ -71,9 +72,10 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
         android:fontFamily="sans-serif-condensed"
+        android:maxWidth="90dp"
         android:singleLine="true"
         android:textColor="@color/white_70"
         android:textSize="@dimen/widget_text_small"
-        tools:text="08:00 PM ABE" />
+        tools:text="08:00 PM Comedy Central (US)" />
 
 </RelativeLayout>

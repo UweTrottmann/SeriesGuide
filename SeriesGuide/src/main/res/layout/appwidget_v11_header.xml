@@ -30,6 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@string/upcoming"
             android:textColor="@color/white" />
 
@@ -41,7 +43,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/list_selector_dark"
         android:focusable="true"
-        android:paddingRight="@dimen/default_padding">
+        android:paddingRight="@dimen/default_padding"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewSettings"
