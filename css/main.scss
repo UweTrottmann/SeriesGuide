@@ -1,0 +1,16 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+//== Bootstrap settings
+$brand-primary:         	#6545a0 !default;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !default;
+$headings-font-weight:    400 !default;
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+  "bootstrap",
+  "base"
+;
