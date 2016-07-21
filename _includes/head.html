@@ -1,0 +1,36 @@
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap: The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <meta name="description" content="SeriesGuide helps you manage (re)watching your favorite TV shows on your Android devices." />
+  
+  <link rel="shortcut icon" href="/favicon.ico"/>
+
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic,300italic,300' rel='stylesheet' type='text/css'>
+
+  <!-- Bootstrap -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- SeriesGuide -->
+  <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+
+  <!-- Google+ author tag -->
+  <link href="https://plus.google.com/112462818579768957964" rel="publisher" />
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27760852-1', 'seriesgui.de');
+    ga('set', 'anonymizeIp', true);
+    ga('send', 'pageview');
+
+  </script>
+  <!-- End Google Analytics -->
+</head>
