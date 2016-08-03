@@ -456,7 +456,7 @@ public class MovieDetailsFragment extends Fragment {
                                 @Override
                                 public void onGenerated(Palette palette) {
                                     int color = palette.getVibrantColor(Color.WHITE);
-                                    color = ColorUtils.setAlphaComponent(color, 30);
+                                    color = ColorUtils.setAlphaComponent(color, 50);
                                     binding.rootLayoutMovie.setBackgroundColor(color);
                                 }
                             });
