@@ -12,7 +12,7 @@ props.load(new FileInputStream(file("../local.properties")))
 // extract Android SDK dir
 def android = [
         sdk: props["sdk.dir"],
-        target: "android-22"
+        target: "android-23"
 ]
 
 compileJava {
