@@ -4,194 +4,207 @@
 
     <FrameLayout
         android:id="@+id/rootLayoutMovie"
-        android:layout_width="590dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
         tools:context=".ui.MovieDetailsFragment"
         tools:ignore="RtlHardcoded">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-        <!-- Padding is adjusted in code based on translucent status bar. -->
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/contentContainerMovie"
-            android:layout_width="360dp"
+        <!-- Parent used for fullscreen color background. -->
+        <!-- Would set window background, but flashes when changing it. -->
+        <FrameLayout
+            android:layout_width="590dp"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize">
+            android:layout_gravity="center_horizontal"
+            tools:ignore="UselessParent">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding">
+                android:layout_gravity="center" />
 
-                <FrameLayout
-                    android:id="@+id/frameLayoutMoviePoster"
-                    android:layout_width="120dp"
-                    android:layout_height="180dp"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/larger_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:foreground="?attr/selectableItemBackground">
+            <!-- Padding is adjusted in code based on translucent status bar. -->
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/contentContainerMovie"
+                android:layout_width="360dp"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="?attr/actionBarSize">
 
-                    <ImageView
-                        android:id="@+id/imageViewMoviePoster"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:paddingBottom="@dimen/default_padding"
+                    android:paddingTop="@dimen/default_padding">
+
+                    <FrameLayout
+                        android:id="@+id/frameLayoutMoviePoster"
+                        android:layout_width="120dp"
+                        android:layout_height="180dp"
+                        android:layout_marginBottom="@dimen/default_padding"
+                        android:layout_marginLeft="@dimen/larger_padding"
+                        android:layout_marginRight="@dimen/default_padding"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:id="@+id/imageViewMoviePoster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@null"
+                            android:scaleType="centerCrop"
+                            android:transitionName="@string/transitionNameMoviePoster"
+                            tools:src="#F44336"
+                            tools:targetApi="lollipop" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textViewMovieTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/larger_padding"
+                        android:layout_marginTop="@dimen/inline_padding"
+                        android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                        android:textAppearance="@style/TextAppearance.Headline"
+                        android:textIsSelectable="true"
+                        tools:text="Awesome Movie Title" />
+
+                    <TextView
+                        android:id="@+id/textViewMovieDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewMovieTitle"
+                        android:layout_marginBottom="@dimen/large_padding"
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/larger_padding"
+                        android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                        android:textAppearance="@style/TextAppearance.Caption"
+                        android:textIsSelectable="true"
+                        tools:text="20 Oct 2013" />
+
+                    <include
+                        android:id="@+id/movieButtons"
+                        layout="@layout/buttons_movie" />
+
+                    <View
+                        android:id="@+id/dividerMovie0"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@null"
-                        android:scaleType="centerCrop"
-                        android:transitionName="@string/transitionNameMoviePoster"
-                        tools:src="#F44336"
-                        tools:targetApi="lollipop" />
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/movieButtons"
+                        android:layout_marginBottom="@dimen/large_padding"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/sgColorDivider"
+                        tools:ignore="UnknownIdInLayout" />
 
-                </FrameLayout>
+                    <TextView
+                        android:id="@+id/textViewMovieDescription"
+                        style="@style/Block.FlowText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dividerMovie0"
+                        android:layout_marginBottom="@dimen/large_padding"
+                        android:maxWidth="400dp"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textIsSelectable="true"
+                        tools:text="Description for a super awesome movie..." />
 
-                <TextView
-                    android:id="@+id/textViewMovieTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/larger_padding"
-                    android:layout_marginTop="@dimen/inline_padding"
-                    android:layout_toRightOf="@id/frameLayoutMoviePoster"
-                    android:textAppearance="@style/TextAppearance.Headline"
-                    android:textIsSelectable="true"
-                    tools:text="Awesome Movie Title" />
+                    <View
+                        android:id="@+id/dividerMovie1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/textViewMovieDescription"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/sgColorDivider" />
 
-                <TextView
-                    android:id="@+id/textViewMovieDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewMovieTitle"
-                    android:layout_marginBottom="@dimen/large_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/larger_padding"
-                    android:layout_toRightOf="@id/frameLayoutMoviePoster"
-                    android:textAppearance="@style/TextAppearance.Caption"
-                    android:textIsSelectable="true"
-                    tools:text="20 Oct 2013" />
+                    <include
+                        android:id="@+id/movieRatings"
+                        layout="@layout/ratings_movies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dividerMovie1"
+                        android:layout_centerHorizontal="true" />
 
-                <include android:id="@+id/movieButtons" layout="@layout/buttons_movie" />
+                    <View
+                        android:id="@+id/dividerMovie2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/movieRatings"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/sgColorDivider"
+                        tools:ignore="UnknownIdInLayout" />
 
-                <View
-                    android:id="@+id/dividerMovie0"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/movieButtons"
-                    android:layout_marginBottom="@dimen/large_padding"
-                    android:layout_marginLeft="@dimen/large_padding"
-                    android:layout_marginRight="@dimen/large_padding"
-                    android:background="?attr/sgColorDivider"
-                    tools:ignore="UnknownIdInLayout" />
+                    <TextView
+                        android:id="@+id/textViewMovieGenresLabel"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dividerMovie2"
+                        android:text="@string/show_genres"
+                        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
-                <TextView
-                    android:id="@+id/textViewMovieDescription"
-                    style="@style/Block.FlowText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerMovie0"
-                    android:layout_marginBottom="@dimen/large_padding"
-                    android:maxWidth="400dp"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    android:textIsSelectable="true"
-                    tools:text="Description for a super awesome movie..." />
+                    <TextView
+                        android:id="@+id/textViewMovieGenres"
+                        style="@style/Block"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewMovieGenresLabel"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textIsSelectable="true"
+                        tools:text="Action, Comedy, Drama" />
 
-                <View
-                    android:id="@+id/dividerMovie1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/textViewMovieDescription"
-                    android:layout_marginLeft="@dimen/large_padding"
-                    android:layout_marginRight="@dimen/large_padding"
-                    android:background="?attr/sgColorDivider" />
+                    <TextView
+                        android:id="@+id/textViewMovieMore"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewMovieGenres"
+                        android:text="@string/services_more"
+                        android:textAppearance="@style/TextAppearance.Body.Bold" />
 
-                <include
-                    android:id="@+id/movieRatings"
-                    layout="@layout/ratings_movies"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerMovie1"
-                    android:layout_centerHorizontal="true" />
+                    <Button
+                        android:id="@+id/buttonMovieComments"
+                        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_below="@+id/textViewMovieMore"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:text="@string/comments" />
+                </RelativeLayout>
 
-                <View
-                    android:id="@+id/dividerMovie2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/movieRatings"
-                    android:layout_marginLeft="@dimen/large_padding"
-                    android:layout_marginRight="@dimen/large_padding"
-                    android:background="?attr/sgColorDivider"
-                    tools:ignore="UnknownIdInLayout" />
+            </android.support.v4.widget.NestedScrollView>
 
-                <TextView
-                    android:id="@+id/textViewMovieGenresLabel"
-                    style="@style/Block.WithTopMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerMovie2"
-                    android:text="@string/show_genres"
-                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+            <!-- Padding is adjusted in code based on translucent status bar. -->
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/contentContainerMovieRight"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="360dp"
+                android:clipToPadding="false"
+                android:paddingTop="?attr/actionBarSize">
 
-                <TextView
-                    android:id="@+id/textViewMovieGenres"
-                    style="@style/Block"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewMovieGenresLabel"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    android:textIsSelectable="true"
-                    tools:text="Action, Comedy, Drama" />
-
-                <TextView
-                    android:id="@+id/textViewMovieMore"
-                    style="@style/Block.WithTopMargin"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewMovieGenres"
-                    android:text="@string/services_more"
-                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/default_padding"
+                    android:paddingTop="@dimen/large_padding">
 
-                <Button
-                    android:id="@+id/buttonMovieComments"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@+id/textViewMovieMore"
-                    android:layout_marginLeft="@dimen/large_padding"
-                    android:layout_marginRight="@dimen/large_padding"
-                    android:text="@string/comments" />
-            </RelativeLayout>
+                    <include
+                        android:id="@+id/moviePeople"
+                        layout="@layout/cast_and_crew" />
 
-        </android.support.v4.widget.NestedScrollView>
+                </LinearLayout>
 
-        <!-- Padding is adjusted in code based on translucent status bar. -->
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/contentContainerMovieRight"
-            android:layout_width="230dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="360dp"
-            android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize">
+            </android.support.v4.widget.NestedScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/large_padding">
-
-                <include android:id="@+id/moviePeople" layout="@layout/cast_and_crew" />
-
-            </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
+        </FrameLayout>
 
     </FrameLayout>
 
