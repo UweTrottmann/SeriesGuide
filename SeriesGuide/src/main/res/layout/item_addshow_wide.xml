@@ -62,33 +62,35 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/dividerItemAdd"
             android:layout_toRightOf="@+id/imageViewAddPoster"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/viewAddButton"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:focusable="false"
-                android:text="@string/action_shows_add" />
-
-            <!-- Content description is set in code. -->
-            <ImageView
-                android:id="@+id/imageViewAddedIndicator"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:contentDescription="@null"
-                android:scaleType="centerInside"
-                android:src="?attr/drawableWatched" />
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/inline_padding">
 
             <ImageView
                 android:id="@+id/buttonItemAddMore"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:contentDescription="@string/description_menu_overflow"
                 android:src="?attr/drawableDropdown" />
+
+            <ImageView
+                android:id="@+id/viewAddButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:contentDescription="@string/action_shows_add"
+                android:focusable="false"
+                android:src="?attr/drawableAddIcon" />
+
+            <!-- Content description is set in code. -->
+            <ImageView
+                android:id="@+id/imageViewAddedIndicator"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="?attr/drawableWatched" />
 
         </LinearLayout>
 
