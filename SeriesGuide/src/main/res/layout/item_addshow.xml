@@ -18,9 +18,10 @@
             android:layout_weight="1"
             android:minHeight="88dp">
 
+            <!-- 2 : 3 aspect ratio -->
             <ImageView
                 android:id="@+id/imageViewAddPoster"
-                android:layout_width="60dp"
+                android:layout_width="59dp"
                 android:layout_height="88dp"
                 android:contentDescription="@null"
                 android:scaleType="centerInside"

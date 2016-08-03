@@ -7,7 +7,7 @@
 
     <dimen name="showgrid_columnWidth">330dp</dimen>
 
-    <dimen name="show_poster_width">102dp</dimen>
-    <dimen name="show_poster_height">150dp</dimen>
+    <dimen name="show_poster_width">@dimen/show_poster_width_large</dimen>
+    <dimen name="show_poster_height">@dimen/show_poster_height_large</dimen>
 
 </resources>

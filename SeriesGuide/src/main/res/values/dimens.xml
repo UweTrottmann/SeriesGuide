@@ -42,13 +42,16 @@
     <dimen name="grid_vertical_spacing">3dp</dimen>
     <dimen name="grid_horizontal_spacing">4dp</dimen>
 
-    <!-- Show posters -->
-    <dimen name="show_poster_width">68dp</dimen>
-    <dimen name="show_poster_height">100dp</dimen>
-    <dimen name="show_poster_small_width">68dp</dimen>
-    <dimen name="show_poster_small_height">100dp</dimen>
-    <dimen name="show_poster_add_width">60dp</dimen>
-    <dimen name="show_poster_add_height">88dp</dimen>
+    <!-- Show posters, 2:3 aspect ratio -->
+    <dimen name="show_poster_width_default">69dp</dimen>
+    <dimen name="show_poster_height_default">104dp</dimen>
+    <dimen name="show_poster_width_large">101dp</dimen>
+    <dimen name="show_poster_height_large">152dp</dimen>
+
+    <dimen name="show_poster_width">@dimen/show_poster_width_default</dimen>
+    <dimen name="show_poster_height">@dimen/show_poster_height_default</dimen>
+    <dimen name="show_poster_small_width">@dimen/show_poster_width_default</dimen>
+    <dimen name="show_poster_small_height">@dimen/show_poster_height_default</dimen>
 
     <!-- Episode images -->
     <dimen name="imagecontainer_height">180dp</dimen>

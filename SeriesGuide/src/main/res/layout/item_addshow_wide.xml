@@ -11,10 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 2 : 3 aspect ratio -->
         <ImageView
             android:id="@+id/imageViewAddPoster"
-            android:layout_width="100dp"
-            android:layout_height="147dp"
+            android:layout_width="@dimen/show_poster_width_large"
+            android:layout_height="@dimen/show_poster_height_large"
             android:layout_alignParentLeft="true"
             android:contentDescription="@null"
             android:scaleType="centerInside"
@@ -28,7 +29,7 @@
             android:ellipsize="end"
             android:paddingLeft="@dimen/large_padding"
             android:paddingRight="@dimen/large_padding"
-            android:paddingTop="@dimen/large_padding"
+            android:paddingTop="13dp"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Title"
             tools:text="Cosmos: A Spacetime Odyssey" />
