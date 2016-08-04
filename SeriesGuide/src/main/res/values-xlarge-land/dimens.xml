@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="show_poster_width">@dimen/show_poster_width_large</dimen>
-    <dimen name="show_poster_height">@dimen/show_poster_height_large</dimen>
-
-</resources>

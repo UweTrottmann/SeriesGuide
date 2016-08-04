@@ -6,9 +6,6 @@
     <dimen name="widget_paddingLeft">10dp</dimen>
     <dimen name="widget_poster_width">40dp</dimen>
 
-    <dimen name="show_poster_width">@dimen/show_poster_width_large</dimen>
-    <dimen name="show_poster_height">@dimen/show_poster_height_large</dimen>
-
     <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="addpager_width">600dp</dimen>
 
