@@ -119,7 +119,7 @@ public class FirstRunFragment extends Fragment {
 
         // language chooser
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.languages, android.R.layout.simple_spinner_item);
+                R.array.languages, R.layout.item_spinner_title);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());

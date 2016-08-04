@@ -23,6 +23,7 @@
     <!-- URLs -->
     <string name="url_website">https://seriesgui.de</string>
     <string name="help_url">https://seriesgui.de/help</string>
+    <string name="url_privacy">https://seriesgui.de/privacy</string>
     <string name="url_whypay">https://seriesgui.de/whypay</string>
     <string name="url_credits">https://github.com/UweTrottmann/SeriesGuide/blob/master/CREDITS.txt</string>
     <string name="url_terms_tvdb">https://thetvdb.com/?tab=tos</string>

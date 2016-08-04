@@ -11,14 +11,12 @@
         cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
         cardview:cardPreventCornerOverlap="false">
 
-        <RelativeLayout
-            style="@style/FirstRunColumn"
-            android:orientation="vertical">
+        <RelativeLayout style="@style/FirstRunColumn">
 
             <ImageButton
                 android:id="@+id/buttonFirstRunDismiss"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/dismiss"
@@ -28,7 +26,6 @@
                 android:id="@+id/textViewFirstRunTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginTop="@dimen/large_padding"
@@ -48,13 +45,15 @@
                     android:id="@+id/language_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/large_padding"
                     android:text="@string/pref_language"
-                    android:textAppearance="@style/TextAppearance.Caption" />
+                    android:textAppearance="@style/TextAppearance.Menu" />
 
                 <Spinner
                     android:id="@+id/welcome_setuplanguage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="32dp"
                     android:layout_marginTop="@dimen/inline_padding"
                     android:prompt="@string/welcome_setuplanguage" />
 
@@ -64,37 +63,55 @@
                 android:id="@+id/containerFirstRunButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/containerFirstRunSettings"
+                android:layout_below="@id/containerFirstRunSettings"
                 android:gravity="end"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/large_padding"
-                android:paddingLeft="@dimen/large_padding"
-                android:paddingRight="@dimen/large_padding"
-                android:paddingTop="@dimen/larger_padding">
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/large_padding">
 
                 <Button
                     android:id="@+id/buttonFirstRunAddShow"
-                    style="?android:attr/borderlessButtonStyle"
+                    style="?attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/action_shows_add"
-                    android:textColor="?attr/colorAccent" />
+                    android:text="@string/action_shows_add" />
 
                 <Button
                     android:id="@+id/buttonFirstRunTrakt"
-                    style="?android:attr/borderlessButtonStyle"
+                    style="?attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/connect_trakt" />
 
                 <Button
                     android:id="@+id/buttonFirstRunRestore"
-                    style="?android:attr/borderlessButtonStyle"
+                    style="?attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/import_button" />
 
             </LinearLayout>
+
+            <include
+                android:id="@+id/dividerFirstRun"
+                layout="@layout/divider_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/containerFirstRunButtons" />
+
+            <TextView
+                android:id="@+id/textViewFirstRunPrivacyLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dividerFirstRun"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:autoLink="web"
+                android:paddingBottom="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:text="@string/url_privacy" />
 
         </RelativeLayout>
 
