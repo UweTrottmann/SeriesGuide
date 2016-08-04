@@ -15,18 +15,6 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="?attr/sgColorSeparator" />
-
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="?attr/sgColorSeparator" />
-
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
     <ScrollView
         android:id="@+id/scrollViewOverview"
@@ -283,5 +271,17 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/viewOverviewShadowStart"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+    <View
+        android:id="@+id/viewOverviewShadowEnd"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end" />
 
 </FrameLayout>

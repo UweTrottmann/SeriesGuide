@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <bool name="isGingerbreadOrLower">false</bool>
     <bool name="isIceCreamSandwichOrLower">true</bool>
     <bool name="gridClipToPadding">false</bool>
     <bool name="sgFitSystemWindows">false</bool>
+
+    <bool name="overview_shadow_start">false</bool>
+    <bool name="overview_shadow_end">false</bool>
+
 </resources>

@@ -3,7 +3,9 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,6 +58,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -87,6 +90,8 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
     @BindView(R.id.background) ImageView imageBackground;
     @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
+    @BindView(R.id.viewOverviewShadowStart) View shadowStart;
+    @BindView(R.id.viewOverviewShadowEnd) View shadowEnd;
 
     @BindView(R.id.episodeTitle) TextView textEpisodeTitle;
     @BindView(R.id.episodeTime) TextView textEpisodeTime;
@@ -226,6 +231,16 @@ public class OverviewFragment extends Fragment implements
 
         // hide web search button
         buttonWebSearch.setVisibility(View.GONE);
+
+        Resources res = getResources();
+        if (res.getBoolean(R.bool.overview_shadow_start)) {
+            Shadows.getInstance().setShadowDrawable(getContext(), shadowStart,
+                    GradientDrawable.Orientation.RIGHT_LEFT);
+        }
+        if (res.getBoolean(R.bool.overview_shadow_end)) {
+            Shadows.getInstance().setShadowDrawable(getContext(), shadowEnd,
+                    GradientDrawable.Orientation.LEFT_RIGHT);
+        }
 
         return v;
     }
