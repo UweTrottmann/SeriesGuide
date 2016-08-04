@@ -55,9 +55,6 @@
     <dimen name="show_poster_small_width">@dimen/show_poster_width_default</dimen>
     <dimen name="show_poster_small_height">@dimen/show_poster_height_default</dimen>
 
-    <!-- Episode images -->
-    <dimen name="imagecontainer_height">180dp</dimen>
-
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
     <dimen name="person_headshot_large_width">100dp</dimen>

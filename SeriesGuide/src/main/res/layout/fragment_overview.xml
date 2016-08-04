@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
@@ -122,22 +122,29 @@
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/inline_padding"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
                         android:layout_marginTop="@dimen/default_padding"
-                        android:layout_marginBottom="@dimen/inline_padding"
                         android:foreground="?attr/selectableItemBackground"
-                        cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-                        cardview:cardPreventCornerOverlap="false">
+                        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+                        app:cardPreventCornerOverlap="false">
 
                         <!-- Fake card fade: ensure that bottom of image and text box match -->
-                        <ImageView
-                            android:id="@+id/imageViewOverviewEpisode"
+                        <android.support.percent.PercentFrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/imagecontainer_height"
-                            android:layout_marginBottom="4dp"
-                            android:contentDescription="@string/description_image"
-                            android:scaleType="centerCrop" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp">
+
+                            <!--suppress AndroidDomInspection -->
+                            <ImageView
+                                android:id="@+id/imageViewOverviewEpisode"
+                                android:contentDescription="@null"
+                                android:scaleType="centerCrop"
+                                app:layout_aspectRatio="178%"
+                                app:layout_widthPercent="100%" />
+
+                        </android.support.percent.PercentFrameLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"

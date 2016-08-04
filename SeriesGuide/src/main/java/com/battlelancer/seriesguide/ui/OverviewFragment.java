@@ -835,14 +835,12 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void loadEpisodeImage(String imagePath) {
-        // immediately hide container if there is no image
         if (TextUtils.isEmpty(imagePath)) {
-            imageEpisode.setVisibility(View.INVISIBLE);
+            imageEpisode.setImageDrawable(null);
             return;
         }
 
         // try loading image
-        imageEpisode.setVisibility(View.VISIBLE);
         ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(imageEpisode,
