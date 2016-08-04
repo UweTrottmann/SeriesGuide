@@ -23,15 +23,11 @@ public class Shadows {
         return shadows;
     }
 
-    private int shadowColor = -1;
-
     public void setShadowDrawable(@NonNull Context context, @NonNull View shadowView,
             GradientDrawable.Orientation orientation) {
-        if (shadowColor == -1) {
-            shadowColor = ContextCompat.getColor(context,
-                    Utils.resolveAttributeToResourceId(context.getTheme(),
-                            R.attr.sgColorShadow));
-        }
+        int shadowColor = ContextCompat.getColor(context,
+                Utils.resolveAttributeToResourceId(context.getTheme(),
+                        R.attr.sgColorShadow));
         GradientDrawable shadowDrawable = new GradientDrawable(orientation,
                 new int[] { Color.TRANSPARENT, shadowColor });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

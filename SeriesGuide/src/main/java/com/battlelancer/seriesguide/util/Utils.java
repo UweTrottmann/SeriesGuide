@@ -301,7 +301,7 @@ public class Utils {
      * Tries to load the given TVDb show poster into the given {@link ImageView} without any
      * resizing or cropping. In addition sets alpha on the view.
      */
-    public static void loadPosterBackground(Context context, ImageView imageView,
+    public static void loadPosterBackground(Context context, @NonNull ImageView imageView,
             String posterPath) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imageView.setImageAlpha(30);

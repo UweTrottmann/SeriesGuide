@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +17,8 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -27,6 +31,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
@@ -44,23 +49,21 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public static final int EPISODE_LOADER_ID = 101;
     public static final int ACTIONS_LOADER_ID = 102;
 
-    private EpisodesFragment mEpisodesFragment;
+    @Nullable @BindView(R.id.pagerEpisodes) ViewPager episodeDetailsPager;
+    @Nullable @BindView(R.id.tabsEpisodes) SlidingTabLayout episodeDetailsTabs;
+    @Nullable @BindView(R.id.imageViewEpisodesBackground) ImageView backgroundImageView;
+    @Nullable @BindView(R.id.viewEpisodesShadowStart) View shadowStart;
+    @Nullable @BindView(R.id.viewEpisodesShadowEnd) View shadowEnd;
 
-    private EpisodePagerAdapter mAdapter;
+    private EpisodesFragment episodesListFragment;
+    private EpisodePagerAdapter episodeDetailsAdapter;
+    private ArrayList<Episode> episodes;
 
-    private ViewPager mPager;
+    private int showTvdbId;
+    private int seasonTvdbId;
+    private int seasonNumber;
 
-    private SlidingTabLayout mTabs;
-
-    private boolean mDualPane;
-
-    private ArrayList<Episode> mEpisodes;
-
-    private int mSeasonId;
-
-    private int mSeasonNumber;
-
-    private int mShowId;
+    private boolean isDualPane;
 
     /**
      * All values have to be integer. Only one is required.
@@ -76,22 +79,21 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episodes);
-        setupActionBar();
         setupNavDrawer();
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
 
         // check for dual pane layout
-        View pager = findViewById(R.id.pagerEpisodes);
-        mDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
+        ButterKnife.bind(this);
+        isDualPane = episodeDetailsPager != null;
 
         boolean isFinishing = false;
 
         // check if we have a certain episode to display
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId != 0) {
-            if (!mDualPane) {
+            if (!isDualPane) {
                 // display just the episode pager in its own activity
                 Intent intent = new Intent(this, EpisodeDetailsActivity.class);
                 intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
@@ -105,7 +107,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
                         }, null, null, null
                 );
                 if (episode != null && episode.moveToFirst()) {
-                    mSeasonId = episode.getInt(1);
+                    seasonTvdbId = episode.getInt(1);
                 } else {
                     // could not get season id
                     isFinishing = true;
@@ -121,19 +123,19 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        if (mSeasonId == 0) {
-            mSeasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
+        if (seasonTvdbId == 0) {
+            seasonTvdbId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
         }
 
         // get show id and season number
         final Cursor season = getContentResolver().query(
-                Seasons.buildSeasonUri(String.valueOf(mSeasonId)), new String[] {
+                Seasons.buildSeasonUri(String.valueOf(seasonTvdbId)), new String[] {
                         Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
                 }, null, null, null
         );
         if (season != null && season.moveToFirst()) {
-            mSeasonNumber = season.getInt(1);
-            mShowId = season.getInt(2);
+            seasonNumber = season.getInt(1);
+            showTvdbId = season.getInt(2);
         } else {
             isFinishing = true;
         }
@@ -146,75 +148,23 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        final Show show = DBUtils.getShow(this, mShowId);
+        final Show show = DBUtils.getShow(this, showTvdbId);
         if (show == null) {
             finish();
             return;
         }
 
         setupActionBar(show);
+        setupViews(savedInstanceState, show, episodeId);
 
-        // check if we should start at a certain position
-        int startPosition = 0;
-        if (mDualPane) {
-            // also build episode list for view pager
-            startPosition = updateEpisodeList(episodeId);
-        }
-
-        // setup the episode list fragment
-        if (savedInstanceState == null) {
-            mEpisodesFragment = EpisodesFragment.newInstance(mShowId, mSeasonId, mSeasonNumber,
-                    startPosition);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
-        } else {
-            mEpisodesFragment = (EpisodesFragment) getSupportFragmentManager().findFragmentByTag(
-                    "episodes");
-        }
-
-        // setup the episode view pager if available
-        if (mDualPane) {
-            // set the pager background
-            Utils.loadPosterBackground(this, (ImageView) findViewById(R.id.background),
-                    show.poster);
-
-            // setup view pager
-            mAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(), mEpisodes, true);
-            mPager = (ViewPager) pager;
-            //noinspection ConstantConditions
-            mPager.setAdapter(mAdapter);
-
-            // setup tabs
-            mTabs = (SlidingTabLayout) findViewById(R.id.tabsEpisodes);
-            mTabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
-            mTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
-                    SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
-                            ? R.color.white
-                            : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-            mTabs.setViewPager(mPager);
-
-            // set page listener afterwards to avoid null pointer for
-            // non-existing content view
-            mPager.setCurrentItem(startPosition, false);
-            mTabs.setOnPageChangeListener(mOnPageChangeListener);
-        } else {
-            // Make sure no fragments are left over from a config
-            // change
-            for (Fragment fragment : getActiveFragments()) {
-                if (fragment.getTag() == null) {
-                    Timber.d("Removing a leftover fragment");
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-            }
-        }
-
-        updateShowDelayed(mShowId);
+        updateShowDelayed(showTvdbId);
     }
 
     private void setupActionBar(Show show) {
+        setupActionBar();
         // setup ActionBar
         String showTitle = show.title;
-        String seasonString = SeasonTools.getSeasonString(this, mSeasonNumber);
+        String seasonString = SeasonTools.getSeasonString(this, seasonNumber);
         setTitle(showTitle + " " + seasonString);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -226,11 +176,75 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
+    private void setupViews(Bundle savedInstanceState, Show show, int episodeId) {
+        // check if we should start with a specific episode
+        int startPosition = 0;
+        if (isDualPane) {
+            // also builds episode list for view pager
+            startPosition = updateEpisodeList(episodeId);
+        }
+
+        // set up the episode list fragment
+        if (savedInstanceState == null) {
+            episodesListFragment = EpisodesFragment.newInstance(showTvdbId, seasonTvdbId,
+                    seasonNumber, startPosition);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.fragment_episodes, episodesListFragment, "episodes").commit();
+        } else {
+            episodesListFragment = (EpisodesFragment) getSupportFragmentManager().findFragmentByTag(
+                    "episodes");
+        }
+
+        // if displaying details pane, set up the episode details pager
+        if (isDualPane) {
+            // set the pager background
+            //noinspection ConstantConditions
+            Utils.loadPosterBackground(this, backgroundImageView, show.poster);
+
+            // pager setup
+            episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                    episodes, true);
+            //noinspection ConstantConditions
+            episodeDetailsPager.setAdapter(episodeDetailsAdapter);
+
+            // tabs setup
+            //noinspection ConstantConditions
+            episodeDetailsTabs.setCustomTabView(R.layout.tabstrip_item_transparent,
+                    R.id.textViewTabStripItem);
+            episodeDetailsTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
+                    SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
+                            ? R.color.white
+                            : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
+            episodeDetailsTabs.setViewPager(episodeDetailsPager);
+
+            // set page listener afterwards to avoid null pointer for non-existing content view
+            episodeDetailsPager.setCurrentItem(startPosition, false);
+            episodeDetailsTabs.setOnPageChangeListener(mOnPageChangeListener);
+
+            if (shadowStart != null) {
+                Shadows.getInstance().setShadowDrawable(this, shadowStart,
+                        GradientDrawable.Orientation.RIGHT_LEFT);
+            }
+            if (shadowEnd != null) {
+                Shadows.getInstance().setShadowDrawable(this, shadowEnd,
+                        GradientDrawable.Orientation.LEFT_RIGHT);
+            }
+        } else {
+            // Make sure no fragments are left over from a config change
+            for (Fragment fragment : getActiveFragments()) {
+                if (fragment.getTag() == null) {
+                    Timber.d("Removing a leftover fragment");
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+            }
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (mDualPane) {
+        if (isDualPane) {
             PreferenceManager.getDefaultSharedPreferences(this)
                     .registerOnSharedPreferenceChangeListener(mSortOrderChangeListener);
         }
@@ -240,7 +254,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     protected void onStop() {
         super.onStop();
 
-        if (mDualPane) {
+        if (isDualPane) {
             PreferenceManager.getDefaultSharedPreferences(this)
                     .unregisterOnSharedPreferenceChangeListener(mSortOrderChangeListener);
         }
@@ -272,7 +286,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (itemId == android.R.id.home) {
             Intent upIntent;
             upIntent = new Intent(this, OverviewActivity.class);
-            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             return true;
@@ -286,7 +300,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
      * <p> Only call this if the episode list and episode view pager are available.
      */
     public void setCurrentPage(int position) {
-        mPager.setCurrentItem(position, true);
+        if (episodeDetailsPager != null) {
+            episodeDetailsPager.setCurrentItem(position, true);
+        }
     }
 
     /**
@@ -304,7 +320,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
 
         Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(mSeasonId)),
+                Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonTvdbId)),
                 new String[] {
                         Episodes._ID, Episodes.NUMBER
                 }, null, null, sortOrder.query()
@@ -320,14 +336,14 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
                     startPosition = episodeCursor.getPosition();
                 }
                 ep.episodeNumber = episodeCursor.getInt(1);
-                ep.seasonNumber = mSeasonNumber;
+                ep.seasonNumber = seasonNumber;
                 episodeList.add(ep);
             }
 
             episodeCursor.close();
         }
 
-        mEpisodes = episodeList;
+        episodes = episodeList;
 
         return startPosition;
     }
@@ -341,7 +357,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         @Override
         public void onPageSelected(int position) {
             // update currently checked episode
-            mEpisodesFragment.setItemChecked(position);
+            episodesListFragment.setItemChecked(position);
         }
 
         @Override
@@ -354,15 +370,16 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
+            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)
+                    && episodeDetailsPager != null && episodeDetailsTabs != null) {
                 // save currently selected episode
-                int oldPosition = mPager.getCurrentItem();
-                int episodeId = mEpisodes.get(oldPosition).episodeId;
+                int oldPosition = episodeDetailsPager.getCurrentItem();
+                int episodeId = episodes.get(oldPosition).episodeId;
 
                 // reorder and update tabs
                 updateEpisodeList();
-                mAdapter.updateEpisodeList(mEpisodes);
-                mTabs.setViewPager(mPager);
+                episodeDetailsAdapter.updateEpisodeList(episodes);
+                episodeDetailsTabs.setViewPager(episodeDetailsPager);
 
                 // scroll to previously selected episode
                 setCurrentPage(getPositionForEpisode(episodeId));
@@ -372,8 +389,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
     private int getPositionForEpisode(int episodeTvdbId) {
         // find page index for this episode
-        for (int position = 0; position < mEpisodes.size(); position++) {
-            if (mEpisodes.get(position).episodeId == episodeTvdbId) {
+        for (int position = 0; position < episodes.size(); position++) {
+            if (episodes.get(position).episodeId == episodeTvdbId) {
                 return position;
             }
         }
