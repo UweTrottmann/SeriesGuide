@@ -13,13 +13,13 @@
     <!-- Add FrameLayout parent so we can set selectable foreground. -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/show_poster_height_default"
         tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/imageViewFriendPoster"
-            android:layout_width="68dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/show_poster_width_default"
+            android:layout_height="@dimen/show_poster_height_default"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@null"
             android:scaleType="centerInside"

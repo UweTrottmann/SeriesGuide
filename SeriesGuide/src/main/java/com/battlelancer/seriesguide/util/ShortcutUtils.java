@@ -61,12 +61,12 @@ public final class ShortcutUtils {
                             .centerCrop()
                             .memoryPolicy(MemoryPolicy.NO_STORE)
                             .networkPolicy(NetworkPolicy.NO_STORE)
-                            .resizeDimen(R.dimen.show_poster_small_width,
-                                    R.dimen.show_poster_small_height)
+                            .resizeDimen(R.dimen.show_poster_width_default,
+                                    R.dimen.show_poster_height_default)
                             .transform(new RoundedCornerTransformation(posterUrl, 10f))
                             .get();
                 } catch (IOException e) {
-                    Timber.e(e, "Could not load show poster for shortcut " + posterPath);
+                    Timber.e(e, "Could not load show poster for shortcut %s", posterPath);
                     posterBitmap = null;
                 }
 

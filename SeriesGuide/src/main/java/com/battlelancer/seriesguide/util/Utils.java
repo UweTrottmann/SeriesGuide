@@ -352,7 +352,7 @@ public class Utils {
     public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
         ServiceUtils.loadWithPicasso(context, posterUrl)
                 .centerCrop()
-                .resizeDimen(R.dimen.show_poster_small_width, R.dimen.show_poster_small_height)
+                .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
     }

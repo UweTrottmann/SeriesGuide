@@ -52,8 +52,6 @@
 
     <dimen name="show_poster_width">@dimen/show_poster_width_default</dimen>
     <dimen name="show_poster_height">@dimen/show_poster_height_default</dimen>
-    <dimen name="show_poster_small_width">@dimen/show_poster_width_default</dimen>
-    <dimen name="show_poster_small_height">@dimen/show_poster_height_default</dimen>
 
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
