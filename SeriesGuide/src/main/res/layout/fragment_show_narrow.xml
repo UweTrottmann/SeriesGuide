@@ -30,8 +30,8 @@
 
                 <FrameLayout
                     android:id="@+id/containerShowPoster"
-                    android:layout_width="100dp"
-                    android:layout_height="150dp"
+                    android:layout_width="@dimen/show_poster_width_default"
+                    android:layout_height="@dimen/show_poster_height_default"
                     android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
@@ -47,7 +47,7 @@
                 <ImageView
                     android:id="@+id/imageViewShowPosterBackground"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="@dimen/show_poster_height_default"
                     android:layout_toRightOf="@+id/containerShowPoster"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop" />
@@ -57,9 +57,9 @@
                     style="@style/Widget.SeriesGuide.TextView.ShowLabels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/inline_padding"
                     android:layout_toRightOf="@+id/containerShowPoster"
-                    android:textAppearance="@style/TextAppearance.Subhead"
+                    android:paddingTop="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.Body"
                     tools:text="Continuing" />
 
                 <TextView
@@ -69,7 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewShowStatus"
                     android:layout_toRightOf="@+id/containerShowPoster"
-                    android:textAppearance="@style/TextAppearance.Subhead"
+                    android:paddingTop="@dimen/inline_padding"
+                    android:textAppearance="@style/TextAppearance.Body"
                     tools:text="Sat 08:00 PM" />
 
                 <TextView
@@ -79,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewShowReleaseTime"
                     android:layout_toRightOf="@+id/containerShowPoster"
-                    android:textAppearance="@style/TextAppearance.Subhead"
+                    android:paddingTop="@dimen/inline_padding"
+                    android:textAppearance="@style/TextAppearance.Body"
                     tools:text="YouTube" />
 
                 <TextView
@@ -89,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewShowNetwork"
                     android:layout_toRightOf="@+id/containerShowPoster"
-                    android:textAppearance="@style/TextAppearance.Subhead"
+                    android:paddingTop="@dimen/inline_padding"
+                    android:textAppearance="@style/TextAppearance.Body"
                     tools:text="60 min" />
 
             </RelativeLayout>
