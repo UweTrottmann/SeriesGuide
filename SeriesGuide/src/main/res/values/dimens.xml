@@ -47,6 +47,8 @@
     <dimen name="show_poster_height_default">104dp</dimen>
     <dimen name="show_poster_width_large">101dp</dimen>
     <dimen name="show_poster_height_large">152dp</dimen>
+    <dimen name="show_poster_width_small">59dp</dimen>
+    <dimen name="show_poster_height_small">88dp</dimen>
 
     <dimen name="show_poster_width">@dimen/show_poster_width_default</dimen>
     <dimen name="show_poster_height">@dimen/show_poster_height_default</dimen>
