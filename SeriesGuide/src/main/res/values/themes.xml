@@ -64,6 +64,7 @@
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg</item>
+        <item name="sgColorShadow">@color/protection_dark</item>
 
         <!-- Color Arrays -->
         <item name="colorsProgressBar">@array/progressBarColors</item>
@@ -151,6 +152,7 @@
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_dark</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_dark</item>
+        <item name="sgColorShadow">@color/protection_dark</item>
 
         <!-- Color Arrays -->
         <item name="colorsProgressBar">@array/progressBarColorsAndroidDark</item>
@@ -250,6 +252,7 @@
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg_light</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg_light</item>
+        <item name="sgColorShadow">@color/protection_light</item>
 
         <!-- Color Arrays -->
         <item name="colorsProgressBar">@array/progressBarColors</item>

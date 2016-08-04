@@ -2,9 +2,12 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -40,6 +43,7 @@ import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShortcutUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -79,6 +83,7 @@ public class ShowFragment extends Fragment {
     }
 
     @BindView(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
+    @Nullable @BindView(R.id.viewShowBottomShadow) View bottomShadow;
 
     @BindView(R.id.containerShowPoster) View posterContainer;
     @BindView(R.id.imageViewShowPoster) ImageView posterView;
@@ -160,6 +165,13 @@ public class ShowFragment extends Fragment {
                 R.array.languages, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerLanguage.setAdapter(adapter);
+
+        // display an elevation shadow for show pane if it is shown above seasons pane
+        if (bottomShadow != null && getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT) {
+            Shadows.getInstance().setShadowDrawable(getContext(), bottomShadow,
+                    GradientDrawable.Orientation.TOP_BOTTOM);
+        }
 
         return v;
     }

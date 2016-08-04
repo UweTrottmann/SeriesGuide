@@ -1,141 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Set focus to work around textIsSelectable auto-scroll -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="beforeDescendants"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/large_padding">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:layout_marginTop="@dimen/large_padding"
-            cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-            cardview:cardPreventCornerOverlap="false">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <FrameLayout
-                    android:id="@+id/containerShowPoster"
-                    android:layout_width="@dimen/show_poster_width_default"
-                    android:layout_height="@dimen/show_poster_height_default"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:id="@+id/imageViewShowPoster"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/description_poster"
-                        android:scaleType="centerCrop"
-                        tools:src="@color/background_dim" />
-
-                </FrameLayout>
-
-                <ImageView
-                    android:id="@+id/imageViewShowPosterBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/show_poster_height_default"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:contentDescription="@null"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/textViewShowStatus"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="Continuing" />
-
-                <TextView
-                    android:id="@+id/textViewShowReleaseTime"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowStatus"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="Sat 08:00 PM" />
-
-                <TextView
-                    android:id="@+id/textViewShowNetwork"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowReleaseTime"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="YouTube" />
-
-                <TextView
-                    android:id="@+id/textViewShowRuntime"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowNetwork"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="60 min" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <include layout="@layout/buttons_show" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
-
-        <include layout="@layout/ratings_shows_narrow" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/large_padding"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
-
-        <include layout="@layout/fragment_show_meta" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:layout_marginTop="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
-
+        <!-- Set focus to work around textIsSelectable auto-scroll -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:orientation="vertical">
+            android:descendantFocusability="beforeDescendants"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/large_padding">
 
-            <include layout="@layout/buttons_more" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+                cardview:cardPreventCornerOverlap="false">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/containerShowPoster"
+                        android:layout_width="@dimen/show_poster_width_default"
+                        android:layout_height="@dimen/show_poster_height_default"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:id="@+id/imageViewShowPoster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/description_poster"
+                            android:scaleType="centerCrop"
+                            tools:src="@color/background_dim" />
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/imageViewShowPosterBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/show_poster_height_default"
+                        android:layout_toRightOf="@+id/containerShowPoster"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:id="@+id/textViewShowStatus"
+                        style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/containerShowPoster"
+                        android:paddingTop="@dimen/default_padding"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        tools:text="Continuing" />
+
+                    <TextView
+                        android:id="@+id/textViewShowReleaseTime"
+                        style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewShowStatus"
+                        android:layout_toRightOf="@+id/containerShowPoster"
+                        android:paddingTop="@dimen/inline_padding"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        tools:text="Sat 08:00 PM" />
+
+                    <TextView
+                        android:id="@+id/textViewShowNetwork"
+                        style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewShowReleaseTime"
+                        android:layout_toRightOf="@+id/containerShowPoster"
+                        android:paddingTop="@dimen/inline_padding"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        tools:text="YouTube" />
+
+                    <TextView
+                        android:id="@+id/textViewShowRuntime"
+                        style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewShowNetwork"
+                        android:layout_toRightOf="@+id/containerShowPoster"
+                        android:paddingTop="@dimen/inline_padding"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        tools:text="60 min" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <include layout="@layout/buttons_show" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:background="?attr/sgColorDivider" />
+
+            <include layout="@layout/ratings_shows_narrow" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:background="?attr/sgColorDivider" />
+
+            <include layout="@layout/fragment_show_meta" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:background="?attr/sgColorDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:orientation="vertical">
+
+                <include layout="@layout/buttons_more" />
+
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/viewShowBottomShadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="bottom" />
+
+</FrameLayout>

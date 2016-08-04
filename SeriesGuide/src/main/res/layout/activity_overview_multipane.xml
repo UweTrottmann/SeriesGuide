@@ -32,16 +32,12 @@
                     android:layout_weight="1"
                     tools:ignore="NestedWeights" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/sgColorDivider" />
-
                 <FrameLayout
                     android:id="@+id/fragment_seasons"
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="1" />
+
             </LinearLayout>
 
             <FrameLayout
