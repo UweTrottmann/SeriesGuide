@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -52,7 +53,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                 action = "load recommended shows";
                 Response<List<Show>> response = trakt.recommendations()
-                        .shows(Extended.IMAGES)
+                        .shows(Extended.FULLIMAGES)
                         .execute();
                 if (response.isSuccessful()) {
                     shows = response.body();
@@ -73,7 +74,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     response = trakt.sync().collectionShows(Extended.IMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
-                    response = trakt.sync().watchlistShows(Extended.IMAGES).execute();
+                    response = trakt.sync().watchlistShows(Extended.FULLIMAGES).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;
@@ -138,7 +139,9 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             SearchResult result = new SearchResult();
             result.tvdbid = show.ids.tvdb;
             result.title = show.title;
-            result.overview = show.year == null ? "" : String.valueOf(show.year);
+            // search results return an overview, while trending and other lists do not
+            result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
+                    : show.year != null ? String.valueOf(show.year) : "";
             if (show.images != null && show.images.poster != null) {
                 result.poster = show.images.poster.thumb;
             }

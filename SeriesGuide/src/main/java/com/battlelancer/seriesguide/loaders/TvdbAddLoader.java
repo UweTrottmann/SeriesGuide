@@ -67,7 +67,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                         = ServiceUtils
                         .getTrakt(getContext())
                         .shows()
-                        .trending(1, 35, Extended.IMAGES)
+                        .trending(1, 35, Extended.FULLIMAGES)
                         .execute();
                 if (response.isSuccessful()) {
                     List<Show> shows = new LinkedList<>();
