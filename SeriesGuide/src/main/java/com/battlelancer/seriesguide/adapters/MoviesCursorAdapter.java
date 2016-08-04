@@ -85,8 +85,11 @@ public class MoviesCursorAdapter extends CursorAdapter {
 
         // load poster, cache on external storage
         String posterPath = cursor.getString(MoviesQuery.POSTER);
+        // use fixed size so bitmaps can be re-used on config change
         ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
                 ? null : tmdbImageBaseUrl + posterPath)
+                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                .centerCrop()
                 .into(holder.poster);
 
         // context menu

@@ -165,6 +165,7 @@ dependencies {
     compile "com.android.support:customtabs:$supportVersion"
     compile "com.android.support:design:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
+    compile "com.android.support:percent:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Google Play Services

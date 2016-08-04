@@ -49,7 +49,7 @@
             style="@style/Widget.SeriesGuide.CardGrid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="@dimen/movie_item_width"
+            android:columnWidth="@dimen/movie_grid_columnWidth"
             android:numColumns="auto_fit"
             android:stretchMode="columnWidth"
             tools:listitem="@layout/item_movie" />

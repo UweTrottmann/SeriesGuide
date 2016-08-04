@@ -84,7 +84,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
 
         // poster
+        // use fixed size so bitmaps can be re-used on config change
         ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
+                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                .centerCrop()
                 .into(holder.poster);
 
         // context menu

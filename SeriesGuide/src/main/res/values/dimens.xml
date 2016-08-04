@@ -63,10 +63,16 @@
     <dimen name="person_headshot_large_width">100dp</dimen>
     <dimen name="person_headshot_large_height">300dp</dimen>
 
+    <!-- Movie posters, 2:3 aspect ratio -->
+    <dimen name="movie_poster_width_default">100dp</dimen>
+    <dimen name="movie_poster_height_default">150dp</dimen>
+    <dimen name="movie_poster_width_large">120dp</dimen>
+    <dimen name="movie_poster_height_large">180dp</dimen>
+    <dimen name="movie_poster_width">@dimen/movie_poster_width_default</dimen>
+    <dimen name="movie_poster_height">@dimen/movie_poster_height_default</dimen>
+
     <!-- Movies -->
-    <dimen name="movie_item_width">100dp</dimen>
-    <dimen name="movie_item_height">214dp</dimen>
-    <dimen name="movie_item_poster_height">150dp</dimen>
+    <dimen name="movie_grid_columnWidth">@dimen/movie_poster_width</dimen>
 
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>

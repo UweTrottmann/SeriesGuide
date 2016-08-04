@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="movie_item_width">144dp</dimen>
-    <dimen name="movie_item_height">284dp</dimen>
-    <dimen name="movie_item_poster_height">216dp</dimen>
-
     <dimen name="showgrid_columnWidth">330dp</dimen>
 
     <dimen name="show_poster_width">@dimen/show_poster_width_large</dimen>
     <dimen name="show_poster_height">@dimen/show_poster_height_large</dimen>
+
+    <dimen name="movie_poster_width">@dimen/movie_poster_width_large</dimen>
+    <dimen name="movie_poster_height">@dimen/movie_poster_height_large</dimen>
 
 </resources>

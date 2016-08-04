@@ -33,8 +33,8 @@
 
                 <FrameLayout
                     android:id="@+id/frameLayoutMoviePoster"
-                    android:layout_width="100dp"
-                    android:layout_height="150dp"
+                    android:layout_width="@dimen/movie_poster_width_default"
+                    android:layout_height="@dimen/movie_poster_height_default"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/larger_padding"
                     android:layout_marginRight="@dimen/default_padding"
