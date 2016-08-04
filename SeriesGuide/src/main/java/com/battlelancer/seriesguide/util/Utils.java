@@ -330,6 +330,16 @@ public class Utils {
                 .into(imageView);
     }
 
+    public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,
+            String posterPath) {
+        ServiceUtils.loadWithPicasso(context,
+                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+                .fit()
+                .centerCrop()
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
     /**
      * Tries to load a resized, center cropped version of the show/movie poster at the given URL
      * into the given {@link android.widget.ImageView}. On failure displays an error drawable

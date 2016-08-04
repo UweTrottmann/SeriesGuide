@@ -107,15 +107,14 @@ public class AddShowDialogFragment extends DialogFragment {
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
     @BindView(R.id.textViewAddGenres) TextView genres;
-    @BindView(R.id.textViewAddReleased) TextView released;
+    @BindView(R.id.textViewAddReleased) TextView releasedTextView;
     @BindView(R.id.imageViewAddPoster) ImageView poster;
 
     @BindViews({
             R.id.textViewAddRatingValue,
             R.id.textViewAddRatingLabel,
             R.id.textViewAddRatingRange,
-            R.id.textViewAddGenresLabel,
-            R.id.textViewAddReleasedLabel
+            R.id.textViewAddGenresLabel
     }) List<View> labelViews;
 
     static final ButterKnife.Setter<View, Boolean> VISIBLE
@@ -269,25 +268,34 @@ public class AddShowDialogFragment extends DialogFragment {
         title.setText(show.title);
         overview.setText(show.overview);
 
-        SpannableStringBuilder meta = new SpannableStringBuilder();
-
-        // status
+        // release year
+        SpannableStringBuilder statusText = new SpannableStringBuilder();
+        String releaseYear = TimeTools.getShowReleaseYear(show.firstAired);
+        if (releaseYear != null) {
+            statusText.append(releaseYear);
+        }
+        // continuing/ended status
         int encodedStatus = DataLiberationTools.encodeShowStatus(show.status);
         if (encodedStatus != ShowTools.Status.UNKNOWN) {
-            String statusText = ShowTools.getStatus(getActivity(), encodedStatus);
-            if (statusText != null) {
-                meta.append(statusText);
+            String decodedStatus = ShowTools.getStatus(getActivity(), encodedStatus);
+            if (decodedStatus != null) {
+                if (statusText.length() > 0) {
+                    statusText.append(" / "); // like "2016 / Continuing"
+                }
+                int currentTextLength = statusText.length();
+                statusText.append(decodedStatus);
                 // if continuing, paint status green
-                meta.setSpan(new TextAppearanceSpan(getActivity(),
+                statusText.setSpan(new TextAppearanceSpan(getActivity(),
                                 encodedStatus == ShowTools.Status.CONTINUING
-                                        ? R.style.TextAppearance_Subhead_Green
-                                        : R.style.TextAppearance_Subhead_Dim), 0, meta.length(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                meta.append("\n");
+                                        ? R.style.TextAppearance_Body_Green
+                                        : R.style.TextAppearance_Body_Dim),
+                        currentTextLength, statusText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
+        releasedTextView.setText(statusText);
 
         // next release day and time
+        SpannableStringBuilder timeAndNetworkText = new SpannableStringBuilder();
         if (show.release_time != -1) {
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(show.release_time),
@@ -298,16 +306,16 @@ public class AddShowDialogFragment extends DialogFragment {
             String day = TimeTools.formatToLocalDayOrDaily(getActivity(), release,
                     show.release_weekday);
             String time = TimeTools.formatToLocalTime(getActivity(), release);
-            meta.append(day).append(" ").append(time);
-            meta.append("\n");
+            timeAndNetworkText.append(day).append(" ").append(time);
+            timeAndNetworkText.append("\n");
         }
 
         // network, runtime
-        meta.append(show.network);
-        meta.append("\n");
-        meta.append(getString(R.string.runtime_minutes, show.runtime));
+        timeAndNetworkText.append(show.network);
+        timeAndNetworkText.append("\n");
+        timeAndNetworkText.append(getString(R.string.runtime_minutes, show.runtime));
 
-        showmeta.setText(meta);
+        showmeta.setText(timeAndNetworkText);
 
         // rating
         rating.setText(TraktTools.buildRatingString(show.rating));
@@ -315,11 +323,8 @@ public class AddShowDialogFragment extends DialogFragment {
         // genres
         Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
-        // original release
-        Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
-
         // poster
-        Utils.loadTvdbShowPoster(getActivity(), poster, show.poster);
+        Utils.loadAndFitTvdbShowPoster(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);

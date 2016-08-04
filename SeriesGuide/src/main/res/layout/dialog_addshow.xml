@@ -18,7 +18,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:minWidth="@dimen/dialog_min_width"
-            android:padding="@dimen/larger_padding">
+            android:paddingBottom="@dimen/large_padding">
 
             <ProgressBar
                 android:id="@+id/progressBarAdd"
@@ -26,46 +26,105 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />
 
-            <TextView
-                android:id="@+id/textViewAddTitle"
+            <RelativeLayout
+                android:id="@+id/containerShowInfo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/default_padding"
-                android:text="@string/action_shows_add"
-                android:textAppearance="@style/TextAppearance.Title"
-                android:textIsSelectable="true" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageViewAddPoster"
-                android:layout_width="@dimen/show_poster_width"
-                android:layout_height="@dimen/show_poster_height"
-                android:layout_below="@+id/textViewAddTitle"
-                android:scaleType="centerInside"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/ic_image_missing" />
+                <ImageView
+                    android:id="@+id/imageViewAddPoster"
+                    android:layout_width="@dimen/show_poster_width_large"
+                    android:layout_height="@dimen/show_poster_height_large"
+                    android:scaleType="centerInside"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/ic_image_missing" />
+
+                <TextView
+                    android:id="@+id/textViewAddTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:layout_toRightOf="@id/imageViewAddPoster"
+                    android:paddingTop="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.Title"
+                    android:textIsSelectable="true"
+                    tools:text="@string/action_shows_add" />
+
+                <TextView
+                    android:id="@+id/textViewAddReleased"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewAddTitle"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:layout_toRightOf="@id/imageViewAddPoster"
+                    android:paddingBottom="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.Body"
+                    android:textIsSelectable="true"
+                    tools:text="2014 / Continuing" />
+
+                <TextView
+                    android:id="@+id/textViewAddShowMeta"
+                    style="@style/Block.FlowText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewAddReleased"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:layout_toRightOf="@+id/imageViewAddPoster"
+                    android:textAppearance="@style/TextAppearance.Body"
+                    android:textIsSelectable="true"
+                    tools:text="Mon 07:00 PM on Showtime\n60 min" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/textViewAddShowMeta"
+                android:id="@+id/textViewAddDescription"
                 style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddTitle"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="0dp"
-                android:layout_toRightOf="@+id/imageViewAddPoster"
-                android:textAppearance="@style/TextAppearance.Subhead"
+                android:layout_below="@+id/containerShowInfo"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:maxWidth="@dimen/max_width_text_size_body"
+                android:textAppearance="@style/TextAppearance.Body"
                 android:textIsSelectable="true"
-                tools:text="Continuing\nMon 07:00 PM\nShowtime\n60 min" />
+                tools:text="@string/description_overview" />
+
+            <TextView
+                android:id="@+id/textViewAddGenresLabel"
+                style="@style/Block.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddDescription"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:text="@string/show_genres"
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+            <TextView
+                android:id="@+id/textViewAddGenres"
+                style="@style/Block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textViewAddGenresLabel"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:textAppearance="@style/TextAppearance.Body"
+                tools:text="Comedy, Drama" />
 
             <TextView
                 android:id="@+id/textViewAddRatingValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageViewAddPoster"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_below="@+id/textViewAddGenres"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/placeholder_rating"
-                android:textAppearance="@style/TextAppearance.Display1"
+                android:textAppearance="@style/TextAppearance.Title"
                 tools:text="9.6" />
 
             <TextView
@@ -87,66 +146,6 @@
                 android:layout_marginTop="-4dp"
                 android:text="@string/trakt"
                 android:textAppearance="@style/TextAppearance.Caption" />
-
-            <TextView
-                android:id="@+id/textViewAddDescription"
-                style="@style/Block.FlowText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddRatingLabel"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="@dimen/large_padding"
-                android:maxWidth="@dimen/max_width_text_size_body"
-                android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
-                tools:text="@string/description_overview" />
-
-            <TextView
-                android:id="@+id/textViewAddGenresLabel"
-                style="@style/Block.WithTopMargin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddDescription"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:text="@string/show_genres"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-            <TextView
-                android:id="@+id/textViewAddGenres"
-                style="@style/Block"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddGenresLabel"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
-                tools:text="Comedy, Drama" />
-
-            <TextView
-                android:id="@+id/textViewAddReleasedLabel"
-                style="@style/Block.WithTopMargin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddGenres"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:text="@string/original_release"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-            <TextView
-                android:id="@+id/textViewAddReleased"
-                style="@style/Block"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddReleasedLabel"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
-                tools:text="2014" />
 
         </RelativeLayout>
     </ScrollView>
