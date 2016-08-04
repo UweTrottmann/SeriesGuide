@@ -9,6 +9,13 @@ Version 32
 ----------
 *(in development)*
 
+#### 32-beta2
+*(2016-08-04)*
+
+* TWEAK Many layout updates, most notably better image aspect ratios.
+* TWEAK Allow list widget to be reduced horizontally to 2 blocks.
+* NOTICE Latest translations from crowdin.
+
 #### 32-beta1
 *(2016-07-08)*
 
