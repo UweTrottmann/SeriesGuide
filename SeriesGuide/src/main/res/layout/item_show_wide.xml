@@ -23,30 +23,29 @@
 
         <ImageView
             android:id="@+id/favoritedLabel"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:scaleType="centerInside"
             android:src="?attr/drawableStar"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,RtlSymmetry" />
 
         <ImageView
             android:id="@+id/imageViewShowsContextMenu"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
-            android:paddingLeft="24dp"
-            android:paddingTop="16dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
             android:scaleType="centerInside"
             android:src="?attr/drawableDropdown"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
             android:id="@+id/seriesname"
