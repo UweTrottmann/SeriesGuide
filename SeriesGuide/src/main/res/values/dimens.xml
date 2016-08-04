@@ -57,8 +57,6 @@
 
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
-    <dimen name="person_headshot_large_width">100dp</dimen>
-    <dimen name="person_headshot_large_height">300dp</dimen>
 
     <!-- Movie posters, 2:3 aspect ratio -->
     <dimen name="movie_poster_width_default">100dp</dimen>
