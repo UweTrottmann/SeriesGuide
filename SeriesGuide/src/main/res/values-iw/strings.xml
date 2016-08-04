@@ -54,7 +54,7 @@
   <string name="share_checkout">בדוק את %s</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
-  <string name="links">Links</string>
+  <string name="links">קישורים</string>
   <!-- Comments -->
   <string name="comments">תגובות</string>
   <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
@@ -492,11 +492,11 @@
   <string name="person_biography">ביוגרפיה</string>
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_action_yes">כן!</string>
+  <string name="feedback_action_notreally">לא ממש</string>
+  <string name="feedback_question_rate_google">דרג/י אותנו ב- Google Play?</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
   <string name="feedback_question_feedback">Tell me how to improve it?</string>
   <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_action_nothanks">לא, תודה</string>
 </resources>

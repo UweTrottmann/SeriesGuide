@@ -213,7 +213,7 @@
   <string name="action_movies_sort_title">Titre</string>
   <string name="action_movies_sort_release">Date de parution</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Impossible de calculer les statistiques.</string>
   <string name="statistics_shows">Séries</string>
   <string name="statistics_episodes">Épisodes</string>
   <string name="statistics_movies">Films</string>
@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Expérimental !</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
   <string name="hexagon_warning_lists">Les listes ne sont pas incluses.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">Tant que SerieGuide Cloud est connecté, la synchronisation trakt sera désactivée.</string>
   <string name="hexagon_signin">Connexion</string>
   <string name="hexagon_signed_in">Vous êtes connecté au cloud SeriesGuide.</string>
   <string name="hexagon_signout">Déconnexion</string>
