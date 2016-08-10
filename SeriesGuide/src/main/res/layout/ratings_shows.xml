@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder_rating"
-        android:textAppearance="@style/TextAppearance.Display1"
+        android:textAppearance="@style/TextAppearance.Title"
         tools:text="9.6" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/large_padding"
         android:text="@string/action_rate"
-        android:textAppearance="@style/TextAppearance.Body.Highlight" />
+        android:textAppearance="@style/TextAppearance.Button" />
 
     <TextView
         android:id="@+id/textViewRatingsUserLabel"
