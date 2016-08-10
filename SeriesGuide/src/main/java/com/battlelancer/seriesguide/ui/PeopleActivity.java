@@ -1,17 +1,23 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
 
-    private boolean mTwoPane;
+    @Nullable @BindView(R.id.viewPeopleShadowStart) View shadowPeoplePane;
+
+    private boolean isTwoPane;
 
     public interface InitBundle {
         String MEDIA_TYPE = "media_title";
@@ -58,10 +64,15 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people);
+        ButterKnife.bind(this);
         setupActionBar();
 
-        if (findViewById(R.id.containerPeoplePerson) != null) {
-            mTwoPane = true;
+        // if there is a pane shadow, we are in two pane layout
+        isTwoPane = shadowPeoplePane != null;
+
+        if (shadowPeoplePane != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowPeoplePane,
+                    GradientDrawable.Orientation.RIGHT_LEFT);
         }
 
         if (savedInstanceState == null) {
@@ -72,7 +83,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
                 showPerson(null, personTmdbId);
 
                 // if this is not a dual pane layout, remove ourselves from back stack
-                if (!mTwoPane) {
+                if (!isTwoPane) {
                     finish();
                     return;
                 }
@@ -82,7 +93,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             f.setArguments(getIntent().getExtras());
 
             // in two-pane mode, list items should be activated when touched
-            if (mTwoPane) {
+            if (isTwoPane) {
                 f.setActivateOnItemClick();
             }
 
@@ -119,7 +130,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
     @Override
     public void showPerson(@Nullable View view, int tmdbId) {
-        if (mTwoPane) {
+        if (isTwoPane) {
             // show inline
             PersonFragment f = PersonFragment.newInstance(tmdbId);
             getSupportFragmentManager().beginTransaction()
