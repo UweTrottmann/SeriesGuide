@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--suppress AndroidDomInspection -->
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,40 +15,40 @@
 
         <include layout="@layout/toolbar" />
 
-        <LinearLayout
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/fragment_show"
+                app:layout_heightPercent="50%"
+                app:layout_widthPercent="40%" />
 
-                <FrameLayout
-                    android:id="@+id/fragment_show"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    tools:ignore="NestedWeights" />
+            <View
+                android:id="@+id/viewOverviewShadowBottom"
+                android:layout_height="4dp"
+                android:layout_alignBottom="@id/fragment_show"
+                app:layout_widthPercent="40%" />
 
-                <FrameLayout
-                    android:id="@+id/fragment_seasons"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/fragment_seasons"
+                android:layout_below="@id/fragment_show"
+                app:layout_heightPercent="50%"
+                app:layout_widthPercent="40%" />
 
             <FrameLayout
                 android:id="@+id/fragment_overview"
-                android:layout_width="0px"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3" />
+                android:layout_toRightOf="@id/fragment_show" />
 
-        </LinearLayout>
+            <View
+                android:id="@+id/viewOverviewShadowStart"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_alignLeft="@id/fragment_overview" />
+
+        </android.support.percent.PercentRelativeLayout>
 
     </LinearLayout>
 

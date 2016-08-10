@@ -272,16 +272,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <View
-        android:id="@+id/viewOverviewShadowStart"
-        android:layout_width="4dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start" />
-
-    <View
-        android:id="@+id/viewOverviewShadowEnd"
-        android:layout_width="4dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end" />
-
 </FrameLayout>

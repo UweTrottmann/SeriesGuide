@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <bool name="overview_shadow_start">true</bool>
-    <bool name="overview_shadow_end">true</bool>
-
-</resources>

@@ -6,7 +6,4 @@
     <bool name="gridClipToPadding">false</bool>
     <bool name="sgFitSystemWindows">false</bool>
 
-    <bool name="overview_shadow_start">false</bool>
-    <bool name="overview_shadow_end">false</bool>
-
 </resources>
