@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -252,6 +253,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
                             ThemeUtils.updateTheme((String) newValue);
+                            Shadows.getInstance().resetShadowColor();
 
                             // restart to apply new theme, go back to this settings screen
                             TaskStackBuilder.create(getActivity())
