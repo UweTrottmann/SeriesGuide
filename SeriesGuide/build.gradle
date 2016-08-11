@@ -129,6 +129,9 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.7'
+    // https://github.com/google/dagger/releases
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.google.dagger:dagger:2.6'
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
