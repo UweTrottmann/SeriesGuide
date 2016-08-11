@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -19,17 +20,19 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  */
 public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
+    private final SgApp app;
     private int mTmdbId;
 
-    public MovieLoader(Context context, int tmdbId) {
-        super(context);
+    public MovieLoader(SgApp app, int tmdbId) {
+        super(app);
+        this.app = app;
         mTmdbId = tmdbId;
     }
 
     @Override
     public MovieDetails loadInBackground() {
         // try loading from trakt and tmdb, this might return a cached response
-        MovieDetails details = MovieTools.Download.getMovieDetails(getContext(), mTmdbId);
+        MovieDetails details = MovieTools.getInstance(app).getMovieDetails(mTmdbId);
 
         // update local database
         updateLocalMovie(getContext(), details, mTmdbId);

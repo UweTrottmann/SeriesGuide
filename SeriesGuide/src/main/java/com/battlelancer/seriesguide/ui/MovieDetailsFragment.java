@@ -351,7 +351,7 @@ public class MovieDetailsFragment extends Fragment {
                     MovieTools.removeFromCollection(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection(getActivity(), tmdbId);
+                    MovieTools.addToCollection((SgApp) getActivity().getApplication(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -378,7 +378,7 @@ public class MovieDetailsFragment extends Fragment {
                     MovieTools.removeFromWatchlist(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist(getActivity(), tmdbId);
+                    MovieTools.addToWatchlist((SgApp) getActivity().getApplication(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
@@ -543,7 +543,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

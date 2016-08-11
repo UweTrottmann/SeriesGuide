@@ -55,6 +55,8 @@ import timber.log.Timber;
  */
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
+    private final SgApp app;
+
     public enum SyncType {
 
         DELTA(0),
@@ -226,8 +228,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return isSyncActive;
     }
 
-    public SgSyncAdapter(Context context, boolean autoInitialize) {
-        super(context, autoInitialize);
+    public SgSyncAdapter(SgApp app, boolean autoInitialize) {
+        super(app, autoInitialize);
+        this.app = app;
         Timber.d("Creating sync adapter");
     }
 
@@ -321,8 +324,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (HexagonTools.isSignedIn(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
-                    boolean success = HexagonTools.syncWithHexagon(getContext(), showsExisting,
-                            showsNew);
+                    boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
@@ -450,7 +452,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private static UpdateResult performTraktSync(Context context, HashSet<Integer> localShows,
+    private UpdateResult performTraktSync(Context context, HashSet<Integer> localShows,
             long currentTime) {
         if (!TraktCredentials.get(context).hasCredentials()) {
             Timber.d("performTraktSync: no auth, skip");
@@ -508,7 +510,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
-        if (MovieTools.Download.syncMovieListsWithTrakt(context, lastActivity.movies)
+        if (MovieTools.getInstance(app).syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }

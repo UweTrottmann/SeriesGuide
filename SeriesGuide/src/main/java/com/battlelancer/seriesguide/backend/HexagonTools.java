@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -220,25 +221,25 @@ public class HexagonTools {
      * <p> Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
      */
-    public static boolean syncWithHexagon(Context context, HashSet<Integer> existingShows,
+    public static boolean syncWithHexagon(SgApp app, HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows) {
         Timber.d("syncWithHexagon: syncing...");
 
         //// EPISODES
-        boolean syncEpisodesSuccessful = syncEpisodes(context);
+        boolean syncEpisodesSuccessful = syncEpisodes(app);
         Timber.d("syncWithHexagon: episode sync %s",
                 syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// SHOWS
-        boolean syncShowsSuccessful = syncShows(context, existingShows, newShows);
+        boolean syncShowsSuccessful = syncShows(app, existingShows, newShows);
         Timber.d("syncWithHexagon: show sync %s", syncShowsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// MOVIES
-        boolean syncMoviesSuccessful = syncMovies(context);
+        boolean syncMoviesSuccessful = syncMovies(app);
         Timber.d("syncWithHexagon: movie sync %s", syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// LISTS
-        boolean syncListsSuccessful = syncLists(context);
+        boolean syncListsSuccessful = syncLists(app);
         Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         Timber.d("syncWithHexagon: syncing...DONE");
@@ -326,28 +327,28 @@ public class HexagonTools {
         return true;
     }
 
-    private static boolean syncMovies(Context context) {
-        boolean hasMergedMovies = HexagonSettings.hasMergedMovies(context);
+    private static boolean syncMovies(SgApp app) {
+        boolean hasMergedMovies = HexagonSettings.hasMergedMovies(app);
 
         // download movies and apply property changes, build list of new movies
         Set<Integer> newCollectionMovies = new HashSet<>();
         Set<Integer> newWatchlistMovies = new HashSet<>();
-        boolean downloadSuccessful = MovieTools.Download.fromHexagon(context, newCollectionMovies,
+        boolean downloadSuccessful = MovieTools.Download.fromHexagon(app, newCollectionMovies,
                 newWatchlistMovies, hasMergedMovies);
         if (!downloadSuccessful) {
             return false;
         }
 
         if (!hasMergedMovies) {
-            boolean uploadSuccessful = MovieTools.Upload.toHexagon(context);
+            boolean uploadSuccessful = MovieTools.Upload.toHexagon(app);
             if (!uploadSuccessful) {
                 return false;
             }
         }
 
         // add new movies with the just downloaded properties
-        SgSyncAdapter.UpdateResult result = MovieTools.Download.addMovies(context,
-                newCollectionMovies, newWatchlistMovies);
+        SgSyncAdapter.UpdateResult result = MovieTools.getInstance(app)
+                .addMovies(newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
@@ -355,7 +356,7 @@ public class HexagonTools {
                 return false;
             }
             // set movies as merged
-            PreferenceManager.getDefaultSharedPreferences(context)
+            PreferenceManager.getDefaultSharedPreferences(app)
                     .edit()
                     .putBoolean(HexagonSettings.KEY_MERGED_MOVIES, true)
                     .commit();
