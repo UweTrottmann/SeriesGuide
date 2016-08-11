@@ -31,7 +31,7 @@
     </uses-feature>
 
     <application
-        android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
+        android:name="com.battlelancer.seriesguide.SgApp"
         android:allowBackup="true"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:fullBackupOnly="true"

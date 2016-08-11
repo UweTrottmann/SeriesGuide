@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -100,7 +100,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // guard against scheduling too many sync requests
         Account account = AccountUtils.getAccount(context);
         if (account == null ||
-                ContentResolver.isSyncPending(account, SeriesGuideApplication.CONTENT_AUTHORITY)) {
+                ContentResolver.isSyncPending(account, SgApp.CONTENT_AUTHORITY)) {
             return;
         }
 
@@ -185,7 +185,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return;
         }
         ContentResolver.requestSync(account,
-                SeriesGuideApplication.CONTENT_AUTHORITY, args);
+                SgApp.CONTENT_AUTHORITY, args);
     }
 
     /**
@@ -196,7 +196,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (account == null) {
             return;
         }
-        ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
+        ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY,
                 sync);
     }
 
@@ -206,7 +206,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     public static boolean isSyncAutomatically(Context context) {
         Account account = AccountUtils.getAccount(context);
         return account != null && ContentResolver.getSyncAutomatically(account,
-                SeriesGuideApplication.CONTENT_AUTHORITY);
+                SgApp.CONTENT_AUTHORITY);
     }
 
     /**
@@ -219,7 +219,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return false;
         }
         boolean isSyncActive = ContentResolver.isSyncActive(account,
-                SeriesGuideApplication.CONTENT_AUTHORITY);
+                SgApp.CONTENT_AUTHORITY);
         if (isSyncActive && isDisplayWarning) {
             Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
         }

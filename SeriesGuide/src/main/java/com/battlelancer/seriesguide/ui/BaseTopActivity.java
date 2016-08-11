@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
@@ -231,7 +231,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
                     // Test the ContentResolver to see if the sync adapter is active.
                     boolean syncActive = ContentResolver.isSyncActive(
-                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
+                            account, SgApp.CONTENT_AUTHORITY);
                     setSyncProgressVisibility(syncActive);
                 }
             });

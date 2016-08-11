@@ -20,7 +20,7 @@ import timber.log.Timber;
  *
  * @author Uwe Trottmann
  */
-public class SeriesGuideApplication extends Application {
+public class SgApp extends Application {
 
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;

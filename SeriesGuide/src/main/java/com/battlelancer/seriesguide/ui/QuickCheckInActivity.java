@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationManagerCompat;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -81,7 +81,7 @@ public class QuickCheckInActivity extends FragmentActivity {
         if (event.mWasSuccessful) {
             NotificationManagerCompat manager = NotificationManagerCompat.from(
                     getApplicationContext());
-            manager.cancel(SeriesGuideApplication.NOTIFICATION_EPISODE_ID);
+            manager.cancel(SgApp.NOTIFICATION_EPISODE_ID);
             // replicate delete intent
             NotificationService.handleDeleteIntent(this, getIntent());
         }
