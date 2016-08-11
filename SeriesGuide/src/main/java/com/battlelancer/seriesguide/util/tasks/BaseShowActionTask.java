@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.util.tasks;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -13,17 +13,21 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
+import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public abstract class BaseShowActionTask extends BaseActionTask {
 
+    @Inject Lazy<Sync> traktSync;
     private final int showTvdbId;
 
-    public BaseShowActionTask(Context context, int showTvdbId) {
-        super(context);
+    public BaseShowActionTask(SgApp app, int showTvdbId) {
+        super(app);
+        app.getServicesComponent().inject(this);
         this.showTvdbId = showTvdbId;
     }
 
@@ -48,11 +52,10 @@ public abstract class BaseShowActionTask extends BaseActionTask {
                 return ERROR_TRAKT_AUTH;
             }
 
-            Sync traktSync = trakt.sync();
             SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)));
 
             try {
-                Response<SyncResponse> response = doTraktAction(traktSync, items).execute();
+                Response<SyncResponse> response = doTraktAction(traktSync.get(), items).execute();
                 if (response.isSuccessful()) {
                     if (isShowNotFound(response.body())) {
                         return ERROR_TRAKT_API_NOT_FOUND;

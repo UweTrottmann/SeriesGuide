@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +17,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -149,17 +149,19 @@ public abstract class AddFragment extends Fragment {
             void onClick(View view, int showTvdbId);
         }
 
+        private final SgApp app;
         private final OnContextMenuClickListener menuClickListener;
         private final boolean hideContextMenuIfAdded;
         private final LayoutInflater inflater;
 
-        public AddAdapter(Context context, List<SearchResult> objects,
+        public AddAdapter(Activity activity, List<SearchResult> objects,
                 OnContextMenuClickListener menuClickListener,
                 boolean hideContextMenuIfAdded) {
-            super(context, 0, objects);
+            super(activity, 0, objects);
+            app = SgApp.from(activity);
             this.menuClickListener = menuClickListener;
             this.hideContextMenuIfAdded = hideContextMenuIfAdded;
-            inflater = LayoutInflater.from(context);
+            inflater = LayoutInflater.from(activity);
         }
 
         @Override
@@ -192,7 +194,7 @@ public abstract class AddFragment extends Fragment {
                     item.isAdded = true;
                     EventBus.getDefault().post(new AddShowEvent());
 
-                    TaskManager.getInstance(getContext()).performAddTask(item);
+                    TaskManager.getInstance(getContext()).performAddTask(app, item);
                 }
             });
 

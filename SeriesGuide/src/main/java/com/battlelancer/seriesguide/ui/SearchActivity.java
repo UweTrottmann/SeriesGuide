@@ -30,6 +30,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.SearchSettings;
@@ -413,7 +414,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(show);
+        TaskManager.getInstance(this).performAddTask(SgApp.from(this), show);
     }
 
     /**

@@ -6,23 +6,26 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -54,15 +57,16 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private final Context context;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
+    @Inject Lazy<Sync> traktSync;
     private boolean isFinishedAddingShows = false;
     private boolean isSilentMode;
     private boolean isMergingShows;
     private String currentShowName;
 
-    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
+    public AddShowTask(SgApp app, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
-        // use an activity independent context
-        this.context = context.getApplicationContext();
+        this.context = app;
+        app.getServicesComponent().inject(this);
         addQueue.addAll(shows);
         this.isSilentMode = isSilentMode;
         this.isMergingShows = isMergingShows;
@@ -112,16 +116,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         HashMap<Integer, BaseShow> traktWatched = null;
         if (!HexagonTools.isSignedIn(context) && TraktCredentials.get(context).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.");
-            Sync traktSync = ServiceUtils.getTrakt(context).sync();
             // get collection
-            HashMap<Integer, BaseShow> traktShows = getTraktShows(traktSync, "get collection",
-                    true);
+            HashMap<Integer, BaseShow> traktShows = getTraktShows("get collection", true);
             if (traktShows == null) {
                 return null; // can not get collected state from trakt, give up.
             }
             traktCollection = traktShows;
             // get watched
-            traktShows = getTraktShows(traktSync, "get watched", false);
+            traktShows = getTraktShows("get watched", false);
             if (traktShows == null) {
                 return null; // can not get watched state from trakt, give up.
             }
@@ -230,14 +232,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Nullable
-    private HashMap<Integer, BaseShow> getTraktShows(Sync traktSync, String action,
+    private HashMap<Integer, BaseShow> getTraktShows(String action,
             boolean isCollectionNotWatched) {
         try {
             Response<List<BaseShow>> response;
             if (isCollectionNotWatched) {
-                response = traktSync.collectionShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
             } else {
-                response = traktSync.watchedShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().watchedShows(Extended.DEFAULT_MIN).execute();
             }
             if (response.isSuccessful()) {
                 return TraktTools.buildTraktShowsMap(response.body());

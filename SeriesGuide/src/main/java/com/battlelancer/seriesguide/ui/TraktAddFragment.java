@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v4.app.LoaderManager;
@@ -108,18 +107,18 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(view.getContext(), showTvdbId));
+                    new AddItemMenuItemClickListener(SgApp.from(getActivity()), showTvdbId));
             popupMenu.show();
         }
     };
 
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final Context context;
+        private final SgApp app;
         private final int showTvdbId;
 
-        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
-            this.context = context;
+        public AddItemMenuItemClickListener(SgApp app, int showTvdbId) {
+            this.app = app;
             this.showTvdbId = showTvdbId;
         }
 
@@ -127,11 +126,11 @@ public class TraktAddFragment extends AddFragment {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(context, showTvdbId);
+                ShowTools.addToWatchlist(app, showTvdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(context, showTvdbId);
+                ShowTools.removeFromWatchlist(app, showTvdbId);
                 return true;
             }
             return false;
@@ -157,7 +156,8 @@ public class TraktAddFragment extends AddFragment {
                         result.isAdded = true;
                     }
                 }
-                TaskManager.getInstance(getActivity()).performAddTask(showsToAdd, false, false);
+                TaskManager.getInstance(getActivity())
+                        .performAddTask(SgApp.from(getActivity()), showsToAdd, false, false);
                 EventBus.getDefault().post(new AddShowEvent());
             }
             // disable the item so the user has to come back

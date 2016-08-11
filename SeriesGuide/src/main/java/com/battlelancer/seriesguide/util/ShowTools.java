@@ -284,8 +284,8 @@ public class ShowTools {
     /**
      * Add a show to the users trakt watchlist.
      */
-    public static void addToWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(context, showTvdbId));
+    public static void addToWatchlist(SgApp app, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(app, showTvdbId));
     }
 
     /**
@@ -298,8 +298,8 @@ public class ShowTools {
     /**
      * Remove a show from the users trakt watchlist.
      */
-    public static void removeFromWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(context, showTvdbId));
+    public static void removeFromWatchlist(SgApp app, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(app, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {

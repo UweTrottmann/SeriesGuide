@@ -9,17 +9,21 @@ import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
+import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.tasks.BaseMovieActionTask;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
+import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = { AppModule.class, TmdbModule.class, TraktModule.class, TvdbModule.class })
 public interface ServicesComponent {
+    void inject(AddShowTask addShowTask);
     void inject(BaseMovieActionTask baseMovieActionTask);
     void inject(BaseRateItemTask baseRateItemTask);
+    void inject(BaseShowActionTask baseShowActionTask);
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
     void inject(MovieTools movieTools);

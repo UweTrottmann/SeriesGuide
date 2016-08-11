@@ -151,7 +151,7 @@ public class TvdbAddFragment extends AddFragment {
                     .setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
-                    new TraktAddFragment.AddItemMenuItemClickListener(view.getContext(),
+                    new TraktAddFragment.AddItemMenuItemClickListener(SgApp.from(getActivity()),
                             showTvdbId));
             popupMenu.show();
         }

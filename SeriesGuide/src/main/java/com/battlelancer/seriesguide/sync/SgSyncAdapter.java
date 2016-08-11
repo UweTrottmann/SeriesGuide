@@ -347,7 +347,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (showsNew.size() > 0) {
                         List<SearchResult> showsNewList = new LinkedList<>(showsNew.values());
                         TaskManager.getInstance(getContext())
-                                .performAddTask(showsNewList, true, false);
+                                .performAddTask(app, showsNewList, true, false);
                     }
                 }
 

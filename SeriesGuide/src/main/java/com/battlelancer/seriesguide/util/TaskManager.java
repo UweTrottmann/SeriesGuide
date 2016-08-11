@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import java.util.ArrayList;
@@ -44,10 +45,10 @@ public class TaskManager {
         return _instance;
     }
 
-    public synchronized void performAddTask(SearchResult show) {
+    public synchronized void performAddTask(SgApp app, SearchResult show) {
         List<SearchResult> wrapper = new ArrayList<>();
         wrapper.add(show);
-        performAddTask(wrapper, false, false);
+        performAddTask(app, wrapper, false, false);
     }
 
     /**
@@ -55,9 +56,8 @@ public class TaskManager {
      *
      * @param isSilentMode   Whether to display status toasts if a show could not be added.
      * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
-     *                       added successfully.
      */
-    public synchronized void performAddTask(final List<SearchResult> shows,
+    public synchronized void performAddTask(final SgApp app, final List<SearchResult> shows,
             final boolean isSilentMode, final boolean isMergingShows) {
         if (!isSilentMode) {
             // notify user here already
@@ -83,7 +83,7 @@ public class TaskManager {
                 @Override
                 public void run() {
                     mAddTask = (AddShowTask) Utils.executeInOrder(
-                            new AddShowTask(mContext, shows, isSilentMode, isMergingShows));
+                            new AddShowTask(app, shows, isSilentMode, isMergingShows));
                 }
             });
         }

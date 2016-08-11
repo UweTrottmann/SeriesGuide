@@ -296,12 +296,12 @@ public class HexagonTools {
         return mergeSuccessful && changedDownloadSuccessful;
     }
 
-    private static boolean syncShows(Context context, HashSet<Integer> existingShows,
+    private static boolean syncShows(SgApp app, HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows) {
-        boolean hasMergedShows = HexagonSettings.hasMergedShows(context);
+        boolean hasMergedShows = HexagonSettings.hasMergedShows(app);
 
         // download shows and apply property changes (if merging only overwrite some properties)
-        boolean downloadSuccessful = ShowTools.Download.fromHexagon(context, existingShows,
+        boolean downloadSuccessful = ShowTools.Download.fromHexagon(app, existingShows,
                 newShows, hasMergedShows);
         if (!downloadSuccessful) {
             return false;
@@ -309,7 +309,7 @@ public class HexagonTools {
 
         // if merge required, upload all shows to Hexagon
         if (!hasMergedShows) {
-            boolean uploadSuccessful = ShowTools.Upload.toHexagon(context);
+            boolean uploadSuccessful = ShowTools.Upload.toHexagon(app);
             if (!uploadSuccessful) {
                 return false;
             }
@@ -318,10 +318,10 @@ public class HexagonTools {
         // add new shows
         if (newShows.size() > 0) {
             List<SearchResult> newShowsList = new LinkedList<>(newShows.values());
-            TaskManager.getInstance(context).performAddTask(newShowsList, true, !hasMergedShows);
+            TaskManager.getInstance(app).performAddTask(app, newShowsList, true, !hasMergedShows);
         } else if (!hasMergedShows) {
             // set shows as merged
-            HexagonSettings.setHasMergedShows(context, true);
+            HexagonSettings.setHasMergedShows(app, true);
         }
 
         return true;
