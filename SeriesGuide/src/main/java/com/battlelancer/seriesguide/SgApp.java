@@ -6,6 +6,10 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.modules.AppModule;
+import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
+import com.battlelancer.seriesguide.modules.ServicesModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -48,6 +52,8 @@ public class SgApp extends Application {
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
+    private ServicesComponent servicesComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -79,6 +85,15 @@ public class SgApp extends Application {
         Analytics.getTracker(this);
 
         enableStrictMode();
+
+        servicesComponent = DaggerServicesComponent.builder()
+                .appModule(new AppModule(this))
+                .servicesModule(new ServicesModule())
+                .build();
+    }
+
+    public ServicesComponent getServicesComponent() {
+        return servicesComponent;
     }
 
     /**

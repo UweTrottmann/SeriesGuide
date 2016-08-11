@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
 import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
@@ -597,7 +598,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieCreditsLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieCreditsLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

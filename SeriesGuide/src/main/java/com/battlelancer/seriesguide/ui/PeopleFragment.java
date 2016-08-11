@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
@@ -215,7 +216,7 @@ public class PeopleFragment extends Fragment {
             setProgressVisibility(true);
 
             if (mMediaType == PeopleActivity.MediaType.MOVIE) {
-                return new MovieCreditsLoader(getActivity(), mTmdbId);
+                return new MovieCreditsLoader((SgApp) getActivity().getApplication(), mTmdbId);
             } else {
                 return new ShowCreditsLoader(getActivity(), mTmdbId, false);
             }
