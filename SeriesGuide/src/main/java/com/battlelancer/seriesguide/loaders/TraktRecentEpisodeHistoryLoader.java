@@ -139,7 +139,7 @@ public class TraktRecentEpisodeHistoryLoader
     public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(TraktV2 trakt) {
         return trakt.users()
                 .history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
-                        Extended.IMAGES);
+                        Extended.IMAGES, null, null);
     }
 
     protected static Result buildResultFailure(int emptyTextResId) {

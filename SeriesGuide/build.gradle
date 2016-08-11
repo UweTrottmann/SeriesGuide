@@ -152,7 +152,7 @@ dependencies {
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann.tmdb2:tmdb-java:1.2.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.0.0') {
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.2.0') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
     }

@@ -73,7 +73,7 @@ public class TraktFriendsEpisodeHistoryLoader
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
                     traktUsers.history(new Username(username), HistoryType.EPISODES, 1, 1,
-                            Extended.IMAGES), "get friend episode history");
+                            Extended.IMAGES, null, null), "get friend episode history");
             if (history == null || history.size() == 0) {
                 continue; // no history
             }

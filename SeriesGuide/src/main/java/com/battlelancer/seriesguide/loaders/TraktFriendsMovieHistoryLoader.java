@@ -71,7 +71,7 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
                     traktUsers.history(new Username(username), HistoryType.MOVIES, 1, 1,
-                            Extended.IMAGES), "get friend movie history");
+                            Extended.IMAGES, null, null), "get friend movie history");
             if (history == null || history.size() == 0) {
                 continue; // no history
             }

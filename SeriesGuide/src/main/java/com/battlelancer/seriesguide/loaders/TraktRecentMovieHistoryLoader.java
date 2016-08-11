@@ -68,6 +68,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
     public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(TraktV2 trakt) {
         return trakt.users()
-                .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.IMAGES);
+                .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.IMAGES,
+                        null, null);
     }
 }
