@@ -39,8 +39,10 @@ import com.uwetrottmann.thetvdb.entities.Series;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResults;
 import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
 import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
+import com.uwetrottmann.thetvdb.services.Search;
 import com.uwetrottmann.thetvdb.services.SeriesService;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import dagger.Lazy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -52,6 +54,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.joda.time.DateTimeZone;
@@ -82,6 +85,21 @@ public class TvdbTools {
     private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
     private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
+
+    private static TvdbTools tvdbTools;
+    @Inject Lazy<Search> searchService;
+
+    public static synchronized TvdbTools getInstance(SgApp app) {
+        if (tvdbTools == null) {
+            tvdbTools = new TvdbTools(app);
+        }
+        return tvdbTools;
+    }
+
+    @Inject
+    public TvdbTools(SgApp app) {
+        app.getServicesComponent().inject(this);
+    }
 
     /**
      * Builds a full url for a TVDb show poster using the given image path.
@@ -225,12 +243,11 @@ public class TvdbTools {
     }
 
     @Nullable
-    public static List<SearchResult> searchSeries(@NonNull Context context, @NonNull String query,
-            @Nullable final String language) throws TvdbException {
+    public List<SearchResult> searchSeries(@NonNull String query, @Nullable final String language)
+            throws TvdbException {
         retrofit2.Response<SeriesResultsWrapper> response;
         try {
-            response = ServiceUtils.getTheTvdb(context)
-                    .search()
+            response = searchService.get()
                     .series(query, null, null, language)
                     .execute();
         } catch (IOException e) {

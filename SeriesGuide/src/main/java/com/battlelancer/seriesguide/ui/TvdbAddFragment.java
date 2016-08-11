@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -232,7 +233,7 @@ public class TvdbAddFragment extends AddFragment {
                     language = null;
                 }
             }
-            return new TvdbAddLoader(getContext(), query, language);
+            return new TvdbAddLoader((SgApp) getActivity().getApplication(), query, language);
         }
 
         @Override
