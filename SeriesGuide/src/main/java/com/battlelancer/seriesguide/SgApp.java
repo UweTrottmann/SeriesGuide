@@ -9,7 +9,7 @@ import android.os.StrictMode.VmPolicy;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.modules.ServicesModule;
+import com.battlelancer.seriesguide.modules.TmdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -88,7 +88,7 @@ public class SgApp extends Application {
 
         servicesComponent = DaggerServicesComponent.builder()
                 .appModule(new AppModule(this))
-                .servicesModule(new ServicesModule())
+                .tmdbModule(new TmdbModule())
                 .build();
     }
 

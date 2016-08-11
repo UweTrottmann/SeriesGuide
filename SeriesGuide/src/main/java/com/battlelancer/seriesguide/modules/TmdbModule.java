@@ -15,7 +15,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 
 @Module
-public class ServicesModule {
+public class TmdbModule {
 
     @Singleton
     @Provides

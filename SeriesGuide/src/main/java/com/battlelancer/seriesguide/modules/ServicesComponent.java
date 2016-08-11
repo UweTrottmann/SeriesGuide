@@ -12,7 +12,7 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = { AppModule.class, ServicesModule.class })
+@Component(modules = { AppModule.class, TmdbModule.class })
 public interface ServicesComponent {
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
