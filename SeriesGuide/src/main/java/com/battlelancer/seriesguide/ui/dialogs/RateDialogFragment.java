@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -150,15 +151,15 @@ public class RateDialogFragment extends DialogFragment {
         int itemId = args.getInt(InitBundle.ITEM_ID);
         switch (itemType) {
             case ITEM_MOVIE: {
-                MovieTools.rate(getActivity(), itemId, rating);
+                MovieTools.rate(SgApp.from(getActivity()), itemId, rating);
                 break;
             }
             case ITEM_SHOW: {
-                ShowTools.rate(getActivity(), itemId, rating);
+                ShowTools.rate(SgApp.from(getActivity()), itemId, rating);
                 break;
             }
             case ITEM_EPISODE: {
-                EpisodeTools.rate(getActivity(), itemId, rating);
+                EpisodeTools.rate(SgApp.from(getActivity()), itemId, rating);
                 break;
             }
         }

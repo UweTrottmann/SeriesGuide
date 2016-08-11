@@ -208,8 +208,8 @@ public class MovieTools {
      * Store the rating for the given movie in the database (if it is in the database) and send it
      * to trakt.
      */
-    public static void rate(Context context, int movieTmdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateMovieTask(context, rating, movieTmdbId));
+    public static void rate(SgApp app, int movieTmdbId, Rating rating) {
+        AsyncTaskCompat.executeParallel(new RateMovieTask(app, rating, movieTmdbId));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {

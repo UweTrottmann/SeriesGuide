@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
@@ -290,8 +291,8 @@ public class ShowTools {
     /**
      * Store the rating for the given episode in the database and send it to trakt.
      */
-    public static void rate(Context context, int showTvdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateShowTask(context, rating, showTvdbId));
+    public static void rate(SgApp app, int showTvdbId, Rating rating) {
+        AsyncTaskCompat.executeParallel(new RateShowTask(app, rating, showTvdbId));
     }
 
     /**
