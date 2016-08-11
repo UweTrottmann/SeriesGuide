@@ -140,7 +140,7 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // temporarily add okhttp 3 support to picasso
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
