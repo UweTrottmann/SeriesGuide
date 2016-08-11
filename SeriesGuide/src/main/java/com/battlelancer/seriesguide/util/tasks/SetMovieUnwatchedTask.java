@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -12,8 +13,8 @@ import retrofit2.Call;
 
 public class SetMovieUnwatchedTask extends BaseMovieActionTask {
 
-    public SetMovieUnwatchedTask(Context context, int movieTmdbId) {
-        super(context, movieTmdbId);
+    public SetMovieUnwatchedTask(SgApp app, int movieTmdbId) {
+        super(app, movieTmdbId);
     }
 
     @Override

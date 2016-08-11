@@ -142,12 +142,12 @@ public class MovieTools {
         }
     }
 
-    public static void removeFromCollection(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(context, movieTmdbId));
+    public static void removeFromCollection(SgApp app, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(app, movieTmdbId));
     }
 
-    public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
+    public static void removeFromWatchlist(SgApp app, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(app, movieTmdbId));
     }
 
     /**
@@ -177,12 +177,12 @@ public class MovieTools {
         }
     }
 
-    public static void watchedMovie(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(context, movieTmdbId));
+    public static void watchedMovie(SgApp app, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(app, movieTmdbId));
     }
 
-    public static void unwatchedMovie(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(context, movieTmdbId));
+    public static void unwatchedMovie(SgApp app, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(app, movieTmdbId));
     }
 
     /**

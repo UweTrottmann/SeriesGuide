@@ -244,21 +244,19 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_action_movies_watchlist_add: {
-                        MovieTools.addToWatchlist((SgApp) getActivity().getApplication(),
-                                movieTmdbId);
+                        MovieTools.addToWatchlist(SgApp.from(getActivity()), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_watchlist_remove: {
-                        MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
+                        MovieTools.removeFromWatchlist(SgApp.from(getActivity()), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_collection_add: {
-                        MovieTools.addToCollection((SgApp) getActivity().getApplication(),
-                                movieTmdbId);
+                        MovieTools.addToCollection(SgApp.from(getActivity()), movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_collection_remove: {
-                        MovieTools.removeFromCollection(getContext(), movieTmdbId);
+                        MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
                         return true;
                     }
                 }
@@ -277,7 +275,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (args != null) {
                 query = args.getString(SEARCH_QUERY_KEY);
             }
-            return new TmdbMoviesLoader((SgApp) getActivity().getApplication(), query);
+            return new TmdbMoviesLoader(SgApp.from(getActivity()), query);
         }
 
         @Override

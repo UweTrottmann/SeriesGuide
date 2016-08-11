@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ContentProvider;
 import android.os.Build;
@@ -10,6 +11,7 @@ import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.modules.TmdbModule;
+import com.battlelancer.seriesguide.modules.TraktModule;
 import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -90,8 +92,13 @@ public class SgApp extends Application {
         servicesComponent = DaggerServicesComponent.builder()
                 .appModule(new AppModule(this))
                 .tmdbModule(new TmdbModule())
+                .traktModule(new TraktModule())
                 .tvdbModule(new TvdbModule())
                 .build();
+    }
+
+    public static SgApp from(Activity activity) {
+        return (SgApp) activity.getApplication();
     }
 
     public ServicesComponent getServicesComponent() {

@@ -317,10 +317,10 @@ public class MovieDetailsFragment extends Fragment {
                     // disable button, will be re-enabled on data reload once action completes
                     v.setEnabled(false);
                     if (isWatched) {
-                        MovieTools.unwatchedMovie(getActivity(), tmdbId);
+                        MovieTools.unwatchedMovie(SgApp.from(getActivity()), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
                     } else {
-                        MovieTools.watchedMovie(getActivity(), tmdbId);
+                        MovieTools.watchedMovie(SgApp.from(getActivity()), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Watched movie");
                     }
                 }
@@ -348,10 +348,10 @@ public class MovieDetailsFragment extends Fragment {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 if (inCollection) {
-                    MovieTools.removeFromCollection(getActivity(), tmdbId);
+                    MovieTools.removeFromCollection(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection((SgApp) getActivity().getApplication(), tmdbId);
+                    MovieTools.addToCollection(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -375,10 +375,10 @@ public class MovieDetailsFragment extends Fragment {
                 // disable button, will be re-enabled on data reload once action completes
                 v.setEnabled(false);
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(getActivity(), tmdbId);
+                    MovieTools.removeFromWatchlist(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist((SgApp) getActivity().getApplication(), tmdbId);
+                    MovieTools.addToWatchlist(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
@@ -543,8 +543,7 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieLoader((SgApp) getActivity().getApplication(),
-                    args.getInt(InitBundle.TMDB_ID));
+            return new MovieLoader(SgApp.from(getActivity()), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -575,7 +574,7 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieTrailersLoader((SgApp) getActivity().getApplication(),
+            return new MovieTrailersLoader(SgApp.from(getActivity()),
                     args.getInt(InitBundle.TMDB_ID));
         }
 
@@ -600,7 +599,7 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieCreditsLoader((SgApp) getActivity().getApplication(),
+            return new MovieCreditsLoader(SgApp.from(getActivity()),
                     args.getInt(InitBundle.TMDB_ID));
         }
 
