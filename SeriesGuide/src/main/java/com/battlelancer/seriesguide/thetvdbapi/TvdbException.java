@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
 /**
- * Thrown when a {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB} operation fails.
+ * Thrown when a {@link TvdbTools} operation fails.
  */
 public class TvdbException extends Exception {
 

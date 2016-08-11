@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.LanguageTools;
@@ -447,9 +447,9 @@ public class ShowFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
                     intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                            TheTVDB.buildPosterUrl(showPoster));
+                            TvdbTools.buildPosterUrl(showPoster));
                     intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                            TheTVDB.buildScreenshotUrl(showPoster));
+                            TvdbTools.buildScreenshotUrl(showPoster));
                     Utils.startActivityWithAnimation(getActivity(), intent, v);
                 }
             });

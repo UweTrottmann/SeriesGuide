@@ -47,7 +47,7 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
@@ -292,7 +292,7 @@ public class Utils {
      * without any resizing or cropping.
      */
     public static void loadPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
                 .noFade()
                 .into(imageView);
     }
@@ -323,7 +323,7 @@ public class Utils {
      */
     public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.loadWithPicasso(context,
-                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)
@@ -333,7 +333,7 @@ public class Utils {
     public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,
             String posterPath) {
         ServiceUtils.loadWithPicasso(context,
-                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
                 .fit()
                 .centerCrop()
                 .error(R.drawable.ic_image_missing)
@@ -363,7 +363,7 @@ public class Utils {
     public static void loadSmallTvdbShowPoster(Context context, ImageView imageView,
             String posterPath) {
         loadSmallPoster(context, imageView,
-                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath));
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath));
     }
 
     /**

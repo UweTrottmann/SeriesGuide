@@ -49,7 +49,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -841,7 +841,7 @@ public class OverviewFragment extends Fragment implements
         }
 
         // try loading image
-        ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(imageEpisode,
                         new Callback() {

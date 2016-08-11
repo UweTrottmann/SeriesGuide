@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -538,7 +538,7 @@ public class NotificationService extends IntentService {
     private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
         try {
             Bitmap poster = ServiceUtils.loadWithPicasso(context,
-                    TheTVDB.buildPosterUrl(posterPath))
+                    TvdbTools.buildPosterUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();
@@ -547,7 +547,7 @@ public class NotificationService extends IntentService {
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
             Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
-                    TheTVDB.buildScreenshotUrl(posterPath))
+                    TvdbTools.buildScreenshotUrl(posterPath))
                     .centerCrop()
                     .resize(400, 400)
                     .get();

@@ -16,6 +16,7 @@ import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -63,7 +64,7 @@ import timber.log.Timber;
  * Provides access to the TheTVDb.com XML API throwing in some additional data from trakt.tv here
  * and there.
  */
-public class TheTVDB {
+public class TvdbTools {
 
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
 

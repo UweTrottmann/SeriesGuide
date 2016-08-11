@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -17,7 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -150,7 +149,7 @@ public class AppWidget extends AppWidgetProvider {
                             CalendarAdapter.Query.SHOW_POSTER);
                     try {
                         Bitmap poster = ServiceUtils.loadWithPicasso(this,
-                                TheTVDB.buildPosterUrl(posterPath))
+                                TvdbTools.buildPosterUrl(posterPath))
                                 .centerCrop()
                                 .resizeDimen(R.dimen.show_poster_width,
                                         R.dimen.show_poster_height)

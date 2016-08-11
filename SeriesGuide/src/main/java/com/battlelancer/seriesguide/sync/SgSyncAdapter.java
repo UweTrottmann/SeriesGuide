@@ -27,7 +27,7 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -117,13 +117,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Schedules a sync for a single show if {@link com.battlelancer.seriesguide.thetvdbapi.TheTVDB#isUpdateShow(android.content.Context,
+     * Schedules a sync for a single show if {@link TvdbTools#isUpdateShow(android.content.Context,
      * int)} returns true.
      *
      * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
-        if (TheTVDB.isUpdateShow(context, showTvdbId)) {
+        if (TvdbTools.isUpdateShow(context, showTvdbId)) {
             SgSyncAdapter.requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
         }
     }
@@ -297,7 +297,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                TheTVDB.updateShow(getContext(), id);
+                TvdbTools.updateShow(getContext(), id);
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
@@ -428,7 +428,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             case DELTA:
             default:
                 // Get shows which have not been updated for a certain time.
-                return TheTVDB.deltaUpdateShows(currentTime, getContext());
+                return TvdbTools.deltaUpdateShows(currentTime, getContext());
         }
     }
 

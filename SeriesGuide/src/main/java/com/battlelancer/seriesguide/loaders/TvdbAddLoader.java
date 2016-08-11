@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -131,9 +131,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 try {
                     if (TextUtils.isEmpty(language)) {
                         // use the v1 API to do an any language search not supported by v2
-                        results = TheTVDB.searchShow(getContext(), query, null);
+                        results = TvdbTools.searchShow(getContext(), query, null);
                     } else {
-                        results = TheTVDB.searchSeries(getContext(), query, language);
+                        results = TvdbTools.searchSeries(getContext(), query, language);
                     }
                     markLocalShows(getContext(), results);
                     return buildResultSuccess(results, R.string.no_results);
