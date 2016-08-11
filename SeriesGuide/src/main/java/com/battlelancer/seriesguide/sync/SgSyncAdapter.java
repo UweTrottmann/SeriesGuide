@@ -32,21 +32,23 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Configuration;
+import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -56,6 +58,7 @@ import timber.log.Timber;
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private final SgApp app;
+    @Inject Lazy<ConfigurationService> tmdbConfigService;
 
     public enum SyncType {
 
@@ -231,6 +234,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     public SgSyncAdapter(SgApp app, boolean autoInitialize) {
         super(app, autoInitialize);
         this.app = app;
+        app.getServicesComponent().inject(this);
         Timber.d("Creating sync adapter");
     }
 
@@ -313,7 +317,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // get latest TMDb configuration
             Timber.d("Syncing...TMDb config");
-            getTmdbConfiguration(getContext(), prefs);
+            getTmdbConfiguration(prefs);
 
             // sync with Hexagon or trakt
             final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
@@ -431,10 +435,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    private static void getTmdbConfiguration(Context context, SharedPreferences prefs) {
+    private void getTmdbConfiguration(SharedPreferences prefs) {
         try {
-            Response<Configuration> response = ServiceUtils.getTmdb(context)
-                    .configurationService().configuration().execute();
+            Response<Configuration> response = tmdbConfigService.get().configuration().execute();
             if (response.isSuccessful()) {
                 Configuration config = response.body();
                 if (config != null && config.images != null
@@ -445,10 +448,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             .apply();
                 }
             } else {
-                SgTmdb.trackFailedRequest(context, "get config", response);
+                SgTmdb.trackFailedRequest(app, "get config", response);
             }
         } catch (IOException e) {
-            SgTmdb.trackFailedRequest(context, "get config", e);
+            SgTmdb.trackFailedRequest(app, "get config", e);
         }
     }
 

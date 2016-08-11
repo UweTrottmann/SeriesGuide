@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -463,7 +464,8 @@ public class ShowFragment extends Fragment {
     private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int id, Bundle args) {
-            return new ShowCreditsLoader(getActivity(), getShowTvdbId(), true);
+            return new ShowCreditsLoader((SgApp) getActivity().getApplication(), getShowTvdbId(),
+                    true);
         }
 
         @Override

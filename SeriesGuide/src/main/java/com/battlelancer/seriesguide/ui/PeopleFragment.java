@@ -218,7 +218,8 @@ public class PeopleFragment extends Fragment {
             if (mMediaType == PeopleActivity.MediaType.MOVIE) {
                 return new MovieCreditsLoader((SgApp) getActivity().getApplication(), mTmdbId);
             } else {
-                return new ShowCreditsLoader(getActivity(), mTmdbId, false);
+                return new ShowCreditsLoader((SgApp) getActivity().getApplication(), mTmdbId,
+                        false);
             }
         }
 

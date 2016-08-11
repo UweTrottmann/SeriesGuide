@@ -13,13 +13,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
@@ -28,7 +26,6 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.uwetrottmann.thetvdb.TheTvdb;
-import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.trakt5.TraktV2;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -77,8 +74,6 @@ public final class ServiceUtils {
 
     private static TraktV2 trakt;
 
-    private static Tmdb tmdb;
-
     /* This class is never initialized */
     private ServiceUtils() {
     }
@@ -93,7 +88,7 @@ public final class ServiceUtils {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            builder.addInterceptor(new SgTmdbInterceptor(context));
+            builder.addInterceptor(new SgTmdbInterceptor());
             builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
             builder.addNetworkInterceptor(new SgTraktInterceptor(context));
             builder.authenticator(new AllApisAuthenticator(context));
@@ -170,17 +165,6 @@ public final class ServiceUtils {
             theTvdb = new SgTheTvdb(context);
         }
         return theTvdb;
-    }
-
-    /**
-     * Get a tmdb-java instance with our API key set.
-     */
-    @NonNull
-    public static synchronized Tmdb getTmdb(Context context) {
-        if (tmdb == null) {
-            tmdb = new SgTmdb(context, BuildConfig.TMDB_API_KEY);
-        }
-        return tmdb;
     }
 
     /**

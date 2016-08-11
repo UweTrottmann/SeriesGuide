@@ -49,6 +49,7 @@ import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,7 +69,7 @@ public class MovieTools {
     private static MovieTools movieTools;
 
     private final Context context;
-    @Inject MoviesService tmdbMovies;
+    @Inject Lazy<MoviesService> tmdbMovies;
 
     public static synchronized MovieTools getInstance(SgApp app) {
         if (movieTools == null) {
@@ -569,15 +570,14 @@ public class MovieTools {
 
             return true;
         }
-
     }
 
     /**
-     * Updates the local movie database against trakt movie watchlist and collection. Adds,
-     * updates and removes movies in the database.
+     * Updates the local movie database against trakt movie watchlist and collection. Adds, updates
+     * and removes movies in the database.
      *
-     * <p> When syncing the first time, will upload any local movies missing from trakt
-     * collection or watchlist instead of removing them locally.
+     * <p> When syncing the first time, will upload any local movies missing from trakt collection
+     * or watchlist instead of removing them locally.
      *
      * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
      * thread.
@@ -760,7 +760,8 @@ public class MovieTools {
 
     /**
      * Adds new movies to the database.
-     *  @param newCollectionMovies Movie TMDB ids to add to the collection.
+     *
+     * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
      */
     public UpdateResult addMovies(@NonNull Set<Integer> newCollectionMovies,
@@ -899,7 +900,9 @@ public class MovieTools {
     private Movie getMovieSummary(@NonNull String action, @Nullable String language,
             int movieTmdbId) {
         try {
-            Response<Movie> response = tmdbMovies.summary(movieTmdbId, language, null).execute();
+            Response<Movie> response = tmdbMovies.get()
+                    .summary(movieTmdbId, language, null)
+                    .execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {

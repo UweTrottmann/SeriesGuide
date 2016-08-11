@@ -277,7 +277,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (args != null) {
                 query = args.getString(SEARCH_QUERY_KEY);
             }
-            return new TmdbMoviesLoader(getContext(), query);
+            return new TmdbMoviesLoader((SgApp) getActivity().getApplication(), query);
         }
 
         @Override
