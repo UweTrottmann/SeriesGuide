@@ -4,12 +4,19 @@ import android.app.Application;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.services.MoviesService;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 
 @Module
 public class ServicesModule {
+
+    @Singleton
+    @Provides
+    MoviesService provideMovieService(Tmdb tmdb) {
+        return tmdb.moviesService();
+    }
 
     @Singleton
     @Provides

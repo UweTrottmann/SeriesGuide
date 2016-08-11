@@ -574,7 +574,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieTrailersLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieTrailersLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
