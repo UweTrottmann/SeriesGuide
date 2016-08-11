@@ -133,8 +133,9 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.6'
     compile 'com.google.dagger:dagger:2.6'
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-    compile 'com.jakewharton:butterknife:8.1.0'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    def butterKnifeVersion = "8.2.1"
+    compile "com.jakewharton:butterknife:$butterKnifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
