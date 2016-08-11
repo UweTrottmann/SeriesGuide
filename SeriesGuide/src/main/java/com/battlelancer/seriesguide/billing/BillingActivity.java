@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -303,7 +303,7 @@ public class BillingActivity extends BaseActivity {
         // show the notification
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(SeriesGuideApplication.NOTIFICATION_SUBSCRIPTION_ID, notification);
+        nm.notify(SgApp.NOTIFICATION_SUBSCRIPTION_ID, notification);
     }
 
     /**

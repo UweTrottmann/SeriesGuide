@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -207,7 +207,7 @@ public class ListWidgetService extends RemoteViewsService {
                     ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER);
             Bitmap poster;
             try {
-                poster = ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
+                poster = ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();

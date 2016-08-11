@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -150,7 +150,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = addQueue.removeFirst();
 
             try {
-                boolean addedShow = TheTVDB.addShow(context, nextShow.tvdbid, nextShow.language,
+                boolean addedShow = TvdbTools.addShow(context, nextShow.tvdbid, nextShow.language,
                         traktCollection, traktWatched);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow

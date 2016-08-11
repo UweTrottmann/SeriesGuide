@@ -1,16 +1,16 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import java.io.IOException;
+import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -20,19 +20,19 @@ import timber.log.Timber;
  */
 public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
+    @Inject MoviesService moviesService;
     private int mTmdbId;
 
-    public MovieTrailersLoader(Context context, int tmdbId) {
-        super(context);
+    public MovieTrailersLoader(SgApp app, int tmdbId) {
+        super(app);
+        app.getServicesComponent().inject(this);
         mTmdbId = tmdbId;
     }
 
     @Override
     public Videos.Video loadInBackground() {
-        MoviesService movieService = ServiceUtils.getTmdb(getContext()).moviesService();
-
         // try to get a local trailer
-        Videos.Video trailer = getTrailer(movieService,
+        Videos.Video trailer = getTrailer(
                 DisplaySettings.getContentLanguage(getContext()), "get local movie trailer");
         if (trailer != null) {
             return trailer;
@@ -40,14 +40,13 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
         Timber.d("Did not find a local movie trailer.");
 
         // fall back to default language trailer
-        return getTrailer(movieService, null, "get default movie trailer");
+        return getTrailer(null, "get default movie trailer");
     }
 
     @Nullable
-    private Videos.Video getTrailer(@NonNull MoviesService movieService, @Nullable String language,
-            @NonNull String action) {
+    private Videos.Video getTrailer(@Nullable String language, @NonNull String action) {
         try {
-            Response<Videos> response = movieService.videos(mTmdbId, language).execute();
+            Response<Videos> response = moviesService.videos(mTmdbId, language).execute();
             if (response.isSuccessful()) {
                 return extractTrailer(response.body());
             } else {

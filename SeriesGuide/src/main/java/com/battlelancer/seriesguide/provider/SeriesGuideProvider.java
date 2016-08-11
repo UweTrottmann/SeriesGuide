@@ -17,7 +17,7 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ public class SeriesGuideProvider extends ContentProvider {
      */
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = SeriesGuideApplication.CONTENT_AUTHORITY;
+        final String authority = SgApp.CONTENT_AUTHORITY;
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);

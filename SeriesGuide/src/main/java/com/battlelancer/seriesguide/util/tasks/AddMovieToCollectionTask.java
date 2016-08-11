@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -12,13 +13,16 @@ import retrofit2.Call;
 
 public class AddMovieToCollectionTask extends BaseMovieActionTask {
 
-    public AddMovieToCollectionTask(Context context, int movieTmdbId) {
-        super(context, movieTmdbId);
+    private final SgApp app;
+
+    public AddMovieToCollectionTask(SgApp app, int movieTmdbId) {
+        super(app, movieTmdbId);
+        this.app = app;
     }
 
     @Override
     protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return MovieTools.addToList(context, movieTmdbId, MovieTools.Lists.COLLECTION);
+        return MovieTools.getInstance(app).addToList(movieTmdbId, MovieTools.Lists.COLLECTION);
     }
 
     @Override

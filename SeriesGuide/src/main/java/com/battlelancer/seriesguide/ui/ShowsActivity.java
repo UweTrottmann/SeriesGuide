@@ -23,7 +23,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.billing.IabHelper;
@@ -424,7 +424,7 @@ public class ShowsActivity extends BaseTopActivity implements
              *
              * NOTE: see version codes for upgrade description.
              */
-            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_12_BETA5) {
+            if (lastVersion < SgApp.RELEASE_VERSION_12_BETA5) {
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
@@ -433,14 +433,14 @@ public class ShowsActivity extends BaseTopActivity implements
                 // sync is triggered in last condition
                 // (if we are in here we will definitely hit the ones below)
             }
-            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_16_BETA1) {
+            if (lastVersion < SgApp.RELEASE_VERSION_16_BETA1) {
                 Utils.clearLegacyExternalFileCache(this);
             }
-            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_23_BETA4) {
+            if (lastVersion < SgApp.RELEASE_VERSION_23_BETA4) {
                 // make next trakt sync download watched movies
                 TraktSettings.resetMoviesLastActivity(this);
             }
-            if (lastVersion < SeriesGuideApplication.RELEASE_VERSION_26_BETA3) {
+            if (lastVersion < SgApp.RELEASE_VERSION_26_BETA3) {
                 // flag all shows outdated so delta sync will pick up, if full sync gets aborted
                 scheduleAllShowsUpdate();
                 // force a sync

@@ -12,7 +12,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.squareup.picasso.MemoryPolicy;
@@ -55,7 +55,7 @@ public final class ShortcutUtils {
                 Bitmap posterBitmap;
 
                 try {
-                    final String posterUrl = TheTVDB.buildPosterUrl(posterPath);
+                    final String posterUrl = TvdbTools.buildPosterUrl(posterPath);
                     posterBitmap = ServiceUtils.getPicasso(context)
                             .load(posterUrl)
                             .centerCrop()

@@ -23,13 +23,13 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.StyleSpan;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -532,13 +532,13 @@ public class NotificationService extends IntentService {
 
         // use a unique id within the app
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
-        nm.notify(SeriesGuideApplication.NOTIFICATION_EPISODE_ID, notification);
+        nm.notify(SgApp.NOTIFICATION_EPISODE_ID, notification);
     }
 
     private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
         try {
             Bitmap poster = ServiceUtils.loadWithPicasso(context,
-                    TheTVDB.buildPosterUrl(posterPath))
+                    TvdbTools.buildPosterUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();
@@ -547,7 +547,7 @@ public class NotificationService extends IntentService {
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
             Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
-                    TheTVDB.buildScreenshotUrl(posterPath))
+                    TvdbTools.buildScreenshotUrl(posterPath))
                     .centerCrop()
                     .resize(400, 400)
                     .get();

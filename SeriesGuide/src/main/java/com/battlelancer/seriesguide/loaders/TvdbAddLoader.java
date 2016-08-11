@@ -1,14 +1,14 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -40,6 +40,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
     }
 
+    private final SgApp app;
     private final String query;
     private final String language;
 
@@ -49,9 +50,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
      *
      * @param language If not provided, will search for results in all languages.
      */
-    public TvdbAddLoader(@NonNull Context context, @Nullable String query,
-            @Nullable String language) {
-        super(context);
+    public TvdbAddLoader(SgApp app, @Nullable String query, @Nullable String language) {
+        super(app);
+        this.app = app;
         this.query = query;
         this.language = language;
     }
@@ -131,9 +132,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 try {
                     if (TextUtils.isEmpty(language)) {
                         // use the v1 API to do an any language search not supported by v2
-                        results = TheTVDB.searchShow(getContext(), query, null);
+                        results = TvdbTools.searchShow(getContext(), query, null);
                     } else {
-                        results = TheTVDB.searchSeries(getContext(), query, language);
+                        results = TvdbTools.getInstance(app).searchSeries(query, language);
                     }
                     markLocalShows(getContext(), results);
                     return buildResultSuccess(results, R.string.no_results);

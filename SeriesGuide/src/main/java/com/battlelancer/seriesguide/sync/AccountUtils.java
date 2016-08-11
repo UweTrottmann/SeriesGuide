@@ -9,7 +9,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
@@ -41,15 +41,15 @@ public class AccountUtils {
         }
         if (isNewAccountAdded) {
             // Inform the system that this account supports sync
-            ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
+            ContentResolver.setIsSyncable(account, SgApp.CONTENT_AUTHORITY, 1);
             // Inform the system that this account is eligible for auto sync
             // when the network is up
-            ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
+            ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY,
                     true);
             // Recommend a schedule for automatic synchronization. The system
             // may modify this based
             // on other scheduled syncs and network utilization.
-            ContentResolver.addPeriodicSync(account, SeriesGuideApplication.CONTENT_AUTHORITY,
+            ContentResolver.addPeriodicSync(account, SgApp.CONTENT_AUTHORITY,
                     new Bundle(), SYNC_FREQUENCY);
         }
 

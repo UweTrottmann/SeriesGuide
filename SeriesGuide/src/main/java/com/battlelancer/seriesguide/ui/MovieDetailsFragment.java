@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
 import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
@@ -350,7 +351,7 @@ public class MovieDetailsFragment extends Fragment {
                     MovieTools.removeFromCollection(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection(getActivity(), tmdbId);
+                    MovieTools.addToCollection((SgApp) getActivity().getApplication(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -377,7 +378,7 @@ public class MovieDetailsFragment extends Fragment {
                     MovieTools.removeFromWatchlist(getActivity(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist(getActivity(), tmdbId);
+                    MovieTools.addToWatchlist((SgApp) getActivity().getApplication(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
@@ -542,7 +543,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -573,7 +575,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieTrailersLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieTrailersLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -597,7 +600,8 @@ public class MovieDetailsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieCreditsLoader(getActivity(), args.getInt(InitBundle.TMDB_ID));
+            return new MovieCreditsLoader((SgApp) getActivity().getApplication(),
+                    args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

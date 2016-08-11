@@ -14,7 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
@@ -94,7 +94,7 @@ public class TraktCredentials {
 
         NotificationManager nm = (NotificationManager) mContext.getSystemService(
                 Context.NOTIFICATION_SERVICE);
-        nm.notify(SeriesGuideApplication.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
+        nm.notify(SgApp.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
     }
 
     /**

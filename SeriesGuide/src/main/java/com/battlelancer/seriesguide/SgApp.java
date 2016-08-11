@@ -6,6 +6,11 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.modules.AppModule;
+import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
+import com.battlelancer.seriesguide.modules.TmdbModule;
+import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -20,7 +25,7 @@ import timber.log.Timber;
  *
  * @author Uwe Trottmann
  */
-public class SeriesGuideApplication extends Application {
+public class SgApp extends Application {
 
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
@@ -47,6 +52,8 @@ public class SeriesGuideApplication extends Application {
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
+
+    private ServicesComponent servicesComponent;
 
     @Override
     public void onCreate() {
@@ -79,6 +86,16 @@ public class SeriesGuideApplication extends Application {
         Analytics.getTracker(this);
 
         enableStrictMode();
+
+        servicesComponent = DaggerServicesComponent.builder()
+                .appModule(new AppModule(this))
+                .tmdbModule(new TmdbModule())
+                .tvdbModule(new TvdbModule())
+                .build();
+    }
+
+    public ServicesComponent getServicesComponent() {
+        return servicesComponent;
     }
 
     /**

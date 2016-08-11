@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.DBUtils;
 import java.lang.annotation.Retention;
@@ -513,7 +513,7 @@ public class SeriesGuideContract {
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
-            + SeriesGuideApplication.CONTENT_AUTHORITY);
+            + SgApp.CONTENT_AUTHORITY);
 
     public static final String PATH_SHOWS = "shows";
 

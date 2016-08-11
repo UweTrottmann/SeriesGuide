@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -243,7 +244,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_action_movies_watchlist_add: {
-                        MovieTools.addToWatchlist(getContext(), movieTmdbId);
+                        MovieTools.addToWatchlist((SgApp) getActivity().getApplication(),
+                                movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_watchlist_remove: {
@@ -251,7 +253,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
                         return true;
                     }
                     case R.id.menu_action_movies_collection_add: {
-                        MovieTools.addToCollection(getContext(), movieTmdbId);
+                        MovieTools.addToCollection((SgApp) getActivity().getApplication(),
+                                movieTmdbId);
                         return true;
                     }
                     case R.id.menu_action_movies_collection_remove: {
@@ -274,7 +277,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (args != null) {
                 query = args.getString(SEARCH_QUERY_KEY);
             }
-            return new TmdbMoviesLoader(getContext(), query);
+            return new TmdbMoviesLoader((SgApp) getActivity().getApplication(), query);
         }
 
         @Override

@@ -14,7 +14,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -814,7 +814,7 @@ public class DBUtils {
             throws OperationApplicationException {
         try {
             context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+                    .applyBatch(SgApp.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);

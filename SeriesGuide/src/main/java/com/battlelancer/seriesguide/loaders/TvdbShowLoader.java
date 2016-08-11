@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -41,7 +41,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
                 // fall back to user preferred language
                 language = DisplaySettings.getContentLanguage(getContext());
             }
-            result.show = TheTVDB.getShowDetails(getContext(), showTvdbId, language);
+            result.show = TvdbTools.getShowDetails(getContext(), showTvdbId, language);
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
             result.show = null;
