@@ -4,22 +4,25 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.TraktAddFragment;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.services.Recommendations;
+import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Response;
 
 /**
@@ -37,22 +40,24 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
     }
 
+    @Inject Lazy<Recommendations> traktRecommendations;
+    @Inject Lazy<Sync> traktSync;
     private final int type;
 
-    public TraktAddLoader(Context context, @TraktAddFragment.ListType int type) {
-        super(context);
+    public TraktAddLoader(SgApp app, @TraktAddFragment.ListType int type) {
+        super(app);
+        app.getServicesComponent().inject(this);
         this.type = type;
     }
 
     @Override
     public Result loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
         List<Show> shows = new LinkedList<>();
         String action = null;
         try {
             if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                 action = "load recommended shows";
-                Response<List<Show>> response = trakt.recommendations()
+                Response<List<Show>> response = traktRecommendations.get()
                         .shows(Extended.FULLIMAGES)
                         .execute();
                 if (response.isSuccessful()) {
@@ -68,13 +73,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktAddFragment.TYPE_WATCHED) {
                     action = "load watched shows";
-                    response = trakt.sync().watchedShows(Extended.NOSEASONSIMAGES).execute();
+                    response = traktSync.get().watchedShows(Extended.NOSEASONSIMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
-                    response = trakt.sync().collectionShows(Extended.IMAGES).execute();
+                    response = traktSync.get().collectionShows(Extended.IMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
-                    response = trakt.sync().watchlistShows(Extended.FULLIMAGES).execute();
+                    response = traktSync.get().watchlistShows(Extended.FULLIMAGES).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;

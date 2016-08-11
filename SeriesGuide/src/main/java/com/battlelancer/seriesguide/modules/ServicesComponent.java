@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
@@ -28,4 +29,5 @@ public interface ServicesComponent {
     void inject(ShowCreditsLoader showCreditsLoader);
     void inject(TvdbTools tvdbTools);
     void inject(TmdbMoviesLoader tmdbMoviesLoader);
+    void inject(TraktAddLoader traktAddLoader);
 }
