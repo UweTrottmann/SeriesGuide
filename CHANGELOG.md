@@ -9,6 +9,13 @@ Version 32
 ----------
 *(in development)*
 
+#### 32-beta3
+*(2016-08-13)*
+
+* NOTICE Started some architecture changes, let me know if you see issues with TVDb, trakt and TMDb integration.
+* TWEAK Match rating text styles throughout the app.
+* NOTICE Latest translations from crowdin.
+
 #### 32-beta2
 *(2016-08-04)*
 
