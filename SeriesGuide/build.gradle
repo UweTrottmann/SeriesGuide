@@ -130,7 +130,6 @@ dependencies {
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.7'
     // https://github.com/google/dagger/releases
-    compile 'com.google.guava:guava:19.0' // temporary manual include as AS2.2 seems not to
     apt 'com.google.dagger:dagger-compiler:2.6'
     compile 'com.google.dagger:dagger:2.6'
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
