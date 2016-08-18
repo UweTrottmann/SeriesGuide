@@ -8,6 +8,8 @@ import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.loaders.TraktEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -46,6 +48,8 @@ public interface ServicesComponent {
     void inject(TraktCancelCheckinDialogFragment traktCancelCheckinDialogFragment);
     void inject(TraktCommentsLoader traktCommentsLoader);
     void inject(TraktEpisodeHistoryLoader traktEpisodeHistoryLoader);
+    void inject(TraktFriendsEpisodeHistoryLoader traktFriendsEpisodeHistoryLoader);
+    void inject(TraktFriendsMovieHistoryLoader traktFriendsMovieHistoryLoader);
     void inject(TraktRatingsTask traktRatingsTask);
     void inject(TraktRecentEpisodeHistoryLoader traktRecentEpisodeHistoryLoader);
     void inject(TraktTask traktTask);
