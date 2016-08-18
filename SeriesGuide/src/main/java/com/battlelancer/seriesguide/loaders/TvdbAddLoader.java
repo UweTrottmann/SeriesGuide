@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -18,11 +17,13 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
-import java.io.IOException;
+import com.uwetrottmann.trakt5.services.Search;
+import com.uwetrottmann.trakt5.services.Shows;
+import dagger.Lazy;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import retrofit2.Response;
+import javax.inject.Inject;
 import timber.log.Timber;
 
 public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
@@ -43,6 +44,8 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
     private final SgApp app;
     private final String query;
     private final String language;
+    @Inject Lazy<Shows> traktShows;
+    @Inject Lazy<Search> traktSearch;
 
     /**
      * Loads a list of trending shows from trakt (query is empty) or searches trakt/TheTVDB for
@@ -53,6 +56,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
     public TvdbAddLoader(SgApp app, @Nullable String query, @Nullable String language) {
         super(app);
         this.app = app;
+        app.getServicesComponent().inject(this);
         this.query = query;
         this.language = language;
     }
@@ -63,70 +67,51 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
         if (TextUtils.isEmpty(query)) {
             // no query? load a list of trending shows from trakt
-            try {
-                Response<List<com.uwetrottmann.trakt5.entities.TrendingShow>> response
-                        = ServiceUtils
-                        .getTrakt(getContext())
-                        .shows()
-                        .trending(1, 35, Extended.FULLIMAGES)
-                        .execute();
-                if (response.isSuccessful()) {
-                    List<Show> shows = new LinkedList<>();
-                    for (TrendingShow show : response.body()) {
-                        if (show.show == null || show.show.ids == null
-                                || show.show.ids.tvdb == null) {
-                            // skip if required values are missing
-                            continue;
-                        }
-                        shows.add(show.show);
+            List<TrendingShow> trendingShows = SgTrakt.executeCall(app,
+                    traktShows.get().trending(1, 35, Extended.FULLIMAGES),
+                    "get trending shows"
+            );
+            if (trendingShows != null) {
+                List<Show> shows = new LinkedList<>();
+                for (TrendingShow show : trendingShows) {
+                    if (show.show == null || show.show.ids == null || show.show.ids.tvdb == null) {
+                        // skip if required values are missing
+                        continue;
                     }
-                    results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows);
-                    // manually set the language to the current search language
-                    for (SearchResult result : results) {
-                        result.language = language;
-                    }
-                    return buildResultSuccess(results, R.string.no_results);
-                } else {
-                    SgTrakt.trackFailedRequest(getContext(), "get trending shows", response);
+                    shows.add(show.show);
                 }
-            } catch (IOException e) {
-                SgTrakt.trackFailedRequest(getContext(), "get trending shows", e);
+                // manually set the language to the current search language
+                results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows,
+                        language);
+                return buildResultSuccess(results, R.string.no_results);
+            } else {
+                return buildResultFailure(getContext(), R.string.trakt_error_general);
             }
-            return buildResultFailure(getContext(), R.string.trakt_error_general);
         } else {
             // have a query?
             // search trakt (has better search) when using English
             // use TheTVDB search for all other (or any) languages
             if (DisplaySettings.LANGUAGE_EN.equals(language)) {
-                try {
-                    Response<List<com.uwetrottmann.trakt5.entities.SearchResult>> response
-                            = ServiceUtils.getTrakt(getContext())
-                            .search()
-                            .textQuery(query, Type.SHOW, null, 1, 30)
-                            .execute();
-                    if (response.isSuccessful()) {
-                        List<Show> shows = new LinkedList<>();
-                        for (com.uwetrottmann.trakt5.entities.SearchResult result : response.body()) {
-                            if (result.show == null || result.show.ids == null
-                                    || result.show.ids.tvdb == null) {
-                                // skip, TVDB id required
-                                continue;
-                            }
-                            shows.add(result.show);
+                List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults
+                        = SgTrakt.executeCall(app,
+                        traktSearch.get().textQuery(query, Type.SHOW, null, 1, 30),
+                        "search shows"
+                );
+                if (searchResults != null) {
+                    List<Show> shows = new LinkedList<>();
+                    for (com.uwetrottmann.trakt5.entities.SearchResult result : searchResults) {
+                        if (result.show == null || result.show.ids == null
+                                || result.show.ids.tvdb == null) {
+                            // skip, TVDB id required
+                            continue;
                         }
-
-                        results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(),
-                                shows);
-                        // manually set the language to English
-                        for (SearchResult result : results) {
-                            result.language = DisplaySettings.LANGUAGE_EN;
-                        }
-                        return buildResultSuccess(results, R.string.no_results);
-                    } else {
-                        SgTrakt.trackFailedRequest(getContext(), "search shows", response);
+                        shows.add(result.show);
                     }
-                } catch (IOException e) {
-                    SgTrakt.trackFailedRequest(getContext(), "search shows", e);
+
+                    // manually set the language to English
+                    results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(),
+                            shows, DisplaySettings.LANGUAGE_EN);
+                    return buildResultSuccess(results, R.string.no_results);
                 }
             } else {
                 try {
