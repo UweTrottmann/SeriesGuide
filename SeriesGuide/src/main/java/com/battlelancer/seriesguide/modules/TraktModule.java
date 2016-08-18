@@ -11,6 +11,7 @@ import com.uwetrottmann.trakt5.services.Recommendations;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
+import com.uwetrottmann.trakt5.services.Users;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -64,6 +65,12 @@ public class TraktModule {
     @Provides
     Sync provideSync(TraktV2 trakt) {
         return trakt.sync();
+    }
+
+    @Singleton
+    @Provides
+    Users provideUsers(TraktV2 trakt) {
+        return trakt.users();
     }
 
     @Provides

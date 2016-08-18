@@ -1,9 +1,8 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.List;
 import retrofit2.Call;
@@ -13,8 +12,8 @@ import retrofit2.Call;
  */
 public class TraktMovieHistoryLoader extends TraktEpisodeHistoryLoader {
 
-    public TraktMovieHistoryLoader(Context context) {
-        super(context);
+    public TraktMovieHistoryLoader(Activity activity) {
+        super(activity);
     }
 
     @NonNull
@@ -29,7 +28,7 @@ public class TraktMovieHistoryLoader extends TraktEpisodeHistoryLoader {
     }
 
     @Override
-    protected Call<List<HistoryEntry>> buildCall(TraktV2 trakt) {
-        return TraktRecentMovieHistoryLoader.buildUserMovieHistoryCall(trakt);
+    protected Call<List<HistoryEntry>> buildCall() {
+        return TraktRecentMovieHistoryLoader.buildUserMovieHistoryCall(traktUsers.get());
     }
 }

@@ -1,14 +1,14 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.Username;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.services.Users;
 import java.util.List;
 import retrofit2.Call;
 
@@ -17,8 +17,8 @@ import retrofit2.Call;
  */
 public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoader {
 
-    public TraktRecentMovieHistoryLoader(Context context) {
-        super(context);
+    public TraktRecentMovieHistoryLoader(Activity activity) {
+        super(activity);
     }
 
     @Override
@@ -62,12 +62,12 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
     }
 
     @Override
-    protected Call<List<HistoryEntry>> buildCall(TraktV2 trakt) {
-        return buildUserMovieHistoryCall(trakt);
+    protected Call<List<HistoryEntry>> buildCall() {
+        return buildUserMovieHistoryCall(traktUsers.get());
     }
 
-    public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(TraktV2 trakt) {
-        return trakt.users()
+    public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Users traktUsers) {
+        return traktUsers
                 .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.IMAGES,
                         null, null);
     }
