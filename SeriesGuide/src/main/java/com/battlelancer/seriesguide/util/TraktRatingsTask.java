@@ -1,15 +1,20 @@
 package com.battlelancer.seriesguide.util;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.services.Episodes;
+import com.uwetrottmann.trakt5.services.Shows;
+import dagger.Lazy;
 import java.io.IOException;
+import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -27,22 +32,25 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
     private final int episodeTvdbId;
     private final int season;
     private final int episode;
+    @Inject Lazy<Shows> traktShows;
+    @Inject Lazy<Episodes> traktEpisodes;
 
     /**
      * Loads the latest ratings for the given show from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(Context context, int showTvdbId) {
-        this(context, showTvdbId, 0, 0, 0);
+    public TraktRatingsTask(SgApp app, int showTvdbId) {
+        this(app, showTvdbId, 0, 0, 0);
     }
 
     /**
      * Loads the latest ratings for the given episode from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(Context context, int showTvdbId, int episodeTvdbId, int season,
+    public TraktRatingsTask(SgApp app, int showTvdbId, int episodeTvdbId, int season,
             int episode) {
-        this.context = context.getApplicationContext();
+        this.context = app;
+        app.getServicesComponent().inject(this);
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
         this.season = season;
@@ -78,16 +86,16 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
         String showTraktIdString = String.valueOf(showTraktId);
 
         String action = null;
-        TraktV2 trakt = ServiceUtils.getTrakt(context);
         boolean isShowNotEpisode = episodeTvdbId == 0;
         try {
             Response<Ratings> response;
             if (isShowNotEpisode) {
                 action = "get show rating";
-                response = trakt.shows().ratings(showTraktIdString).execute();
+                response = traktShows.get().ratings(showTraktIdString).execute();
             } else {
                 action = "get episode rating";
-                response = trakt.episodes().ratings(showTraktIdString, season, episode)
+                response = traktEpisodes.get()
+                        .ratings(showTraktIdString, season, episode)
                         .execute();
             }
             if (response.isSuccessful()) {

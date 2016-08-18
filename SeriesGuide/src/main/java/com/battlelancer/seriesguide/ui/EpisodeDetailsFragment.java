@@ -552,8 +552,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void loadTraktRatings() {
         if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktRatingsTask(getActivity(), mShowTvdbId, getEpisodeTvdbId(),
-                    mSeasonNumber, mEpisodeNumber);
+            mTraktTask = new TraktRatingsTask(SgApp.from(getActivity()), mShowTvdbId,
+                    getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
             AsyncTaskCompat.executeParallel(mTraktTask);
         }
     }

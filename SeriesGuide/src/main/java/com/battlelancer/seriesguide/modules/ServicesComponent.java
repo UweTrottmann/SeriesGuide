@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseMovieActionTask;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
@@ -38,6 +39,7 @@ public interface ServicesComponent {
     void inject(TmdbMoviesLoader tmdbMoviesLoader);
     void inject(TraktAddLoader traktAddLoader);
     void inject(TraktCommentsLoader traktCommentsLoader);
+    void inject(TraktRatingsTask traktRatingsTask);
     void inject(TraktTools traktTools);
     void inject(TvdbTools tvdbTools);
 }

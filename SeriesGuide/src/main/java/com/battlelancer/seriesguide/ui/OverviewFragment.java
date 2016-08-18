@@ -391,7 +391,8 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(), currentEpisodeTvdbId);
+        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(),
+                currentEpisodeTvdbId);
 
         Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
@@ -869,8 +870,8 @@ public class OverviewFragment extends Fragment implements
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        traktRatingsTask = new TraktRatingsTask(getActivity(), showTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber);
+        traktRatingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
+                episodeTvdbId, seasonNumber, episodeNumber);
         AsyncTaskCompat.executeParallel(traktRatingsTask);
     }
 
