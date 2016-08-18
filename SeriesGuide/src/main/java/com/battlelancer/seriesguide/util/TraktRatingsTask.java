@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -13,9 +12,7 @@ import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Shows;
 import dagger.Lazy;
-import java.io.IOException;
 import javax.inject.Inject;
-import retrofit2.Response;
 import timber.log.Timber;
 
 public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
@@ -83,35 +80,25 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
             Timber.d("Show %s has no trakt id, skip.", showTvdbId);
             return null;
         }
-        String showTraktIdString = String.valueOf(showTraktId);
 
-        String action = null;
+        String showTraktIdString = String.valueOf(showTraktId);
         boolean isShowNotEpisode = episodeTvdbId == 0;
-        try {
-            Response<Ratings> response;
+
+        Ratings ratings;
+        if (isShowNotEpisode) {
+            ratings = SgTrakt.executeCall(context, traktShows.get().ratings(showTraktIdString),
+                    "get show rating");
+        } else {
+            ratings = SgTrakt.executeCall(context,
+                    traktEpisodes.get().ratings(showTraktIdString, season, episode),
+                    "get episode rating");
+        }
+        if (ratings != null && ratings.rating != null && ratings.votes != null) {
             if (isShowNotEpisode) {
-                action = "get show rating";
-                response = traktShows.get().ratings(showTraktIdString).execute();
+                saveShowRating(ratings);
             } else {
-                action = "get episode rating";
-                response = traktEpisodes.get()
-                        .ratings(showTraktIdString, season, episode)
-                        .execute();
+                saveEpisodeRating(ratings);
             }
-            if (response.isSuccessful()) {
-                Ratings ratings = response.body();
-                if (ratings != null && ratings.rating != null && ratings.votes != null) {
-                    if (isShowNotEpisode) {
-                        saveShowRating(ratings);
-                    } else {
-                        saveEpisodeRating(ratings);
-                    }
-                }
-            } else {
-                SgTrakt.trackFailedRequest(context, action, response);
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, action, e);
         }
 
         // cache download time to avoid saving ratings too frequently
