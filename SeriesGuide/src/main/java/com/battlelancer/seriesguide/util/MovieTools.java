@@ -33,7 +33,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.entities.MovieIds;
@@ -93,6 +92,8 @@ public class MovieTools {
 
     private final Context context;
     @Inject Lazy<MoviesService> tmdbMovies;
+    @Inject Lazy<Movies> traktMovies;
+    @Inject Lazy<Search> traktSearch;
     @Inject Lazy<Sync> traktSync;
 
     public static synchronized MovieTools getInstance(SgApp app) {
@@ -411,9 +412,9 @@ public class MovieTools {
      * id if it was found.
      */
     @Nullable
-    public static Integer lookupTraktId(Context context, Search traktSearch, int movieTmdbId) {
+    public Integer lookupTraktId(int movieTmdbId) {
         try {
-            Response<List<SearchResult>> response = traktSearch.idLookup(IdType.TMDB,
+            Response<List<SearchResult>> response = traktSearch.get().idLookup(IdType.TMDB,
                     String.valueOf(movieTmdbId), 1, 10).execute();
             if (response.isSuccessful()) {
                 List<SearchResult> lookup = response.body();
@@ -775,9 +776,6 @@ public class MovieTools {
             newMovies.add(tmdbId);
         }
 
-        TraktV2 trakt = ServiceUtils.getTrakt(context);
-        Search traktSearch = trakt.search();
-        Movies traktMovies = trakt.movies();
         String languageCode = DisplaySettings.getContentLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();
 
@@ -790,8 +788,7 @@ public class MovieTools {
             }
 
             // download movie data
-            MovieDetails movieDetails = getMovieDetails(traktSearch, traktMovies, languageCode,
-                    tmdbId);
+            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId);
             if (movieDetails.tmdbMovie() == null) {
                 // skip if minimal values failed to load
                 Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
@@ -819,34 +816,23 @@ public class MovieTools {
     }
 
     /**
-     * Download movie data from trakt and TMDb. If you plan on calling this multiple times, use
-     * {@link #getMovieDetails(Search, Movies, String, int)} instead.
+     * Download movie data from trakt and TMDb using the {@link DisplaySettings#getContentLanguage(Context)}.
      */
     public MovieDetails getMovieDetails(int movieTmdbId) {
-        // trakt
-        TraktV2 trakt = ServiceUtils.getTrakt(context);
-        Movies traktMovies = trakt.movies();
-        Search traktSearch = trakt.search();
-
-        // TMDb
         String languageCode = DisplaySettings.getContentLanguage(context);
-        return getMovieDetails(traktSearch, traktMovies, languageCode, movieTmdbId);
+        return getMovieDetails(languageCode, movieTmdbId);
     }
 
     /**
      * Download movie data from trakt and TMDb.
-     *
-     * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on auth
-     * errors.
      */
-    private MovieDetails getMovieDetails(Search traktSearch, Movies traktMovies,
-            String languageCode, int movieTmdbId) {
+    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId) {
         MovieDetails details = new MovieDetails();
 
         // load ratings from trakt
-        Integer movieTraktId = lookupTraktId(context, traktSearch, movieTmdbId);
+        Integer movieTraktId = lookupTraktId(movieTmdbId);
         if (movieTraktId != null) {
-            details.traktRatings(loadRatingsFromTrakt(traktMovies, movieTraktId));
+            details.traktRatings(loadRatingsFromTrakt(movieTraktId));
         }
 
         // load summary from tmdb
@@ -855,9 +841,10 @@ public class MovieTools {
         return details;
     }
 
-    private Ratings loadRatingsFromTrakt(Movies traktMovies, int movieTraktId) {
+    private Ratings loadRatingsFromTrakt(int movieTraktId) {
         try {
-            Response<Ratings> response = traktMovies.ratings(String.valueOf(movieTraktId))
+            Response<Ratings> response = traktMovies.get()
+                    .ratings(String.valueOf(movieTraktId))
                     .execute();
             if (response.isSuccessful()) {
                 return response.body();

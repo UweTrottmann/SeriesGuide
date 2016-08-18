@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
@@ -245,7 +246,7 @@ public class TraktCommentsFragment extends Fragment {
         @Override
         public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
             showProgressBar(true);
-            return new TraktCommentsLoader(getActivity(), args);
+            return new TraktCommentsLoader(SgApp.from(getActivity()), args);
         }
 
         @Override
