@@ -7,12 +7,10 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
@@ -81,7 +79,6 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
 
         // send to trakt
         if (isSendingToTrakt()) {
-            TraktV2 trakt = ServiceUtils.getTrakt(getContext());
             if (!TraktCredentials.get(getContext()).hasCredentials()) {
                 return ERROR_TRAKT_AUTH;
             }
