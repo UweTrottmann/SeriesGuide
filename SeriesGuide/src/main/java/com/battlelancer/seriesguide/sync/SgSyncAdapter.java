@@ -297,7 +297,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                TvdbTools.updateShow(getContext(), id);
+                TvdbTools.getInstance(app).updateShow(id);
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);

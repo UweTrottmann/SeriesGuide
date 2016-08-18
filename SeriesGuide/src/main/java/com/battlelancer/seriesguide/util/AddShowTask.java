@@ -152,8 +152,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = addQueue.removeFirst();
 
             try {
-                boolean addedShow = TvdbTools.addShow(app, nextShow.tvdbid, nextShow.language,
-                        traktCollection, traktWatched);
+                boolean addedShow = TvdbTools.getInstance(app)
+                        .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched);
                 result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success

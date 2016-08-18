@@ -25,8 +25,6 @@ import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedShow;
-import com.uwetrottmann.trakt5.entities.SearchResult;
-import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -34,7 +32,6 @@ import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
@@ -639,8 +636,8 @@ public class TraktTools {
     }
 
     /**
-     * Similar to {@link #syncEpisodeFlags(HashSet, LastActivityMore, boolean)}, but only
-     * processes a single show and only downloads watched/collected episodes from trakt.
+     * Similar to {@link #syncEpisodeFlags(HashSet, LastActivityMore, boolean)}, but only processes
+     * a single show and only downloads watched/collected episodes from trakt.
      */
     public boolean storeEpisodeFlags(@Nullable HashMap<Integer, BaseShow> traktShows,
             int showTvdbId, @NonNull Flag flag) {
@@ -1092,66 +1089,6 @@ public class TraktTools {
         }
 
         return context.getString(resId);
-    }
-
-    /**
-     * Look up a show's trakt id, may return {@code null} if not found.
-     *
-     * <p> <b>Always</b> supply trakt services <b>without</b> auth, as retrofit will crash on auth
-     * errors.
-     */
-    public static String lookupShowTraktId(Context context, int showTvdbId) {
-        List<SearchResult> searchResults = null;
-        try {
-            // get up to 3 results: may be a show, season or episode (TVDb ids are not unique)
-            Response<List<SearchResult>> response = ServiceUtils.getTrakt(context)
-                    .search()
-                    .idLookup(IdType.TVDB, String.valueOf(showTvdbId), 1, 3)
-                    .execute();
-            if (response.isSuccessful()) {
-                searchResults = response.body();
-            } else {
-                SgTrakt.trackFailedRequest(context, "show trakt id lookup", response);
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "show trakt id lookup", e);
-        }
-        if (searchResults == null) {
-            return null;
-        }
-
-        for (SearchResult result : searchResults) {
-            if (result.episode != null) {
-                // not a show result
-                continue;
-            }
-            Show show = result.show;
-            if (show != null && show.ids != null && show.ids.trakt != null) {
-                return String.valueOf(show.ids.trakt);
-            }
-        }
-
-        return null;
-    }
-
-    @Nullable
-    public static Show getShowSummary(Context context, String showTraktId) {
-        try {
-            // fetch details
-            retrofit2.Response<com.uwetrottmann.trakt5.entities.Show> response
-                    = ServiceUtils.getTrakt(context)
-                    .shows()
-                    .summary(showTraktId, Extended.FULL)
-                    .execute();
-            if (response.isSuccessful()) {
-                return response.body();
-            } else {
-                SgTrakt.trackFailedRequest(context, "get show summary", response);
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "get show summary", e);
-        }
-        return null;
     }
 
     @Nullable
