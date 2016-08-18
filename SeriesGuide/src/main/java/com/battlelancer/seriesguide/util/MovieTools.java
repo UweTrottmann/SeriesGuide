@@ -64,23 +64,6 @@ import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
 
-    private static MovieTools movieTools;
-
-    private final Context context;
-    @Inject Lazy<MoviesService> tmdbMovies;
-
-    public static synchronized MovieTools getInstance(SgApp app) {
-        if (movieTools == null) {
-            movieTools = new MovieTools(app);
-        }
-        return movieTools;
-    }
-
-    private MovieTools(SgApp app) {
-        context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
-    }
-
     public static class MovieChangedEvent {
         public int movieTmdbId;
 
@@ -98,6 +81,30 @@ public class MovieTools {
         Lists(String databaseColumn) {
             this.databaseColumn = databaseColumn;
         }
+    }
+
+    private static final String[] PROJECTION_MOVIES_IN_LISTS = {
+            SeriesGuideContract.Movies.TMDB_ID, // 0
+            SeriesGuideContract.Movies.IN_COLLECTION, // 1
+            SeriesGuideContract.Movies.IN_WATCHLIST // 2
+    };
+
+    private static MovieTools movieTools;
+
+    private final Context context;
+    @Inject Lazy<MoviesService> tmdbMovies;
+    @Inject Lazy<Sync> traktSync;
+
+    public static synchronized MovieTools getInstance(SgApp app) {
+        if (movieTools == null) {
+            movieTools = new MovieTools(app);
+        }
+        return movieTools;
+    }
+
+    private MovieTools(SgApp app) {
+        context = app.getApplicationContext();
+        app.getServicesComponent().inject(this);
     }
 
     /**
@@ -593,12 +600,11 @@ public class MovieTools {
             return UpdateResult.SUCCESS;
         }
 
-        Sync sync = ServiceUtils.getTrakt(context).sync();
-
         // download collection
         Set<Integer> collection;
         try {
-            Response<List<BaseMovie>> response = sync.collectionMovies(Extended.DEFAULT_MIN)
+            Response<List<BaseMovie>> response = traktSync.get()
+                    .collectionMovies(Extended.DEFAULT_MIN)
                     .execute();
             if (response.isSuccessful()) {
                 collection = buildTmdbIdSet(response.body());
@@ -620,7 +626,8 @@ public class MovieTools {
         // download watchlist
         Set<Integer> watchlist;
         try {
-            Response<List<BaseMovie>> response = sync.watchlistMovies(Extended.DEFAULT_MIN)
+            Response<List<BaseMovie>> response = traktSync.get()
+                    .watchlistMovies(Extended.DEFAULT_MIN)
                     .execute();
             if (response.isSuccessful()) {
                 watchlist = buildTmdbIdSet(response.body());
@@ -701,8 +708,8 @@ public class MovieTools {
         // merge on first run
         if (merging) {
             // upload movies not in trakt collection or watchlist
-            if (Upload.toTrakt(context, sync, moviesNotOnTraktCollection,
-                    moviesNotOnTraktWatchlist) != UpdateResult.SUCCESS) {
+            if (toTrakt(moviesNotOnTraktCollection, moviesNotOnTraktWatchlist)
+                    != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
             } else {
                 // set merge successful
@@ -906,12 +913,6 @@ public class MovieTools {
 
     public static class Upload {
 
-        private static final String[] PROJECTION_MOVIES_IN_LISTS = {
-                SeriesGuideContract.Movies.TMDB_ID, // 0
-                SeriesGuideContract.Movies.IN_COLLECTION, // 1
-                SeriesGuideContract.Movies.IN_WATCHLIST // 2
-        };
-
         /**
          * Uploads all local movies to Hexagon.
          */
@@ -974,84 +975,84 @@ public class MovieTools {
 
             return movies;
         }
+    }
 
-        /**
-         * Checks if the given movies are in the local collection or watchlist, then uploads them to
-         * the appropriate list(s) on trakt.
-         */
-        public static UpdateResult toTrakt(Context context, Sync traktSync,
-                Set<Integer> moviesNotOnTraktCollection, Set<Integer> moviesNotOnTraktWatchlist) {
-            if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
-                // nothing to upload
-                Timber.d("toTrakt: nothing to upload");
-                return UpdateResult.SUCCESS;
-            }
-
-            // return if connectivity is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return UpdateResult.INCOMPLETE;
-            }
-
-            // query for movies in lists (excluding movies that are only watched)
-            Cursor moviesInLists = context.getContentResolver()
-                    .query(SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
-                            SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
-            if (moviesInLists == null) {
-                Timber.e("toTrakt: query failed");
-                return UpdateResult.INCOMPLETE;
-            }
-
-            // build list of collected, watchlisted movies to upload
-            List<SyncMovie> moviesToCollect = new LinkedList<>();
-            List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-            while (moviesInLists.moveToNext()) {
-                int tmdbId = moviesInLists.getInt(0);
-
-                // in local collection, but not on trakt?
-                if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
-                    moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
-                }
-                // in local watchlist, but not on trakt?
-                if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
-                    moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
-                }
-            }
-
-            // clean up
-            moviesInLists.close();
-
-            // upload
-            String action = null;
-            SyncItems items = new SyncItems();
-            Response<SyncResponse> response = null;
-            try {
-                if (moviesToCollect.size() > 0) {
-                    action = "add movies to collection";
-                    items.movies(moviesToCollect);
-                    response = traktSync.addItemsToCollection(items).execute();
-                }
-                if (response == null || response.isSuccessful()) {
-                    if (moviesToWatchlist.size() > 0) {
-                        action = "add movies to watchlist";
-                        items.movies(moviesToWatchlist);
-                        response = traktSync.addItemsToWatchlist(items).execute();
-                    }
-                }
-            } catch (IOException e) {
-                SgTrakt.trackFailedRequest(context, action, e);
-                return UpdateResult.INCOMPLETE;
-            }
-            if (response != null && !response.isSuccessful()) {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return UpdateResult.INCOMPLETE;
-                }
-                SgTrakt.trackFailedRequest(context, action, response);
-                return UpdateResult.INCOMPLETE;
-            }
-
-            Timber.d("toTrakt: success, uploaded %s to collection, %s to watchlist",
-                    moviesToCollect.size(), moviesToWatchlist.size());
+    /**
+     * Checks if the given movies are in the local collection or watchlist, then uploads them to the
+     * appropriate list(s) on trakt.
+     */
+    public UpdateResult toTrakt(Set<Integer> moviesNotOnTraktCollection,
+            Set<Integer> moviesNotOnTraktWatchlist) {
+        if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
+            // nothing to upload
+            Timber.d("toTrakt: nothing to upload");
             return UpdateResult.SUCCESS;
         }
+
+        // return if connectivity is lost
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // query for movies in lists (excluding movies that are only watched)
+        Cursor moviesInLists = context.getContentResolver()
+                .query(SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
+                        SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
+        if (moviesInLists == null) {
+            Timber.e("toTrakt: query failed");
+            return UpdateResult.INCOMPLETE;
+        }
+
+        // build list of collected, watchlisted movies to upload
+        List<SyncMovie> moviesToCollect = new LinkedList<>();
+        List<SyncMovie> moviesToWatchlist = new LinkedList<>();
+        while (moviesInLists.moveToNext()) {
+            int tmdbId = moviesInLists.getInt(0);
+
+            // in local collection, but not on trakt?
+            if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
+                moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
+            }
+            // in local watchlist, but not on trakt?
+            if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
+                moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
+            }
+        }
+
+        // clean up
+        moviesInLists.close();
+
+        // upload
+        String action = null;
+        SyncItems items = new SyncItems();
+        Response<SyncResponse> response = null;
+        try {
+            if (moviesToCollect.size() > 0) {
+                action = "add movies to collection";
+                items.movies(moviesToCollect);
+                response = traktSync.get().addItemsToCollection(items).execute();
+            }
+            if (response == null || response.isSuccessful()) {
+                if (moviesToWatchlist.size() > 0) {
+                    action = "add movies to watchlist";
+                    items.movies(moviesToWatchlist);
+                    response = traktSync.get().addItemsToWatchlist(items).execute();
+                }
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, action, e);
+            return UpdateResult.INCOMPLETE;
+        }
+        if (response != null && !response.isSuccessful()) {
+            if (SgTrakt.isUnauthorized(context, response)) {
+                return UpdateResult.INCOMPLETE;
+            }
+            SgTrakt.trackFailedRequest(context, action, response);
+            return UpdateResult.INCOMPLETE;
+        }
+
+        Timber.d("toTrakt: success, uploaded %s to collection, %s to watchlist",
+                moviesToCollect.size(), moviesToWatchlist.size());
+        return UpdateResult.SUCCESS;
     }
 }
