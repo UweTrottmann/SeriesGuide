@@ -8,21 +8,24 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
-import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.services.Checkin;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
+import javax.inject.Inject;
 
 /**
  * Warns about an ongoing check-in, how long it takes until it is finished. Offers to override or
@@ -30,6 +33,7 @@ import java.io.IOException;
  */
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
+    @Inject Lazy<Checkin> traktCheckin;
     private int mWait;
 
     /**
@@ -41,6 +45,13 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         f.setArguments(traktTaskData);
         f.mWait = waitInMinutes;
         return f;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        SgApp.from(getActivity()).getServicesComponent().inject(this);
     }
 
     @NonNull
@@ -70,9 +81,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                             return context.getString(R.string.trakt_error_credentials);
                         }
 
-                        TraktV2 trakt = ServiceUtils.getTrakt(context);
                         try {
-                            retrofit2.Response<Void> response = trakt.checkin()
+                            retrofit2.Response<Void> response = traktCheckin.get()
                                     .deleteActiveCheckin()
                                     .execute();
                             if (response.isSuccessful()) {

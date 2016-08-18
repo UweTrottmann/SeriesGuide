@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.modules;
 import android.app.Application;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Recommendations;
@@ -15,6 +16,12 @@ import javax.inject.Singleton;
 
 @Module
 public class TraktModule {
+
+    @Singleton
+    @Provides
+    Checkin provideCheckin(TraktV2 trakt) {
+        return trakt.checkin();
+    }
 
     @Singleton
     @Provides
