@@ -25,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -209,14 +210,15 @@ public class CalendarFragment extends Fragment implements
 
     private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean addToCollection) {
-        EpisodeTools.episodeCollected(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
-                episodeNumber, addToCollection);
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
+                seasonNumber, episodeNumber, addToCollection);
     }
 
     private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, boolean isWatched) {
-        EpisodeTools.episodeWatched(getActivity(), showTvdbId, episodeTvdbId, seasonNumber,
-                episodeNumber, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
+                seasonNumber, episodeNumber,
+                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     @Override

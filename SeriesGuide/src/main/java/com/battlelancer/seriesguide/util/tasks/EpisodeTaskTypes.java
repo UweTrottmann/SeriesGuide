@@ -109,6 +109,9 @@ public class EpisodeTaskTypes {
             return episodes;
         }
 
+        /**
+         * Return {@code null} to upload the complete show.
+         */
         @Nullable
         public abstract List<SyncSeason> getEpisodesForTrakt();
 
@@ -118,7 +121,7 @@ public class EpisodeTaskTypes {
         protected abstract void setEpisodeProperties(Episode episode);
 
         /**
-         * Builds a list of {@link com.uwetrottmann.trakt.v2.entities.SyncSeason} objects to submit
+         * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit
          * to trakt.
          */
         protected List<SyncSeason> buildTraktEpisodeList() {

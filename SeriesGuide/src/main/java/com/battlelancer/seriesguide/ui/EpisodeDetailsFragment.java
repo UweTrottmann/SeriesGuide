@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -46,6 +47,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -265,14 +267,14 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
 
     private void changeEpisodeFlag(int episodeFlag) {
         mEpisodeFlag = episodeFlag;
-        EpisodeTools.episodeWatched(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
-                mEpisodeNumber, episodeFlag);
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+                mSeasonNumber, mEpisodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        EpisodeTools.episodeCollected(getActivity(), mShowTvdbId, getEpisodeTvdbId(), mSeasonNumber,
-                mEpisodeNumber, mCollected);
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+                mSeasonNumber, mEpisodeNumber, mCollected);
     }
 
     @Override
@@ -557,7 +559,8 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     }
 
     private void rateEpisode() {
-        EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), getEpisodeTvdbId());
+        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(),
+                getEpisodeTvdbId());
         Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
 

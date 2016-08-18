@@ -9,36 +9,35 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -81,19 +80,6 @@ public class EpisodeTools {
         return episodeFlags == EpisodeFlags.WATCHED;
     }
 
-    /**
-     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment} to rate an
-     * episode.
-     */
-    public static void displayRateDialog(Context context, FragmentManager fragmentManager,
-            int episodeTvdbId) {
-        if (!TraktCredentials.ensureCredentials(context)) {
-            return;
-        }
-        RateDialogFragment newFragment = RateDialogFragment.newInstanceEpisode(episodeTvdbId);
-        newFragment.show(fragmentManager, "ratedialog");
-    }
-
     public static void validateFlags(int episodeFlags) {
         if (isUnwatched(episodeFlags)) {
             return;
@@ -109,19 +95,21 @@ public class EpisodeTools {
                 "Did not pass a valid episode flag. See EpisodeFlags class for details.");
     }
 
-    public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
+    public static void episodeWatched(SgApp app, int showTvdbId, int episodeTvdbId,
             int season, int episode, int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(context,
-                new EpisodeTaskTypes.EpisodeWatchedType(context, showTvdbId, episodeTvdbId, season, episode,
+        execute(app,
+                new EpisodeTaskTypes.EpisodeWatchedType(app, showTvdbId, episodeTvdbId, season,
+                        episode,
                         episodeFlags)
         );
     }
 
-    public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
+    public static void episodeCollected(SgApp app, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isFlag) {
-        execute(context,
-                new EpisodeTaskTypes.EpisodeCollectedType(context, showTvdbId, episodeTvdbId, season, episode,
+        execute(app,
+                new EpisodeTaskTypes.EpisodeCollectedType(app, showTvdbId, episodeTvdbId,
+                        season, episode,
                         isFlag ? 1 : 0)
         );
     }
@@ -130,47 +118,48 @@ public class EpisodeTools {
      * Flags all episodes released previous to this one as watched (excluding episodes with no
      * release date).
      */
-    public static void episodeWatchedPrevious(Context context, int showTvdbId,
+    public static void episodeWatchedPrevious(SgApp app, int showTvdbId,
             long episodeFirstAired) {
-        execute(context,
-                new EpisodeTaskTypes.EpisodeWatchedPreviousType(context, showTvdbId, episodeFirstAired)
+        execute(app,
+                new EpisodeTaskTypes.EpisodeWatchedPreviousType(app, showTvdbId,
+                        episodeFirstAired)
         );
     }
 
-    public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
+    public static void seasonWatched(SgApp app, int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(context,
-                new EpisodeTaskTypes.SeasonWatchedType(context, showTvdbId, seasonTvdbId, season, episodeFlags)
+        execute(app,
+                new EpisodeTaskTypes.SeasonWatchedType(app, showTvdbId, seasonTvdbId, season,
+                        episodeFlags)
         );
     }
 
-    public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
+    public static void seasonCollected(SgApp app, int showTvdbId, int seasonTvdbId,
             int season, boolean isFlag) {
-        execute(context,
-                new EpisodeTaskTypes.SeasonCollectedType(context, showTvdbId, seasonTvdbId, season, isFlag ? 1 : 0)
+        execute(app,
+                new EpisodeTaskTypes.SeasonCollectedType(app, showTvdbId, seasonTvdbId, season,
+                        isFlag ? 1 : 0)
         );
     }
 
-    public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
-        execute(context,
-                new EpisodeTaskTypes.ShowWatchedType(context, showTvdbId, isFlag ? 1 : 0)
+    public static void showWatched(SgApp app, int showTvdbId, boolean isFlag) {
+        execute(app,
+                new EpisodeTaskTypes.ShowWatchedType(app, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
-    public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
-        execute(context,
-                new EpisodeTaskTypes.ShowCollectedType(context, showTvdbId, isFlag ? 1 : 0)
+    public static void showCollected(SgApp app, int showTvdbId, boolean isFlag) {
+        execute(app,
+                new EpisodeTaskTypes.ShowCollectedType(app, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
     /**
      * Run the task on the thread pool.
      */
-    private static void execute(@NonNull Context context, @NonNull EpisodeTaskTypes.FlagType type) {
-        AsyncTaskCompat.executeParallel(
-                new EpisodeFlagTask(context.getApplicationContext(), type)
-        );
+    private static void execute(SgApp app, @NonNull EpisodeTaskTypes.FlagType type) {
+        AsyncTaskCompat.executeParallel(new EpisodeFlagTask(app, type));
     }
 
     /**
@@ -185,7 +174,7 @@ public class EpisodeTools {
         }
     }
 
-    private static class EpisodeFlagTask extends AsyncTask<Void, Void, Integer> {
+    public static class EpisodeFlagTask extends AsyncTask<Void, Void, Integer> {
 
         private static final int SUCCESS = 0;
         private static final int ERROR_NETWORK = -1;
@@ -194,6 +183,7 @@ public class EpisodeTools {
         private static final int ERROR_HEXAGON_API = -4;
 
         private final Context context;
+        @Inject Lazy<Sync> traktSync;
         private final EpisodeTaskTypes.FlagType flagType;
 
         private boolean shouldSendToTrakt;
@@ -201,8 +191,9 @@ public class EpisodeTools {
 
         private boolean canSendToTrakt;
 
-        public EpisodeFlagTask(Context context, EpisodeTaskTypes.FlagType type) {
-            this.context = context.getApplicationContext();
+        public EpisodeFlagTask(SgApp app, EpisodeTaskTypes.FlagType type) {
+            this.context = app;
+            app.getServicesComponent().inject(this);
             flagType = type;
         }
 
@@ -247,11 +238,7 @@ public class EpisodeTools {
                         return ERROR_NETWORK;
                     }
 
-                    int result = uploadToTrakt(context,
-                            traktId,
-                            flagType.getAction(),
-                            flagType.getEpisodesForTrakt(),
-                            !isUnwatched(flagType.getFlagValue()));
+                    int result = uploadToTrakt(traktId);
                     if (result < 0) {
                         return result;
                     }
@@ -300,26 +287,21 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
-        /**
-         * @param flags Send {@code null} to upload complete show.
-         */
-        private static int uploadToTrakt(@NonNull Context context, int showTraktId,
-                @NonNull EpisodeTaskTypes.Action flagAction, @Nullable List<SyncSeason> flags,
-                boolean isAddNotDelete) {
+        private int uploadToTrakt(int showTraktId) {
+            List<SyncSeason> flags = flagType.getEpisodesForTrakt();
             if (flags != null && flags.isEmpty()) {
                 return SUCCESS; // nothing to upload, done.
             }
 
-            TraktV2 trakt = ServiceUtils.getTrakt(context);
             if (!TraktCredentials.get(context).hasCredentials()) {
                 return ERROR_TRAKT_AUTH;
             }
-            Sync traktSync = trakt.sync();
 
             // outer wrapper and show are always required
             SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
             SyncItems items = new SyncItems().shows(show);
             // add season or episodes
+            EpisodeTaskTypes.Action flagAction = flagType.getAction();
             if (flagAction == EpisodeTaskTypes.Action.SEASON_WATCHED
                     || flagAction == EpisodeTaskTypes.Action.SEASON_COLLECTED
                     || flagAction == EpisodeTaskTypes.Action.EPISODE_WATCHED
@@ -331,6 +313,7 @@ public class EpisodeTools {
             // determine network call
             String action;
             Call<SyncResponse> call;
+            boolean isAddNotDelete = !isUnwatched(flagType.getFlagValue());
             switch (flagAction) {
                 case SHOW_WATCHED:
                 case SEASON_WATCHED:
@@ -338,10 +321,10 @@ public class EpisodeTools {
                 case EPISODE_WATCHED_PREVIOUS:
                     if (isAddNotDelete) {
                         action = "set episodes watched";
-                        call = traktSync.addItemsToWatchedHistory(items);
+                        call = traktSync.get().addItemsToWatchedHistory(items);
                     } else {
                         action = "set episodes not watched";
-                        call = traktSync.deleteItemsFromWatchedHistory(items);
+                        call = traktSync.get().deleteItemsFromWatchedHistory(items);
                     }
                     break;
                 case SHOW_COLLECTED:
@@ -349,10 +332,10 @@ public class EpisodeTools {
                 case EPISODE_COLLECTED:
                     if (isAddNotDelete) {
                         action = "add episodes to collection";
-                        call = traktSync.addItemsToCollection(items);
+                        call = traktSync.get().addItemsToCollection(items);
                     } else {
                         action = "remove episodes from collection";
-                        call = traktSync.deleteItemsFromCollection(items);
+                        call = traktSync.get().deleteItemsFromCollection(items);
                     }
                     break;
                 default:
@@ -380,8 +363,8 @@ public class EpisodeTools {
         }
 
         /**
-         * If the {@link SyncResponse} is invalid or any show,
-         * season or episode was not found returns {@code false}.
+         * If the {@link SyncResponse} is invalid or any show, season or episode was not found
+         * returns {@code false}.
          */
         private static boolean isSyncSuccessful(SyncResponse response) {
             if (response == null || response.not_found == null) {

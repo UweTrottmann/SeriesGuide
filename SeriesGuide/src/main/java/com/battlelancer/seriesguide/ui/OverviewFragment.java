@@ -36,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -52,6 +53,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
@@ -380,7 +382,7 @@ public class OverviewFragment extends Fragment implements
         }
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(getActivity(), showTvdbId,
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
     }
 
@@ -389,7 +391,7 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), currentEpisodeTvdbId);
+        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(), currentEpisodeTvdbId);
 
         Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
@@ -415,7 +417,7 @@ public class OverviewFragment extends Fragment implements
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(getActivity(), showTvdbId,
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
 
         Utils.trackAction(getActivity(), TAG, "Toggle Collected");
