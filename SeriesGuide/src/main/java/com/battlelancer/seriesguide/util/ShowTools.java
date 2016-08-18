@@ -24,14 +24,12 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
-import com.uwetrottmann.trakt5.enums.Rating;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -286,13 +284,6 @@ public class ShowTools {
      */
     public static void addToWatchlist(SgApp app, int showTvdbId) {
         AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(app, showTvdbId));
-    }
-
-    /**
-     * Store the rating for the given episode in the database and send it to trakt.
-     */
-    public static void rate(SgApp app, int showTvdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateShowTask(app, rating, showTvdbId));
     }
 
     /**

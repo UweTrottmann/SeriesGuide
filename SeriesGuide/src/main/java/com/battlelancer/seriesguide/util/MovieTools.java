@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.SetMovieUnwatchedTask;
@@ -45,7 +44,6 @@ import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
-import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Sync;
@@ -202,14 +200,6 @@ public class MovieTools {
         } else {
             return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
         }
-    }
-
-    /**
-     * Store the rating for the given movie in the database (if it is in the database) and send it
-     * to trakt.
-     */
-    public static void rate(SgApp app, int movieTmdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateMovieTask(app, rating, movieTmdbId));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {

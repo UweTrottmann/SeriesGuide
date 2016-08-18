@@ -16,6 +16,10 @@ public class RateMovieTask extends BaseRateItemTask {
 
     private final int movieTmdbId;
 
+    /**
+     * Stores the rating for the given movie in the database (if it is in the database) and sends it
+     * to trakt.
+     */
     public RateMovieTask(SgApp app, Rating rating, int movieTmdbId) {
         super(app, rating);
         this.movieTmdbId = movieTmdbId;

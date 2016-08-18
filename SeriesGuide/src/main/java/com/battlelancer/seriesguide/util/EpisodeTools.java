@@ -15,7 +15,6 @@ import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -24,7 +23,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
-import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -36,7 +34,6 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
-import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Sync;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
@@ -95,13 +92,6 @@ public class EpisodeTools {
         }
         RateDialogFragment newFragment = RateDialogFragment.newInstanceEpisode(episodeTvdbId);
         newFragment.show(fragmentManager, "ratedialog");
-    }
-
-    /**
-     * Store the rating for the given episode in the database and send it to trakt.
-     */
-    public static void rate(SgApp app, int episodeTvdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateEpisodeTask(app, rating, episodeTvdbId));
     }
 
     public static void validateFlags(int episodeFlags) {

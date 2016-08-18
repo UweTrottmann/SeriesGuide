@@ -17,6 +17,9 @@ public class RateEpisodeTask extends BaseRateItemTask {
 
     private final int episodeTvdbId;
 
+    /**
+     * Stores the rating for the given episode in the database and sends it to trakt.
+     */
     public RateEpisodeTask(SgApp app, Rating rating, int episodeTvdbId) {
         super(app, rating);
         this.episodeTvdbId = episodeTvdbId;
