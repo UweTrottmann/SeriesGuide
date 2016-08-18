@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseMovieActionTask;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
@@ -43,6 +44,7 @@ public interface ServicesComponent {
     void inject(TraktCancelCheckinDialogFragment traktCancelCheckinDialogFragment);
     void inject(TraktCommentsLoader traktCommentsLoader);
     void inject(TraktRatingsTask traktRatingsTask);
+    void inject(TraktTask traktTask);
     void inject(TraktTools traktTools);
     void inject(TvdbAddLoader tvdbAddLoader);
     void inject(TvdbTools tvdbTools);
