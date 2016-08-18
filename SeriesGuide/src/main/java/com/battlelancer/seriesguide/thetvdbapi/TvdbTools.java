@@ -150,53 +150,54 @@ public class TvdbTools {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(@NonNull Context context, int showTvdbId,
+    public static boolean addShow(@NonNull SgApp app, int showTvdbId,
             @Nullable String language, @Nullable HashMap<Integer, BaseShow> traktCollection,
             @Nullable HashMap<Integer, BaseShow> traktWatched)
             throws TvdbException {
-        boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
+        boolean isShowExists = DBUtils.isShowExists(app, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
         // get show and determine the language to use
-        Show show = getShowDetailsWithHexagon(context, showTvdbId, language);
+        Show show = getShowDetailsWithHexagon(app, showTvdbId, language);
         language = show.language;
 
         // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(DBUtils.buildShowOp(context, show, true));
-        getEpisodesAndUpdateDatabase(context, show, language, batch);
+        batch.add(DBUtils.buildShowOp(app, show, true));
+        getEpisodesAndUpdateDatabase(app, show, language, batch);
 
         // restore episode flags...
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isSignedIn(app)) {
             // ...from Hexagon
-            boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
+            boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge
                 ContentValues values = new ContentValues();
                 values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
-                context.getContentResolver()
+                app.getContentResolver()
                         .update(Shows.buildShowUri(showTvdbId), values, null, null);
             }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
-            ShowTools.get(context).sendIsAdded(showTvdbId, language);
+            ShowTools.get(app).sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            if (!TraktTools.storeEpisodeFlags(context, traktWatched, showTvdbId,
+            TraktTools traktTools = TraktTools.getInstance(app);
+            if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
                 throw new TvdbException("addShow: storing trakt watched episodes failed.");
             }
-            if (!TraktTools.storeEpisodeFlags(context, traktCollection, showTvdbId,
+            if (!traktTools.storeEpisodeFlags(traktCollection, showTvdbId,
                     TraktTools.Flag.COLLECTED)) {
                 throw new TvdbException("addShow: storing trakt collected episodes failed.");
             }
         }
 
         // calculate next episode
-        DBUtils.updateLatestEpisode(context, showTvdbId);
+        DBUtils.updateLatestEpisode(app, showTvdbId);
 
         return true;
     }

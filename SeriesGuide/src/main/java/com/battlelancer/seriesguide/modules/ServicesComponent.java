@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseMovieActionTask;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
@@ -31,7 +32,8 @@ public interface ServicesComponent {
     void inject(SgSyncAdapter sgSyncAdapter);
     void inject(SgTmdbInterceptor sgTmdbInterceptor);
     void inject(ShowCreditsLoader showCreditsLoader);
-    void inject(TvdbTools tvdbTools);
     void inject(TmdbMoviesLoader tmdbMoviesLoader);
     void inject(TraktAddLoader traktAddLoader);
+    void inject(TraktTools traktTools);
+    void inject(TvdbTools tvdbTools);
 }
