@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
@@ -42,6 +43,8 @@ import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
 import com.uwetrottmann.thetvdb.services.Search;
 import com.uwetrottmann.thetvdb.services.SeriesService;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.IdType;
 import dagger.Lazy;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,7 +90,10 @@ public class TvdbTools {
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
     private static TvdbTools tvdbTools;
+    private final SgApp app;
     @Inject Lazy<Search> searchService;
+    @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
+    @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
 
     public static synchronized TvdbTools getInstance(SgApp app) {
         if (tvdbTools == null) {
@@ -98,6 +104,7 @@ public class TvdbTools {
 
     @Inject
     public TvdbTools(SgApp app) {
+        this.app = app;
         app.getServicesComponent().inject(this);
     }
 
@@ -150,53 +157,54 @@ public class TvdbTools {
      *
      * @return True, if the show and its episodes were added to the database.
      */
-    public static boolean addShow(@NonNull Context context, int showTvdbId,
-            @Nullable String language, @Nullable HashMap<Integer, BaseShow> traktCollection,
+    public boolean addShow(int showTvdbId, @Nullable String language,
+            @Nullable HashMap<Integer, BaseShow> traktCollection,
             @Nullable HashMap<Integer, BaseShow> traktWatched)
             throws TvdbException {
-        boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
+        boolean isShowExists = DBUtils.isShowExists(app, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
         // get show and determine the language to use
-        Show show = getShowDetailsWithHexagon(context, showTvdbId, language);
+        Show show = getShowDetailsWithHexagon(showTvdbId, language);
         language = show.language;
 
         // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(DBUtils.buildShowOp(context, show, true));
-        getEpisodesAndUpdateDatabase(context, show, language, batch);
+        batch.add(DBUtils.buildShowOp(app, show, true));
+        getEpisodesAndUpdateDatabase(app, show, language, batch);
 
         // restore episode flags...
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isSignedIn(app)) {
             // ...from Hexagon
-            boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
+            boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge
                 ContentValues values = new ContentValues();
                 values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
-                context.getContentResolver()
+                app.getContentResolver()
                         .update(Shows.buildShowUri(showTvdbId), values, null, null);
             }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
-            ShowTools.get(context).sendIsAdded(showTvdbId, language);
+            ShowTools.get(app).sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            if (!TraktTools.storeEpisodeFlags(context, traktWatched, showTvdbId,
+            TraktTools traktTools = TraktTools.getInstance(app);
+            if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
                 throw new TvdbException("addShow: storing trakt watched episodes failed.");
             }
-            if (!TraktTools.storeEpisodeFlags(context, traktCollection, showTvdbId,
+            if (!traktTools.storeEpisodeFlags(traktCollection, showTvdbId,
                     TraktTools.Flag.COLLECTED)) {
                 throw new TvdbException("addShow: storing trakt collected episodes failed.");
             }
         }
 
         // calculate next episode
-        DBUtils.updateLatestEpisode(context, showTvdbId);
+        DBUtils.updateLatestEpisode(app, showTvdbId);
 
         return true;
     }
@@ -204,21 +212,21 @@ public class TvdbTools {
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      */
-    public static void updateShow(@NonNull Context context, int showTvdbId) throws TvdbException {
+    public void updateShow(int showTvdbId) throws TvdbException {
         // determine which translation to get
-        String language = getShowLanguage(context, showTvdbId);
+        String language = getShowLanguage(app, showTvdbId);
         if (language == null) {
             return;
         }
 
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
-        Show show = getShowDetails(context, showTvdbId, language);
-        batch.add(DBUtils.buildShowOp(context, show, false));
+        Show show = getShowDetails(showTvdbId, language);
+        batch.add(DBUtils.buildShowOp(app, show, false));
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
-        getEpisodesAndUpdateDatabase(context, show, show.language, batch);
+        getEpisodesAndUpdateDatabase(app, show, show.language, batch);
     }
 
     private static String getShowLanguage(Context context, int showTvdbId) {
@@ -411,18 +419,18 @@ public class TvdbTools {
     }
 
     /**
-     * Like {@link #getShowDetails(Context, int, String)}, but if signed in and available adds
-     * properties stored on Hexagon.
+     * Like {@link #getShowDetails(int, String)}, but if signed in and available adds properties
+     * stored on Hexagon.
      */
     @NonNull
-    private static Show getShowDetailsWithHexagon(@NonNull Context context, int showTvdbId,
-            @Nullable String language) throws TvdbException {
+    private Show getShowDetailsWithHexagon(int showTvdbId, @Nullable String language)
+            throws TvdbException {
         // check for show on hexagon
         com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
         try {
-            hexagonShow = ShowTools.Download.showFromHexagon(context, showTvdbId);
+            hexagonShow = ShowTools.Download.showFromHexagon(app, showTvdbId);
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "get show details", e);
+            HexagonTools.trackFailedRequest(app, "get show details", e);
             throw new TvdbException("getShowDetailsWithHexagon: " + e.getMessage(), e);
         }
 
@@ -432,11 +440,11 @@ public class TvdbTools {
         }
         // if we still have no language, use the users default language
         if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getContentLanguage(context);
+            language = DisplaySettings.getContentLanguage(app);
         }
 
         // get show info from TVDb and trakt
-        Show show = getShowDetails(context, showTvdbId, language);
+        Show show = getShowDetails(showTvdbId, language);
 
         if (hexagonShow != null) {
             // restore properties from hexagon
@@ -460,19 +468,21 @@ public class TvdbTools {
      * supplied, TVDb falls back to English.
      */
     @NonNull
-    public static Show getShowDetails(@NonNull Context context, int showTvdbId,
-            @NonNull String language) throws TvdbException {
+    public Show getShowDetails(int showTvdbId, @NonNull String language) throws TvdbException {
         // try to get some details from trakt
         com.uwetrottmann.trakt5.entities.Show traktShow = null;
         // always look up the trakt id based on the TVDb id
         // e.g. a TVDb id might be linked against the wrong trakt entry, then get fixed
-        String showTraktId = TraktTools.lookupShowTraktId(context, showTvdbId);
+        String showTraktId = lookupShowTraktId(showTvdbId);
         if (showTraktId != null) {
-            traktShow = TraktTools.getShowSummary(context, showTraktId);
+            traktShow = SgTrakt.executeCall(app,
+                    traktShows.get().summary(showTraktId, Extended.FULL),
+                    "get show summary"
+            );
         }
 
         // get full show details from TVDb
-        final Show show = downloadAndParseShow(context, showTvdbId, language);
+        final Show show = downloadAndParseShow(app, showTvdbId, language);
 
         // fill in data from trakt
         if (traktShow != null) {
@@ -490,7 +500,7 @@ public class TvdbTools {
         } else {
             // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
             Timber.w("getShowDetails: failed to get trakt show details.");
-            show.traktId = ShowTools.getShowTraktId(context, showTvdbId);
+            show.traktId = ShowTools.getShowTraktId(app, showTvdbId);
             // set default values
             show.release_time = -1;
             show.release_weekday = -1;
@@ -499,6 +509,35 @@ public class TvdbTools {
         }
 
         return show;
+    }
+
+    /**
+     * Look up a show's trakt id, may return {@code null} if not found.
+     */
+    private String lookupShowTraktId(int showTvdbId) {
+        // get up to 3 results: may be a show, season or episode (TVDb ids are not unique)
+        List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
+                app,
+                traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), 1, 3),
+                "show trakt id lookup"
+        );
+
+        if (searchResults == null) {
+            return null;
+        }
+
+        for (com.uwetrottmann.trakt5.entities.SearchResult result : searchResults) {
+            if (result.episode != null) {
+                // not a show result
+                continue;
+            }
+            com.uwetrottmann.trakt5.entities.Show show = result.show;
+            if (show != null && show.ids != null && show.ids.trakt != null) {
+                return String.valueOf(show.ids.trakt);
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -1,13 +1,12 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import timber.log.Timber;
@@ -22,11 +21,13 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
         public boolean isAdded;
     }
 
+    private final SgApp app;
     private final int showTvdbId;
     private String language;
 
-    public TvdbShowLoader(@NonNull Context context, int showTvdbId, @Nullable String language) {
-        super(context);
+    public TvdbShowLoader(SgApp app, int showTvdbId, @Nullable String language) {
+        super(app);
+        this.app = app;
         this.showTvdbId = showTvdbId;
         this.language = language;
     }
@@ -41,7 +42,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
                 // fall back to user preferred language
                 language = DisplaySettings.getContentLanguage(getContext());
             }
-            result.show = TvdbTools.getShowDetails(getContext(), showTvdbId, language);
+            result.show = TvdbTools.getInstance(app).getShowDetails(showTvdbId, language);
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
             result.show = null;

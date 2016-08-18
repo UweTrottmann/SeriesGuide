@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -142,7 +143,7 @@ public class ShowSearchFragment extends ListFragment {
             menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(getActivity(),
+                    new ShowMenuItemClickListener(SgApp.from(getActivity()),
                             getFragmentManager(), viewHolder.showTvdbId, viewHolder.episodeTvdbId,
                             ListsActivity.TAG));
             popupMenu.show();

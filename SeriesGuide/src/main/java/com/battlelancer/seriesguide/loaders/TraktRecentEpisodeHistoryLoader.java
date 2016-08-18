@@ -1,25 +1,27 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.Username;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.services.Users;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -41,21 +43,23 @@ public class TraktRecentEpisodeHistoryLoader
         }
     }
 
-    public TraktRecentEpisodeHistoryLoader(Context context) {
-        super(context);
+    @Inject Lazy<Users> traktUsers;
+
+    public TraktRecentEpisodeHistoryLoader(Activity activity) {
+        super(activity);
+        SgApp.from(activity).getServicesComponent().inject(this);
     }
 
     @Override
     @NonNull
     public Result loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
         if (!TraktCredentials.get(getContext()).hasCredentials()) {
             return buildResultFailure(R.string.trakt_error_credentials);
         }
 
         List<HistoryEntry> history = null;
         try {
-            Response<List<HistoryEntry>> response = buildCall(trakt).execute();
+            Response<List<HistoryEntry>> response = buildCall().execute();
             if (response.isSuccessful()) {
                 history = response.body();
             } else {
@@ -132,13 +136,12 @@ public class TraktRecentEpisodeHistoryLoader
         return "get user episode history";
     }
 
-    protected Call<List<HistoryEntry>> buildCall(TraktV2 trakt) {
-        return buildUserEpisodeHistoryCall(trakt);
+    protected Call<List<HistoryEntry>> buildCall() {
+        return buildUserEpisodeHistoryCall(traktUsers.get());
     }
 
-    public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(TraktV2 trakt) {
-        return trakt.users()
-                .history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+    public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
+        return traktUsers.history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
                         Extended.IMAGES, null, null);
     }
 

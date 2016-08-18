@@ -77,8 +77,8 @@ public class SgTrakt extends TraktV2 {
     }
 
     /**
-     * Executes the given call. If the call fails because auth is invalid, removes the current
-     * access token and displays a warning notification to the user.
+     * Executes the given call. Will return null if the call fails for any reason, including auth
+     * failures.
      */
     public static <T> T executeCall(Context context, Call<T> call, String action) {
         try {

@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -126,12 +127,17 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         return new Result(new LinkedList<SearchResult>(), errorResId);
     }
 
+    public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
+            @NonNull List<Show> traktShows) {
+        return parseTraktShowsToSearchResults(context, traktShows, null);
+    }
+
     /**
      * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already in
      * the local database as added.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<Show> traktShows) {
+            @NonNull List<Show> traktShows, @Nullable String overrideLanguage) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
@@ -153,6 +159,9 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
                 // is already in local database
                 result.isAdded = true;
+            }
+            if (overrideLanguage != null) {
+                result.language = overrideLanguage;
             }
             results.add(result);
         }

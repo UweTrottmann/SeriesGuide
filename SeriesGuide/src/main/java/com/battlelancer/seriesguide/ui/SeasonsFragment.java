@@ -30,6 +30,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -39,8 +40,8 @@ import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -319,24 +320,24 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     private void onFlagSeasonSkipped(long seasonId, int seasonNumber) {
-        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
-                EpisodeFlags.SKIPPED);
+        EpisodeTools.seasonWatched(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+                seasonNumber, EpisodeFlags.SKIPPED);
     }
 
     /**
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        EpisodeTools.seasonWatched(getActivity(), getShowId(), (int) seasonId, seasonNumber,
-                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+        EpisodeTools.seasonWatched(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+                seasonNumber, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     /**
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        EpisodeTools.seasonCollected(getActivity(), getShowId(), (int) seasonId, seasonNumber,
-                isCollected);
+        EpisodeTools.seasonCollected(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+                seasonNumber, isCollected);
     }
 
     /**
@@ -344,7 +345,7 @@ public class SeasonsFragment extends ListFragment implements
      * seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        EpisodeTools.showWatched(getActivity(), getShowId(), isWatched);
+        EpisodeTools.showWatched(SgApp.from(getActivity()), getShowId(), isWatched);
     }
 
     /**
@@ -352,7 +353,7 @@ public class SeasonsFragment extends ListFragment implements
      * all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        EpisodeTools.showCollected(getActivity(), getShowId(), isCollected);
+        EpisodeTools.showCollected(SgApp.from(getActivity()), getShowId(), isCollected);
     }
 
     /**

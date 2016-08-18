@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -25,20 +27,17 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
+import javax.inject.Inject;
 import org.joda.time.DateTime;
 
 public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private static final String APP_VERSION = "SeriesGuide " + BuildConfig.VERSION_NAME;
-
-    private Bundle mArgs;
-
-    private final Context mContext;
-
-    private TraktAction mAction;
 
     public interface InitBundle {
 
@@ -138,15 +137,21 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
     }
 
+    private final Context mContext;
+    private Bundle mArgs;
+    private TraktAction mAction;
+    @Inject Lazy<TraktV2> trakt;
+    @Inject Lazy<Checkin> traktCheckin;
+    @Inject Lazy<Comments> traktComments;
+
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
      * String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials (check
      * with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then
      * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(Context context) {
-        mContext = context.getApplicationContext();
-        mArgs = new Bundle();
+    public TraktTask(Activity activity) {
+        this(SgApp.from(activity), new Bundle());
     }
 
     /**
@@ -155,9 +160,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(Context context, Bundle args) {
-        this(context);
+    public TraktTask(SgApp app, Bundle args) {
+        mContext = app;
         mArgs = args;
+        app.getServicesComponent().inject(this);
     }
 
     /**
@@ -230,9 +236,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             return new TraktResponse(false, mContext.getString(R.string.trakt_error_credentials));
         }
 
-        // get trakt
-        TraktV2 trakt = ServiceUtils.getTrakt(mContext);
-
         // last chance to abort
         if (isCancelled()) {
             return null;
@@ -241,17 +244,17 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         switch (mAction) {
             case CHECKIN_EPISODE:
             case CHECKIN_MOVIE: {
-                return doCheckInAction(ServiceUtils.getTrakt(mContext));
+                return doCheckInAction();
             }
             case COMMENT: {
-                return doCommentAction(trakt.comments());
+                return doCommentAction();
             }
             default:
                 return null;
         }
     }
 
-    private TraktResponse doCheckInAction(TraktV2 trakt) {
+    private TraktResponse doCheckInAction() {
         try {
             retrofit2.Response response;
             String message = mArgs.getString(InitBundle.MESSAGE);
@@ -263,7 +266,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = trakt.checkin().checkin(checkin).execute();
+                    response = traktCheckin.get().checkin(checkin).execute();
                     break;
                 }
                 case CHECKIN_MOVIE: {
@@ -273,7 +276,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = trakt.checkin().checkin(checkin).execute();
+                    response = traktCheckin.get().checkin(checkin).execute();
                     break;
                 }
                 default:
@@ -285,7 +288,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                         mArgs.getString(InitBundle.TITLE)));
             } else {
                 // check if the user wants to check-in, but there is already a check-in in progress
-                CheckinError checkinError = trakt.checkForCheckinError(response);
+                CheckinError checkinError = trakt.get().checkForCheckinError(response);
                 if (checkinError != null) {
                     DateTime expiresAt = checkinError.expires_at;
                     int waitTimeMin = expiresAt == null ? -1
@@ -311,10 +314,12 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         return new TraktResponse(false, mContext.getString(R.string.trakt_error_general));
     }
 
-    private TraktResponse doCommentAction(Comments traktComments) {
+    private TraktResponse doCommentAction() {
         try {
             // post comment
-            retrofit2.Response<Comment> response = traktComments.post(buildComment()).execute();
+            retrofit2.Response<Comment> response = traktComments.get()
+                    .post(buildComment())
+                    .execute();
             if (response.isSuccessful()) {
                 Comment postedComment = response.body();
                 if (postedComment.id != null) {
@@ -389,7 +394,8 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     if (checkinBlockedResponse.waitTimeMin > 0) {
                         // looks like a check in is already in progress
                         EventBus.getDefault().post(
-                                new TraktCheckInBlockedEvent(mArgs, checkinBlockedResponse.waitTimeMin));
+                                new TraktCheckInBlockedEvent(mArgs,
+                                        checkinBlockedResponse.waitTimeMin));
                         return;
                     }
                 }

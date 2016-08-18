@@ -6,14 +6,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
+import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
+import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
+import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.uwetrottmann.trakt5.enums.Rating;
 
 /**
@@ -21,6 +25,18 @@ import com.uwetrottmann.trakt5.enums.Rating;
  * sent to trakt (if the user is connected).
  */
 public class RateDialogFragment extends DialogFragment {
+
+    /**
+     * Display a {@link RateDialogFragment} to rate an episode.
+     */
+    public static void displayRateDialog(Context context, FragmentManager fragmentManager,
+            int episodeTvdbId) {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return;
+        }
+        RateDialogFragment newFragment = newInstanceEpisode(episodeTvdbId);
+        newFragment.show(fragmentManager, "ratedialog");
+    }
 
     private interface InitBundle {
         String ITEM_TYPE = "item-type";
@@ -149,19 +165,24 @@ public class RateDialogFragment extends DialogFragment {
             return;
         }
         int itemId = args.getInt(InitBundle.ITEM_ID);
+        SgApp app = SgApp.from(getActivity());
+        BaseRateItemTask task = null;
         switch (itemType) {
             case ITEM_MOVIE: {
-                MovieTools.rate(SgApp.from(getActivity()), itemId, rating);
+                task = new RateMovieTask(app, rating, itemId);
                 break;
             }
             case ITEM_SHOW: {
-                ShowTools.rate(SgApp.from(getActivity()), itemId, rating);
+                task = new RateShowTask(app, rating, itemId);
                 break;
             }
             case ITEM_EPISODE: {
-                EpisodeTools.rate(SgApp.from(getActivity()), itemId, rating);
+                task = new RateEpisodeTask(app, rating, itemId);
                 break;
             }
+        }
+        if (task != null) {
+            AsyncTaskCompat.executeParallel(task);
         }
 
         dismiss();

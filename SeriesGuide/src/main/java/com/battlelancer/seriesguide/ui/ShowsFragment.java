@@ -29,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -526,7 +527,7 @@ public class ShowsFragment extends Fragment implements
             menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
             popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(getActivity(), getFragmentManager(),
+                    new ShowMenuItemClickListener(SgApp.from(getActivity()), getFragmentManager(),
                             viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
             popupMenu.show();
         }
