@@ -75,6 +75,6 @@ public class TraktModule {
 
     @Provides
     TraktV2 provideTrakt(Application application) {
-        return ServiceUtils.getTrakt(application);
+        return ServiceUtils.getTraktNoTokenRefresh(application);
     }
 }
