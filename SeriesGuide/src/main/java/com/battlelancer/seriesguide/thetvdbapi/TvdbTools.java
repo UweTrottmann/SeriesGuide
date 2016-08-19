@@ -91,7 +91,8 @@ public class TvdbTools {
 
     private static TvdbTools tvdbTools;
     private final SgApp app;
-    @Inject Lazy<Search> searchService;
+    @Inject Lazy<Search> tvdbSearch;
+    @Inject Lazy<SeriesService> tvdbSeries;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
 
@@ -255,7 +256,7 @@ public class TvdbTools {
             throws TvdbException {
         retrofit2.Response<SeriesResultsWrapper> response;
         try {
-            response = searchService.get()
+            response = tvdbSearch.get()
                     .series(query, null, null, language)
                     .execute();
         } catch (IOException e) {
@@ -482,7 +483,7 @@ public class TvdbTools {
         }
 
         // get full show details from TVDb
-        final Show show = downloadAndParseShow(app, showTvdbId, language);
+        final Show show = downloadAndParseShow(showTvdbId, language);
 
         // fill in data from trakt
         if (traktShow != null) {
@@ -547,16 +548,14 @@ public class TvdbTools {
      * content.
      */
     @NonNull
-    private static Show downloadAndParseShow(@NonNull Context context, int showTvdbId,
-            @NonNull String desiredLanguage) throws TvdbException {
-        SeriesService seriesService = ServiceUtils.getTheTvdb(context).series();
-
-        Series series = getSeries(seriesService, showTvdbId, desiredLanguage);
+    private Show downloadAndParseShow(int showTvdbId, @NonNull String desiredLanguage)
+            throws TvdbException {
+        Series series = getSeries(showTvdbId, desiredLanguage);
         // title is null if no translation exists
         boolean noTranslation = TextUtils.isEmpty(series.seriesName);
         if (noTranslation) {
             // try to fetch default entry
-            series = getSeries(seriesService, showTvdbId, null);
+            series = getSeries(showTvdbId, null);
         }
 
         Show result = new Show();
@@ -572,9 +571,9 @@ public class TvdbTools {
         if (noTranslation || TextUtils.isEmpty(series.overview)) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = series.overview;
-            result.overview = context.getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(context, desiredLanguage),
-                    context.getString(R.string.tvdb));
+            result.overview = app.getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(app, desiredLanguage),
+                    app.getString(R.string.tvdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 result.overview += "\n\n" + untranslatedOverview;
             }
@@ -600,10 +599,10 @@ public class TvdbTools {
 
         // poster
         retrofit2.Response<SeriesImageQueryResults> posterResponse;
-        posterResponse = getSeriesPosters(seriesService, showTvdbId, desiredLanguage);
+        posterResponse = getSeriesPosters(showTvdbId, desiredLanguage);
         if (posterResponse.code() == 404) {
             // no posters for this language, fall back to default
-            posterResponse = getSeriesPosters(seriesService, showTvdbId, null);
+            posterResponse = getSeriesPosters(showTvdbId, null);
         }
 
         if (posterResponse.isSuccessful()) {
@@ -614,13 +613,10 @@ public class TvdbTools {
     }
 
     @NonNull
-    private static Series getSeries(@NonNull SeriesService seriesService, int showTvdbId,
-            @Nullable String language) throws TvdbException {
+    private Series getSeries(int showTvdbId, @Nullable String language) throws TvdbException {
         retrofit2.Response<SeriesWrapper> response;
         try {
-            response = seriesService
-                    .series(showTvdbId, language)
-                    .execute();
+            response = tvdbSeries.get().series(showTvdbId, language).execute();
         } catch (IOException e) {
             throw new TvdbException("getSeries: " + e.getMessage(), e);
         }
@@ -630,11 +626,10 @@ public class TvdbTools {
         return response.body().data;
     }
 
-    private static retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(
-            @NonNull SeriesService seriesService, int showTvdbId, @Nullable String language)
-            throws TvdbException {
+    private retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(int showTvdbId,
+            @Nullable String language) throws TvdbException {
         try {
-            return seriesService
+            return tvdbSeries.get()
                     .imagesQuery(showTvdbId, "poster", null, null, language)
                     .execute();
         } catch (IOException e) {
