@@ -5,7 +5,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import java.io.IOException;
@@ -22,11 +21,13 @@ public class SgTrakt extends TraktV2 {
     private static String TAG_TRAKT_ERROR = "trakt Error";
 
     private final Context context;
+    private final OkHttpClient okHttpClient;
 
-    public SgTrakt(Context context) {
+    public SgTrakt(Context context, OkHttpClient okHttpClient) {
         super(BuildConfig.TRAKT_CLIENT_ID, BuildConfig.TRAKT_CLIENT_SECRET,
                 BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM);
         this.context = context.getApplicationContext();
+        this.okHttpClient = okHttpClient;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class SgTrakt extends TraktV2 {
 
     @Override
     protected synchronized OkHttpClient okHttpClient() {
-        return ServiceUtils.getCachingOkHttpClient(context);
+        return okHttpClient;
     }
 
     /**

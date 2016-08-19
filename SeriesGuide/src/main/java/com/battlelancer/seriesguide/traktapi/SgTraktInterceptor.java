@@ -1,10 +1,11 @@
 package com.battlelancer.seriesguide.traktapi;
 
-import android.content.Context;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.TraktV2Interceptor;
+import dagger.Lazy;
 import java.io.IOException;
+import javax.inject.Inject;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
@@ -14,15 +15,15 @@ import okhttp3.Response;
  */
 public class SgTraktInterceptor implements Interceptor {
 
-    private final Context context;
+    @Inject Lazy<TraktV2> trakt;
 
-    public SgTraktInterceptor(Context context) {
-        this.context = context.getApplicationContext();
+    public SgTraktInterceptor(SgApp app) {
+        app.getServicesComponent().inject(this);
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        TraktV2 trakt = ServiceUtils.getTraktNoTokenRefresh(context);
-        return TraktV2Interceptor.handleIntercept(chain, trakt.apiKey(), trakt.accessToken());
+        return TraktV2Interceptor.handleIntercept(chain, trakt.get().apiKey(),
+                trakt.get().accessToken());
     }
 }

@@ -9,6 +9,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
+import com.battlelancer.seriesguide.modules.HttpClientModule;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.modules.TmdbModule;
 import com.battlelancer.seriesguide.modules.TraktModule;
@@ -91,6 +92,7 @@ public class SgApp extends Application {
 
         servicesComponent = DaggerServicesComponent.builder()
                 .appModule(new AppModule(this))
+                .httpClientModule(new HttpClientModule())
                 .tmdbModule(new TmdbModule())
                 .traktModule(new TraktModule())
                 .tvdbModule(new TvdbModule())

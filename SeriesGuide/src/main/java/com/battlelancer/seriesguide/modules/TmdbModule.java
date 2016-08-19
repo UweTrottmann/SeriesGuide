@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.app.Application;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.tmdb2.Tmdb;
@@ -13,6 +12,7 @@ import com.uwetrottmann.tmdb2.services.TvService;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
 
 @Module
 public class TmdbModule {
@@ -55,7 +55,7 @@ public class TmdbModule {
 
     @Singleton
     @Provides
-    Tmdb provideSgTmdb(Application application) {
-        return new SgTmdb(application, BuildConfig.TMDB_API_KEY);
+    Tmdb provideSgTmdb(OkHttpClient okHttpClient) {
+        return new SgTmdb(okHttpClient, BuildConfig.TMDB_API_KEY);
     }
 }
