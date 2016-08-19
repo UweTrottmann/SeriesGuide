@@ -216,15 +216,13 @@ public class TraktCredentials {
     }
 
     /**
-     * Tries to refresh the current access token. Calls {@link #setCredentialsInvalid()} on failure
-     * and returns {@code false}.
+     * Tries to refresh the current access token. Returns {@code false} on failure.
      */
     public synchronized boolean refreshAccessToken(TraktV2 trakt) {
-        Timber.d("refreshAccessToken: time to refresh the access token.");
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
         if (TextUtils.isEmpty(oldRefreshToken)) {
-            setCredentialsInvalid();
+            Timber.d("refreshAccessToken: no refresh token, give up.");
             return false;
         }
 
@@ -251,7 +249,6 @@ public class TraktCredentials {
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
             Timber.e("refreshAccessToken: failed.");
-            setCredentialsInvalid();
             return false;
         }
 
@@ -259,7 +256,6 @@ public class TraktCredentials {
         if (!setAccessToken(accessToken)
                 || !TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
             Timber.e("refreshAccessToken: saving failed");
-            setCredentialsInvalid();
             return false;
         }
 

@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
@@ -165,28 +163,6 @@ public final class ServiceUtils {
             theTvdb = new SgTheTvdb(context);
         }
         return theTvdb;
-    }
-
-    /**
-     * Get a {@link TraktV2} service manager. If the user is connected to trakt requests will be
-     * authenticated. In addition if an existing access token is expired, tries to refresh it. So it
-     * is advisable to check {@link TraktCredentials#hasCredentials()} before using the manager for
-     * calls that require auth.
-     *
-     * @return A {@link TraktV2} instance.
-     */
-    @NonNull
-    public static synchronized TraktV2 getTrakt(Context context) {
-        TraktV2 trakt = getTraktNoTokenRefresh(context);
-
-        // try to refresh access token if it is about to expire or has expired
-        TraktCredentials traktCredentials = TraktCredentials.get(context);
-        if (traktCredentials.hasCredentials()
-                && TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
-            traktCredentials.refreshAccessToken(trakt);
-        }
-
-        return trakt;
     }
 
     @NonNull
