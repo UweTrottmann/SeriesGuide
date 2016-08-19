@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -27,6 +28,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
@@ -148,6 +150,36 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         return false;
                     }
                 });
+
+        if (BuildConfig.DEBUG) {
+            // add debug drawer
+            View debugViews = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
+                    true);
+            debugViews.findViewById(R.id.debug_buttonClearTraktRefreshToken).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TraktOAuthSettings.storeRefreshData(getApplicationContext(),
+                                    "", 3600 /* 1 hour */);
+                        }
+                    });
+            debugViews.findViewById(R.id.debug_buttonInvalidateTraktAccessToken).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TraktCredentials.get(getApplicationContext())
+                                    .storeAccessToken("invalid-token");
+                        }
+                    });
+            debugViews.findViewById(R.id.debug_buttoInvalidateTraktRefreshToken).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TraktOAuthSettings.storeRefreshData(getApplicationContext(),
+                                    "invalid-token", 3600 /* 1 hour */);
+                        }
+                    });
+        }
     }
 
     @Override
