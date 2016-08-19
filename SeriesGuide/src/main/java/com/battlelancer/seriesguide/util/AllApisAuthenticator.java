@@ -45,10 +45,9 @@ public class AllApisAuthenticator implements Authenticator {
             return null;
         }
 
-        // verify the auth header contains our access token
+        // verify that we have existing credentials
         TraktCredentials credentials = TraktCredentials.get(context);
-        String authHeader = "Bearer " + credentials.getAccessToken();
-        if (authHeader.equals(response.request().header(TraktV2.HEADER_AUTHORIZATION))) {
+        if (credentials.hasCredentials()) {
             // refresh the token
             boolean successful = credentials
                     .refreshAccessToken(ServiceUtils.getTraktNoTokenRefresh(context));
