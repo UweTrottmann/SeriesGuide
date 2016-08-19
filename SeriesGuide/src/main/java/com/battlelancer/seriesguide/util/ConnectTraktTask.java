@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -17,8 +18,11 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.Settings;
+import com.uwetrottmann.trakt5.services.Users;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
+import javax.inject.Inject;
 import retrofit2.Response;
 
 /**
@@ -38,17 +42,20 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
     }
 
-    private final Context mContext;
+    private final Context context;
+    @Inject TraktV2 trakt;
+    @Inject Lazy<Users> traktUsers;
 
-    public ConnectTraktTask(Context context) {
-        mContext = context;
+    public ConnectTraktTask(SgApp app) {
+        context = app;
+        app.getServicesComponent().inject(this);
     }
 
     @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(String... params) {
         // check for connectivity
-        if (!AndroidUtils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(context)) {
             return TraktResult.OFFLINE;
         }
 
@@ -61,7 +68,6 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // get access token
-        TraktV2 trakt = ServiceUtils.getTraktNoTokenRefresh(mContext);
         String accessToken = null;
         String refreshToken = null;
         long expiresIn = -1;
@@ -72,10 +78,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 refreshToken = response.body().refresh_token;
                 expiresIn = response.body().expires_in;
             } else {
-                SgTrakt.trackFailedRequest(mContext, "get access token", response);
+                SgTrakt.trackFailedRequest(context, "get access token", response);
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(mContext, "get access token", e);
+            SgTrakt.trackFailedRequest(context, "get access token", e);
         }
 
         // did we obtain all required data?
@@ -84,11 +90,11 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // store the access token, refresh token and expiry time
-        TraktCredentials.get(mContext).storeAccessToken(accessToken);
-        if (!TraktCredentials.get(mContext).hasCredentials()) {
+        TraktCredentials.get(context).storeAccessToken(accessToken);
+        if (!TraktCredentials.get(context).hasCredentials()) {
             return Result.ERROR; // saving access token failed, abort.
         }
-        if (!TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
+        if (!TraktOAuthSettings.storeRefreshData(context, refreshToken, expiresIn)) {
             return Result.ERROR; // saving refresh token failed, abort.
         }
 
@@ -96,23 +102,23 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         String username = null;
         String displayname = null;
         try {
-            Response<Settings> response = trakt.users().settings().execute();
+            Response<Settings> response = traktUsers.get().settings().execute();
             if (response.isSuccessful()) {
                 if (response.body().user != null) {
                     username = response.body().user.username;
                     displayname = response.body().user.name;
                 }
             } else {
-                SgTrakt.trackFailedRequest(mContext, "get user settings", response);
+                SgTrakt.trackFailedRequest(context, "get user settings", response);
                 if (SgTrakt.isUnauthorized(response)) {
                     // access token already is invalid, remove it :(
-                    TraktCredentials.get(mContext).removeCredentials();
+                    TraktCredentials.get(context).removeCredentials();
                     return TraktResult.AUTH_ERROR;
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(mContext, "get user settings", e);
-            return AndroidUtils.isNetworkConnected(mContext)
+            SgTrakt.trackFailedRequest(context, "get user settings", e);
+            return AndroidUtils.isNetworkConnected(context)
                     ? TraktResult.API_ERROR : TraktResult.OFFLINE;
         }
 
@@ -120,9 +126,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         if (TextUtils.isEmpty(username)) {
             return TraktResult.API_ERROR;
         }
-        TraktCredentials.get(mContext).storeUsername(username, displayname);
+        TraktCredentials.get(context).storeUsername(username, displayname);
 
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext)
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                context)
                 .edit();
 
         // make next sync merge local watched and collected episodes with those on trakt
@@ -148,7 +155,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer resultCode) {
         if (resultCode == Result.SUCCESS) {
             // trigger a sync, notifies user via toast
-            SgSyncAdapter.requestSyncImmediate(mContext, SgSyncAdapter.SyncType.DELTA, 0, true);
+            SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.DELTA, 0, true);
         }
 
         EventBus.getDefault().post(new FinishedEvent(resultCode));

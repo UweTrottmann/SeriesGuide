@@ -15,8 +15,10 @@ import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
+import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.AddShowTask;
+import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
@@ -35,6 +37,7 @@ public interface ServicesComponent {
     void inject(BaseMovieActionTask baseMovieActionTask);
     void inject(BaseRateItemTask baseRateItemTask);
     void inject(BaseShowActionTask baseShowActionTask);
+    void inject(ConnectTraktTask connectTraktTask);
     void inject(EpisodeTools.EpisodeFlagTask episodeFlagTask);
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
@@ -45,6 +48,7 @@ public interface ServicesComponent {
     void inject(ShowCreditsLoader showCreditsLoader);
     void inject(TmdbMoviesLoader tmdbMoviesLoader);
     void inject(TraktAddLoader traktAddLoader);
+    void inject(TraktAuthActivity traktAuthActivity);
     void inject(TraktCancelCheckinDialogFragment traktCancelCheckinDialogFragment);
     void inject(TraktCommentsLoader traktCommentsLoader);
     void inject(TraktEpisodeHistoryLoader traktEpisodeHistoryLoader);
