@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.thetvdbapi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import okhttp3.OkHttpClient;
 
@@ -17,12 +16,12 @@ public class SgTheTvdb extends TheTvdb {
     private static final String PREFERENCE_FILE = "thetvdb-prefs";
     private static final String KEY_JSON_WEB_TOKEN = "token";
 
-    private final Context context;
+    private final OkHttpClient okHttpClient;
     private final SharedPreferences preferences;
 
-    public SgTheTvdb(Context context) {
+    public SgTheTvdb(Context context, OkHttpClient okHttpClient) {
         super(BuildConfig.TVDB_API_KEY);
-        this.context = context.getApplicationContext();
+        this.okHttpClient = okHttpClient;
         this.preferences = context.getSharedPreferences(PREFERENCE_FILE, Context.MODE_PRIVATE);
     }
 
@@ -40,6 +39,6 @@ public class SgTheTvdb extends TheTvdb {
 
     @Override
     protected synchronized OkHttpClient okHttpClient() {
-        return ServiceUtils.getCachingOkHttpClient(context);
+        return okHttpClient;
     }
 }

@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
-import android.content.Context;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.SgApp;
+import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdbInterceptor;
+import dagger.Lazy;
 import java.io.IOException;
+import javax.inject.Inject;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
@@ -13,15 +15,14 @@ import okhttp3.Response;
  */
 public class SgTheTvdbInterceptor implements Interceptor {
 
-    private Context context;
+    @Inject Lazy<TheTvdb> theTvdb;
 
-    public SgTheTvdbInterceptor(Context context) {
-        this.context = context.getApplicationContext();
+    public SgTheTvdbInterceptor(SgApp app) {
+        app.getServicesComponent().inject(this);
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return TheTvdbInterceptor.handleIntercept(chain,
-                ServiceUtils.getTheTvdb(context).jsonWebToken());
+        return TheTvdbInterceptor.handleIntercept(chain, theTvdb.get().jsonWebToken());
     }
 }

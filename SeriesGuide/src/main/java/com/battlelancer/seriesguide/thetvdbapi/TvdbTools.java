@@ -30,7 +30,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -58,6 +57,7 @@ import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.joda.time.DateTimeZone;
@@ -95,6 +95,7 @@ public class TvdbTools {
     @Inject Lazy<SeriesService> tvdbSeries;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
+    @Inject Lazy<OkHttpClient> okHttpClient;
 
     public static synchronized TvdbTools getInstance(SgApp app) {
         if (tvdbTools == null) {
@@ -174,7 +175,7 @@ public class TvdbTools {
         // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(app, show, true));
-        getEpisodesAndUpdateDatabase(app, show, language, batch);
+        getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
         if (HexagonTools.isSignedIn(app)) {
@@ -227,7 +228,7 @@ public class TvdbTools {
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
-        getEpisodesAndUpdateDatabase(app, show, show.language, batch);
+        getEpisodesAndUpdateDatabase(batch, show, show.language);
     }
 
     private static String getShowLanguage(Context context, int showTvdbId) {
@@ -294,8 +295,8 @@ public class TvdbTools {
      * @return At most 100 results (limited by TheTVDB API).
      */
     @Nonnull
-    public static List<SearchResult> searchShow(@NonNull Context context, @NonNull String query,
-            @Nullable final String language) throws TvdbException {
+    public List<SearchResult> searchShow(@NonNull String query, @Nullable final String language)
+            throws TvdbException {
         final List<SearchResult> series = new ArrayList<>();
         final SearchResult currentShow = new SearchResult();
 
@@ -346,7 +347,7 @@ public class TvdbTools {
             url += TVDB_PARAM_LANGUAGE + language;
         }
 
-        downloadAndParse(context, root.getContentHandler(), url, false, "searchShow: ");
+        downloadAndParse(root.getContentHandler(), url, false, "searchShow: ");
 
         return series;
     }
@@ -400,23 +401,21 @@ public class TvdbTools {
      * Fetches episodes for the given show from TVDb, adds database ops for them. Then adds all
      * information to the database.
      */
-    private static void getEpisodesAndUpdateDatabase(Context context, Show show,
-            String language, final ArrayList<ContentProviderOperation> batch)
-            throws TvdbException {
+    private void getEpisodesAndUpdateDatabase(final ArrayList<ContentProviderOperation> batch,
+            Show show, String language) throws TvdbException {
         // get ops for episodes of this show
-        ArrayList<ContentValues> importShowEpisodes = fetchEpisodes(batch, show, language,
-                context);
+        ArrayList<ContentValues> importShowEpisodes = fetchEpisodes(batch, show, language);
         ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 
         try {
-            DBUtils.applyInSmallBatches(context, batch);
+            DBUtils.applyInSmallBatches(app, batch);
         } catch (OperationApplicationException e) {
             throw new TvdbException("getEpisodesAndUpdateDatabase: " + e.getMessage(), e);
         }
 
         // insert all new episodes in bulk
-        context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
+        app.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
     }
 
     /**
@@ -656,13 +655,12 @@ public class TvdbTools {
         return posters.get(highestRatedIndex).fileName;
     }
 
-    private static ArrayList<ContentValues> fetchEpisodes(
-            ArrayList<ContentProviderOperation> batch, Show show, String language, Context context)
-            throws TvdbException {
+    private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
+            Show show, String language) throws TvdbException {
         String url = TVDB_API_SERIES + show.tvdbId + "/" + TVDB_PATH_ALL
                 + (language != null ? language + TVDB_EXTENSION_COMPRESSED : TVDB_FILE_DEFAULT);
 
-        return parseEpisodes(batch, url, show, context);
+        return parseEpisodes(batch, show, url);
     }
 
     /**
@@ -670,9 +668,8 @@ public class TvdbTools {
      * ContentValues} for new episodes.<br> Adds update ops for updated episodes and delete ops for
      * local orphaned episodes to the given {@link ContentProviderOperation} batch.
      */
-    private static ArrayList<ContentValues> parseEpisodes(
-            final ArrayList<ContentProviderOperation> batch, String url, final Show show,
-            final Context context) throws TvdbException {
+    private ArrayList<ContentValues> parseEpisodes(final ArrayList<ContentProviderOperation> batch,
+            final Show show, String url) throws TvdbException {
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
         final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
@@ -684,11 +681,11 @@ public class TvdbTools {
 
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
 
-        final HashMap<Integer, Long> localEpisodeIds = DBUtils
-                .getEpisodeMapForShow(context, show.tvdbId);
+        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
+                show.tvdbId);
         final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(
                 localEpisodeIds); // just copy episodes list, then remove valid ones
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, show.tvdbId);
+        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdbId);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
         final ContentValues values = new ContentValues();
@@ -764,7 +761,7 @@ public class TvdbTools {
         );
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String releaseDate) {
-                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(app, showTimeZone,
                         releaseDate, showReleaseTime, show.country, show.network, deviceTimeZone);
                 values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
             }
@@ -825,7 +822,7 @@ public class TvdbTools {
             }
         });
 
-        downloadAndParse(context, root.getContentHandler(), url, true, "parseEpisodes: ");
+        downloadAndParse(root.getContentHandler(), url, true, "parseEpisodes: ");
 
         // add delete ops for leftover episodeIds in our db
         for (Integer episodeId : removableEpisodeIds.keySet()) {
@@ -841,15 +838,13 @@ public class TvdbTools {
      * Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)} using the given {@link
      * ContentHandler}.
      */
-    private static void downloadAndParse(Context context, ContentHandler handler, String urlString,
-            boolean isZipFile, String logTag) throws TvdbException {
+    private void downloadAndParse(ContentHandler handler, String urlString, boolean isZipFile,
+            String logTag) throws TvdbException {
         Request request = new Request.Builder().url(urlString).build();
 
         Response response;
         try {
-            response = ServiceUtils.getCachingOkHttpClient(context)
-                    .newCall(request)
-                    .execute();
+            response = okHttpClient.get().newCall(request).execute();
         } catch (IOException e) {
             throw new TvdbException(logTag + e.getMessage(), e);
         }

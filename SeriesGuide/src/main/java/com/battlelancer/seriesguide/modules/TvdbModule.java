@@ -1,13 +1,14 @@
 package com.battlelancer.seriesguide.modules;
 
 import android.app.Application;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.services.Search;
 import com.uwetrottmann.thetvdb.services.SeriesService;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
 
 @Module
 public class TvdbModule {
@@ -26,7 +27,7 @@ public class TvdbModule {
 
     @Singleton
     @Provides
-    TheTvdb provideTheTvdb(Application application) {
-        return ServiceUtils.getTheTvdb(application);
+    TheTvdb provideTheTvdb(Application application, OkHttpClient okHttpClient) {
+        return new SgTheTvdb(application, okHttpClient);
     }
 }

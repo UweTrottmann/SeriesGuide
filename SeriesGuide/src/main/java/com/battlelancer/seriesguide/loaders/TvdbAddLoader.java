@@ -117,7 +117,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 try {
                     if (TextUtils.isEmpty(language)) {
                         // use the v1 API to do an any language search not supported by v2
-                        results = TvdbTools.searchShow(getContext(), query, null);
+                        results = TvdbTools.getInstance(app).searchShow(query, null);
                     } else {
                         results = TvdbTools.getInstance(app).searchSeries(query, language);
                     }

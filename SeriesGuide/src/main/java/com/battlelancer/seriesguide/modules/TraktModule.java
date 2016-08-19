@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.modules;
 
 import android.app.Application;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
@@ -15,6 +15,7 @@ import com.uwetrottmann.trakt5.services.Users;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
 
 @Module
 public class TraktModule {
@@ -73,8 +74,9 @@ public class TraktModule {
         return trakt.users();
     }
 
+    @Singleton
     @Provides
-    TraktV2 provideTrakt(Application application) {
-        return ServiceUtils.getTraktNoTokenRefresh(application);
+    TraktV2 provideTrakt(Application application, OkHttpClient okHttpClient) {
+        return new SgTrakt(application, okHttpClient);
     }
 }
