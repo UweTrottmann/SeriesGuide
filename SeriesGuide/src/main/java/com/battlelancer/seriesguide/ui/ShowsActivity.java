@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -316,6 +315,11 @@ public class ShowsActivity extends BaseTopActivity implements
             // pause Amazon IAP
             AmazonIapManager.get().deactivate();
         }
+
+        // save selected tab index
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, viewPager.getCurrentItem())
+                .apply();
     }
 
     @Override
@@ -475,13 +479,11 @@ public class ShowsActivity extends BaseTopActivity implements
     public static class ShowsTabPageAdapter extends TabStripAdapter
             implements ViewPager.OnPageChangeListener {
 
-        private final SharedPreferences prefs;
         private final FloatingActionButton floatingActionButton;
 
         public ShowsTabPageAdapter(FragmentManager fm, Context context, ViewPager pager,
                 SlidingTabLayout tabs, FloatingActionButton floatingActionButton) {
             super(fm, context, pager, tabs);
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
             this.floatingActionButton = floatingActionButton;
             tabs.setOnPageChangeListener(this);
         }
@@ -505,8 +507,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
         @Override
         public void onPageSelected(int position) {
-            // save selected tab index
-            prefs.edit().putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, position).apply();
             // only display add show button on Shows tab
             if (position == InitBundle.INDEX_TAB_SHOWS) {
                 floatingActionButton.show();
