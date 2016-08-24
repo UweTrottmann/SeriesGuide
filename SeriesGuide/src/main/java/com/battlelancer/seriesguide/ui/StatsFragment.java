@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentResolver;
@@ -36,8 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -55,25 +40,26 @@ import java.util.Locale;
  */
 public class StatsFragment extends Fragment {
 
-    @Bind(R.id.emptyViewStats) EmptyView errorView;
+    @BindView(R.id.emptyViewStats) EmptyView errorView;
 
-    @Bind(R.id.textViewStatsShows) TextView mShowCount;
-    @Bind(R.id.textViewStatsShowsWithNext) TextView mShowsWithNextEpisode;
-    @Bind(R.id.progressBarStatsShowsWithNext) ProgressBar mProgressShowsWithNextEpisode;
-    @Bind(R.id.textViewStatsShowsContinuing) TextView mShowsContinuing;
-    @Bind(R.id.progressBarStatsShowsContinuing) ProgressBar mProgressShowsContinuing;
+    @BindView(R.id.textViewStatsShows) TextView mShowCount;
+    @BindView(R.id.textViewStatsShowsWithNext) TextView mShowsWithNextEpisode;
+    @BindView(R.id.progressBarStatsShowsWithNext) ProgressBar mProgressShowsWithNextEpisode;
+    @BindView(R.id.textViewStatsShowsContinuing) TextView mShowsContinuing;
+    @BindView(R.id.progressBarStatsShowsContinuing) ProgressBar mProgressShowsContinuing;
 
-    @Bind(R.id.textViewStatsEpisodes) TextView mEpisodeCount;
-    @Bind(R.id.textViewStatsEpisodesWatched) TextView mEpisodesWatched;
-    @Bind(R.id.progressBarStatsEpisodesWatched) ProgressBar mProgressEpisodesWatched;
-    @Bind(R.id.textViewStatsEpisodesRuntime) TextView mEpisodesRuntime;
-    @Bind(R.id.progressBarStatsEpisodesRuntime) ProgressBar mProgressEpisodesRuntime;
+    @BindView(R.id.textViewStatsEpisodes) TextView mEpisodeCount;
+    @BindView(R.id.textViewStatsEpisodesWatched) TextView mEpisodesWatched;
+    @BindView(R.id.progressBarStatsEpisodesWatched) ProgressBar mProgressEpisodesWatched;
+    @BindView(R.id.textViewStatsEpisodesRuntime) TextView mEpisodesRuntime;
+    @BindView(R.id.progressBarStatsEpisodesRuntime) ProgressBar mProgressEpisodesRuntime;
 
-    @Bind(R.id.textViewStatsMovies) TextView mMovieCount;
-    @Bind(R.id.textViewStatsMoviesWatchlist) TextView mMoviesWatchlist;
-    @Bind(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
-    @Bind(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
+    @BindView(R.id.textViewStatsMovies) TextView mMovieCount;
+    @BindView(R.id.textViewStatsMoviesWatchlist) TextView mMoviesWatchlist;
+    @BindView(R.id.progressBarStatsMoviesWatchlist) ProgressBar mProgressMoviesWatchlist;
+    @BindView(R.id.textViewStatsMoviesWatchlistRuntime) TextView mMoviesWatchlistRuntime;
 
+    private Unbinder unbinder;
     private AsyncTask<Void, StatsUpdateEvent, StatsUpdateEvent> statsTask;
     private Stats currentStats;
     private boolean hasFinalValues;
@@ -82,7 +68,7 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stats, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         errorView.setVisibility(View.GONE);
         errorView.setButtonClickListener(new View.OnClickListener() {
@@ -136,7 +122,7 @@ public class StatsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

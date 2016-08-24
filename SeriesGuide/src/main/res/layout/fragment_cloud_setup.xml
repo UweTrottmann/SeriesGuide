@@ -11,6 +11,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hexagon_warning"
+            android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hexagon"
@@ -31,6 +37,15 @@
             android:text="@string/hexagon_description"
             android:textAppearance="@style/TextAppearance.Body" />
 
+        <TextView
+            android:id="@+id/textViewCloudWarnings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/hexagon_warning_trakt"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
+
         <Button
             android:id="@+id/buttonCloudAction"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -46,21 +61,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/default_padding" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hexagon_warning"
-            android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
-
-        <TextView
-            android:id="@+id/textViewCloudWarnings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hexagon_warning_trakt"
-            android:textAppearance="@style/TextAppearance.Body.Highlight.Red" />
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"

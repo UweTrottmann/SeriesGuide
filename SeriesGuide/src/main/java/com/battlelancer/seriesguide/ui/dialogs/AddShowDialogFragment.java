@@ -1,24 +1,9 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,9 +20,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -115,44 +103,44 @@ public class AddShowDialogFragment extends DialogFragment {
         String SEARCH_RESULT = "search_result";
     }
 
-    @Bind(R.id.textViewAddTitle) TextView title;
-    @Bind(R.id.textViewAddShowMeta) TextView showmeta;
-    @Bind(R.id.textViewAddDescription) TextView overview;
-    @Bind(R.id.textViewAddRatingValue) TextView rating;
-    @Bind(R.id.textViewAddGenres) TextView genres;
-    @Bind(R.id.textViewAddReleased) TextView released;
-    @Bind(R.id.imageViewAddPoster) ImageView poster;
+    @BindView(R.id.textViewAddTitle) TextView title;
+    @BindView(R.id.textViewAddShowMeta) TextView showmeta;
+    @BindView(R.id.textViewAddDescription) TextView overview;
+    @BindView(R.id.textViewAddRatingValue) TextView rating;
+    @BindView(R.id.textViewAddGenres) TextView genres;
+    @BindView(R.id.textViewAddReleased) TextView releasedTextView;
+    @BindView(R.id.imageViewAddPoster) ImageView poster;
 
-    @Bind({
+    @BindViews({
             R.id.textViewAddRatingValue,
             R.id.textViewAddRatingLabel,
             R.id.textViewAddRatingRange,
-            R.id.textViewAddGenresLabel,
-            R.id.textViewAddReleasedLabel
+            R.id.textViewAddGenresLabel
     }) List<View> labelViews;
 
     static final ButterKnife.Setter<View, Boolean> VISIBLE
             = new ButterKnife.Setter<View, Boolean>() {
         @Override
-        public void set(View view, Boolean value, int index) {
+        public void set(@NonNull View view, Boolean value, int index) {
             view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
         }
     };
 
-    @Bind(R.id.buttonPositive) Button buttonPositive;
-    @Bind(R.id.buttonNegative) Button buttonNegative;
-    @Bind(R.id.progressBarAdd) View progressBar;
+    @BindView(R.id.buttonPositive) Button buttonPositive;
+    @BindView(R.id.buttonNegative) Button buttonNegative;
+    @BindView(R.id.progressBarAdd) View progressBar;
 
+    private Unbinder unbinder;
     private OnAddShowListener addShowListener;
     private SearchResult displayedShow;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            addShowListener = (OnAddShowListener) activity;
+            addShowListener = (OnAddShowListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnAddShowListener");
+            throw new ClassCastException(context.toString() + " must implement OnAddShowListener");
         }
     }
 
@@ -175,7 +163,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // buttons
         buttonNegative.setText(R.string.dismiss);
@@ -210,7 +198,7 @@ public class AddShowDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> mShowLoaderCallbacks
@@ -219,7 +207,7 @@ public class AddShowDialogFragment extends DialogFragment {
         public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
             String language = args.getString(KEY_SHOW_LANGUAGE);
-            return new TvdbShowLoader(getActivity(), showTvdbId, language);
+            return new TvdbShowLoader(SgApp.from(getActivity()), showTvdbId, language);
         }
 
         @Override
@@ -281,25 +269,34 @@ public class AddShowDialogFragment extends DialogFragment {
         title.setText(show.title);
         overview.setText(show.overview);
 
-        SpannableStringBuilder meta = new SpannableStringBuilder();
-
-        // status
+        // release year
+        SpannableStringBuilder statusText = new SpannableStringBuilder();
+        String releaseYear = TimeTools.getShowReleaseYear(show.firstAired);
+        if (releaseYear != null) {
+            statusText.append(releaseYear);
+        }
+        // continuing/ended status
         int encodedStatus = DataLiberationTools.encodeShowStatus(show.status);
         if (encodedStatus != ShowTools.Status.UNKNOWN) {
-            String statusText = ShowTools.getStatus(getActivity(), encodedStatus);
-            if (statusText != null) {
-                meta.append(statusText);
+            String decodedStatus = ShowTools.getStatus(getActivity(), encodedStatus);
+            if (decodedStatus != null) {
+                if (statusText.length() > 0) {
+                    statusText.append(" / "); // like "2016 / Continuing"
+                }
+                int currentTextLength = statusText.length();
+                statusText.append(decodedStatus);
                 // if continuing, paint status green
-                meta.setSpan(new TextAppearanceSpan(getActivity(),
+                statusText.setSpan(new TextAppearanceSpan(getActivity(),
                                 encodedStatus == ShowTools.Status.CONTINUING
-                                        ? R.style.TextAppearance_Subhead_Green
-                                        : R.style.TextAppearance_Subhead_Dim), 0, meta.length(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                meta.append("\n");
+                                        ? R.style.TextAppearance_Body_Green
+                                        : R.style.TextAppearance_Body_Dim),
+                        currentTextLength, statusText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
+        releasedTextView.setText(statusText);
 
         // next release day and time
+        SpannableStringBuilder timeAndNetworkText = new SpannableStringBuilder();
         if (show.release_time != -1) {
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
                     TimeTools.getShowReleaseTime(show.release_time),
@@ -310,16 +307,16 @@ public class AddShowDialogFragment extends DialogFragment {
             String day = TimeTools.formatToLocalDayOrDaily(getActivity(), release,
                     show.release_weekday);
             String time = TimeTools.formatToLocalTime(getActivity(), release);
-            meta.append(day).append(" ").append(time);
-            meta.append("\n");
+            timeAndNetworkText.append(day).append(" ").append(time);
+            timeAndNetworkText.append("\n");
         }
 
         // network, runtime
-        meta.append(show.network);
-        meta.append("\n");
-        meta.append(getString(R.string.runtime_minutes, show.runtime));
+        timeAndNetworkText.append(show.network);
+        timeAndNetworkText.append("\n");
+        timeAndNetworkText.append(getString(R.string.runtime_minutes, show.runtime));
 
-        showmeta.setText(meta);
+        showmeta.setText(timeAndNetworkText);
 
         // rating
         rating.setText(TraktTools.buildRatingString(show.rating));
@@ -327,11 +324,8 @@ public class AddShowDialogFragment extends DialogFragment {
         // genres
         Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
-        // original release
-        Utils.setValueOrPlaceholder(released, TimeTools.getShowReleaseYear(show.firstAired));
-
         // poster
-        Utils.loadTvdbShowPoster(getActivity(), poster, show.poster);
+        Utils.loadAndFitTvdbShowPoster(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);

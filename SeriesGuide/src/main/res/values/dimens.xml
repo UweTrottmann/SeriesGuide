@@ -42,26 +42,30 @@
     <dimen name="grid_vertical_spacing">3dp</dimen>
     <dimen name="grid_horizontal_spacing">4dp</dimen>
 
-    <!-- Show posters -->
-    <dimen name="show_poster_width">68dp</dimen>
-    <dimen name="show_poster_height">100dp</dimen>
-    <dimen name="show_poster_small_width">68dp</dimen>
-    <dimen name="show_poster_small_height">100dp</dimen>
-    <dimen name="show_poster_add_width">60dp</dimen>
-    <dimen name="show_poster_add_height">88dp</dimen>
+    <!-- Show posters, 2:3 aspect ratio -->
+    <dimen name="show_poster_width_default">69dp</dimen>
+    <dimen name="show_poster_height_default">104dp</dimen>
+    <dimen name="show_poster_width_large">101dp</dimen>
+    <dimen name="show_poster_height_large">152dp</dimen>
+    <dimen name="show_poster_width_small">59dp</dimen>
+    <dimen name="show_poster_height_small">88dp</dimen>
 
-    <!-- Episode images -->
-    <dimen name="imagecontainer_height">180dp</dimen>
+    <dimen name="show_poster_width">@dimen/show_poster_width_default</dimen>
+    <dimen name="show_poster_height">@dimen/show_poster_height_default</dimen>
 
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
-    <dimen name="person_headshot_large_width">100dp</dimen>
-    <dimen name="person_headshot_large_height">300dp</dimen>
+
+    <!-- Movie posters, 2:3 aspect ratio -->
+    <dimen name="movie_poster_width_default">100dp</dimen>
+    <dimen name="movie_poster_height_default">150dp</dimen>
+    <dimen name="movie_poster_width_large">120dp</dimen>
+    <dimen name="movie_poster_height_large">180dp</dimen>
+    <dimen name="movie_poster_width">@dimen/movie_poster_width_default</dimen>
+    <dimen name="movie_poster_height">@dimen/movie_poster_height_default</dimen>
 
     <!-- Movies -->
-    <dimen name="movie_item_width">100dp</dimen>
-    <dimen name="movie_item_height">214dp</dimen>
-    <dimen name="movie_item_poster_height">150dp</dimen>
+    <dimen name="movie_grid_columnWidth">@dimen/movie_poster_width</dimen>
 
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>

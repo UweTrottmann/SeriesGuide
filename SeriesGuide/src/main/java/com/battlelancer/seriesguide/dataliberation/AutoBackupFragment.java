@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.Manifest;
@@ -42,8 +26,9 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
@@ -67,23 +52,24 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
 
     private static final int PATH_TEXT_APPEARANCE = R.style.TextAppearance_Body_Dim;
 
-    @Bind(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
-    @Bind(R.id.containerAutoBackupSettings) View containerSettings;
-    @Bind(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
+    @BindView(R.id.switchAutoBackup) SwitchCompat switchAutoBackup;
+    @BindView(R.id.containerAutoBackupSettings) View containerSettings;
+    @BindView(R.id.checkBoxAutoBackupDefaultFiles) CheckBox checkBoxDefaultFiles;
 
-    @Bind(R.id.textViewAutoBackupShowsExportFile) TextView textShowsExportFile;
-    @Bind(R.id.buttonAutoBackupShowsExportFile) Button buttonShowsExportFile;
-    @Bind(R.id.textViewAutoBackupListsExportFile) TextView textListsExportFile;
-    @Bind(R.id.buttonAutoBackupListsExportFile) Button buttonListsExportFile;
-    @Bind(R.id.textViewAutoBackupMoviesExportFile) TextView textMoviesExportFile;
-    @Bind(R.id.buttonAutoBackupMoviesExportFile) Button buttonMoviesExportFile;
+    @BindView(R.id.textViewAutoBackupShowsExportFile) TextView textShowsExportFile;
+    @BindView(R.id.buttonAutoBackupShowsExportFile) Button buttonShowsExportFile;
+    @BindView(R.id.textViewAutoBackupListsExportFile) TextView textListsExportFile;
+    @BindView(R.id.buttonAutoBackupListsExportFile) Button buttonListsExportFile;
+    @BindView(R.id.textViewAutoBackupMoviesExportFile) TextView textMoviesExportFile;
+    @BindView(R.id.buttonAutoBackupMoviesExportFile) Button buttonMoviesExportFile;
 
-    @Bind(R.id.checkBoxAutoBackupImportWarning) CheckBox checkBoxImportWarning;
-    @Bind(R.id.textViewAutoBackupLastTime) TextView textViewLastAutoBackup;
-    @Bind(R.id.buttonAutoBackupImport) Button buttonImportAutoBackup;
-    @Bind(R.id.progressBarAutoBackup) ProgressBar progressBar;
+    @BindView(R.id.checkBoxAutoBackupImportWarning) CheckBox checkBoxImportWarning;
+    @BindView(R.id.textViewAutoBackupLastTime) TextView textViewLastAutoBackup;
+    @BindView(R.id.buttonAutoBackupImport) Button buttonImportAutoBackup;
+    @BindView(R.id.progressBarAutoBackup) ProgressBar progressBar;
 
     private AsyncTask<Void, Integer, Integer> importTask;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +86,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_auto_backup, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         progressBar.setVisibility(View.GONE);
 
@@ -203,7 +189,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Experimental!</string>
   <string name="hexagon_description">Conecta-te ao servidor para criar uma cópia de segurança e sincronizar as tuas séries e filmes.</string>
   <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
-  <string name="hexagon_warning_trakt">Ao usar o servidor SeriesGuide, as alterações no trakt não serão sincronizadas para o SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Entrar</string>
   <string name="hexagon_signed_in">Está ligado à SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Sair</string>
@@ -486,7 +486,7 @@
   <string name="feedback_action_notreally">Not really</string>
   <string name="feedback_question_rate_google">Rate it on Google Play?</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_feedback">Diga-me como o melhorar?</string>
+  <string name="feedback_action_ok">OK, claro</string>
+  <string name="feedback_action_nothanks">Não, obrigado</string>
 </resources>

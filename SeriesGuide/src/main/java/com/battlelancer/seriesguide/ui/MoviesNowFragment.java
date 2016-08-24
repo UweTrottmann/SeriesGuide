@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
@@ -35,8 +19,9 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
@@ -53,24 +38,25 @@ import java.util.List;
  */
 public class MoviesNowFragment extends Fragment {
 
-    @Bind(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.recyclerViewNow) RecyclerView recyclerView;
-    @Bind(R.id.emptyViewNow) TextView emptyView;
-    @Bind(R.id.containerSnackbar) View snackbar;
-    @Bind(R.id.textViewSnackbar) TextView snackbarText;
-    @Bind(R.id.buttonSnackbar) Button snackbarButton;
+    @BindView(R.id.recyclerViewNow) RecyclerView recyclerView;
+    @BindView(R.id.emptyViewNow) TextView emptyView;
+    @BindView(R.id.containerSnackbar) View snackbar;
+    @BindView(R.id.textViewSnackbar) TextView snackbarText;
+    @BindView(R.id.buttonSnackbar) Button snackbarButton;
 
     private NowAdapter adapter;
     private boolean isLoadingRecentlyWatched;
     private boolean isLoadingFriends;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -167,7 +153,7 @@ public class MoviesNowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

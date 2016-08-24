@@ -16,24 +16,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:minHeight="88dp">
+            android:minHeight="@dimen/show_poster_height_small">
 
+            <!-- 2 : 3 aspect ratio -->
             <ImageView
                 android:id="@+id/imageViewAddPoster"
-                android:layout_width="60dp"
-                android:layout_height="88dp"
+                android:layout_width="@dimen/show_poster_width_small"
+                android:layout_height="@dimen/show_poster_height_small"
                 android:contentDescription="@null"
                 android:scaleType="centerInside"
-                tools:src="@drawable/ic_image_missing" />
+                tools:src="#F50057" />
 
             <TextView
                 android:id="@+id/textViewAddTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding"
                 android:layout_toRightOf="@id/imageViewAddPoster"
                 android:ellipsize="end"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Subhead"
@@ -44,12 +44,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddTitle"
+                android:layout_marginLeft="@dimen/default_padding"
                 android:layout_toRightOf="@id/imageViewAddPoster"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:paddingBottom="@dimen/default_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
                 android:paddingTop="@dimen/inline_padding"
                 android:textAppearance="@style/TextAppearance.Body"
                 tools:text="Some awesome\nthree-line\ndescription" />
@@ -59,7 +58,7 @@
         <ImageView
             android:id="@+id/buttonItemAddMore"
             android:layout_width="48dp"
-            android:layout_height="88dp"
+            android:layout_height="@dimen/show_poster_height_small"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside"
@@ -68,7 +67,7 @@
         <ImageView
             android:id="@+id/viewAddButton"
             android:layout_width="48dp"
-            android:layout_height="88dp"
+            android:layout_height="@dimen/show_poster_height_small"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_shows_add"
             android:scaleType="centerInside"
@@ -78,7 +77,7 @@
         <ImageView
             android:id="@+id/imageViewAddedIndicator"
             android:layout_width="48dp"
-            android:layout_height="88dp"
+            android:layout_height="@dimen/show_poster_height_small"
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:src="?attr/drawableWatched" />

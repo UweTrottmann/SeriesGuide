@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -23,9 +24,13 @@ android {
     compileSdkVersion project.androidCompileSdkVersion
     buildToolsVersion project.androidBuildToolsVersion
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
 
         vectorDrawables.useSupportLibrary = true
 
@@ -124,11 +129,18 @@ dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    // https://github.com/google/dagger/releases
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.google.dagger:dagger:2.6'
+    // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
+    def butterKnifeVersion = "8.2.1"
+    compile "com.jakewharton:butterknife:$butterKnifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // temporarily add okhttp 3 support to picasso
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
@@ -138,15 +150,15 @@ dependencies {
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.2.0'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    compile 'com.uwetrottmann.tmdb2:tmdb-java:1.0.0'
+    compile 'com.uwetrottmann.tmdb2:tmdb-java:1.2.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.0.0') {
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.2.1') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    def jodaTimeVersion = '2.9.3'
+    def jodaTimeVersion = '2.9.4'
     compile "net.danlew:android.joda:$jodaTimeVersion"
 
     // Android support libraries
@@ -156,11 +168,13 @@ dependencies {
     compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:customtabs:$supportVersion"
     compile "com.android.support:design:$supportVersion"
+    compile "com.android.support:palette-v7:$supportVersion"
+    compile "com.android.support:percent:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    def playServicesVersion = '9.0.2'
+    def playServicesVersion = '9.4.0'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
@@ -168,8 +182,9 @@ dependencies {
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
     compile('com.google.api-client:google-api-client-android:1.22.0') {
-        exclude group: 'com.google.android.google-play-services'
-        exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
+        exclude group: 'com.google.android.google-play-services' // including latest ourselves
+        exclude group: 'com.google.guava', module: 'guava-jdk5' // data binding using regular guava
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
     }
 
     // libs folder

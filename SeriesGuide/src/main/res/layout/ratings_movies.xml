@@ -1,64 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerRatings"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:background="?attr/selectableItemBackground"
-    android:focusable="true"
-    android:padding="@dimen/large_padding">
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/inline_padding"
-        android:textAppearance="@style/TextAppearance.Display1"
-        tools:text="9.6" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbVotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewRatingsTmdbValue"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_toRightOf="@+id/textViewRatingsTmdbValue"
-        android:ellipsize="end"
-        android:maxEms="6"
-        android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.Caption"
-        tools:text="12340 votes" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsTmdbValue"
-        android:layout_marginTop="-4dp"
-        android:text="@string/tmdb"
-        android:textAppearance="@style/TextAppearance.Caption" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
+        android:id="@+id/containerRatings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_toRightOf="@id/textViewRatingsTmdbVotes">
+        android:layout_gravity="center_horizontal"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:padding="@dimen/large_padding"
+        tools:ignore="RtlHardcoded">
 
         <TextView
-            android:id="@+id/textViewRatingsTraktValue"
+            android:id="@+id/textViewRatingsTmdbValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Display1"
-            tools:text="8.4" />
+            android:textAppearance="@style/TextAppearance.Title"
+            tools:text="9.6" />
 
         <TextView
-            android:id="@+id/textViewRatingsTraktVotes"
+            android:id="@+id/textViewRatingsTmdbVotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textViewRatingsTraktValue"
-            android:layout_toRightOf="@+id/textViewRatingsTraktValue"
+            android:layout_alignBaseline="@+id/textViewRatingsTmdbValue"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/textViewRatingsTmdbValue"
             android:ellipsize="end"
             android:maxEms="6"
             android:maxLines="2"
@@ -66,33 +34,70 @@
             tools:text="12340 votes" />
 
         <TextView
-            android:id="@+id/textViewRatingsTraktLabel"
+            android:id="@+id/textViewRatingsTmdbLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewRatingsTraktValue"
+            android:layout_below="@+id/textViewRatingsTmdbValue"
             android:layout_marginTop="-4dp"
-            android:text="@string/trakt"
+            android:text="@string/tmdb"
+            android:textAppearance="@style/TextAppearance.Caption" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_toRightOf="@id/textViewRatingsTmdbVotes">
+
+            <TextView
+                android:id="@+id/textViewRatingsTraktValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/inline_padding"
+                android:textAppearance="@style/TextAppearance.Title"
+                tools:text="8.4" />
+
+            <TextView
+                android:id="@+id/textViewRatingsTraktVotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textViewRatingsTraktValue"
+                android:layout_toRightOf="@+id/textViewRatingsTraktValue"
+                android:ellipsize="end"
+                android:maxEms="6"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.Caption"
+                tools:text="12340 votes" />
+
+            <TextView
+                android:id="@+id/textViewRatingsTraktLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRatingsTraktValue"
+                android:layout_marginTop="-4dp"
+                android:text="@string/trakt"
+                android:textAppearance="@style/TextAppearance.Caption" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewRatingsTmdbLabel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/action_rate"
+            android:textAppearance="@style/TextAppearance.Button" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUserLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewRatingsTraktUser"
+            android:layout_centerHorizontal="true"
+            android:text="@string/your_rating"
             android:textAppearance="@style/TextAppearance.Caption" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textViewRatingsTraktUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsTmdbLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/large_padding"
-        android:text="@string/action_rate"
-        android:textAppearance="@style/TextAppearance.Body.Highlight" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTraktUserLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsTraktUser"
-        android:layout_centerHorizontal="true"
-        android:text="@string/your_rating"
-        android:textAppearance="@style/TextAppearance.Caption" />
-
-</RelativeLayout>
+</layout>

@@ -1,22 +1,6 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,9 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -52,10 +36,10 @@ public abstract class AddFragment extends Fragment {
     public static class AddShowEvent {
     }
 
-    @Bind(R.id.containerAddContent) View contentContainer;
-    @Bind(R.id.progressBarAdd) View progressBar;
-    @Bind(android.R.id.list) GridView resultsGridView;
-    @Bind(R.id.emptyViewAdd) EmptyView emptyView;
+    @BindView(R.id.containerAddContent) View contentContainer;
+    @BindView(R.id.progressBarAdd) View progressBar;
+    @BindView(android.R.id.list) GridView resultsGridView;
+    @BindView(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
@@ -103,13 +87,6 @@ public abstract class AddFragment extends Fragment {
         super.onStop();
 
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        ButterKnife.unbind(this);
     }
 
     protected abstract void setupEmptyView(EmptyView buttonEmptyView);
@@ -172,17 +149,19 @@ public abstract class AddFragment extends Fragment {
             void onClick(View view, int showTvdbId);
         }
 
+        private final SgApp app;
         private final OnContextMenuClickListener menuClickListener;
         private final boolean hideContextMenuIfAdded;
         private final LayoutInflater inflater;
 
-        public AddAdapter(Context context, List<SearchResult> objects,
+        public AddAdapter(Activity activity, List<SearchResult> objects,
                 OnContextMenuClickListener menuClickListener,
                 boolean hideContextMenuIfAdded) {
-            super(context, 0, objects);
+            super(activity, 0, objects);
+            app = SgApp.from(activity);
             this.menuClickListener = menuClickListener;
             this.hideContextMenuIfAdded = hideContextMenuIfAdded;
-            inflater = LayoutInflater.from(context);
+            inflater = LayoutInflater.from(activity);
         }
 
         @Override
@@ -215,7 +194,7 @@ public abstract class AddFragment extends Fragment {
                     item.isAdded = true;
                     EventBus.getDefault().post(new AddShowEvent());
 
-                    TaskManager.getInstance(getContext()).performAddTask(item);
+                    TaskManager.getInstance(getContext()).performAddTask(app, item);
                 }
             });
 
@@ -225,8 +204,8 @@ public abstract class AddFragment extends Fragment {
             if (item.poster != null) {
                 holder.poster.setVisibility(View.VISIBLE);
                 ServiceUtils.loadWithPicasso(getContext(), item.poster)
+                        .fit()
                         .centerCrop()
-                        .resizeDimen(R.dimen.show_poster_add_width, R.dimen.show_poster_add_height)
                         .error(R.drawable.ic_image_missing)
                         .into(holder.poster);
             } else {

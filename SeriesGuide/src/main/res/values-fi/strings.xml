@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
   <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
   <string name="hexagon_warning_lists">Listoja ei sisällytetä.</string>
-  <string name="hexagon_warning_trakt">Käyttäessäsi SeriesGuide Cloud -palvelua, tekemäsi muutokset trakt-palvelussa eivät synkronoidu SeriesGuideen.</string>
+  <string name="hexagon_warning_trakt">Trakt-synkronointi poistetaan käytöstä, kun SeriesGuide Cloud on yhdistetty.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
   <string name="hexagon_signed_in">Olet yhteydessä SeriesGuide Cloud -palveluun.</string>
   <string name="hexagon_signout">Kirjaudu ulos</string>
@@ -486,7 +486,7 @@
   <string name="feedback_action_notreally">En oikeastaan</string>
   <string name="feedback_question_rate_google">Haluatko arvostella Google Playssa?</string>
   <string name="feedback_question_rate_amazon">Haluatko arvostella Amazonissa?</string>
-  <string name="feedback_question_feedback">Haluatko kertoa, miten sitä vois parantaa?</string>
+  <string name="feedback_question_feedback">Haluatko kertoa, miten sitä voisi parantaa?</string>
   <string name="feedback_action_ok">Kyllä</string>
   <string name="feedback_action_nothanks">Ei kiitos</string>
 </resources>

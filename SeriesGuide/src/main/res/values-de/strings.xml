@@ -236,10 +236,10 @@
     <item quantity="other">%d Minuten</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimentell!</string>
+  <string name="hexagon_warning">Experimentell</string>
   <string name="hexagon_description">Stellen Sie eine Verbindung zur Cloud her um Ihre Serien und Filme zu sichern und zu synchronisieren.</string>
   <string name="hexagon_warning_lists">Listen sind nicht mit eingeschlossen.</string>
-  <string name="hexagon_warning_trakt">Bei Nutzung von SeriesGuide Cloud werden Änderungen auf trakt nicht in SeriesGuide übertragen.</string>
+  <string name="hexagon_warning_trakt">Solange SeriesGuide Cloud verbunden ist, wird die Synchronisation mit trakt deaktiviert.</string>
   <string name="hexagon_signin">Anmelden</string>
   <string name="hexagon_signed_in">Sie sind mit SeriesGuide Cloud verbunden.</string>
   <string name="hexagon_signout">Abmelden</string>

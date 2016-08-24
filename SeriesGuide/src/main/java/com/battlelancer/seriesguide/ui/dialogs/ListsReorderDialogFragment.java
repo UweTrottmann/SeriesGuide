@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.os.Bundle;
@@ -26,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsAdapter;
 import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
@@ -49,17 +34,18 @@ public class ListsReorderDialogFragment extends DialogFragment {
         f.show(fragmentManager, "lists-reorder-dialog");
     }
 
-    @Bind(R.id.listViewListsReorder) DragSortListView dragSortListView;
-    @Bind(R.id.buttonNegative) Button buttonNegative;
-    @Bind(R.id.buttonPositive) Button buttonPositive;
+    @BindView(R.id.listViewListsReorder) DragSortListView dragSortListView;
+    @BindView(R.id.buttonNegative) Button buttonNegative;
+    @BindView(R.id.buttonPositive) Button buttonPositive;
 
+    private Unbinder unbinder;
     private ListsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         DragSortController controller = new DragSortController(dragSortListView,
                 R.id.dragGripViewItemList, DragSortController.ON_DOWN,
@@ -109,7 +95,7 @@ public class ListsReorderDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private void reorderList(int from, int to) {

@@ -213,7 +213,7 @@
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Releasedatum</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Kon statistieken niet berekenen.</string>
   <string name="statistics_shows">Series</string>
   <string name="statistics_episodes">Afleveringen</string>
   <string name="statistics_movies">Films</string>
@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Experimenteel!</string>
   <string name="hexagon_description">Maak verbinding met de cloud zodat je een backup kunt maken van je series en films.</string>
   <string name="hexagon_warning_lists">Exclusief lijsten.</string>
-  <string name="hexagon_warning_trakt">Als je SeriesGuide cloud gebruikt, worden aanpassingen in trakt niet teruggesynchroniseerd met SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">Wanneer SeriesGuide Cloud verbonden is, word trakt sync uitgeschakeld.</string>
   <string name="hexagon_signin">Log in</string>
   <string name="hexagon_signed_in">U bent verbonden met de SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Uitloggen</string>
@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biografie</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Bevalt SeriesGuide?</string>
+  <string name="feedback_action_yes">Ja!</string>
+  <string name="feedback_action_notreally">Niet echt</string>
+  <string name="feedback_question_rate_google">Beoordeel op Google Play?</string>
+  <string name="feedback_question_rate_amazon">Beoordeel op Amazon?</string>
+  <string name="feedback_question_feedback">Vertel me hoe ik het kan verbeteren?</string>
+  <string name="feedback_action_ok">Oké, natuurlijk</string>
+  <string name="feedback_action_nothanks">Nee, bedankt</string>
 </resources>

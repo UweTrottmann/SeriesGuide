@@ -1,29 +1,15 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -31,11 +17,14 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
@@ -58,10 +47,15 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @SuppressWarnings("FieldCanBeLocal") private NfcAdapter nfcAdapter;
     private int showTvdbId;
 
+    @Nullable @BindView(R.id.viewOverviewShadowStart) View shadowOverviewStart;
+    @Nullable @BindView(R.id.viewOverviewShadowEnd) View shadowOverviewEnd;
+    @Nullable @BindView(R.id.viewOverviewShadowBottom) View shadowShowBottom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+        ButterKnife.bind(this);
         setupActionBar();
         setupNavDrawer();
 
@@ -113,6 +107,19 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             if (savedInstanceState == null || isSwitchingLayouts) {
                 setupPanes();
             }
+        }
+
+        if (shadowOverviewStart != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowOverviewStart,
+                    GradientDrawable.Orientation.RIGHT_LEFT);
+        }
+        if (shadowOverviewEnd != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowOverviewEnd,
+                    GradientDrawable.Orientation.LEFT_RIGHT);
+        }
+        if (shadowShowBottom != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowShowBottom,
+                    GradientDrawable.Orientation.TOP_BOTTOM);
         }
     }
 
@@ -228,12 +235,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            Intent upIntent = new Intent(this, ShowsActivity.class);
-            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(upIntent);
-            return true;
-        } else if (itemId == R.id.menu_overview_search) {
+        if (itemId == R.id.menu_overview_search) {
             launchSearch();
             return true;
         }

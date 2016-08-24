@@ -15,6 +15,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,21 +30,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageViewPersonHeadshot"
+            <android.support.percent.PercentFrameLayout
+                android:id="@+id/containerPersonHeadshot"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/person_headshot_large_height"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                android:src="@color/protection_dark"
-                android:transitionName="@string/transitionNamePersonImage"
-                tools:targetApi="lollipop" />
+                android:layout_height="wrap_content">
+
+                <!--suppress AndroidDomInspection -->
+                <ImageView
+                    android:id="@+id/imageViewPersonHeadshot"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@color/protection_dark"
+                    android:transitionName="@string/transitionNamePersonImage"
+                    app:layout_aspectRatio="100%"
+                    app:layout_widthPercent="100%"
+                    tools:targetApi="lollipop" />
+
+            </android.support.percent.PercentFrameLayout>
 
             <TextView
                 android:id="@+id/textViewPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageViewPersonHeadshot"
+                android:layout_alignBottom="@+id/containerPersonHeadshot"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/keyline"
                 android:layout_marginRight="@dimen/keyline"
@@ -60,7 +69,7 @@
                 android:id="@+id/textViewPersonBiographyHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageViewPersonHeadshot"
+                android:layout_below="@id/containerPersonHeadshot"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/keyline"
                 android:layout_marginRight="@dimen/keyline"

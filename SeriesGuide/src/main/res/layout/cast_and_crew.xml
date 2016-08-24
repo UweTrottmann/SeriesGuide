@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <merge>
+
+        <TextView
+            android:id="@+id/labelCast"
+            style="@style/Block.WithTopMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/movie_cast"
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+        <LinearLayout
+            android:id="@+id/containerCast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/labelCrew"
+            style="@style/Block.WithTopMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/movie_crew"
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+        <LinearLayout
+            android:id="@+id/containerCrew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </merge>
+
+</layout>

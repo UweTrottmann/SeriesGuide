@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Fragment;
@@ -26,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -40,21 +25,23 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class AboutSettingsFragment extends Fragment {
 
-    @Bind(R.id.textViewAboutVersion) TextView textVersion;
-    @Bind(R.id.buttonAboutWebsite) Button buttonWebsite;
-    @Bind(R.id.buttonAboutTvdbTerms) Button buttonTvdbTerms;
-    @Bind(R.id.buttonAboutCreativeCommons) Button buttonCreativeCommons;
-    @Bind(R.id.buttonAboutTmdbTerms) Button buttonTmdbTerms;
-    @Bind(R.id.buttonAboutTmdbApiTerms) Button buttonTmdbApiTerms;
-    @Bind(R.id.buttonAboutTraktTerms) Button buttonTraktTerms;
-    @Bind(R.id.buttonAboutCredits) Button buttonCredits;
+    @BindView(R.id.textViewAboutVersion) TextView textVersion;
+    @BindView(R.id.buttonAboutWebsite) Button buttonWebsite;
+    @BindView(R.id.buttonAboutTvdbTerms) Button buttonTvdbTerms;
+    @BindView(R.id.buttonAboutCreativeCommons) Button buttonCreativeCommons;
+    @BindView(R.id.buttonAboutTmdbTerms) Button buttonTmdbTerms;
+    @BindView(R.id.buttonAboutTmdbApiTerms) Button buttonTmdbApiTerms;
+    @BindView(R.id.buttonAboutTraktTerms) Button buttonTraktTerms;
+    @BindView(R.id.buttonAboutCredits) Button buttonCredits;
+
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // display version number and database version
         textVersion.setText(Utils.getVersionString(getActivity()));
@@ -68,6 +55,13 @@ public class AboutSettingsFragment extends Fragment {
         buttonCredits.setOnClickListener(urlButtonClickListener);
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 
     private View.OnClickListener urlButtonClickListener = new View.OnClickListener() {

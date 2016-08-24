@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.settings;
 
 import android.accounts.Account;
@@ -30,7 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
@@ -110,7 +94,7 @@ public class TraktCredentials {
 
         NotificationManager nm = (NotificationManager) mContext.getSystemService(
                 Context.NOTIFICATION_SERVICE);
-        nm.notify(SeriesGuideApplication.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
+        nm.notify(SgApp.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
     }
 
     /**
@@ -232,15 +216,13 @@ public class TraktCredentials {
     }
 
     /**
-     * Tries to refresh the current access token. Calls {@link #setCredentialsInvalid()} on failure
-     * and returns {@code false}.
+     * Tries to refresh the current access token. Returns {@code false} on failure.
      */
     public synchronized boolean refreshAccessToken(TraktV2 trakt) {
-        Timber.d("refreshAccessToken: time to refresh the access token.");
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
         if (TextUtils.isEmpty(oldRefreshToken)) {
-            setCredentialsInvalid();
+            Timber.d("refreshAccessToken: no refresh token, give up.");
             return false;
         }
 
@@ -267,7 +249,6 @@ public class TraktCredentials {
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
             Timber.e("refreshAccessToken: failed.");
-            setCredentialsInvalid();
             return false;
         }
 
@@ -275,7 +256,6 @@ public class TraktCredentials {
         if (!setAccessToken(accessToken)
                 || !TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
             Timber.e("refreshAccessToken: saving failed");
-            setCredentialsInvalid();
             return false;
         }
 

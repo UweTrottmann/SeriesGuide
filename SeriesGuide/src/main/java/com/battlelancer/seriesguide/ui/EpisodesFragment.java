@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
@@ -38,6 +22,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -274,22 +259,25 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
-        EpisodeTools.episodeWatched(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
-                episode, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+                getSeasonNumber(), episode,
+                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeSkipped(int episodeTvdbId, int episode, boolean isSkipped) {
-        EpisodeTools.episodeWatched(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
-                episode, isSkipped ? EpisodeFlags.SKIPPED : EpisodeFlags.UNWATCHED);
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+                getSeasonNumber(), episode,
+                isSkipped ? EpisodeFlags.SKIPPED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
-        EpisodeTools.episodeCollected(getActivity(), getShowId(), episodeTvdbId, getSeasonNumber(),
-                episode, isCollected);
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+                getSeasonNumber(), episode, isCollected);
     }
 
     private void onMarkUntilHere(long episodeFirstReleaseMs) {
-        EpisodeTools.episodeWatchedPrevious(getActivity(), getShowId(), episodeFirstReleaseMs);
+        EpisodeTools.episodeWatchedPrevious(SgApp.from(getActivity()), getShowId(),
+                episodeFirstReleaseMs);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks

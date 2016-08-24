@@ -1,22 +1,5 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v4.app.LoaderManager;
@@ -29,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -52,6 +37,7 @@ public class TraktAddFragment extends AddFragment {
      * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
      */
     public final static String ARG_TYPE = "traktListType";
+    private Unbinder unbinder;
 
     @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
     @Retention(RetentionPolicy.SOURCE)
@@ -78,7 +64,7 @@ public class TraktAddFragment extends AddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // set initial view states
         setProgressVisible(true, false);
@@ -121,18 +107,18 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(view.getContext(), showTvdbId));
+                    new AddItemMenuItemClickListener(SgApp.from(getActivity()), showTvdbId));
             popupMenu.show();
         }
     };
 
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final Context context;
+        private final SgApp app;
         private final int showTvdbId;
 
-        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
-            this.context = context;
+        public AddItemMenuItemClickListener(SgApp app, int showTvdbId) {
+            this.app = app;
             this.showTvdbId = showTvdbId;
         }
 
@@ -140,11 +126,11 @@ public class TraktAddFragment extends AddFragment {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(context, showTvdbId);
+                ShowTools.addToWatchlist(app, showTvdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(context, showTvdbId);
+                ShowTools.removeFromWatchlist(app, showTvdbId);
                 return true;
             }
             return false;
@@ -170,7 +156,8 @@ public class TraktAddFragment extends AddFragment {
                         result.isAdded = true;
                     }
                 }
-                TaskManager.getInstance(getActivity()).performAddTask(showsToAdd, false, false);
+                TaskManager.getInstance(getActivity())
+                        .performAddTask(SgApp.from(getActivity()), showsToAdd, false, false);
                 EventBus.getDefault().post(new AddShowEvent());
             }
             // disable the item so the user has to come back
@@ -178,6 +165,13 @@ public class TraktAddFragment extends AddFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 
     public void onEventMainThread(
@@ -223,7 +217,7 @@ public class TraktAddFragment extends AddFragment {
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktAddLoader(getContext(), getListType());
+            return new TraktAddLoader(SgApp.from(getActivity()), getListType());
         }
 
         @Override

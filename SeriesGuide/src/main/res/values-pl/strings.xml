@@ -243,7 +243,7 @@
   <string name="hexagon_warning">Eksperymentalne!</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
   <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
-  <string name="hexagon_warning_trakt">Podczas korzystania z chmury SeriesGuide, zmiany na trakt nie są pobierane do SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">Po podłączeniu do chmury SeriesGuide, synchronizacja trakt jest wyłączona.</string>
   <string name="hexagon_signin">Zaloguj się</string>
   <string name="hexagon_signed_in">Podłączono SeriesGuide z chmurą.</string>
   <string name="hexagon_signout">Wyloguj</string>

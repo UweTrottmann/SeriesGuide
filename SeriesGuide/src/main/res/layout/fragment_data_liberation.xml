@@ -186,7 +186,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/containerDataLibImportFiles"
-                android:text="@string/import_warning" />
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/import_warning"
+                android:textAppearance="@style/TextAppearance.Body.Bold"/>
 
             <Button
                 android:id="@+id/buttonDataLibImport"
@@ -194,7 +196,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/checkBoxDataLibImportWarning"
-                android:layout_marginTop="@dimen/default_padding"
                 android:enabled="false"
                 android:text="@string/import_button" />
 

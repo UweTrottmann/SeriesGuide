@@ -1,40 +1,29 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.TraktAddFragment;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.services.Recommendations;
+import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Response;
 
 /**
@@ -52,23 +41,25 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
     }
 
+    @Inject Lazy<Recommendations> traktRecommendations;
+    @Inject Lazy<Sync> traktSync;
     private final int type;
 
-    public TraktAddLoader(Context context, @TraktAddFragment.ListType int type) {
-        super(context);
+    public TraktAddLoader(SgApp app, @TraktAddFragment.ListType int type) {
+        super(app);
+        app.getServicesComponent().inject(this);
         this.type = type;
     }
 
     @Override
     public Result loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
         List<Show> shows = new LinkedList<>();
         String action = null;
         try {
             if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                 action = "load recommended shows";
-                Response<List<Show>> response = trakt.recommendations()
-                        .shows(Extended.IMAGES)
+                Response<List<Show>> response = traktRecommendations.get()
+                        .shows(Extended.FULLIMAGES)
                         .execute();
                 if (response.isSuccessful()) {
                     shows = response.body();
@@ -83,13 +74,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktAddFragment.TYPE_WATCHED) {
                     action = "load watched shows";
-                    response = trakt.sync().watchedShows(Extended.NOSEASONSIMAGES).execute();
+                    response = traktSync.get().watchedShows(Extended.NOSEASONSIMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
-                    response = trakt.sync().collectionShows(Extended.IMAGES).execute();
+                    response = traktSync.get().collectionShows(Extended.IMAGES).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
-                    response = trakt.sync().watchlistShows(Extended.IMAGES).execute();
+                    response = traktSync.get().watchlistShows(Extended.FULLIMAGES).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;
@@ -136,12 +127,17 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         return new Result(new LinkedList<SearchResult>(), errorResId);
     }
 
+    public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
+            @NonNull List<Show> traktShows) {
+        return parseTraktShowsToSearchResults(context, traktShows, null);
+    }
+
     /**
      * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already in
      * the local database as added.
      */
     public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<Show> traktShows) {
+            @NonNull List<Show> traktShows, @Nullable String overrideLanguage) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
@@ -154,13 +150,18 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             SearchResult result = new SearchResult();
             result.tvdbid = show.ids.tvdb;
             result.title = show.title;
-            result.overview = show.year == null ? "" : String.valueOf(show.year);
+            // search results return an overview, while trending and other lists do not
+            result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
+                    : show.year != null ? String.valueOf(show.year) : "";
             if (show.images != null && show.images.poster != null) {
                 result.poster = show.images.poster.thumb;
             }
             if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
                 // is already in local database
                 result.isAdded = true;
+            }
+            if (overrideLanguage != null) {
+                result.language = overrideLanguage;
             }
             results.add(result);
         }

@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.app.SearchManager;
@@ -22,34 +6,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
-import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
-import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
-import com.uwetrottmann.thetvdb.TheTvdb;
-import com.uwetrottmann.tmdb2.Tmdb;
-import com.uwetrottmann.trakt5.TraktV2;
-import java.io.File;
-import java.util.concurrent.TimeUnit;
-import okhttp3.Cache;
-import okhttp3.OkHttpClient;
 
 /**
  * Helper methods to interact with third-party services trakt and The Movie Database used within
@@ -58,12 +25,6 @@ import okhttp3.OkHttpClient;
 public final class ServiceUtils {
 
     public static final String TAG = "Service Utils";
-
-    public static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
-    public static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
-    private static final String API_CACHE = "api-cache";
-    private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
-    private static final int MAX_DISK_API_CACHE_SIZE = 20 * 1024 * 1024; // 20MB
 
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
@@ -85,68 +46,10 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static OkHttpClient cachingHttpClient;
-
     private static Picasso sPicasso;
-
-    private static TheTvdb theTvdb;
-
-    private static TraktV2 trakt;
-
-    private static Tmdb tmdb;
 
     /* This class is never initialized */
     private ServiceUtils() {
-    }
-
-    /**
-     * Returns this apps {@link OkHttpClient} with enabled response cache. Should be used with API
-     * calls.
-     */
-    @NonNull
-    public static synchronized OkHttpClient getCachingOkHttpClient(Context context) {
-        if (cachingHttpClient == null) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-            builder.addInterceptor(new SgTmdbInterceptor(context));
-            builder.addNetworkInterceptor(new SgTheTvdbInterceptor(context));
-            builder.addNetworkInterceptor(new SgTraktInterceptor(context));
-            builder.authenticator(new AllApisAuthenticator(context));
-            File cacheDir = createApiCacheDir(context, API_CACHE);
-            builder.cache(new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir)));
-            cachingHttpClient = builder.build();
-        }
-        return cachingHttpClient;
-    }
-
-    public static File createApiCacheDir(Context context, String directoryName) {
-        File cache = new File(context.getApplicationContext().getCacheDir(), directoryName);
-        if (!cache.exists()) {
-            cache.mkdirs();
-        }
-        return cache;
-    }
-
-    public static long calculateApiDiskCacheSize(File dir) {
-        long size = MIN_DISK_API_CACHE_SIZE;
-
-        try {
-            StatFs statFs = new StatFs(dir.getAbsolutePath());
-            long available;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                available = statFs.getBlockCountLong() * statFs.getBlockSizeLong();
-            } else {
-                //noinspection deprecation
-                available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
-            }
-            // Target 2% of the total space.
-            size = available / 50;
-        } catch (IllegalArgumentException ignored) {
-        }
-
-        // Bound inside min/max size for disk cache.
-        return Math.max(Math.min(size, MAX_DISK_API_CACHE_SIZE), MIN_DISK_API_CACHE_SIZE);
     }
 
     @NonNull
@@ -175,58 +78,6 @@ public final class ServiceUtils {
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
         }
         return requestCreator;
-    }
-
-    /**
-     * Get a {@link com.uwetrottmann.thetvdb.TheTvdb} instance.
-     */
-    @NonNull
-    public static synchronized TheTvdb getTheTvdb(Context context) {
-        if (theTvdb == null) {
-            theTvdb = new SgTheTvdb(context);
-        }
-        return theTvdb;
-    }
-
-    /**
-     * Get a tmdb-java instance with our API key set.
-     */
-    @NonNull
-    public static synchronized Tmdb getTmdb(Context context) {
-        if (tmdb == null) {
-            tmdb = new SgTmdb(context, BuildConfig.TMDB_API_KEY);
-        }
-        return tmdb;
-    }
-
-    /**
-     * Get a {@link TraktV2} service manager. If the user is connected to trakt requests will be
-     * authenticated. In addition if an existing access token is expired, tries to refresh it. So it
-     * is advisable to check {@link TraktCredentials#hasCredentials()} before using the manager for
-     * calls that require auth.
-     *
-     * @return A {@link TraktV2} instance.
-     */
-    @NonNull
-    public static synchronized TraktV2 getTrakt(Context context) {
-        TraktV2 trakt = getTraktNoTokenRefresh(context);
-
-        // try to refresh access token if it is about to expire or has expired
-        TraktCredentials traktCredentials = TraktCredentials.get(context);
-        if (traktCredentials.hasCredentials()
-                && TraktOAuthSettings.isTimeToRefreshAccessToken(context)) {
-            traktCredentials.refreshAccessToken(trakt);
-        }
-
-        return trakt;
-    }
-
-    @NonNull
-    public static synchronized TraktV2 getTraktNoTokenRefresh(Context context) {
-        if (trakt == null) {
-            trakt = new SgTrakt(context);
-        }
-        return trakt;
     }
 
     /**

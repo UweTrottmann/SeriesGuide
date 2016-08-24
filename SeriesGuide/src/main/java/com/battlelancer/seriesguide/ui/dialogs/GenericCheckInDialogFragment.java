@@ -1,23 +1,8 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -26,8 +11,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
@@ -59,11 +45,13 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public class CheckInDialogDismissedEvent {
     }
 
-    @Bind(R.id.editTextCheckInMessage) EditText mEditTextMessage;
-    @Bind(R.id.buttonCheckIn) View mButtonCheckIn;
-    @Bind(R.id.buttonCheckInPasteTitle) View mButtonPasteTitle;
-    @Bind(R.id.buttonCheckInClear) View mButtonClear;
-    @Bind(R.id.progressBarCheckIn) View mProgressBar;
+    @BindView(R.id.textInputLayoutCheckIn) TextInputLayout textInputLayout;
+    @BindView(R.id.buttonCheckIn) View buttonCheckIn;
+    @BindView(R.id.buttonCheckInPasteTitle) View buttonPasteTitle;
+    @BindView(R.id.buttonCheckInClear) View buttonClear;
+    @BindView(R.id.progressBarCheckIn) View progressBar;
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,32 +71,39 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         // Paste episode button
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
+        final EditText editTextMessage = textInputLayout.getEditText();
         if (!TextUtils.isEmpty(itemTitle)) {
-            mButtonPasteTitle.setOnClickListener(new OnClickListener() {
+            buttonPasteTitle.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int start = mEditTextMessage.getSelectionStart();
-                    int end = mEditTextMessage.getSelectionEnd();
-                    mEditTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
+                    if (editTextMessage == null) {
+                        return;
+                    }
+                    int start = editTextMessage.getSelectionStart();
+                    int end = editTextMessage.getSelectionEnd();
+                    editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
                             itemTitle, 0, itemTitle.length());
                 }
             });
         }
 
         // Clear button
-        mButtonClear.setOnClickListener(new OnClickListener() {
+        buttonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditTextMessage.setText(null);
+                if (editTextMessage == null) {
+                    return;
+                }
+                editTextMessage.setText(null);
             }
         });
 
         // Checkin Button
-        mButtonCheckIn.setOnClickListener(new OnClickListener() {
+        buttonCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkIn();
@@ -155,9 +150,10 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         // done with checking in, unlock UI
         setProgressLock(false);
@@ -196,7 +192,10 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
         }
 
         // try to check in
-        checkInTrakt(mEditTextMessage.getText().toString());
+        EditText editText = textInputLayout.getEditText();
+        if (editText != null) {
+            checkInTrakt(editText.getText().toString());
+        }
     }
 
     /**
@@ -208,10 +207,10 @@ public abstract class GenericCheckInDialogFragment extends DialogFragment {
      * Disables all interactive UI elements and shows a progress indicator.
      */
     private void setProgressLock(boolean lock) {
-        mProgressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
-        mEditTextMessage.setEnabled(!lock);
-        mButtonPasteTitle.setEnabled(!lock);
-        mButtonClear.setEnabled(!lock);
-        mButtonCheckIn.setEnabled(!lock);
+        progressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
+        textInputLayout.setEnabled(!lock);
+        buttonPasteTitle.setEnabled(!lock);
+        buttonClear.setEnabled(!lock);
+        buttonCheckIn.setEnabled(!lock);
     }
 }

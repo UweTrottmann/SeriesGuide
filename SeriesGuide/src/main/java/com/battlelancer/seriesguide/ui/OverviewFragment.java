@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
@@ -48,9 +32,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -64,9 +50,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
@@ -95,8 +82,45 @@ public class OverviewFragment extends Fragment implements
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
+    @BindView(R.id.containerOverviewShow) View containerShow;
+    @Nullable @BindView(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
+    @Nullable @BindView(R.id.feedbackViewOverview) FeedbackView feedbackView;
+    @BindView(R.id.containerOverviewEpisode) View containerEpisode;
+    @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
+    @BindView(R.id.background) ImageView imageBackground;
+    @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
+
+    @BindView(R.id.episodeTitle) TextView textEpisodeTitle;
+    @BindView(R.id.episodeTime) TextView textEpisodeTime;
+    @BindView(R.id.episodeInfo) TextView textEpisodeNumbers;
+    @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
+    @BindView(R.id.episode_meta_container) View containerEpisodeMeta;
+    @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
+    @BindView(R.id.progress_container) View containerProgress;
+    @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
+    @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
+    @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
+
+    @BindView(R.id.TextViewEpisodeDescription) TextView textDescription;
+    @BindView(R.id.labelDvd) View labelDvdNumber;
+    @BindView(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
+    @BindView(R.id.labelGuestStars) View labelGuestStars;
+    @BindView(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
+    @BindView(R.id.textViewRatingsValue) TextView textRating;
+    @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
+    @BindView(R.id.textViewRatingsUser) TextView textUserRating;
+
+    @BindView(R.id.buttonShowInfoIMDB) View buttonImdb;
+    @BindView(R.id.buttonTVDB) View buttonTvdb;
+    @BindView(R.id.buttonTrakt) View buttonTrakt;
+    @BindView(R.id.buttonWebSearch) View buttonWebSearch;
+    @BindView(R.id.buttonShouts) View buttonComments;
+
     private Handler handler = new Handler();
     private TraktRatingsTask traktRatingsTask;
+    private Unbinder unbinder;
 
     private boolean isEpisodeDataAvailable;
     private Cursor currentEpisodeCursor;
@@ -108,42 +132,6 @@ public class OverviewFragment extends Fragment implements
     private String showTitle;
 
     private boolean hasSetEpisodeWatched;
-
-    @Bind(R.id.containerOverviewShow) View containerShow;
-    @Nullable @Bind(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
-    @Nullable @Bind(R.id.feedbackViewOverview) FeedbackView feedbackView;
-    @Bind(R.id.containerOverviewEpisode) View containerEpisode;
-    @Bind(R.id.containerEpisodeActions) LinearLayout containerActions;
-    @Bind(R.id.background) ImageView imageBackground;
-    @Bind(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
-
-    @Bind(R.id.episodeTitle) TextView textEpisodeTitle;
-    @Bind(R.id.episodeTime) TextView textEpisodeTime;
-    @Bind(R.id.episodeInfo) TextView textEpisodeNumbers;
-    @Bind(R.id.episode_primary_container) View containerEpisodePrimary;
-    @Bind(R.id.episode_meta_container) View containerEpisodeMeta;
-    @Bind(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
-    @Bind(R.id.progress_container) View containerProgress;
-    @Bind(R.id.containerRatings) View containerRatings;
-    @Bind(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @Bind(R.id.buttonEpisodeWatched) Button buttonWatch;
-    @Bind(R.id.buttonEpisodeCollected) Button buttonCollect;
-    @Bind(R.id.buttonEpisodeSkip) Button buttonSkip;
-
-    @Bind(R.id.TextViewEpisodeDescription) TextView textDescription;
-    @Bind(R.id.labelDvd) View labelDvdNumber;
-    @Bind(R.id.textViewEpisodeDVDnumber) TextView textDvdNumber;
-    @Bind(R.id.labelGuestStars) View labelGuestStars;
-    @Bind(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
-    @Bind(R.id.textViewRatingsValue) TextView textRating;
-    @Bind(R.id.textViewRatingsVotes) TextView textRatingVotes;
-    @Bind(R.id.textViewRatingsUser) TextView textUserRating;
-
-    @Bind(R.id.buttonShowInfoIMDB) View buttonImdb;
-    @Bind(R.id.buttonTVDB) View buttonTvdb;
-    @Bind(R.id.buttonTrakt) View buttonTrakt;
-    @Bind(R.id.buttonWebSearch) View buttonWebSearch;
-    @Bind(R.id.buttonShouts) View buttonComments;
 
     /**
      * All values have to be integer.
@@ -175,7 +163,7 @@ public class OverviewFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
             @Override
@@ -236,7 +224,6 @@ public class OverviewFragment extends Fragment implements
                 rateEpisode();
             }
         });
-        containerRatings.setFocusable(true);
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // hide web search button
@@ -288,7 +275,7 @@ public class OverviewFragment extends Fragment implements
         // fragment is destroyed.
         ServiceUtils.getPicasso(getActivity()).cancelRequest(imageEpisode);
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -395,7 +382,7 @@ public class OverviewFragment extends Fragment implements
         }
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(getActivity(), showTvdbId,
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
     }
 
@@ -404,7 +391,8 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        EpisodeTools.displayRateDialog(getActivity(), getFragmentManager(), currentEpisodeTvdbId);
+        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(),
+                currentEpisodeTvdbId);
 
         Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
     }
@@ -430,7 +418,7 @@ public class OverviewFragment extends Fragment implements
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(getActivity(), showTvdbId,
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
 
         Utils.trackAction(getActivity(), TAG, "Toggle Collected");
@@ -850,15 +838,13 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void loadEpisodeImage(String imagePath) {
-        // immediately hide container if there is no image
         if (TextUtils.isEmpty(imagePath)) {
-            imageEpisode.setVisibility(View.INVISIBLE);
+            imageEpisode.setImageDrawable(null);
             return;
         }
 
         // try loading image
-        imageEpisode.setVisibility(View.VISIBLE);
-        ServiceUtils.loadWithPicasso(getActivity(), TheTVDB.buildScreenshotUrl(imagePath))
+        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
                 .error(R.drawable.ic_image_missing)
                 .into(imageEpisode,
                         new Callback() {
@@ -884,8 +870,8 @@ public class OverviewFragment extends Fragment implements
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        traktRatingsTask = new TraktRatingsTask(getActivity(), showTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber);
+        traktRatingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
+                episodeTvdbId, seasonNumber, episodeNumber);
         AsyncTaskCompat.executeParallel(traktRatingsTask);
     }
 

@@ -1,40 +1,25 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
+import android.app.Activity;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.Username;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
+import dagger.Lazy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
@@ -42,21 +27,22 @@ import java.util.List;
 public class TraktFriendsEpisodeHistoryLoader
         extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public TraktFriendsEpisodeHistoryLoader(Context context) {
-        super(context);
+    @Inject Lazy<Users> traktUsers;
+
+    public TraktFriendsEpisodeHistoryLoader(Activity activity) {
+        super(activity);
+        SgApp.from(activity).getServicesComponent().inject(this);
     }
 
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
-        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
         if (!TraktCredentials.get(getContext()).hasCredentials()) {
             return null;
         }
-        Users traktUsers = trakt.users();
 
         // get all trakt friends
         List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
-                traktUsers.friends(Username.ME, Extended.IMAGES), "get friends");
+                traktUsers.get().friends(Username.ME, Extended.IMAGES), "get friends");
         if (friends == null) {
             return null;
         }
@@ -88,8 +74,8 @@ public class TraktFriendsEpisodeHistoryLoader
 
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
-                    traktUsers.history(new Username(username), HistoryType.EPISODES, 1, 1,
-                            Extended.IMAGES), "get friend episode history");
+                    traktUsers.get().history(new Username(username), HistoryType.EPISODES, 1, 1,
+                            Extended.IMAGES, null, null), "get friend episode history");
             if (history == null || history.size() == 0) {
                 continue; // no history
             }

@@ -1,27 +1,19 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ContentProvider;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.modules.AppModule;
+import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
+import com.battlelancer.seriesguide.modules.HttpClientModule;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
+import com.battlelancer.seriesguide.modules.TmdbModule;
+import com.battlelancer.seriesguide.modules.TraktModule;
+import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -36,7 +28,7 @@ import timber.log.Timber;
  *
  * @author Uwe Trottmann
  */
-public class SeriesGuideApplication extends Application {
+public class SgApp extends Application {
 
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
@@ -63,6 +55,8 @@ public class SeriesGuideApplication extends Application {
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
+
+    private ServicesComponent servicesComponent;
 
     @Override
     public void onCreate() {
@@ -95,6 +89,22 @@ public class SeriesGuideApplication extends Application {
         Analytics.getTracker(this);
 
         enableStrictMode();
+
+        servicesComponent = DaggerServicesComponent.builder()
+                .appModule(new AppModule(this))
+                .httpClientModule(new HttpClientModule())
+                .tmdbModule(new TmdbModule())
+                .traktModule(new TraktModule())
+                .tvdbModule(new TvdbModule())
+                .build();
+    }
+
+    public static SgApp from(Activity activity) {
+        return (SgApp) activity.getApplication();
+    }
+
+    public ServicesComponent getServicesComponent() {
+        return servicesComponent;
     }
 
     /**

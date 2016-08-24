@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Eksperimentel!</string>
   <string name="hexagon_description">Opret forbindelse til netskyen for at sikkerhedskopiere og synkronisere dine film og serier.</string>
   <string name="hexagon_warning_lists">Listerne er ikke inkluderet.</string>
-  <string name="hexagon_warning_trakt">Når du bruger SeriesGuide Cloud, vil ændringer på trakt ikke synkroniseres med SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Log ind</string>
   <string name="hexagon_signed_in">Du er forbundet til SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Log ud</string>

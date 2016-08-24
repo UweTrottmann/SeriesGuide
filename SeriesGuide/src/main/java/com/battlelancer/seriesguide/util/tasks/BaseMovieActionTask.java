@@ -1,42 +1,27 @@
-/*
- * Copyright 2015 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.services.Sync;
+import dagger.Lazy;
 import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -45,10 +30,12 @@ import retrofit2.Response;
  */
 public abstract class BaseMovieActionTask extends BaseActionTask {
 
+    @Inject Lazy<Sync> traktSync;
     private final int movieTmdbId;
 
-    public BaseMovieActionTask(Context context, int movieTmdbId) {
-        super(context);
+    public BaseMovieActionTask(SgApp app, int movieTmdbId) {
+        super(app);
+        app.getServicesComponent().inject(this);
         this.movieTmdbId = movieTmdbId;
     }
 
@@ -92,17 +79,15 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
 
         // send to trakt
         if (isSendingToTrakt()) {
-            TraktV2 trakt = ServiceUtils.getTrakt(getContext());
             if (!TraktCredentials.get(getContext()).hasCredentials()) {
                 return ERROR_TRAKT_AUTH;
             }
 
-            Sync traktSync = trakt.sync();
             SyncItems items = new SyncItems().movies(
                     new SyncMovie().id(MovieIds.tmdb(movieTmdbId)));
 
             try {
-                Response<SyncResponse> response = doTraktAction(traktSync, items).execute();
+                Response<SyncResponse> response = doTraktAction(traktSync.get(), items).execute();
                 if (response.isSuccessful()) {
                     if (isMovieNotFound(response.body())) {
                         return ERROR_TRAKT_API_NOT_FOUND;

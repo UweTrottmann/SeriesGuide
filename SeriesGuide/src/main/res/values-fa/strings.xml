@@ -239,7 +239,7 @@
   <string name="hexagon_warning">تجربی!</string>
   <string name="hexagon_description">وصل شدن به ابرواره برای پشتیبان گیری و هم‌گام سازی نمایش‌ها و فیلم‌هایتان.</string>
   <string name="hexagon_warning_lists">فهرست‌ها گنجانده نشده‌اند.</string>
-  <string name="hexagon_warning_trakt">هنگام استفاده از ابروارهٔ سریزگاید، تغییرات روی ترکت با سریزگاید هم‌گام نخواهند شد.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">ورود به برنامه</string>
   <string name="hexagon_signed_in">به ابروارهٔ سریزگاید وصل هستید.</string>
   <string name="hexagon_signout">خروج از سیستم</string>

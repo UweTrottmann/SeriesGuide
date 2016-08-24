@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.ComponentName;
@@ -25,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
@@ -97,6 +82,7 @@ public class ExtensionManager {
      * com.battlelancer.seriesguide.api.SeriesGuideExtension} extensions. Their info is extracted
      * into {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension} objects.
      */
+    @NonNull
     public List<Extension> queryAllAvailableExtensions() {
         Intent queryIntent = new Intent(SeriesGuideExtension.ACTION_SERIESGUIDE_EXTENSION);
         PackageManager pm = mContext.getPackageManager();
@@ -119,8 +105,7 @@ public class ExtensionManager {
                 Resources packageRes = packageContext.getResources();
                 extension.description = packageRes.getString(info.serviceInfo.descriptionRes);
             } catch (SecurityException | PackageManager.NameNotFoundException | Resources.NotFoundException e) {
-                Timber.e(e, "Reading description for extension " + extension.componentName
-                        + " failed");
+                Timber.e(e, "Reading description for extension %s failed", extension.componentName);
                 extension.description = "";
             }
             // get (optional) settings activity
@@ -133,8 +118,8 @@ public class ExtensionManager {
                 }
             }
 
-            Timber.d("queryAllAvailableExtensions: found extension " + extension.label + " "
-                    + extension.componentName);
+            Timber.d("queryAllAvailableExtensions: found extension %s %s", extension.label,
+                    extension.componentName);
             extensions.add(extension);
         }
 
@@ -200,7 +185,7 @@ public class ExtensionManager {
 
         if (mSubscriptions.containsKey(extension)) {
             // already subscribed
-            Timber.d("enableExtension: already subscribed to " + extension);
+            Timber.d("enableExtension: already subscribed to %s", extension);
             return;
         }
 
@@ -214,7 +199,7 @@ public class ExtensionManager {
              */
             token = UUID.randomUUID().toString();
         }
-        Timber.d("enableExtension: subscribing to " + extension);
+        Timber.d("enableExtension: subscribing to %s", extension);
         mSubscriptions.put(extension, token);
         mTokens.put(token, extension);
         mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
@@ -230,12 +215,12 @@ public class ExtensionManager {
         }
 
         if (!mSubscriptions.containsKey(extension)) {
-            Timber.d("disableExtension: extension not enabled " + extension);
+            Timber.d("disableExtension: extension not enabled %s", extension);
             return;
         }
 
         // unsubscribe
-        Timber.d("disableExtension: unsubscribing from " + extension);
+        Timber.d("disableExtension: unsubscribing from %s", extension);
         mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
@@ -276,7 +261,7 @@ public class ExtensionManager {
      * Ask a single extension to publish an action for the given episode.
      */
     public synchronized void requestAction(ComponentName extension, Episode episode) {
-        Timber.d("requestAction: requesting from " + extension + " for " + episode.getTvdbId());
+        Timber.d("requestAction: requesting from %s for %s", extension, episode.getTvdbId());
         // prepare to receive actions for the given episode
         if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
             sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
@@ -307,8 +292,9 @@ public class ExtensionManager {
                     action.getEntityIdentifier());
             if (actionMap == null) {
                 // did not request actions for this episode, or is already out of cache (too late!)
-                Timber.d("handlePublishedAction: not interested in actions for "
-                        + action.getEntityIdentifier() + ", ignoring incoming action");
+                Timber.d(
+                        "handlePublishedAction: not interested in actions for %s, ignoring incoming action",
+                        action.getEntityIdentifier());
                 return;
             }
             // store action for this episode
@@ -350,7 +336,7 @@ public class ExtensionManager {
             mEnabledExtensions.add(extension);
             mSubscriptions.put(extension, token);
             mTokens.put(token, extension);
-            Timber.d("Restored subscription: " + extension + " token: " + token);
+            Timber.d("Restored subscription: %s token: %s", extension, token);
         }
     }
 
@@ -360,7 +346,7 @@ public class ExtensionManager {
             serializedSubscriptions.add(extension.flattenToShortString() + "|"
                     + mSubscriptions.get(extension));
         }
-        Timber.d("Saving " + serializedSubscriptions.size() + " subscriptions");
+        Timber.d("Saving %s subscriptions", serializedSubscriptions.size());
         JSONArray json = new JSONArray(serializedSubscriptions);
         mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
     }

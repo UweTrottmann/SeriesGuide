@@ -235,7 +235,7 @@
   <string name="hexagon_warning">실험적인 기능</string>
   <string name="hexagon_description">쇼와 영화를 백업/동기화하기 위해 클라우드에 접속</string>
   <string name="hexagon_warning_lists">리스트는 포함되지 않습니다.</string>
-  <string name="hexagon_warning_trakt">SeriesGuide 클라우드 사용시 trakt의 변경사항은 SeriesGuide와 동기화 되지 않습니다.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">로그인</string>
   <string name="hexagon_signed_in">시리즈가이드 클라우드에 접속하였습니다.</string>
   <string name="hexagon_signout">로그아웃</string>

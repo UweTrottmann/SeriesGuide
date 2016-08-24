@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:background="?attr/colorPrimaryDark"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/containerDrawerAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/large_padding"
+        android:paddingLeft="@dimen/keyline"
+        android:paddingRight="@dimen/keyline"
+        android:paddingTop="@dimen/large_padding"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:text="debug"
+            android:textAppearance="@style/TextAppearance.Caption" />
+
+        <Button
+            android:id="@+id/debug_buttonClearTraktRefreshToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear trakt refresh token" />
+
+        <Button
+            android:id="@+id/debug_buttonInvalidateTraktAccessToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invalidate trakt access token" />
+
+        <Button
+            android:id="@+id/debug_buttoInvalidateTraktRefreshToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invalidate trakt refresh token" />
+
+    </LinearLayout>
+</ScrollView>

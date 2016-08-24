@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-  ~ Copyright 2015 Uwe Trottmann
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <!-- Set focus to work around textIsSelectable auto-scroll -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerEpisode"
     android:layout_width="match_parent"
@@ -49,7 +34,7 @@
         android:textIsSelectable="true"
         tools:text="OCT 15, 2013 (TUE) ABSOLUTE 52" />
 
-    <FrameLayout
+    <android.support.percent.PercentFrameLayout
         android:id="@+id/containerEpisodeImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,14 +46,15 @@
         android:foreground="?attr/selectableItemBackground"
         tools:ignore="Overdraw">
 
+        <!--suppress AndroidDomInspection -->
         <ImageView
             android:id="@+id/imageViewEpisode"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/imagecontainer_height"
             android:contentDescription="@string/description_image"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:layout_aspectRatio="178%"
+            app:layout_widthPercent="100%" />
 
-    </FrameLayout>
+    </android.support.percent.PercentFrameLayout>
 
     <include layout="@layout/buttons_episode" />
 

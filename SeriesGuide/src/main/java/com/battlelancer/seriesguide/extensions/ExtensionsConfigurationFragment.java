@@ -1,24 +1,9 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.ComponentName;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -33,8 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
@@ -63,33 +49,34 @@ public class ExtensionsConfigurationFragment extends Fragment
 
     private static final String TAG = "Extension Configuration";
 
-    @Bind(R.id.listViewExtensionsConfiguration) DragSortListView mListView;
+    @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
 
-    private ExtensionsAdapter mAdapter;
-    private PopupMenu mAddExtensionPopupMenu;
+    private ExtensionsAdapter adapter;
+    private PopupMenu addExtensionPopupMenu;
+    private Unbinder unbinder;
 
-    private List<ExtensionManager.Extension> mAvailableExtensions = new ArrayList<>();
-    private List<ComponentName> mEnabledExtensions;
+    private List<ExtensionManager.Extension> availableExtensions = new ArrayList<>();
+    private List<ComponentName> enabledExtensions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
-        mListView.setFloatViewManager(dragSortController);
-        mListView.setOnTouchListener(dragSortController);
-        mListView.setDropListener(new DragSortListView.DropListener() {
+        listView.setFloatViewManager(dragSortController);
+        listView.setOnTouchListener(dragSortController);
+        listView.setDropListener(new DragSortListView.DropListener() {
             @Override
             public void drop(int from, int to) {
-                ComponentName extension = mEnabledExtensions.remove(from);
-                mEnabledExtensions.add(to, extension);
+                ComponentName extension = enabledExtensions.remove(from);
+                enabledExtensions.add(to, extension);
                 getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
                         null, mExtensionsLoaderCallbacks);
             }
         });
-        mListView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(this);
 
         return v;
     }
@@ -98,8 +85,8 @@ public class ExtensionsConfigurationFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ExtensionsAdapter(getActivity());
-        mListView.setAdapter(mAdapter);
+        adapter = new ExtensionsAdapter(getActivity());
+        listView.setAdapter(adapter);
 
         getLoaderManager().initLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mExtensionsLoaderCallbacks);
@@ -119,8 +106,8 @@ public class ExtensionsConfigurationFragment extends Fragment
         super.onPause();
 
         EventBus.getDefault().unregister(this);
-        if (mEnabledExtensions != null) { // might not have finished loading, yet
-            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(mEnabledExtensions);
+        if (enabledExtensions != null) { // might not have finished loading, yet
+            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(enabledExtensions);
         }
     }
 
@@ -163,7 +150,7 @@ public class ExtensionsConfigurationFragment extends Fragment
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>
@@ -176,21 +163,22 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public void onLoadFinished(Loader<List<ExtensionManager.Extension>> loader,
-                List<ExtensionManager.Extension> availableExtensions) {
-            if (availableExtensions == null || availableExtensions.size() == 0) {
+                @NonNull List<ExtensionManager.Extension> availableExtensions) {
+            if (availableExtensions.size() == 0) {
                 Timber.d("Did not find any extension");
             } else {
-                Timber.d("Found " + availableExtensions.size() + " extensions");
+                Timber.d("Found %d extensions", availableExtensions.size());
             }
 
-            if (mEnabledExtensions == null) {
-                mEnabledExtensions = ExtensionManager.getInstance(getActivity())
+            if (enabledExtensions == null) {
+                enabledExtensions = ExtensionManager.getInstance(getActivity())
                         .getEnabledExtensions();
             }
-            Set<ComponentName> enabledExtensions = new HashSet<>(mEnabledExtensions);
+            Set<ComponentName> enabledExtensions = new HashSet<>(
+                    ExtensionsConfigurationFragment.this.enabledExtensions);
 
             // find all extensions not yet enabled
-            mAvailableExtensions.clear();
+            ExtensionsConfigurationFragment.this.availableExtensions.clear();
             Map<ComponentName, ExtensionManager.Extension> enabledExtensionsMap = new HashMap<>();
             for (ExtensionManager.Extension extension : availableExtensions) {
                 if (enabledExtensions.contains(extension.componentName)) {
@@ -199,11 +187,11 @@ public class ExtensionsConfigurationFragment extends Fragment
                     continue;
                 }
 
-                mAvailableExtensions.add(extension);
+                ExtensionsConfigurationFragment.this.availableExtensions.add(extension);
             }
 
             // sort available extensions alphabetically
-            Collections.sort(mAvailableExtensions, new Comparator<ExtensionManager.Extension>() {
+            Collections.sort(ExtensionsConfigurationFragment.this.availableExtensions, new Comparator<ExtensionManager.Extension>() {
                 @Override
                 public int compare(ExtensionManager.Extension extension1,
                         ExtensionManager.Extension extension2) {
@@ -222,40 +210,41 @@ public class ExtensionsConfigurationFragment extends Fragment
             });
 
             // force re-creation of extension add menu
-            if (mAddExtensionPopupMenu != null) {
-                mAddExtensionPopupMenu.dismiss();
-                mAddExtensionPopupMenu = null;
+            if (addExtensionPopupMenu != null) {
+                addExtensionPopupMenu.dismiss();
+                addExtensionPopupMenu = null;
             }
 
             // list enabled extensions in order dictated by extension manager
             List<ExtensionManager.Extension> enabledExtensionsList = new ArrayList<>();
-            List<ComponentName> enabledExtensionNames = new ArrayList<>(mEnabledExtensions);
+            List<ComponentName> enabledExtensionNames = new ArrayList<>(
+                    ExtensionsConfigurationFragment.this.enabledExtensions);
             for (ComponentName extensionName : enabledExtensionNames) {
                 ExtensionManager.Extension extension = enabledExtensionsMap.get(extensionName);
                 if (extension == null) {
                     // filter out any unavailable/uninstalled extensions
-                    mEnabledExtensions.remove(extensionName);
+                    ExtensionsConfigurationFragment.this.enabledExtensions.remove(extensionName);
                     continue;
                 }
                 enabledExtensionsList.add(extension);
             }
 
             // refresh enabled extensions list
-            mAdapter.clear();
-            mAdapter.addAll(enabledExtensionsList);
+            adapter.clear();
+            adapter.addAll(enabledExtensionsList);
         }
 
         @Override
         public void onLoaderReset(Loader<List<ExtensionManager.Extension>> loader) {
-            mAdapter.clear();
+            adapter.clear();
         }
     };
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == mAdapter.getCount() - 1) {
+        if (position == adapter.getCount() - 1) {
             // non-supporters only can add a few extensions
-            if (mAdapter.getCount() - 1 == EXTENSION_LIMIT_FREE
+            if (adapter.getCount() - 1 == EXTENSION_LIMIT_FREE
                     && !Utils.hasAccessToX(getActivity())) {
                 Utils.advertiseSubscription(getActivity());
                 return;
@@ -266,22 +255,22 @@ public class ExtensionsConfigurationFragment extends Fragment
     }
 
     public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
-        mEnabledExtensions.remove(event.position);
+        enabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                 mExtensionsLoaderCallbacks);
         Utils.trackAction(getActivity(), TAG, "Remove extension");
     }
 
     private void showAddExtensionPopupMenu(View anchorView) {
-        if (mAddExtensionPopupMenu != null) {
-            mAddExtensionPopupMenu.dismiss();
+        if (addExtensionPopupMenu != null) {
+            addExtensionPopupMenu.dismiss();
         }
 
-        mAddExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
-        Menu menu = mAddExtensionPopupMenu.getMenu();
+        addExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
+        Menu menu = addExtensionPopupMenu.getMenu();
         // list of installed, but disabled extensions
-        for (int i = 0; i < mAvailableExtensions.size(); i++) {
-            ExtensionManager.Extension extension = mAvailableExtensions.get(i);
+        for (int i = 0; i < availableExtensions.size(); i++) {
+            ExtensionManager.Extension extension = availableExtensions.get(i);
             menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label);
         }
         // no third-party extensions supported on Amazon app store for now
@@ -289,7 +278,7 @@ public class ExtensionsConfigurationFragment extends Fragment
             // link to get more extensions
             menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search);
         }
-        mAddExtensionPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        addExtensionPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
                 if (item.getItemId() == 0) {
@@ -299,19 +288,19 @@ public class ExtensionsConfigurationFragment extends Fragment
                 }
 
                 // add to enabled extensions
-                ExtensionManager.Extension extension = mAvailableExtensions.get(
+                ExtensionManager.Extension extension = availableExtensions.get(
                         item.getItemId() - 1);
-                mEnabledExtensions.add(extension.componentName);
+                enabledExtensions.add(extension.componentName);
                 // re-populate extension list
                 getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
                         null, mExtensionsLoaderCallbacks);
                 // scroll to end of list
-                mListView.smoothScrollToPosition(mAdapter.getCount() - 1);
+                listView.smoothScrollToPosition(adapter.getCount() - 1);
                 return true;
             }
         });
 
-        mAddExtensionPopupMenu.show();
+        addExtensionPopupMenu.show();
     }
 
     private void onGetMoreExtensions() {
@@ -324,7 +313,7 @@ public class ExtensionsConfigurationFragment extends Fragment
         private int mFloatViewOriginPosition;
 
         public ExtensionsDragSortController() {
-            super(mListView, R.id.drag_handle, DragSortController.ON_DOWN,
+            super(listView, R.id.drag_handle, DragSortController.ON_DOWN,
                     DragSortController.CLICK_REMOVE);
             setRemoveEnabled(false);
         }
@@ -332,7 +321,7 @@ public class ExtensionsConfigurationFragment extends Fragment
         @Override
         public int startDragPosition(MotionEvent ev) {
             int hitPosition = super.dragHandleHitPosition(ev);
-            if (hitPosition >= mAdapter.getCount() - 1) {
+            if (hitPosition >= adapter.getCount() - 1) {
                 return DragSortController.MISS;
             }
 
@@ -349,19 +338,19 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
-            final int addButtonPosition = mAdapter.getCount() - 1;
-            final int first = mListView.getFirstVisiblePosition();
-            final int lvDivHeight = mListView.getDividerHeight();
+            final int addButtonPosition = adapter.getCount() - 1;
+            final int first = listView.getFirstVisiblePosition();
+            final int lvDivHeight = listView.getDividerHeight();
 
             if (mFloatViewHeight == -1) {
                 mFloatViewHeight = floatView.getHeight();
             }
 
-            View div = mListView.getChildAt(addButtonPosition - first);
+            View div = listView.getChildAt(addButtonPosition - first);
 
-            if (touchPoint.x > mListView.getWidth() / 2) {
-                float scale = touchPoint.x - mListView.getWidth() / 2;
-                scale /= (float) (mListView.getWidth() / 5);
+            if (touchPoint.x > listView.getWidth() / 2) {
+                float scale = touchPoint.x - listView.getWidth() / 2;
+                scale /= (float) (listView.getWidth() / 5);
                 ViewGroup.LayoutParams lp = floatView.getLayoutParams();
                 lp.height = Math.max(mFloatViewHeight, (int) (scale * mFloatViewHeight));
                 floatView.setLayoutParams(lp);

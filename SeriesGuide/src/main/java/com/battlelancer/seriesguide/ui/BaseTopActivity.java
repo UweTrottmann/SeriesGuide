@@ -1,20 +1,4 @@
 
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.accounts.Account;
@@ -29,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
@@ -247,7 +231,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
 
                     // Test the ContentResolver to see if the sync adapter is active.
                     boolean syncActive = ContentResolver.isSyncActive(
-                            account, SeriesGuideApplication.CONTENT_AUTHORITY);
+                            account, SgApp.CONTENT_AUTHORITY);
                     setSyncProgressVisibility(syncActive);
                 }
             });

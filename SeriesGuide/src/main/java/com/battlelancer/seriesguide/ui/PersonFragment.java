@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.graphics.drawable.ColorDrawable;
@@ -34,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
@@ -50,13 +36,14 @@ public class PersonFragment extends Fragment {
 
     private static final String TAG = "Person Details";
 
-    @Bind(R.id.progressBarPerson) ProgressBar mProgressBar;
+    @BindView(R.id.progressBarPerson) ProgressBar progressBar;
 
-    @Bind(R.id.imageViewPersonHeadshot) ImageView mImageHeadshot;
-    @Bind(R.id.textViewPersonName) TextView mTextName;
-    @Bind(R.id.textViewPersonBiography) TextView mTextBiography;
+    @BindView(R.id.imageViewPersonHeadshot) ImageView imageViewHeadshot;
+    @BindView(R.id.textViewPersonName) TextView textViewName;
+    @BindView(R.id.textViewPersonBiography) TextView textViewBiography;
 
-    private Person mPerson;
+    private Person person;
+    private Unbinder unbinder;
 
     public static PersonFragment newInstance(int tmdbId) {
         PersonFragment f = new PersonFragment();
@@ -80,7 +67,7 @@ public class PersonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_person, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         return rootView;
     }
@@ -99,12 +86,12 @@ public class PersonFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mPerson != null) {
+        if (person != null) {
             inflater.inflate(R.menu.person_menu, menu);
         }
     }
@@ -113,11 +100,11 @@ public class PersonFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_person_tmdb) {
-            TmdbTools.openTmdbPerson(getActivity(), mPerson.id, TAG);
+            TmdbTools.openTmdbPerson(getActivity(), person.id, TAG);
             return true;
         }
         if (itemId == R.id.menu_action_person_web_search) {
-            ServiceUtils.performWebSearch(getActivity(), mPerson.name, TAG);
+            ServiceUtils.performWebSearch(getActivity(), person.name, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -132,10 +119,10 @@ public class PersonFragment extends Fragment {
             return;
         }
 
-        mPerson = person;
+        this.person = person;
 
-        mTextName.setText(person.name);
-        mTextBiography.setText(
+        textViewName.setText(person.name);
+        textViewBiography.setText(
                 TextUtils.isEmpty(person.biography) ? getString(R.string.not_available)
                         : person.biography);
 
@@ -146,7 +133,7 @@ public class PersonFragment extends Fragment {
                     .placeholder(
                             new ColorDrawable(
                                     ContextCompat.getColor(getContext(), R.color.protection_dark)))
-                    .into(mImageHeadshot);
+                    .into(imageViewHeadshot);
         }
 
         // show actions
@@ -157,13 +144,13 @@ public class PersonFragment extends Fragment {
      * Shows or hides a custom indeterminate progress indicator inside this activity layout.
      */
     private void setProgressVisibility(boolean isVisible) {
-        if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
+        if (progressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
             // already in desired state, avoid replaying animation
             return;
         }
-        mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
+        progressBar.startAnimation(AnimationUtils.loadAnimation(progressBar.getContext(),
                 isVisible ? R.anim.fade_in : R.anim.fade_out));
-        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     private LoaderManager.LoaderCallbacks<Person> mPersonLoaderCallbacks
@@ -173,7 +160,7 @@ public class PersonFragment extends Fragment {
             setProgressVisibility(true);
 
             int tmdbId = getArguments().getInt(InitBundle.PERSON_TMDB_ID);
-            return new PersonLoader(getActivity(), tmdbId);
+            return new PersonLoader((SgApp) getActivity().getApplication(), tmdbId);
         }
 
         @Override

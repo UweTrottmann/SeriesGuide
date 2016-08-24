@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
@@ -43,9 +27,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.SearchSettings;
@@ -107,11 +92,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    @Bind(R.id.containerSearchBar) View searchContainer;
-    @Bind(R.id.editTextSearchBar) AutoCompleteTextView searchView;
-    @Bind(R.id.imageButtonSearchClear) View clearButton;
-    @Bind(R.id.tabsSearch) SlidingTabLayout tabs;
-    @Bind(R.id.pagerSearch) ViewPager viewPager;
+    @BindView(R.id.containerSearchBar) View searchContainer;
+    @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
+    @BindView(R.id.imageButtonSearchClear) View clearButton;
+    @BindView(R.id.tabsSearch) SlidingTabLayout tabs;
+    @BindView(R.id.pagerSearch) ViewPager viewPager;
     private ProgressDialog progressDialog;
 
     private SearchHistory searchHistory;
@@ -429,7 +414,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(show);
+        TaskManager.getInstance(this).performAddTask(SgApp.from(this), show);
     }
 
     /**

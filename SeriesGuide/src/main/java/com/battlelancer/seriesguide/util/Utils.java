@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
@@ -63,7 +47,7 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
@@ -308,7 +292,7 @@ public class Utils {
      * without any resizing or cropping.
      */
     public static void loadPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
                 .noFade()
                 .into(imageView);
     }
@@ -317,7 +301,7 @@ public class Utils {
      * Tries to load the given TVDb show poster into the given {@link ImageView} without any
      * resizing or cropping. In addition sets alpha on the view.
      */
-    public static void loadPosterBackground(Context context, ImageView imageView,
+    public static void loadPosterBackground(Context context, @NonNull ImageView imageView,
             String posterPath) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imageView.setImageAlpha(30);
@@ -339,9 +323,19 @@ public class Utils {
      */
     public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.loadWithPicasso(context,
-                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath))
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
                 .centerCrop()
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
+    public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,
+            String posterPath) {
+        ServiceUtils.loadWithPicasso(context,
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
+                .fit()
+                .centerCrop()
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
     }
@@ -358,7 +352,7 @@ public class Utils {
     public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
         ServiceUtils.loadWithPicasso(context, posterUrl)
                 .centerCrop()
-                .resizeDimen(R.dimen.show_poster_small_width, R.dimen.show_poster_small_height)
+                .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
     }
@@ -369,7 +363,7 @@ public class Utils {
     public static void loadSmallTvdbShowPoster(Context context, ImageView imageView,
             String posterPath) {
         loadSmallPoster(context, imageView,
-                TextUtils.isEmpty(posterPath) ? null : TheTVDB.buildPosterUrl(posterPath));
+                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath));
     }
 
     /**

@@ -214,7 +214,7 @@
   <string name="action_movies_sort_title">Название</string>
   <string name="action_movies_sort_release">Дата выпуска</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Не удалось рассчитать статистику.</string>
   <string name="statistics_shows">Сериалы</string>
   <string name="statistics_episodes">Эпизоды</string>
   <string name="statistics_movies">Фильмы</string>
@@ -226,24 +226,24 @@
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d days</item>
+    <item quantity="few">%d дня</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="other">%d часа/часов</item>
+    <item quantity="few">%d часа</item>
+    <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="other">%d минут/минуты</item>
+    <item quantity="few">%d минуты</item>
+    <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
   <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
   <string name="hexagon_warning_lists">Списки не включены.</string>
-  <string name="hexagon_warning_trakt">При использовании SeriesGuide Cloud, изменения на trakt.tv не будут синхронизироваться с SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">Пока подключен SeriesGuide Cloud, синхронизация с trakt будет отключена.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signed_in">Вы подключены к SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Выйти</string>
@@ -304,8 +304,8 @@
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
     <item quantity="one">%d голос</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="other">%d голоса/ов</item>
+    <item quantity="few">%d голоса</item>
+    <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Отметить</string>
@@ -486,12 +486,12 @@
   <!-- People -->
   <string name="person_biography">Биография</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Вам нравится SeriesGuide?</string>
+  <string name="feedback_action_yes">Да!</string>
+  <string name="feedback_action_notreally">Не совсем</string>
+  <string name="feedback_question_rate_google">Оценить его на Google Play?</string>
+  <string name="feedback_question_rate_amazon">Оценить его на Amazon?</string>
+  <string name="feedback_question_feedback">Расскажите мне, как его улучшить?</string>
+  <string name="feedback_action_ok">Да, конечно</string>
+  <string name="feedback_action_nothanks">Нет, спасибо</string>
 </resources>

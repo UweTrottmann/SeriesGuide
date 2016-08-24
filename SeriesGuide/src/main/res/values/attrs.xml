@@ -17,6 +17,7 @@
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
     <attr name="sgColorNavDrawerIcon" format="reference" />
     <attr name="sgColorNavDrawerText" format="reference" />
+    <attr name="sgColorShadow" format="reference|color" />
 
     <!-- Color Arrays -->
     <attr name="colorsProgressBar" format="reference" />
@@ -31,7 +32,6 @@
     <attr name="drawableCheckin" format="reference" />
     <attr name="drawableCollect" format="reference" />
     <attr name="drawableCollectAll" format="reference" />
-    <attr name="drawableDivider" format="reference" />
     <attr name="drawableDropdown" format="reference" />
     <attr name="drawableFilter" format="reference" />
     <attr name="drawableHelp" format="reference" />

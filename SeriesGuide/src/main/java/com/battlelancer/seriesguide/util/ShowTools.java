@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
@@ -31,6 +15,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
@@ -39,14 +24,12 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
-import com.uwetrottmann.trakt5.enums.Rating;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -299,22 +282,15 @@ public class ShowTools {
     /**
      * Add a show to the users trakt watchlist.
      */
-    public static void addToWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(context, showTvdbId));
-    }
-
-    /**
-     * Store the rating for the given episode in the database and send it to trakt.
-     */
-    public static void rate(Context context, int showTvdbId, Rating rating) {
-        AsyncTaskCompat.executeParallel(new RateShowTask(context, rating, showTvdbId));
+    public static void addToWatchlist(SgApp app, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(app, showTvdbId));
     }
 
     /**
      * Remove a show from the users trakt watchlist.
      */
-    public static void removeFromWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(context, showTvdbId));
+    public static void removeFromWatchlist(SgApp app, int showTvdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(app, showTvdbId));
     }
 
     private void uploadShowAsync(Show show) {

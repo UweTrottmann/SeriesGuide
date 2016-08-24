@@ -9,7 +9,7 @@
   <string name="search">Iskanje</string>
   <string name="preferences">Nastavitve</string>
   <string name="help">Pomoč</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Pomoč &amp; povratne informacije</string>
   <string name="drawer_open">Odpri navigacijsko okno</string>
   <string name="drawer_close">Zapri navigacijsko okno</string>
   <!-- Media items -->
@@ -37,14 +37,14 @@
   <!-- Search -->
   <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="search_hint">Iskanje epizode</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Katerikoli jezik</string>
   <!-- Status messages -->
   <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
   <string name="norating">n/a</string>
   <string name="unknown">neznano</string>
   <string name="offline">Vzpostavite povezavo z omrežjem in nato poskusite znova.</string>
   <string name="app_not_available">Za obravnavo tega ni na voljo nobene aplikacije.</string>
-  <string name="people_empty">Nobody here?! Touch to try again.</string>
+  <string name="people_empty">Nihče tukaj?! Dotik in poskusite znova.</string>
   <string name="database_error">Podatkov ni bilo mogoče spremeniti.</string>
   <!-- Sharing -->
   <string name="share">Deli</string>
@@ -54,11 +54,11 @@
   <string name="share_checkout">Oglejte si %s</string>
   <string name="addtocalendar">Dodaj v koledar</string>
   <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
-  <string name="links">Links</string>
+  <string name="links">Povezave</string>
   <!-- Comments -->
   <string name="comments">Komentarji</string>
-  <string name="shout_hint">Type a comment (English, 5+ words)</string>
-  <string name="shout_invalid">Your comment does not follow the rules!</string>
+  <string name="shout_hint">Vnesite komentar (v angleščini, več kot 5 besed)</string>
+  <string name="shout_invalid">Vaš komentar ne upošteva pravil!</string>
   <string name="action_post">Objavi</string>
   <string name="isspoiler">Pozor! Razkrita vsebina!</string>
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
@@ -67,7 +67,7 @@
     <item quantity="one">%d reply</item>
     <item quantity="two">%d replies</item>
     <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d odgovorov</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ABSOLUTNO</string>
@@ -81,7 +81,7 @@
   <string name="show_genres">Žanri</string>
   <string name="show_runtime">Dolžina</string>
   <string name="show_contentrating">Primernost vsebine</string>
-  <string name="show_release_times">Release times</string>
+  <string name="show_release_times">Opombe ob izdaji</string>
   <string name="episode_directors">Režiserji</string>
   <string name="episode_gueststars">Gostujoči igralci</string>
   <string name="episode_writers">Pisci</string>
@@ -91,7 +91,7 @@
   <string name="services_watch">Gledaj</string>
   <string name="services_more">Več</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Ni prevedeno</string>
   <!-- Date and Time -->
   <string name="today">danes</string>
   <string name="now">zdaj</string>
@@ -247,7 +247,7 @@
   <string name="hexagon_warning">Preizkusno!</string>
   <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
   <string name="hexagon_warning_lists">Seznami niso vključeni.</string>
-  <string name="hexagon_warning_trakt">When using SeriesGuide Cloud, changes on trakt will not sync down to SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signed_in">Povezani ste v SeriesGuide oblak.</string>
   <string name="hexagon_signout">Izpis</string>

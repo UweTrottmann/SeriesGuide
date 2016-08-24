@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Kísérleti fázisban!</string>
   <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
   <string name="hexagon_warning_lists">A listákat nem tartalmazza.</string>
-  <string name="hexagon_warning_trakt">A SeriesGuide Cloud használatakor a trakton végzett változások nem szinkronizálódnak a SeriesGuide alkalmazásba.</string>
+  <string name="hexagon_warning_trakt">Amíg a SeriesGuide Cloud csatlakozva van, a trakt szinkronizáció letiltásra kerül.</string>
   <string name="hexagon_signin">Bejelentkezés</string>
   <string name="hexagon_signed_in">Csatlakozva a SeriesGuide Cloudhoz.</string>
   <string name="hexagon_signout">Kijelentkezés</string>

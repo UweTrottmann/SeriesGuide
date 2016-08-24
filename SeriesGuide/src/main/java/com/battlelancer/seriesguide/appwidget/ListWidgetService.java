@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.appwidget;
 
 import android.appwidget.AppWidgetManager;
@@ -35,7 +19,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TheTVDB;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -223,7 +207,7 @@ public class ListWidgetService extends RemoteViewsService {
                     ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER);
             Bitmap poster;
             try {
-                poster = ServiceUtils.loadWithPicasso(context, TheTVDB.buildPosterUrl(posterPath))
+                poster = ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();

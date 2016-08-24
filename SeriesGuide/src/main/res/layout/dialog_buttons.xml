@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <android.support.v7.widget.ButtonBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:measureWithLargestChild="true"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/large_padding"
-        android:paddingTop="@dimen/large_padding">
+        android:paddingBottom="@dimen/inline_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="@dimen/larger_padding"
+        app:allowStacking="true">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/buttonNegative"
-            style="?android:attr/borderlessButtonStyle"
+            style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="160dp"
             tools:text="Button Negative" />
 
         <Button
@@ -26,8 +29,8 @@
             style="?attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="160dp"
             tools:text="Button Positive" />
-    </LinearLayout>
+
+    </android.support.v7.widget.ButtonBarLayout>
 
 </merge>

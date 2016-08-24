@@ -14,7 +14,6 @@
     <dimen name="widget_padding_inline">8dp</dimen>
 
     <dimen name="addpager_width">600dp</dimen>
-    <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="buttonbar_button_width">64dp</dimen>
     <dimen name="search_padding_right">400dp</dimen>
 

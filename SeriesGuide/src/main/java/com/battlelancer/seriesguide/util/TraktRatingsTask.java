@@ -1,32 +1,18 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Ratings;
-import java.io.IOException;
-import retrofit2.Response;
+import com.uwetrottmann.trakt5.services.Episodes;
+import com.uwetrottmann.trakt5.services.Shows;
+import dagger.Lazy;
+import javax.inject.Inject;
 import timber.log.Timber;
 
 public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
@@ -43,22 +29,25 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
     private final int episodeTvdbId;
     private final int season;
     private final int episode;
+    @Inject Lazy<Shows> traktShows;
+    @Inject Lazy<Episodes> traktEpisodes;
 
     /**
      * Loads the latest ratings for the given show from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(Context context, int showTvdbId) {
-        this(context, showTvdbId, 0, 0, 0);
+    public TraktRatingsTask(SgApp app, int showTvdbId) {
+        this(app, showTvdbId, 0, 0, 0);
     }
 
     /**
      * Loads the latest ratings for the given episode from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(Context context, int showTvdbId, int episodeTvdbId, int season,
+    public TraktRatingsTask(SgApp app, int showTvdbId, int episodeTvdbId, int season,
             int episode) {
-        this.context = context.getApplicationContext();
+        this.context = app;
+        app.getServicesComponent().inject(this);
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
         this.season = season;
@@ -91,35 +80,25 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
             Timber.d("Show %s has no trakt id, skip.", showTvdbId);
             return null;
         }
-        String showTraktIdString = String.valueOf(showTraktId);
 
-        String action = null;
-        TraktV2 trakt = ServiceUtils.getTrakt(context);
+        String showTraktIdString = String.valueOf(showTraktId);
         boolean isShowNotEpisode = episodeTvdbId == 0;
-        try {
-            Response<Ratings> response;
+
+        Ratings ratings;
+        if (isShowNotEpisode) {
+            ratings = SgTrakt.executeCall(context, traktShows.get().ratings(showTraktIdString),
+                    "get show rating");
+        } else {
+            ratings = SgTrakt.executeCall(context,
+                    traktEpisodes.get().ratings(showTraktIdString, season, episode),
+                    "get episode rating");
+        }
+        if (ratings != null && ratings.rating != null && ratings.votes != null) {
             if (isShowNotEpisode) {
-                action = "get show rating";
-                response = trakt.shows().ratings(showTraktIdString).execute();
+                saveShowRating(ratings);
             } else {
-                action = "get episode rating";
-                response = trakt.episodes().ratings(showTraktIdString, season, episode)
-                        .execute();
+                saveEpisodeRating(ratings);
             }
-            if (response.isSuccessful()) {
-                Ratings ratings = response.body();
-                if (ratings != null && ratings.rating != null && ratings.votes != null) {
-                    if (isShowNotEpisode) {
-                        saveShowRating(ratings);
-                    } else {
-                        saveEpisodeRating(ratings);
-                    }
-                }
-            } else {
-                SgTrakt.trackFailedRequest(context, action, response);
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, action, e);
         }
 
         // cache download time to avoid saving ratings too frequently

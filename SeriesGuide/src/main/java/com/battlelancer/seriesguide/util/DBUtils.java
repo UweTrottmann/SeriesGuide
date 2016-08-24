@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.content.ContentProviderOperation;
@@ -30,7 +14,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -377,16 +361,16 @@ public class DBUtils {
      * Marks the next episode (if there is one) of the given show as watched. Submits it to trakt if
      * possible.
      */
-    public static void markNextEpisode(Context context, int showId, int episodeId) {
+    public static void markNextEpisode(SgApp app, int showId, int episodeId) {
         if (episodeId > 0) {
-            Cursor episode = context.getContentResolver().query(
+            Cursor episode = app.getContentResolver().query(
                     Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
                             Episodes.SEASON, Episodes.NUMBER
                     }, null, null, null
             );
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    EpisodeTools.episodeWatched(context, showId, episodeId, episode.getInt(0),
+                    EpisodeTools.episodeWatched(app, showId, episodeId, episode.getInt(0),
                             episode.getInt(1), EpisodeFlags.WATCHED);
                 }
                 episode.close();
@@ -830,7 +814,7 @@ public class DBUtils {
             throws OperationApplicationException {
         try {
             context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+                    .applyBatch(SgApp.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // not using a remote provider, so this should never happen. crash if it does.
             throw new RuntimeException("Problem applying batch operation", e);

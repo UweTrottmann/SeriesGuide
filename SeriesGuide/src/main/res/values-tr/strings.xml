@@ -213,7 +213,7 @@
   <string name="action_movies_sort_title">Başlık</string>
   <string name="action_movies_sort_release">Yayın tarihi</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">İstatistik hesaplanamadı.</string>
   <string name="statistics_shows">Diziler</string>
   <string name="statistics_episodes">Bölümler</string>
   <string name="statistics_movies">Filmler</string>
@@ -239,7 +239,7 @@
   <string name="hexagon_warning">Deneysel!</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
   <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
-  <string name="hexagon_warning_trakt">SeriesGuide Cloud kullandığınızda, trakt üzerindeki değişiklikler SeriesGuide ile senkronize edilmeyecektir.</string>
+  <string name="hexagon_warning_trakt">SeriesGuide Cloud bağlandığında, trakt eşitlemesi devre dışı bırakılacak.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signed_in">SeriesGuide Bulut Hizmetine bağlısınız.</string>
   <string name="hexagon_signout">Çıkış</string>
@@ -331,9 +331,9 @@
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Bu uygulamada kullanılan theTVDb verileri ve görselleri CC BY-NC 4.0 lisansı altındadır.</string>
+  <string name="licence_tvdb">Bu uygulama, theTVDB verilerini ve görsellerini, CC BY-NC 4.0 lisansı altında kullanmaktadır.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>
-  <string name="licence_trakt">Bu uygulama trakt tarafından veri ve görüntü kullanır.</string>
+  <string name="licence_trakt">Bu uygulama, trakt verilerini ve görsellerini kullanmaktadır.</string>
   <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
   <string name="licences_and_credits">Lisanslar ve Bilgiler</string>
   <!-- Sort -->
@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biyografi</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">SeriesGuide hoşunuza gidiyor mu?</string>
+  <string name="feedback_action_yes">Evet!</string>
+  <string name="feedback_action_notreally">Pek sayılmaz</string>
+  <string name="feedback_question_rate_google">Google Play\'de değerlendirin?</string>
+  <string name="feedback_question_rate_amazon">Amazon\'da değerlendirin?</string>
+  <string name="feedback_question_feedback">Nasıl geliştirileceğini göster?</string>
+  <string name="feedback_action_ok">TAMAM, tabi ki</string>
+  <string name="feedback_action_nothanks">Hayır, teşekkürler</string>
 </resources>

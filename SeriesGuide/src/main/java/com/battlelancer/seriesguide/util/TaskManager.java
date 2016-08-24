@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
@@ -23,6 +7,7 @@ import android.os.Looper;
 import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import java.util.ArrayList;
@@ -60,10 +45,10 @@ public class TaskManager {
         return _instance;
     }
 
-    public synchronized void performAddTask(SearchResult show) {
+    public synchronized void performAddTask(SgApp app, SearchResult show) {
         List<SearchResult> wrapper = new ArrayList<>();
         wrapper.add(show);
-        performAddTask(wrapper, false, false);
+        performAddTask(app, wrapper, false, false);
     }
 
     /**
@@ -71,9 +56,8 @@ public class TaskManager {
      *
      * @param isSilentMode   Whether to display status toasts if a show could not be added.
      * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
-     *                       added successfully.
      */
-    public synchronized void performAddTask(final List<SearchResult> shows,
+    public synchronized void performAddTask(final SgApp app, final List<SearchResult> shows,
             final boolean isSilentMode, final boolean isMergingShows) {
         if (!isSilentMode) {
             // notify user here already
@@ -99,7 +83,7 @@ public class TaskManager {
                 @Override
                 public void run() {
                     mAddTask = (AddShowTask) Utils.executeInOrder(
-                            new AddShowTask(mContext, shows, isSilentMode, isMergingShows));
+                            new AddShowTask(app, shows, isSilentMode, isMergingShows));
                 }
             });
         }

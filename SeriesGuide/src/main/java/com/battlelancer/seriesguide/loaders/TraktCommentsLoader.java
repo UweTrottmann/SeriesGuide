@@ -1,38 +1,25 @@
-/*
- * Copyright 2014 Uwe Trottmann
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.TraktCommentsFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.services.Episodes;
+import com.uwetrottmann.trakt5.services.Movies;
+import com.uwetrottmann.trakt5.services.Shows;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -52,27 +39,32 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
     }
 
     private static final int PAGE_SIZE = 25;
-    private Bundle mArgs;
 
-    public TraktCommentsLoader(Context context, Bundle args) {
-        super(context);
-        mArgs = args;
+    private final SgApp app;
+    private Bundle args;
+    @Inject Lazy<Episodes> traktEpisodes;
+    @Inject Lazy<Movies> traktMovies;
+    @Inject Lazy<Shows> traktShows;
+
+    public TraktCommentsLoader(SgApp app, Bundle args) {
+        super(app);
+        this.app = app;
+        app.getServicesComponent().inject(this);
+        this.args = args;
     }
 
     @Override
     public Result loadInBackground() {
         // movie comments?
-        TraktV2 trakt = ServiceUtils.getTrakt(getContext());
-        int movieTmdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
+        int movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            Integer movieTraktId = MovieTools.lookupTraktId(getContext(), trakt.search(),
-                    movieTmdbId);
+            Integer movieTraktId = MovieTools.getInstance(app).lookupTraktId(movieTmdbId);
             if (movieTraktId != null) {
                 if (movieTraktId == -1) {
                     return buildResultFailure(R.string.trakt_error_not_exists);
                 }
                 try {
-                    Response<List<Comment>> response = trakt.movies()
+                    Response<List<Comment>> response = traktMovies.get()
                             .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.IMAGES)
                             .execute();
                     if (response.isSuccessful()) {
@@ -89,7 +81,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         }
 
         // episode comments?
-        int episodeTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID);
+        int episodeTvdbId = args.getInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
             // look up episode number, season and show id
             Cursor query = getContext().getContentResolver()
@@ -116,9 +108,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     return buildResultFailure(R.string.trakt_error_not_exists);
                 }
                 try {
-                    Response<List<Comment>> response = trakt.episodes()
+                    Response<List<Comment>> response = traktEpisodes.get()
                             .comments(String.valueOf(showTraktId), season, episode,
-                                    1, PAGE_SIZE, Extended.IMAGES).execute();
+                                    1, PAGE_SIZE, Extended.IMAGES)
+                            .execute();
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
                     } else {
@@ -135,14 +128,15 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         }
 
         // show comments!
-        int showTvdbId = mArgs.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
+        int showTvdbId = args.getInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID);
         Integer showTraktId = ShowTools.getShowTraktId(getContext(), showTvdbId);
         if (showTraktId == null) {
             return buildResultFailure(R.string.trakt_error_not_exists);
         }
         try {
-            Response<List<Comment>> response = trakt.shows()
-                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES).execute();
+            Response<List<Comment>> response = traktShows.get()
+                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                    .execute();
             if (response.isSuccessful()) {
                 return buildResultSuccess(response.body());
             } else {

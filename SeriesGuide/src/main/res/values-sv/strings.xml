@@ -240,7 +240,7 @@
   <string name="hexagon_warning">Experimentell!</string>
   <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina serier och filmer.</string>
   <string name="hexagon_warning_lists">Listor ingår inte.</string>
-  <string name="hexagon_warning_trakt">När du använder SeriesGuide Cloud synkroniseras inte ändringarna på trakt till SeriesGuide.</string>
+  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
   <string name="hexagon_signin">Logga in</string>
   <string name="hexagon_signed_in">Du är ansluten till SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Logga ut</string>
@@ -376,7 +376,7 @@
   <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Skicka anonym användardata till Googles tjänster</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
@@ -482,12 +482,12 @@
   <!-- People -->
   <string name="person_biography">Biografi</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_enjoy">Gillar du SeriesGuide?</string>
+  <string name="feedback_action_yes">Ja!</string>
+  <string name="feedback_action_notreally">Inte riktigt</string>
+  <string name="feedback_question_rate_google">Betygsätt det på Google Play?</string>
+  <string name="feedback_question_rate_amazon">Betygsätt det på Amazon?</string>
   <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_action_ok">OK, visst</string>
+  <string name="feedback_action_nothanks">Nej, tack</string>
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
-    <item name="activity_episodes" type="layout">@layout/activity_episodes_multipane</item>
     <item name="item_addshow" type="layout">@layout/item_addshow_wide</item>
     <item name="item_show" type="layout">@layout/item_show_wide</item>
 
