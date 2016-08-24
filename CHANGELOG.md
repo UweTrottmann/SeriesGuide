@@ -7,7 +7,12 @@ All dates are in the European Central timezone.
 
 Version 32
 ----------
-*(in development)*
+*(2016-08-24)*
+
+* Various layout improvements, most notably for image sizes.
+* Remember last selected tab in Lists and Movies.
+* The list widget can now be reduced horizontally to 2 blocks.
+* Support for Android 7.0 (Nougat).
 
 #### 32
 *(2016-08-24)*
