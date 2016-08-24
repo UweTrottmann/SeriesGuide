@@ -9,6 +9,13 @@ Version 32
 ----------
 *(in development)*
 
+#### 32
+*(2016-08-24)*
+
+* TWEAK Remember last selected tab in Lists and Movies.
+* NOTE Support Android 7.0 (Nougat).
+* NOTE Latest translations from crowdin. Thanks to translators added Japanese and Tamil.
+
 #### 32-beta3
 *(2016-08-13)*
 
