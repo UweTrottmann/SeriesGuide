@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -33,9 +35,9 @@ public class ListsActivity extends BaseTopActivity {
     public static final String TAG = "Lists";
     public static final int LISTS_REORDER_LOADER_ID = 1;
 
-    private ListsPagerAdapter mListsAdapter;
-    private ViewPager mPager;
-    private SlidingTabLayout mTabs;
+    @BindView(R.id.viewPagerTabs) ViewPager viewPager;
+    @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
+    private ListsPagerAdapter listsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +46,32 @@ public class ListsActivity extends BaseTopActivity {
         setupActionBar();
         setupNavDrawer();
 
-        setupViews();
+        setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
     }
 
-    private void setupViews() {
-        mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
+    private void setupViews(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
 
-        mPager = (ViewPager) findViewById(R.id.viewPagerTabs);
-        mPager.setAdapter(mListsAdapter);
+        listsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        mTabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
-        mTabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        mTabs.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.white));
-        mTabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
+        viewPager.setAdapter(listsAdapter);
+
+        tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
+        tabs.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.white));
+        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override
             public void onTabClick(int position) {
-                if (mPager.getCurrentItem() == position) {
+                if (viewPager.getCurrentItem() == position) {
                     showListManageDialog(position);
                 }
             }
         });
-        mTabs.setViewPager(mPager);
+        tabs.setViewPager(viewPager);
+
+        if (savedInstanceState == null) {
+            viewPager.setCurrentItem(DisplaySettings.getLastListsTabPosition(this), false);
+        }
     }
 
     @Override
@@ -76,10 +82,19 @@ public class ListsActivity extends BaseTopActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putInt(DisplaySettings.KEY_LAST_ACTIVE_LISTS_TAB, viewPager.getCurrentItem())
+                .apply();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        mListsAdapter.onCleanUp();
+        listsAdapter.onCleanUp();
     }
 
     @Override
@@ -105,7 +120,7 @@ public class ListsActivity extends BaseTopActivity {
             return true;
         }
         if (itemId == R.id.menu_action_lists_edit) {
-            int selectedListIndex = mPager.getCurrentItem();
+            int selectedListIndex = viewPager.getCurrentItem();
             showListManageDialog(selectedListIndex);
             return true;
         }
@@ -139,7 +154,7 @@ public class ListsActivity extends BaseTopActivity {
     }
 
     private void showListManageDialog(int selectedListIndex) {
-        String listId = mListsAdapter.getListId(selectedListIndex);
+        String listId = listsAdapter.getListId(selectedListIndex);
         ListManageDialogFragment.show(listId, getSupportFragmentManager());
     }
 
@@ -150,9 +165,9 @@ public class ListsActivity extends BaseTopActivity {
 
     private void onListsChanged() {
         // refresh list adapter
-        mListsAdapter.onListsChanged();
+        listsAdapter.onListsChanged();
         // update tabs
-        mTabs.setViewPager(mPager);
+        tabs.setViewPager(viewPager);
     }
 
     private void changeSortOrder(int sortOrderId) {

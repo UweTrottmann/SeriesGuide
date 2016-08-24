@@ -44,6 +44,9 @@ public class DisplaySettings {
     public static final String KEY_LAST_ACTIVE_SHOWS_TAB
             = "com.battlelancer.seriesguide.activitytab";
 
+    public static final String KEY_LAST_ACTIVE_LISTS_TAB
+            = "com.battlelancer.seriesguide.listsActiveTab";
+
     public static final String KEY_LAST_ACTIVE_MOVIES_TAB
             = "com.battlelancer.seriesguide.moviesActiveTab";
 
@@ -146,6 +149,14 @@ public class DisplaySettings {
     public static int getLastShowsTabPosition(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(KEY_LAST_ACTIVE_SHOWS_TAB, ShowsActivity.InitBundle.INDEX_TAB_SHOWS);
+    }
+
+    /**
+     * Return the position of the last selected lists tab.
+     */
+    public static int getLastListsTabPosition(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(KEY_LAST_ACTIVE_LISTS_TAB, 0);
     }
 
     /**
