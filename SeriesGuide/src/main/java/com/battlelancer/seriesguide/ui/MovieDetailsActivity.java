@@ -1,9 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -78,21 +76,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            Intent parentActivityIntent = new Intent(this, MoviesActivity.class);
-            parentActivityIntent.addFlags(
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(parentActivityIntent);
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public SystemBarTintManager getSystemBarTintManager() {

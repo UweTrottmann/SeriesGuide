@@ -77,10 +77,12 @@
         <!-- Shows -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:parentActivityName="com.battlelancer.seriesguide.ui.ShowsActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <!-- Parent activity meta-data to support ICS -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
@@ -98,7 +100,13 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
-        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity"
+            android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity">
+            <!-- Parent activity meta-data to support ICS -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
+        </activity>
 
         <!-- Settings -->
         <activity

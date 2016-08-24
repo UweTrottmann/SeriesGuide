@@ -18,7 +18,6 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int WATCHLIST_LOADER_ID = 103;
     public static final int COLLECTION_LOADER_ID = 104;
 
-    private static final String TAG = "Movies";
     private static final int TAB_COUNT_WITH_TRAKT = 4;
 
     private TabStripAdapter tabsAdapter;
