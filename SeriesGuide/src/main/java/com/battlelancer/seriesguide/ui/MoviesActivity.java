@@ -1,9 +1,13 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 
@@ -20,6 +24,8 @@ public class MoviesActivity extends BaseTopActivity {
 
     private static final int TAB_COUNT_WITH_TRAKT = 4;
 
+    @BindView(R.id.viewPagerTabs) ViewPager viewPager;
+    @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
     private TabStripAdapter tabsAdapter;
 
     @Override
@@ -29,15 +35,14 @@ public class MoviesActivity extends BaseTopActivity {
         setupActionBar();
         setupNavDrawer();
 
-        setupViews();
+        setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
     }
 
-    private void setupViews() {
+    private void setupViews(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         // tabs
-        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
-                (ViewPager) findViewById(R.id.viewPagerTabs),
-                (SlidingTabLayout) findViewById(R.id.tabLayoutTabs));
+        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         // trakt-only tabs should only be visible if connected
@@ -51,6 +56,9 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
 
         tabsAdapter.notifyTabsChanged();
+        if (savedInstanceState == null) {
+            viewPager.setCurrentItem(DisplaySettings.getLastMoviesTabPosition(this), false);
+        }
     }
 
     @Override
@@ -68,6 +76,14 @@ public class MoviesActivity extends BaseTopActivity {
         super.onResume();
 
         supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putInt(DisplaySettings.KEY_LAST_ACTIVE_MOVIES_TAB, viewPager.getCurrentItem())
+                .apply();
     }
 
     private void maybeAddNowTab() {
