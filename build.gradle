@@ -31,5 +31,5 @@ ext {
     androidVersionCode = 15202
     androidVersionName = '32-beta3'
 
-    supportVersion = '24.1.1'
+    supportVersion = '24.2.0'
 }
