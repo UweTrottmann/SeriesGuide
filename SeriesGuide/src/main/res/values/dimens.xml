@@ -56,11 +56,11 @@
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
 
-    <!-- Movie posters, 2:3 aspect ratio -->
-    <dimen name="movie_poster_width_default">100dp</dimen>
+    <!-- Movie posters, 2:3 aspect ratio, though using 66% here to fit percent layouts -->
+    <dimen name="movie_poster_width_default">99dp</dimen>
     <dimen name="movie_poster_height_default">150dp</dimen>
-    <dimen name="movie_poster_width_large">120dp</dimen>
-    <dimen name="movie_poster_height_large">180dp</dimen>
+    <dimen name="movie_poster_width_large">132dp</dimen>
+    <dimen name="movie_poster_height_large">200dp</dimen>
     <dimen name="movie_poster_width">@dimen/movie_poster_width_default</dimen>
     <dimen name="movie_poster_height">@dimen/movie_poster_height_default</dimen>
 
