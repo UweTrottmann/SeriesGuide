@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * Confirms whether to obliterate a SeriesGuide cloud account.
  */
-public class RemoveCloudAccountDialogFragment extends DialogFragment {
+public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
     @NonNull
     @Override

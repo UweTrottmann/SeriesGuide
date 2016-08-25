@@ -6,14 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 
 /**
  * A dialog displaying a list of options to choose from, saving the selected option to the given
  * preference upon selection by the user.
  */
-public class SingleChoiceDialogFragment extends DialogFragment {
+public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
 
     public static SingleChoiceDialogFragment newInstance(int itemArrayResource,
             int itemDataArrayResource, int selectedItemIndex, String preferenceKey,

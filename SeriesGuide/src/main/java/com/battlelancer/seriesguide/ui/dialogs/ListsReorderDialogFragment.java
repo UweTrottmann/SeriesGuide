@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +27,7 @@ import java.util.List;
  * Dialog to reorder lists using a vertical list with drag handles. Currently not accessibility or
  * keyboard friendly (same as extension configuration screen).
  */
-public class ListsReorderDialogFragment extends DialogFragment {
+public class ListsReorderDialogFragment extends AppCompatDialogFragment {
 
     public static void show(FragmentManager fragmentManager) {
         ListsReorderDialogFragment f = new ListsReorderDialogFragment();

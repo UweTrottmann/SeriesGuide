@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import java.util.HashSet;
 /**
  * Displays a dialog to add a new list to lists.
  */
-public class AddListDialogFragment extends DialogFragment {
+public class AddListDialogFragment extends AppCompatDialogFragment {
 
     public static AddListDialogFragment newInstance() {
         return new AddListDialogFragment();
