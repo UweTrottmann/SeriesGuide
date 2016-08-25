@@ -14,6 +14,13 @@ Version 32
 * The list widget can now be reduced horizontally to 2 blocks.
 * Support for Android 7.0 (Nougat).
 
+#### 32.1
+*(2016-08-25)*
+
+* FIX Dialogs have a white background, text is unreadable.
+* FIX Movie posters have slightly wrong size.
+* FIX Crash when trying to purchase subscription.
+
 #### 32
 *(2016-08-24)*
 
