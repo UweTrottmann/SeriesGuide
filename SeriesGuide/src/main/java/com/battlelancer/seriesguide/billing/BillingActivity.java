@@ -42,7 +42,7 @@ public class BillingActivity extends BaseActivity {
     public static final String SKU_X_SUB_NEW_PURCHASES = SKU_X_SUB_2016_05;
 
     // (arbitrary) request code for the purchase flow
-    private static final int RC_REQUEST = 749758;
+    private static final int RC_REQUEST = 21;
 
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
 
