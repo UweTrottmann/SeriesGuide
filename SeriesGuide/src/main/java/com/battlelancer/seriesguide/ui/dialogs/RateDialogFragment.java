@@ -5,10 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.battlelancer.seriesguide.R;
@@ -24,7 +24,7 @@ import com.uwetrottmann.trakt5.enums.Rating;
  * Displays a 10 value rating scale. If a rating is clicked it will be stored to the database and
  * sent to trakt (if the user is connected).
  */
-public class RateDialogFragment extends DialogFragment {
+public class RateDialogFragment extends AppCompatDialogFragment {
 
     /**
      * Display a {@link RateDialogFragment} to rate an episode.
