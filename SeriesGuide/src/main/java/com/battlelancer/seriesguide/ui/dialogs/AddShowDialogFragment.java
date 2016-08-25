@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TextAppearanceSpan;
@@ -48,7 +49,7 @@ import java.util.List;
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
  * Displays show details as well.
  */
-public class AddShowDialogFragment extends DialogFragment {
+public class AddShowDialogFragment extends AppCompatDialogFragment {
 
     public static final String TAG = "AddShowDialogFragment";
     private static final String KEY_SHOW_TVDBID = "show_tvdbid";

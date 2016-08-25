@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.os.AsyncTaskCompat;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Dialog asking if a show should be removed from the database.
  */
-public class RemoveShowDialogFragment extends DialogFragment {
+public class RemoveShowDialogFragment extends AppCompatDialogFragment {
 
     private static final String KEY_SHOW_TVDB_ID = "show_tvdb_id";
 

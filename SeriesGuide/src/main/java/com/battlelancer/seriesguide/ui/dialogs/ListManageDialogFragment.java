@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +25,7 @@ import com.battlelancer.seriesguide.util.ListsTools;
 /**
  * Dialog to rename or remove a list.
  */
-public class ListManageDialogFragment extends DialogFragment {
+public class ListManageDialogFragment extends AppCompatDialogFragment {
 
     private static final String ARG_LIST_ID = "listId";
 

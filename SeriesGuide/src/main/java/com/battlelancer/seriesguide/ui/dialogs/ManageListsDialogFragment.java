@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ import java.util.List;
  * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
  * number of them.
  */
-public class ManageListsDialogFragment extends DialogFragment implements
+public class ManageListsDialogFragment extends AppCompatDialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     public static ManageListsDialogFragment newInstance(int itemTvdbId,

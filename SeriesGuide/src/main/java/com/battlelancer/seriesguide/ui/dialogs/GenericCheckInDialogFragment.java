@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import de.greenrobot.event.EventBus;
 
-public abstract class GenericCheckInDialogFragment extends DialogFragment {
+public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragment {
 
     public interface InitBundle {
 

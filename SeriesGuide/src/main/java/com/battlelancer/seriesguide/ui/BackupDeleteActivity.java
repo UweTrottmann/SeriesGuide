@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,9 +57,11 @@ public class BackupDeleteActivity extends BaseActivity {
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.backup));
-        actionBar.setDisplayShowTitleEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(R.string.backup));
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
     }
 
     private void setupViews() {
@@ -311,7 +313,7 @@ public class BackupDeleteActivity extends BaseActivity {
         }
     }
 
-    public static class ExportDialogFragment extends DialogFragment {
+    public static class ExportDialogFragment extends AppCompatDialogFragment {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -329,7 +331,7 @@ public class BackupDeleteActivity extends BaseActivity {
         }
     }
 
-    public static class ImportDialogFragment extends DialogFragment {
+    public static class ImportDialogFragment extends AppCompatDialogFragment {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
