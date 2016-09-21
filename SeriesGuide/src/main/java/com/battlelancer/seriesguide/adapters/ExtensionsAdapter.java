@@ -143,7 +143,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                                             true),
                             true
                     );
-                    ExtensionManager.getInstance(getContext()).clearEpisodeActionsCache();
+                    ExtensionManager.getInstance(getContext()).clearActionsCache();
                     return true;
                 case R.id.menu_action_extension_disable:
                     EventBus.getDefault()
