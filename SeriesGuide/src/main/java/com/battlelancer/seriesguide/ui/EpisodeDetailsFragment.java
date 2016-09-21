@@ -34,7 +34,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
@@ -68,7 +68,7 @@ import timber.log.Timber;
 /**
  * Displays details about a single episode like summary, ratings and episode image if available.
  */
-public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentContract {
+public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String TAG = "Episode Details";
 
@@ -646,7 +646,7 @@ public class EpisodeDetailsFragment extends Fragment implements ActionsFragmentC
     public void loadEpisodeActionsDelayed() {
         mHandler.removeCallbacks(mEpisodeActionsRunnable);
         mHandler.postDelayed(mEpisodeActionsRunnable,
-                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
+                EpisodeActionsContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     interface DetailsQuery {

@@ -109,6 +109,15 @@ public class MovieTools {
     }
 
     /**
+     * Return release date or null if unknown from millisecond value stored in the database as
+     * {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies#RELEASED_UTC_MS}.
+     */
+    @Nullable
+    public static Date movieReleaseDateFrom(long releaseDateMs) {
+        return releaseDateMs == Long.MAX_VALUE ? null : new Date(releaseDateMs);
+    }
+
+    /**
      * Deletes all movies which are not watched and not in any list.
      */
     public static void deleteUnusedMovies(Context context) {

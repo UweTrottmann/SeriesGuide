@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -31,10 +32,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
 import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.extensions.MovieActionsContract;
 import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.loaders.MovieActionsLoader;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
@@ -59,11 +65,13 @@ import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import de.greenrobot.event.EventBus;
+import java.util.List;
+import timber.log.Timber;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
  */
-public class MovieDetailsFragment extends Fragment {
+public class MovieDetailsFragment extends Fragment implements MovieActionsContract {
 
     public static MovieDetailsFragment newInstance(int tmdbId) {
         MovieDetailsFragment f = new MovieDetailsFragment();
@@ -81,12 +89,14 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private static final String TAG = "Movie Details";
+    private static final String ARG_MOVIE_TMDB_ID = "movieTmdbId";
 
     private FragmentMovieBinding binding;
 
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
+    private Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -512,6 +522,63 @@ public class MovieDetailsFragment extends Fragment {
         }
         // re-query some movie details to update button states
         restartMovieLoader();
+    }
+
+    @Override
+    public void onEventMainThread(ExtensionManager.MovieActionReceivedEvent event) {
+        if (event.movieTmdbId != tmdbId) {
+            return;
+        }
+        loadMovieActionsDelayed();
+    }
+
+    @Override
+    public void loadMovieActions() {
+        Bundle args = new Bundle();
+        args.putInt(ARG_MOVIE_TMDB_ID, tmdbId);
+        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_ACTIONS, args,
+                movieActionsLoaderCallbacks);
+    }
+
+    private LoaderManager.LoaderCallbacks<List<Action>> movieActionsLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<Action>>() {
+                @Override
+                public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
+                    int movieTmdbId = args.getInt(ARG_MOVIE_TMDB_ID);
+                    return new MovieActionsLoader(getActivity(), movieTmdbId);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
+                    if (!isAdded()) {
+                        return;
+                    }
+                    if (data == null) {
+                        Timber.e("onLoadFinished: did not receive valid actions for %s", tmdbId);
+                    } else {
+                        Timber.d("onLoadFinished: received %s actions for %s", data.size(), tmdbId);
+                    }
+//                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+//                            actionsContainer, data, TAG);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<Action>> loader) {
+                    // do nothing, we are not holding onto the actions list
+                }
+            };
+
+    Runnable movieActionsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadMovieActions();
+        }
+    };
+
+    @Override
+    public void loadMovieActionsDelayed() {
+        handler.removeCallbacks(movieActionsRunnable);
+        handler.postDelayed(movieActionsRunnable, MovieActionsContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void rateMovie() {
