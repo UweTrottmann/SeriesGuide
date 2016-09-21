@@ -25,7 +25,10 @@ import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION_TYPE;
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to
@@ -162,6 +165,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     private Map<ComponentName, String> mSubscribers;
 
     private Action mCurrentAction;
+    private int currentActionType;
 
     private Handler mHandler = new Handler();
 
@@ -416,6 +420,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
+        currentActionType = ACTION_TYPE_EPISODE;
         Episode episode = Episode.fromBundle(episodeBundle);
         onRequest(episodeIdentifier, episode);
     }
@@ -424,6 +429,7 @@ public abstract class SeriesGuideExtension extends IntentService {
         if (movieIdentifier <= 0 || movieBundle == null) {
             return;
         }
+        currentActionType = ACTION_TYPE_MOVIE;
         Movie movie = Movie.fromBundle(movieBundle);
         onRequest(movieIdentifier, movie);
     }
@@ -447,7 +453,8 @@ public abstract class SeriesGuideExtension extends IntentService {
                 .setComponent(subscriber)
                 .putExtra(EXTRA_TOKEN, token)
                 .putExtra(EXTRA_ACTION,
-                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null);
+                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null)
+                .putExtra(EXTRA_ACTION_TYPE, currentActionType);
         try {
             ComponentName returnedSubscriber = startService(intent);
             if (returnedSubscriber == null) {

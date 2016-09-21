@@ -27,6 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
+
 public class ExtensionManager {
 
     private static final String PREF_FILE_SUBSCRIPTIONS = "seriesguide_extensions";
@@ -273,10 +276,14 @@ public class ExtensionManager {
                 .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
     }
 
-    public void handlePublishedAction(String token, Action action) {
+    public void handlePublishedAction(String token, Action action, int type) {
         if (TextUtils.isEmpty(token) || action == null) {
             // whoops, no token or action received
             Timber.d("handlePublishedAction: token or action empty");
+            return;
+        }
+        if (type != ACTION_TYPE_EPISODE && type != ACTION_TYPE_MOVIE) {
+            Timber.d("handlePublishedAction: unknown type of entity");
             return;
         }
 
@@ -306,7 +313,7 @@ public class ExtensionManager {
         EventBus.getDefault().post(new EpisodeActionReceivedEvent(action.getEntityIdentifier()));
     }
 
-    private synchronized void loadSubscriptions() {
+        private synchronized void loadSubscriptions() {
         mEnabledExtensions = new ArrayList<>();
         mSubscriptions = new HashMap<>();
         mTokens = new HashMap<>();
