@@ -76,7 +76,9 @@ public class Movie {
         bundle.putString(KEY_TITLE, title);
         bundle.putInt(KEY_TMDBID, tmdbId);
         bundle.putString(KEY_IMDBID, imdbId);
-        bundle.putLong(KEY_RELEASE_DATE, releaseDate.getTime());
+        if (releaseDate != null) {
+            bundle.putLong(KEY_RELEASE_DATE, releaseDate.getTime());
+        }
         return bundle;
     }
 
@@ -84,7 +86,7 @@ public class Movie {
      * Deserializes an {@link Movie} into a {@link Bundle} object.
      */
     public static Movie fromBundle(Bundle bundle) {
-        long releaseDate = bundle.getLong(KEY_RELEASE_DATE);
+        long releaseDate = bundle.getLong(KEY_RELEASE_DATE, Long.MAX_VALUE);
         Builder builder = new Builder()
                 .title(bundle.getString(KEY_TITLE))
                 .tmdbId(bundle.getInt(KEY_TMDBID))
