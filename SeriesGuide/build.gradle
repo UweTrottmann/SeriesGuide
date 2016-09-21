@@ -155,6 +155,7 @@ dependencies {
     compile ('com.uwetrottmann.trakt5:trakt-java:5.2.1') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
+        exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
