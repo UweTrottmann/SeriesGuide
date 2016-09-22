@@ -180,6 +180,14 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // refresh actions when returning, enabled extensions or their actions might have changed
+        loadMovieActionsDelayed();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
