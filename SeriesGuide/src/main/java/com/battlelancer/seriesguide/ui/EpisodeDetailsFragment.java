@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -619,7 +619,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                         Timber.d("onLoadFinished: received %s actions for %s", data.size(),
                                 getEpisodeTvdbId());
                     }
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             mActionsContainer, data, TAG);
                 }
 

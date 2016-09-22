@@ -18,7 +18,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.List;
 import timber.log.Timber;
 
-public class EpisodeActionsHelper {
+public class ActionsHelper {
 
     /**
      * Replaces all child views of the given {@link android.view.ViewGroup} with a {@link
@@ -26,12 +26,12 @@ public class EpisodeActionsHelper {
      * Sets up {@link android.view.View.OnClickListener} if {@link com.battlelancer.seriesguide.api.Action#getViewIntent()}
      * of an  {@link com.battlelancer.seriesguide.api.Action} is not null.
      */
-    public static void populateEpisodeActions(@NonNull LayoutInflater layoutInflater,
+    public static void populateActions(@NonNull LayoutInflater layoutInflater,
             @Nullable ViewGroup actionsContainer, @Nullable List<Action> data,
             @NonNull final String logCategory) {
         if (actionsContainer == null) {
             // nothing we can do, view is already gone
-            Timber.d("populateEpisodeActions: action view container gone, aborting");
+            Timber.d("populateActions: action view container gone, aborting");
             return;
         }
         actionsContainer.removeAllViews();

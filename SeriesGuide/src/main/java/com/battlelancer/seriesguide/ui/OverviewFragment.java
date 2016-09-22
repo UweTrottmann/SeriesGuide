@@ -41,7 +41,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -960,13 +960,13 @@ public class OverviewFragment extends Fragment implements
                     } else {
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, null, TAG);
                 }
             };

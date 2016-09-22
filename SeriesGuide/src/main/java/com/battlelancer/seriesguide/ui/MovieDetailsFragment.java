@@ -36,7 +36,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
 import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -554,7 +554,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
-        EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+        ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                 binding.containerMovieActions, actions, TAG);
     }
 
