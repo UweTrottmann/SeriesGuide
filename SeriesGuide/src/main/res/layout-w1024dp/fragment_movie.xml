@@ -143,29 +143,11 @@
                             tools:text="Action, Comedy, Drama" />
 
                         <TextView
-                            android:id="@+id/textViewMovieExtensionsLabel"
-                            style="@style/Block.WithTopMargin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/textViewMovieGenres"
-                            android:text="@string/extensions"
-                            android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-                        <LinearLayout
-                            android:id="@+id/containerMovieActions"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/textViewMovieExtensionsLabel"
-                            android:layout_marginLeft="@dimen/large_padding"
-                            android:layout_marginRight="@dimen/large_padding"
-                            android:orientation="vertical" />
-
-                        <TextView
                             android:id="@+id/textViewMovieMore"
                             style="@style/Block.WithTopMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/containerMovieActions"
+                            android:layout_below="@+id/textViewMovieGenres"
                             android:text="@string/services_more"
                             android:textAppearance="@style/TextAppearance.Body.Bold" />
 
@@ -217,6 +199,20 @@
                     <include
                         android:id="@+id/moviePeople"
                         layout="@layout/cast_and_crew" />
+
+                    <TextView
+                        android:id="@+id/textViewMovieExtensionsLabel"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extensions"
+                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                    <LinearLayout
+                        android:id="@+id/containerMovieActions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
                 </LinearLayout>
 
