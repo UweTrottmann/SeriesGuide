@@ -54,6 +54,7 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
                         .showTvdbId(query.getInt(Query.SHOW_TVDB_ID))
                         .showTitle(query.getString(Query.SHOW_TITLE))
                         .showImdbId(query.getString(Query.SHOW_IMDB_ID))
+                        .showFirstReleaseDate(query.getString(Query.SHOW_FIRST_RELEASE))
                         .build();
             }
             // clean up query first
@@ -84,7 +85,8 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
                 Episodes.IMDBID,
                 Shows.REF_SHOW_ID,
                 Shows.TITLE,
-                Shows.IMDBID
+                Shows.IMDBID,
+                Shows.FIRST_RELEASE
         };
 
         int TITLE = 0;
@@ -95,5 +97,6 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
         int SHOW_TVDB_ID = 5;
         int SHOW_TITLE = 6;
         int SHOW_IMDB_ID = 7;
+        int SHOW_FIRST_RELEASE = 8;
     }
 }
