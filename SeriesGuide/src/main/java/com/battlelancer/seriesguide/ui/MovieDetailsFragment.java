@@ -40,7 +40,6 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
 import com.battlelancer.seriesguide.items.MovieDetails;
-import com.battlelancer.seriesguide.loaders.MovieActionsLoader;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
@@ -65,6 +64,7 @@ import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
 
@@ -89,7 +89,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private static final String TAG = "Movie Details";
-    private static final String ARG_MOVIE_TMDB_ID = "movieTmdbId";
 
     private FragmentMovieBinding binding;
 
@@ -288,7 +287,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     TimeTools.formatToLocalDate(getContext(), tmdbMovie.release_date));
             releaseAndRuntime.append(" | ");
         }
-        releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
+        releaseAndRuntime.append(
+                getString(R.string.runtime_minutes, String.valueOf(tmdbMovie.runtime)));
         binding.textViewMovieDate.setText(releaseAndRuntime.toString());
 
         // check-in button
@@ -534,39 +534,29 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
     @Override
     public void loadMovieActions() {
-        Bundle args = new Bundle();
-        args.putInt(ARG_MOVIE_TMDB_ID, tmdbId);
-        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_ACTIONS, args,
-                movieActionsLoaderCallbacks);
+        List<Action> actions = ExtensionManager.getInstance(getContext())
+                .getLatestMovieActions(tmdbId);
+
+        // no actions available yet, request extensions to publish them
+        if (actions == null || actions.size() == 0) {
+            actions = new ArrayList<>();
+
+            if (movieDetails.tmdbMovie() != null) {
+                com.battlelancer.seriesguide.api.Movie movie
+                        = new com.battlelancer.seriesguide.api.Movie.Builder()
+                        .tmdbId(tmdbId)
+                        .imdbId(movieDetails.tmdbMovie().imdb_id)
+                        .title(movieDetails.tmdbMovie().title)
+                        .releaseDate(movieDetails.tmdbMovie().release_date)
+                        .build();
+                ExtensionManager.getInstance(getContext()).requestMovieActions(movie);
+            }
+        }
+
+        Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
+        EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                binding.containerMovieActions, actions, TAG);
     }
-
-    private LoaderManager.LoaderCallbacks<List<Action>> movieActionsLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<List<Action>>() {
-                @Override
-                public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
-                    int movieTmdbId = args.getInt(ARG_MOVIE_TMDB_ID);
-                    return new MovieActionsLoader(getActivity(), movieTmdbId);
-                }
-
-                @Override
-                public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
-                    if (!isAdded()) {
-                        return;
-                    }
-                    if (data == null) {
-                        Timber.e("onLoadFinished: did not receive valid actions for %s", tmdbId);
-                    } else {
-                        Timber.d("onLoadFinished: received %s actions for %s", data.size(), tmdbId);
-                    }
-//                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
-//                            actionsContainer, data, TAG);
-                }
-
-                @Override
-                public void onLoaderReset(Loader<List<Action>> loader) {
-                    // do nothing, we are not holding onto the actions list
-                }
-            };
 
     Runnable movieActionsRunnable = new Runnable() {
         @Override
@@ -624,6 +614,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             // we need at least values from database or tmdb
             if (movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
+                loadMovieActions();
                 getActivity().invalidateOptionsMenu();
             } else {
                 // if there is no local data and loading from network failed
