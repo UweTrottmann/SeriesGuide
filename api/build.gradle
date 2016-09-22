@@ -4,7 +4,7 @@ apply plugin: "signing"
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
-version = "1.2.0"
+version = "1.3.0"
 
 // load properties file
 def Properties props = new Properties()
@@ -12,7 +12,7 @@ props.load(new FileInputStream(file("../local.properties")))
 // extract Android SDK dir
 def android = [
         sdk: props["sdk.dir"],
-        target: "android-23"
+        target: "android-24"
 ]
 
 compileJava {
