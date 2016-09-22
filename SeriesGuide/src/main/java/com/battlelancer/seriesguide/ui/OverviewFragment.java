@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -77,7 +77,7 @@ import timber.log.Timber;
  * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
+        LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
 
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -834,7 +834,7 @@ public class OverviewFragment extends Fragment implements
     public void loadEpisodeActionsDelayed() {
         handler.removeCallbacks(episodeActionsRunnable);
         handler.postDelayed(episodeActionsRunnable,
-                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
+                EpisodeActionsContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void loadEpisodeImage(String imagePath) {
@@ -960,13 +960,13 @@ public class OverviewFragment extends Fragment implements
                     } else {
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, null, TAG);
                 }
             };

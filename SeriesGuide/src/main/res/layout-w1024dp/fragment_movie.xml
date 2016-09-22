@@ -145,7 +145,7 @@
                         <TextView
                             android:id="@+id/textViewMovieMore"
                             style="@style/Block.WithTopMargin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textViewMovieGenres"
                             android:text="@string/services_more"
@@ -199,6 +199,20 @@
                     <include
                         android:id="@+id/moviePeople"
                         layout="@layout/cast_and_crew" />
+
+                    <TextView
+                        android:id="@+id/textViewMovieExtensionsLabel"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extensions"
+                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                    <LinearLayout
+                        android:id="@+id/containerMovieActions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
                 </LinearLayout>
 

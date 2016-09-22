@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.extensions;
 
 /**
- * If a fragment wants to display a list of {@linkplain com.battlelancer.seriesguide.api.Action}s,
- * it should follow these guidelines.
+ * If a fragment wants to display a list of {@linkplain com.battlelancer.seriesguide.api.Action}s
+ * for episodes, it should follow these guidelines.
  */
-public interface ActionsFragmentContract {
+public interface EpisodeActionsContract {
 
     /**
      * The recommended value to delay the call to {@link #loadEpisodeActions()} from {@link
@@ -23,7 +23,8 @@ public interface ActionsFragmentContract {
      * posting a {@link java.lang.Runnable} with {@link android.os.Handler#postDelayed(Runnable,
      * long)}, delayed by {@link #ACTION_LOADER_DELAY_MILLIS}). If this is called again before the
      * delay expires, the delay should be reset.
-     * <p/>Call this in e.g. {@link android.support.v4.app.Fragment#onResume()}.
+     *
+     * <p>Call this in e.g. {@link android.support.v4.app.Fragment#onResume()}.
      */
     void loadEpisodeActionsDelayed();
 

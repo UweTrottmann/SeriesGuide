@@ -79,8 +79,7 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             details.tmdbMovie().vote_count = movieQuery.getInt(MovieQuery.RATING_VOTES_TMDB);
             // if stored release date is Long.MAX, movie has no release date
             long releaseDateMs = movieQuery.getLong(MovieQuery.RELEASED_UTC_MS);
-            details.tmdbMovie().release_date = releaseDateMs == Long.MAX_VALUE ? null
-                    : new Date(releaseDateMs);
+            details.tmdbMovie().release_date = MovieTools.movieReleaseDateFrom(releaseDateMs);
         }
 
         // clean up

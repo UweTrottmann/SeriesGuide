@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -31,9 +32,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
 import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.extensions.MovieActionsContract;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
@@ -59,11 +64,14 @@ import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import de.greenrobot.event.EventBus;
+import java.util.ArrayList;
+import java.util.List;
+import timber.log.Timber;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
  */
-public class MovieDetailsFragment extends Fragment {
+public class MovieDetailsFragment extends Fragment implements MovieActionsContract {
 
     public static MovieDetailsFragment newInstance(int tmdbId) {
         MovieDetailsFragment f = new MovieDetailsFragment();
@@ -87,6 +95,7 @@ public class MovieDetailsFragment extends Fragment {
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
+    private Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -171,6 +180,14 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // refresh actions when returning, enabled extensions or their actions might have changed
+        loadMovieActionsDelayed();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -194,19 +211,6 @@ public class MovieDetailsFragment extends Fragment {
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare);
-            MenuItem webSearchItem = menu.findItem(R.id.menu_action_movie_websearch);
-            webSearchItem.setEnabled(isEnableShare);
-            webSearchItem.setVisible(isEnableShare);
-
-            MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
-            if (Utils.isAmazonVersion()) {
-                // hide Google Play button in Amazon version
-                playStoreItem.setEnabled(false);
-                playStoreItem.setVisible(false);
-            } else {
-                playStoreItem.setEnabled(isEnableShare);
-                playStoreItem.setVisible(isEnableShare);
-            }
 
             boolean isEnableImdb = movieDetails.tmdbMovie() != null
                     && !TextUtils.isEmpty(movieDetails.tmdbMovie().imdb_id);
@@ -237,20 +241,11 @@ public class MovieDetailsFragment extends Fragment {
             ServiceUtils.openYoutube(trailer.key, TAG, getActivity());
             return true;
         }
-        if (itemId == R.id.menu_open_google_play) {
-            ServiceUtils.searchGooglePlay(movieDetails.tmdbMovie().title, TAG,
-                    getActivity());
-            return true;
-        }
         if (itemId == R.id.menu_open_tmdb) {
             TmdbTools.openTmdbMovie(getActivity(), tmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
             Utils.launchWebsite(getActivity(), TraktTools.buildMovieUrl(tmdbId), TAG, "trakt");
-            return true;
-        }
-        if (itemId == R.id.menu_action_movie_websearch) {
-            ServiceUtils.performWebSearch(getActivity(), movieDetails.tmdbMovie().title, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -278,7 +273,8 @@ public class MovieDetailsFragment extends Fragment {
                     TimeTools.formatToLocalDate(getContext(), tmdbMovie.release_date));
             releaseAndRuntime.append(" | ");
         }
-        releaseAndRuntime.append(getString(R.string.runtime_minutes, tmdbMovie.runtime));
+        releaseAndRuntime.append(
+                getString(R.string.runtime_minutes, String.valueOf(tmdbMovie.runtime)));
         binding.textViewMovieDate.setText(releaseAndRuntime.toString());
 
         // check-in button
@@ -514,6 +510,53 @@ public class MovieDetailsFragment extends Fragment {
         restartMovieLoader();
     }
 
+    @Override
+    public void onEventMainThread(ExtensionManager.MovieActionReceivedEvent event) {
+        if (event.movieTmdbId != tmdbId) {
+            return;
+        }
+        loadMovieActionsDelayed();
+    }
+
+    @Override
+    public void loadMovieActions() {
+        List<Action> actions = ExtensionManager.getInstance(getContext())
+                .getLatestMovieActions(tmdbId);
+
+        // no actions available yet, request extensions to publish them
+        if (actions == null || actions.size() == 0) {
+            actions = new ArrayList<>();
+
+            if (movieDetails.tmdbMovie() != null) {
+                com.battlelancer.seriesguide.api.Movie movie
+                        = new com.battlelancer.seriesguide.api.Movie.Builder()
+                        .tmdbId(tmdbId)
+                        .imdbId(movieDetails.tmdbMovie().imdb_id)
+                        .title(movieDetails.tmdbMovie().title)
+                        .releaseDate(movieDetails.tmdbMovie().release_date)
+                        .build();
+                ExtensionManager.getInstance(getContext()).requestMovieActions(movie);
+            }
+        }
+
+        Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
+        ActionsHelper.populateActions(getActivity().getLayoutInflater(),
+                binding.containerMovieActions, actions, TAG);
+    }
+
+    Runnable movieActionsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadMovieActions();
+        }
+    };
+
+    @Override
+    public void loadMovieActionsDelayed() {
+        handler.removeCallbacks(movieActionsRunnable);
+        handler.postDelayed(movieActionsRunnable, MovieActionsContract.ACTION_LOADER_DELAY_MILLIS);
+    }
+
     private void rateMovie() {
         if (TraktCredentials.ensureCredentials(getActivity())) {
             RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(tmdbId);
@@ -557,6 +600,7 @@ public class MovieDetailsFragment extends Fragment {
             // we need at least values from database or tmdb
             if (movieDetails.tmdbMovie() != null) {
                 populateMovieViews();
+                loadMovieActions();
                 getActivity().invalidateOptionsMenu();
             } else {
                 // if there is no local data and loading from network failed

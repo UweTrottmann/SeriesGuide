@@ -18,46 +18,52 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
  */
 public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
 
-    private final int mEpisodeTvdbId;
-    private Cursor mQuery;
+    private final int episodeTvdbId;
+    private Cursor query;
 
     public EpisodeActionsLoader(Context context, int episodeTvdbId) {
         super(context);
-        mEpisodeTvdbId = episodeTvdbId;
+        this.episodeTvdbId = episodeTvdbId;
     }
 
     @Override
     public List<Action> loadInBackground() {
         List<Action> actions = ExtensionManager.getInstance(getContext())
-                .getLatestEpisodeActions(mEpisodeTvdbId);
+                .getLatestEpisodeActions(episodeTvdbId);
 
         // no actions available yet, request extensions to publish them
         if (actions == null || actions.size() == 0) {
             actions = new ArrayList<>();
 
-            mQuery = getContext().getContentResolver().query(
-                    Episodes.buildEpisodeWithShowUri(mEpisodeTvdbId),
+            query = getContext().getContentResolver().query(
+                    Episodes.buildEpisodeWithShowUri(episodeTvdbId),
                     Query.PROJECTION, null, null, null);
-            if (mQuery == null || !mQuery.moveToFirst()) {
+            if (query == null) {
                 return actions;
             }
 
-            Episode episode = new Episode.Builder()
-                    .tvdbId(mEpisodeTvdbId)
-                    .title(mQuery.getString(Query.TITLE))
-                    .number(mQuery.getInt(Query.NUMBER))
-                    .numberAbsolute(mQuery.getInt(Query.NUMBER_ABSOLUTE))
-                    .season(mQuery.getInt(Query.SEASON))
-                    .imdbId(mQuery.getString(Query.IMDB_ID))
-                    .showTvdbId(mQuery.getInt(Query.SHOW_TVDB_ID))
-                    .showTitle(mQuery.getString(Query.SHOW_TITLE))
-                    .showImdbId(mQuery.getString(Query.SHOW_IMDB_ID))
-                    .build();
+            Episode episode = null;
+            if (query.moveToFirst()) {
+                episode = new Episode.Builder()
+                        .tvdbId(episodeTvdbId)
+                        .title(query.getString(Query.TITLE))
+                        .number(query.getInt(Query.NUMBER))
+                        .numberAbsolute(query.getInt(Query.NUMBER_ABSOLUTE))
+                        .season(query.getInt(Query.SEASON))
+                        .imdbId(query.getString(Query.IMDB_ID))
+                        .showTvdbId(query.getInt(Query.SHOW_TVDB_ID))
+                        .showTitle(query.getString(Query.SHOW_TITLE))
+                        .showImdbId(query.getString(Query.SHOW_IMDB_ID))
+                        .showFirstReleaseDate(query.getString(Query.SHOW_FIRST_RELEASE))
+                        .build();
+            }
+            // clean up query first
+            query.close();
+            query = null;
 
-            mQuery.close();
-            mQuery = null;
-
-            ExtensionManager.getInstance(getContext()).requestActions(episode);
+            if (episode != null) {
+                ExtensionManager.getInstance(getContext()).requestEpisodeActions(episode);
+            }
         }
 
         return actions;
@@ -65,8 +71,8 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
 
     @Override
     protected void onReleaseResources(List<Action> items) {
-        if (mQuery != null && !mQuery.isClosed()) {
-            mQuery.close();
+        if (query != null && !query.isClosed()) {
+            query.close();
         }
     }
 
@@ -79,7 +85,8 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
                 Episodes.IMDBID,
                 Shows.REF_SHOW_ID,
                 Shows.TITLE,
-                Shows.IMDBID
+                Shows.IMDBID,
+                Shows.FIRST_RELEASE
         };
 
         int TITLE = 0;
@@ -90,5 +97,6 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
         int SHOW_TVDB_ID = 5;
         int SHOW_TITLE = 6;
         int SHOW_IMDB_ID = 7;
+        int SHOW_FIRST_RELEASE = 8;
     }
 }

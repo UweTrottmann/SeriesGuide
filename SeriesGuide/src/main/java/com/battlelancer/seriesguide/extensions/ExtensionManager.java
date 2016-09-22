@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
+import com.battlelancer.seriesguide.api.Movie;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.api.constants.IncomingConstants;
 import de.greenrobot.event.EventBus;
@@ -27,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import timber.log.Timber;
 
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
+
 public class ExtensionManager {
 
     private static final String PREF_FILE_SUBSCRIPTIONS = "seriesguide_extensions";
@@ -37,6 +41,10 @@ public class ExtensionManager {
     // Cashes received actions for the last few displayed episodes.
     private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
             sEpisodeActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
+
+    // Cashes received actions for the last few displayed movies.
+    private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
+            sMovieActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
 
     private static ExtensionManager _instance;
 
@@ -60,20 +68,33 @@ public class ExtensionManager {
         }
     }
 
-    private Context mContext;
-    private SharedPreferences mSharedPrefs;
-    private ComponentName mSubscriberComponentName;
+    /**
+     * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} has received new {@link
+     * com.battlelancer.seriesguide.api.Action} objects from enabled extensions. Receivers might
+     * want to requery available actions.
+     */
+    public static class MovieActionReceivedEvent {
+        public int movieTmdbId;
 
-    private Map<ComponentName, String> mSubscriptions; // extension + token = sub
-    private Map<String, ComponentName> mTokens; // mirrored map for faster token searching
+        public MovieActionReceivedEvent(int movieTmdbId) {
+            this.movieTmdbId = movieTmdbId;
+        }
+    }
 
-    private List<ComponentName> mEnabledExtensions; // order-preserving list of enabled extensions
+    private Context context;
+    private SharedPreferences prefs;
+    private ComponentName subscriberComponentName;
+
+    private Map<ComponentName, String> subscriptions; // extension + token = sub
+    private Map<String, ComponentName> tokens; // mirrored map for faster token searching
+
+    private List<ComponentName> enabledExtensions; // order-preserving list of enabled extensions
 
     private ExtensionManager(Context context) {
         Timber.d("Initializing extension manager");
-        mContext = context.getApplicationContext();
-        mSharedPrefs = mContext.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
-        mSubscriberComponentName = new ComponentName(mContext, ExtensionSubscriberService.class);
+        this.context = context.getApplicationContext();
+        prefs = this.context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
+        subscriberComponentName = new ComponentName(this.context, ExtensionSubscriberService.class);
         loadSubscriptions();
     }
 
@@ -85,7 +106,7 @@ public class ExtensionManager {
     @NonNull
     public List<Extension> queryAllAvailableExtensions() {
         Intent queryIntent = new Intent(SeriesGuideExtension.ACTION_SERIESGUIDE_EXTENSION);
-        PackageManager pm = mContext.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         List<ResolveInfo> resolveInfos = pm.queryIntentServices(queryIntent,
                 PackageManager.GET_META_DATA);
 
@@ -100,7 +121,7 @@ public class ExtensionManager {
             // get description
             Context packageContext;
             try {
-                packageContext = mContext.createPackageContext(
+                packageContext = context.createPackageContext(
                         extension.componentName.getPackageName(), 0);
                 Resources packageRes = packageContext.getResources();
                 extension.description = packageRes.getString(info.serviceInfo.descriptionRes);
@@ -131,7 +152,8 @@ public class ExtensionManager {
      */
     public void setDefaultEnabledExtensions() {
         List<ComponentName> defaultExtensions = new ArrayList<>();
-        defaultExtensions.add(new ComponentName(mContext, YouTubeExtension.class));
+        defaultExtensions.add(new ComponentName(context, WebSearchExtension.class));
+        defaultExtensions.add(new ComponentName(context, YouTubeExtension.class));
         setEnabledExtensions(defaultExtensions);
     }
 
@@ -144,7 +166,7 @@ public class ExtensionManager {
         boolean isChanged = false;
 
         // disable removed extensions
-        for (ComponentName extension : mEnabledExtensions) {
+        for (ComponentName extension : enabledExtensions) {
             if (!extensionsToEnable.contains(extension)) {
                 // disable extension
                 disableExtension(extension);
@@ -161,12 +183,13 @@ public class ExtensionManager {
         }
 
         // always save because just the order might have changed
-        mEnabledExtensions = new ArrayList<>(extensions);
+        enabledExtensions = new ArrayList<>(extensions);
         saveSubscriptions();
 
         if (isChanged) {
             // clear actions cache so loaders will request new actions
             sEpisodeActionsCache.evictAll();
+            sMovieActionsCache.evictAll();
         }
     }
 
@@ -175,7 +198,7 @@ public class ExtensionManager {
      * determined.
      */
     public synchronized List<ComponentName> getEnabledExtensions() {
-        return new ArrayList<>(mEnabledExtensions);
+        return new ArrayList<>(enabledExtensions);
     }
 
     private void enableExtension(ComponentName extension) {
@@ -183,7 +206,7 @@ public class ExtensionManager {
             Timber.e("enableExtension: empty extension");
         }
 
-        if (mSubscriptions.containsKey(extension)) {
+        if (subscriptions.containsKey(extension)) {
             // already subscribed
             Timber.d("enableExtension: already subscribed to %s", extension);
             return;
@@ -191,7 +214,7 @@ public class ExtensionManager {
 
         // subscribe
         String token = UUID.randomUUID().toString();
-        while (mTokens.containsKey(token)) {
+        while (tokens.containsKey(token)) {
             // create another UUID on collision
             /**
              * As the number of enabled extensions is rather low compared to the UUID number
@@ -200,12 +223,12 @@ public class ExtensionManager {
             token = UUID.randomUUID().toString();
         }
         Timber.d("enableExtension: subscribing to %s", extension);
-        mSubscriptions.put(extension, token);
-        mTokens.put(token, extension);
-        mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+        subscriptions.put(extension, token);
+        tokens.put(token, extension);
+        context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                        mSubscriberComponentName)
+                        subscriberComponentName)
                 .putExtra(IncomingConstants.EXTRA_TOKEN, token));
     }
 
@@ -214,19 +237,19 @@ public class ExtensionManager {
             Timber.e("disableExtension: extension empty");
         }
 
-        if (!mSubscriptions.containsKey(extension)) {
+        if (!subscriptions.containsKey(extension)) {
             Timber.d("disableExtension: extension not enabled %s", extension);
             return;
         }
 
         // unsubscribe
         Timber.d("disableExtension: unsubscribing from %s", extension);
-        mContext.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+        context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                        mSubscriberComponentName)
+                        subscriberComponentName)
                 .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
-        mTokens.remove(mSubscriptions.remove(extension));
+        tokens.remove(subscriptions.remove(extension));
     }
 
     /**
@@ -235,11 +258,24 @@ public class ExtensionManager {
      */
     public synchronized List<Action> getLatestEpisodeActions(int episodeTvdbId) {
         Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
+        return actionListFrom(actionMap);
+    }
+
+    /**
+     * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
+     * given movie, identified through its TMDB id. Sorted in the order determined by the user.
+     */
+    public synchronized List<Action> getLatestMovieActions(int movieTmdbId) {
+        Map<ComponentName, Action> actionMap = sMovieActionsCache.get(movieTmdbId);
+        return actionListFrom(actionMap);
+    }
+
+    private List<Action> actionListFrom(Map<ComponentName, Action> actionMap) {
         if (actionMap == null) {
             return null;
         }
         List<Action> sortedActions = new ArrayList<>();
-        for (ComponentName extension : mEnabledExtensions) {
+        for (ComponentName extension : enabledExtensions) {
             Action action = actionMap.get(extension);
             if (action != null) {
                 sortedActions.add(action);
@@ -251,67 +287,107 @@ public class ExtensionManager {
     /**
      * Asks all enabled extensions to publish an action for the given episode.
      */
-    public synchronized void requestActions(Episode episode) {
-        for (ComponentName extension : mSubscriptions.keySet()) {
-            requestAction(extension, episode);
+    public synchronized void requestEpisodeActions(Episode episode) {
+        for (ComponentName extension : subscriptions.keySet()) {
+            requestEpisodeAction(extension, episode);
         }
     }
 
     /**
      * Ask a single extension to publish an action for the given episode.
      */
-    public synchronized void requestAction(ComponentName extension, Episode episode) {
+    private synchronized void requestEpisodeAction(ComponentName extension, Episode episode) {
         Timber.d("requestAction: requesting from %s for %s", extension, episode.getTvdbId());
         // prepare to receive actions for the given episode
         if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
             sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
         }
         // actually request actions
-        mContext.startService(new Intent(IncomingConstants.ACTION_UPDATE)
+        context.startService(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
                 .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
     }
 
-    public void handlePublishedAction(String token, Action action) {
+    /**
+     * Asks all enabled extensions to publish an action for the given movie.
+     */
+    public synchronized void requestMovieActions(Movie movie) {
+        for (ComponentName extension : subscriptions.keySet()) {
+            requestMovieAction(extension, movie);
+        }
+    }
+
+    /**
+     * Ask a single extension to publish an action for the given movie.
+     */
+    private synchronized void requestMovieAction(ComponentName extension, Movie movie) {
+        Timber.d("requestAction: requesting from %s for %s", extension, movie.getTmdbId());
+        // prepare to receive actions for the given episode
+        if (sMovieActionsCache.get(movie.getTmdbId()) == null) {
+            sMovieActionsCache.put(movie.getTmdbId(), new HashMap<ComponentName, Action>());
+        }
+        // actually request actions
+        context.startService(new Intent(IncomingConstants.ACTION_UPDATE)
+                .setComponent(extension)
+                .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, movie.getTmdbId())
+                .putExtra(IncomingConstants.EXTRA_MOVIE, movie.toBundle()));
+    }
+
+    public void handlePublishedAction(String token, Action action, int type) {
         if (TextUtils.isEmpty(token) || action == null) {
             // whoops, no token or action received
             Timber.d("handlePublishedAction: token or action empty");
             return;
         }
+        if (type != ACTION_TYPE_EPISODE && type != ACTION_TYPE_MOVIE) {
+            Timber.d("handlePublishedAction: unknown type of entity");
+            return;
+        }
 
         synchronized (this) {
-            if (!mTokens.containsKey(token)) {
+            if (!tokens.containsKey(token)) {
                 // we are not subscribed, ignore
                 Timber.d("handlePublishedAction: token invalid, ignoring incoming action");
                 return;
             }
 
-            // check if action episode identifier is for an episode we requested actions for
-            Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(
-                    action.getEntityIdentifier());
+            // check if action entity identifier is for an entity we requested actions for
+            Map<ComponentName, Action> actionMap;
+            if (type == ACTION_TYPE_EPISODE) {
+                // episode
+                actionMap = sEpisodeActionsCache.get(action.getEntityIdentifier());
+            } else {
+                // movie
+                actionMap = sMovieActionsCache.get(action.getEntityIdentifier());
+            }
             if (actionMap == null) {
                 // did not request actions for this episode, or is already out of cache (too late!)
                 Timber.d(
-                        "handlePublishedAction: not interested in actions for %s, ignoring incoming action",
+                        "handlePublishedAction: ignoring actions for %s, not requested",
                         action.getEntityIdentifier());
                 return;
             }
-            // store action for this episode
-            ComponentName extension = mTokens.get(token);
+            // store action for this entity
+            ComponentName extension = tokens.get(token);
             actionMap.put(extension, action);
         }
 
-        // notify that actions for an episode were updated
-        EventBus.getDefault().post(new EpisodeActionReceivedEvent(action.getEntityIdentifier()));
+        // notify that actions were updated
+        if (type == ACTION_TYPE_EPISODE) {
+            EventBus.getDefault()
+                    .post(new EpisodeActionReceivedEvent(action.getEntityIdentifier()));
+        } else {
+            EventBus.getDefault().post(new MovieActionReceivedEvent(action.getEntityIdentifier()));
+        }
     }
 
     private synchronized void loadSubscriptions() {
-        mEnabledExtensions = new ArrayList<>();
-        mSubscriptions = new HashMap<>();
-        mTokens = new HashMap<>();
+        enabledExtensions = new ArrayList<>();
+        subscriptions = new HashMap<>();
+        tokens = new HashMap<>();
 
-        String serializedSubscriptions = mSharedPrefs.getString(PREF_SUBSCRIPTIONS, null);
+        String serializedSubscriptions = prefs.getString(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions == null) {
             setDefaultEnabledExtensions();
             return;
@@ -333,22 +409,22 @@ public class ExtensionManager {
             String[] arr = subscription.split("\\|", 2);
             ComponentName extension = ComponentName.unflattenFromString(arr[0]);
             String token = arr[1];
-            mEnabledExtensions.add(extension);
-            mSubscriptions.put(extension, token);
-            mTokens.put(token, extension);
+            enabledExtensions.add(extension);
+            subscriptions.put(extension, token);
+            tokens.put(token, extension);
             Timber.d("Restored subscription: %s token: %s", extension, token);
         }
     }
 
     private synchronized void saveSubscriptions() {
         List<String> serializedSubscriptions = new ArrayList<>();
-        for (ComponentName extension : mEnabledExtensions) {
+        for (ComponentName extension : enabledExtensions) {
             serializedSubscriptions.add(extension.flattenToShortString() + "|"
-                    + mSubscriptions.get(extension));
+                    + subscriptions.get(extension));
         }
         Timber.d("Saving %s subscriptions", serializedSubscriptions.size());
         JSONArray json = new JSONArray(serializedSubscriptions);
-        mSharedPrefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
+        prefs.edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
     }
 
     /**
@@ -356,8 +432,9 @@ public class ExtensionManager {
      * enabled {@linkplain com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}s.
      * Call this e.g. after going into an extensions settings activity.
      */
-    public synchronized void clearEpisodeActionsCache() {
+    public synchronized void clearActionsCache() {
         sEpisodeActionsCache.evictAll();
+        sMovieActionsCache.evictAll();
     }
 
     public class Extension {

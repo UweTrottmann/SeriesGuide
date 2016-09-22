@@ -8,6 +8,7 @@ public interface IncomingConstants {
 
     String ACTION_UPDATE = "com.battlelancer.seriesguide.api.action.UPDATE";
     String EXTRA_EPISODE = "com.battlelancer.seriesguide.api.extra.EPISODE";
+    String EXTRA_MOVIE = "com.battlelancer.seriesguide.api.extra.MOVIE";
     String EXTRA_ENTITY_IDENTIFIER = "com.battlelancer.seriesguide.api.extra.ENTITY_IDENTIFIER";
 
 }
