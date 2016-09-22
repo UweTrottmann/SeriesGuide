@@ -203,19 +203,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             MenuItem shareItem = menu.findItem(R.id.menu_movie_share);
             shareItem.setEnabled(isEnableShare);
             shareItem.setVisible(isEnableShare);
-            MenuItem webSearchItem = menu.findItem(R.id.menu_action_movie_websearch);
-            webSearchItem.setEnabled(isEnableShare);
-            webSearchItem.setVisible(isEnableShare);
-
-            MenuItem playStoreItem = menu.findItem(R.id.menu_open_google_play);
-            if (Utils.isAmazonVersion()) {
-                // hide Google Play button in Amazon version
-                playStoreItem.setEnabled(false);
-                playStoreItem.setVisible(false);
-            } else {
-                playStoreItem.setEnabled(isEnableShare);
-                playStoreItem.setVisible(isEnableShare);
-            }
 
             boolean isEnableImdb = movieDetails.tmdbMovie() != null
                     && !TextUtils.isEmpty(movieDetails.tmdbMovie().imdb_id);
@@ -246,20 +233,11 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             ServiceUtils.openYoutube(trailer.key, TAG, getActivity());
             return true;
         }
-        if (itemId == R.id.menu_open_google_play) {
-            ServiceUtils.searchGooglePlay(movieDetails.tmdbMovie().title, TAG,
-                    getActivity());
-            return true;
-        }
         if (itemId == R.id.menu_open_tmdb) {
             TmdbTools.openTmdbMovie(getActivity(), tmdbId, TAG);
         }
         if (itemId == R.id.menu_open_trakt) {
             Utils.launchWebsite(getActivity(), TraktTools.buildMovieUrl(tmdbId), TAG, "trakt");
-            return true;
-        }
-        if (itemId == R.id.menu_action_movie_websearch) {
-            ServiceUtils.performWebSearch(getActivity(), movieDetails.tmdbMovie().title, TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
