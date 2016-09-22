@@ -1,6 +1,7 @@
 apply plugin: "java"
 apply plugin: "maven"
 apply plugin: "signing"
+apply plugin: "io.codearte.nexus-staging"
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
@@ -101,4 +102,8 @@ uploadArchives {
             }
         }
     }
+}
+
+nexusStaging {
+    packageGroup = "com.uwetrottmann"
 }
