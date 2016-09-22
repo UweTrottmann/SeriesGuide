@@ -152,6 +152,7 @@ public class ExtensionManager {
      */
     public void setDefaultEnabledExtensions() {
         List<ComponentName> defaultExtensions = new ArrayList<>();
+        defaultExtensions.add(new ComponentName(context, WebSearchExtension.class));
         defaultExtensions.add(new ComponentName(context, YouTubeExtension.class));
         setEnabledExtensions(defaultExtensions);
     }
