@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 33
+----------
+*(in development)*
+
+#### 33-beta1
+*(2016-09-23)*
+
+* FEATURE Extensions support for movies. See https://seriesgui.de/api for details.
+* FEATURE Share TheTVDB links to SeriesGuide to add a show. For now, if no TheTVDB link is recognized,
+  the search field is filled with the shared text.
+* TWEAK Display language button right above show description. Easier to find and understand what it does.
+* NOTE Latest translations from crowdin.
+
 Version 32
 ----------
 *(2016-08-24)*
