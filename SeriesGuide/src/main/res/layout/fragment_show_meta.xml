@@ -2,6 +2,17 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <Button
+        android:id="@+id/buttonShowLanguage"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:drawableLeft="?attr/drawableLanguage"
+        android:drawablePadding="@dimen/default_padding"
+        tools:text="Deutsch" />
+
     <TextView
         android:id="@+id/textViewShowOverview"
         style="@style/Block.FlowText"
@@ -109,19 +120,5 @@
         android:textAppearance="@style/TextAppearance.Body"
         android:textIsSelectable="true"
         tools:text="July 17, 21:48" />
-
-    <TextView
-        style="@style/Block.WithTopMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pref_language"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-    <Spinner
-        android:id="@+id/spinnerShowLanguage"
-        style="@style/Block"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:prompt="@string/welcome_setuplanguage" />
 
 </merge>

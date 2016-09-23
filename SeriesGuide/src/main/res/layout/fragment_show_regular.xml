@@ -119,7 +119,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/inline_padding"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/sgColorDivider" />
