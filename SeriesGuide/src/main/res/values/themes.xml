@@ -78,6 +78,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
+        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
@@ -166,6 +167,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
+        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
@@ -266,6 +268,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_grey600_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
+        <item name="drawableComments">@drawable/ic_forum_black_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all_inverse</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>

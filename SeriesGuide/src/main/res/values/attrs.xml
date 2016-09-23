@@ -32,6 +32,7 @@
     <attr name="drawableCheckin" format="reference" />
     <attr name="drawableCollect" format="reference" />
     <attr name="drawableCollectAll" format="reference" />
+    <attr name="drawableComments" format="reference" />
     <attr name="drawableDropdown" format="reference" />
     <attr name="drawableFilter" format="reference" />
     <attr name="drawableHelp" format="reference" />

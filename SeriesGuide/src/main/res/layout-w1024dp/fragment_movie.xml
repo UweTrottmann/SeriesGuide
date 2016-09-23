@@ -162,6 +162,8 @@
                             android:layout_below="@+id/textViewMovieMore"
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
+                            android:drawableLeft="?attr/drawableComments"
+                            android:drawablePadding="8dp"
                             android:text="@string/comments" />
                     </RelativeLayout>
 
