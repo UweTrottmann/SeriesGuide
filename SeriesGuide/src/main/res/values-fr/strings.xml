@@ -321,7 +321,7 @@
   <string name="pref_onlyseasoneps">Masquer les épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">Les épisodes spéciaux n\'apparaissent plus excepté dans la liste des saisons</string>
   <string name="pref_exactdates">Afficher les dates exactes</string>
-  <string name="pref_exactdates_summary">« 31 octobre » au lieu de « en 3 jours »</string>
+  <string name="pref_exactdates_summary">« 31 octobre » au lieu de « dans 3 jours »</string>
   <string name="pref_seasonsorting">Trier les saisons par&#8230;</string>
   <string name="pref_episodesorting">Trier les épisodes par&#8230;</string>
   <string name="pref_language">Langue préférée pour le contenu</string>
@@ -486,7 +486,7 @@
   <string name="feedback_action_notreally">Pas vraiment</string>
   <string name="feedback_question_rate_google">Notez-le sur Google Play ?</string>
   <string name="feedback_question_rate_amazon">Notez-le sur Amazon ?</string>
-  <string name="feedback_question_feedback">Ditez-moi comment l’améliorer ?</string>
+  <string name="feedback_question_feedback">Dites-moi comment l’améliorer ?</string>
   <string name="feedback_action_ok">OK, bien sûr</string>
   <string name="feedback_action_nothanks">Non, merci</string>
 </resources>

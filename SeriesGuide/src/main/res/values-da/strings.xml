@@ -40,7 +40,7 @@
   <string name="any_language">Ethvert sprog</string>
   <!-- Status messages -->
   <string name="updated">Opdateret til nyeste version.</string>
-  <string name="norating">ikke relevant</string>
+  <string name="norating">ikke tilgængelig</string>
   <string name="unknown">ukendt</string>
   <string name="offline">Forbind til et netværk, og prøv igen.</string>
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
@@ -68,7 +68,7 @@
     <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">HEL EPISODE</string>
+  <string name="episode_number_absolute">Absolut nr.</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Udgivelsesdato</string>
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>

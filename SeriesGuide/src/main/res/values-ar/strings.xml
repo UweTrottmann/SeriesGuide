@@ -54,7 +54,7 @@
   <string name="share_checkout">تتحق من %s</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
-  <string name="links">Links</string>
+  <string name="links">الروابط</string>
   <!-- Comments -->
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
@@ -217,7 +217,7 @@
   <string name="action_movies_sort_title">العنوان</string>
   <string name="action_movies_sort_release">تاريخ الإصدار</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">خطأ في الإحصائيات.</string>
   <string name="statistics_shows">المسلسلات</string>
   <string name="statistics_episodes">الحلقات</string>
   <string name="statistics_movies">الأفلام</string>
@@ -395,7 +395,7 @@
   <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
   <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
@@ -501,12 +501,12 @@
   <!-- People -->
   <string name="person_biography">السيرة الذاتية</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_question_enjoy">هل انت راض و مستمتع ب SeriesGuide؟</string>
+  <string name="feedback_action_yes">تم!</string>
+  <string name="feedback_action_notreally">ليس في الحقيقة</string>
   <string name="feedback_question_rate_google">Rate it on Google Play?</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_feedback">اخبرني كيف احسنها ؟</string>
+  <string name="feedback_action_ok">بالتأكيد</string>
+  <string name="feedback_action_nothanks">لا، شكرا</string>
 </resources>

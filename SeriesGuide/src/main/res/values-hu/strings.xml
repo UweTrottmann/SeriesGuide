@@ -273,7 +273,7 @@
   <string name="trakt_account">trakt fiók</string>
   <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
-  <string name="trakt_reconnect">A SeriesGuide csatlakozása a trakthoz</string>
+  <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>
   <string name="trakt_reconnect_details">Ellenőrizd a trakt engedélyeket</string>
   <string name="username">Felhasználónév</string>
   <string name="waitplease">Kis türelmet&#8230;</string>

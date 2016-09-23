@@ -370,7 +370,7 @@
   <!-- Other advanced settings -->
   <string name="pref_other">Другое</string>
   <string name="pref_autoupdate">Автоматическое обновление</string>
-  <string name="pref_autoupdatesummary">Переодически обновлять сериалы</string>
+  <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы</string>
   <string name="pref_autobackup">Автоматическое резервное копирование</string>
   <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
   <string name="backup">Резервное копирование/восстановление</string>

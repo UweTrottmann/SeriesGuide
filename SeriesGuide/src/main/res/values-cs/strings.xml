@@ -309,10 +309,10 @@
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Ohlásit se</string>
-  <string name="checkin_hint">Napište postřeh (nepovinné)</string>
+  <string name="checkin_hint">Napište zprávu (volitelné)</string>
   <string name="paste_title">Vložit název</string>
   <string name="pref_quick_checkin">Rychle se ohlásit</string>
-  <string name="pref_quick_checkin_summary">Nevyžadovat postřeh</string>
+  <string name="pref_quick_checkin_summary">Bez možnosti přidání zprávy k ohlášení</string>
   <!-- Help -->
   <string name="feedback">Poslat reakci</string>
   <string name="action_open_in_browser">Otevřít v prohlížečí</string>

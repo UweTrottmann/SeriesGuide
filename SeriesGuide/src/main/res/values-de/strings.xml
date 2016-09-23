@@ -473,9 +473,9 @@
   <string name="extension_amazon">Amazon-Suche</string>
   <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
   <string name="pref_amazon_domain">Amazon-Seite</string>
-  <string name="extension_google_play">Google Play Suche</string>
+  <string name="extension_google_play">Google Play-Suche</string>
   <string name="description_extension_google_play">Google Play Store durchsuchen</string>
-  <string name="extension_youtube">YouTube Suche</string>
+  <string name="extension_youtube">YouTube-Suche</string>
   <string name="description_extension_youtube">YouTube nach Videos durchsuchen</string>
   <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
   <!-- People -->
