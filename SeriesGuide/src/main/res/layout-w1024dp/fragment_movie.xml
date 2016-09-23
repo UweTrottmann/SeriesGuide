@@ -32,10 +32,13 @@
                 android:clipToPadding="false"
                 android:paddingTop="?attr/actionBarSize">
 
+                <!-- Make container focusable to prevent ScrollView from scrolling to selectable TextViews. -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <RelativeLayout
