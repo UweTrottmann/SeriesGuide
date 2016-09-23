@@ -172,44 +172,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/containerMoviePeople"
+                    android:layout_marginBottom="@dimen/inline_padding"
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
-                    android:layout_marginTop="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/inline_padding"
                     android:background="?attr/sgColorDivider" />
-
-                <TextView
-                    android:id="@+id/textViewMovieExtensionsLabel"
-                    style="@style/Block.WithTopMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dividerMovie3"
-                    android:text="@string/extensions"
-                    android:textAppearance="@style/TextAppearance.Body.Bold" />
 
                 <LinearLayout
                     android:id="@+id/containerMovieActions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewMovieExtensionsLabel"
+                    android:layout_below="@id/dividerMovie3"
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:orientation="vertical" />
 
-                <TextView
-                    android:id="@+id/textViewMovieMore"
-                    style="@style/Block.WithTopMargin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/containerMovieActions"
-                    android:text="@string/services_more"
-                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+                <View
+                    android:id="@+id/dividerMovie4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/containerMovieActions"
+                    android:layout_marginBottom="@dimen/inline_padding"
+                    android:layout_marginLeft="@dimen/large_padding"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/inline_padding"
+                    android:background="?attr/sgColorDivider" />
 
                 <Button
                     android:id="@+id/buttonMovieComments"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Default"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@+id/textViewMovieMore"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dividerMovie4"
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:drawableLeft="?attr/drawableComments"

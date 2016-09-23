@@ -3,8 +3,9 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textViewItemActionTitle"
-    style="@style/Widget.SeriesGuide.Button.Borderless"
+    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="end"
+    android:gravity="center_vertical|start"
     tools:text="Some Extension Action" />
