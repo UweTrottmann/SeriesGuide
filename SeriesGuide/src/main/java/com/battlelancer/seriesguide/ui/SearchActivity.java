@@ -10,6 +10,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -42,6 +43,8 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import de.greenrobot.event.EventBus;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or redirects
@@ -317,7 +320,51 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             String id = data.getLastPathSegment();
             displayEpisode(id);
             finish();
+        } else if (Intent.ACTION_SEND.equals(action)) {
+            // text share intents from other apps
+            if ("text/plain".equals(intent.getType())) {
+                handleSharedText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            }
         }
+    }
+
+    private void handleSharedText(@Nullable String sharedText) {
+        if (TextUtils.isEmpty(sharedText)) {
+            return;
+        }
+
+        // try to match TVDB URLs
+        // match season and episode pages first
+        Pattern tvdbSeriesIdPattern = Pattern.compile(".*?thetvdb\\.com.*?seriesid=([0-9]*)");
+        int showTvdbId = matchShowTvdbId(tvdbSeriesIdPattern, sharedText);
+        if (showTvdbId <= 0) {
+            // match show pages
+            Pattern tvdbIdPattern = Pattern.compile(".*?thetvdb\\.com.*?id=([0-9]*)");
+            showTvdbId = matchShowTvdbId(tvdbIdPattern, sharedText);
+        }
+
+        if (showTvdbId > 0) {
+            // found an id, display the add dialog
+            AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+        } else {
+            // no id, populate the search field instead
+            viewPager.setCurrentItem(SEARCH_TAB_POSITION);
+            searchView.setText(sharedText);
+        }
+    }
+
+    private int matchShowTvdbId(Pattern pattern, String text) {
+        int showTvdbId = -1;
+
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find()) {
+            try {
+                showTvdbId = Integer.parseInt(matcher.group(1));
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        return showTvdbId;
     }
 
     private void triggerLocalSearch(String query) {
