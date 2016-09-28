@@ -108,6 +108,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         binding.movieButtons.containerMovieButtons.setVisibility(View.GONE);
         binding.movieRatings.containerRatings.setVisibility(View.GONE);
 
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), binding.buttonMovieComments,
+                R.attr.drawableComments);
+
         // cast and crew
         setCastVisibility(false);
         setCrewVisibility(false);

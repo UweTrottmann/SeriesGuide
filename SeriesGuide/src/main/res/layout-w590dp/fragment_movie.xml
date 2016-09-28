@@ -182,6 +182,7 @@
                         android:layout_marginTop="@dimen/inline_padding"
                         android:background="?attr/sgColorDivider" />
 
+                    <!-- Compound drawable set in code. -->
                     <Button
                         android:id="@+id/buttonMovieComments"
                         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
@@ -190,9 +191,9 @@
                         android:layout_below="@id/dividerMovie3"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
-                        android:drawableLeft="?attr/drawableComments"
                         android:drawablePadding="8dp"
                         android:text="@string/comments" />
+
                 </RelativeLayout>
 
             </android.support.v4.widget.NestedScrollView>

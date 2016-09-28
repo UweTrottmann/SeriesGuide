@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:drawableLeft="?attr/drawableLanguage"
         android:drawablePadding="@dimen/default_padding"
         tools:text="Deutsch" />
 

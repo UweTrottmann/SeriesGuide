@@ -143,6 +143,8 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonShortcut);
 
         // language button
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonLanguage,
+                R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
