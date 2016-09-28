@@ -550,6 +550,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     Runnable movieActionsRunnable = new Runnable() {
         @Override
         public void run() {
+            if (!isAdded()) {
+                return; // we need an activity for this, abort.
+            }
             loadMovieActions();
         }
     };
