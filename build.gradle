@@ -29,8 +29,8 @@ ext {
     androidBuildToolsVersion = '24.0.1'
 
     // API level 15+ -> version 15xxx
-    androidVersionCode = 15210
-    androidVersionName = '33-beta1'
+    androidVersionCode = 15211
+    androidVersionName = '33-beta2'
 
     supportVersion = '24.2.0'
 }

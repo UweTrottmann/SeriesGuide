@@ -9,6 +9,13 @@ Version 33
 ----------
 *(in development)*
 
+#### 33-beta2
+*(2016-09-28)*
+
+* FIX Crash when opening show overview or movie details on Android 4.4 and below. New vector icons
+  are not supported without some tweaks.
+* FIX Crash in movie details when actions are loaded, but there is no view to attach them to.
+
 #### 33-beta1
 *(2016-09-23)*
 
