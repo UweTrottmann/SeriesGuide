@@ -156,8 +156,7 @@ public class AppWidget extends AppWidgetProvider {
                                 .get();
                         item.setImageViewBitmap(R.id.widgetPoster, poster);
                     } catch (IOException e) {
-                        Timber.e(e,
-                                "Failed to load show poster for widget item: " + posterPath);
+                        Timber.e(e, "Failed to load show poster for widget item: %s", posterPath);
                     }
 
                     views.addView(R.id.LinearLayoutWidget, item);
@@ -177,17 +176,6 @@ public class AppWidget extends AppWidgetProvider {
                     .addNextIntent(activityIntent)
                     .getPendingIntent(0, 0);
             views.setOnClickPendingIntent(R.id.LinearLayoutWidget, activityPendingIntent);
-
-            if (layout != R.layout.appwidget) {
-                // Create an Intent to launch SeriesGuide
-                Intent launchIntent = new Intent(context, ShowsActivity.class);
-                launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                PendingIntent pendingIntent = PendingIntent
-                        .getActivity(context, 0, launchIntent, 0);
-                views.setOnClickPendingIntent(R.id.widgetShowlistButton, pendingIntent);
-            }
 
             // Create an intent to update the widget
             updateIntent.setAction(REFRESH);
