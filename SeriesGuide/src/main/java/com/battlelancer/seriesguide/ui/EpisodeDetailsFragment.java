@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -109,6 +110,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView mTextUserRating;
 
+    @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button mCheckinButton;
     @BindView(R.id.buttonEpisodeWatched) Button mWatchedButton;
     @BindView(R.id.buttonEpisodeCollected) Button mCollectedButton;
@@ -447,9 +449,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         });
         CheatSheet.setup(mCheckinButton);
 
-        // prevent checking in if hexagon is enabled
-        mCheckinButton.setVisibility(
-                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
+        // hide check-in if not connected to trakt or hexagon is enabled
+        boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
+        boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+        mCheckinButton.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+        dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);

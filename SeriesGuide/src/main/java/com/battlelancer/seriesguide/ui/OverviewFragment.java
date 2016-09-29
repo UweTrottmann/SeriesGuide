@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -98,6 +99,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
     @BindView(R.id.progress_container) View containerProgress;
     @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
@@ -646,9 +648,11 @@ public class OverviewFragment extends Fragment implements
             CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
                     : R.string.action_collection_add);
 
-            // prevent checking in if hexagon is enabled
-            buttonCheckin.setVisibility(
-                    HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
+            // hide check-in if not connected to trakt or hexagon is enabled
+            boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
+            boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+            buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+            dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
             // buttons might have been disabled by action, re-enable
             buttonWatch.setEnabled(true);

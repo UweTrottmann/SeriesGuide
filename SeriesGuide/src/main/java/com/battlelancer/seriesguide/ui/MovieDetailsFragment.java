@@ -295,13 +295,16 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
         CheatSheet.setup(checkinButton);
 
-        // prevent checking in if hexagon is enabled
-        checkinButton.setVisibility(
-                HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
+        // hide check-in if not connected to trakt or hexagon is enabled
+        boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
+        boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+        checkinButton.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+        binding.movieButtons.dividerMovieButtons.setVisibility(
+                displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
         Button watchedButton = binding.movieButtons.buttonMovieWatched;
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+        if (isConnectedToTrakt) {
             watchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(watchedButton,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
