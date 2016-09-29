@@ -226,17 +226,17 @@
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d дня</item>
+    <item quantity="few">%d день</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d часа</item>
+    <item quantity="few">%d час</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минуты</item>
+    <item quantity="few">%d минута</item>
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
@@ -304,7 +304,7 @@
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
     <item quantity="one">%d голос</item>
-    <item quantity="few">%d голоса</item>
+    <item quantity="few">%d голос</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
