@@ -139,6 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/inline_padding"
             android:orientation="vertical">
 
             <include layout="@layout/buttons_more" />
