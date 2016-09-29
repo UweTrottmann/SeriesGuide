@@ -591,16 +591,21 @@ public class OverviewFragment extends Fragment implements
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
 
             // title
-            textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            int season = episode.getInt(EpisodeQuery.SEASON);
+            int number = episode.getInt(EpisodeQuery.NUMBER);
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textEpisodeTitle.setText(TextTools.getEpisodeNumber(getContext(), season, number));
+            } else {
+                textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            }
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, episode.getInt(EpisodeQuery.SEASON)));
+            infoText.append(getString(R.string.season_number, String.valueOf(season)));
             infoText.append(" ");
-            int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
-            infoText.append(getString(R.string.episode_number, episodeNumber));
+            infoText.append(getString(R.string.episode_number, String.valueOf(number)));
             int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
+            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }
             textEpisodeNumbers.setText(infoText);
@@ -803,15 +808,19 @@ public class OverviewFragment extends Fragment implements
             // no show or episode data available
             return;
         }
-        String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
-        if (TextUtils.isEmpty(overview)) {
-            // no description available, show no translation available message
-            textDescription.setText(getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(getContext(),
-                            showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
-                    getString(R.string.tvdb)));
+        if (DisplaySettings.preventSpoilers(getContext())) {
+            textDescription.setText(null);
         } else {
-            textDescription.setText(overview);
+            String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
+            if (TextUtils.isEmpty(overview)) {
+                // no description available, show no translation available message
+                textDescription.setText(getString(R.string.no_translation,
+                        LanguageTools.getLanguageStringForCode(getContext(),
+                                showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
+                        getString(R.string.tvdb)));
+            } else {
+                textDescription.setText(overview);
+            }
         }
     }
 
