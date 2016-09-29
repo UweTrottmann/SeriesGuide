@@ -53,6 +53,9 @@ public class DisplaySettings {
     public static final String KEY_DISPLAY_EXACT_DATE =
             "com.battlelancer.seriesguide.shows.exactdate";
 
+    public static final String KEY_PREVENT_SPOILERS =
+            "com.battlelancer.seriesguide.PREVENT_SPOILERS";
+
     /**
      * Returns true for xlarge, xlarge-land or sw720dp screens.
      */
@@ -174,5 +177,13 @@ public class DisplaySettings {
     public static boolean isDisplayExactDate(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_DISPLAY_EXACT_DATE, false);
+    }
+
+    /**
+     * Whether the app should hide details potentially spoiling an unwatched episode.
+     */
+    public static boolean preventSpoilers(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                KEY_PREVENT_SPOILERS, false);
     }
 }
