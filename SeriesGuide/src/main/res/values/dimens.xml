@@ -28,7 +28,6 @@
     <dimen name="widget_item_width">27dp</dimen>
     <dimen name="widget_item_height">40dp</dimen>
     <dimen name="widget_text_small">12sp</dimen>
-    <dimen name="widget_text_middle">12sp</dimen>
     <dimen name="widget_text_large">13sp</dimen>
     <dimen name="widget_padding_default">8dp</dimen>
     <dimen name="widget_padding_inline">4dp</dimen>
@@ -69,14 +68,10 @@
 
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>
-    <dimen name="buttonbar_button_width">56dp</dimen>
 
     <!-- Reorder drag grip -->
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
-
-    <!-- Navigation drawer -->
-    <dimen name="drawer_width">260dp</dimen>
 
     <!-- Refresh progress circle -->
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
@@ -90,7 +85,6 @@
     <!-- Others -->
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>
-    <dimen name="addpager_width">450dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
     <dimen name="tab_padding_horizontal">12dp</dimen>
     <dimen name="search_padding_right">16dp</dimen>
