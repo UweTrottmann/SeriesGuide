@@ -11,7 +11,6 @@
   <string name="help">Pomoč</string>
   <string name="help_and_feedback">Pomoč &amp; povratne informacije</string>
   <string name="drawer_open">Odpri navigacijsko okno</string>
-  <string name="drawer_close">Zapri navigacijsko okno</string>
   <!-- Media items -->
   <string name="show">Prikaži</string>
   <string name="episode">Epizoda</string>
@@ -75,11 +74,9 @@
   <string name="episode_firstaired">Datum izdaje</string>
   <string name="episode_firstaired_unknown">Neznan datum izdaje</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
-  <string name="show_actors">Igralci</string>
   <string name="original_release">Originalna izdaja</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žanri</string>
-  <string name="show_runtime">Dolžina</string>
   <string name="show_contentrating">Primernost vsebine</string>
   <string name="show_release_times">Opombe ob izdaji</string>
   <string name="episode_directors">Režiserji</string>
@@ -88,8 +85,6 @@
   <string name="show_isalive">Se nadaljuje</string>
   <string name="show_isnotalive">Končano</string>
   <string name="lastEdit">Zadnja sprememba // TVDb</string>
-  <string name="services_watch">Gledaj</string>
-  <string name="services_more">Več</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Ni prevedeno</string>
   <!-- Date and Time -->
@@ -337,9 +332,6 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">O SeriesGuide</string>
-  <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
-  <string name="pref_autoaddshowssummary">Avtomatsko dodaj oddaje iz svoje trakt aktivnosti</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -440,8 +432,6 @@
   <string name="notification_release_earlier_hour">eno uro prej</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (majhen)</string>
-  <string name="bigwidget">SeriesGuide (srednji)</string>
-  <string name="largewidget">SeriesGuide (velik)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skrij gledane epizode</string>
   <string name="pref_widget_opacity">Widget background</string>
@@ -474,7 +464,6 @@
   <string name="subscription_failed">Purchase not completed.</string>
   <string name="pass_unavailable">X Pass is currently not available.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensions</string>
   <string name="action_extensions_configure">Customize extensions</string>
   <string name="action_extensions_add">Add extension</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>

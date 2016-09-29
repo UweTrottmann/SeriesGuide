@@ -11,7 +11,6 @@
   <string name="help">Помоћ</string>
   <string name="help_and_feedback">Помоћ &amp; повратне информације</string>
   <string name="drawer_open">Отвори панел за навигацију</string>
-  <string name="drawer_close">Затвори панел за навигацију</string>
   <!-- Media items -->
   <string name="show">Серија</string>
   <string name="episode">Епизода</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Датум емитовања</string>
   <string name="episode_firstaired_unknown">Датум емитовања је непознат</string>
   <string name="episode_dvdnumber">DVD епизода</string>
-  <string name="show_actors">Глумци</string>
   <string name="original_release">Оригинално издање</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрови</string>
-  <string name="show_runtime">Трајање</string>
   <string name="show_contentrating">Оцена садржаја</string>
   <string name="show_release_times">Време емитовања</string>
   <string name="episode_directors">Режисери</string>
@@ -87,8 +84,6 @@
   <string name="show_isalive">Наставља се</string>
   <string name="show_isnotalive">Завршена</string>
   <string name="lastEdit">Последње уређено // TVDb</string>
-  <string name="services_watch">Гледај</string>
-  <string name="services_more">Више</string>
   <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
@@ -332,9 +327,6 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">О SeriesGuide-у</string>
-  <string name="pref_autoaddshows">Додај нове серије тракта</string>
-  <string name="pref_autoaddshowssummary">Аутоматски додај серије са ваших активности на тракту</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -435,8 +427,6 @@
   <string name="notification_release_earlier_hour">1 сат унапред</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (мали)</string>
-  <string name="bigwidget">SeriesGuide (средњи)</string>
-  <string name="largewidget">SeriesGuide (велики)</string>
   <!-- List Widget -->
   <string name="hide_watched">Сакриј одгледане епизоде</string>
   <string name="pref_widget_opacity">Позадина виџета</string>
@@ -469,7 +459,6 @@
   <string name="subscription_failed">Куповина није обављена.</string>
   <string name="pass_unavailable">X Pass тренутно није доступан.</string>
   <!-- Extensions -->
-  <string name="extensions">Додаци</string>
   <string name="action_extensions_configure">Подеси додатке</string>
   <string name="action_extensions_add">Додај додатак</string>
   <string name="action_extensions_limit">Претплати се на Х да додаш нове додатке</string>

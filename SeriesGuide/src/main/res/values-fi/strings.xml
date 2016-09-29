@@ -11,7 +11,6 @@
   <string name="help">Ohjeet</string>
   <string name="help_and_feedback">Ohje ja palaute</string>
   <string name="drawer_open">Avaa vetopaneeli</string>
-  <string name="drawer_close">Sulje vetopaneeli</string>
   <!-- Media items -->
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Julkaisupäivä</string>
   <string name="episode_firstaired_unknown">Tuntematon julkaisupäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
-  <string name="show_actors">Näyttelijät</string>
   <string name="original_release">Alkuperäinen julkaisu</string>
   <string name="show_on_network">kanavalla %s</string>
   <string name="show_genres">Genret</string>
-  <string name="show_runtime">Kesto</string>
   <string name="show_contentrating">Sisällön luokitus</string>
   <string name="show_release_times">Julkaisuajat</string>
   <string name="episode_directors">Ohjaajat</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Jatkuu</string>
   <string name="show_isnotalive">Päättynyt</string>
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
-  <string name="services_watch">Katso</string>
-  <string name="services_more">Enemmän</string>
   <string name="no_translation">Kuvausta ei ole saatavilla %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Ensisijainen sisällön kieli</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
-  <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
-  <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
   <!-- About screen -->
   <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta se ei ole TMDb:n hyväksymä tai sertifioima.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 tunti etukäteen</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
-  <string name="bigwidget">SeriesGuide (keski)</string>
-  <string name="largewidget">SeriesGuide (suuri)</string>
   <!-- List Widget -->
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="pref_widget_opacity">Widgetin tausta</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Ostos epäonnistui.</string>
   <string name="pass_unavailable">X Pass ei ole nyt käytettävissä.</string>
   <!-- Extensions -->
-  <string name="extensions">Laajennukset</string>
   <string name="action_extensions_configure">Muokkaa laajennuksia</string>
   <string name="action_extensions_add">Lisää laajennus</string>
   <string name="action_extensions_limit">Hanki X lisätäksesi enemmän laajennuksia</string>

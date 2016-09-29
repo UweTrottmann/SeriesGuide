@@ -11,7 +11,6 @@
   <string name="help">راهنما</string>
   <string name="help_and_feedback">راه‌نما و بازخورد</string>
   <string name="drawer_open">باز کردن کشو ی ناوبری</string>
-  <string name="drawer_close">بستن کشوی ناوبری</string>
   <!-- Media items -->
   <string name="show">نمایش</string>
   <string name="episode">قسمت</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">تاریخ انتشار</string>
   <string name="episode_firstaired_unknown">تاریخ انتشار نامشخّص</string>
   <string name="episode_dvdnumber">قسمت دی‌وی‌دی</string>
-  <string name="show_actors">بازیگران</string>
   <string name="original_release">انتشار اصلی</string>
   <string name="show_on_network">در %s</string>
   <string name="show_genres">سبک‌ها</string>
-  <string name="show_runtime">زمان پخش</string>
   <string name="show_contentrating">رتبه‌بندی محتوایی</string>
   <string name="show_release_times">زمان‌های انتشار</string>
   <string name="episode_directors">کارگردانان</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">ادامه دارد</string>
   <string name="show_isnotalive">به پایان رسیده</string>
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
-  <string name="services_watch">تماشا کردن</string>
-  <string name="services_more">بیش‌تر</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">زبان محتوای ترجیحی</string>
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
-  <string name="about">دربارهٔ سریزگاید</string>
-  <string name="pref_autoaddshows">افزودن نمایش‌های جدید ترکت</string>
-  <string name="pref_autoaddshowssummary">افزودن خودکار نمایش‌ها از جریان فعّالیت ترکت</string>
   <!-- About screen -->
   <string name="licence_tvdb">این کاره از داده‌ها و تصویرهای TheTVDB با پروانهٔ CC BY-NC 4.0 استفاده می‌کند.</string>
   <string name="licence_themoviedb">این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند، ولی توسّط TMDb توصیه یا تصدیق نشده است.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">۱ ساعت قبل</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">سریزگاید (کوچک)</string>
-  <string name="bigwidget">سریزگاید (متوسّط)</string>
-  <string name="largewidget">سریزگاید (بزرگ)</string>
   <!-- List Widget -->
   <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
   <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">خرید کامل نشد.</string>
   <string name="pass_unavailable">در حال حاضر X Pass موجود نیست.</string>
   <!-- Extensions -->
-  <string name="extensions">افزونه‌ها</string>
   <string name="action_extensions_configure">سفارشی سازی افزونه‌ها</string>
   <string name="action_extensions_add">افزودن افزونه‌ها</string>
   <string name="action_extensions_limit">برای افزودن افزونه‌های بیش‌تر X را بگیرید</string>

@@ -11,7 +11,6 @@
   <string name="help">Nápověda</string>
   <string name="help_and_feedback">Pomoc a připomínky</string>
   <string name="drawer_open">Otevřít záložky aplikace</string>
-  <string name="drawer_close">Zavřít záložky aplikace</string>
   <!-- Media items -->
   <string name="show">Seriál</string>
   <string name="episode">Epizoda</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Datum vysílání</string>
   <string name="episode_firstaired_unknown">Datum vysílání neznámé</string>
   <string name="episode_dvdnumber">Epizoda na DVD</string>
-  <string name="show_actors">Herci</string>
   <string name="original_release">Původní vydání</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánr</string>
-  <string name="show_runtime">Celková délka</string>
   <string name="show_contentrating">Hodnocení obsahu</string>
   <string name="show_release_times">Časy vydání</string>
   <string name="episode_directors">Režie</string>
@@ -87,8 +84,6 @@
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Ukončený</string>
   <string name="lastEdit">Naposledy editováno // TVDb</string>
-  <string name="services_watch">Zhlédnout</string>
-  <string name="services_more">Více</string>
   <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
   <string name="no_translation_title">Nepřeloženo</string>
   <!-- Date and Time -->
@@ -332,9 +327,6 @@
   <string name="pref_language">Preferovaný jazyk obsahu</string>
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
-  <string name="about">O SeriesGuide</string>
-  <string name="pref_autoaddshows">Přidávat nové seriály z traktu</string>
-  <string name="pref_autoaddshowssummary">Automaticky přidávat seriály z Vaší aktivity na trakt.tv</string>
   <!-- About screen -->
   <string name="licence_tvdb">Tato aplikace využívá údaje a obrázky z TheTVDB podle licence CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tento produkt používá TMDb API ale není schválen nebo certifikován TMDb.</string>
@@ -435,8 +427,6 @@
   <string name="notification_release_earlier_hour">hodinu předem</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
-  <string name="bigwidget">SeriesGuide (střední)</string>
-  <string name="largewidget">SeriesGuide (velký)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skrýt zhlédnuté epizody</string>
   <string name="pref_widget_opacity">Pozadí widgetu</string>
@@ -469,7 +459,6 @@
   <string name="subscription_failed">Nákup nebyl dokončen.</string>
   <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>
   <!-- Extensions -->
-  <string name="extensions">Rozšíření</string>
   <string name="action_extensions_configure">Přispůsobit rozšíření</string>
   <string name="action_extensions_add">Přidat rozšíření</string>
   <string name="action_extensions_limit">Získej X verzi s více funkcemi</string>

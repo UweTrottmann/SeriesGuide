@@ -11,7 +11,6 @@
   <string name="help">Hjælp</string>
   <string name="help_and_feedback">Hjælp &amp; Feedback</string>
   <string name="drawer_open">Åbn navigationspanel</string>
-  <string name="drawer_close">Luk navigationspanel</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Episode</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Udgivelsesdato</string>
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>
   <string name="episode_dvdnumber">DVD-episode</string>
-  <string name="show_actors">Skuespillere</string>
   <string name="original_release">Originalversion</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
-  <string name="show_runtime">Varighed</string>
   <string name="show_contentrating">Bedømmelse</string>
   <string name="show_release_times">Udgivelsestider</string>
   <string name="episode_directors">Instruktører</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Fortsætter</string>
   <string name="show_isnotalive">Afsluttet</string>
   <string name="lastEdit">Sidste redigering / / TVDb</string>
-  <string name="services_watch">Se</string>
-  <string name="services_more">Mere</string>
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
   <string name="no_translation_title">Ikke oversat</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Foretrukket indholdssprog</string>
   <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Download ikke billeder via mobildata for at begrænse dataforbruget</string>
-  <string name="about">Om SeriesGuide</string>
-  <string name="pref_autoaddshows">Tilføj nye trakt-serier</string>
-  <string name="pref_autoaddshowssummary">Tilføj automatisk serier fra din trakt-historik</string>
   <!-- About screen -->
   <string name="licence_tvdb">Denne app bruger data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produkt bruger TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 time i forvejen</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (lille)</string>
-  <string name="bigwidget">SeriesGuide (mellem)</string>
-  <string name="largewidget">SeriesGuide (stor)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skjul sete episoder</string>
   <string name="pref_widget_opacity">Widget-baggrund</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Køb ikke afsluttet.</string>
   <string name="pass_unavailable">X Pass er ikke tilgængelig i øjeblikket.</string>
   <!-- Extensions -->
-  <string name="extensions">Udvidelser</string>
   <string name="action_extensions_configure">Tilpas udvidelser</string>
   <string name="action_extensions_add">Tilføj udvidelse</string>
   <string name="action_extensions_limit">Få X for at tilføje flere udvidelser</string>

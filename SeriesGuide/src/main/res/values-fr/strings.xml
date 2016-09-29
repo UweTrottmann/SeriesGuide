@@ -11,7 +11,6 @@
   <string name="help">Aide</string>
   <string name="help_and_feedback">Aide &amp; commentaire</string>
   <string name="drawer_open">Ouvrir le tiroir de navigation</string>
-  <string name="drawer_close">Fermer le tiroir de navigation</string>
   <!-- Media items -->
   <string name="show">Série</string>
   <string name="episode">Épisode</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Date de parution</string>
   <string name="episode_firstaired_unknown">Date de parution inconnue</string>
   <string name="episode_dvdnumber">Episode DVD</string>
-  <string name="show_actors">Acteurs</string>
   <string name="original_release">Paru en</string>
   <string name="show_on_network">sur %s</string>
   <string name="show_genres">Genres</string>
-  <string name="show_runtime">Durée</string>
   <string name="show_contentrating">Classification</string>
   <string name="show_release_times">Heures de parution</string>
   <string name="episode_directors">Réalisateurs</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">En cours</string>
   <string name="show_isnotalive">Terminé</string>
   <string name="lastEdit">Dernière modification // TVDb</string>
-  <string name="services_watch">Regarder</string>
-  <string name="services_more">Plus</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
   <string name="no_translation_title">Non traduit</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Langue préférée pour le contenu</string>
   <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
-  <string name="about">A propos de SeriesGuide</string>
-  <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
-  <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Cette application utilise des données et images provenant de TheTVDB sous license CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Ce produit utilise l\'API TMDb mais n\'est pas approuvé ou certifié par TMDb.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 heure avant</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
-  <string name="bigwidget">SeriesGuide (moyen)</string>
-  <string name="largewidget">SeriesGuide (grand)</string>
   <!-- List Widget -->
   <string name="hide_watched">Masquer les épisodes vus</string>
   <string name="pref_widget_opacity">Arrière-plan du widget</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Achat non terminé.</string>
   <string name="pass_unavailable">X Pass n\'est actuellement pas disponible.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensions</string>
   <string name="action_extensions_configure">Personnaliser les extensions</string>
   <string name="action_extensions_add">Ajouter une extension</string>
   <string name="action_extensions_limit">Obtenir X pour ajouter plus d\'extensions</string>

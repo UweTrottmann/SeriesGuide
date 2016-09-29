@@ -11,7 +11,6 @@
   <string name="help">עזרה</string>
   <string name="help_and_feedback">עזרה &amp; משוב</string>
   <string name="drawer_open">פתח תפריט ניווט</string>
-  <string name="drawer_close">סגור תפריט ניווט</string>
   <!-- Media items -->
   <string name="show">סדרה</string>
   <string name="episode">פרק</string>
@@ -75,11 +74,9 @@
   <string name="episode_firstaired">תאריך שחרור</string>
   <string name="episode_firstaired_unknown">תאריך שחרור לא ידוע</string>
   <string name="episode_dvdnumber">פרק DVD</string>
-  <string name="show_actors">שחקנים</string>
   <string name="original_release">השחרור המקורי</string>
   <string name="show_on_network">ב- %s</string>
   <string name="show_genres">ז\'אנרים</string>
-  <string name="show_runtime">זמן ריצה</string>
   <string name="show_contentrating">דירוג תוכן</string>
   <string name="show_release_times">זמני שחרור</string>
   <string name="episode_directors">במאים</string>
@@ -88,8 +85,6 @@
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
   <string name="lastEdit">עדכון אחרון // TVDb</string>
-  <string name="services_watch">צפה</string>
-  <string name="services_more">עוד</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
@@ -337,9 +332,6 @@
   <string name="pref_language">שפת תוכן מועדפת</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
   <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
-  <string name="about">אודות SeriesGuide</string>
-  <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
-  <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
   <!-- About screen -->
   <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות על ידי TheTVDB תחת רישיון CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">מוצר זה עושה שימוש ב-API TMDb אך אינו נתמך או מאושר על ידי TMDb.</string>
@@ -440,8 +432,6 @@
   <string name="notification_release_earlier_hour">שעה מראש</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (קטן)</string>
-  <string name="bigwidget">SeriesGuide (בינוני)</string>
-  <string name="largewidget">SeriesGuide (גדול)</string>
   <!-- List Widget -->
   <string name="hide_watched">הסתר פרקים שנצפו</string>
   <string name="pref_widget_opacity">רקע ווידג\'ט</string>
@@ -474,7 +464,6 @@
   <string name="subscription_failed">הרכישה לא הושלמה.</string>
   <string name="pass_unavailable">X Pass אינו זמין כרגע.</string>
   <!-- Extensions -->
-  <string name="extensions">תוספים</string>
   <string name="action_extensions_configure">התאמת תוספים</string>
   <string name="action_extensions_add">הוספת תוסף</string>
   <string name="action_extensions_limit">הירשם ל-X בכדי להוסיף הרחבות נוספות</string>

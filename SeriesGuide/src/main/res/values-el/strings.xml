@@ -11,7 +11,6 @@
   <string name="help">Βοήθεια</string>
   <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Συρτάρι ανοιχτό</string>
-  <string name="drawer_close">Κλείσιμο μενού πλοήγησης</string>
   <!-- Media items -->
   <string name="show">Σειρά</string>
   <string name="episode">Επεισόδιο</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Ημερομηνία προβολής</string>
   <string name="episode_firstaired_unknown">Άγνωστη ημερομηνία προβολής</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
-  <string name="show_actors">Ηθοποιοί</string>
   <string name="original_release">Αρχική κυκλοφορία</string>
   <string name="show_on_network">στο %s</string>
   <string name="show_genres">Είδη</string>
-  <string name="show_runtime">Διάρκεια</string>
   <string name="show_contentrating">Αξιολόγηση περιεχομένου</string>
   <string name="show_release_times">Ώρες που παίζονται</string>
   <string name="episode_directors">Σκηνοθέτες</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="lastEdit">Τελευταία επεξεργασία // TVDb</string>
-  <string name="services_watch">Παρακολουθήστε</string>
-  <string name="services_more">Περισσότερα</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Σχετικά με το SeriesGuide</string>
-  <string name="pref_autoaddshows">Προσθήκη νέων σειρών από το trakt</string>
-  <string name="pref_autoaddshowssummary">Αυτόματη προσθήκη σειρών από το trakt activity stream</string>
   <!-- About screen -->
   <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί πληροφορίες και εικόνες από το TheTVDB με άδεια CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">μία ώρα νωρίτερα</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (μικρό)</string>
-  <string name="bigwidget">SeriesGuide (μεσαίο)</string>
-  <string name="largewidget">SeriesGuide (μεγάλο)</string>
   <!-- List Widget -->
   <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
   <string name="pref_widget_opacity">Φόντο widget</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Η αγορά δεν έχει ολοκληρωθεί.</string>
   <string name="pass_unavailable">Το X Pass δεν είναι προσωρινά διαθέσιμο.</string>
   <!-- Extensions -->
-  <string name="extensions">Επεκτάσεις</string>
   <string name="action_extensions_configure">Προσαρμοσμένες επεκτάσεις</string>
   <string name="action_extensions_add">Προσθήκη επέκταση</string>
   <string name="action_extensions_limit">Λήψη X για να προσθέσετε περισσότερες επεκτάσεις</string>

@@ -11,7 +11,6 @@
   <string name="help">Ayuda</string>
   <string name="help_and_feedback">Ayuda y comentarios</string>
   <string name="drawer_open">Abrir menú lateral</string>
-  <string name="drawer_close">Cerrar menú lateral</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Episodio</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Fecha de estreno</string>
   <string name="episode_firstaired_unknown">Fecha de estreno desconocida</string>
   <string name="episode_dvdnumber">Episodio de DVD</string>
-  <string name="show_actors">Actores</string>
   <string name="original_release">Fecha de estreno original</string>
   <string name="show_on_network">en %s</string>
   <string name="show_genres">Géneros</string>
-  <string name="show_runtime">Duración</string>
   <string name="show_contentrating">Clasificación de contenido</string>
   <string name="show_release_times">Fecha de estreno</string>
   <string name="episode_directors">Directores</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Continuando</string>
   <string name="show_isnotalive">Terminó</string>
   <string name="lastEdit">Última edición//TVDb</string>
-  <string name="services_watch">Ver</string>
-  <string name="services_more">Más</string>
   <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
   <string name="no_translation_title">Sin traducir</string>
   <!-- Date and Time -->
@@ -328,9 +323,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_language">Lenguaje preferido para el contenido</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
-  <string name="about">Acerca de SeriesGuide</string>
-  <string name="pref_autoaddshows">Añadir nueva serie trakt</string>
-  <string name="pref_autoaddshowssummary">Añadir automáticamente series de tu flujo de actividad trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">La aplicación utiliza datos e imágenes de TheTVDB licenciadas bajo la CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
@@ -431,8 +423,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="notification_release_earlier_hour">1 hora antes</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeño)</string>
-  <string name="bigwidget">SeriesGuide (mediano)</string>
-  <string name="largewidget">SeriesGuide (grande)</string>
   <!-- List Widget -->
   <string name="hide_watched">Ocultar episodios vistos</string>
   <string name="pref_widget_opacity">Fondo de widget</string>
@@ -465,7 +455,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="subscription_failed">Compra no completada.</string>
   <string name="pass_unavailable">El X Pass no esta disponible actualmente.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensiones</string>
   <string name="action_extensions_configure">Personalizar extensiones</string>
   <string name="action_extensions_add">Agregar extensión</string>
   <string name="action_extensions_limit">Obtén X para agregar más extensiones</string>

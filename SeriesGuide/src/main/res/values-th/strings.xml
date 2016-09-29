@@ -11,7 +11,6 @@
   <string name="help">ช่วยเหลือ</string>
   <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
   <string name="drawer_open">เปิดแถบนำทาง</string>
-  <string name="drawer_close">ปิดแถบนำทาง</string>
   <!-- Media items -->
   <string name="show">ซีรีส์</string>
   <string name="episode">ตอน</string>
@@ -72,11 +71,9 @@
   <string name="episode_firstaired">วันที่ออกฉาย</string>
   <string name="episode_firstaired_unknown">ไม่ทราบวันที่ออกฉาย</string>
   <string name="episode_dvdnumber">ตอนใน DVD</string>
-  <string name="show_actors">นักแสดง</string>
   <string name="original_release">วันที่ออกดั้งเดิม</string>
   <string name="show_on_network">บน %s</string>
   <string name="show_genres">ประเภท</string>
-  <string name="show_runtime">ระยะเวลา</string>
   <string name="show_contentrating">การจัดอันดับเนื้อหา</string>
   <string name="show_release_times">เวลาออกฉาย</string>
   <string name="episode_directors">ผู้กำกับ</string>
@@ -85,8 +82,6 @@
   <string name="show_isalive">ยังไม่จบ</string>
   <string name="show_isnotalive">จบแล้ว</string>
   <string name="lastEdit">แก้ไขล่าสุด // TheTVDB</string>
-  <string name="services_watch">ดู</string>
-  <string name="services_more">เพิ่มเติม</string>
   <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
   <string name="no_translation_title">ยังไม่ถูกแปล</string>
   <!-- Date and Time -->
@@ -322,9 +317,6 @@
   <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
   <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
   <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
-  <string name="about">เกี่ยวกับ SeiresGuide</string>
-  <string name="pref_autoaddshows">เพิ่มซีรีส์ trakt ใหม่</string>
-  <string name="pref_autoaddshowssummary">เพิ่มซีรีส์จากสตรีมกิจกรรม trakt ของคุณโดยอัตโนมัติ</string>
   <!-- About screen -->
   <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้ CC BY-NC 4.0</string>
   <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
@@ -425,8 +417,6 @@
   <string name="notification_release_earlier_hour">ล่วงหน้า 1 ชั่วโมง</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
-  <string name="bigwidget">SeriesGuide (กลาง)</string>
-  <string name="largewidget">SeriesGuide (ใหญ่)</string>
   <!-- List Widget -->
   <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
   <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>
@@ -459,7 +449,6 @@
   <string name="subscription_failed">การชำระเงินไม่สมบูรณ์</string>
   <string name="pass_unavailable">X Pass ไม่พร้อมใช้งาน</string>
   <!-- Extensions -->
-  <string name="extensions">ส่วนเสริม</string>
   <string name="action_extensions_configure">ปรับแต่งส่วนเสริม</string>
   <string name="action_extensions_add">เพิ่มส่วนเสริม</string>
   <string name="action_extensions_limit">รับ X เพื่อเพิ่มส่วนเสริมมากขึ้น</string>

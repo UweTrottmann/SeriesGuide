@@ -11,7 +11,6 @@
   <string name="help">Yardım</string>
   <string name="help_and_feedback">Yardım ve Geribildirim</string>
   <string name="drawer_open">Navigasyon çekmecesini aç</string>
-  <string name="drawer_close">Navigasyon çekmecesini kapat</string>
   <!-- Media items -->
   <string name="show">Dizi</string>
   <string name="episode">Bölüm</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Yayın tarihi</string>
   <string name="episode_firstaired_unknown">Yayın tarihi bilinmiyor</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
-  <string name="show_actors">Aktörler</string>
   <string name="original_release">Orjinal Yayınlanma</string>
   <string name="show_on_network">kanal %s</string>
   <string name="show_genres">Türler</string>
-  <string name="show_runtime">Süresi</string>
   <string name="show_contentrating">İçerik Derecelendirmesi</string>
   <string name="show_release_times">Yayın zamanı</string>
   <string name="episode_directors">Yönetmen</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
   <string name="lastEdit">Son Düzenleme // TVDb</string>
-  <string name="services_watch">İzle</string>
-  <string name="services_more">Daha</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Tercih edilen içerik dili</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
-  <string name="about">SeriesGuide Hakkında</string>
-  <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
-  <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
   <!-- About screen -->
   <string name="licence_tvdb">Bu uygulama, theTVDB verilerini ve görsellerini, CC BY-NC 4.0 lisansı altında kullanmaktadır.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">bir saat önce</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (dar)</string>
-  <string name="bigwidget">SeriesGuide (orta)</string>
-  <string name="largewidget">SeriesGuide (geniş)</string>
   <!-- List Widget -->
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="pref_widget_opacity">Widget arka planı</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Satın alma tamamlanmadı.</string>
   <string name="pass_unavailable">X Pass şu an mevcut değil.</string>
   <!-- Extensions -->
-  <string name="extensions">Eklentiler</string>
   <string name="action_extensions_configure">Eklentileri özelleştir</string>
   <string name="action_extensions_add">Eklenti ekle</string>
   <string name="action_extensions_limit">Daha fazla eklenti için X\'i edinin</string>

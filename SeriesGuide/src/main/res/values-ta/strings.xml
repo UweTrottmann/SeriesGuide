@@ -11,7 +11,6 @@
   <string name="help">உதவி</string>
   <string name="help_and_feedback">உதவி &amp; பின்னூட்டம்</string>
   <string name="drawer_open">திறந்த ஊடாடுதல் drawer</string>
-  <string name="drawer_close">நெருங்கிய ஊடாடுதல் drawer</string>
   <!-- Media items -->
   <string name="show">காண்பி</string>
   <string name="episode">அத்தியாயத்தில்</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">வெளியீட்டு தேதி</string>
   <string name="episode_firstaired_unknown">வெளியீட்டு தேதி தெரியாத</string>
   <string name="episode_dvdnumber">DVD சம்பவம்</string>
-  <string name="show_actors">நடிகர்கள்</string>
   <string name="original_release">அசல் வெளியீடு</string>
   <string name="show_on_network">அன்று %s</string>
   <string name="show_genres">வகைகள்</string>
-  <string name="show_runtime">இயங்குநேர</string>
   <string name="show_contentrating">உள்ளடக்க மதிப்பீடு</string>
   <string name="show_release_times">வெளியீட்டு முறை</string>
   <string name="episode_directors">இயக்குநர்கள்</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">தொடரும்</string>
   <string name="show_isnotalive">முடிவுக்கு வந்தது</string>
   <string name="lastEdit">திருத்து கடைசி / / TheTVDB</string>
-  <string name="services_watch">பார்</string>
-  <string name="services_more"> மேலும்</string>
   <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
   <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
-  <string name="about">SeriesGuide பற்றி</string>
-  <string name="pref_autoaddshows">புதிய trakt காட்சிகள் சேர்</string>
-  <string name="pref_autoaddshowssummary">உங்கள் trakt செயற்பாடு ஸ்ட்ரீம் இருந்து காட்சிகள் தானாகவே சேர்</string>
   <!-- About screen -->
   <string name="licence_tvdb">இந்த பயன்பாட்டு பயன்படுத்தும் தரவு மற்றும் படிமங்கள் மூலம் TheTVDB உரிமம் கீழ் நகல் மூலம்-NC 4.0.</string>
   <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 மணி நேரம் உள்நாட்டு</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (சிறிய)</string>
-  <string name="bigwidget">SeriesGuide (நடு)</string>
-  <string name="largewidget">SeriesGuide (பெரிய)</string>
   <!-- List Widget -->
   <string name="hide_watched">பார்த்த episodes மறை</string>
   <string name="pref_widget_opacity">விட்ஜெட் பின்னணி</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">வாங்குதல் நிறைவடையவில்லை.</string>
   <string name="pass_unavailable">X கடவுச் தற்போது இல்லை.</string>
   <!-- Extensions -->
-  <string name="extensions">நீட்டிப்புகள்</string>
   <string name="action_extensions_configure">நீட்டிப்புகள் விருப்பமாக்கு</string>
   <string name="action_extensions_add">நீட்டிப்பு சேர்</string>
   <string name="action_extensions_limit">மேலும் நீட்டிப்புகள் சேர்க்க X பெற</string>

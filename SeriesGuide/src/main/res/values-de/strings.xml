@@ -11,7 +11,6 @@
   <string name="help">Hilfe</string>
   <string name="help_and_feedback">Hilfe &amp; Feedback</string>
   <string name="drawer_open">Navigation öffnen</string>
-  <string name="drawer_close">Navigation schließen</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Folge</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Erscheinungsdatum</string>
   <string name="episode_firstaired_unknown">Erscheinungsdatum unbekannt</string>
   <string name="episode_dvdnumber">DVD Folge</string>
-  <string name="show_actors">Schauspieler</string>
   <string name="original_release">Erste Veröffentlichung</string>
   <string name="show_on_network">auf %s</string>
   <string name="show_genres">Genres</string>
-  <string name="show_runtime">Laufzeit</string>
   <string name="show_contentrating">Inhaltsklassifikation</string>
   <string name="show_release_times">Erscheinungszeitpunkte</string>
   <string name="episode_directors">Regisseure</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">Wird fortgesetzt</string>
   <string name="show_isnotalive">Endete</string>
   <string name="lastEdit">Zuletzt bearbeitet // TheTVDB</string>
-  <string name="services_watch">Anschauen</string>
-  <string name="services_more">Mehr</string>
   <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
   <string name="no_translation_title">Nicht übersetzt</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
-  <string name="about">Über SeriesGuide</string>
-  <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
-  <string name="pref_autoaddshowssummary">Automatisch neue Serien aus Ihren trakt-Aktivitäten hinzufügen</string>
   <!-- About screen -->
   <string name="licence_tvdb">Diese App verwendet Daten und Bilder von TheTVDB lizenziert unter CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dieses Produkt verwendet die TMDb API ist aber von TMDb nicht unterstützt oder zertifiziert.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 Stunde zuvor</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
-  <string name="bigwidget">SeriesGuide (mittel)</string>
-  <string name="largewidget">SeriesGuide (groß)</string>
   <!-- List Widget -->
   <string name="hide_watched">Verstecke gesehene Folgen</string>
   <string name="pref_widget_opacity">Widget-Hintergrund</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Kauf nicht abgeschlossen.</string>
   <string name="pass_unavailable">X Pass ist derzeit nicht verfügbar.</string>
   <!-- Extensions -->
-  <string name="extensions">Erweiterungen</string>
   <string name="action_extensions_configure">Erweiterungen anpassen</string>
   <string name="action_extensions_add">Erweiterung hinzufügen</string>
   <string name="action_extensions_limit">Erwerben Sie X um mehr Erweiterungen hinzuzufügen</string>

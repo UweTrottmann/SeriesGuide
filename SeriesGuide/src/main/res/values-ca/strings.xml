@@ -11,7 +11,6 @@
   <string name="help">Ajuda</string>
   <string name="help_and_feedback">Ajuda i comentaris</string>
   <string name="drawer_open">Obre el calaix de navegació</string>
-  <string name="drawer_close">Tanca el calaix de navegació</string>
   <!-- Media items -->
   <string name="show">Sèrie</string>
   <string name="episode">Episodi</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Data de llançament</string>
   <string name="episode_firstaired_unknown">Data de llançament desconeguda</string>
   <string name="episode_dvdnumber">Episodi de DVD</string>
-  <string name="show_actors">Actors</string>
   <string name="original_release">Versió original</string>
   <string name="show_on_network">a %s</string>
   <string name="show_genres">Gèneres</string>
-  <string name="show_runtime">Durada</string>
   <string name="show_contentrating">Contingut</string>
   <string name="show_release_times">Data d\'estrena</string>
   <string name="episode_directors">Directors</string>
@@ -86,8 +83,6 @@
   <string name="show_isalive">No ha finalitzat</string>
   <string name="show_isnotalive">Finalitzat</string>
   <string name="lastEdit">Darrera edició // TVDb</string>
-  <string name="services_watch">Veure</string>
-  <string name="services_more">Més</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
@@ -327,9 +322,6 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Quant a SeriesGuide</string>
-  <string name="pref_autoaddshows">Afegeix noves sèries del trakt</string>
-  <string name="pref_autoaddshowssummary">Afegeix sèries de la meva activitat de trakt automàticament</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -430,8 +422,6 @@
   <string name="notification_release_earlier_hour">1 hora d\'antelació</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
-  <string name="bigwidget">SeriesGuide (mitjà)</string>
-  <string name="largewidget">SeriesGuide (gran)</string>
   <!-- List Widget -->
   <string name="hide_watched">Amaga els episodis vistos</string>
   <string name="pref_widget_opacity">Fons del widget</string>
@@ -464,7 +454,6 @@
   <string name="subscription_failed">Purchase not completed.</string>
   <string name="pass_unavailable">X Pass is currently not available.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensions</string>
   <string name="action_extensions_configure">Personalitzeu extensions</string>
   <string name="action_extensions_add">Afegeix extensió</string>
   <string name="action_extensions_limit">Passeu-vos a X per afegir més extensions</string>

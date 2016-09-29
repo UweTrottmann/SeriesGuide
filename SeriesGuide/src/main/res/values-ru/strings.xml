@@ -11,7 +11,6 @@
   <string name="help">Помощь</string>
   <string name="help_and_feedback">Помощь и обратная связь</string>
   <string name="drawer_open">Открыть навигационную панель</string>
-  <string name="drawer_close">Закрыть навигационную панель</string>
   <!-- Media items -->
   <string name="show">Инфо</string>
   <string name="episode">Эпизод</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Дата выхода</string>
   <string name="episode_firstaired_unknown">Дата выхода неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
-  <string name="show_actors">Актёры</string>
   <string name="original_release">Оригинальное издание</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанры</string>
-  <string name="show_runtime">Продолжительность</string>
   <string name="show_contentrating">Возрастные ограничения</string>
   <string name="show_release_times">Время выпуска</string>
   <string name="episode_directors">Режиссёры</string>
@@ -87,8 +84,6 @@
   <string name="show_isalive">Продолжается</string>
   <string name="show_isnotalive">Закончился</string>
   <string name="lastEdit">Последние изменения / / TVDb</string>
-  <string name="services_watch">Смотреть</string>
-  <string name="services_more">Подробнее</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
   <!-- Date and Time -->
@@ -332,9 +327,6 @@
   <string name="pref_language">Предпочтительный язык контента</string>
   <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
-  <string name="about">О SeriesGuide</string>
-  <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
-  <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
@@ -435,8 +427,6 @@
   <string name="notification_release_earlier_hour">один час до начала</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малый)</string>
-  <string name="bigwidget">SeriesGuide (средний)</string>
-  <string name="largewidget">SeriesGuide (большой)</string>
   <!-- List Widget -->
   <string name="hide_watched">Скрывать просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
@@ -469,7 +459,6 @@
   <string name="subscription_failed">Покупка не завершена.</string>
   <string name="pass_unavailable">X Pass в данный момент не доступен.</string>
   <!-- Extensions -->
-  <string name="extensions">Расширения</string>
   <string name="action_extensions_configure">Настроить расширения</string>
   <string name="action_extensions_add">Добавить расширение</string>
   <string name="action_extensions_limit">Получите X, чтобы добавить больше расширений</string>

@@ -11,7 +11,6 @@
   <string name="help">說明</string>
   <string name="help_and_feedback">幫助與意見反饋</string>
   <string name="drawer_open">Open navigation drawer</string>
-  <string name="drawer_close">Close navigation drawer</string>
   <!-- Media items -->
   <string name="show">節目</string>
   <string name="episode">集數</string>
@@ -72,11 +71,9 @@
   <string name="episode_firstaired">播出日期</string>
   <string name="episode_firstaired_unknown">播出日期不明</string>
   <string name="episode_dvdnumber">DVD集數</string>
-  <string name="show_actors">演員</string>
   <string name="original_release">Original release</string>
   <string name="show_on_network">on %s</string>
   <string name="show_genres">戲劇類別</string>
-  <string name="show_runtime">影片長度</string>
   <string name="show_contentrating">節目分級</string>
   <string name="show_release_times">Release times</string>
   <string name="episode_directors">導演</string>
@@ -85,8 +82,6 @@
   <string name="show_isalive">待續</string>
   <string name="show_isnotalive">已完結</string>
   <string name="lastEdit">Last Edit // TheTVDB</string>
-  <string name="services_watch">觀看</string>
-  <string name="services_more">更多</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <!-- Date and Time -->
@@ -322,9 +317,6 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">關於 SeriesGuide</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -425,8 +417,6 @@
   <string name="notification_release_earlier_hour">1 hour in advance</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
   <!-- List Widget -->
   <string name="hide_watched">Hide watched episodes</string>
   <string name="pref_widget_opacity">Widget background</string>
@@ -459,7 +449,6 @@
   <string name="subscription_failed">Purchase not completed.</string>
   <string name="pass_unavailable">X Pass is currently not available.</string>
   <!-- Extensions -->
-  <string name="extensions">擴充套件</string>
   <string name="action_extensions_configure">Customize extensions</string>
   <string name="action_extensions_add">Add extension</string>
   <string name="action_extensions_limit">Get X to add more extensions</string>

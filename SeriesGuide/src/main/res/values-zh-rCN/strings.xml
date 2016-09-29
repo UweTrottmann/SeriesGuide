@@ -11,7 +11,6 @@
   <string name="help">帮助</string>
   <string name="help_and_feedback">帮助 &amp; 反馈</string>
   <string name="drawer_open">显示导航栏</string>
-  <string name="drawer_close">隐藏导航栏</string>
   <!-- Media items -->
   <string name="show">节目</string>
   <string name="episode">剧集</string>
@@ -72,11 +71,9 @@
   <string name="episode_firstaired">首播日期</string>
   <string name="episode_firstaired_unknown">没有已知播出计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
-  <string name="show_actors">演员</string>
   <string name="original_release">首播年份</string>
   <string name="show_on_network">在 %s 播出</string>
   <string name="show_genres">类型</string>
-  <string name="show_runtime">时长</string>
   <string name="show_contentrating">内容分级</string>
   <string name="show_release_times">首映于</string>
   <string name="episode_directors">导演</string>
@@ -85,8 +82,6 @@
   <string name="show_isalive">连载中</string>
   <string name="show_isnotalive">已完结</string>
   <string name="lastEdit">最后修改 // TVDb</string>
-  <string name="services_watch">在线观看</string>
-  <string name="services_more">更多</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
   <string name="no_translation_title">未翻译</string>
   <!-- Date and Time -->
@@ -322,9 +317,6 @@
   <string name="pref_language">内容首选的语言</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
-  <string name="about">SeriesGuide</string>
-  <string name="pref_autoaddshows">添加来自 trakt 的节目</string>
-  <string name="pref_autoaddshowssummary">自动从 trakt 用户数据中添加节目</string>
   <!-- About screen -->
   <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
   <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口但没有被 TMDb 官方认证。</string>
@@ -425,8 +417,6 @@
   <string name="notification_release_earlier_hour">提前 1 小时</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide 最小尺寸</string>
-  <string name="bigwidget">SeriesGuide 中等尺寸</string>
-  <string name="largewidget">SeriesGuide 最大尺寸</string>
   <!-- List Widget -->
   <string name="hide_watched">隐藏已观看剧集</string>
   <string name="pref_widget_opacity">小部件背景</string>
@@ -459,7 +449,6 @@
   <string name="subscription_failed">支付过程中断，购买无效。</string>
   <string name="pass_unavailable">X Pass 当前不可用。</string>
   <!-- Extensions -->
-  <string name="extensions">扩展组件</string>
   <string name="action_extensions_configure">自定义扩展</string>
   <string name="action_extensions_add">添加扩展组件</string>
   <string name="action_extensions_limit">订阅/购买 SeriesGuide X 来访问扩展组件</string>
