@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_sesortby"
-        android:orderInCategory="200"
+        android:orderInCategory="8"
         android:title="@string/sort"
         app:showAsAction="never" />
 

@@ -23,7 +23,10 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
@@ -239,7 +242,19 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             launchSearch();
             return true;
         }
+        if (itemId == R.id.menu_overview_remove_show) {
+            if (!SgSyncAdapter.isSyncActive(this, true)) {
+                RemoveShowDialogFragment.show(getSupportFragmentManager(), showTvdbId);
+            }
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
+        if (event.showTvdbId == showTvdbId) {
+            finish(); // finish this activity if the show it displays is about to get removed
+        }
     }
 
     private void launchSearch() {
