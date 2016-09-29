@@ -313,26 +313,26 @@ public class EpisodesFragment extends ListFragment
     public interface EpisodesQuery {
 
         String[] PROJECTION = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
-                Episodes.ABSOLUTE_NUMBER, Episodes.COLLECTED
+                Tables.EPISODES + "." + Episodes._ID, // 0
+                Episodes.WATCHED,
+                Episodes.TITLE,
+                Episodes.NUMBER, // 3
+                Episodes.SEASON,
+                Episodes.FIRSTAIREDMS,
+                Episodes.DVDNUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.COLLECTED // 8
         };
 
         int _ID = 0;
-
         int WATCHED = 1;
-
         int TITLE = 2;
-
         int NUMBER = 3;
-
-        int FIRSTAIREDMS = 4;
-
-        int DVDNUMBER = 5;
-
-        int ABSOLUTE_NUMBER = 6;
-
-        int COLLECTED = 7;
+        int SEASON = 4;
+        int FIRSTAIREDMS = 5;
+        int DVDNUMBER = 6;
+        int ABSOLUTE_NUMBER = 7;
+        int COLLECTED = 8;
     }
 
     private void loadSortOrder() {

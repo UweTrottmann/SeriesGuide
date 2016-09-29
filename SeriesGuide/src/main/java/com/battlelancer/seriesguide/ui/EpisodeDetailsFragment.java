@@ -324,17 +324,26 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mEpisodeReleaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
 
         // title and description
+        mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
-        mTitle.setText(mEpisodeTitle);
-        String overview = cursor.getString(DetailsQuery.OVERVIEW);
-        if (TextUtils.isEmpty(overview)) {
-            // no description available, show no translation available message
-            mDescription.setText(getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(getContext(),
-                            cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
-                    getString(R.string.tvdb)));
+        boolean isUnwatched = EpisodeTools.isUnwatched(mEpisodeFlag);
+        if (isUnwatched && DisplaySettings.preventSpoilers(getContext())) {
+            // just show the episode number "1x02"
+            mTitle.setText(TextTools.getEpisodeNumber(getContext(), mSeasonNumber, mEpisodeNumber));
+            // hide the description
+            mDescription.setText(null);
         } else {
-            mDescription.setText(overview);
+            mTitle.setText(mEpisodeTitle);
+            String overview = cursor.getString(DetailsQuery.OVERVIEW);
+            if (TextUtils.isEmpty(overview)) {
+                // no description available, show no translation available message
+                mDescription.setText(getString(R.string.no_translation,
+                        LanguageTools.getLanguageStringForCode(getContext(),
+                                cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
+                        getString(R.string.tvdb)));
+            } else {
+                mDescription.setText(overview);
+            }
         }
 
         // show title
@@ -456,7 +465,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button
-        mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
         Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
                 isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
