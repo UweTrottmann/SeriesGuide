@@ -83,9 +83,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
                 );
             }
         });
-        viewHolder.watchedBox.setEpisodeFlag(cursor.getInt(Query.WATCHED));
+        int episodeFlag = cursor.getInt(Query.WATCHED);
+        viewHolder.watchedBox.setEpisodeFlag(episodeFlag);
         viewHolder.watchedBox.setEnabled(true);
-        boolean watched = EpisodeTools.isWatched(viewHolder.watchedBox.getEpisodeFlag());
+        boolean watched = EpisodeTools.isWatched(episodeFlag);
         viewHolder.watchedBox.setContentDescription(
                 context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
         CheatSheet.setup(viewHolder.watchedBox,
@@ -96,8 +97,14 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
 
         // episode number and title
-        viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
-                cursor.getString(Query.TITLE)));
+        if (EpisodeTools.isUnwatched(episodeFlag) && DisplaySettings.preventSpoilers(context)) {
+            // just show the number
+            viewHolder.episode.setText(TextTools.getEpisodeNumber(context, season, episode));
+        } else {
+            // show number and title
+            viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
+                    cursor.getString(Query.TITLE)));
+        }
 
         // timestamp, absolute time and network
         StringBuilder releaseInfo = new StringBuilder();

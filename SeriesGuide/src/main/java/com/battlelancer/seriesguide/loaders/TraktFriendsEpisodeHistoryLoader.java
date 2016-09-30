@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -60,6 +61,7 @@ public class TraktFriendsEpisodeHistoryLoader
                 new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
 
         // add last watched episode for each friend
+        boolean preventSpoilers = DisplaySettings.preventSpoilers(getContext());
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
 
@@ -92,12 +94,21 @@ public class TraktFriendsEpisodeHistoryLoader
                     ? null : entry.show.images.poster.thumb;
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
+            String episodeString;
+            if (preventSpoilers) {
+                // just display the number
+                episodeString = TextTools.getEpisodeNumber(getContext(), entry.episode.season,
+                        entry.episode.number);
+            } else {
+                // display number and title
+                episodeString = TextTools.getNextEpisodeString(getContext(), entry.episode.season,
+                        entry.episode.number, entry.episode.title);
+            }
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.getMillis(),
                             entry.show.title,
-                            TextTools.getNextEpisodeString(getContext(), entry.episode.season,
-                                    entry.episode.number, entry.episode.title),
+                            episodeString,
                             poster
                     )
                     .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb,
