@@ -48,8 +48,10 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -540,6 +542,7 @@ public class ShowFragment extends Fragment {
         ShowTools.get(getContext()).storeLanguage(getShowTvdbId(), languageCode);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
         if (event.showTvdbId != getShowTvdbId()) {
             return;

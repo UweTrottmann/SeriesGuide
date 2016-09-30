@@ -25,8 +25,9 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Super class for fragments displaying a list of shows and allowing to add them to the database.
@@ -138,7 +139,8 @@ public abstract class AddFragment extends Fragment {
     /**
      * Called if the user adds a new show through the dialog.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("UnusedParameters")
+    @Subscribe
     public void onEvent(AddShowEvent event) {
         adapter.notifyDataSetChanged();
     }

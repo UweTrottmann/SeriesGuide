@@ -44,7 +44,9 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -384,6 +386,7 @@ public class ShowsActivity extends BaseTopActivity implements
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
         showProgressDialog();
     }
@@ -392,6 +395,7 @@ public class ShowsActivity extends BaseTopActivity implements
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
         hideProgressDialog();
     }

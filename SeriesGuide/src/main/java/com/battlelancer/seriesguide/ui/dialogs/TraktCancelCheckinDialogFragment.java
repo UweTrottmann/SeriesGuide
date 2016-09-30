@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.uwetrottmann.trakt5.services.Checkin;
 import dagger.Lazy;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
 

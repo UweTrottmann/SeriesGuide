@@ -33,6 +33,8 @@ import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Hosts an {@link OverviewFragment}.
@@ -251,6 +253,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
         if (event.showTvdbId == showTvdbId) {
             finish(); // finish this activity if the show it displays is about to get removed

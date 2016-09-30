@@ -29,7 +29,9 @@ import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -230,6 +232,7 @@ public class CloudSetupFragment extends Fragment {
         super.onDestroy();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(
             RemoveCloudAccountDialogFragment.RemoveHexagonAccountTask.HexagonAccountRemovedEvent event) {
         event.handle(getActivity());

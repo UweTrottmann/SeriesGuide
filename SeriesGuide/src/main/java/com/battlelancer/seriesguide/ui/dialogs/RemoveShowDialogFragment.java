@@ -18,7 +18,9 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Dialog asking if a show should be removed from the database.
@@ -26,6 +28,10 @@ import de.greenrobot.event.EventBus;
 public class RemoveShowDialogFragment extends AppCompatDialogFragment {
 
     private static final String KEY_SHOW_TVDB_ID = "show_tvdb_id";
+
+    public static class ShowTitleEvent {
+        public String showTitle;
+    }
 
     /**
      * Dialog to confirm the removal of a show from the database.
@@ -100,11 +106,7 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
     }
 
     private static class GetShowTitleTask
-            extends AsyncTask<Integer, Void, GetShowTitleTask.ShowTitleEvent> {
-
-        public class ShowTitleEvent {
-            public String showTitle;
-        }
+            extends AsyncTask<Integer, Void, ShowTitleEvent> {
 
         private final Context context;
 
@@ -141,7 +143,8 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
         }
     }
 
-    public void onEventMainThread(GetShowTitleTask.ShowTitleEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(ShowTitleEvent event) {
         if (event.showTitle == null) {
             // failed to find show
             dismiss();

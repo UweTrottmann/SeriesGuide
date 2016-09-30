@@ -27,7 +27,9 @@ import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
@@ -141,6 +143,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     }
 
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
         // sort order has changed, reload lists
         getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);

@@ -12,7 +12,7 @@ import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
 import retrofit2.Call;

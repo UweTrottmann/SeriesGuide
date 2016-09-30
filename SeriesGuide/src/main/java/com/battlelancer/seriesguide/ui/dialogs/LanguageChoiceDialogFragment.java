@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**

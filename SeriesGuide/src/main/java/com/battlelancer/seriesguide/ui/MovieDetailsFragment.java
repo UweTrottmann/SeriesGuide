@@ -63,9 +63,11 @@ import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt5.entities.Ratings;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -508,6 +510,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     @SuppressWarnings("unused")
+    @Subscribe
     public void onEvent(MovieTools.MovieChangedEvent event) {
         if (event.movieTmdbId != tmdbId) {
             return;
@@ -517,6 +520,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.MovieActionReceivedEvent event) {
         if (event.movieTmdbId != tmdbId) {
             return;

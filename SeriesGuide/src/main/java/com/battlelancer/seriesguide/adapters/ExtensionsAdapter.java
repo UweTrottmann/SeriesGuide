@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.

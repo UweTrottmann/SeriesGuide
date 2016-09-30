@@ -10,7 +10,8 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Blank activity, just used to quickly check into a show/episode on GetGlue/trakt.
@@ -64,12 +65,14 @@ public class QuickCheckInActivity extends FragmentActivity {
     }
 
     @SuppressWarnings("unused")
+    @Subscribe
     public void onEvent(GenericCheckInDialogFragment.CheckInDialogDismissedEvent event) {
         // if check-in dialog is dismissed, finish ourselves as well
         finish();
     }
 
     @SuppressWarnings("unused")
+    @Subscribe
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         if (event.mTraktAction != TraktAction.CHECKIN_EPISODE) {
             return;

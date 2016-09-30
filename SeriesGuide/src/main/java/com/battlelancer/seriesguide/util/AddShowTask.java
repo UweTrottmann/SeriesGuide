@@ -20,7 +20,7 @@ import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;

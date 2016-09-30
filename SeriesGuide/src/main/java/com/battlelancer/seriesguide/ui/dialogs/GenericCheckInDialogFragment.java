@@ -20,7 +20,8 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragment {
 
@@ -154,6 +155,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     }
 
     @SuppressWarnings("unused")
+    @Subscribe
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         // done with checking in, unlock UI
         setProgressLock(false);
@@ -165,6 +167,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     }
 
     @SuppressWarnings("unused")
+    @Subscribe
     public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
         // launch a check-in override dialog
         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment

@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Worker {@link android.support.v4.app.Fragment} hosting an {@link android.os.AsyncTask} that

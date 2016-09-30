@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.loaders.AvailableExtensionsLoader;
 import com.battlelancer.seriesguide.util.Utils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -254,6 +256,7 @@ public class ExtensionsConfigurationFragment extends Fragment
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
         enabledExtensions.remove(event.position);
         getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,

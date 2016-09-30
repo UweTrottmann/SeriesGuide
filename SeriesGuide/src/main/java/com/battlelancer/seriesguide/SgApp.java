@@ -21,6 +21,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**
@@ -73,6 +74,9 @@ public class SgApp extends Application {
                 Fabric.with(this, new Crashlytics());
             }
         }
+
+        // initialize EventBus
+        EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
 
         // initialize joda-time-android
         JodaTimeAndroid.init(this);

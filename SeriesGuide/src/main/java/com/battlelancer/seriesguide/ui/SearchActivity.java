@@ -42,9 +42,11 @@ import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Handles search intents and displays a {@link EpisodeSearchFragment} when needed or redirects
@@ -468,6 +470,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
         showProgressDialog();
     }
@@ -476,11 +479,13 @@ public class SearchActivity extends BaseNavDrawerActivity implements
      * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
      */
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
         hideProgressDialog();
     }
 
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();

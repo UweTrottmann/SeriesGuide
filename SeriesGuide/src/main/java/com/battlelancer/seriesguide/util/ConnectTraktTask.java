@@ -20,7 +20,7 @@ import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.Settings;
 import com.uwetrottmann.trakt5.services.Users;
 import dagger.Lazy;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
 import retrofit2.Response;

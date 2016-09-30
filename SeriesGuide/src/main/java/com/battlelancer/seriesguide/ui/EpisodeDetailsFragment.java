@@ -60,10 +60,12 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.CheatSheet;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -280,6 +282,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (getEpisodeTvdbId() == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();

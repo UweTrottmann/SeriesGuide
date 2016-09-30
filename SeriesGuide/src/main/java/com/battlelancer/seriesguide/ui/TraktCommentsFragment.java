@@ -38,7 +38,9 @@ import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.Comment;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -298,6 +300,7 @@ public class TraktCommentsFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(isShowing);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
         if (event.mTraktAction != TraktAction.COMMENT || getView() == null) {
             return;

@@ -42,7 +42,9 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays a list of seasons of one show.
@@ -539,6 +541,7 @@ public class SeasonsFragment extends ListFragment implements
     }
 
     @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
         /**
          * Updates the total remaining episodes counter, updates season

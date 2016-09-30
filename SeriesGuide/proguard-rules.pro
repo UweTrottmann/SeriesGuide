@@ -50,10 +50,11 @@
 #-keepattributes *Annotation* // already in default config
 
 # EventBus
-# Keep onEvent methods
+# Keep subscriber methods
 -keepclassmembers class ** {
-    public void onEvent*(**);
+    @org.greenrobot.eventbus.Subscribe <methods>;
 }
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.

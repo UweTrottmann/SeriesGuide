@@ -30,13 +30,13 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**

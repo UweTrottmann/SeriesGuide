@@ -158,7 +158,9 @@ dependencies {
         exclude group: 'joda-time', module: 'joda-time'
         exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
     }
-    compile 'de.greenrobot:eventbus:2.4.0'
+    // http://greenrobot.org/eventbus/changelog/
+    compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
     def jodaTimeVersion = '2.9.4'
     compile "net.danlew:android.joda:$jodaTimeVersion"
@@ -202,4 +204,10 @@ dependencies {
     // include regular joda-time to have access to the tz database without init call
     testCompile "joda-time:joda-time:$jodaTimeVersion"
 
+}
+
+apt {
+    arguments {
+        eventBusIndex 'com.battlelancer.seriesguide.SgEventBusIndex'
+    }
 }
