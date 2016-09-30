@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -808,16 +808,16 @@ public class OverviewFragment extends Fragment implements
             // no show or episode data available
             return;
         }
-        if (DisplaySettings.preventSpoilers(getContext())) {
-            textDescription.setText(null);
+        String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            textDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
         } else {
-            String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
-            if (TextUtils.isEmpty(overview)) {
-                // no description available, show no translation available message
-                textDescription.setText(getString(R.string.no_translation,
-                        LanguageTools.getLanguageStringForCode(getContext(),
-                                showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
-                        getString(R.string.tvdb)));
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textDescription.setText(R.string.no_spoilers);
             } else {
                 textDescription.setText(overview);
             }

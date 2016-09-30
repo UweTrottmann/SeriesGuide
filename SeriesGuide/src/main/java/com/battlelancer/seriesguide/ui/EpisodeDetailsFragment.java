@@ -331,17 +331,19 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (hideDetails) {
             // just show the episode number "1x02"
             mTitle.setText(TextTools.getEpisodeNumber(getContext(), mSeasonNumber, mEpisodeNumber));
-            // hide the description
-            mDescription.setText(null);
         } else {
             mTitle.setText(mEpisodeTitle);
-            String overview = cursor.getString(DetailsQuery.OVERVIEW);
-            if (TextUtils.isEmpty(overview)) {
-                // no description available, show no translation available message
-                mDescription.setText(getString(R.string.no_translation,
-                        LanguageTools.getLanguageStringForCode(getContext(),
-                                cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
-                        getString(R.string.tvdb)));
+        }
+        String overview = cursor.getString(DetailsQuery.OVERVIEW);
+        if (TextUtils.isEmpty(overview)) {
+            // no description available, show no translation available message
+            mDescription.setText(getString(R.string.no_translation,
+                    LanguageTools.getLanguageStringForCode(getContext(),
+                            cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
+                    getString(R.string.tvdb)));
+        } else {
+            if (hideDetails) {
+                mDescription.setText(R.string.no_spoilers);
             } else {
                 mDescription.setText(overview);
             }
