@@ -355,7 +355,7 @@ public class SeriesGuideContract {
         String FIRSTAIREDMS = "episode_firstairedms";
 
         /**
-         * Whether an episode has been watched.
+         * One of {@link EpisodeFlags}, whether an episode is watched, skipped or unwatched.
          */
         String WATCHED = "watched";
 
