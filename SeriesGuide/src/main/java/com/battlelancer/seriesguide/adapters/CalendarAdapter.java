@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.util.LongSparseArray;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,9 +29,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Adapter for {@link CalendarFragment} with optimizations for image loading for smoother
@@ -237,14 +236,15 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             return null;
         }
 
-        Map<Long, HeaderData> mapping = new HashMap<>();
+        // pre-size to 30 as we display 30 days == headers at most
+        LongSparseArray<HeaderData> mapping = new LongSparseArray<>(30);
         List<HeaderData> headers = new ArrayList<>();
 
-        for (int i = 0; i < getCount(); i++) {
-            long headerId = getHeaderId(i);
+        for (int position = 0; position < getCount(); position++) {
+            long headerId = getHeaderId(position);
             HeaderData headerData = mapping.get(headerId);
             if (headerData == null) {
-                headerData = new HeaderData(i);
+                headerData = new HeaderData(position);
                 headers.add(headerData);
             }
             headerData.incrementCount();
