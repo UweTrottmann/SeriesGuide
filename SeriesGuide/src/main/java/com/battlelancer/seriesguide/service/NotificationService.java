@@ -413,19 +413,21 @@ public class NotificationService extends IntentService {
                 upcomingEpisodes.moveToPosition(notifyPositions.get(0));
                 maybeSetPoster(context, nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
-                final String episodeTitle = upcomingEpisodes
-                        .getString(NotificationQuery.TITLE);
-                final String episodeSummary = upcomingEpisodes
-                        .getString(NotificationQuery.OVERVIEW);
+                if (!DisplaySettings.preventSpoilers(context)) {
+                    final String episodeTitle = upcomingEpisodes
+                            .getString(NotificationQuery.TITLE);
+                    final String episodeSummary = upcomingEpisodes
+                            .getString(NotificationQuery.OVERVIEW);
 
-                final SpannableStringBuilder bigText = new SpannableStringBuilder();
-                bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
-                bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
-                bigText.append("\n");
-                bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
+                    final SpannableStringBuilder bigText = new SpannableStringBuilder();
+                    bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
+                    bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
+                    bigText.append("\n");
+                    bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
 
-                nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
-                        .setSummaryText(contentText));
+                    nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
+                            .setSummaryText(contentText));
+                }
 
                 // Action button to check in
                 Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);

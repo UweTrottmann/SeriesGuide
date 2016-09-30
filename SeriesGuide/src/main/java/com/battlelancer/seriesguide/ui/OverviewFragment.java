@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -591,16 +591,21 @@ public class OverviewFragment extends Fragment implements
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
 
             // title
-            textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            int season = episode.getInt(EpisodeQuery.SEASON);
+            int number = episode.getInt(EpisodeQuery.NUMBER);
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textEpisodeTitle.setText(TextTools.getEpisodeNumber(getContext(), season, number));
+            } else {
+                textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            }
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, episode.getInt(EpisodeQuery.SEASON)));
+            infoText.append(getString(R.string.season_number, String.valueOf(season)));
             infoText.append(" ");
-            int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
-            infoText.append(getString(R.string.episode_number, episodeNumber));
+            infoText.append(getString(R.string.episode_number, String.valueOf(number)));
             int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
+            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }
             textEpisodeNumbers.setText(infoText);
@@ -811,7 +816,11 @@ public class OverviewFragment extends Fragment implements
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {
-            textDescription.setText(overview);
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textDescription.setText(R.string.no_spoilers);
+            } else {
+                textDescription.setText(overview);
+            }
         }
     }
 
@@ -847,22 +856,28 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        // try loading image
-        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
-                .error(R.drawable.ic_image_missing)
-                .into(imageEpisode,
-                        new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            }
+        if (DisplaySettings.preventSpoilers(getContext())) {
+            // show image placeholder
+            imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageEpisode.setImageResource(R.drawable.ic_image_missing);
+        } else {
+            // try loading image
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+                    .error(R.drawable.ic_image_missing)
+                    .into(imageEpisode,
+                            new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                }
 
-                            @Override
-                            public void onError() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                @Override
+                                public void onError() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                }
                             }
-                        }
-                );
+                    );
+        }
     }
 
     private void loadTraktRatings() {
