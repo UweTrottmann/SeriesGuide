@@ -89,6 +89,7 @@
   <string name="lastEdit">آخر تحرير//TVDb</string>
   <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
   <string name="no_translation_title">غير مترجمة</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
@@ -337,6 +338,8 @@
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_exactdates">عرض التواريخ بشكل دقيق</string>
   <string name="pref_exactdates_summary">\"31 أكتوبر\" بدلاً من \"في 3 أيام\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>

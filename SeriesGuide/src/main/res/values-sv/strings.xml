@@ -86,6 +86,7 @@
   <string name="lastEdit">Senast redigerad // TVDb</string>
   <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
   <string name="no_translation_title">Inte översatt</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">idag</string>
   <string name="now">nu</string>
@@ -318,6 +319,8 @@
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_exactdates">Visa exakt datum</string>
   <string name="pref_exactdates_summary">\"31 oktober\" istället för \"om 3 dagar\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
   <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>

@@ -85,6 +85,7 @@
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">امروز</string>
   <string name="now">اکنون</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">قسمت‌های ویژه از همه‌جا جز فهرست فصل‌ها ناپدید شوند</string>
   <string name="pref_exactdates">نمایش تاریخ‌های دقیق</string>
   <string name="pref_exactdates_summary">«۳۱ اکتبر» به‌جای «در ۳ روز»</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">چینش فصل‌ها بر اساس&#8230;</string>
   <string name="pref_episodesorting">چینش قسمت‌ها بر اساس&#8230;</string>
   <string name="pref_language">زبان محتوای ترجیحی</string>

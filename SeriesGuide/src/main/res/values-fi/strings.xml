@@ -85,6 +85,7 @@
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="no_translation">Kuvausta ei ole saatavilla %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
   <string name="now">nyt</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
   <string name="pref_exactdates">Tarkat päivämäärät</string>
   <string name="pref_exactdates_summary">Käytä \"3 päivän kuluttua\" sijasta \"31. lokakuuta\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Lajittele kaudet&#8230;</string>
   <string name="pref_episodesorting">Lajittele jaksot&#8230;</string>
   <string name="pref_language">Ensisijainen sisällön kieli</string>

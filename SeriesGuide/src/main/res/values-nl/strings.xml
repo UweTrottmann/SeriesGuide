@@ -85,6 +85,7 @@
   <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="no_translation">Er is geen be schrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="no_translation_title">Niet vertaald</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_exactdates">Juiste datum weergeven</string>
   <string name="pref_exactdates_summary">\"31 oktober\" in plaats van \"over 3 dagen\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
   <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>

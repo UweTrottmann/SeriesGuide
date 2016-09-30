@@ -85,6 +85,7 @@
   <string name="lastEdit">Zuletzt bearbeitet // TheTVDB</string>
   <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
   <string name="no_translation_title">Nicht übersetzt</string>
+  <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschalten werden.</string>
   <!-- Date and Time -->
   <string name="today">heute</string>
   <string name="now">jetzt</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Specials verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_exactdates">Genaues Datum anzeigen</string>
   <string name="pref_exactdates_summary">\"31. Oktober\" anstelle von \"in 3 Tagen\"</string>
+  <string name="pref_nospoilers">Spoiler vermeiden</string>
+  <string name="pref_nospoilers_summary">Details ausblenden, bis eine Folge angesehen wurde</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach&#8230;</string>
   <string name="pref_episodesorting">Sortiere Folgen nach&#8230;</string>
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>

@@ -84,6 +84,7 @@
   <string name="lastEdit">最后修改 // TVDb</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
   <string name="no_translation_title">未翻译</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">今天</string>
   <string name="now">现在</string>
@@ -312,6 +313,8 @@
   <string name="pref_onlyseasonepssummary">仅在季列表中显示特别剧集</string>
   <string name="pref_exactdates">显示具体日期</string>
   <string name="pref_exactdates_summary">\"10 月 31 日\"而不是\"3 天\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">季排序依据&#8230;&#8230;</string>
   <string name="pref_episodesorting">集排序依据&#8230;&#8230;</string>
   <string name="pref_language">内容首选的语言</string>

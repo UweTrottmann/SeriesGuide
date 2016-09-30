@@ -84,6 +84,7 @@
   <string name="lastEdit">마지막 편집 // TVDb</string>
   <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">오늘</string>
   <string name="now">지금</string>
@@ -312,6 +313,8 @@
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
   <string name="pref_exactdates">정확한 날짜를 표시합니다.</string>
   <string name="pref_exactdates_summary">\"10월 31일\" 대신 \"3일안에\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
   <string name="pref_language">선호하는 컨텐츠 언어</string>

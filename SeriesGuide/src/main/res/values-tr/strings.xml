@@ -85,6 +85,7 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
   <string name="pref_exactdates_summary">\"3 gün\" yerine \"31 Ekim\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Sezonları sırala:&#8230;</string>
   <string name="pref_episodesorting">Bölümleri sırala:&#8230;</string>
   <string name="pref_language">Tercih edilen içerik dili</string>

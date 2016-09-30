@@ -85,6 +85,7 @@
   <string name="lastEdit">Darrera edició // TVDb</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
   <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
   <string name="pref_language">Preferred content language</string>

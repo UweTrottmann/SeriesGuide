@@ -85,6 +85,7 @@
   <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Por traduzir</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">Episódios especiais apenas na lista de temporadas</string>
   <string name="pref_exactdates">Exibir datas exatas</string>
   <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"Dentro de 3 dias\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Linguagem Preferida</string>

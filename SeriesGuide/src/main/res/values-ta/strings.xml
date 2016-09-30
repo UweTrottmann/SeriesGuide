@@ -85,6 +85,7 @@
   <string name="lastEdit">திருத்து கடைசி / / TheTVDB</string>
   <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
   <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">இன்று</string>
   <string name="now">இப்போது</string>
@@ -317,6 +318,8 @@
   <string name="pref_onlyseasonepssummary">சிறப்பு episodes இடங்களிலிருந்தும் எல்லா இடத்திலும் தவிர செல்வதைத் பட்டியல்</string>
   <string name="pref_exactdates">காட்சி சரியான தேதிகள்</string>
   <string name="pref_exactdates_summary">\"அக்டோபர் 31\" பதிலாக \"உள்ள நாட்கள்\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">மூலம் அடுக்கு சீசன்ஸ்&#8230;</string>
   <string name="pref_episodesorting">மூலம் அடுக்கு episodes...</string>
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>

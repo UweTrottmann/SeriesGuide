@@ -87,6 +87,7 @@
   <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
@@ -327,6 +328,8 @@
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
   <string name="pref_exactdates">הצג תאריכים מדויקים</string>
   <string name="pref_exactdates_summary">\"31 באוקטובר\" במקום \"ב-3 ימים\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
   <string name="pref_language">שפת תוכן מועדפת</string>

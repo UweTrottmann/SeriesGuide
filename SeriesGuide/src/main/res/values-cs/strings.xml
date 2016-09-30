@@ -86,6 +86,7 @@
   <string name="lastEdit">Naposledy editováno // TVDb</string>
   <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
   <string name="no_translation_title">Nepřeloženo</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">nyní</string>
@@ -322,6 +323,8 @@
   <string name="pref_onlyseasonepssummary">Bonusové epizody se budou zobrazovat pouze v seznamu série</string>
   <string name="pref_exactdates">Zobrazovat celá data</string>
   <string name="pref_exactdates_summary">\"31. října\" místo \"za 3 dny\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
   <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
