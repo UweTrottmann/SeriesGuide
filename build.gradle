@@ -26,7 +26,7 @@ task clean(type: Delete) {
 
 ext {
     androidCompileSdkVersion = 24
-    androidBuildToolsVersion = '24.0.1'
+    androidBuildToolsVersion = '24.0.3'
 
     // API level 15+ -> version 15xxx
     androidVersionCode = 15211
