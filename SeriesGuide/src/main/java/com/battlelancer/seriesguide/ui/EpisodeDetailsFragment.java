@@ -34,8 +34,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -326,8 +326,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // title and description
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
         mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
-        boolean isUnwatched = EpisodeTools.isUnwatched(mEpisodeFlag);
-        if (isUnwatched && DisplaySettings.preventSpoilers(getContext())) {
+        boolean hideDetails = EpisodeTools.isUnwatched(mEpisodeFlag)
+                && DisplaySettings.preventSpoilers(getContext());
+        if (hideDetails) {
             // just show the episode number "1x02"
             mTitle.setText(TextTools.getEpisodeNumber(getContext(), mSeasonNumber, mEpisodeNumber));
             // hide the description
@@ -440,7 +441,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
-        loadImage(imagePath);
+        loadImage(imagePath, hideDetails);
 
         // check in button
         final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
@@ -585,30 +586,36 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         Utils.trackAction(getActivity(), TAG, "Share");
     }
 
-    private void loadImage(String imagePath) {
+    private void loadImage(String imagePath, boolean hideDetails) {
         // immediately hide container if there is no image
         if (TextUtils.isEmpty(imagePath)) {
             mImageContainer.setVisibility(View.GONE);
             return;
         }
 
-        // try loading image
-        mImageContainer.setVisibility(View.VISIBLE);
-        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
-                .error(R.drawable.ic_image_missing)
-                .into(mEpisodeImage,
-                        new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            }
+        if (hideDetails) {
+            // show image placeholder
+            mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            mEpisodeImage.setImageResource(R.drawable.ic_image_missing);
+        } else {
+            // try loading image
+            mImageContainer.setVisibility(View.VISIBLE);
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+                    .error(R.drawable.ic_image_missing)
+                    .into(mEpisodeImage,
+                            new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                }
 
-                            @Override
-                            public void onError() {
-                                mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                @Override
+                                public void onError() {
+                                    mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                }
                             }
-                        }
-                );
+                    );
+        }
     }
 
     private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =

@@ -856,22 +856,28 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        // try loading image
-        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
-                .error(R.drawable.ic_image_missing)
-                .into(imageEpisode,
-                        new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            }
+        if (DisplaySettings.preventSpoilers(getContext())) {
+            // show image placeholder
+            imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageEpisode.setImageResource(R.drawable.ic_image_missing);
+        } else {
+            // try loading image
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+                    .error(R.drawable.ic_image_missing)
+                    .into(imageEpisode,
+                            new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                }
 
-                            @Override
-                            public void onError() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                @Override
+                                public void onError() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                }
                             }
-                        }
-                );
+                    );
+        }
     }
 
     private void loadTraktRatings() {
