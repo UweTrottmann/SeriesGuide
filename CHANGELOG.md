@@ -9,6 +9,16 @@ Version 33
 ----------
 *(in development)*
 
+#### 33-beta3
+*(2016-09-30)*
+
+* FEATURE Add "Prevent spoilers" option in Settings. If enabled, episode details are hidden until
+  the episode is watched.
+* TWEAK Add "Delete" option to show overview menu.
+* TWEAK Add "Set watched" action to single episode notifications.
+* TWEAK Show "Check in" as a separate full-width button. Hide it if trakt is not connected.
+* NOTE Latest translations from crowdin.
+
 #### 33-beta2
 *(2016-09-28)*
 
