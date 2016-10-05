@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath dep.androidPlugin
+    }
+}
+
 apply plugin: 'com.android.library'
 
 dependencies {
