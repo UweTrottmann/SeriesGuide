@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -102,6 +103,7 @@ public class AppWidget extends AppWidgetProvider {
                 views.addView(R.id.LinearLayoutWidget, item);
             } else {
                 boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+                boolean preventSpoilers = DisplaySettings.preventSpoilers(context);
 
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
@@ -109,13 +111,21 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    int seasonNumber = upcomingEpisodes.getInt(
-                            CalendarAdapter.Query.SEASON);
-                    int episodeNumber = upcomingEpisodes.getInt(
-                            CalendarAdapter.Query.NUMBER);
+                    int seasonNumber = upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON);
+                    int episodeNumber = upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER);
                     String title = upcomingEpisodes.getString(CalendarAdapter.Query.TITLE);
-                    item.setTextViewText(R.id.textViewWidgetEpisode,
-                            TextTools.getNextEpisodeString(this, seasonNumber, episodeNumber, title));
+                    int watchedFlag = upcomingEpisodes.getInt(CalendarAdapter.Query.WATCHED);
+                    String nextEpisodeString;
+                    if (EpisodeTools.isUnwatched(watchedFlag) && preventSpoilers) {
+                        // just display the episode number
+                        nextEpisodeString = TextTools.getEpisodeNumber(context, seasonNumber,
+                                episodeNumber);
+                    } else {
+                        // display episode number and title
+                        nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
+                                episodeNumber, title);
+                    }
+                    item.setTextViewText(R.id.textViewWidgetEpisode, nextEpisodeString);
 
                     Date actualRelease = TimeTools.applyUserOffset(context,
                             upcomingEpisodes.getLong(CalendarAdapter.Query.RELEASE_TIME_MS)

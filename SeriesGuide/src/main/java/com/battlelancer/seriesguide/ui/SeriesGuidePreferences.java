@@ -516,7 +516,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // pref changes that require the widgets to be updated
             if (KEY_OFFSET.equals(key)
                     || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
-                    || DisplaySettings.KEY_DISPLAY_EXACT_DATE.equals(key)) {
+                    || DisplaySettings.KEY_DISPLAY_EXACT_DATE.equals(key)
+                    || DisplaySettings.KEY_PREVENT_SPOILERS.equals(key)) {
                 // update any widgets
                 ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getActivity());
             }
