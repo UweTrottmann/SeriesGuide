@@ -142,7 +142,7 @@
   <string name="now_empty">Rien ici. Regardez des épisodes !</string>
   <string name="now_movies_empty">Rien ne se passe. Regarder des films !</string>
   <!-- History -->
-  <string name="user_stream">historique</string>
+  <string name="user_stream">Historique</string>
   <string name="user_stream_empty">Aucun historique sur trakt. Visionner et faites des check-ins !</string>
   <string name="user_movie_stream_empty">Aucune activité récente sur trakt. Faites des check-ins !</string>
   <!-- Calendar -->
@@ -232,7 +232,7 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Expérimental !</string>
+  <string name="hexagon_warning">Expérimental</string>
   <string name="hexagon_description">Connectez vous au cloud pour sauvegarder et synchroniser vos séries et films.</string>
   <string name="hexagon_warning_lists">Les listes ne sont pas incluses.</string>
   <string name="hexagon_warning_trakt">Tant que SerieGuide Cloud est connecté, la synchronisation trakt sera désactivée.</string>
@@ -438,7 +438,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
-  <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
+  <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Uniquement pour les supporters</string>
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>

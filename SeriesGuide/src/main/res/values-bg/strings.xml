@@ -24,7 +24,7 @@
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
-  <string name="description_menu_overflow">Повече опции</string>
+  <string name="description_menu_overflow">Още опции</string>
   <!-- Actions -->
   <string name="clear">Изчисти</string>
   <string name="discard">Откажи</string>
@@ -109,7 +109,7 @@
   <!-- Shows -->
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
-  <string name="delete_show">Премахни</string>
+  <string name="delete_show">Премахване</string>
   <string name="no_nextepisode">няма намерен следващ епизод</string>
   <string name="context_favorite">Добави към Любими</string>
   <string name="context_unfavorite">Премахни от Любими</string>
@@ -119,7 +119,7 @@
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито ТВ предаване</string>
   <string name="unhidden">Показано ТВ предаване</string>
-  <string name="action_shows_add">Добави ТВ предаване</string>
+  <string name="action_shows_add">Добавяне на тв предаване</string>
   <string name="action_shows_filter">Филтриране на сериали</string>
   <string name="empty_filter">Премахни всички филтри</string>
   <string name="action_shows_filter_favorites">Любими</string>
@@ -153,7 +153,7 @@
   <string name="only_favorites">Само Любими сериали</string>
   <string name="pref_infinite_scrolling">Безкраен календар</string>
   <!-- Updating -->
-  <string name="update_scheduled">Обновяване...</string>
+  <string name="update_scheduled">Обновяване&#8230;</string>
   <string name="update_no_connection">За актуализация се свържете към интернет.</string>
   <string name="update_inprogress">Актуализиране в процес, опитайте по-късно.</string>
   <!-- Seasons -->
@@ -183,14 +183,14 @@
   <!-- Lists -->
   <string name="first_list">Първи списък</string>
   <string name="list_add">Добави списък</string>
-  <string name="list_title_hint">Изберете име за списъка</string>
-  <string name="list_remove">Премахни списъка</string>
+  <string name="list_title_hint">Дайте име за списъка</string>
+  <string name="list_remove">Премахване на списъка</string>
   <string name="list_manage">Управление на списъка</string>
   <string name="list_item_manage">Управление на списъци</string>
-  <string name="list_item_remove">Премахни от списъка</string>
+  <string name="list_item_remove">Премахване от списъка</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
-  <string name="action_lists_sort">Сортиране на списъци</string>
-  <string name="action_lists_reorder">Преподреждане на списъци</string>
+  <string name="action_lists_sort">Подреждане на списъка</string>
+  <string name="action_lists_reorder">Пренареждане на списъците</string>
   <string name="error_name_already_exists">Списък с това име вече съществува</string>
   <!-- Movies -->
   <string name="movies_collection">Колекция</string>
@@ -232,7 +232,7 @@
     <item quantity="other">%d минути</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Експериментално!</string>
+  <string name="hexagon_warning">Експериментално</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
   <string name="hexagon_warning_lists">Списъци не са включени.</string>
   <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
@@ -271,8 +271,8 @@
   <string name="connect_trakt">Свържете се с trakt</string>
   <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
   <string name="trakt_reconnect_details">Проверете идентификацията си в trakt</string>
-  <string name="username">Потребител</string>
-  <string name="waitplease">Един момент, моля...</string>
+  <string name="username">Потребителско име</string>
+  <string name="waitplease">Един момент, моля&#8230;</string>
   <string name="connect">Свързване</string>
   <string name="disconnect">Прекъсване на връзката</string>
   <string name="use_integrated_browser">Използвай вградения четец</string>
@@ -401,7 +401,7 @@
   <string name="backup_use_default_files">Use default backup files</string>
   <!-- Welcome dialog -->
   <string name="get_started">Начало</string>
-  <string name="welcome_setuplanguage">Избери език</string>
+  <string name="welcome_setuplanguage">Избор на език</string>
   <string name="dismiss">Отхвърли</string>
   <!-- Notifications -->
   <string name="upcoming_show">%s предстои</string>
@@ -438,7 +438,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Покажи следващият предстоящ епизод от вашите SeriesGuide сериали.</string>
-  <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите...</string>
+  <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Само за поддръжници</string>
   <string name="action_upgrade">Отключване на всички функции</string>
@@ -461,7 +461,7 @@
   <string name="action_extensions_add">Добави разширение</string>
   <string name="action_extensions_limit">Вземете X, за да добавите още разширения</string>
   <string name="action_extensions_search">Вземи още разширения</string>
-  <string name="action_extension_remove">Премахни</string>
+  <string name="action_extension_remove">Премахване</string>
   <string name="extension_amazon">Търсене в Amazon</string>
   <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
   <string name="pref_amazon_domain">Amazon сайт</string>
@@ -474,7 +474,7 @@
   <string name="person_biography">Биография</string>
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Радвате ли се на използването на SeriesGuide?</string>
-  <string name="feedback_action_yes">Да</string>
+  <string name="feedback_action_yes">Да!</string>
   <string name="feedback_action_notreally">Not really</string>
   <string name="feedback_question_rate_google">Ще оцените ли приложението в Google Play?</string>
   <string name="feedback_question_rate_amazon">Ще оцените ли приложението в Amazon?</string>

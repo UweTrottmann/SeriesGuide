@@ -86,7 +86,7 @@
   <string name="lastEdit">Ostatnia edycja // TVDb</string>
   <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
   <string name="no_translation_title">Nie przetłumaczone</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Niektóre informacje zostały ukryte, aby zapobiec spoilerowaniu. W celu wyłączenia tej funkcji wejdź do ustawień.</string>
   <!-- Date and Time -->
   <string name="today">dziś</string>
   <string name="now">teraz</string>
@@ -140,7 +140,7 @@
   <string name="recently_watched">Niedawno obejrzane</string>
   <string name="released_today">Dodane dziś</string>
   <string name="friends_recently">Twoi znajomi z trakt</string>
-  <string name="now_empty">Nic się nie dzieje. Obejrzyj coś! </string>
+  <string name="now_empty">Nic się nie dzieje. Obejrzyj coś!</string>
   <string name="now_movies_empty">Nic nie dzieje. Obejrzyj jakiś film!</string>
   <!-- History -->
   <string name="user_stream">Historia</string>
@@ -236,7 +236,7 @@
     <item quantity="other">%d minut</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Eksperymentalne!</string>
+  <string name="hexagon_warning">Eksperymentalne</string>
   <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
   <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
   <string name="hexagon_warning_trakt">Po podłączeniu do chmury SeriesGuide, synchronizacja trakt jest wyłączona.</string>
@@ -266,7 +266,7 @@
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
-  <string name="trakt_error_general">Nie można połączyć z  trakt. Spróbuj ponownie później.</string>
+  <string name="trakt_error_general">Nie można połączyć z trakt. Spróbuj ponownie później.</string>
   <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
   <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
   <!-- Connect trakt -->
@@ -323,10 +323,10 @@
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_exactdates">Wyświetlaj dokładne daty</string>
   <string name="pref_exactdates_summary">\"31 października\" zamiast \"za 3 dni\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-  <string name="pref_seasonsorting">Sortuj sezony wg</string>
-  <string name="pref_episodesorting">Sortuj odcinki wg</string>
+  <string name="pref_nospoilers">Ukryj spoilery</string>
+  <string name="pref_nospoilers_summary">Ukrywa szczegóły do czasu obejrzenia odcinka</string>
+  <string name="pref_seasonsorting">Sortuj sezony wg&#8230;</string>
+  <string name="pref_episodesorting">Sortuj odcinki wg&#8230;</string>
   <string name="pref_language">Preferowany język zawartości</string>
   <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
@@ -395,7 +395,7 @@
   <string name="import_button">Przywróć</string>
   <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
-  <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione.</string>
+  <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
   <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
   <string name="restore_auto_backup">Przywróć kopię zapasową</string>
   <string name="dataliberation_permission_missing">Umożliwia dostęp do plików, aby użyć tworzenia i przywracania kopii zapasowych.</string>
@@ -443,7 +443,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
+  <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Tylko dla osób wspierających</string>
   <string name="action_upgrade">Odblokuj wszystkie funkcje</string>

@@ -85,7 +85,7 @@
   <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Alguns detalhes estão escondidos para evitar spoilers. Para desativar vá até as configurações.</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -232,7 +232,7 @@
     <item quantity="other">%d minutos</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Experimental</string>
   <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
   <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
   <string name="hexagon_warning_trakt">Enquanto o SeriesGuide Cloud está conectado, a sincronização do trakt sync vai estar desativada.</string>
@@ -318,8 +318,8 @@
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_exactdates">Mostrar datas exatas</string>
   <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"em 3 dias\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Evitar spoilers</string>
+  <string name="pref_nospoilers_summary">Esconda detalhes até que o episódio seja assistido</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Idioma preferido do conteúdo</string>

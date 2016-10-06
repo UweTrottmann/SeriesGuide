@@ -89,7 +89,7 @@
   <string name="lastEdit">آخر تحرير//TVDb</string>
   <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
   <string name="no_translation_title">غير مترجمة</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع المفسدين. لإيقاف هذا الانتقال إلى إعدادات.</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
@@ -251,7 +251,7 @@
   <string name="hexagon_warning">تجريبي</string>
   <string name="hexagon_description">اتصل بالسحابة لتقوم بالنسخ الإحتياطي و مزامنة مسلسلات و أفلامك.</string>
   <string name="hexagon_warning_lists">القوائم غير متوفرة.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">بينما سحابة سيريسجويدي متصل، سيتم تعطيل المزامنة trakt.</string>
   <string name="hexagon_signin">تسجيل الدخول</string>
   <string name="hexagon_signed_in">أنت متصل بسحابة التخزين الخاصة بدليل المسلسلات.</string>
   <string name="hexagon_signout">تسجيل الخروج</string>
@@ -338,8 +338,8 @@
   <string name="pref_onlyseasonepssummary">سيتم إخفاء الحلقات الخاصة من كل مكان عدا من قائمة الموسم</string>
   <string name="pref_exactdates">عرض التواريخ بشكل دقيق</string>
   <string name="pref_exactdates_summary">\"31 أكتوبر\" بدلاً من \"في 3 أيام\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">منع المفسدين</string>
+  <string name="pref_nospoilers_summary">إخفاء التفاصيل حتى هو شاهد الحلقة</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>
@@ -496,8 +496,8 @@
   <string name="feedback_question_enjoy">هل انت راض و مستمتع ب SeriesGuide؟</string>
   <string name="feedback_action_yes">تم!</string>
   <string name="feedback_action_notreally">ليس في الحقيقة</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
+  <string name="feedback_question_rate_google">قيم على Google Play؟</string>
+  <string name="feedback_question_rate_amazon">صنفه في الأمازون؟</string>
   <string name="feedback_question_feedback">اخبرني كيف احسنها ؟</string>
   <string name="feedback_action_ok">بالتأكيد</string>
   <string name="feedback_action_nothanks">لا، شكرا</string>

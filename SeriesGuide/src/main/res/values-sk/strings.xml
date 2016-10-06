@@ -86,7 +86,7 @@
   <string name="lastEdit">Posledné úpravy // TheTVDB</string>
   <string name="no_translation">Na %2$s nie je dostupný žiadny popis preložený do %1$s.</string>
   <string name="no_translation_title">Nie je preložené</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Niektoré detily sú skryté aby sa zabránilo spojlerom. Ak to chcete vypnúť prejdite do nastavení.</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">teraz</string>
@@ -236,9 +236,9 @@
     <item quantity="other">%d minút</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimentálne!</string>
+  <string name="hexagon_warning">Experimentálne</string>
   <string name="hexagon_description">Pripojte sa ku cloudu pre zálohovanie a synchronizovanie seriálov a filmov.</string>
-  <string name="hexagon_warning_lists">Zoznamy nie su zahrnuté</string>
+  <string name="hexagon_warning_lists">Zoznamy nie su zahrnuté.</string>
   <string name="hexagon_warning_trakt">Pokiaľ je SeriesGuide Cloud pripojený, synchronizácia s trakt bude zakázaná.</string>
   <string name="hexagon_signin">Prihlásiť sa</string>
   <string name="hexagon_signed_in">Ste pripojený k SeriesGuide Cloudu.</string>
@@ -272,7 +272,7 @@
   <!-- Connect trakt -->
   <string name="trakt_account">trakt účet</string>
   <string name="trakt_connect_instructions">Na nasledujúcej obrazovke sa prihláste alebo zaregistrujte na trakt. Potom povoľte prístup k účtu pre SeriesGuide.</string>
-  <string name="connect_trakt">Pripojenie na trakt.tv</string>
+  <string name="connect_trakt">Pripojenie na trakt</string>
   <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
   <string name="trakt_reconnect_details">Skontroľujte poverenia trakt</string>
   <string name="username">Užívateľské meno</string>
@@ -280,7 +280,7 @@
   <string name="connect">Pripojiť</string>
   <string name="disconnect">Odpojiť</string>
   <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
-  <string name="connect_trakt_done">Pripojený do trakt.tv!</string>
+  <string name="connect_trakt_done">Pripojený do trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide teraz zosynchronizuje seriály a filmy na tomto zariadení s trakt. Môže to chvíľu trvať.</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť knižnicu</string>
@@ -323,8 +323,8 @@
   <string name="pref_onlyseasonepssummary">Bonusové epizódy sa budú zobrazovať jedine v zozname sérií</string>
   <string name="pref_exactdates">Zobraziť presné dátumy</string>
   <string name="pref_exactdates_summary">\"31. 10\" namiesto \"o 3 dni\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Zabrániť spojlerom</string>
+  <string name="pref_nospoilers_summary">Skryť detaily kým nie je epizóda pozretá</string>
   <string name="pref_seasonsorting">Zoradiť série podľa&#8230;</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
@@ -388,7 +388,7 @@
   <string name="import_failed_nosd">Nie je možné obnoviť zálohu. Priečinok zálohy nie je dostupný.</string>
   <string name="import_failed_nofile">Nie je čitateľný záložný súbor.</string>
   <string name="import_failed_noread">Záloha sa nedá načítať.</string>
-  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohy nižšej verzie ako 2.0 obnovujte najskôr vo verzii 1.9.x .</string>
+  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohy nižšej verzie ako 2.0 obnovujte najskôr vo verzii 1.9.x.</string>
   <string name="import_success">Záloha úspešne vytvorená.</string>
   <string name="import_failed">Obnovenie zálohy zlyhalo.</string>
   <string name="backup_button">Zálohovať</string>

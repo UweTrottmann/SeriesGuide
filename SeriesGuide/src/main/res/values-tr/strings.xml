@@ -85,7 +85,7 @@
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -232,7 +232,7 @@
     <item quantity="other">%d dakika</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Deneysel!</string>
+  <string name="hexagon_warning">Deneysel</string>
   <string name="hexagon_description">Yedekleme için buluta bağlanın ve dizilerinizi ve filmlerinizi senkronize edin.</string>
   <string name="hexagon_warning_lists">Listeler dahil edilmez.</string>
   <string name="hexagon_warning_trakt">SeriesGuide Cloud bağlandığında, trakt eşitlemesi devre dışı bırakılacak.</string>
@@ -318,10 +318,10 @@
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
   <string name="pref_exactdates_summary">\"3 gün\" yerine \"31 Ekim\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-  <string name="pref_seasonsorting">Sezonları sırala:&#8230;</string>
-  <string name="pref_episodesorting">Bölümleri sırala:&#8230;</string>
+  <string name="pref_nospoilers">Spoiler önle</string>
+  <string name="pref_nospoilers_summary">Bölümü izlenene kadar detayları gizle</string>
+  <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
+  <string name="pref_episodesorting">Bölümleri sırala&#8230;</string>
   <string name="pref_language">Tercih edilen içerik dili</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
@@ -400,7 +400,7 @@
   <string name="action_select_file">Dosya seçin</string>
   <string name="backup_use_default_files">Varsayılan yedek dosyalarını kullan</string>
   <!-- Welcome dialog -->
-  <string name="get_started">Başlarken... </string>
+  <string name="get_started">Başlarken</string>
   <string name="welcome_setuplanguage">Dil seçin</string>
   <string name="dismiss">Kapat</string>
   <!-- Notifications -->
@@ -438,7 +438,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
-  <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde</string>
+  <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Sadece destekçileri için</string>
   <string name="action_upgrade">Tüm özellikleri aç</string>

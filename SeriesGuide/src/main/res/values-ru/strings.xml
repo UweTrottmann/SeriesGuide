@@ -86,7 +86,7 @@
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
   <!-- Date and Time -->
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
@@ -154,7 +154,7 @@
   <string name="only_favorites">Только избранные сериалы</string>
   <string name="pref_infinite_scrolling">Бесконечный календарь</string>
   <!-- Updating -->
-  <string name="update_scheduled">Обновление...</string>
+  <string name="update_scheduled">Обновление&#8230;</string>
   <string name="update_no_connection">Для обновления подключитесь к Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <!-- Seasons -->
@@ -323,10 +323,10 @@
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
   <string name="pref_exactdates">Отображать точные даты</string>
   <string name="pref_exactdates_summary">\"31 октября\" вместо \"Через 3 дня\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-  <string name="pref_seasonsorting">Сортировка сезонов по</string>
-  <string name="pref_episodesorting">Сортировка эпизодов по</string>
+  <string name="pref_nospoilers">Предотвратить спойлеры</string>
+  <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
+  <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
+  <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
   <string name="pref_language">Предпочтительный язык контента</string>
   <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
@@ -381,10 +381,10 @@
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
   <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
-  <string name="backup_inprogress">Резервное копирование базы данных...</string>
+  <string name="backup_inprogress">Резервное копирование базы данных&#8230;</string>
   <string name="backup_success">Резервное копирование прошло успешно.</string>
   <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
-  <string name="import_inprogress">Восстановление базы данных...</string>
+  <string name="import_inprogress">Восстановление базы данных&#8230;</string>
   <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
   <string name="import_failed_nofile">Существует не читаемый файл резервной копии.</string>
   <string name="import_failed_noread">Невозможно прочитать файл резервной копии.</string>
@@ -443,7 +443,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящий эпизод ваших SeriesGuide сериалов.</string>
-  <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
+  <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Только для пожертвовавших</string>
   <string name="action_upgrade">Разблокировать все возможности</string>

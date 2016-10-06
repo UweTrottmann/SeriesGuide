@@ -84,7 +84,7 @@
   <string name="lastEdit">最終更新 // TheTVDB</string>
   <string name="no_translation">%2$s に %1$s 語で利用できる説明はありません。</string>
   <string name="no_translation_title">翻訳されていません</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これをオフにするには設定に移動します。</string>
   <!-- Date and Time -->
   <string name="today">今日</string>
   <string name="now">今</string>
@@ -306,15 +306,15 @@
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">サービス</string>
   <string name="prefs_category_advanced">高度</string>
-  <string name="prefs_category_about">...について</string>
+  <string name="prefs_category_about">について</string>
   <string name="pref_onlyfuture">未放映のエピソード</string>
   <string name="pref_onlyfuturesummary">すでに放映されたエピソードを表示しません</string>
   <string name="pref_onlyseasoneps">特別編を非表示</string>
   <string name="pref_onlyseasonepssummary">シーズン リストを除き、すべての場所で特別編を表示しません</string>
   <string name="pref_exactdates">正確な日付を表示</string>
   <string name="pref_exactdates_summary">「3 日以内」ではなく「10 月 31 日」</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">ネタバレを防ぐ</string>
+  <string name="pref_nospoilers_summary">エピソードを見るまで詳細を非表示</string>
   <string name="pref_seasonsorting">シーズンを並び替え&#8230;</string>
   <string name="pref_episodesorting">エピソードを並び替え&#8230;</string>
   <string name="pref_language">ご希望のコンテンツ言語</string>

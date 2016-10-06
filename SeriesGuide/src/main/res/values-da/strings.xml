@@ -85,7 +85,7 @@
   <string name="lastEdit">Sidste redigering / / TVDb</string>
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
   <string name="no_translation_title">Ikke oversat</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. For at slå dette fra, gå til Indstillinger.</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nu</string>
@@ -318,8 +318,8 @@
   <string name="pref_onlyseasonepssummary">Specielle episoder skjules overalt bortset fra sæsonlisten</string>
   <string name="pref_exactdates">Vis nøjagtige datoer</string>
   <string name="pref_exactdates_summary">\"31. oktober\" i stedet for \"om 3 dage\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Forhindre spoilere</string>
+  <string name="pref_nospoilers_summary">Skjul detaljer indtil en episode ses</string>
   <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
   <string name="pref_episodesorting">Sortér episoder efter&#8230;</string>
   <string name="pref_language">Foretrukket indholdssprog</string>
@@ -332,7 +332,7 @@
   <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
   <string name="licences_and_credits">Licenser og tilkendegivelser</string>
   <!-- Sort -->
-  <string name="sort">Sorter efter</string>
+  <string name="sort">Sortér efter</string>
   <string name="action_sort_ignore_articles">Ignorér artikler</string>
   <!-- Sort orders -->
   <string name="sort_order_latest_first">Seneste først</string>
