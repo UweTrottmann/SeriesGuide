@@ -9,6 +9,13 @@ Version 33
 ----------
 *(in development)*
 
+#### 33-beta4
+*(2016-10-06)*
+
+* TWEAK "Prevent spoilers" setting also applies to widgets.
+* FIX Revert Android Support library version to avoid rare crash.
+* NOTE Latest translations from crowdin.
+
 #### 33-beta3
 *(2016-09-30)*
 
