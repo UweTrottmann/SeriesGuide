@@ -123,7 +123,7 @@ dependencies {
     compile project(':libraries:stickygridheaders')
 
     // https://docs.fabric.io/android/changelog.html
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
