@@ -302,13 +302,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.username.setVisibility(View.GONE);
                 holder.avatar.setVisibility(View.GONE);
 
-                if (item.poster != null && item.poster.startsWith("http")) {
-                    // is a trakt poster
-                    Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
-                } else {
-                    // is a TVDb (only path then, so build URL) or no poster
-                    Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
-                }
+                // a TVDb/TMDB or no poster
+                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
             } else {
                 // friend history entry
                 holder.username.setVisibility(View.VISIBLE);
@@ -316,8 +311,9 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 holder.username.setText(item.username);
 
-                // trakt poster and avatar
+                // a TVDb/TMDB or no poster
                 Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+                // trakt avatar
                 ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
             }
 
