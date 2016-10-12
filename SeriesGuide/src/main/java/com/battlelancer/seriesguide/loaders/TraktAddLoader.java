@@ -61,7 +61,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                 action = "load recommended shows";
                 Response<List<Show>> response = traktRecommendations.get()
-                        .shows(Extended.FULLIMAGES)
+                        .shows(Extended.FULL)
                         .execute();
                 if (response.isSuccessful()) {
                     shows = response.body();
@@ -76,13 +76,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktAddFragment.TYPE_WATCHED) {
                     action = "load watched shows";
-                    response = traktSync.get().watchedShows(Extended.NOSEASONSIMAGES).execute();
+                    response = traktSync.get().watchedShows(Extended.NOSEASONS).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
-                    response = traktSync.get().collectionShows(Extended.IMAGES).execute();
+                    response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
-                    response = traktSync.get().watchlistShows(Extended.FULLIMAGES).execute();
+                    response = traktSync.get().watchlistShows(Extended.FULL).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;

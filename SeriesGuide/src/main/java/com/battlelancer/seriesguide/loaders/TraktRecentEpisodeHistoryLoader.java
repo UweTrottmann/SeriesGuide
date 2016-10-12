@@ -156,7 +156,7 @@ public class TraktRecentEpisodeHistoryLoader
 
     public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
         return traktUsers.history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
-                Extended.IMAGES, null, null);
+                Extended.DEFAULT_MIN, null, null);
     }
 
     protected static Result buildResultFailure(int emptyTextResId) {
