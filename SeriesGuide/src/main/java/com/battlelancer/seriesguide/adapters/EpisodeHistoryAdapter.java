@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -19,6 +21,23 @@ import java.util.List;
  * Creates a list of episodes from a list of trakt {@link HistoryEntry} objects.
  */
 public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
+
+    public static class ViewHolder {
+
+        TextView title;
+        TextView description;
+        TextView timestamp;
+        ImageView poster;
+        ImageView type;
+
+        public ViewHolder(View view) {
+            title = (TextView) view.findViewById(R.id.textViewHistoryTitle);
+            description = (TextView) view.findViewById(R.id.textViewHistoryDescription);
+            timestamp = (TextView) view.findViewById(R.id.textViewHistoryTimestamp);
+            poster = (ImageView) view.findViewById(R.id.imageViewHistoryPoster);
+            type = (ImageView) view.findViewById(R.id.imageViewHistoryType);
+        }
+    }
 
     private SparseArrayCompat<String> localShowPosters;
 

@@ -1,53 +1,62 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**
- * Creates a list of movies from a list of {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry}.
+ * Creates a list of movies from a list of {@link HistoryEntry}.
  */
 public class MovieHistoryAdapter extends SectionedHistoryAdapter {
+
+    public static class ViewHolder {
+
+        TextView title;
+        TextView timestamp;
+        ImageView type;
+
+        public ViewHolder(View view) {
+            title = (TextView) view.findViewById(R.id.textViewHistoryTitle);
+            timestamp = (TextView) view.findViewById(R.id.textViewHistoryTimestamp);
+            type = (ImageView) view.findViewById(R.id.imageViewHistoryType);
+        }
+    }
 
     public MovieHistoryAdapter(Context context) {
         super(context);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // A ViewHolder keeps references to child views to avoid
         // unnecessary calls to findViewById() on each row.
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_history, parent, false);
-
+            convertView = mInflater.inflate(R.layout.item_history_movie, parent, false);
             holder = new ViewHolder(convertView);
-            // tweak layout for movie
-            holder.title.setTextAppearance(convertView.getContext(),
-                    R.style.TextAppearance_Subhead);
-            holder.title.setMaxLines(2);
-            holder.description.setVisibility(View.GONE);
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         HistoryEntry item = getItem(position);
+        if (item == null) {
+            return convertView; // all bets are off!
+        }
 
         // movie title
         holder.title.setText(item.movie == null ? null : item.movie.title);
         // movie poster
-        String poster =
-                (item.movie == null || item.movie.images == null
-                        || item.movie.images.poster == null)
-                        ? null : item.movie.images.poster.thumb;
-        Utils.loadSmallPoster(getContext(), holder.poster, poster);
+        // trakt has removed images: currently displaying no poster
+//        Utils.loadSmallPoster(getContext(), holder.poster, poster);
 
         // timestamp
         if (item.watched_at != null) {

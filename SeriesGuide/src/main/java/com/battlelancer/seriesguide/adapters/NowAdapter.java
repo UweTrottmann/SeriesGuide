@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -27,6 +28,8 @@ import java.util.List;
  * recently watched by trakt friends.
  */
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    public static final String TRAKT_ACTION_WATCH = "watch";
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
@@ -59,7 +62,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    static class FriendViewHolder extends RecyclerView.ViewHolder {
+    static class HistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView show;
         public TextView episode;
         public TextView timestamp;
@@ -68,7 +71,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ImageView avatar;
         public ImageView type;
 
-        public FriendViewHolder(View itemView, final ItemClickListener listener) {
+        public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
             episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
@@ -130,10 +133,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ViewType.RELEASED, ViewType.FRIEND, ViewType.MORE_LINK, ViewType.HEADER })
+    @IntDef({ ViewType.RELEASED, ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER })
     public @interface ViewType {
         int RELEASED = 0;
-        int FRIEND = 1;
+        int HISTORY = 1;
         int MORE_LINK = 2;
         int HEADER = 3;
     }
@@ -232,25 +235,31 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        if (viewType == ViewType.RELEASED) {
+        if (viewType == ViewType.HEADER) {
             View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_released, viewGroup, false);
-            return new ReleasedViewHolder(v, listener);
-        } else if (viewType == ViewType.FRIEND) {
-            View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_friend, viewGroup, false);
-            return new FriendViewHolder(v, listener);
+                    .inflate(R.layout.item_grid_header, viewGroup, false);
+            return new HeaderViewHolder(v);
         } else if (viewType == ViewType.MORE_LINK) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_more, viewGroup, false);
             return new MoreViewHolder(v, listener);
-        } else if (viewType == ViewType.HEADER) {
+        } else if (viewType == ViewType.RELEASED) {
             View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_grid_header, viewGroup, false);
-            return new HeaderViewHolder(v);
+                    .inflate(R.layout.item_now_released, viewGroup, false);
+            return new ReleasedViewHolder(v, listener);
+        } else if (viewType == ViewType.HISTORY) {
+            return getHistoryViewHolder(viewGroup, listener);
         } else {
             throw new IllegalArgumentException("Using unrecognized view type.");
         }
+    }
+
+    @NonNull
+    protected RecyclerView.ViewHolder getHistoryViewHolder(ViewGroup viewGroup,
+            ItemClickListener itemClickListener) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.item_now_history, viewGroup, false);
+        return new HistoryViewHolder(v, itemClickListener);
     }
 
     @Override
@@ -294,15 +303,15 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 holder.poster.setTransitionName("nowAdapterPoster_" + position);
             }
-        } else if (viewHolder instanceof FriendViewHolder) {
-            FriendViewHolder holder = (FriendViewHolder) viewHolder;
+        } else if (viewHolder instanceof HistoryViewHolder) {
+            HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
 
             if (item.type == ItemType.HISTORY) {
                 // user history entry
                 holder.username.setVisibility(View.GONE);
                 holder.avatar.setVisibility(View.GONE);
 
-                // a TVDb/TMDB or no poster
+                // a TVDb or no poster
                 Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
             } else {
                 // friend history entry
@@ -311,7 +320,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 holder.username.setText(item.username);
 
-                // a TVDb/TMDB or no poster
+                // a TVDb or no poster
                 Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
                 // trakt avatar
                 ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
@@ -323,7 +332,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
 
             // action type indicator (only if showing trakt history)
-            if ("watch".equals(item.action)) {
+            if (TRAKT_ACTION_WATCH.equals(item.action)) {
                 holder.type.setImageResource(resIdDrawableWatched);
                 holder.type.setVisibility(View.VISIBLE);
             } else if (item.action != null) {
@@ -332,11 +341,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.type.setVisibility(View.VISIBLE);
             } else {
                 holder.type.setVisibility(View.GONE);
-            }
-
-            // set unique transition names
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                holder.poster.setTransitionName("nowAdapterPoster_" + position);
             }
         }
     }
@@ -354,7 +358,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return ViewType.RELEASED;
             case ItemType.HISTORY:
             case ItemType.FRIEND:
-                return ViewType.FRIEND;
+                return ViewType.HISTORY;
             case ItemType.MORE_LINK:
                 return ViewType.MORE_LINK;
             case ItemType.HEADER:
@@ -363,8 +367,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return 0;
     }
 
-    private Context getContext() {
+    protected Context getContext() {
         return context;
+    }
+
+    protected int getResIdDrawableWatched() {
+        return resIdDrawableWatched;
+    }
+
+    protected int getResIdDrawableCheckin() {
+        return resIdDrawableCheckin;
     }
 
     public NowItem getItem(int position) {

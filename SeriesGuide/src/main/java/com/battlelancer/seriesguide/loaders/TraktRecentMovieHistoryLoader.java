@@ -40,14 +40,13 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
                 break;
             }
 
-            String poster = (entry.movie.images == null || entry.movie.images.poster == null) ? null
-                    : entry.movie.images.poster.thumb;
+            // trakt has removed image support: currently displaying no image
             items.add(new NowAdapter.NowItem()
                     .displayData(
                             entry.watched_at.getMillis(),
-                            "",
                             entry.movie.title,
-                            poster
+                            null,
+                            null
                     )
                     .tmdbId(entry.movie.ids.tmdb)
                     .recentlyWatchedTrakt(entry.action)
@@ -68,7 +67,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
     public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Users traktUsers) {
         return traktUsers
-                .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.IMAGES,
+                .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.DEFAULT_MIN,
                         null, null);
     }
 }
