@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -20,13 +21,14 @@ import butterknife.BindView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import org.greenrobot.eventbus.EventBus;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
@@ -166,8 +168,9 @@ public abstract class AddFragment extends Fragment {
             inflater = LayoutInflater.from(activity);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             ViewHolder holder;
 
             if (convertView == null) {
@@ -179,6 +182,9 @@ public abstract class AddFragment extends Fragment {
             }
 
             final SearchResult item = getItem(position);
+            if (item == null) {
+                return convertView; // all bets are off!
+            }
             holder.showTvdbId = item.tvdbid;
 
             // hide context menu if not useful
@@ -203,16 +209,12 @@ public abstract class AddFragment extends Fragment {
             // set text properties immediately
             holder.title.setText(showTitle);
             holder.description.setText(item.overview);
-            if (item.poster != null) {
-                holder.poster.setVisibility(View.VISIBLE);
-                ServiceUtils.loadWithPicasso(getContext(), item.poster)
-                        .fit()
-                        .centerCrop()
-                        .error(R.drawable.ic_image_missing)
-                        .into(holder.poster);
-            } else {
-                holder.poster.setVisibility(View.GONE);
-            }
+
+            // if there is no poster path, try to fall back to the first uploaded TVDB poster
+            String poster = item.poster == null
+                    ? TvdbTools.buildFallbackPosterPath(item.tvdbid)
+                    : item.poster;
+            Utils.loadTvdbShowPoster(getContext(), holder.poster, poster);
 
             return convertView;
         }

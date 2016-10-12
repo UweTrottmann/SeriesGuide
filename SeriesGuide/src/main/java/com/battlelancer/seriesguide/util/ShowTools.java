@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.AsyncTaskCompat;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -611,6 +612,32 @@ public class ShowTools {
 
         while (shows.moveToNext()) {
             existingShows.add(shows.getInt(0));
+        }
+
+        shows.close();
+
+        return existingShows;
+    }
+
+    /**
+     * Returns a set of the TVDb ids of all shows in the local database mapped to their poster path
+     * (null if there is no poster).
+     *
+     * @return null if there was an error, empty list if there are no shows.
+     */
+    @Nullable
+    public static SparseArrayCompat<String> getShowTvdbIdsAndPosters(Context context) {
+        SparseArrayCompat<String> existingShows = new SparseArrayCompat<>();
+
+        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
+                new String[] { SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER },
+                null, null, null);
+        if (shows == null) {
+            return null;
+        }
+
+        while (shows.moveToNext()) {
+            existingShows.put(shows.getInt(0), shows.getString(1));
         }
 
         shows.close();

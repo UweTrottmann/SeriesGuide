@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.adapters.MoviesNowAdapter;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
@@ -46,7 +47,7 @@ public class MoviesNowFragment extends Fragment {
     @BindView(R.id.textViewSnackbar) TextView snackbarText;
     @BindView(R.id.buttonSnackbar) Button snackbarButton;
 
-    private NowAdapter adapter;
+    private MoviesNowAdapter adapter;
     private boolean isLoadingRecentlyWatched;
     private boolean isLoadingFriends;
     private Unbinder unbinder;
@@ -116,7 +117,7 @@ public class MoviesNowFragment extends Fragment {
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
         // define dataset
-        adapter = new NowAdapter(getActivity(), itemClickListener);
+        adapter = new MoviesNowAdapter(getActivity(), itemClickListener);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -269,7 +270,7 @@ public class MoviesNowFragment extends Fragment {
 
             int viewType = adapter.getItemViewType(position);
             if (viewType == NowAdapter.ViewType.RELEASED
-                    || viewType == NowAdapter.ViewType.FRIEND) {
+                    || viewType == NowAdapter.ViewType.HISTORY) {
                 // poster element transition
                 View posterView;
                 if (viewType == NowAdapter.ViewType.RELEASED) {
