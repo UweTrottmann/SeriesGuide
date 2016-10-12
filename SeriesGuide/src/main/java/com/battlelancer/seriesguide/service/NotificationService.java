@@ -211,7 +211,7 @@ public class NotificationService extends IntentService {
 
             if (newEpisodesAvailable == 0) {
                 // Go to sleep, wake up as planned
-                Timber.d("No new episodes, going to sleep.");
+                Timber.d("No new episodes");
                 wakeUpTime = plannedWakeUpTime;
             } else {
                 // Get episodes which are within the notification threshold
