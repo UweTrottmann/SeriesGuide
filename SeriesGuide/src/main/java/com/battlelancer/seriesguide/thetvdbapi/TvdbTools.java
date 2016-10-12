@@ -860,6 +860,7 @@ public class TvdbTools {
                 try {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
                 } finally {
+                    //noinspection ThrowFromFinallyBlock
                     zipin.close();
                 }
             } else {
@@ -867,6 +868,7 @@ public class TvdbTools {
                     Xml.parse(input, Xml.Encoding.UTF_8, handler);
                 } finally {
                     if (input != null) {
+                        //noinspection ThrowFromFinallyBlock
                         input.close();
                     }
                 }
