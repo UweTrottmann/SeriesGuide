@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.support.v4.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A sectioned {@link com.uwetrottmann.trakt.v2.entities.HistoryEntry} adapter, grouping watched
- * items by day.
+ * A sectioned {@link HistoryEntry} adapter, grouping watched items by day.
  */
 public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
         StickyGridHeadersBaseAdapter {
@@ -141,18 +141,19 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     }
 
     protected List<HeaderData> generateHeaderList() {
-        if (getCount() == 0) {
+        int count = getCount();
+        if (count == 0) {
             return null;
         }
 
-        Map<Long, HeaderData> mapping = new HashMap<>();
+        LongSparseArray<HeaderData> mapping = new LongSparseArray<>();
         List<HeaderData> headers = new ArrayList<>();
 
-        for (int i = 0; i < getCount(); i++) {
-            long headerId = getHeaderId(i);
+        for (int position = 0; position < count; position++) {
+            long headerId = getHeaderId(position);
             HeaderData headerData = mapping.get(headerId);
             if (headerData == null) {
-                headerData = new HeaderData(i);
+                headerData = new HeaderData(position);
                 headers.add(headerData);
             }
             headerData.incrementCount();

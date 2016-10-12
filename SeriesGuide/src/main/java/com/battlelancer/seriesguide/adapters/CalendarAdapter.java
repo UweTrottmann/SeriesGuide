@@ -239,7 +239,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     }
 
     protected List<HeaderData> generateHeaderList() {
-        if (getCount() == 0 || !mIsShowingHeaders) {
+        int count = getCount();
+        if (count == 0 || !mIsShowingHeaders) {
             return null;
         }
 
@@ -247,7 +248,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         LongSparseArray<HeaderData> mapping = new LongSparseArray<>(30);
         List<HeaderData> headers = new ArrayList<>();
 
-        for (int position = 0; position < getCount(); position++) {
+        for (int position = 0; position < count; position++) {
             long headerId = getHeaderId(position);
             HeaderData headerData = mapping.get(headerId);
             if (headerData == null) {
