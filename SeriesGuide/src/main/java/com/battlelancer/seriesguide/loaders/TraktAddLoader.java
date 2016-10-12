@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -20,9 +21,10 @@ import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
 
@@ -141,7 +143,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(context);
+        SparseArrayCompat<String> existingShows = ShowTools.getShowTvdbIdsAndPosters(context);
         for (Show show : traktShows) {
             if (show.ids == null || show.ids.tvdb == null) {
                 // has no TheTVDB id
@@ -153,12 +155,11 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             // search results return an overview, while trending and other lists do not
             result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
                     : show.year != null ? String.valueOf(show.year) : "";
-            if (show.images != null && show.images.poster != null) {
-                result.poster = show.images.poster.thumb;
-            }
-            if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
+            if (existingShows != null && existingShows.indexOfKey(show.ids.tvdb) >= 0) {
                 // is already in local database
                 result.isAdded = true;
+                // use the poster we fetched for it (or null if there is none)
+                result.poster = existingShows.get(show.ids.tvdb);
             }
             if (overrideLanguage != null) {
                 result.language = overrideLanguage;
