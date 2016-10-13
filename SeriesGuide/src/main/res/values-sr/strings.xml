@@ -32,7 +32,7 @@
   <string name="action_display_all">Прикажи све</string>
   <string name="web_search">Веб претрага</string>
   <string name="add_to_homescreen">Пречица</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Отворено</string>
   <!-- Search -->
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
@@ -53,18 +53,18 @@
   <string name="share_checkout">Погледај %s</string>
   <string name="addtocalendar">Додај у календар</string>
   <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
-  <string name="links">Links</string>
+  <string name="links">Линкови</string>
   <!-- Comments -->
   <string name="comments">Коментари</string>
   <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>
   <string name="shout_invalid">Ваш коментар није по правилима!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Објава</string>
   <string name="isspoiler">Пажња, Спојлер!</string>
   <string name="no_shouts">Буди први који ће коментарисати!</string>
   <string name="refresh">Освежи</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
+    <item quantity="one">%d odgovor</item>
+    <item quantity="few">%d odgovor</item>
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
@@ -377,7 +377,7 @@
   <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене...)</string>
+  <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене…)</string>
   <string name="backup_path">Фасцикла за архивирање</string>
   <string name="backup_version">Верзија базе података</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>

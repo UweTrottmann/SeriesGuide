@@ -86,7 +86,7 @@
   <string name="lastEdit">Posledné úpravy // TheTVDB</string>
   <string name="no_translation">Na %2$s nie je dostupný žiadny popis preložený do %1$s.</string>
   <string name="no_translation_title">Nie je preložené</string>
-  <string name="no_spoilers">Niektoré detily sú skryté aby sa zabránilo spojlerom. Ak to chcete vypnúť prejdite do nastavení.</string>
+  <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo spojlerom. Ak to chcete vypnúť prejdite do nastavení.</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">teraz</string>
