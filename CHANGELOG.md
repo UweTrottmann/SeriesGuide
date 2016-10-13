@@ -9,6 +9,14 @@ Version 33
 ----------
 *(in development)*
 
+#### 33-beta5
+*(2016-10-13)*
+
+* TWEAK trakt will stop supplying images end of October. This affects the Now tabs and history
+  screens, as well as the search tabs for shows. For shows, SeriesGuide will fall back to a TheTVDB
+  poster. For movies, images from trakt have been removed.
+* NOTE Latest translations from crowdin.
+
 #### 33-beta4
 *(2016-10-06)*
 
