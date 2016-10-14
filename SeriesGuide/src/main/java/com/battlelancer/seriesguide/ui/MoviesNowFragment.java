@@ -268,22 +268,8 @@ public class MoviesNowFragment extends Fragment {
             Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
             i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movieTmdbId);
 
-            int viewType = adapter.getItemViewType(position);
-            if (viewType == NowAdapter.ViewType.RELEASED
-                    || viewType == NowAdapter.ViewType.HISTORY) {
-                // poster element transition
-                View posterView;
-                if (viewType == NowAdapter.ViewType.RELEASED) {
-                    posterView = view.findViewById(R.id.imageViewReleasedPoster);
-                } else {
-                    posterView = view.findViewById(R.id.imageViewFriendPoster);
-                }
-                Utils.startActivityWithTransition(getActivity(), i, posterView,
-                        R.string.transitionNameMoviePoster);
-            } else {
-                // simple scale up animation if there is no shared element
-                Utils.startActivityWithAnimation(getActivity(), i, view);
-            }
+            // simple scale up animation as there are no images
+            Utils.startActivityWithAnimation(getActivity(), i, view);
         }
     };
 
