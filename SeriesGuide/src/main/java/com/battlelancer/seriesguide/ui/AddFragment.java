@@ -214,7 +214,7 @@ public abstract class AddFragment extends Fragment {
             String poster = item.poster == null
                     ? TvdbTools.buildFallbackPosterPath(item.tvdbid)
                     : item.poster;
-            Utils.loadTvdbShowPoster(getContext(), holder.poster, poster);
+            Utils.loadTvdbShowPosterFromCache(getContext(), holder.poster, poster);
 
             return convertView;
         }
