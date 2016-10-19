@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -26,13 +25,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -41,7 +40,12 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.FirstRunView;
+import com.battlelancer.seriesguide.widgets.HeaderGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -51,10 +55,11 @@ public class ShowsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
+    private static final String TAG_FIRST_RUN = "First Run";
 
     private ShowsAdapter mAdapter;
 
-    private GridView mGrid;
+    private HeaderGridView mGrid;
 
     private int mSortOrderId;
 
@@ -123,9 +128,14 @@ public class ShowsFragment extends Fragment implements
         mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(android.R.id.list);
+        mGrid = (HeaderGridView) getView().findViewById(android.R.id.list);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
+        if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
+            FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
+                    .inflate(R.layout.item_first_run, mGrid, false);
+            mGrid.addHeaderView(headerView);
+        }
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
 
@@ -177,6 +187,13 @@ public class ShowsFragment extends Fragment implements
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -198,6 +215,13 @@ public class ShowsFragment extends Fragment implements
 
         // avoid CPU activity
         schedulePeriodicDataRefresh(false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -373,12 +397,40 @@ public class ShowsFragment extends Fragment implements
                 .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).commit();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleFirstRunButtonEvent(FirstRunView.ButtonEvent event) {
+        switch (event.type) {
+            case FirstRunView.ButtonType.ADD_SHOW: {
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
+                break;
+            }
+            case FirstRunView.ButtonType.CONNECT_TRAKT: {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Connect trakt");
+                break;
+            }
+            case FirstRunView.ButtonType.RESTORE_BACKUP: {
+                startActivity(new Intent(getActivity(), DataLiberationActivity.class));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Restore backup");
+                break;
+            }
+            case FirstRunView.ButtonType.DISMISS: {
+                if (mGrid != null) {
+                    mGrid.removeHeaderView(event.firstRunView);
+                    Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
+                }
+                break;
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
     }
 
-    @TargetApi(16)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // display overview for this show
