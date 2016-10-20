@@ -50,13 +50,13 @@
   <string name="share_show">Zdieľať seriál</string>
   <string name="share_episode">Zdieľať epizódu</string>
   <string name="share_movie">Zdieľať film</string>
-  <string name="share_checkout">Odhlásiť %s</string>
+  <string name="share_checkout">Pozri si %s</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
   <string name="links">Odkazy</string>
   <!-- Comments -->
   <string name="comments">Komentáre</string>
-  <string name="shout_hint">Napíšte komentár (Anglicky, 5 a viac slov)</string>
+  <string name="shout_hint">Napíšte komentár (po anglicky, aspoň 5 slov)</string>
   <string name="shout_invalid">Váš komentár nezodpovedá pravidlám!</string>
   <string name="action_post">Odoslať</string>
   <string name="isspoiler">Prezradenie deja!</string>
@@ -71,22 +71,22 @@
   <string name="episode_number_absolute">CELKOVO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Prvýkrát odvysielané</string>
-  <string name="episode_firstaired_unknown">Neznámy dátum odvysielania</string>
+  <string name="episode_firstaired_unknown">Neznámy dátum premiéry</string>
   <string name="episode_dvdnumber">DVD epizóda</string>
   <string name="original_release">Prvé odvysielanie</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánre</string>
   <string name="show_contentrating">Hodnotenie obsahu</string>
   <string name="show_release_times">Vysielané v</string>
-  <string name="episode_directors">Režiséri</string>
-  <string name="episode_gueststars">Hosťujúci herci</string>
+  <string name="episode_directors">Réžia</string>
+  <string name="episode_gueststars">Epizódni herci</string>
   <string name="episode_writers">Scenár</string>
-  <string name="show_isalive">Vysiela sa</string>
+  <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Skončil</string>
-  <string name="lastEdit">Posledné úpravy // TheTVDB</string>
-  <string name="no_translation">Na %2$s nie je dostupný žiadny popis preložený do %1$s.</string>
+  <string name="lastEdit">Posledná zmena // TheTVDB</string>
+  <string name="no_translation">Na %2$s nie je dostupný žiadny popis v %1$s.</string>
   <string name="no_translation_title">Nie je preložené</string>
-  <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo spojlerom. Ak to chcete vypnúť prejdite do nastavení.</string>
+  <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">teraz</string>
@@ -94,26 +94,26 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
-  <string name="mark_all">Pozreté všetky</string>
+  <string name="mark_all">Videné všetky</string>
   <string name="unmark_all">Nepozreté žiadne</string>
-  <string name="mark_untilhere">Prezreté všetky predchádzajúce</string>
+  <string name="mark_untilhere">Všetky predchádzajúce videné</string>
   <string name="collect_all">Pridať sériu do zbierky</string>
-  <string name="uncollect_all">Odobrané zo zbierky</string>
+  <string name="uncollect_all">Odstrániť sériu zo zbierky</string>
   <string name="action_skip">Preskočiť</string>
   <string name="action_dont_skip">Nepreskakovať</string>
   <string name="action_collection_add">Pridať do zbierky</string>
   <string name="action_collection_remove">Odstrániť zo zbierky</string>
   <string name="action_collection_added">Pridané do zbierky</string>
   <string name="action_collection_removed">Odstránené zo zbierky</string>
-  <string name="action_watched">Nepozreté</string>
-  <string name="action_unwatched">Pozreté</string>
+  <string name="action_watched">Označiť ako videné</string>
+  <string name="action_unwatched">Označiť ako nevidené</string>
   <!-- Shows -->
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
   <string name="delete_show">Odstrániť</string>
   <string name="no_nextepisode">žiadne ďalšie epizódy sa nenašli</string>
-  <string name="context_favorite">Obľúbené</string>
-  <string name="context_unfavorite">Odstrániť z obľúbených položiek</string>
+  <string name="context_favorite">Pridať k obľúbeným</string>
+  <string name="context_unfavorite">Odstrániť z obľúbených</string>
   <string name="favorited">Pridané k obľúbeným</string>
   <string name="unfavorited">Odstránené z obľúbených</string>
   <string name="context_hide">Skryť</string>
@@ -121,10 +121,10 @@
   <string name="hidden">Skrytý seriál</string>
   <string name="unhidden">Obnovený seriál</string>
   <string name="action_shows_add">Pridať seriál</string>
-  <string name="action_shows_filter">Triediť seriály</string>
-  <string name="empty_filter">Odstrániť všetky triedenia</string>
+  <string name="action_shows_filter">Filtrovať seriály</string>
+  <string name="empty_filter">Odstrániť všetky filtre</string>
   <string name="action_shows_filter_favorites">Obľúbené</string>
-  <string name="action_shows_filter_unwatched">Nepozreté</string>
+  <string name="action_shows_filter_unwatched">Nevidené</string>
   <string name="action_shows_filter_upcoming">Nadchádzajúce</string>
   <string name="action_shows_filter_hidden">Skryté</string>
   <string name="action_shows_sort">Zoradiť seriály</string>
@@ -134,18 +134,18 @@
   <string name="updateall_yes">Aktualizovať (všetky)</string>
   <string name="menu_update_delta">Aktualizácia (iba zastaralé)</string>
   <string name="context_updateshow">Aktualizovať</string>
-  <string name="context_marknext">Ďalšia pozretá epizóda</string>
+  <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
   <!-- Now -->
   <string name="now_tab">Teraz</string>
-  <string name="recently_watched">Nedávno pozreté</string>
+  <string name="recently_watched">Nedávno videné</string>
   <string name="released_today">Odvysielané dnes</string>
   <string name="friends_recently">Vaši priatelia z trakt</string>
-  <string name="now_empty">Nič nebeží. Pozrite nejaké seriály!</string>
-  <string name="now_movies_empty">Nič nebeží. Pozrite nejaké filmy!</string>
+  <string name="now_empty">Nič nebeží. Pozrite si nejaké seriály!</string>
+  <string name="now_movies_empty">Nič nebeží. Pozrite si nejaké filmy!</string>
   <!-- History -->
   <string name="user_stream">História</string>
-  <string name="user_stream_empty">Žiadna história na trakt. Pozrite sa na nejaké seriály!</string>
-  <string name="user_movie_stream_empty">Žiadna nedávna aktivita na trakt. Pozrite sa na nejaké filmy!</string>
+  <string name="user_stream_empty">Žiadna história na trakt. Pozrite si nejaké seriály!</string>
+  <string name="user_movie_stream_empty">Žiadna nedávna aktivita na trakt. Pozrite si nejaké filmy!</string>
   <!-- Calendar -->
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
@@ -159,8 +159,8 @@
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <!-- Seasons -->
   <string name="season_watchcount">nepozreté epizódy</string>
-  <string name="season_allwatched">Všetky epizódy pozreté</string>
-  <string name="season_onenotwatched">epizóda nepozretá</string>
+  <string name="season_allwatched">Všetky epizódy videné</string>
+  <string name="season_onenotwatched">epizóda nevidená</string>
   <string name="season_unaired">neodvysielané</string>
   <string name="oneotherepisode">iná epizóda</string>
   <string name="otherepisodes">iné epizódy</string>
@@ -170,15 +170,15 @@
   <string name="add_empty">Nie sú tu žiadne seriály.</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="action_try_any_language">Skúsiť ľubovoľný jazyk</string>
-  <string name="action_try_again">Skúste znova</string>
+  <string name="action_try_again">Skúsiť znova</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
   <string name="add_all">Pridať všetky</string>
-  <string name="add_multiple">Všetky seriály sa zakrátko zobrazia vo vašom zozname.</string>
+  <string name="add_multiple">Všetky seriály sa čoskoro zobrazia vo vašom zozname.</string>
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
   <string name="add_error">Nemožno pridať %s.</string>
-  <string name="add_already_exists">%s je už vo vašom zozname.</string>
+  <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
   <string name="recommended">Odporúčané</string>
-  <string name="watched_shows">Pozreté</string>
+  <string name="watched_shows">Videné</string>
   <string name="shows_collection">Zbierka</string>
   <string name="watchlist">Chcem vidieť</string>
   <!-- Lists -->
@@ -189,34 +189,34 @@
   <string name="list_manage">Spravovať zoznam</string>
   <string name="list_item_manage">Spravovať zoznamy</string>
   <string name="list_item_remove">Odstrániť zo zoznamu</string>
-  <string name="list_empty">Do tohto zoznamu môžete pridať seriály, série alebo epizódy.</string>
+  <string name="list_empty">Pridajte seriály, série alebo epizódy.</string>
   <string name="action_lists_sort">Zoradiť zoznamy</string>
-  <string name="action_lists_reorder">zoradiť zoznamy</string>
+  <string name="action_lists_reorder">Zoradiť zoznamy</string>
   <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
   <!-- Movies -->
   <string name="movies_collection">Zbierka</string>
   <string name="movies_watchlist">Chcem vidieť</string>
   <string name="watchlist_add">Pridať do Chcem vidieť</string>
-  <string name="watchlist_remove">Vymazať zo Chcem vidieť</string>
+  <string name="watchlist_remove">Vymazať z Chcem vidieť</string>
   <string name="watchlist_added">Pridané do Chcem vidieť</string>
-  <string name="watchlist_removed">Odstránené zo Chcem vidieť</string>
+  <string name="watchlist_removed">Odstránené z Chcem vidieť</string>
   <string name="movies_search_hint">Zadajte názov filmu</string>
   <string name="movies_collection_empty">Do zbierky ste nepridali žiadne filmy.</string>
   <string name="movies_watchlist_empty">Do Chcem vidieť ste nepridali žiadne filmy.</string>
-  <string name="trailer">Trailer</string>
+  <string name="trailer">Ukážka</string>
   <string name="movie_cast">Obsadenie</string>
   <string name="movie_crew">Kolektív</string>
   <string name="action_movies_sort">Zoradiť filmy</string>
   <string name="action_movies_sort_title">Názov</string>
-  <string name="action_movies_sort_release">Dátum odvysielania</string>
+  <string name="action_movies_sort_release">Dátum premiéry</string>
   <!-- Statistics -->
   <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
-  <string name="statistics_shows">Seriály</string>
+  <string name="statistics_shows">seriálov</string>
   <string name="statistics_episodes">Epizódy</string>
-  <string name="statistics_movies">Filmy</string>
+  <string name="statistics_movies">filmov</string>
   <string name="shows_with_next">%s s ďalšími epizódami</string>
-  <string name="shows_continuing">%s pokračujúcich</string>
-  <string name="episodes_watched">%s pozretých</string>
+  <string name="shows_continuing">%s pokračuje</string>
+  <string name="episodes_watched">%s videných</string>
   <string name="runtime_all_episodes">Celkový čas všetkých videných epizód</string>
   <string name="movies_on_watchlist">%s v Chcem vidieť</string>
   <string name="runtime_movies_watchlist">Celková dĺžka filmov v Chcem vidieť</string>
@@ -238,7 +238,7 @@
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentálne</string>
   <string name="hexagon_description">Pripojte sa ku cloudu pre zálohovanie a synchronizovanie seriálov a filmov.</string>
-  <string name="hexagon_warning_lists">Zoznamy nie su zahrnuté.</string>
+  <string name="hexagon_warning_lists">Zoznamy nie sú zahrnuté.</string>
   <string name="hexagon_warning_trakt">Pokiaľ je SeriesGuide Cloud pripojený, synchronizácia s trakt bude zakázaná.</string>
   <string name="hexagon_signin">Prihlásiť sa</string>
   <string name="hexagon_signed_in">Ste pripojený k SeriesGuide Cloudu.</string>
@@ -247,7 +247,7 @@
   <string name="hexagon_setup_fail_auth">Váš účet Google nebol odhlásený.</string>
   <string name="hexagon_remove_account">Odstrániť účet</string>
   <string name="hexagon_remove_account_success">Účet odstránený.</string>
-  <string name="hexagon_remove_account_failure">Konto sa nedá odstrániť.</string>
+  <string name="hexagon_remove_account_failure">Účet sa nedá odstrániť.</string>
   <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
   <string name="hexagon_api_error">Nie je možné komunikovať so SeriesGuide Cloud. Skúste to znova neskôr.</string>
   <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
@@ -259,22 +259,22 @@
   <string name="trakt_notseen">%s nových.</string>
   <string name="trakt_collected">%s zozbieraných.</string>
   <string name="trakt_notcollected">%s nezozbieraných.</string>
-  <string name="checkin_success_trakt">Prihlásený k %s na trakt.</string>
-  <string name="checkin_canceled_success_trakt">Zrušené prihlásenie na trakt.</string>
-  <string name="traktcheckin_cancel">Prepísať</string>
+  <string name="checkin_success_trakt">Práve pozeráte %s na trakt.</string>
+  <string name="checkin_canceled_success_trakt">Pozeranie na trakt zrušené.</string>
+  <string name="traktcheckin_cancel">Zmeniť</string>
   <string name="traktcheckin_inprogress">Už ste prihlásený k inej epizóde alebo filmu. Buď prepíšte predchádzajúce prihlásenie alebo počkajte %s a skúste znova.</string>
-  <string name="traktcheckin_wait">Počkám</string>
+  <string name="traktcheckin_wait">Počkať</string>
   <string name="trakt_success">Odoslané do trakt.</string>
-  <string name="trakt_error_credentials">Niečo nie je v poriadku. Skontroľujte poverenia trakt a skúste to znova.</string>
+  <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
   <string name="trakt_error_general">Nie je možné komunikovať s trakt. Skúste to znova neskôr.</string>
   <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
   <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt účet</string>
   <string name="trakt_connect_instructions">Na nasledujúcej obrazovke sa prihláste alebo zaregistrujte na trakt. Potom povoľte prístup k účtu pre SeriesGuide.</string>
-  <string name="connect_trakt">Pripojenie na trakt</string>
+  <string name="connect_trakt">Pripojiť na trakt</string>
   <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
-  <string name="trakt_reconnect_details">Skontroľujte poverenia trakt</string>
+  <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
   <string name="username">Užívateľské meno</string>
   <string name="waitplease">Prosím, chvíľku počkajte&#8230;</string>
   <string name="connect">Pripojiť</string>
@@ -283,10 +283,10 @@
   <string name="connect_trakt_done">Pripojený do trakt!</string>
   <string name="connect_trakt_done_explanation">SeriesGuide teraz zosynchronizuje seriály a filmy na tomto zariadení s trakt. Môže to chvíľu trvať.</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
-  <string name="show_library">Zobraziť knižnicu</string>
-  <string name="about_trakt">trakt pomáha uchovať záznam o seriáloch a filmoch, ktoré sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
+  <string name="show_library">Zobraziť trakt knižnicu</string>
+  <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
   <!-- trakt ratings -->
-  <string name="action_rate">Ohodnotiť</string>
+  <string name="action_rate">Hodnotiť</string>
   <string name="your_rating">Vaše hodnotenie</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
@@ -304,11 +304,11 @@
     <item quantity="other">%d hlasov</item>
   </plurals>
   <!-- Check Ins -->
-  <string name="checkin">Prihlásiť sa</string>
+  <string name="checkin">Práve pozeráte</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
   <string name="paste_title">Vložiť názov</string>
-  <string name="pref_quick_checkin">Rýchle prihlásenie</string>
-  <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri prihlásení</string>
+  <string name="pref_quick_checkin">Rýchle Práve pozeráte</string>
+  <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
   <!-- Help -->
   <string name="feedback">Poslať reakciu</string>
   <string name="action_open_in_browser">Otvoriť v prehliadači</string>
@@ -318,13 +318,13 @@
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">O aplikácii</string>
   <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
-  <string name="pref_onlyfuturesummary">Nezobrazovať odvysielané epizódy</string>
+  <string name="pref_onlyfuturesummary">Nikdy nezobrazovať už odvysielané epizódy</string>
   <string name="pref_onlyseasoneps">Skryť bonusové epizódy</string>
   <string name="pref_onlyseasonepssummary">Bonusové epizódy sa budú zobrazovať jedine v zozname sérií</string>
   <string name="pref_exactdates">Zobraziť presné dátumy</string>
-  <string name="pref_exactdates_summary">\"31. 10\" namiesto \"o 3 dni\"</string>
-  <string name="pref_nospoilers">Zabrániť spojlerom</string>
-  <string name="pref_nospoilers_summary">Skryť detaily kým nie je epizóda pozretá</string>
+  <string name="pref_exactdates_summary">\"31. 10.\" namiesto \"o 3 dni\"</string>
+  <string name="pref_nospoilers">Neprezradzovať dej</string>
+  <string name="pref_nospoilers_summary">Skryť detaily dokiaľ nie je epizóda videná</string>
   <string name="pref_seasonsorting">Zoradiť série podľa&#8230;</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
@@ -332,8 +332,8 @@
   <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
   <!-- About screen -->
   <string name="licence_tvdb">Táto aplikácia využíva dáta a obrázky z TheTVDB licencované pod CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Tento produkt používa TMDb API, ale nie je potvrdený alebo overený TMDb.</string>
-  <string name="licence_trakt">Táto aplikácia používa dáta a obrázky z \"trakt\".</string>
+  <string name="licence_themoviedb">Tento produkt používa TMDb API, ale nie je uznaný či certifikovaný TMDb.</string>
+  <string name="licence_trakt">Táto aplikácia používa dáta a obrázky z trakt.</string>
   <string name="about_open_source">SeriesGuide je vytvorený s použitím Open Source softvéru.</string>
   <string name="licences_and_credits">Licencie a zásluhy</string>
   <!-- Sort -->
@@ -342,21 +342,21 @@
   <!-- Sort orders -->
   <string name="sort_order_latest_first">Od najnovších</string>
   <string name="sort_order_oldest_first">Od najstarších</string>
-  <string name="sort_order_unwatched_first">Od nezhliadnutých</string>
+  <string name="sort_order_unwatched_first">Najprv nevidené</string>
   <string name="sort_order_alphabetical">A - Z</string>
   <string name="sort_order_top_rated_first">Najlepšie hodnotené</string>
   <string name="sort_order_latest_first_dvd">Od najnovších (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Od najstarších (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Rozsah nadchádzajúcich</string>
+  <string name="pref_upcominglimit">Rozpätie nadchádzajúcich</string>
   <string name="upcoming_upto_now">teraz</string>
-  <string name="upcoming_upto_one_day">deň</string>
+  <string name="upcoming_upto_one_day">1 deň</string>
   <string name="upcoming_upto_three_days">3 dni</string>
-  <string name="upcoming_upto_one_week">týždeň</string>
-  <string name="upcoming_upto_two_weeks">dva týždne</string>
-  <string name="upcoming_upto_one_month">mesiac</string>
+  <string name="upcoming_upto_one_week">1 týždeň</string>
+  <string name="upcoming_upto_two_weeks">2 týždne</string>
+  <string name="upcoming_upto_one_month">1 mesiac</string>
   <!-- Additional DashClock extension upcoming thresholds -->
-  <string name="upcoming_upto_one_hour">hodinu</string>
+  <string name="upcoming_upto_one_hour">1 hodiny</string>
   <string name="upcoming_upto_six_hours">6 hodín</string>
   <string name="upcoming_upto_half_day">12 hodín</string>
   <!-- Appearance settings -->
@@ -365,19 +365,19 @@
   <!-- Other advanced settings -->
   <string name="pref_other">Ostatné</string>
   <string name="pref_autoupdate">Aktualizovať automaticky</string>
-  <string name="pref_autoupdatesummary">Pravideľne aktualizovať vaše seriály</string>
+  <string name="pref_autoupdatesummary">Pravidelne aktualizovať vaše seriály</string>
   <string name="pref_autobackup">Automatické zálohovanie</string>
   <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
-  <string name="backup">Zálohovanie / obnovenie</string>
+  <string name="backup">Zálohovanie/Obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
   <string name="pref_number">Formát číslovania</string>
   <string name="pref_offset">Manuálny časový posun</string>
-  <string name="pref_offsetsummary">Posun času %s hodín</string>
+  <string name="pref_offsetsummary">Posunúť časy vysielania o %s hodín</string>
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
   <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Zahrnúť metadata ako popisy, hercov alebo hodnotenie.</string>
+  <string name="backup_full_dump">Zahrnúť metadáta ako popisy, hercov alebo hodnotenie.</string>
   <string name="backup_path">Priečinok zálohy</string>
   <string name="backup_version">Verzia databázy</string>
   <string name="backup_failed_file_access">Nie je možné zálohovať. Záložný súbor nie je možné nájsť alebo k nemu nie je prístup.</string>
@@ -388,32 +388,32 @@
   <string name="import_failed_nosd">Nie je možné obnoviť zálohu. Priečinok zálohy nie je dostupný.</string>
   <string name="import_failed_nofile">Nie je čitateľný záložný súbor.</string>
   <string name="import_failed_noread">Záloha sa nedá načítať.</string>
-  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohy nižšej verzie ako 2.0 obnovujte najskôr vo verzii 1.9.x.</string>
-  <string name="import_success">Záloha úspešne vytvorená.</string>
-  <string name="import_failed">Obnovenie zálohy zlyhalo.</string>
+  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohu verzie nižšej ako 2.0 obnovte najprv vo verzii 1.9.x.</string>
+  <string name="import_success">Obnova zo zálohy úspešná.</string>
+  <string name="import_failed">Obnova zo zálohy zlyhala.</string>
   <string name="backup_button">Zálohovať</string>
   <string name="import_button">Obnoviť</string>
   <string name="backup_question">Prepíše aktuálnu zálohu v priečinku novou!</string>
-  <string name="import_question">Aktuálny zoznam seriálov sa stratí! Presvedčte sa, či máte spravenú zálohu.</string>
-  <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené!</string>
+  <string name="import_question">Aktuálny zoznam seriálov bude vymazaný! Uistite sa, že máte vytvorenú zálohu.</string>
+  <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
   <string name="last_auto_backup">Posledná automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
-  <string name="dataliberation_permission_missing">Pre zálohovanie alebo ovnovenie, povoľte prístup k vašim súborom.</string>
+  <string name="dataliberation_permission_missing">Pre zálohovanie alebo obnovenie, povoľte prístup k vašim súborom.</string>
   <string name="autobackup_permission_missing">Ak chcete použiť automatické zálohovanie, povoľte prístup k vašim súborom.</string>
-  <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platný záložný súbor.</string>
+  <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
   <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
   <string name="action_select_file">Vyberte súbor</string>
   <string name="backup_use_default_files">Použiť predvolené záložné súbory</string>
   <!-- Welcome dialog -->
   <string name="get_started">Začíname</string>
   <string name="welcome_setuplanguage">Vyberte jazyk</string>
-  <string name="dismiss">Zrušiť</string>
+  <string name="dismiss">Zatvoriť</string>
   <!-- Notifications -->
   <string name="upcoming_show">%s práve vychádzajú</string>
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
   <string name="upcoming_episodes_number">%s nových epizód</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s viac</string>
+  <string name="more">%s ďalších</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Upozornenia</string>
   <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
@@ -425,41 +425,41 @@
   <string name="pref_notifications_treshold">Čas upozornenia</string>
   <!-- Notification thresholds -->
   <string name="notification_release_exact">vysiela sa</string>
-  <string name="notification_release_earlier_five">5 minut vopred</string>
-  <string name="notification_release_earlier_ten">10 minut vopred</string>
-  <string name="notification_release_earlier_hour">hodinu vopred</string>
+  <string name="notification_release_earlier_five">5 minút vopred</string>
+  <string name="notification_release_earlier_ten">10 minút vopred</string>
+  <string name="notification_release_earlier_hour">1 hodinu vopred</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->
-  <string name="hide_watched">Skryť zhliadnuté epizódy</string>
+  <string name="hide_watched">Skryť videné epizódy</string>
   <string name="pref_widget_opacity">Pozadie widgetu</string>
   <string name="pref_widget_type">Typ widgetu</string>
   <!-- Widget background options -->
-  <string name="widget_background_transparent">Priehľadná</string>
+  <string name="widget_background_transparent">Priehľadné</string>
   <string name="widget_background_25">25%</string>
   <string name="widget_background_50">50%</string>
   <string name="widget_background_75">75%</string>
-  <string name="widget_background_opaque">Nepriehľadná</string>
+  <string name="widget_background_opaque">Nepriehľadné</string>
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Ďalšia epizóda</string>
   <string name="dashclock_extension_description">Zobrazuje ďalšiu epizódu zo seriálov v SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zobraziť epizódy v rámci&#8230;</string>
+  <string name="dashclock_pref_upcoming_threshold">Zobraziť epizódy v rozpätí&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Len pre podporovateľov</string>
   <string name="action_upgrade">Odomknúť všetky funkcie</string>
   <string name="billing_action_subscribe">Predplatiť</string>
   <string name="billing_action_pass">Získať X Pass</string>
-  <string name="billing_price_subscribe">%s/ročne, vyskúšajte zadarmo</string>
-  <string name="billing_price_pass">jednorázová platba</string>
+  <string name="billing_price_subscribe">%s ročne, vyskúšajte zadarmo</string>
+  <string name="billing_price_pass">jednorazová platba</string>
   <string name="upgrade_description">Odomknúť všetky funkcie vrátane upozornení, tém a možností pre miniaplikáciu. Pomôžte mi s budúcimi aktualizáciami.</string>
   <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
   <string name="billing_learn_more">Prečo platiť? Zistite viac.</string>
   <string name="subscription_expired">Predplatné vypršalo</string>
-  <string name="subscription_expired_details">Vaše SeriesGuide predplatné vypršalo.</string>
+  <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
   <!-- Amazon In-App Billing -->
   <string name="subscription_not_signed_in">Prihláste sa do svojho účtu Amazon!</string>
   <string name="subscription_unavailable">Predplatné momentálne nie je dostupné.</string>
-  <string name="subscription_failed">Nákup nie je dokončený.</string>
+  <string name="subscription_failed">Platba nebola dokončená.</string>
   <string name="pass_unavailable">X Pass nie je momentálne k dispozícii.</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Upraviť rozšírenia</string>
@@ -484,6 +484,6 @@
   <string name="feedback_question_rate_google">Ohodnotiť v Google Play?</string>
   <string name="feedback_question_rate_amazon">Ohodnotiť na Amazone?</string>
   <string name="feedback_question_feedback">Povedzte nám, ako ho vylepšiť?</string>
-  <string name="feedback_action_ok">OK, samozrejme</string>
+  <string name="feedback_action_ok">Áno, samozrejme</string>
   <string name="feedback_action_nothanks">Nie, ďakujem</string>
 </resources>
