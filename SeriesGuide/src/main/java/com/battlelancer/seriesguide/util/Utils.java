@@ -65,6 +65,8 @@ import timber.log.Timber;
  */
 public class Utils {
 
+    private static Mac sha256_hmac;
+
     private Utils() {
         // prevent instantiation
     }
@@ -355,9 +357,9 @@ public class Utils {
             posterUrl = null;
         } else {
             posterUrl = TvdbTools.buildPosterUrl(posterPath);
-            String mac = encode("secret key", posterUrl);
+            String mac = encode("supereule", posterUrl);
             if (mac != null) {
-                posterUrl = String.format("http://192.168.178.46/s%s/%s", mac, posterUrl);
+                posterUrl = String.format("http://cache.seriesgui.de/s%s/%s", mac, posterUrl);
             } else {
                 posterUrl = null;
             }
@@ -371,13 +373,15 @@ public class Utils {
     }
 
     @Nullable
-    public static String encode(String key, String data) {
+    public static synchronized String encode(String key, String data) {
         try {
-            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-            sha256_HMAC.init(secret_key);
+            if (sha256_hmac == null) {
+                sha256_hmac = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+                sha256_hmac.init(secret_key);
+            }
 
-            return Base64.encodeToString(sha256_HMAC.doFinal(data.getBytes()), Base64.NO_WRAP | Base64.URL_SAFE);
+            return Base64.encodeToString(sha256_hmac.doFinal(data.getBytes()), Base64.NO_WRAP | Base64.URL_SAFE);
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             Timber.e(e, "Signing image URL failed.");
             return null;
