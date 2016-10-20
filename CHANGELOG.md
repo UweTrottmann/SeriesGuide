@@ -7,7 +7,19 @@ All dates are in the European Central timezone.
 
 Version 33
 ----------
-*(in development)*
+*(2016-10-20)*
+
+* "Prevent spoilers" option in Settings > Basics. If enabled, episode details are hidden until an episode is watched.
+* Extensions support for movies. See https://seriesgui.de/api for details.
+* Share TheTVDB links to SeriesGuide to add a show.
+* "Set watched" action in single episode notifications.
+* All changes at https://git.io/sgchanges
+
+#### 33
+*(2016-10-20)*
+
+* FIX Crash when taping on item in Movies Now tab.
+* NOTE Latest translations from crowdin.
 
 #### 33-beta5
 *(2016-10-13)*
