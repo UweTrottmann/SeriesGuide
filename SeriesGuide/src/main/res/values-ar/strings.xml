@@ -24,24 +24,24 @@
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
   <string name="description_image">صورة الحلقة</string>
-  <string name="description_menu_overflow">خيارات اخرى</string>
+  <string name="description_menu_overflow">خيارات أخرى</string>
   <!-- Actions -->
   <string name="clear">تنظيف</string>
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
   <string name="action_display_all">عرض الكل</string>
   <string name="web_search">البحث في الويب</string>
-  <string name="add_to_homescreen">إختصار</string>
-  <string name="action_open">إفتح</string>
+  <string name="add_to_homescreen">اختصار</string>
+  <string name="action_open">افتح</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
-  <string name="any_language">اي لغة</string>
+  <string name="any_language">أي لغة</string>
   <!-- Status messages -->
   <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
-  <string name="offline">إتصل بالشبكة، ثم حاول مرة أخرى.</string>
+  <string name="offline">اتصل بشبكة، ثم حاول مرة أخرى.</string>
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
@@ -58,9 +58,9 @@
   <string name="comments">التعليقات</string>
   <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
   <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
-  <string name="action_post">أنشر</string>
-  <string name="isspoiler">تنبيه</string>
-  <string name="no_shouts">أكتب أول تعليق</string>
+  <string name="action_post">انشر</string>
+  <string name="isspoiler">تنبيه حرق!</string>
+  <string name="no_shouts">كم أول من يعلّق!</string>
   <string name="refresh">تحديث</string>
   <plurals name="replies_plural">
     <item quantity="one">%d ردود</item>
