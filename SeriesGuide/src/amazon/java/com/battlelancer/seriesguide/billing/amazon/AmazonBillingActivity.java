@@ -15,6 +15,8 @@ import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
@@ -136,10 +138,12 @@ public class AmazonBillingActivity extends BaseActivity {
         finish();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapMessageEvent event) {
         Toast.makeText(this, event.messageResId, Toast.LENGTH_LONG).show();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapAvailabilityEvent event) {
         if (progressBar == null || buttonSubscribe == null || buttonGetPass == null
                 || textViewIsSupporter == null) {
@@ -163,6 +167,7 @@ public class AmazonBillingActivity extends BaseActivity {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapProductEvent event) {
         Product product = event.product;
         // display the actual price like "1.23 C"

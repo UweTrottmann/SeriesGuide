@@ -40,8 +40,10 @@ import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays recently watched episodes, today's releases and recent episodes from friends (if
@@ -333,6 +335,7 @@ public class ShowsNowFragment extends Fragment {
         emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
         if (!isAdded()) {
             return;

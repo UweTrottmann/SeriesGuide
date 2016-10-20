@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false">
+
+    <!-- Add FrameLayout parent so we can set selectable foreground. -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/show_poster_height_default"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/imageViewFriendPoster"
+            android:layout_width="@dimen/show_poster_width_default"
+            android:layout_height="@dimen/show_poster_height_default"
+            android:layout_marginRight="@dimen/default_padding"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            tools:src="@color/protection_dark" />
+
+        <TextView
+            android:id="@+id/textViewFriendTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:maxWidth="120dp"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="11 hours ago" />
+
+        <ImageView
+            android:id="@+id/imageViewFriendAvatar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:contentDescription="@null"
+            tools:src="@color/protection_dark" />
+
+        <TextView
+            android:id="@+id/textViewFriendUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:layout_toLeftOf="@+id/imageViewFriendActionType"
+            android:layout_toRightOf="@+id/imageViewFriendAvatar"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="sgtest" />
+
+        <TextView
+            android:id="@+id/textViewFriendShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/textViewFriendTimestamp"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/default_padding"
+            android:textAppearance="@style/TextAppearance.Body.Dim"
+            tools:text="Somewhere in the middle of the park" />
+
+        <TextView
+            android:id="@+id/textViewFriendEpisode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFriendShow"
+            android:layout_toRightOf="@+id/imageViewFriendPoster"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding"
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="24x10 On a Troublesome Terribly Long Episode Name"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/imageViewFriendActionType"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/inline_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
+            tools:src="?attr/drawableWatch" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

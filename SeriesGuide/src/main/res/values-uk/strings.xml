@@ -11,7 +11,6 @@
   <string name="help">Допомога</string>
   <string name="help_and_feedback">Довідка &amp; Відгук</string>
   <string name="drawer_open">Відкрити вікно навігації</string>
-  <string name="drawer_close">Закрити вікно навігації</string>
   <!-- Media items -->
   <string name="show">Серіал</string>
   <string name="episode">Серія</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Дата виходу</string>
   <string name="episode_firstaired_unknown">Дата виходу невідома</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
-  <string name="show_actors">Актори</string>
   <string name="original_release">Оригінальне видання</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанри</string>
-  <string name="show_runtime">Тривалість</string>
   <string name="show_contentrating">Рейтинг</string>
   <string name="show_release_times">Дата релізу</string>
   <string name="episode_directors">Режисери</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Продовжується</string>
   <string name="show_isnotalive">Закінчився</string>
   <string name="lastEdit">Останнє редагування / / TVDb</string>
-  <string name="services_watch">Дивитися</string>
-  <string name="services_more">Більше</string>
   <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
   <string name="no_translation_title">Не перекладено</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
@@ -327,14 +323,13 @@
   <string name="pref_onlyseasonepssummary">Спец. епізоди зчезають звідусіль крім списку сезонів</string>
   <string name="pref_exactdates">Відображати точні дати</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Сортувати сезони за&#8230;</string>
   <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
   <string name="pref_language">Бажана мова контенту</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Про SeriesGuide</string>
-  <string name="pref_autoaddshows">Додати нові серіали з trakt</string>
-  <string name="pref_autoaddshowssummary">Автоматично додавати серіали з вашого потоку активності на trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
@@ -435,8 +430,6 @@
   <string name="notification_release_earlier_hour">одна година до початку</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малий)</string>
-  <string name="bigwidget">SeriesGuide (середній)</string>
-  <string name="largewidget">SeriesGuide (великий)</string>
   <!-- List Widget -->
   <string name="hide_watched">Приховати переглянуті серії</string>
   <string name="pref_widget_opacity">Фон віджета</string>
@@ -469,7 +462,6 @@
   <string name="subscription_failed">Купівля не завершена.</string>
   <string name="pass_unavailable">X Pass наразі недоступний.</string>
   <!-- Extensions -->
-  <string name="extensions">Розширення</string>
   <string name="action_extensions_configure">Змінити розширення</string>
   <string name="action_extensions_add">Додати розширення</string>
   <string name="action_extensions_limit">Отримати X, щоб додати більше розширеннь</string>
@@ -487,7 +479,7 @@
   <string name="person_biography">Біографія</string>
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_action_yes">Так!</string>
   <string name="feedback_action_notreally">Not really</string>
   <string name="feedback_question_rate_google">Rate it on Google Play?</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Task to rename a list.

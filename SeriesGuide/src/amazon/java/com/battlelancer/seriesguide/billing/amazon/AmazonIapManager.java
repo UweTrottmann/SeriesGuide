@@ -11,7 +11,7 @@ import com.amazon.device.iap.model.Receipt;
 import com.amazon.device.iap.model.UserData;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;

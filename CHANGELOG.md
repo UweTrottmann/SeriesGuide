@@ -5,6 +5,63 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 33
+----------
+*(2016-10-20)*
+
+* "Prevent spoilers" option in Settings > Basics. If enabled, episode details are hidden until an episode is watched.
+* Extensions support for movies. See https://seriesgui.de/api for details.
+* Share TheTVDB links to SeriesGuide to add a show.
+* "Set watched" action in single episode notifications.
+* All changes at https://git.io/sgchanges
+
+#### 33
+*(2016-10-20)*
+
+* FIX Crash when taping on item in Movies Now tab.
+* NOTE Latest translations from crowdin.
+
+#### 33-beta5
+*(2016-10-13)*
+
+* TWEAK trakt will stop supplying images end of October. This affects the Now tabs and history
+  screens, as well as the search tabs for shows. For shows, SeriesGuide will fall back to a TheTVDB
+  poster. For movies, images from trakt have been removed.
+* NOTE Latest translations from crowdin.
+
+#### 33-beta4
+*(2016-10-06)*
+
+* TWEAK "Prevent spoilers" setting also applies to widgets.
+* FIX Revert Android Support library version to avoid rare crash.
+* NOTE Latest translations from crowdin.
+
+#### 33-beta3
+*(2016-09-30)*
+
+* FEATURE Add "Prevent spoilers" option in Settings. If enabled, episode details are hidden until
+  the episode is watched.
+* TWEAK Add "Delete" option to show overview menu.
+* TWEAK Add "Set watched" action to single episode notifications.
+* TWEAK Show "Check in" as a separate full-width button. Hide it if trakt is not connected.
+* NOTE Latest translations from crowdin.
+
+#### 33-beta2
+*(2016-09-28)*
+
+* FIX Crash when opening show overview or movie details on Android 4.4 and below. New vector icons
+  are not supported without some tweaks.
+* FIX Crash in movie details when actions are loaded, but there is no view to attach them to.
+
+#### 33-beta1
+*(2016-09-23)*
+
+* FEATURE Extensions support for movies. See https://seriesgui.de/api for details.
+* FEATURE Share TheTVDB links to SeriesGuide to add a show. For now, if no TheTVDB link is recognized,
+  the search field is filled with the shared text.
+* TWEAK Display language button right above show description. Easier to find and understand what it does.
+* NOTE Latest translations from crowdin.
+
 Version 32
 ----------
 *(2016-08-24)*

@@ -31,8 +31,10 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.Locale;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays some statistics about the users show database, e.g. number of shows, episodes, share of
@@ -182,6 +184,7 @@ public class StatsFragment extends Fragment {
         AsyncTaskCompat.executeParallel(statsTask);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(StatsUpdateEvent event) {
         if (!isAdded()) {
             return;

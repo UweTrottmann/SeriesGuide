@@ -8,13 +8,10 @@
     <dimen name="widget_item_width">31dp</dimen>
     <dimen name="widget_item_height">45dp</dimen>
     <dimen name="widget_text_small">12sp</dimen>
-    <dimen name="widget_text_middle">13sp</dimen>
     <dimen name="widget_text_large">14sp</dimen>
     <dimen name="widget_padding_default">16dp</dimen>
     <dimen name="widget_padding_inline">8dp</dimen>
 
-    <dimen name="addpager_width">600dp</dimen>
-    <dimen name="buttonbar_button_width">64dp</dimen>
     <dimen name="search_padding_right">400dp</dimen>
 
 </resources>

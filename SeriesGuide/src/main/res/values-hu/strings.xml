@@ -11,7 +11,6 @@
   <string name="help">Súgó</string>
   <string name="help_and_feedback">Súgó &amp; Visszajelzés</string>
   <string name="drawer_open">Navigációs fiók megnyitása</string>
-  <string name="drawer_close">Navigációs fiók bezárása</string>
   <!-- Media items -->
   <string name="show">Műsor</string>
   <string name="episode">Epizód</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Első adás</string>
   <string name="episode_firstaired_unknown">A vetítési időpont ismeretlen</string>
   <string name="episode_dvdnumber">DVD epizód</string>
-  <string name="show_actors">Szereplők</string>
   <string name="original_release">Eredeti megjelenés</string>
   <string name="show_on_network">%s csatornán</string>
   <string name="show_genres">Műfaj</string>
-  <string name="show_runtime">Hossz</string>
   <string name="show_contentrating">Korhatár besorolás</string>
   <string name="show_release_times">Megjelenési idő</string>
   <string name="episode_directors">Rendező(k)</string>
@@ -86,10 +83,9 @@
   <string name="show_isalive">Még fut</string>
   <string name="show_isnotalive">Véget ért</string>
   <string name="lastEdit">Utolsó szerkesztés / / TheTVDb</string>
-  <string name="services_watch">Figyelés</string>
-  <string name="services_more">Több</string>
   <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
   <string name="no_translation_title">Nincs lefordítva</string>
+  <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
   <!-- Date and Time -->
   <string name="today">ma</string>
   <string name="now">most</string>
@@ -273,7 +269,7 @@
   <string name="trakt_account">trakt fiók</string>
   <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
-  <string name="trakt_reconnect">A SeriesGuide csatlakozása a trakthoz</string>
+  <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>
   <string name="trakt_reconnect_details">Ellenőrizd a trakt engedélyeket</string>
   <string name="username">Felhasználónév</string>
   <string name="waitplease">Kis türelmet&#8230;</string>
@@ -322,14 +318,13 @@
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
   <string name="pref_exactdates">Pontos dátumok megjelenítése</string>
   <string name="pref_exactdates_summary">\"Október 31\" a \"3 napon belül\" helyett</string>
+  <string name="pref_nospoilers">Spoilerek megakadályozása</string>
+  <string name="pref_nospoilers_summary">Részletek elrejtése, amíg az epizód nincs megnézve</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom preferált nyelve</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
-  <string name="about">A SeriesGuide-ról</string>
-  <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
-  <string name="pref_autoaddshowssummary">Trakt aktivitásod és adataid alapján sorozataid bekerülnek az adatbázisba</string>
   <!-- About screen -->
   <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, CC BY-NC 4.0 licenc alatt álló adatait és képeit használja.</string>
   <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
@@ -430,8 +425,6 @@
   <string name="notification_release_earlier_hour">egy órával előtte</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kicsi)</string>
-  <string name="bigwidget">SeriesGuide (közepes)</string>
-  <string name="largewidget">SeriesGuide (nagy)</string>
   <!-- List Widget -->
   <string name="hide_watched">Megnézett epizódok elrejtése</string>
   <string name="pref_widget_opacity">Widget háttér</string>
@@ -464,7 +457,6 @@
   <string name="subscription_failed">A vásárlás nem fejeződött be.</string>
   <string name="pass_unavailable">Az X Pass jelenleg nem elérhető.</string>
   <!-- Extensions -->
-  <string name="extensions">Kiegészítők</string>
   <string name="action_extensions_configure">Kiegészítők testreszabása</string>
   <string name="action_extensions_add">Kiegészítő hozzáadása</string>
   <string name="action_extensions_limit">X beszerzése a további bővítményekhez</string>

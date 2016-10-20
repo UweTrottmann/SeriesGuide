@@ -20,12 +20,14 @@ import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Multi-purpose "Add show" tab. Can display either the connected trakt user's recommendations,
@@ -174,6 +176,7 @@ public class TraktAddFragment extends AddFragment {
         unbinder.unbind();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(
             @SuppressWarnings("UnusedParameters") ShowTools.ShowChangedEvent event) {
         int listType = getListType();

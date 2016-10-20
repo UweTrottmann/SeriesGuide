@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="88dp">
+
+        <TextView
+            android:id="@+id/textViewHistoryTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:maxWidth="120dp"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/large_padding"
+            android:paddingTop="@dimen/large_padding"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="11 hours ago" />
+
+        <TextView
+            android:id="@+id/textViewHistoryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/textViewHistoryTimestamp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingBottom="@dimen/default_padding"
+            android:paddingLeft="@dimen/large_padding"
+            android:paddingTop="@dimen/large_padding"
+            android:textAppearance="@style/TextAppearance.Subhead"
+            tools:text="Somewhere in the middle of the park movie"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/imageViewHistoryType"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/large_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/large_padding"
+            android:paddingTop="@dimen/default_padding"
+            android:src="?attr/drawableWatch" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

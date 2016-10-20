@@ -26,9 +26,11 @@ import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Collections;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 public class TvdbAddFragment extends AddFragment {
@@ -186,6 +188,7 @@ public class TvdbAddFragment extends AddFragment {
         unbinder.unbind();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SearchActivity.SearchQuerySubmitEvent event) {
         currentQuery = event.query;
         search();

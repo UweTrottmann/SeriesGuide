@@ -1,10 +1,17 @@
+buildscript {
+    dependencies {
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+    }
+}
+
 apply plugin: "java"
 apply plugin: "maven"
 apply plugin: "signing"
+apply plugin: "io.codearte.nexus-staging"
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
-version = "1.2.0"
+version = "1.3.0"
 
 // load properties file
 def Properties props = new Properties()
@@ -12,7 +19,7 @@ props.load(new FileInputStream(file("../local.properties")))
 // extract Android SDK dir
 def android = [
         sdk: props["sdk.dir"],
-        target: "android-23"
+        target: "android-24"
 ]
 
 compileJava {
@@ -101,4 +108,8 @@ uploadArchives {
             }
         }
     }
+}
+
+nexusStaging {
+    packageGroup = "com.uwetrottmann"
 }

@@ -25,6 +25,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -197,6 +198,14 @@ public class Utils {
                 top != 0 ? ContextCompat.getDrawable(context, top) : null,
                 right != 0 ? ContextCompat.getDrawable(context, right) : null,
                 bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
+    }
+
+    public static void setVectorCompoundDrawable(Resources.Theme theme, Button button,
+            @AttrRes int vectorAttr) {
+        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorResId, theme);
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
     }
 
     /**

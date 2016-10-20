@@ -11,7 +11,6 @@
   <string name="help">Помощь</string>
   <string name="help_and_feedback">Помощь и обратная связь</string>
   <string name="drawer_open">Открыть навигационную панель</string>
-  <string name="drawer_close">Закрыть навигационную панель</string>
   <!-- Media items -->
   <string name="show">Инфо</string>
   <string name="episode">Эпизод</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Дата выхода</string>
   <string name="episode_firstaired_unknown">Дата выхода неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
-  <string name="show_actors">Актёры</string>
   <string name="original_release">Оригинальное издание</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанры</string>
-  <string name="show_runtime">Продолжительность</string>
   <string name="show_contentrating">Возрастные ограничения</string>
   <string name="show_release_times">Время выпуска</string>
   <string name="episode_directors">Режиссёры</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Продолжается</string>
   <string name="show_isnotalive">Закончился</string>
   <string name="lastEdit">Последние изменения / / TVDb</string>
-  <string name="services_watch">Смотреть</string>
-  <string name="services_more">Подробнее</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
+  <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
   <!-- Date and Time -->
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
@@ -158,7 +154,7 @@
   <string name="only_favorites">Только избранные сериалы</string>
   <string name="pref_infinite_scrolling">Бесконечный календарь</string>
   <!-- Updating -->
-  <string name="update_scheduled">Обновление...</string>
+  <string name="update_scheduled">Обновление&#8230;</string>
   <string name="update_no_connection">Для обновления подключитесь к Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <!-- Seasons -->
@@ -226,17 +222,17 @@
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d дня</item>
+    <item quantity="few">%d день</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d часа</item>
+    <item quantity="few">%d час</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минуты</item>
+    <item quantity="few">%d минута</item>
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
@@ -304,7 +300,7 @@
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
     <item quantity="one">%d голос</item>
-    <item quantity="few">%d голоса</item>
+    <item quantity="few">%d голос</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
@@ -327,14 +323,13 @@
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
   <string name="pref_exactdates">Отображать точные даты</string>
   <string name="pref_exactdates_summary">\"31 октября\" вместо \"Через 3 дня\"</string>
-  <string name="pref_seasonsorting">Сортировка сезонов по</string>
-  <string name="pref_episodesorting">Сортировка эпизодов по</string>
+  <string name="pref_nospoilers">Предотвратить спойлеры</string>
+  <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
+  <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
+  <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
   <string name="pref_language">Предпочтительный язык контента</string>
   <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
-  <string name="about">О SeriesGuide</string>
-  <string name="pref_autoaddshows">Добавить новые сериалы из trakt</string>
-  <string name="pref_autoaddshowssummary">Автоматически добавлять сериалы из trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
@@ -370,7 +365,7 @@
   <!-- Other advanced settings -->
   <string name="pref_other">Другое</string>
   <string name="pref_autoupdate">Автоматическое обновление</string>
-  <string name="pref_autoupdatesummary">Переодически обновлять сериалы</string>
+  <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы</string>
   <string name="pref_autobackup">Автоматическое резервное копирование</string>
   <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
   <string name="backup">Резервное копирование/восстановление</string>
@@ -386,10 +381,10 @@
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
   <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
-  <string name="backup_inprogress">Резервное копирование базы данных...</string>
+  <string name="backup_inprogress">Резервное копирование базы данных&#8230;</string>
   <string name="backup_success">Резервное копирование прошло успешно.</string>
   <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
-  <string name="import_inprogress">Восстановление базы данных...</string>
+  <string name="import_inprogress">Восстановление базы данных&#8230;</string>
   <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
   <string name="import_failed_nofile">Существует не читаемый файл резервной копии.</string>
   <string name="import_failed_noread">Невозможно прочитать файл резервной копии.</string>
@@ -435,8 +430,6 @@
   <string name="notification_release_earlier_hour">один час до начала</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малый)</string>
-  <string name="bigwidget">SeriesGuide (средний)</string>
-  <string name="largewidget">SeriesGuide (большой)</string>
   <!-- List Widget -->
   <string name="hide_watched">Скрывать просмотренные эпизоды</string>
   <string name="pref_widget_opacity">Фон виджета</string>
@@ -450,7 +443,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящий эпизод ваших SeriesGuide сериалов.</string>
-  <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро</string>
+  <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Только для пожертвовавших</string>
   <string name="action_upgrade">Разблокировать все возможности</string>
@@ -469,7 +462,6 @@
   <string name="subscription_failed">Покупка не завершена.</string>
   <string name="pass_unavailable">X Pass в данный момент не доступен.</string>
   <!-- Extensions -->
-  <string name="extensions">Расширения</string>
   <string name="action_extensions_configure">Настроить расширения</string>
   <string name="action_extensions_add">Добавить расширение</string>
   <string name="action_extensions_limit">Получите X, чтобы добавить больше расширений</string>

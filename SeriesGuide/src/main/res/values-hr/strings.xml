@@ -11,7 +11,6 @@
   <string name="help">Pomoć</string>
   <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Otvori izbornik za navigaciju</string>
-  <string name="drawer_close">Zatvori izbornik za navigaciju</string>
   <!-- Media items -->
   <string name="show">Serija</string>
   <string name="episode">Epizoda</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Datum emitiranja</string>
   <string name="episode_firstaired_unknown">Datum emitiranja nepoznat</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
-  <string name="show_actors">Glumci</string>
   <string name="original_release">Original release</string>
   <string name="show_on_network">na %s</string>
   <string name="show_genres">Žanrovi</string>
-  <string name="show_runtime">Trajanje</string>
   <string name="show_contentrating">Ocjena sadržaja</string>
   <string name="show_release_times">Vrijeme emitiranja</string>
   <string name="episode_directors">Režiseri</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Nastavlja se</string>
   <string name="show_isnotalive">Završilo</string>
   <string name="lastEdit">Zadnje uređeno // TVDb</string>
-  <string name="services_watch">Gledaj</string>
-  <string name="services_more">Više</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">danas</string>
   <string name="now">sada</string>
@@ -327,14 +323,13 @@
   <string name="pref_onlyseasonepssummary">Posebne epizode nestaju svugdje osim na popisu sezona</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
   <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fia</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">O SeriesGuide</string>
-  <string name="pref_autoaddshows">Dodaj nove trakt serije</string>
-  <string name="pref_autoaddshowssummary">Automatski dodaj serije iz svojih aktivnosti na traktu</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -435,8 +430,6 @@
   <string name="notification_release_earlier_hour">1 sat prije</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mali)</string>
-  <string name="bigwidget">SeriesGuide (srednji)</string>
-  <string name="largewidget">SeriesGuide (veliki)</string>
   <!-- List Widget -->
   <string name="hide_watched">Sakrij pogledane epizode</string>
   <string name="pref_widget_opacity">Pozadina widgeta</string>
@@ -469,7 +462,6 @@
   <string name="subscription_failed">Purchase not completed.</string>
   <string name="pass_unavailable">X Pass is currently not available.</string>
   <!-- Extensions -->
-  <string name="extensions">Proširenja</string>
   <string name="action_extensions_configure">Prilagodi proširenja</string>
   <string name="action_extensions_add">Dodavanje proširenja</string>
   <string name="action_extensions_limit">Nabavite X za dodavanje više proširenja</string>

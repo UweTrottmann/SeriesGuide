@@ -1,5 +1,8 @@
 package com.battlelancer.seriesguide.enums;
 
+/**
+ * {@link #WATCHED}, {@link #SKIPPED} and {@link #UNWATCHED} flag for episode watched state.
+ */
 public interface EpisodeFlags {
 
     int UNWATCHED = 0x0;

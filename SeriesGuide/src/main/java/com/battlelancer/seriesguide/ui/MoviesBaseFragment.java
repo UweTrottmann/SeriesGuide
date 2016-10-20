@@ -23,7 +23,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrder;
 import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
@@ -149,6 +151,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     }
 
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
         getLoaderManager().restartLoader(getLoaderId(), null, this);
     }

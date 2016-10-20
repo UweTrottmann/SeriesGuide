@@ -11,7 +11,6 @@
   <string name="help">Помощ</string>
   <string name="help_and_feedback">Помощ &amp; Обратна връзка</string>
   <string name="drawer_open">Отвори навигационния панел</string>
-  <string name="drawer_close">Затвори навигационния панел</string>
   <!-- Media items -->
   <string name="show">ТВ предаване</string>
   <string name="episode">Епизод</string>
@@ -25,7 +24,7 @@
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
   <string name="description_image">Снимкa нa епизодa</string>
-  <string name="description_menu_overflow">Повече опции</string>
+  <string name="description_menu_overflow">Още опции</string>
   <!-- Actions -->
   <string name="clear">Изчисти</string>
   <string name="discard">Откажи</string>
@@ -54,7 +53,7 @@
   <string name="share_checkout">Виж %s</string>
   <string name="addtocalendar">Добавяне в календара</string>
   <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
-  <string name="links">Links</string>
+  <string name="links">Интернет връзки</string>
   <!-- Comments -->
   <string name="comments">Коментари</string>
   <string name="shout_hint">Въведете коментар (английски, 5 + думи)</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Дата на издаване</string>
   <string name="episode_firstaired_unknown">Неизвестна дата на издаване</string>
   <string name="episode_dvdnumber">DVD епизод</string>
-  <string name="show_actors">Актьори</string>
   <string name="original_release">Оригинално издание</string>
   <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрове</string>
-  <string name="show_runtime">Времетраене</string>
   <string name="show_contentrating">Оценка на съдържанието</string>
   <string name="show_release_times">Брой издания</string>
   <string name="episode_directors">Режисьори</string>
@@ -86,10 +83,9 @@
   <string name="show_isalive">Продължава</string>
   <string name="show_isnotalive">Завършил</string>
   <string name="lastEdit">Последна промяна // TVDb</string>
-  <string name="services_watch">Гледайте</string>
-  <string name="services_more">Още</string>
   <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Не е преведено</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">днес</string>
   <string name="now">сега</string>
@@ -113,7 +109,7 @@
   <!-- Shows -->
   <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
   <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
-  <string name="delete_show">Премахни</string>
+  <string name="delete_show">Премахване</string>
   <string name="no_nextepisode">няма намерен следващ епизод</string>
   <string name="context_favorite">Добави към Любими</string>
   <string name="context_unfavorite">Премахни от Любими</string>
@@ -123,7 +119,7 @@
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито ТВ предаване</string>
   <string name="unhidden">Показано ТВ предаване</string>
-  <string name="action_shows_add">Добави ТВ предаване</string>
+  <string name="action_shows_add">Добавяне на тв предаване</string>
   <string name="action_shows_filter">Филтриране на сериали</string>
   <string name="empty_filter">Премахни всички филтри</string>
   <string name="action_shows_filter_favorites">Любими</string>
@@ -157,7 +153,7 @@
   <string name="only_favorites">Само Любими сериали</string>
   <string name="pref_infinite_scrolling">Безкраен календар</string>
   <!-- Updating -->
-  <string name="update_scheduled">Обновяване...</string>
+  <string name="update_scheduled">Обновяване&#8230;</string>
   <string name="update_no_connection">За актуализация се свържете към интернет.</string>
   <string name="update_inprogress">Актуализиране в процес, опитайте по-късно.</string>
   <!-- Seasons -->
@@ -187,14 +183,14 @@
   <!-- Lists -->
   <string name="first_list">Първи списък</string>
   <string name="list_add">Добави списък</string>
-  <string name="list_title_hint">Изберете име за списъка</string>
-  <string name="list_remove">Премахни списъка</string>
+  <string name="list_title_hint">Дайте име за списъка</string>
+  <string name="list_remove">Премахване на списъка</string>
   <string name="list_manage">Управление на списъка</string>
   <string name="list_item_manage">Управление на списъци</string>
-  <string name="list_item_remove">Премахни от списъка</string>
+  <string name="list_item_remove">Премахване от списъка</string>
   <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
-  <string name="action_lists_sort">Сортиране на списъци</string>
-  <string name="action_lists_reorder">Преподреждане на списъци</string>
+  <string name="action_lists_sort">Подреждане на списъка</string>
+  <string name="action_lists_reorder">Пренареждане на списъците</string>
   <string name="error_name_already_exists">Списък с това име вече съществува</string>
   <!-- Movies -->
   <string name="movies_collection">Колекция</string>
@@ -213,7 +209,7 @@
   <string name="action_movies_sort_title">Заглавие</string>
   <string name="action_movies_sort_release">Дата на издаване</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Не може да се изчисли статистиката.</string>
   <string name="statistics_shows">ТВ предавания</string>
   <string name="statistics_episodes">Епизоди</string>
   <string name="statistics_movies">Филми</string>
@@ -236,7 +232,7 @@
     <item quantity="other">%d минути</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Експериментално!</string>
+  <string name="hexagon_warning">Експериментално</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
   <string name="hexagon_warning_lists">Списъци не са включени.</string>
   <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
@@ -275,8 +271,8 @@
   <string name="connect_trakt">Свържете се с trakt</string>
   <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
   <string name="trakt_reconnect_details">Проверете идентификацията си в trakt</string>
-  <string name="username">Потребител</string>
-  <string name="waitplease">Един момент, моля...</string>
+  <string name="username">Потребителско име</string>
+  <string name="waitplease">Един момент, моля&#8230;</string>
   <string name="connect">Свързване</string>
   <string name="disconnect">Прекъсване на връзката</string>
   <string name="use_integrated_browser">Използвай вградения четец</string>
@@ -322,14 +318,13 @@
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
   <string name="pref_exactdates">Показване на точните дати</string>
   <string name="pref_exactdates_summary">\"31 октомври\" вместо \"след 3 дни\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
   <string name="pref_language">Предпочитан език на съдържанието</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Относно SeriesGuide</string>
-  <string name="pref_autoaddshows">Добавяне на нови trakt сериали</string>
-  <string name="pref_autoaddshowssummary">Автоматично добавяне на сериали от дейността ви в trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Това приложение ползва данни и изображения от TheTVDB лицензиран под  CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
@@ -366,7 +361,7 @@
   <string name="pref_other">Други</string>
   <string name="pref_autoupdate">Включване на автоматичното актуализиране</string>
   <string name="pref_autoupdatesummary">Периодично обновявайте сериалите си</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
@@ -401,12 +396,12 @@
   <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
   <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
   <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
+  <string name="no_file_selected">Няма избран файл</string>
+  <string name="action_select_file">Избор на файл</string>
   <string name="backup_use_default_files">Use default backup files</string>
   <!-- Welcome dialog -->
   <string name="get_started">Начало</string>
-  <string name="welcome_setuplanguage">Избери език</string>
+  <string name="welcome_setuplanguage">Избор на език</string>
   <string name="dismiss">Отхвърли</string>
   <!-- Notifications -->
   <string name="upcoming_show">%s предстои</string>
@@ -430,8 +425,6 @@
   <string name="notification_release_earlier_hour">един час по-рано</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малка)</string>
-  <string name="bigwidget">SeriesGuide (средна)</string>
-  <string name="largewidget">SeriesGuide (голяма)</string>
   <!-- List Widget -->
   <string name="hide_watched">Скрий гледаните епизоди</string>
   <string name="pref_widget_opacity">Фон на уиджета</string>
@@ -445,7 +438,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Предстоящ епизод</string>
   <string name="dashclock_extension_description">Покажи следващият предстоящ епизод от вашите SeriesGuide сериали.</string>
-  <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите...</string>
+  <string name="dashclock_pref_upcoming_threshold">Покажи епизодите в следващите&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Само за поддръжници</string>
   <string name="action_upgrade">Отключване на всички функции</string>
@@ -464,12 +457,11 @@
   <string name="subscription_failed">Покупката не завърши.</string>
   <string name="pass_unavailable">X Pass е недостъпен в момента.</string>
   <!-- Extensions -->
-  <string name="extensions">Разширения</string>
   <string name="action_extensions_configure">Персонализиране на разширения</string>
   <string name="action_extensions_add">Добави разширение</string>
   <string name="action_extensions_limit">Вземете X, за да добавите още разширения</string>
   <string name="action_extensions_search">Вземи още разширения</string>
-  <string name="action_extension_remove">Премахни</string>
+  <string name="action_extension_remove">Премахване</string>
   <string name="extension_amazon">Търсене в Amazon</string>
   <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
   <string name="pref_amazon_domain">Amazon сайт</string>
@@ -481,12 +473,12 @@
   <!-- People -->
   <string name="person_biography">Биография</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_question_enjoy">Радвате ли се на използването на SeriesGuide?</string>
+  <string name="feedback_action_yes">Да!</string>
   <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_question_rate_google">Ще оцените ли приложението в Google Play?</string>
+  <string name="feedback_question_rate_amazon">Ще оцените ли приложението в Amazon?</string>
+  <string name="feedback_question_feedback">Кажете ми как да го подобрим?</string>
   <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_action_nothanks">Не, благодаря</string>
 </resources>

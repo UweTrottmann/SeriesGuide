@@ -20,7 +20,9 @@ import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.ListsSortOrder;
 
@@ -159,6 +161,7 @@ public class ListsActivity extends BaseTopActivity {
     }
 
     @SuppressWarnings("UnusedParameters")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsChangedEvent event) {
         onListsChanged();
     }

@@ -12,7 +12,6 @@
   <string name="help_and_feedback">Hjälp &amp; feedback</string>
   <string name="drawer_open">Öppna navigeringslåda
 </string>
-  <string name="drawer_close">Stäng navigeringslåda</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Avsnitt</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Releasedatum</string>
   <string name="episode_firstaired_unknown">Releasedatum okänt</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
-  <string name="show_actors">Skådespelare</string>
   <string name="original_release">Ursprunglig release</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
-  <string name="show_runtime">Speltid</string>
   <string name="show_contentrating">Åldersgräns</string>
   <string name="show_release_times">Visa publiceringstider</string>
   <string name="episode_directors">Regissörer</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
   <string name="lastEdit">Senast redigerad // TVDb</string>
-  <string name="services_watch">Titta på</string>
-  <string name="services_more">Mer</string>
   <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
   <string name="no_translation_title">Inte översatt</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">idag</string>
   <string name="now">nu</string>
@@ -323,14 +319,13 @@
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_exactdates">Visa exakt datum</string>
   <string name="pref_exactdates_summary">\"31 oktober\" istället för \"om 3 dagar\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
   <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Om SeriesGuide</string>
-  <string name="pref_autoaddshows">Lägg till nya trakt-serier</string>
-  <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
   <!-- About screen -->
   <string name="licence_tvdb">Den här appen använder data och bilder från TheTVDB under licensen CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>
@@ -431,8 +426,6 @@
   <string name="notification_release_earlier_hour">en timme i förväg</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (liten)</string>
-  <string name="bigwidget">SeriesGuide (mellan)</string>
-  <string name="largewidget">SeriesGuide (stor)</string>
   <!-- List Widget -->
   <string name="hide_watched">Dölj sedda avsnitt</string>
   <string name="pref_widget_opacity">Widgetbakgrund </string>
@@ -465,7 +458,6 @@
   <string name="subscription_failed">Köp ej slutfört.</string>
   <string name="pass_unavailable">X Pass är för tillfället otillgängligt.</string>
   <!-- Extensions -->
-  <string name="extensions">Tillägg</string>
   <string name="action_extensions_configure">Anpassa tillägg</string>
   <string name="action_extensions_add">Lägg till tillägg</string>
   <string name="action_extensions_limit">Skaffa X för att lägga till fler tillägg</string>

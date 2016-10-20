@@ -11,7 +11,6 @@
     <string name="help">Help</string>
     <string name="help_and_feedback">Help &amp; Feedback</string>
     <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Media items -->
     <string name="show">Show</string>
@@ -85,11 +84,9 @@
     <string name="episode_firstaired">Release date</string>
     <string name="episode_firstaired_unknown">Release date unknown</string>
     <string name="episode_dvdnumber">DVD Episode</string>
-    <string name="show_actors">Actors</string>
     <string name="original_release">Original release</string>
     <string name="show_on_network">on %s</string>
     <string name="show_genres">Genres</string>
-    <string name="show_runtime">Runtime</string>
     <string name="show_contentrating">Content Rating</string>
     <string name="show_release_times">Release times</string>
     <string name="episode_directors">Directors</string>
@@ -98,10 +95,9 @@
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="lastEdit">Last Edit // TheTVDB</string>
-    <string name="services_watch">Watch</string>
-    <string name="services_more">More</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Not translated</string>
+    <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>
@@ -370,14 +366,13 @@
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_exactdates">Display exact dates</string>
     <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+    <string name="pref_nospoilers">Prevent spoilers</string>
+    <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="pref_language">Preferred content language</string>
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-    <string name="about">About SeriesGuide</string>
-    <string name="pref_autoaddshows">Add new trakt shows</string>
-    <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
     <!-- About screen -->
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
@@ -490,8 +485,6 @@
 
     <!-- Legacy Widgets -->
     <string name="smallwidget">SeriesGuide (small)</string>
-    <string name="bigwidget">SeriesGuide (middle)</string>
-    <string name="largewidget">SeriesGuide (large)</string>
 
     <!-- List Widget -->
     <string name="hide_watched">Hide watched episodes</string>
@@ -530,7 +523,6 @@
     <string name="pass_unavailable">X Pass is currently not available.</string>
 
     <!-- Extensions -->
-    <string name="extensions">Extensions</string>
     <string name="action_extensions_configure">Customize extensions</string>
     <string name="action_extensions_add">Add extension</string>
     <string name="action_extensions_limit">Get X to add more extensions</string>

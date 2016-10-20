@@ -11,7 +11,6 @@
   <string name="help">Palīdzība</string>
   <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Atvērt navigācijas atvilktni</string>
-  <string name="drawer_close">Aizvērt navigācijas atvilktni</string>
   <!-- Media items -->
   <string name="show">Seriāls</string>
   <string name="episode">Epizode</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Raidīšanas datums</string>
   <string name="episode_firstaired_unknown">Nezināms raidīšanas datums</string>
   <string name="episode_dvdnumber">DVD epizode</string>
-  <string name="show_actors">Aktieri</string>
   <string name="original_release">Oriģināls publikācijas datums</string>
   <string name="show_on_network">kanālā %s</string>
   <string name="show_genres">Žanri</string>
-  <string name="show_runtime">Garums</string>
   <string name="show_contentrating">Satura novērtējums</string>
   <string name="show_release_times">Iznākšanas laiki</string>
   <string name="episode_directors">Režisori</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Turpinās</string>
   <string name="show_isnotalive">Beidzies</string>
   <string name="lastEdit">Pēdējais labojums //TVDb</string>
-  <string name="services_watch">Skaties</string>
-  <string name="services_more">Vairāk</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Nav tulkots</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">šodien</string>
   <string name="now">pašlaik</string>
@@ -327,14 +323,13 @@
   <string name="pref_onlyseasonepssummary">Īpašās epizodes pazūd no visurienes, izņemot sezonu sarakstu</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Kārtot epizodes pēc...</string>
   <string name="pref_episodesorting">Kārtot epizodes pēc...</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Par SeriesGuide</string>
-  <string name="pref_autoaddshows">Pievienot jaunus trakt šovus</string>
-  <string name="pref_autoaddshowssummary">Automātiski pievienot šovus no tavas trakt aktivitāšu straumes</string>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -435,8 +430,6 @@
   <string name="notification_release_earlier_hour">1 stundu pirms</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (neliels)</string>
-  <string name="bigwidget">SeriesGuide (vidēji liels)</string>
-  <string name="largewidget">SeriesGuide (liels)</string>
   <!-- List Widget -->
   <string name="hide_watched">Slēpt jau redzētās epizodes</string>
   <string name="pref_widget_opacity">Logrīka fons</string>
@@ -469,7 +462,6 @@
   <string name="subscription_failed">Purchase not completed.</string>
   <string name="pass_unavailable">X Pass is currently not available.</string>
   <!-- Extensions -->
-  <string name="extensions">Papildinājumi</string>
   <string name="action_extensions_configure">Personalizēt papildinājumus</string>
   <string name="action_extensions_add">Pievienot papildinājumus</string>
   <string name="action_extensions_limit">Iegūsti X lai iegūtu vairāk papildinājumus</string>

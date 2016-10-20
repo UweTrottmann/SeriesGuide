@@ -3,12 +3,16 @@ package com.battlelancer.seriesguide.loaders;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.util.SparseArrayCompat;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -94,7 +98,7 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
-        // add episodes
+        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
         for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
@@ -111,8 +115,19 @@ public class TraktRecentEpisodeHistoryLoader
                 break;
             }
 
-            String poster = (entry.show.images == null || entry.show.images.poster == null)
-                    ? null : entry.show.images.poster.thumb;
+            // look for a TVDB poster
+            Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
+            String poster = null;
+            if (showTvdbId != null && localShows != null) {
+                // prefer poster of already added show
+                poster = localShows.get(showTvdbId);
+                if (TextUtils.isEmpty(poster)) {
+                    // fall back to first uploaded poster
+                    poster = TvdbTools.buildFallbackPosterPath(showTvdbId);
+                }
+                poster = TvdbTools.buildPosterUrl(poster);
+            }
+
             String description = (entry.episode.season == null || entry.episode.number == null)
                     ? entry.episode.title
                     : TextTools.getNextEpisodeString(getContext(), entry.episode.season,
@@ -124,8 +139,7 @@ public class TraktRecentEpisodeHistoryLoader
                             description,
                             poster
                     )
-                    .tvdbIds(entry.episode.ids.tvdb,
-                            entry.show.ids == null ? null : entry.show.ids.tvdb)
+                    .tvdbIds(entry.episode.ids.tvdb, showTvdbId)
                     .recentlyWatchedTrakt(entry.action);
             items.add(item);
         }
@@ -142,7 +156,7 @@ public class TraktRecentEpisodeHistoryLoader
 
     public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
         return traktUsers.history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
-                        Extended.IMAGES, null, null);
+                Extended.DEFAULT_MIN, null, null);
     }
 
     protected static Result buildResultFailure(int emptyTextResId) {

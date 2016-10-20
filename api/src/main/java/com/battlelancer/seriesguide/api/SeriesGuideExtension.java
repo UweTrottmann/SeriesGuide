@@ -21,10 +21,14 @@ import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTIO
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_UPDATE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_ENTITY_IDENTIFIER;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION_TYPE;
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to
@@ -161,6 +165,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     private Map<ComponentName, String> mSubscribers;
 
     private Action mCurrentAction;
+    private int currentActionType;
 
     private Handler mHandler = new Handler();
 
@@ -212,6 +217,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      *
      * @return true if the subscription should be allowed, false if it should be denied.
      */
+    @SuppressWarnings("UnusedParameters")
     protected boolean onAllowSubscription(ComponentName subscriber) {
         return true;
     }
@@ -220,6 +226,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Lifecycle method called when a new subscriber is added. Extensions generally don't need to
      * override this.
      */
+    @SuppressWarnings("UnusedParameters")
     protected void onSubscriberAdded(ComponentName subscriber) {
     }
 
@@ -227,6 +234,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Lifecycle method called when a subscriber is removed. Extensions generally don't need to
      * override this.
      */
+    @SuppressWarnings("UnusedParameters")
     protected void onSubscriberRemoved(ComponentName subscriber) {
     }
 
@@ -247,13 +255,27 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     /**
-     * Called when a new episode is displayed and the extension should publish the action it wants
-     * to display using {@link #publishAction(Action)}.
+     * Called when an episode is displayed and the extension should publish the action it wants to
+     * display using {@link #publishAction(Action)}.
      *
      * @param episodeIdentifier The episode identifier the extension should submit with the action
-     *                          it wants to publish.
+     * it wants to publish.
      */
-    protected abstract void onRequest(int episodeIdentifier, Episode episode);
+    protected void onRequest(int episodeIdentifier, Episode episode) {
+        // do nothing by default, may choose to either supply episode or movie actions
+    }
+
+    /**
+     * Called when a movie is displayed and the extension should publish the action it wants to
+     * display using {@link #publishAction(Action)}.
+     *
+     * @param movieIdentifier The movie identifier the extension should submit with the action it
+     * wants to publish.
+     */
+    @SuppressWarnings("UnusedParameters")
+    protected void onRequest(int movieIdentifier, Movie movie) {
+        // do nothing by default, may choose to either supply episode or movie actions
+    }
 
     /**
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
@@ -267,6 +289,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     /**
      * Returns the most recently published {@link Action}, or null if none was published, yet.
      */
+    @SuppressWarnings("unused")
     protected final Action getCurrentAction() {
         return mCurrentAction;
     }
@@ -285,9 +308,14 @@ public abstract class SeriesGuideExtension extends IntentService {
                     intent.getStringExtra(EXTRA_TOKEN));
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
-            if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER) && intent.hasExtra(EXTRA_EPISODE)) {
-                handleEpisodeRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
-                        intent.getBundleExtra(EXTRA_EPISODE));
+            if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER)) {
+                if (intent.hasExtra(EXTRA_EPISODE)) {
+                    handleEpisodeRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
+                            intent.getBundleExtra(EXTRA_EPISODE));
+                } else if (intent.hasExtra(EXTRA_MOVIE)) {
+                    handleMovieRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
+                            intent.getBundleExtra(EXTRA_MOVIE));
+                }
             }
         }
     }
@@ -392,8 +420,18 @@ public abstract class SeriesGuideExtension extends IntentService {
         if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
+        currentActionType = ACTION_TYPE_EPISODE;
         Episode episode = Episode.fromBundle(episodeBundle);
         onRequest(episodeIdentifier, episode);
+    }
+
+    private void handleMovieRequest(int movieIdentifier, Bundle movieBundle) {
+        if (movieIdentifier <= 0 || movieBundle == null) {
+            return;
+        }
+        currentActionType = ACTION_TYPE_MOVIE;
+        Movie movie = Movie.fromBundle(movieBundle);
+        onRequest(movieIdentifier, movie);
     }
 
     private synchronized void publishCurrentAction() {
@@ -415,7 +453,8 @@ public abstract class SeriesGuideExtension extends IntentService {
                 .setComponent(subscriber)
                 .putExtra(EXTRA_TOKEN, token)
                 .putExtra(EXTRA_ACTION,
-                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null);
+                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null)
+                .putExtra(EXTRA_ACTION_TYPE, currentActionType);
         try {
             ComponentName returnedSubscriber = startService(intent);
             if (returnedSubscriber == null) {

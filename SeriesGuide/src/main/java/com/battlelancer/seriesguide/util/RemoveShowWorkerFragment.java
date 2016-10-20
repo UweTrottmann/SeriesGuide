@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Worker {@link android.support.v4.app.Fragment} hosting an {@link android.os.AsyncTask} that
@@ -30,15 +30,20 @@ public class RemoveShowWorkerFragment extends Fragment {
     }
 
     /**
-     * Posted if show is about to get removed.
+     * Posted if a show is about to get removed.
      */
-    public class OnRemovingShowEvent {
+    public static class OnRemovingShowEvent {
+        public final int showTvdbId;
+
+        public OnRemovingShowEvent(int showTvdbId) {
+            this.showTvdbId = showTvdbId;
+        }
     }
 
     /**
      * Posted if show was just removed (or failure).
      */
-    public class OnShowRemovedEvent {
+    public static class OnShowRemovedEvent {
         /** One of {@link com.battlelancer.seriesguide.enums.NetworkResult}. */
         public final int resultCode;
 
@@ -62,8 +67,9 @@ public class RemoveShowWorkerFragment extends Fragment {
 
         // do not overwrite existing task
         if (mTask == null) {
-            mTask = new RemoveShowTask(getActivity().getApplicationContext());
-            Utils.executeInOrder(mTask, getArguments().getInt(KEY_SHOW_TVDBID));
+            mTask = new RemoveShowTask(getActivity().getApplicationContext(),
+                    getArguments().getInt(KEY_SHOW_TVDBID));
+            Utils.executeInOrder(mTask);
         }
     }
 
@@ -71,30 +77,32 @@ public class RemoveShowWorkerFragment extends Fragment {
         return mTask == null || mTask.getStatus() == AsyncTask.Status.FINISHED;
     }
 
-    private class RemoveShowTask extends AsyncTask<Integer, Void, Integer> {
+    private static class RemoveShowTask extends AsyncTask<Integer, Void, Integer> {
 
-        private final Context mContext;
+        private final Context context;
+        private final int showTvdbId;
 
-        public RemoveShowTask(Context context) {
-            mContext = context;
+        public RemoveShowTask(Context context, int showTvdbId) {
+            this.context = context;
+            this.showTvdbId = showTvdbId;
         }
 
         @Override
         protected void onPreExecute() {
-            EventBus.getDefault().post(new OnRemovingShowEvent());
+            EventBus.getDefault().post(new OnRemovingShowEvent(showTvdbId));
         }
 
         @Override
         protected Integer doInBackground(Integer... params) {
-            return ShowTools.get(mContext).removeShow(params[0]);
+            return ShowTools.get(context).removeShow(showTvdbId);
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             if (result == NetworkResult.OFFLINE) {
-                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
             } else if (result == NetworkResult.ERROR) {
-                Toast.makeText(mContext, R.string.delete_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show();
             }
 
             EventBus.getDefault().post(new OnShowRemovedEvent(result));

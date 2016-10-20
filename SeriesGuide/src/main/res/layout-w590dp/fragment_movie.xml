@@ -32,10 +32,13 @@
                 android:clipToPadding="false"
                 android:paddingTop="?attr/actionBarSize">
 
+                <!-- Make container focusable to prevent ScrollView from scrolling to selectable TextViews. -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
                     android:paddingBottom="@dimen/default_padding"
                     android:paddingTop="@dimen/default_padding">
 
@@ -105,20 +108,39 @@
                         style="@style/Block.FlowText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/dividerMovie0"
-                        android:layout_marginBottom="@dimen/large_padding"
+                        android:layout_below="@id/dividerMovie0"
                         android:maxWidth="400dp"
                         android:textAppearance="@style/TextAppearance.Body"
                         android:textIsSelectable="true"
                         tools:text="Description for a super awesome movie..." />
 
+                    <TextView
+                        android:id="@+id/textViewMovieGenresLabel"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewMovieDescription"
+                        android:text="@string/show_genres"
+                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+                    <TextView
+                        android:id="@+id/textViewMovieGenres"
+                        style="@style/Block"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewMovieGenresLabel"
+                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textIsSelectable="true"
+                        tools:text="Action, Comedy, Drama" />
+
                     <View
                         android:id="@+id/dividerMovie1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@+id/textViewMovieDescription"
+                        android:layout_below="@id/textViewMovieGenres"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/large_padding"
                         android:background="?attr/sgColorDivider" />
 
                     <include
@@ -133,49 +155,45 @@
                         android:id="@+id/dividerMovie2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@+id/movieRatings"
+                        android:layout_below="@id/movieRatings"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
+                        android:layout_marginBottom="@dimen/inline_padding"
                         android:background="?attr/sgColorDivider"
                         tools:ignore="UnknownIdInLayout" />
 
-                    <TextView
-                        android:id="@+id/textViewMovieGenresLabel"
-                        style="@style/Block.WithTopMargin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dividerMovie2"
-                        android:text="@string/show_genres"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-                    <TextView
-                        android:id="@+id/textViewMovieGenres"
-                        style="@style/Block"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewMovieGenresLabel"
-                        android:textAppearance="@style/TextAppearance.Body"
-                        android:textIsSelectable="true"
-                        tools:text="Action, Comedy, Drama" />
-
-                    <TextView
-                        android:id="@+id/textViewMovieMore"
-                        style="@style/Block.WithTopMargin"
+                    <LinearLayout
+                        android:id="@+id/containerMovieActions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewMovieGenres"
-                        android:text="@string/services_more"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+                        android:layout_below="@id/dividerMovie2"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:orientation="vertical" />
 
+                    <View
+                        android:id="@+id/dividerMovie3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/containerMovieActions"
+                        android:layout_marginBottom="@dimen/inline_padding"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/inline_padding"
+                        android:background="?attr/sgColorDivider" />
+
+                    <!-- Compound drawable set in code. -->
                     <Button
                         android:id="@+id/buttonMovieComments"
                         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_below="@+id/textViewMovieMore"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dividerMovie3"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"
+                        android:drawablePadding="8dp"
                         android:text="@string/comments" />
+
                 </RelativeLayout>
 
             </android.support.v4.widget.NestedScrollView>

@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -19,12 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +30,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.LanguageTools;
@@ -51,7 +48,10 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
+import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -88,7 +88,6 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewShowRuntime) TextView mTextViewRuntime;
     @BindView(R.id.textViewShowNetwork) TextView mTextViewNetwork;
     @BindView(R.id.textViewShowOverview) TextView mTextViewOverview;
-    @BindView(R.id.spinnerShowLanguage) Spinner mSpinnerLanguage;
     @BindView(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
     @BindView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
     @BindView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
@@ -98,11 +97,12 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
     @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
     @BindView(R.id.buttonShowShare) Button mButtonShare;
     @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
+    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
     @BindView(R.id.buttonTVDB) View mButtonTvdb;
     @BindView(R.id.buttonTrakt) View mButtonTrakt;
     @BindView(R.id.buttonWebSearch) View mButtonWebSearch;
@@ -118,7 +118,7 @@ public class ShowFragment extends Fragment {
     private TraktRatingsTask traktTask;
     private String showTitle;
     private String showPoster;
-    private int spinnerLastPosition;
+    private int selectedLanguageIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,6 +144,17 @@ public class ShowFragment extends Fragment {
         });
         CheatSheet.setup(mButtonShortcut);
 
+        // language button
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonLanguage,
+                R.attr.drawableLanguage);
+        buttonLanguage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayLanguageSettings();
+            }
+        });
+        CheatSheet.setup(buttonLanguage, R.string.pref_language);
+
         // rate button
         mButtonRate.setOnClickListener(new OnClickListener() {
             @Override
@@ -155,12 +166,6 @@ public class ShowFragment extends Fragment {
 
         setCastVisibility(false);
         setCrewVisibility(false);
-
-        // language chooser
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.languages, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerLanguage.setAdapter(adapter);
 
         return v;
     }
@@ -174,6 +179,20 @@ public class ShowFragment extends Fragment {
                 mCreditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -303,8 +322,8 @@ public class ShowFragment extends Fragment {
         }
 
         // runtime
-        mTextViewRuntime.setText(
-                getString(R.string.runtime_minutes, showCursor.getInt(ShowQuery.RUNTIME)));
+        mTextViewRuntime.setText(getString(R.string.runtime_minutes,
+                String.valueOf(showCursor.getInt(ShowQuery.RUNTIME))));
 
         // network
         mTextViewNetwork.setText(network);
@@ -342,36 +361,12 @@ public class ShowFragment extends Fragment {
         }
 
         // language preferred for content
-        String languageCode = showCursor.getString(ShowQuery.LANGUAGE);
-        if (TextUtils.isEmpty(languageCode)) {
-            languageCode = DisplaySettings.getContentLanguage(getContext());
+        LanguageTools.LanguageData languageData = LanguageTools.getLanguageDataForCode(
+                getContext(), showCursor.getString(ShowQuery.LANGUAGE));
+        if (languageData != null) {
+            selectedLanguageIndex = languageData.languageIndex;
+            buttonLanguage.setText(languageData.languageString);
         }
-        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
-        for (int i = 0; i < languageCodes.length; i++) {
-            if (languageCodes[i].equals(languageCode)) {
-                spinnerLastPosition = i;
-                mSpinnerLanguage.setSelection(i, false);
-                break;
-            }
-        }
-        mSpinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == spinnerLastPosition) {
-                    // guard against firing after layout completes
-                    // still happening on custom ROMs despite workaround described at
-                    // http://stackoverflow.com/a/17336944/1000543
-                    return;
-                }
-                spinnerLastPosition = position;
-                changeShowLanguage(parent.getContext(), getShowTvdbId(), languageCodes[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // do nothing
-            }
-        });
 
         // country for release time calculation
         // show "unknown" if country is not supported
@@ -532,9 +527,27 @@ public class ShowFragment extends Fragment {
         }
     }
 
-    private static void changeShowLanguage(Context context, int showTvdbId, String languageCode) {
+    private void displayLanguageSettings() {
+        DialogFragment dialog
+                = LanguageChoiceDialogFragment.newInstance(getShowTvdbId(), selectedLanguageIndex);
+        dialog.show(getFragmentManager(), "dialog-language");
+    }
+
+    private void changeShowLanguage(int languageCodeIndex) {
+        selectedLanguageIndex = languageCodeIndex;
+        String languageCode = getResources().getStringArray(
+                R.array.languageData)[languageCodeIndex];
+
         Timber.d("Changing show language to %s", languageCode);
-        ShowTools.get(context).storeLanguage(showTvdbId, languageCode);
+        ShowTools.get(getContext()).storeLanguage(getShowTvdbId(), languageCode);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        if (event.showTvdbId != getShowTvdbId()) {
+            return;
+        }
+        changeShowLanguage(event.selectedLanguageIndex);
     }
 
     private void createShortcut() {

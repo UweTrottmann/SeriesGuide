@@ -11,7 +11,6 @@
   <string name="help">Ajutor</string>
   <string name="help_and_feedback">Ajutor și feedback</string>
   <string name="drawer_open">Deschide sertarul de navigare</string>
-  <string name="drawer_close">Închide sertarul de navigare</string>
   <!-- Media items -->
   <string name="show">Emisiune</string>
   <string name="episode">Episod</string>
@@ -74,11 +73,9 @@
   <string name="episode_firstaired">Data de lansare</string>
   <string name="episode_firstaired_unknown">Data de lansare necunoscută</string>
   <string name="episode_dvdnumber">Episod DVD</string>
-  <string name="show_actors">Actori</string>
   <string name="original_release">Release original</string>
   <string name="show_on_network">pe %s</string>
   <string name="show_genres">Genuri</string>
-  <string name="show_runtime">Durata</string>
   <string name="show_contentrating">Punctajul conţinutului</string>
   <string name="show_release_times">Ora de lansare</string>
   <string name="episode_directors">Regizori</string>
@@ -87,10 +84,9 @@
   <string name="show_isalive">Continuă</string>
   <string name="show_isnotalive">Terminat</string>
   <string name="lastEdit">Ultima editare//TVDb</string>
-  <string name="services_watch">Vezi</string>
-  <string name="services_more">Mai mult</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -327,14 +323,13 @@
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar de peste tot, cu excepţia celor din lista sezonului</string>
   <string name="pref_exactdates">Display exact dates</string>
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
   <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Despre SeriesGuide</string>
-  <string name="pref_autoaddshows">Adăugați emisiuni trakt</string>
-  <string name="pref_autoaddshowssummary">Adăugați automat emisiunile după activitatea dvs. de pe trakt</string>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
@@ -435,8 +430,6 @@
   <string name="notification_release_earlier_hour">o oră în avans</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mic)</string>
-  <string name="bigwidget">SeriesGuide (mediu)</string>
-  <string name="largewidget">SeriesGuide (mare)</string>
   <!-- List Widget -->
   <string name="hide_watched">Ascundeți episoadele vizionate</string>
   <string name="pref_widget_opacity">Widget fundal</string>
@@ -469,7 +462,6 @@
   <string name="subscription_failed">Plata nu a fost făcută.</string>
   <string name="pass_unavailable">X Pass nu este disponibil momentan.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensii</string>
   <string name="action_extensions_configure">Personalizează extensile</string>
   <string name="action_extensions_add">Adaugă extensie</string>
   <string name="action_extensions_limit">Cumpărați X pentru a adăuga mai multe extensii</string>

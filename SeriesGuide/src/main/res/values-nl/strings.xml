@@ -11,7 +11,6 @@
   <string name="help">Help</string>
   <string name="help_and_feedback">Hulp &amp; Terugkoppeling</string>
   <string name="drawer_open">Navigatiedrawer openen</string>
-  <string name="drawer_close">Navigatiedrawer sluiten</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Releasedatum</string>
   <string name="episode_firstaired_unknown">Releasedatum onbekend</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
-  <string name="show_actors">Acteurs</string>
   <string name="original_release">Originele versie</string>
   <string name="show_on_network">op %s</string>
   <string name="show_genres">Genres</string>
-  <string name="show_runtime">Speelduur</string>
   <string name="show_contentrating">Beoordeling inhoud</string>
   <string name="show_release_times">Releasetijden</string>
   <string name="episode_directors">Regisseurs</string>
@@ -86,10 +83,9 @@
   <string name="show_isalive">Lopende serie</string>
   <string name="show_isnotalive">Afgelopen</string>
   <string name="lastEdit">Laatste bewerking //TVDb</string>
-  <string name="services_watch">Bekijken</string>
-  <string name="services_more">Meer</string>
   <string name="no_translation">Er is geen be schrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="no_translation_title">Niet vertaald</string>
+  <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat je spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>
@@ -322,14 +318,13 @@
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_exactdates">Juiste datum weergeven</string>
   <string name="pref_exactdates_summary">\"31 oktober\" in plaats van \"over 3 dagen\"</string>
+  <string name="pref_nospoilers">Voorkomen van spoilers</string>
+  <string name="pref_nospoilers_summary">Details verbergen totdat een aflevering is bekeken</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
   <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
-  <string name="about">Over SeriesGuide</string>
-  <string name="pref_autoaddshows">Nieuwe trakt-series toevoegen</string>
-  <string name="pref_autoaddshowssummary">Series van uw actieve trakt-stream automatisch toevoegen</string>
   <!-- About screen -->
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
@@ -430,8 +425,6 @@
   <string name="notification_release_earlier_hour">één uur van tevoren</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
-  <string name="bigwidget">SeriesGuide (middelgroot)</string>
-  <string name="largewidget">SeriesGuide (groot)</string>
   <!-- List Widget -->
   <string name="hide_watched">Bekeken afleveringen verbergen</string>
   <string name="pref_widget_opacity">Widget achtergrond</string>
@@ -464,7 +457,6 @@
   <string name="subscription_failed">Aankoop niet voltooid.</string>
   <string name="pass_unavailable">X Pass is momenteel niet beschikbaar.</string>
   <!-- Extensions -->
-  <string name="extensions">Extensies</string>
   <string name="action_extensions_configure">Extensies aanpassen</string>
   <string name="action_extensions_add">Extensie toevoegen</string>
   <string name="action_extensions_limit">Neem X om meer extensies toe te voegen</string>

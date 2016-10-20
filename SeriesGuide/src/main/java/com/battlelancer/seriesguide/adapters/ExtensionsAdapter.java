@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment;
 import com.battlelancer.seriesguide.util.Utils;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.
@@ -143,7 +143,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                                             true),
                             true
                     );
-                    ExtensionManager.getInstance(getContext()).clearEpisodeActionsCache();
+                    ExtensionManager.getInstance(getContext()).clearActionsCache();
                     return true;
                 case R.id.menu_action_extension_disable:
                     EventBus.getDefault()

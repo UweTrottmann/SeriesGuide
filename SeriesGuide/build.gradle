@@ -3,8 +3,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        //noinspection GradleDynamicVersion
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath dep.androidPlugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'io.fabric.tools:gradle:1.22.0'
     }
 }
 
@@ -122,7 +123,7 @@ dependencies {
     compile project(':libraries:stickygridheaders')
 
     // https://docs.fabric.io/android/changelog.html
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
@@ -130,14 +131,15 @@ dependencies {
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.7'
     // https://github.com/google/dagger/releases
-    apt 'com.google.dagger:dagger-compiler:2.6'
-    compile 'com.google.dagger:dagger:2.6'
+    def daggerVersion = "2.7"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    compile "com.google.dagger:dagger:$daggerVersion"
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-    def butterKnifeVersion = "8.2.1"
+    def butterKnifeVersion = "8.4.0"
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'com.jakewharton.timber:timber:4.3.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
@@ -155,8 +157,11 @@ dependencies {
     compile ('com.uwetrottmann.trakt5:trakt-java:5.2.1') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
+        exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
     }
-    compile 'de.greenrobot:eventbus:2.4.0'
+    // http://greenrobot.org/eventbus/changelog/
+    compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
     def jodaTimeVersion = '2.9.4'
     compile "net.danlew:android.joda:$jodaTimeVersion"
@@ -200,4 +205,10 @@ dependencies {
     // include regular joda-time to have access to the tz database without init call
     testCompile "joda-time:joda-time:$jodaTimeVersion"
 
+}
+
+apt {
+    arguments {
+        eventBusIndex 'com.battlelancer.seriesguide.SgEventBusIndex'
+    }
 }

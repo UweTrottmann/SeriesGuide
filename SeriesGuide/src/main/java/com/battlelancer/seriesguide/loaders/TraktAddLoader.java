@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -20,9 +21,10 @@ import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
 
@@ -59,7 +61,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (type == TraktAddFragment.TYPE_RECOMMENDED) {
                 action = "load recommended shows";
                 Response<List<Show>> response = traktRecommendations.get()
-                        .shows(Extended.FULLIMAGES)
+                        .shows(Extended.FULL)
                         .execute();
                 if (response.isSuccessful()) {
                     shows = response.body();
@@ -74,13 +76,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktAddFragment.TYPE_WATCHED) {
                     action = "load watched shows";
-                    response = traktSync.get().watchedShows(Extended.NOSEASONSIMAGES).execute();
+                    response = traktSync.get().watchedShows(Extended.NOSEASONS).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
-                    response = traktSync.get().collectionShows(Extended.IMAGES).execute();
+                    response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
-                    response = traktSync.get().watchlistShows(Extended.FULLIMAGES).execute();
+                    response = traktSync.get().watchlistShows(Extended.FULL).execute();
                 } else {
                     // cause NPE if used incorrectly
                     return null;
@@ -141,7 +143,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(context);
+        SparseArrayCompat<String> existingShows = ShowTools.getShowTvdbIdsAndPosters(context);
         for (Show show : traktShows) {
             if (show.ids == null || show.ids.tvdb == null) {
                 // has no TheTVDB id
@@ -153,12 +155,11 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             // search results return an overview, while trending and other lists do not
             result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
                     : show.year != null ? String.valueOf(show.year) : "";
-            if (show.images != null && show.images.poster != null) {
-                result.poster = show.images.poster.thumb;
-            }
-            if (existingShows != null && existingShows.contains(show.ids.tvdb)) {
+            if (existingShows != null && existingShows.indexOfKey(show.ids.tvdb) >= 0) {
                 // is already in local database
                 result.isAdded = true;
+                // use the poster we fetched for it (or null if there is none)
+                result.poster = existingShows.get(show.ids.tvdb);
             }
             if (overrideLanguage != null) {
                 result.language = overrideLanguage;

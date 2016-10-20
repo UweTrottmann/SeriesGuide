@@ -19,6 +19,8 @@ import javax.inject.Inject;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -118,6 +120,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         taskFragment.setTask(task);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ConnectTraktTask.FinishedEvent event) {
         taskFragment.setTask(null);
 

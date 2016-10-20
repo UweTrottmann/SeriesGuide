@@ -118,6 +118,14 @@ public class TvdbTools {
     }
 
     /**
+     * Builds a fall-back path for a TVDb show poster using the TVDB id, equals the first image
+     * uploaded.
+     */
+    public static String buildFallbackPosterPath(int showTvdbId) {
+        return "posters/" + showTvdbId + "-1.jpg";
+    }
+
+    /**
      * Builds a full url for a TVDb screenshot (episode still) using the given image path.
      *
      * <p> May also be used with posters, but a much larger version than {@link
@@ -860,6 +868,7 @@ public class TvdbTools {
                 try {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
                 } finally {
+                    //noinspection ThrowFromFinallyBlock
                     zipin.close();
                 }
             } else {
@@ -867,6 +876,7 @@ public class TvdbTools {
                     Xml.parse(input, Xml.Encoding.UTF_8, handler);
                 } finally {
                     if (input != null) {
+                        //noinspection ThrowFromFinallyBlock
                         input.close();
                     }
                 }

@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -132,17 +133,19 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
     }
 
     private static void markLocalShows(Context context, @Nullable List<SearchResult> results) {
-        HashSet<Integer> localShows = ShowTools.getShowTvdbIdsAsSet(context);
+        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(context);
         if (localShows == null || results == null) {
             return;
         }
 
         for (SearchResult result : results) {
-            result.overview = "(" + result.language + ") " + result.overview;
+            result.overview = String.format("(%s) %s", result.language, result.overview);
 
-            if (localShows.contains(result.tvdbid)) {
+            if (localShows.indexOfKey(result.tvdbid) >= 0) {
                 // is already in local database
                 result.isAdded = true;
+                // use the poster we fetched for it (or null if there is none)
+                result.poster = localShows.get(result.tvdbid);
             }
         }
     }

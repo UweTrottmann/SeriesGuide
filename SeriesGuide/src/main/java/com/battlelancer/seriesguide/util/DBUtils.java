@@ -27,7 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -661,6 +661,7 @@ public class DBUtils {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
         final boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+        DisplaySettings.preventSpoilers(context);
         for (String[] show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
             final String showTvdbId = show[0];
@@ -709,11 +710,21 @@ public class DBUtils {
 
             // STEP 3: build updated next episode values
             if (next.moveToFirst()) {
-                // next episode text, e.g. '0x12 Episode Name'
-                final String nextEpisodeString = TextTools.getNextEpisodeString(context,
-                        next.getInt(NextEpisodesQuery.SEASON),
-                        next.getInt(NextEpisodesQuery.NUMBER),
-                        next.getString(NextEpisodesQuery.TITLE));
+                final String nextEpisodeString;
+                int seasonNumber = next.getInt(NextEpisodesQuery.SEASON);
+                int episodeNumber = next.getInt(NextEpisodesQuery.NUMBER);
+                if (DisplaySettings.preventSpoilers(context)) {
+                    // just the number, like '0x12'
+                    nextEpisodeString = TextTools.getEpisodeNumber(context,
+                            seasonNumber,
+                            episodeNumber);
+                } else {
+                    // next episode text, like '0x12 Episode Name'
+                    nextEpisodeString = TextTools.getNextEpisodeString(context,
+                            seasonNumber,
+                            episodeNumber,
+                            next.getString(NextEpisodesQuery.TITLE));
+                }
 
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);

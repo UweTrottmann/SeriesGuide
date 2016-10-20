@@ -19,10 +19,6 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/menu_open_google_play"
-                android:title="@string/googleplay"
-                app:showAsAction="never" />
-            <item
                 android:id="@+id/menu_open_imdb"
                 android:title="@string/imdb"
                 app:showAsAction="never" />
@@ -33,10 +29,6 @@
             <item
                 android:id="@+id/menu_open_trakt"
                 android:title="@string/trakt"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/menu_action_movie_websearch"
-                android:title="@string/web_search"
                 app:showAsAction="never" />
         </menu>
     </item>

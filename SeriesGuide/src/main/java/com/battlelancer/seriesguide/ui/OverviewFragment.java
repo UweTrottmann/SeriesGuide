@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.extensions.ActionsFragmentContract;
-import com.battlelancer.seriesguide.extensions.EpisodeActionsHelper;
+import com.battlelancer.seriesguide.extensions.ActionsHelper;
+import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.loaders.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -68,16 +69,18 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.CheatSheet;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
  * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, ActionsFragmentContract {
+        LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
 
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -98,6 +101,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
     @BindView(R.id.progress_container) View containerProgress;
     @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
@@ -575,6 +579,7 @@ public class OverviewFragment extends Fragment implements
     }
 
     @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         if (currentEpisodeTvdbId == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
@@ -589,16 +594,21 @@ public class OverviewFragment extends Fragment implements
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
 
             // title
-            textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            int season = episode.getInt(EpisodeQuery.SEASON);
+            int number = episode.getInt(EpisodeQuery.NUMBER);
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textEpisodeTitle.setText(TextTools.getEpisodeNumber(getContext(), season, number));
+            } else {
+                textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+            }
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, episode.getInt(EpisodeQuery.SEASON)));
+            infoText.append(getString(R.string.season_number, String.valueOf(season)));
             infoText.append(" ");
-            int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
-            infoText.append(getString(R.string.episode_number, episodeNumber));
+            infoText.append(getString(R.string.episode_number, String.valueOf(number)));
             int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
+            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }
             textEpisodeNumbers.setText(infoText);
@@ -646,9 +656,11 @@ public class OverviewFragment extends Fragment implements
             CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
                     : R.string.action_collection_add);
 
-            // prevent checking in if hexagon is enabled
-            buttonCheckin.setVisibility(
-                    HexagonTools.isSignedIn(getActivity()) ? View.GONE : View.VISIBLE);
+            // hide check-in if not connected to trakt or hexagon is enabled
+            boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
+            boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+            buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+            dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
             // buttons might have been disabled by action, re-enable
             buttonWatch.setEnabled(true);
@@ -807,7 +819,11 @@ public class OverviewFragment extends Fragment implements
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {
-            textDescription.setText(overview);
+            if (DisplaySettings.preventSpoilers(getContext())) {
+                textDescription.setText(R.string.no_spoilers);
+            } else {
+                textDescription.setText(overview);
+            }
         }
     }
 
@@ -834,7 +850,7 @@ public class OverviewFragment extends Fragment implements
     public void loadEpisodeActionsDelayed() {
         handler.removeCallbacks(episodeActionsRunnable);
         handler.postDelayed(episodeActionsRunnable,
-                ActionsFragmentContract.ACTION_LOADER_DELAY_MILLIS);
+                EpisodeActionsContract.ACTION_LOADER_DELAY_MILLIS);
     }
 
     private void loadEpisodeImage(String imagePath) {
@@ -843,22 +859,28 @@ public class OverviewFragment extends Fragment implements
             return;
         }
 
-        // try loading image
-        ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
-                .error(R.drawable.ic_image_missing)
-                .into(imageEpisode,
-                        new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            }
+        if (DisplaySettings.preventSpoilers(getContext())) {
+            // show image placeholder
+            imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageEpisode.setImageResource(R.drawable.ic_image_missing);
+        } else {
+            // try loading image
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+                    .error(R.drawable.ic_image_missing)
+                    .into(imageEpisode,
+                            new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                }
 
-                            @Override
-                            public void onError() {
-                                imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                @Override
+                                public void onError() {
+                                    imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                }
                             }
-                        }
-                );
+                    );
+        }
     }
 
     private void loadTraktRatings() {
@@ -960,13 +982,13 @@ public class OverviewFragment extends Fragment implements
                     } else {
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
-                    EpisodeActionsHelper.populateEpisodeActions(getActivity().getLayoutInflater(),
+                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
                             containerActions, null, TAG);
                 }
             };

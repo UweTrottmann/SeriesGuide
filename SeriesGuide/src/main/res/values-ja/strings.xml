@@ -11,7 +11,6 @@
   <string name="help">ヘルプ</string>
   <string name="help_and_feedback">ヘルプ &amp; フィードバック</string>
   <string name="drawer_open">ナビゲーションドロワーを開く</string>
-  <string name="drawer_close">ナビゲーションドロワーを閉じる</string>
   <!-- Media items -->
   <string name="show">表示</string>
   <string name="episode">エピソード</string>
@@ -72,11 +71,9 @@
   <string name="episode_firstaired">リリース日</string>
   <string name="episode_firstaired_unknown">リリース日不明</string>
   <string name="episode_dvdnumber">DVD エピソード</string>
-  <string name="show_actors">俳優</string>
   <string name="original_release">オリジナル リリース</string>
   <string name="show_on_network">%s で</string>
   <string name="show_genres">ジャンル</string>
-  <string name="show_runtime">ランタイム</string>
   <string name="show_contentrating">コンテンツの評価</string>
   <string name="show_release_times">リリース回</string>
   <string name="episode_directors">ディレクター</string>
@@ -85,10 +82,9 @@
   <string name="show_isalive">継続中</string>
   <string name="show_isnotalive">終了</string>
   <string name="lastEdit">最終更新 // TheTVDB</string>
-  <string name="services_watch">視聴</string>
-  <string name="services_more">さらに</string>
   <string name="no_translation">%2$s に %1$s 語で利用できる説明はありません。</string>
   <string name="no_translation_title">翻訳されていません</string>
+  <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これをオフにするには設定に移動します。</string>
   <!-- Date and Time -->
   <string name="today">今日</string>
   <string name="now">今</string>
@@ -310,21 +306,20 @@
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">サービス</string>
   <string name="prefs_category_advanced">高度</string>
-  <string name="prefs_category_about">...について</string>
+  <string name="prefs_category_about">について</string>
   <string name="pref_onlyfuture">未放映のエピソード</string>
   <string name="pref_onlyfuturesummary">すでに放映されたエピソードを表示しません</string>
   <string name="pref_onlyseasoneps">特別編を非表示</string>
   <string name="pref_onlyseasonepssummary">シーズン リストを除き、すべての場所で特別編を表示しません</string>
   <string name="pref_exactdates">正確な日付を表示</string>
   <string name="pref_exactdates_summary">「3 日以内」ではなく「10 月 31 日」</string>
+  <string name="pref_nospoilers">ネタバレを防ぐ</string>
+  <string name="pref_nospoilers_summary">エピソードを見るまで詳細を非表示</string>
   <string name="pref_seasonsorting">シーズンを並び替え&#8230;</string>
   <string name="pref_episodesorting">エピソードを並び替え&#8230;</string>
   <string name="pref_language">ご希望のコンテンツ言語</string>
   <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
   <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
-  <string name="about">SeriesGuide について</string>
-  <string name="pref_autoaddshows">新しい trakt 番組を追加</string>
-  <string name="pref_autoaddshowssummary">Trakt アクティビティ ストリームから番組を自動的に追加します</string>
   <!-- About screen -->
   <string name="licence_tvdb">このアプリは、TheTVDB により CC BY-NC 4.0 の下でライセンスされるデータと画像を使用します。</string>
   <string name="licence_themoviedb">この製品は TMDb API を使用していますが、TMDb による承認または認定はされていません。</string>
@@ -425,8 +420,6 @@
   <string name="notification_release_earlier_hour">1 時間前</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (小)</string>
-  <string name="bigwidget">SeriesGuide (中)</string>
-  <string name="largewidget">SeriesGuide (大)</string>
   <!-- List Widget -->
   <string name="hide_watched">視聴済のエピソードを非表示</string>
   <string name="pref_widget_opacity">ウィジェットの背景</string>
@@ -459,7 +452,6 @@
   <string name="subscription_failed">支払は完了していません。</string>
   <string name="pass_unavailable">X Pass は現在使用できません。</string>
   <!-- Extensions -->
-  <string name="extensions">拡張機能</string>
   <string name="action_extensions_configure">拡張機能をカスタマイズ</string>
   <string name="action_extensions_add">拡張機能を追加</string>
   <string name="action_extensions_limit">X を入手して、さらに拡張機能を追加</string>

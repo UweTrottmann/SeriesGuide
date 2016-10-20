@@ -73,7 +73,7 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
                     traktUsers.get().history(new Username(username), HistoryType.MOVIES, 1, 1,
-                            Extended.IMAGES, null, null), "get friend movie history");
+                            Extended.DEFAULT_MIN, null, null), "get friend movie history");
             if (history == null || history.size() == 0) {
                 continue; // no history
             }
@@ -84,16 +84,15 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
                 continue;
             }
 
-            String poster = (entry.movie.images == null || entry.movie.images.poster == null) ? null
-                    : entry.movie.images.poster.thumb;
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
+            // trakt has removed image support: currently displaying no image
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.getMillis(),
-                            "",
                             entry.movie.title,
-                            poster
+                            null,
+                            null
                     )
                     .tmdbId(entry.movie.ids == null ? null : entry.movie.ids.tmdb)
                     .friend(username, avatar, entry.action);

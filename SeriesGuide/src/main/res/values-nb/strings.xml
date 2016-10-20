@@ -11,7 +11,6 @@
   <string name="help">Hjelp</string>
   <string name="help_and_feedback">Hjelp og tilbakemelding</string>
   <string name="drawer_open">Åpne navigasjonsskuff</string>
-  <string name="drawer_close">Lukk navigasjonsskuff</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Episode</string>
@@ -73,11 +72,9 @@
   <string name="episode_firstaired">Utgivelsesdato</string>
   <string name="episode_firstaired_unknown">Ukjent utgivelsesdato</string>
   <string name="episode_dvdnumber">DVD-episode</string>
-  <string name="show_actors">Skuespillere</string>
   <string name="original_release">Opprinnelig utgivelse</string>
   <string name="show_on_network">på %s</string>
   <string name="show_genres">Sjangre</string>
-  <string name="show_runtime">Lengde</string>
   <string name="show_contentrating">Innholdsvurdering</string>
   <string name="show_release_times">Utgivelsestider</string>
   <string name="episode_directors">Regissører</string>
@@ -86,10 +83,9 @@
   <string name="show_isalive">Fortsetter</string>
   <string name="show_isnotalive">Avsluttet</string>
   <string name="lastEdit">Sist endret // TVDb</string>
-  <string name="services_watch">Se</string>
-  <string name="services_more">Mer</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Not translated</string>
+  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nå</string>
@@ -322,14 +318,13 @@
   <string name="pref_onlyseasonepssummary">Spesialepisoder forsvinner fra alle lister utenom sesonglisten</string>
   <string name="pref_exactdates">Vis nøyaktige datoer</string>
   <string name="pref_exactdates_summary">\"31. Oktober\" i stedet for \"om 3 dager\"</string>
+  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">Sorter sesonger etter&#8230;</string>
   <string name="pref_episodesorting">Sorter episoder etter&#8230;</string>
   <string name="pref_language">Foretrukket språk</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
-  <string name="about">Om SeriesGuide</string>
-  <string name="pref_autoaddshows">Legg til nye trakt-serier</string>
-  <string name="pref_autoaddshowssummary">Automatisk legge til serier fra din trakt aktivitetsstrøm</string>
   <!-- About screen -->
   <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
@@ -430,8 +425,6 @@
   <string name="notification_release_earlier_hour">1 time på forhånd</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (liten)</string>
-  <string name="bigwidget">SeriesGuide (middels)</string>
-  <string name="largewidget">SeriesGuide (stor)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skjul sette episoder</string>
   <string name="pref_widget_opacity">Modulbakgrunn</string>
@@ -464,7 +457,6 @@
   <string name="subscription_failed">Kjøp ikke fullført.</string>
   <string name="pass_unavailable">X Pass er for øyeblikket ikke tilgjengelig.</string>
   <!-- Extensions -->
-  <string name="extensions">Utvidelser</string>
   <string name="action_extensions_configure">Tilpass utvidelser</string>
   <string name="action_extensions_add">Legg til utvidelse</string>
   <string name="action_extensions_limit">Kjøp X for å legge til flere utvidelser</string>

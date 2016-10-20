@@ -6,6 +6,8 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -35,24 +37,12 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
         timeAtStartOfDay = TimeTools.applyUserOffsetInverted(getContext(), timeAtStartOfDay);
 
         Cursor query = getContext().getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                new String[] {
-                        SeriesGuideDatabase.Tables.EPISODES + "." + Episodes._ID, // 0
-                        Episodes.TITLE,
-                        Episodes.NUMBER,
-                        Episodes.SEASON,
-                        Episodes.FIRSTAIREDMS, // 4
-                        Shows.REF_SHOW_ID,
-                        Shows.TITLE,
-                        Shows.NETWORK,
-                        Shows.POSTER // 8
-                }, Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS + "<? AND "
-                        + Shows.SELECTION_NO_HIDDEN,
+                Query.PROJECTION, Query.SELECTION,
                 new String[] {
                         String.valueOf(timeAtStartOfDay),
                         String.valueOf(timeAtStartOfDay + DateUtils.DAY_IN_MILLIS)
                 },
-                Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC,"
-                        + Episodes.NUMBER + " DESC");
+                Query.SORT_ORDER);
         if (query != null) {
             List<NowAdapter.NowItem> items = new ArrayList<>();
 
@@ -63,18 +53,30 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
             }
 
             // add items
+            boolean preventSpoilers = DisplaySettings.preventSpoilers(getContext());
             while (query.moveToNext()) {
+                String episodeString;
+                int season = query.getInt(Query.SEASON);
+                int episode = query.getInt(Query.NUMBER);
+                int episodeFlag = query.getInt(Query.WATCHED);
+                if (EpisodeTools.isUnwatched(episodeFlag) && preventSpoilers) {
+                    // just display the number
+                    episodeString = TextTools.getEpisodeNumber(getContext(), season, episode);
+                } else {
+                    // display number and title
+                    episodeString = TextTools.getNextEpisodeString(getContext(), season, episode,
+                            query.getString(Query.EPISODE_TITLE));
+                }
                 NowAdapter.NowItem item = new NowAdapter.NowItem()
                         .displayData(
-                                query.getLong(4),
-                                query.getString(6),
-                                TextTools.getNextEpisodeString(getContext(), query.getInt(3),
-                                        query.getInt(2),
-                                        query.getString(1)),
-                                query.getString(8)
+                                query.getLong(Query.FIRSTAIREDMS),
+                                query.getString(Query.SHOW_TITLE),
+                                episodeString,
+                                query.getString(Query.POSTER)
                         )
-                        .tvdbIds(query.getInt(0), query.getInt(5))
-                        .releasedToday(query.getString(7));
+                        .tvdbIds(query.getInt(Query.EPISODE_TVDBID),
+                                query.getInt(Query.SHOW_TVDBID))
+                        .releasedToday(query.getString(Query.NETWORK));
 
                 items.add(item);
             }
@@ -85,5 +87,39 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
         }
 
         return null;
+    }
+
+    private interface Query {
+        String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND "
+                + Episodes.FIRSTAIREDMS + "<? AND "
+                + Shows.SELECTION_NO_HIDDEN;
+
+        String SORT_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
+                + Shows.TITLE + " ASC,"
+                + Episodes.NUMBER + " DESC";
+
+        String[] PROJECTION = new String[] {
+                SeriesGuideDatabase.Tables.EPISODES + "." + Episodes._ID, // 0
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.SEASON, // 3
+                Episodes.FIRSTAIREDMS,
+                Episodes.WATCHED,
+                Shows.REF_SHOW_ID, // 6
+                Shows.TITLE,
+                Shows.NETWORK,
+                Shows.POSTER // 9
+        };
+
+        int EPISODE_TVDBID = 0;
+        int EPISODE_TITLE = 1;
+        int NUMBER = 2;
+        int SEASON = 3;
+        int FIRSTAIREDMS = 4;
+        int WATCHED = 5;
+        int SHOW_TVDBID = 6;
+        int SHOW_TITLE = 7;
+        int NETWORK = 8;
+        int POSTER = 9;
     }
 }

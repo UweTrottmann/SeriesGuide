@@ -22,7 +22,9 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
@@ -90,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Override this to avoid unregistering from {@link de.greenrobot.event.EventBus#getDefault()}
+     * Override this to avoid unregistering from {@link EventBus#getDefault()}
      * in {@link #onStop()}.
      *
      * <p> See {@link #registerEventBus()} as well.
@@ -122,16 +124,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Subscribe
     public void onEvent(AddShowTask.OnShowAddedEvent event) {
         // display status toast about adding shows
         event.handle(this);
     }
 
+    @Subscribe
     public void onEvent(TraktTask.TraktActionCompleteEvent event) {
         // display status toast about trakt action
         event.handle(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(DBUtils.DatabaseErrorEvent event) {
         event.handle(this);
     }

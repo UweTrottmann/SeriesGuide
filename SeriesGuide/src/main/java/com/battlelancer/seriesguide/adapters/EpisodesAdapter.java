@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -103,14 +104,22 @@ public class EpisodesAdapter extends CursorAdapter {
         }
 
         // episode title
-        viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
+        final int watchedFlag = mCursor.getInt(EpisodesQuery.WATCHED);
+        final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);
+        if (EpisodeTools.isUnwatched(watchedFlag) && DisplaySettings.preventSpoilers(mContext)) {
+            // just display the episode number "1x02"
+            int season = mCursor.getInt(EpisodesQuery.SEASON);
+            viewHolder.episodeTitle.setText(
+                    TextTools.getEpisodeNumber(mContext, season, episodeNumber));
+        } else {
+            viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
+        }
 
         // number
-        final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);
         viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
 
         // watched box
-        viewHolder.watchedBox.setEpisodeFlag(mCursor.getInt(EpisodesQuery.WATCHED));
+        viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
         final int episodeId = mCursor.getInt(EpisodesQuery._ID);
         viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -122,7 +131,6 @@ public class EpisodesAdapter extends CursorAdapter {
             }
         });
         viewHolder.watchedBox.setEnabled(true);
-        final int watchedFlag = viewHolder.watchedBox.getEpisodeFlag();
         boolean watched = EpisodeTools.isWatched(watchedFlag);
         viewHolder.watchedBox.setContentDescription(
                 mContext.getString(watched ? R.string.action_unwatched : R.string.action_watched));

@@ -78,6 +78,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
+        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
@@ -89,6 +90,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableMovie">@drawable/ic_action_movie</item>
@@ -166,6 +168,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
+        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
@@ -177,6 +180,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show</item>
+        <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableMovie">@drawable/ic_action_movie</item>
@@ -266,6 +270,7 @@
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_grey600_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
+        <item name="drawableComments">@drawable/ic_forum_black_24dp</item>
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
         <item name="drawableWatchAll">@drawable/ic_action_watch_all_inverse</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
@@ -277,6 +282,7 @@
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
         <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
+        <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
         <item name="drawableMovie">@drawable/ic_action_movie_inverse</item>

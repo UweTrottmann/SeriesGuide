@@ -9,4 +9,10 @@
         android:title="@string/search_hint"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menu_overview_remove_show"
+        android:orderInCategory="9"
+        android:title="@string/delete_show"
+        app:showAsAction="never" />
+
 </menu>
