@@ -357,9 +357,9 @@ public class Utils {
             posterUrl = null;
         } else {
             posterUrl = TvdbTools.buildPosterUrl(posterPath);
-            String mac = encode("supereule", posterUrl);
+            String mac = encode(BuildConfig.IMAGE_CACHE_SECRET, posterUrl);
             if (mac != null) {
-                posterUrl = String.format("http://cache.seriesgui.de/s%s/%s", mac, posterUrl);
+                posterUrl = String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrl);
             } else {
                 posterUrl = null;
             }

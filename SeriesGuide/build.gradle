@@ -43,6 +43,8 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
+        buildConfigField("String", "IMAGE_CACHE_URL", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_URL")}\"")
+        buildConfigField("String", "IMAGE_CACHE_SECRET", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_SECRET")}\"")
     }
 
     compileOptions {
