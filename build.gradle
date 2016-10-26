@@ -29,7 +29,7 @@ ext {
     androidVersionCode = 15215
     androidVersionName = '33'
 
-    supportVersion = '24.2.0'
+    supportVersion = '25.0.0'
 
     dep = [
             androidPlugin: 'com.android.tools.build:gradle:2.2.0'
