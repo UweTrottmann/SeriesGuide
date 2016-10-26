@@ -68,6 +68,9 @@
                 <action android:name="com.battlelancer.seriesguide.api.action.VIEW_SHOW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
+            <!-- launcher shortcuts -->
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
         </activity>
 
         <!-- Hexagon -->

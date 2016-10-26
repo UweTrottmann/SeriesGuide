@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- NOTE: this file has sadly to be duplicated across application IDs,
+     as using a resource for targetPackage does not work -->
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_movies"
+        android:shortcutDisabledMessage="@string/app_not_available"
+        android:shortcutId="movies"
+        android:shortcutLongLabel="@string/movies"
+        android:shortcutShortLabel="@string/movies">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.MoviesActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_lists"
+        android:shortcutDisabledMessage="@string/app_not_available"
+        android:shortcutId="lists"
+        android:shortcutLongLabel="@string/lists"
+        android:shortcutShortLabel="@string/lists">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.ListsActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_add"
+        android:shortcutDisabledMessage="@string/app_not_available"
+        android:shortcutId="addShow"
+        android:shortcutLongLabel="@string/action_shows_add"
+        android:shortcutShortLabel="@string/action_shows_add">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.battlelancer.seriesguide.ui.SearchActivity"
+            android:targetPackage="com.battlelancer.seriesguide" />
+    </shortcut>
+</shortcuts>
