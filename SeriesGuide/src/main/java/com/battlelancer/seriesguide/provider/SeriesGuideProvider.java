@@ -229,7 +229,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
         if (LOGV) {
-            Timber.v("query(uri=" + uri + ", proj=" + Arrays.toString(projection) + ")");
+            Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
         final SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -262,7 +262,7 @@ public class SeriesGuideProvider extends ContentProvider {
                             .where(selection, selectionArgs)
                             .query(db, projection, sortOrder);
                 } catch (SQLiteException e) {
-                    Timber.e(e, "Failed to query with uri=" + uri);
+                    Timber.e(e, "Failed to query with uri=%s", uri);
                 }
                 if (query != null) {
                     //noinspection ConstantConditions
@@ -331,13 +331,13 @@ public class SeriesGuideProvider extends ContentProvider {
         if (!applyingBatch()) {
             db.beginTransaction();
             try {
-                newItemUri = insertInTransaction(db, uri, values);
+                newItemUri = insertInTransaction(db, uri, values, false);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         } else {
-            newItemUri = insertInTransaction(db, uri, values);
+            newItemUri = insertInTransaction(db, uri, values, false);
         }
 
         if (newItemUri != null) {
@@ -356,9 +356,8 @@ public class SeriesGuideProvider extends ContentProvider {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
-            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < numValues; i++) {
-                Uri result = insertInTransaction(db, uri, values[i]);
+                Uri result = insertInTransaction(db, uri, values[i], true);
                 if (result != null) {
                     notifyChange = true;
                 }
@@ -377,9 +376,15 @@ public class SeriesGuideProvider extends ContentProvider {
         return numValues;
     }
 
-    private Uri insertInTransaction(SQLiteDatabase db, Uri uri, ContentValues values) {
+    /**
+     * @param bulkInsert It seems to happen on occasion that TVDB has duplicate episodes, also
+     * backup files may contain duplicates. Handle them by making the last insert win (ON CONFLICT
+     * REPLACE) for bulk inserts.
+     */
+    private Uri insertInTransaction(SQLiteDatabase db, Uri uri, ContentValues values,
+            boolean bulkInsert) {
         if (LOGV) {
-            Timber.v("insert(uri=" + uri + ", values=" + values.toString() + ")");
+            Timber.v("insert(uri=%s, values=%s)", uri, values.toString());
         }
         Uri notifyUri = null;
 
@@ -394,7 +399,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case SEASONS: {
-                long id = db.insert(Tables.SEASONS, null, values);
+                long id;
+                if (bulkInsert) {
+                    id = db.replace(Tables.SEASONS, null, values);
+                } else {
+                    id = db.insert(Tables.SEASONS, null, values);
+                }
                 if (id < 0) {
                     break;
                 }
@@ -402,7 +412,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case EPISODES: {
-                long id = db.insert(Tables.EPISODES, null, values);
+                long id;
+                if (bulkInsert) {
+                    id = db.replace(Tables.EPISODES, null, values);
+                } else {
+                    id = db.insert(Tables.EPISODES, null, values);
+                }
                 if (id < 0) {
                     break;
                 }
@@ -418,7 +433,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LIST_ITEMS: {
-                long id = db.insert(Tables.LIST_ITEMS, null, values);
+                long id;
+                if (bulkInsert) {
+                    id = db.replace(Tables.LIST_ITEMS, null, values);
+                } else {
+                    id = db.insert(Tables.LIST_ITEMS, null, values);
+                }
                 if (id < 0) {
                     break;
                 }
@@ -426,7 +446,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id = db.insert(Tables.MOVIES, null, values);
+                long id;
+                if (bulkInsert) {
+                    id = db.replace(Tables.MOVIES, null, values);
+                } else {
+                    id = db.insert(Tables.MOVIES, null, values);
+                }
                 if (id < 0) {
                     break;
                 }
@@ -456,7 +481,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues values, String selection,
             String[] selectionArgs) {
         if (LOGV) {
-            Timber.v("update(uri=" + uri + ", values=" + values.toString() + ")");
+            Timber.v("update(uri=%s, values=%s)", uri, values.toString());
         }
         int count = 0;
 
@@ -492,7 +517,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         if (LOGV) {
-            Timber.v("delete(uri=" + uri + ")");
+            Timber.v("delete(uri=%s)", uri);
         }
         int count = 0;
 
