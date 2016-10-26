@@ -419,11 +419,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ");";
 
     private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
-            + Tables.EPISODES_SEARCH + " USING FTS3("
+            + Tables.EPISODES_SEARCH + " USING fts4("
 
-            + EpisodeSearchColumns.TITLE + " TEXT,"
+            // set episodes table as external content table
+            + "content='" + Tables.EPISODES + "',"
 
-            + EpisodeSearchColumns.OVERVIEW + " TEXT"
+            + EpisodeSearchColumns.TITLE + ","
+
+            + EpisodeSearchColumns.OVERVIEW
 
             + ");";
 
@@ -1076,20 +1079,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + "," + Episodes.OVERVIEW
-                                + " from " + Tables.EPISODES + ";");
+                db.execSQL("INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
+                        + "(" + Tables.EPISODES_SEARCH + ") VALUES('rebuild')");
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         } catch (SQLiteException e) {
             Timber.e(e, "rebuildFtsTable: failed to populate table.");
-            // try to build a basic table with only episode titles
-            rebuildBasicFtsTable(db);
         }
     }
 
@@ -1107,32 +1104,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         } catch (SQLiteException e) {
             Timber.e(e, "recreateFtsTable: failed.");
             return false;
-        }
-    }
-
-    /**
-     * Similar to {@link #rebuildFtsTable(SQLiteDatabase)}. However only inserts the episode title,
-     * not the overviews to conserve space.
-     */
-    private static void rebuildBasicFtsTable(SQLiteDatabase db) {
-        if (!recreateFtsTable(db)) {
-            return;
-        }
-
-        try {
-            db.beginTransaction();
-            try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + " from " + Tables.EPISODES + ";");
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-        } catch (SQLiteException e) {
-            Timber.e(e, "rebuildBasicFtsTable: failed to populate table.");
         }
     }
 
