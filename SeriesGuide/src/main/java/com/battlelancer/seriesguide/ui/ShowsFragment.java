@@ -240,7 +240,7 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
                         || mIsFilterHidden ?
-                        R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+                        R.drawable.ic_action_filter_selected_24dp : R.drawable.ic_action_filter);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
