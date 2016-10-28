@@ -10,7 +10,7 @@ Version 34
 *(in development)*
 
 #### 34-beta1
-*(2016-10-18)*
+*(2016-10-28)*
 
 * TWEAK Use an image caching server, currently only for images from TheTVDB in the show search screen.
 * TWEAK Add round launcher icon.
