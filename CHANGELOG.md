@@ -5,6 +5,20 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 34
+----------
+*(in development)*
+
+#### 34-beta1
+*(2016-10-18)*
+
+* TWEAK Use an image caching server, currently only for images from TheTVDB in the show search screen.
+* TWEAK Add round launcher icon.
+* TWEAK Add launcher shortcuts to "Add show", "Lists" and "Movies".
+* TWEAK Improvements to search index generation (use FTS4 instead of FTS3), should require less disk space.
+* FIX Text overlaps other content if movie title is very long.
+* FIX Handle duplicates when adding episodes while adding or updating a show.
+
 Version 33
 ----------
 *(2016-10-20)*
