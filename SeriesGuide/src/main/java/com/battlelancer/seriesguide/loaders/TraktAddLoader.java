@@ -105,8 +105,8 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(getContext(), action, e);
             // only check for network here to allow hitting the response cache
-            return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
-                    ? R.string.trakt_error_general : R.string.offline);
+            return AndroidUtils.isNetworkConnected(getContext())
+                    ? buildResultGenericFailure() : buildResultFailure(R.string.offline);
         }
 
         // return empty list right away if there are no results
