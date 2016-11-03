@@ -20,12 +20,12 @@ import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import org.greenrobot.eventbus.EventBus;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -230,7 +230,7 @@ public class TraktAddFragment extends AddFragment {
                 return;
             }
             setSearchResults(data.results);
-            setEmptyMessage(data.emptyTextResId);
+            setEmptyMessage(data.emptyText);
             setProgressVisible(false, true);
         }
 

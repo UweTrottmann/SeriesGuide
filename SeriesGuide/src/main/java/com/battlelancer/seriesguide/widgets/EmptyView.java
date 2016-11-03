@@ -40,6 +40,10 @@ public class EmptyView extends FrameLayout {
         emptyViewText.setText(textResId);
     }
 
+    public void setMessage(CharSequence textResId) {
+        emptyViewText.setText(textResId);
+    }
+
     public void setButtonText(@StringRes int textResId) {
         emptyViewButton.setText(textResId);
     }
