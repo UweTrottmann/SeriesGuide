@@ -41,9 +41,9 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -233,6 +233,10 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             // failed to load, can't be added
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
+            } else if (result.doesNotExist) {
+                overview.setText(R.string.error_tvdb_does_not_exist);
+            } else {
+                overview.setText(getString(R.string.error_api_generic, getString(R.string.tvdb)));
             }
             return;
         }
@@ -315,7 +319,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         // network, runtime
         timeAndNetworkText.append(show.network);
         timeAndNetworkText.append("\n");
-        timeAndNetworkText.append(getString(R.string.runtime_minutes, show.runtime));
+        timeAndNetworkText.append(
+                getString(R.string.runtime_minutes, String.valueOf(show.runtime)));
 
         showmeta.setText(timeAndNetworkText);
 
