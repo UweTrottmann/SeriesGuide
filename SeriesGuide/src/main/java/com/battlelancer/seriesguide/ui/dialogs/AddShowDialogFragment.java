@@ -236,7 +236,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             } else if (result.doesNotExist) {
                 overview.setText(R.string.error_tvdb_does_not_exist);
             } else {
-                overview.setText(getString(R.string.error_api_generic, getString(R.string.tvdb)));
+                overview.setText(getString(R.string.error_api_generic,
+                        String.format("%s/%s", getString(R.string.tvdb),
+                                getString(R.string.trakt))));
             }
             return;
         }
