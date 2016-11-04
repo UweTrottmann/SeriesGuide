@@ -579,7 +579,7 @@ public class TvdbTools {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = series.overview;
             result.overview = app.getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(app, desiredLanguage),
+                    LanguageTools.getShowLanguageStringFor(app, desiredLanguage),
                     app.getString(R.string.tvdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 result.overview += "\n\n" + untranslatedOverview;

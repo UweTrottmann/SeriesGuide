@@ -16,7 +16,7 @@
     <string name="tvdb_range">/10</string>
     <string name="placeholder_rating">--</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
-	<string name="not_available">n/a</string>
+    <string name="not_available">n/a</string>
 
     <!-- URLs -->
     <string name="url_website">https://seriesgui.de</string>
@@ -60,7 +60,7 @@
     <string name="theme_default">SeriesGuide</string>
     <string name="theme_dark_alt">Android Dark</string>
     <string name="theme_light">SeriesGuide Light</string>
-    
+
     <!-- Animations -->
     <string name="transitionNameMoviePoster">moviePoster</string>
     <string name="transitionNamePersonImage">personImage</string>
@@ -96,7 +96,7 @@
     </string-array>
 
     <!-- Content languages -->
-    <string-array name="languages">
+    <string-array name="languagesShows">
         <item>English</item>
         <item>čeština</item>
         <item>Dansk</item>
@@ -121,7 +121,7 @@
         <item> עברית</item>
         <item>日本語 (Japanese)</item>
     </string-array>
-    <string-array name="languageData">
+    <string-array name="languageCodesShows">
         <item>en</item>
         <item>cs</item>
         <item>da</item>
@@ -145,6 +145,393 @@
         <item>zh</item>
         <item>he</item>
         <item>ja</item>
+    </string-array>
+
+    <!-- Movie languages -->
+    <string name="movie_default_language">en-US</string>
+    <string-array name="languagesMovies">
+        <item>Abkhazian (ab-AB)</item>
+        <item>Afar (aa-AA)</item>
+        <item>Afrikaans (af-AF)</item>
+        <item>Akan (ak-AK)</item>
+        <item>Albanian (sq-SQ)</item>
+        <item>Amharic (am-AM)</item>
+        <item>Arabic (ar-AR)</item>
+        <item>Aragonese (an-AN)</item>
+        <item>Armenian (hy-HY)</item>
+        <item>Assamese (as-AS)</item>
+        <item>Avaric (av-AV)</item>
+        <item>Avestan (ae-AE)</item>
+        <item>Aymara (ay-AY)</item>
+        <item>Azerbaijani (az-AZ)</item>
+        <item>Bambara (bm-BM)</item>
+        <item>Bashkir (ba-BA)</item>
+        <item>Basque (eu-ES)</item>
+        <item>Belarusian (be-BE)</item>
+        <item>Bengali (bn-BD)</item>
+        <item>Bislama (bi-BI)</item>
+        <item>Bosnian (bs-BS)</item>
+        <item>Breton (br-BR)</item>
+        <item>Bulgarian (bg-BG)</item>
+        <item>Burmese (my-MY)</item>
+        <item>Cantonese (cn-CN)</item>
+        <item>Catalan (ca-ES)</item>
+        <item>Chamorro (ch-GU)</item>
+        <item>Chechen (ce-CE)</item>
+        <item>Chichewa; Nyanja (ny-NY)</item>
+        <item>Chuvash (cv-CV)</item>
+        <item>Cornish (kw-KW)</item>
+        <item>Corsican (co-CO)</item>
+        <item>Cree (cr-CR)</item>
+        <item>Croatian (hr-HR)</item>
+        <item>Czech (cs-CZ)</item>
+        <item>Danish (da-DK)</item>
+        <item>Divehi (dv-DV)</item>
+        <item>Dutch (nl-NL)</item>
+        <item>Dzongkha (dz-DZ)</item>
+        <item>English (en-US)</item>
+        <item>Esperanto (eo-EO)</item>
+        <item>Estonian (et-ET)</item>
+        <item>Ewe (ee-EE)</item>
+        <item>Faroese (fo-FO)</item>
+        <item>Fijian (fj-FJ)</item>
+        <item>Finnish (fi-FI)</item>
+        <item>French (fr-CA)</item>
+        <item>French (fr-FR)</item>
+        <item>Frisian (fy-FY)</item>
+        <item>Fulah (ff-FF)</item>
+        <item>Gaelic (gd-GD)</item>
+        <item>Gallegan (gl-GL)</item>
+        <item>Ganda (lg-LG)</item>
+        <item>Georgian (ka-GE)</item>
+        <item>German (de-DE)</item>
+        <item>Greek (el-GR)</item>
+        <item>Guarani (gn-GN)</item>
+        <item>Gujarati (gu-GU)</item>
+        <item>Haitian; Haitian Creole (ht-HT)</item>
+        <item>Hausa (ha-HA)</item>
+        <item>Hebrew (he-IL)</item>
+        <item>Herero (hz-HZ)</item>
+        <item>Hindi (hi-IN)</item>
+        <item>Hiri Motu (ho-HO)</item>
+        <item>Hungarian (hu-HU)</item>
+        <item>Icelandic (is-IS)</item>
+        <item>Ido (io-IO)</item>
+        <item>Igbo (ig-IG)</item>
+        <item>Indonesian (id-ID)</item>
+        <item>Interlingua (ia-IA)</item>
+        <item>Interlingue (ie-IE)</item>
+        <item>Inuktitut (iu-IU)</item>
+        <item>Inupiaq (ik-IK)</item>
+        <item>Irish (ga-GA)</item>
+        <item>Italian (it-IT)</item>
+        <item>Japanese (ja-JP)</item>
+        <item>Javanese (jv-JV)</item>
+        <item>Kalaallisut (kl-KL)</item>
+        <item>Kannada (kn-KN)</item>
+        <item>Kanuri (kr-KR)</item>
+        <item>Kashmiri (ks-KS)</item>
+        <item>Kazakh (kk-KK)</item>
+        <item>Khmer (km-KM)</item>
+        <item>Kikuyu (ki-KI)</item>
+        <item>Kinyarwanda (rw-RW)</item>
+        <item>Kirghiz (ky-KY)</item>
+        <item>Komi (kv-KV)</item>
+        <item>Kongo (kg-KG)</item>
+        <item>Korean (ko-KR)</item>
+        <item>Kuanyama (kj-KJ)</item>
+        <item>Kurdish (ku-KU)</item>
+        <item>Lao (lo-LO)</item>
+        <item>Latin (la-LA)</item>
+        <item>Latvian (lv-LV)</item>
+        <item>Letzeburgesch (lb-LB)</item>
+        <item>Limburgish (li-LI)</item>
+        <item>Lingala (ln-LN)</item>
+        <item>Lithuanian (lt-LT)</item>
+        <item>Luba-Katanga (lu-LU)</item>
+        <item>Macedonian (mk-MK)</item>
+        <item>Malagasy (mg-MG)</item>
+        <item>Malay (ms-MS)</item>
+        <item>Malayalam (ml-ML)</item>
+        <item>Maltese (mt-MT)</item>
+        <item>Mandarin (zh-CN)</item>
+        <item>Mandarin (zh-TW)</item>
+        <item>Manx (gv-GV)</item>
+        <item>Maori (mi-MI)</item>
+        <item>Marathi (mr-MR)</item>
+        <item>Marshall (mh-MH)</item>
+        <item>Moldavian (mo-MO)</item>
+        <item>Mongolian (mn-MN)</item>
+        <item>Nauru (na-NA)</item>
+        <item>Navajo (nv-NV)</item>
+        <item>Ndebele (nd-ND)</item>
+        <item>Ndebele (nr-NR)</item>
+        <item>Ndonga (ng-NG)</item>
+        <item>Nepali (ne-NE)</item>
+        <item>No Language (xx-XX)</item>
+        <item>Northern Sami (se-SE)</item>
+        <item>Norwegian (no-NO)</item>
+        <item>Norwegian Bokmål (nb-NO)</item>
+        <item>Norwegian Nynorsk (nn-NN)</item>
+        <item>Occitan (oc-OC)</item>
+        <item>Ojibwa (oj-OJ)</item>
+        <item>Oriya (or-OR)</item>
+        <item>Oromo (om-OM)</item>
+        <item>Ossetian; Ossetic (os-OS)</item>
+        <item>Pali (pi-PI)</item>
+        <item>Persian (fa-IR)</item>
+        <item>Polish (pl-PL)</item>
+        <item>Portuguese (pt-BR)</item>
+        <item>Portuguese (pt-PT)</item>
+        <item>Punjabi (pa-PA)</item>
+        <item>Pushto (ps-PS)</item>
+        <item>Quechua (qu-QU)</item>
+        <item>Raeto-Romance (rm-RM)</item>
+        <item>Romanian (ro-RO)</item>
+        <item>Rundi (rn-RN)</item>
+        <item>Russian (ru-RU)</item>
+        <item>Samoan (sm-SM)</item>
+        <item>Sango (sg-SG)</item>
+        <item>Sanskrit (sa-SA)</item>
+        <item>Sardinian (sc-SC)</item>
+        <item>Serbian (sr-RS)</item>
+        <item>Serbo-Croatian (sh-SH)</item>
+        <item>Shona (sn-SN)</item>
+        <item>Sindhi (sd-SD)</item>
+        <item>Sinhalese (si-SI)</item>
+        <item>Slavic (cu-CU)</item>
+        <item>Slovak (sk-SK)</item>
+        <item>Slovenian (sl-SI)</item>
+        <item>Somali (so-SO)</item>
+        <item>Sotho (st-ST)</item>
+        <item>Spanish (es-ES)</item>
+        <item>Spanish (es-MX)</item>
+        <item>Sundanese (su-SU)</item>
+        <item>Swahili (sw-SW)</item>
+        <item>Swati (ss-SS)</item>
+        <item>Swedish (sv-SE)</item>
+        <item>Tagalog (tl-TL)</item>
+        <item>Tahitian (ty-TY)</item>
+        <item>Tajik (tg-TG)</item>
+        <item>Tamil (ta-IN)</item>
+        <item>Tatar (tt-TT)</item>
+        <item>Telugu (te-TE)</item>
+        <item>Thai (th-TH)</item>
+        <item>Tibetan (bo-BO)</item>
+        <item>Tigrinya (ti-TI)</item>
+        <item>Tonga (to-TO)</item>
+        <item>Tsonga (ts-TS)</item>
+        <item>Tswana (tn-TN)</item>
+        <item>Turkish (tr-TR)</item>
+        <item>Turkmen (tk-TK)</item>
+        <item>Twi (tw-TW)</item>
+        <item>Uighur (ug-UG)</item>
+        <item>Ukrainian (uk-UA)</item>
+        <item>Urdu (ur-UR)</item>
+        <item>Uzbek (uz-UZ)</item>
+        <item>Venda (ve-VE)</item>
+        <item>Vietnamese (vi-VN)</item>
+        <item>Volapük (vo-VO)</item>
+        <item>Walloon (wa-WA)</item>
+        <item>Welsh (cy-CY)</item>
+        <item>Wolof (wo-WO)</item>
+        <item>Xhosa (xh-XH)</item>
+        <item>Yi (ii-II)</item>
+        <item>Yiddish (yi-YI)</item>
+        <item>Zhuang (za-ZA)</item>
+        <item>Zulu (zu-ZU)</item>
+    </string-array>
+    <string-array name="languageCodesMovies">
+        <item>ab-AB</item>
+        <item>aa-AA</item>
+        <item>af-AF</item>
+        <item>ak-AK</item>
+        <item>sq-SQ</item>
+        <item>am-AM</item>
+        <item>ar-AR</item>
+        <item>an-AN</item>
+        <item>hy-HY</item>
+        <item>as-AS</item>
+        <item>av-AV</item>
+        <item>ae-AE</item>
+        <item>ay-AY</item>
+        <item>az-AZ</item>
+        <item>bm-BM</item>
+        <item>ba-BA</item>
+        <item>eu-ES</item>
+        <item>be-BE</item>
+        <item>bn-BD</item>
+        <item>bi-BI</item>
+        <item>bs-BS</item>
+        <item>br-BR</item>
+        <item>bg-BG</item>
+        <item>my-MY</item>
+        <item>cn-CN</item>
+        <item>ca-ES</item>
+        <item>ch-GU</item>
+        <item>ce-CE</item>
+        <item>ny-NY</item>
+        <item>cv-CV</item>
+        <item>kw-KW</item>
+        <item>co-CO</item>
+        <item>cr-CR</item>
+        <item>hr-HR</item>
+        <item>cs-CZ</item>
+        <item>da-DK</item>
+        <item>dv-DV</item>
+        <item>nl-NL</item>
+        <item>dz-DZ</item>
+        <item>@string/movie_default_language</item>
+        <item>eo-EO</item>
+        <item>et-ET</item>
+        <item>ee-EE</item>
+        <item>fo-FO</item>
+        <item>fj-FJ</item>
+        <item>fi-FI</item>
+        <item>fr-CA</item>
+        <item>fr-FR</item>
+        <item>fy-FY</item>
+        <item>ff-FF</item>
+        <item>gd-GD</item>
+        <item>gl-GL</item>
+        <item>lg-LG</item>
+        <item>ka-GE</item>
+        <item>de-DE</item>
+        <item>el-GR</item>
+        <item>gn-GN</item>
+        <item>gu-GU</item>
+        <item>ht-HT</item>
+        <item>ha-HA</item>
+        <item>he-IL</item>
+        <item>hz-HZ</item>
+        <item>hi-IN</item>
+        <item>ho-HO</item>
+        <item>hu-HU</item>
+        <item>is-IS</item>
+        <item>io-IO</item>
+        <item>ig-IG</item>
+        <item>id-ID</item>
+        <item>ia-IA</item>
+        <item>ie-IE</item>
+        <item>iu-IU</item>
+        <item>ik-IK</item>
+        <item>ga-GA</item>
+        <item>it-IT</item>
+        <item>ja-JP</item>
+        <item>jv-JV</item>
+        <item>kl-KL</item>
+        <item>kn-KN</item>
+        <item>kr-KR</item>
+        <item>ks-KS</item>
+        <item>kk-KK</item>
+        <item>km-KM</item>
+        <item>ki-KI</item>
+        <item>rw-RW</item>
+        <item>ky-KY</item>
+        <item>kv-KV</item>
+        <item>kg-KG</item>
+        <item>ko-KR</item>
+        <item>kj-KJ</item>
+        <item>ku-KU</item>
+        <item>lo-LO</item>
+        <item>la-LA</item>
+        <item>lv-LV</item>
+        <item>lb-LB</item>
+        <item>li-LI</item>
+        <item>ln-LN</item>
+        <item>lt-LT</item>
+        <item>lu-LU</item>
+        <item>mk-MK</item>
+        <item>mg-MG</item>
+        <item>ms-MS</item>
+        <item>ml-ML</item>
+        <item>mt-MT</item>
+        <item>zh-CN</item>
+        <item>zh-TW</item>
+        <item>gv-GV</item>
+        <item>mi-MI</item>
+        <item>mr-MR</item>
+        <item>mh-MH</item>
+        <item>mo-MO</item>
+        <item>mn-MN</item>
+        <item>na-NA</item>
+        <item>nv-NV</item>
+        <item>nd-ND</item>
+        <item>nr-NR</item>
+        <item>ng-NG</item>
+        <item>ne-NE</item>
+        <item>xx-XX</item>
+        <item>se-SE</item>
+        <item>no-NO</item>
+        <item>nb-NO</item>
+        <item>nn-NN</item>
+        <item>oc-OC</item>
+        <item>oj-OJ</item>
+        <item>or-OR</item>
+        <item>om-OM</item>
+        <item>os-OS</item>
+        <item>pi-PI</item>
+        <item>fa-IR</item>
+        <item>pl-PL</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>pa-PA</item>
+        <item>ps-PS</item>
+        <item>qu-QU</item>
+        <item>rm-RM</item>
+        <item>ro-RO</item>
+        <item>rn-RN</item>
+        <item>ru-RU</item>
+        <item>sm-SM</item>
+        <item>sg-SG</item>
+        <item>sa-SA</item>
+        <item>sc-SC</item>
+        <item>sr-RS</item>
+        <item>sh-SH</item>
+        <item>sn-SN</item>
+        <item>sd-SD</item>
+        <item>si-SI</item>
+        <item>cu-CU</item>
+        <item>sk-SK</item>
+        <item>sl-SI</item>
+        <item>so-SO</item>
+        <item>st-ST</item>
+        <item>es-ES</item>
+        <item>es-MX</item>
+        <item>su-SU</item>
+        <item>sw-SW</item>
+        <item>ss-SS</item>
+        <item>sv-SE</item>
+        <item>tl-TL</item>
+        <item>ty-TY</item>
+        <item>tg-TG</item>
+        <item>ta-IN</item>
+        <item>tt-TT</item>
+        <item>te-TE</item>
+        <item>th-TH</item>
+        <item>bo-BO</item>
+        <item>ti-TI</item>
+        <item>to-TO</item>
+        <item>ts-TS</item>
+        <item>tn-TN</item>
+        <item>tr-TR</item>
+        <item>tk-TK</item>
+        <item>tw-TW</item>
+        <item>ug-UG</item>
+        <item>uk-UA</item>
+        <item>ur-UR</item>
+        <item>uz-UZ</item>
+        <item>ve-VE</item>
+        <item>vi-VN</item>
+        <item>vo-VO</item>
+        <item>wa-WA</item>
+        <item>cy-CY</item>
+        <item>wo-WO</item>
+        <item>xh-XH</item>
+        <item>ii-II</item>
+        <item>yi-YI</item>
+        <item>za-ZA</item>
+        <item>zu-ZU</item>
     </string-array>
 
     <!-- Number format options -->

@@ -19,6 +19,8 @@ public class DisplaySettings {
 
     public static final String KEY_LANGUAGE = "language";
 
+    public static final String KEY_LANGUAGE_MOVIES = "com.battlelancer.seriesguide.languagemovies";
+
     public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
 
     public static final String KEY_NUMBERFORMAT = "numberformat";
@@ -90,6 +92,15 @@ public class DisplaySettings {
     public static String getContentLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE, LANGUAGE_EN);
+    }
+
+    /**
+     * @return Two letter ISO 639-1 language code plus an extra ISO-3166-1 region tag used by TMDB
+     * as preferred by the user. Or the default language.
+     */
+    public static String getMoviesLanguage(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_MOVIES, context.getString(R.string.movie_default_language));
     }
 
     /**

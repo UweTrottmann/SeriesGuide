@@ -785,7 +785,7 @@ public class MovieTools {
             newMovies.add(tmdbId);
         }
 
-        String languageCode = DisplaySettings.getContentLanguage(context);
+        String languageCode = DisplaySettings.getMoviesLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();
 
         // loop through ids
@@ -825,10 +825,10 @@ public class MovieTools {
     }
 
     /**
-     * Download movie data from trakt and TMDb using the {@link DisplaySettings#getContentLanguage(Context)}.
+     * Download movie data from trakt and TMDb using the {@link DisplaySettings#getMoviesLanguage(Context)}.
      */
     public MovieDetails getMovieDetails(int movieTmdbId) {
-        String languageCode = DisplaySettings.getContentLanguage(context);
+        String languageCode = DisplaySettings.getMoviesLanguage(context);
         return getMovieDetails(languageCode, movieTmdbId);
     }
 
@@ -880,7 +880,7 @@ public class MovieTools {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = movie.overview;
             movie.overview = context.getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(context, languageCode),
+                    LanguageTools.getMovieLanguageStringFor(context, languageCode),
                     context.getString(R.string.tmdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 movie.overview += "\n\n" + untranslatedOverview;

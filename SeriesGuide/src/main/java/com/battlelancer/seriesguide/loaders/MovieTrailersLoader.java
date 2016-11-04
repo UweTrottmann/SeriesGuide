@@ -33,7 +33,7 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
     public Videos.Video loadInBackground() {
         // try to get a local trailer
         Videos.Video trailer = getTrailer(
-                DisplaySettings.getContentLanguage(getContext()), "get local movie trailer");
+                DisplaySettings.getMoviesLanguage(getContext()), "get local movie trailer");
         if (trailer != null) {
             return trailer;
         }

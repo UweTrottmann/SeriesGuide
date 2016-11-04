@@ -92,7 +92,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private JsonImportTask(Context context) {
         this.context = context.getApplicationContext();
-        languageCodes = this.context.getResources().getStringArray(R.array.languageData);
+        languageCodes = this.context.getResources().getStringArray(R.array.languageCodesShows);
     }
 
     @Override

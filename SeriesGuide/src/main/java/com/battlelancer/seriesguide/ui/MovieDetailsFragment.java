@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +32,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
@@ -43,10 +46,13 @@ import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -63,9 +69,9 @@ import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.trakt5.entities.Ratings;
-import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -97,6 +103,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
+    private int currentLanguageIndex;
     private Handler handler = new Handler();
 
     @Override
@@ -106,12 +113,27 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.textViewMovieGenresLabel.setVisibility(View.GONE);
-        binding.buttonMovieComments.setVisibility(View.GONE);
 
         // important action buttons
         binding.movieButtons.containerMovieButtons.setVisibility(View.GONE);
         binding.movieRatings.containerRatings.setVisibility(View.GONE);
 
+        // language button
+        binding.buttonMovieLanguage.setVisibility(View.GONE);
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), binding.buttonMovieLanguage,
+                R.attr.drawableLanguage);
+        CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language);
+        binding.buttonMovieLanguage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                        currentLanguageIndex);
+                dialog.show(getFragmentManager(), "dialog-language");
+            }
+        });
+
+        // comments button
+        binding.buttonMovieComments.setVisibility(View.GONE);
         Utils.setVectorCompoundDrawable(getActivity().getTheme(), binding.buttonMovieComments,
                 R.attr.drawableComments);
 
@@ -394,6 +416,16 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // show button bar
         binding.movieButtons.containerMovieButtons.setVisibility(View.VISIBLE);
 
+        // language button
+        LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(getContext());
+        if (languageData != null) {
+            currentLanguageIndex = languageData.languageIndex;
+            binding.buttonMovieLanguage.setText(languageData.languageString);
+        } else {
+            binding.buttonMovieLanguage.setText(null);
+        }
+        binding.buttonMovieLanguage.setVisibility(View.VISIBLE);
+
         // ratings
         RatingsMoviesBinding ratings = binding.movieRatings;
         ratings.textViewRatingsTmdbValue.setText(
@@ -530,6 +562,29 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
         loadMovieActionsDelayed();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleLanguageEvent(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        if (!AndroidUtils.isNetworkConnected(getContext())) {
+            Toast.makeText(getContext(), R.string.offline, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String languageCode = getResources().getStringArray(
+                R.array.languageCodesMovies)[event.selectedLanguageIndex];
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .apply();
+
+        binding.progressBar.setVisibility(View.VISIBLE);
+
+        // reload movie details and trailers (but not cast/crew info which is not language dependent)
+        restartMovieLoader();
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.TMDB_ID, tmdbId);
+        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
+                mMovieTrailerLoaderCallbacks);
     }
 
     @Override
