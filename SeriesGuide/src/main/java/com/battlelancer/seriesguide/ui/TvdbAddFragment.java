@@ -245,7 +245,7 @@ public class TvdbAddFragment extends AddFragment {
                 return;
             }
             setSearchResults(data.results);
-            setEmptyMessage(data.emptyTextResId);
+            setEmptyMessage(data.emptyText);
             if (data.successful && data.results.size() == 0 && !TextUtils.isEmpty(language)) {
                 shouldTryAnyLanguage = true;
                 emptyView.setButtonText(R.string.action_try_any_language);

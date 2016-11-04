@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
@@ -94,13 +93,6 @@ public abstract class AddFragment extends Fragment {
     }
 
     protected abstract void setupEmptyView(EmptyView buttonEmptyView);
-
-    /**
-     * Changes the empty message.
-     */
-    public void setEmptyMessage(@StringRes int messageResId) {
-        emptyView.setMessage(messageResId);
-    }
 
     /**
      * Changes the empty message.

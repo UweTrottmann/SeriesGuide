@@ -191,7 +191,6 @@
     <string name="no_results">No results, try complete words.</string>
     <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
-    <string name="search_error">Searching failed, try again later.</string>
     <string name="error_api_generic">Could not talk to %s. Try again later.</string>
     <string name="error_tvdb_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Add all</string>
