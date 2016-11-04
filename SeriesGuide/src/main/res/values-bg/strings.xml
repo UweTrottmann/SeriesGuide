@@ -45,6 +45,7 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
   <string name="database_error">Не може да промени данните.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="action_try_any_language">Опитай всеки език</string>
   <string name="action_try_again">Опитай отново</string>
-  <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Добави всички</string>
   <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
   <string name="add_started">Всеки момент %s ще се появи в списъка със сериали.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Акаунт унищожен.</string>
   <string name="hexagon_remove_account_failure">Не може да се премахне акаунта.</string>
   <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
-  <string name="hexagon_api_error">Не взаимодейства със SeriesGuide облака. Опитайте отново по-късно.</string>
   <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
   <string name="hexagon_permission_missing">За да ползвате облака на SeriesGuide, позволете достъп до профила си.</string>
   <string name="hexagon_google_play_missing">Необходимо е да използвате SeriesGuide Cloud, Google Play Services.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Ще изчакам</string>
   <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
-  <string name="trakt_error_general">Няма връзка с trakt. Опитайте отново по-късно.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

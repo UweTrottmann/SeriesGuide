@@ -45,6 +45,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
   <string name="action_try_any_language">Keresés bármely nyelven</string>
   <string name="action_try_again">Próbáld újra</string>
-  <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Add hozzá mindet</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Fiók törölve.</string>
   <string name="hexagon_remove_account_failure">A fiók eltávolítása sikertelen.</string>
   <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
-  <string name="hexagon_api_error">Nem sikerült a kapcsolat a SeriesGuide felhőszolgáltatással. Próbáld újra később.</string>
   <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
   <string name="hexagon_permission_missing">A SeriesGuide Cloud használatához engedélyezd a fiókodhoz való hozzáférést.</string>
   <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Várok</string>
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
-  <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
   <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
   <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a traktal.</string>
   <!-- Connect trakt -->

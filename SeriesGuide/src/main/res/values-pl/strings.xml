@@ -45,6 +45,7 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
   <string name="database_error">Nie można zmodyfikować danych.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="action_try_any_language">Szukaj w innych językach</string>
   <string name="action_try_again">Spróbuj ponownie</string>
-  <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Dodaj wszystkie</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
   <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
@@ -180,7 +181,7 @@
   <string name="recommended">Zalecane</string>
   <string name="watched_shows">Obejrzane</string>
   <string name="shows_collection">Kolekcja</string>
-  <string name="watchlist">Lista obejrzanych</string>
+  <string name="watchlist">Watchlist</string>
   <!-- Lists -->
   <string name="first_list">Pierwsza lista</string>
   <string name="list_add">Dodaj listę</string>
@@ -195,14 +196,14 @@
   <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcja</string>
-  <string name="movies_watchlist">Lista obejrzanych</string>
-  <string name="watchlist_add">Dodaj do listy oglądanych</string>
-  <string name="watchlist_remove">Usuń z listy oglądanych</string>
-  <string name="watchlist_added">Dodano do listy oglądanych</string>
-  <string name="watchlist_removed">Usunięto z listy oglądanych</string>
+  <string name="movies_watchlist">Watchlist</string>
+  <string name="watchlist_add">Add to watchlist</string>
+  <string name="watchlist_remove">Remove from watchlist</string>
+  <string name="watchlist_added">Added to watchlist</string>
+  <string name="watchlist_removed">Removed from watchlist</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
   <string name="movies_collection_empty">Brak filmów w kolekcji.</string>
-  <string name="movies_watchlist_empty">Brak filmów na liście do obejrzenia.</string>
+  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
   <string name="trailer">Zwiastun</string>
   <string name="movie_cast">Obsada</string>
   <string name="movie_crew">Ekipa filmowa</string>
@@ -218,8 +219,8 @@
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
   <string name="runtime_all_episodes">Czas wyświetlania wszystkich obejrzanych odcinków</string>
-  <string name="movies_on_watchlist">%s na liście oglądanych</string>
-  <string name="runtime_movies_watchlist">Czas wyświetlania obejrzanych filmów</string>
+  <string name="movies_on_watchlist">%s on watchlist</string>
+  <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
     <item quantity="few">%d dni</item>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Konto zostało usunięte.</string>
   <string name="hexagon_remove_account_failure">Usuwanie konta nie powiodło się.</string>
   <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
-  <string name="hexagon_api_error">Brak komunikacji z chmurą SeriesGuide. Spróbuj ponownie później.</string>
   <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
   <string name="hexagon_permission_missing">Umożliwiają dostęp do Twojego konta, aby użyć chmury SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Aby użyć chmury SeriesGuide Cloud wymagane jest Google Play Services.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
-  <string name="trakt_error_general">Nie można połączyć z trakt. Spróbuj ponownie później.</string>
   <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
   <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
   <!-- Connect trakt -->

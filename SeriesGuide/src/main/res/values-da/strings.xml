@@ -45,6 +45,7 @@
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
   <string name="people_empty">Ingen her?! Tryk for at forsøge igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -67,7 +68,7 @@
     <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Absolut nr.</string>
+  <string name="episode_number_absolute">SÆSONFINALE</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Udgivelsesdato</string>
   <string name="episode_firstaired_unknown">Udgivelsesdato ukendt</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Ingen resultater, prøv med hele ord.</string>
   <string name="action_try_any_language">Prøv med ethvert sprog</string>
   <string name="action_try_again">Prøv igen</string>
-  <string name="search_error">Søgning mislykkedes, forsøg igen senere.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Tilføj alle</string>
   <string name="add_multiple">Alle serier vil blive vist på din liste om lidt.</string>
   <string name="add_started">%s vil blive vist på din serieliste om lidt.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Konto fjernet.</string>
   <string name="hexagon_remove_account_failure">Kunne ikke fjerne konto.</string>
   <string name="hexagon_remove_account_confirmation">Fjernes din konto, så slettes alle film og serier fra SeriesGuide Cloud. Sørg venligst for også at fjerne kontoen fra andre tilsluttede enheder.</string>
-  <string name="hexagon_api_error">Kunne ikke kommunikere med SeriesGuide Cloud. Forsøg igen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Tildel adgang til dine konti for at benytte SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Google Play-tjenester kræves for at benytte SeriesGuide Cloud.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="trakt_success">Sendt til trakt.</string>
   <string name="trakt_error_credentials">Noget gik galt. Tjek dine trakt-akkreditiver, og forsøg igen.</string>
-  <string name="trakt_error_general">Kunne ikke kommunikere med trakt. Forsøg igen senere.</string>
   <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Forsøg igen senere.</string>
   <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
   <!-- Connect trakt -->

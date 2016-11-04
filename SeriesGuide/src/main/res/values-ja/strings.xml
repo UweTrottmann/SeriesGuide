@@ -45,6 +45,7 @@
   <string name="app_not_available">これを処理するために利用できるアプリはありません。</string>
   <string name="people_empty">誰もいません?! タップして、もう一度やり直してください。</string>
   <string name="database_error">データを更新できませんでした。</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">共有</string>
   <string name="share_show">番組を共有</string>
@@ -169,7 +170,7 @@
   <string name="no_results">結果はありません。完全な単語で試してください。</string>
   <string name="action_try_any_language">任意の言語を試してください</string>
   <string name="action_try_again">もう一度やり直してください</string>
-  <string name="search_error">検索が失敗しました、後でもう一度やり直してください。</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">すべて追加</string>
   <string name="add_multiple">すぐにすべての番組が番組リストに表示されます。</string>
   <string name="add_started">すぐに %s が番組リストに表示されます。</string>
@@ -241,7 +242,6 @@
   <string name="hexagon_remove_account_success">アカウントを抹消しました。</string>
   <string name="hexagon_remove_account_failure">アカウントを削除できませんでした。</string>
   <string name="hexagon_remove_account_confirmation">アカウントを削除すると、SeriesGuide クラウドからすべての番組や映画が削除されます。他の接続されているデバイスも同様に削除することを確認してください。</string>
-  <string name="hexagon_api_error">SeriesGuide クラウドに通信できませんでした。後でもう一度やり直してください。</string>
   <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
   <string name="hexagon_permission_missing">SeriesGuide クラウドを使用するために、あなたのアカウントへのアクセスを許可してください。</string>
   <string name="hexagon_google_play_missing">SeriesGuide クラウドを使用するために、Google Play サービスが必要です。</string>
@@ -258,7 +258,6 @@
   <string name="traktcheckin_wait">待ちます</string>
   <string name="trakt_success">Trakt に送信しました。</string>
   <string name="trakt_error_credentials">何か問題があります。Trakt 資格情報を確認して、もう一度やり直してください。</string>
-  <string name="trakt_error_general">Trakt に通信できませんでした。後でもう一度やり直してください。</string>
   <string name="trakt_error_not_exists">(まだ) Trakt で利用できません。後でもう一度やり直してください。</string>
   <string name="trakt_notice_not_exists">Trakt で (まだ) トラックすることはできません。</string>
   <!-- Connect trakt -->

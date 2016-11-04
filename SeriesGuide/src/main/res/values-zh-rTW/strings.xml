@@ -45,6 +45,7 @@
   <string name="app_not_available">沒有應用程式可以處理此需求</string>
   <string name="people_empty">什麼東西都沒有？ ！點擊以在試一次。</string>
   <string name="database_error">無法修改資料。</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享節目</string>
@@ -72,7 +73,7 @@
   <string name="episode_firstaired_unknown">播出日期不明</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="original_release">原始版本</string>
-  <string name="show_on_network">在 %s 上</string>
+  <string name="show_on_network">於 %s 播出</string>
   <string name="show_genres">戲劇類別</string>
   <string name="show_contentrating">節目分級</string>
   <string name="show_release_times">發布時間</string>
@@ -169,7 +170,7 @@
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="action_try_any_language">嘗試其他種語言</string>
   <string name="action_try_again">再試一次</string>
-  <string name="search_error">搜尋失敗，請稍後再試。</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">全部加入</string>
   <string name="add_multiple">所有節目將會顯示在你的清單中。</string>
   <string name="add_started">%s將會顯示在你的清單中。</string>
@@ -241,7 +242,6 @@
   <string name="hexagon_remove_account_success">帳戶已刪除。</string>
   <string name="hexagon_remove_account_failure">無法刪除帳戶。</string>
   <string name="hexagon_remove_account_confirmation">移除你的帳戶將會刪除SeriesGuide Cloud上所有節目與電影的紀錄。請確認其他裝置上的資料也一併刪除。</string>
-  <string name="hexagon_api_error">無法連接SeriesGuide Cloud，再試一次。</string>
   <string name="hexagon_api_queued">發送至SeriesGuide Cloud。</string>
   <string name="hexagon_permission_missing">若要使用SeriesGuide Cloud，請允許存取您的帳戶。</string>
   <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
@@ -258,7 +258,6 @@
   <string name="traktcheckin_wait">等待</string>
   <string name="trakt_success">已發送至trakt。</string>
   <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
-  <string name="trakt_error_general">無法與trakt連線，稍後再試。</string>
   <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
   <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>
   <!-- Connect trakt -->

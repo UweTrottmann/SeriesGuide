@@ -45,6 +45,7 @@
   <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
   <string name="database_error">Klarte ikke endre dataene.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Ingen treff, prøv hele ord.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Prøv igjen</string>
-  <string name="search_error">Søk feilet. Prøv på nytt senere.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Legg til alle</string>
   <string name="add_multiple">Alle serier vil vises i serielisten om kort tid.</string>
   <string name="add_started">%s vil vises i serielisten om kort tid.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Konto utslettet.</string>
   <string name="hexagon_remove_account_failure">Klarte ikke fjerne kontoen.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
-  <string name="hexagon_api_error">Klarte ikke koble til SeriesGuide Cloud. Prøv igjen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">For å kunne bruke SeriesGuide Cloud må du gi tilgang til kontoene dine.</string>
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="trakt_success">Sendt til Trakt.</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
-  <string name="trakt_error_general">Klarte ikke koble til trakt. Prøv igjen senere.</string>
   <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>
   <string name="trakt_notice_not_exists">Kan ikke spores med trakt.</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">Ne postoji aplikacija koja moze ovo otvoriti.</string>
   <string name="people_empty">Nobody here?! Touch to try again.</string>
   <string name="database_error">Could not modify data.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Share</string>
   <string name="share_show">Podijeli seriju</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
-  <string name="search_error">Pretraga nije uspjela, pokušaj kasnije.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Dodaj sve</string>
   <string name="add_multiple">Sve serije uskoro će se pojaviti na tvom popisu serija.</string>
   <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Pričekat ću</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
-  <string name="trakt_error_general">Nije se moguće povezati s traktom. Pokušajte ponovno kasnije.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

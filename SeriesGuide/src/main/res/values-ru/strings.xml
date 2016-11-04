@@ -45,6 +45,7 @@
   <string name="app_not_available">Нет приложения для обработки этой команды.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="database_error">Не получается модифицирофавать данные.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
   <string name="action_try_any_language">Попробовать любой язык</string>
   <string name="action_try_again">Повторить попытку</string>
-  <string name="search_error">Найти не удалось, повторите попытку позже.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Добавить все</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
   <string name="add_started">%s скоро появится в вашем списке.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
   <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
-  <string name="hexagon_api_error">Нет доступа к облаку SeriesGuid. Повторите попытку позже.</string>
   <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
   <string name="hexagon_permission_missing">Чтобы использовать облако SeriesGuide, разрешите доступ к вашим аккаунтам.</string>
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
@@ -263,12 +263,11 @@
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
   <string name="traktcheckin_cancel">Отменить</string>
   <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
-  <string name="traktcheckin_wait">Согласен</string>
+  <string name="traktcheckin_wait">Я подожду</string>
   <string name="trakt_success">Отправлено в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
-  <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
-  <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
-  <string name="trakt_notice_not_exists">(Пока) не может быть отслежен с помощью trakt.</string>
+  <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
+  <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Аккаунт trakt</string>
   <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>

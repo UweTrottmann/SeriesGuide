@@ -45,6 +45,7 @@
   <string name="app_not_available">Nav pieejama aplikācija, lai šo izdarītu.</string>
   <string name="people_empty">Neviena te nav?! Pieskaries lai mēģinātu vēlreiz.</string>
   <string name="database_error">Could not modify data.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Dalīties</string>
   <string name="share_show">Kopīgot seriālu</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Mēģināt vēlreiz</string>
-  <string name="search_error">Meklēšana neizdevās, mēģiniet vēlreiz vēlāk.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Pievienot visas</string>
   <string name="add_multiple">Visi seriāli tuvākajā laikā parādīsies jūsu seriālu sarakstā.</string>
   <string name="add_started">%s drīz parādīsies tavā šovu sarakstā.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Account obliterated.</string>
   <string name="hexagon_remove_account_failure">Could not remove account.</string>
   <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
-  <string name="hexagon_api_error">Could not talk to SeriesGuide Cloud. Try again later.</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Es gaidīšu</string>
   <string name="trakt_success">Sent to trakt.</string>
   <string name="trakt_error_credentials">Kaut kas izgāzās. Lūdzu pārbaudi savus datus un mēģini vēlreiz.</string>
-  <string name="trakt_error_general">Saruna ar trakt izgāzās. Mēģini vēlreiz.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>
-  <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Lisää kaikki</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
   <string name="add_started">%s ilmestyy pian ohjelmalistaasi.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Tili poistettu.</string>
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
-  <string name="hexagon_api_error">Ei voitu keskustella SeriesGuide Cloudin kanssa. Yritä myöhemmin uudelleen.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
   <string name="hexagon_permission_missing">Salli pääsy tiliisi käyttääksesi SeriesGuide Cloudia.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="trakt_success">Lähetetty traktiin.</string>
   <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista oikeutesi ja yritä uudelleen.</string>
-  <string name="trakt_error_general">Kommunikointi traktin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_error_not_exists">Ei (vielä) saatavilla traktissa. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_notice_not_exists">Ei voida (vielä) kuitata traktissa.</string>
   <!-- Connect trakt -->

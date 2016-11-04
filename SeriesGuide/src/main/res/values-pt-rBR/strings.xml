@@ -45,6 +45,7 @@
   <string name="app_not_available">Nenhum app disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toque para tentar novamente.</string>
   <string name="database_error">Não pode modificar os dados.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="action_try_any_language">Tentar qualquer idioma</string>
   <string name="action_try_again">Tentar novamente</string>
-  <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Adicionar tudo</string>
   <string name="add_multiple">Todas as séries aparecerão na sua lista em breve.</string>
   <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Conta obliterada.</string>
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
-  <string name="hexagon_api_error">Não conseguiu se comunicar com SeriesGuide Cloud. Tente novamente mais tarde.</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Para usar o SeriesGuide Cloud, permita o acesso às suas contas.</string>
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="trakt_success">Enviado ao trakt.</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
-  <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
   <string name="trakt_error_not_exists">(Ainda) Não disponível no trakt.. Tente novamente mais tarde.</string>
   <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt.</string>
   <!-- Connect trakt -->

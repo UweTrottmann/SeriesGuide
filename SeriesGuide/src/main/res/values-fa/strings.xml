@@ -45,6 +45,7 @@
   <string name="app_not_available">هیچ برنامه ای برای این کار موجود نیست.</string>
   <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">اشتراک گذاری</string>
   <string name="share_show">اشتراک گذاری نمایش</string>
@@ -170,7 +171,7 @@
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
   <string name="action_try_any_language">هر زبانی را امتحان کنید</string>
   <string name="action_try_again">تلاش دوباره</string>
-  <string name="search_error">جست‌وجو شکست خورد، بعداً دوباره تلاش کنید.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">افزودن همه</string>
   <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
   <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">حساب حذف شد.</string>
   <string name="hexagon_remove_account_failure">نمی‌توان حساب را برداشت.</string>
   <string name="hexagon_remove_account_confirmation">برداشتن حسابتان تمام نمایش‌ها و فیلم‌ها را از ابروارهٔ سریزگاید حذف می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز برمی‌دارید.</string>
-  <string name="hexagon_api_error">نمي‌توان با ابروارهٔ سریزگاید صحبت کرد. بعداً دوباره تلاش کنید.</string>
   <string name="hexagon_api_queued">در حال ارسال به ابروارهٔ سریزگاید.</string>
   <string name="hexagon_permission_missing">برای استفاده از ابروارهٔ سریزگاید، اجازهٔ دسترسی به حسابتان را بدهید.</string>
   <string name="hexagon_google_play_missing">برای استفاده از ابروارهٔ سریزگاید، نیاز به خدمات گوگل پلی است.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">منتظر شدن</string>
   <string name="trakt_success">به ترکت فرستاده شد.</string>
   <string name="trakt_error_credentials">چیزی اشتباه شد. اعتبارنامهٔ ترکت را بررسی کرده و دوباره تلاش کنید.</string>
-  <string name="trakt_error_general">نمی‌توان با ترکت صحبت کرد. بعداً دوباره تلاش کنید.</string>
   <string name="trakt_error_not_exists">(هنوز) روی ترکت موجود نیست. بعداً دوباره تلاش کنید.</string>
   <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با ترکت ردیابی کرد.</string>
   <!-- Connect trakt -->

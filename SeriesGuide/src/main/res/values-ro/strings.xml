@@ -45,6 +45,7 @@
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
   <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou. </string>
   <string name="database_error">Datele nu pot fi modificate.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
-  <string name="search_error">Căutarea nu a reuşit, încercaţi din nou mai târziu.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Adaugă-le pe toate</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Contul a fost șters.</string>
   <string name="hexagon_remove_account_failure">Nu se poate șterge contul.</string>
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
-  <string name="hexagon_api_error">Comunicare cu SeriesGuide Cloud eșuată. Încearcă mai târziu.</string>
   <string name="hexagon_api_queued">Se trimite către SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Pentru a folosi SeriesGuide Cloud, apermite accesul la conturile tale.</string>
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Voi aștepta</string>
   <string name="trakt_success">Trimis către trakt.</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
-  <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Încercați mai tarziu.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

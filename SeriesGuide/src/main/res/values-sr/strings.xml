@@ -45,6 +45,7 @@
   <string name="app_not_available">Немате потребну апликацију за ово.</string>
   <string name="people_empty">Нема никога?! Поновите претрагу.</string>
   <string name="database_error">Није могуће променити податке.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Подели</string>
   <string name="share_show">Подели серију</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Нема резултата, покушајте са целим речима.</string>
   <string name="action_try_any_language">Покушајте било који језик</string>
   <string name="action_try_again">Поушајте поново</string>
-  <string name="search_error">Неуспела претрага, покушајте поново касније.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Додај све</string>
   <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
   <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Налог обрисан.</string>
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
-  <string name="hexagon_api_error">Није успостављен контакт са SeriesGuide Cloud. Покушајте поново касније.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Да би користили SeriesGuide Cloud, дозволите приступ вашим налозима.</string>
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Сачекаћу</string>
   <string name="trakt_success">Пошаљу на Trakt.</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
-  <string name="trakt_error_general">Не могу да комуницирам са trakt-ом. Покушајте поново касније.</string>
   <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

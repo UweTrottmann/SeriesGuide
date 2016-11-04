@@ -45,6 +45,7 @@
   <string name="app_not_available">Не постои апликација која може да го отвори ова.</string>
   <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
   <string name="database_error">Не е возможно да ги променити податоците.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели серија</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
   <string name="action_try_any_language">Прoбaј билo кoј јaзик</string>
   <string name="action_try_again">Прoбaј пoвтoрнo</string>
-  <string name="search_error">Пребарувањето не е успешно, пробајте подоцна.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Додај се</string>
   <string name="add_multiple">Сите серии ќе се прикажат во твојата листа од серии за кратко.</string>
   <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Корисничката смета е поништена.</string>
   <string name="hexagon_remove_account_failure">Неможе да ја избрише корисничката сметка.</string>
   <string name="hexagon_remove_account_confirmation">Отстранување на вашиот профил ќе бидат избришани сите емисии и филмови од SeriesGuide Cloud. Бидете сигурни да го отстраните како и од другите поврзани уреди.</string>
-  <string name="hexagon_api_error">Не може да се конектира со SeriesGuide Облак. Обидете се повторно подоцна.</string>
   <string name="hexagon_api_queued">Испраќање во SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">За да користите SeriesGuide Cloud, дозволете пристап до вашата корисничка сметка.</string>
   <string name="hexagon_google_play_missing">За да го користите SeriesGuide Cloud, Google Play Services е потребно.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Ќе почекам</string>
   <string name="trakt_success">Прати на trakt.</string>
   <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
-  <string name="trakt_error_general">Неможе да се конектира со trakt. Пробајте подоцна.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

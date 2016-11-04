@@ -45,6 +45,7 @@
   <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
   <string name="database_error">Nie je možné zmeniť dáta.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>
   <string name="share_show">Zdieľať seriál</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="action_try_any_language">Skúsiť ľubovoľný jazyk</string>
   <string name="action_try_again">Skúsiť znova</string>
-  <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Pridať všetky</string>
   <string name="add_multiple">Všetky seriály sa čoskoro zobrazia vo vašom zozname.</string>
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Účet odstránený.</string>
   <string name="hexagon_remove_account_failure">Účet sa nedá odstrániť.</string>
   <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
-  <string name="hexagon_api_error">Nie je možné komunikovať so SeriesGuide Cloud. Skúste to znova neskôr.</string>
   <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Pre použitie SeriesGuide Cloud, povoľte prístup k účtom.</string>
   <string name="hexagon_google_play_missing">Pre použitie SeriesGuide Cloud sú potrebné Služby Google Play.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Počkať</string>
   <string name="trakt_success">Odoslané do trakt.</string>
   <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
-  <string name="trakt_error_general">Nie je možné komunikovať s trakt. Skúste to znova neskôr.</string>
   <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
   <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
   <!-- Connect trakt -->

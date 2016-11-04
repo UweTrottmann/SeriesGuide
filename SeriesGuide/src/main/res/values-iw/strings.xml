@@ -45,6 +45,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
@@ -172,7 +173,7 @@
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
   <string name="action_try_any_language">נסה בכל שפה</string>
   <string name="action_try_again">נסה שוב</string>
-  <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">הוסף הכל</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
   <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
@@ -253,7 +254,6 @@
   <string name="hexagon_remove_account_success">החשבון נמחק.</string>
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
-  <string name="hexagon_api_error">לא הייתה אפשרות לדבר עם SeriesGuide Cloud. נסה שוב מאוחר יותר.</string>
   <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">כדי להשתמש ב-SeriesGuide בענן, אפשר גישה לחשבונות שלך.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
@@ -270,7 +270,6 @@
   <string name="traktcheckin_wait">אני אחכה</string>
   <string name="trakt_success">נשלח ל-trakt.</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
-  <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">没有可用的应用程序来处理此项。</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>
   <string name="database_error">无法修改数据：数据库操作出错。</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>
@@ -169,7 +170,7 @@
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
   <string name="action_try_again">重试</string>
-  <string name="search_error">搜索出错，请稍后再试。</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">全部添加</string>
   <string name="add_multiple">已选项将很快出现在节目单中。</string>
   <string name="add_started">%s 将很快出现在节目单中。</string>
@@ -241,7 +242,6 @@
   <string name="hexagon_remove_account_success">用户数据已删除。</string>
   <string name="hexagon_remove_account_failure">无法删除帐户。</string>
   <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
-  <string name="hexagon_api_error">无法与 SeriesGuide Cloud 建立连接。</string>
   <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
   <string name="hexagon_permission_missing">若要使用 SeriesGuide 云，请允许访问您的帐户。</string>
   <string name="hexagon_google_play_missing">若要使用 SeriesGuide 云，需要谷歌Play服务。</string>
@@ -258,7 +258,6 @@
   <string name="traktcheckin_wait">等待</string>
   <string name="trakt_success">已同步至 trakt</string>
   <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
-  <string name="trakt_error_general">无法与 trakt 关联</string>
   <string name="trakt_error_not_exists">trakt 上尚无相关信息，请稍后重试。</string>
   <string name="trakt_notice_not_exists">无法在 trakt 上追剧。</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">No hi ha cap aplicació per gestionar-ho.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
@@ -170,7 +171,7 @@
   <string name="no_results">Cap resultat, proveu paraules completes.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
-  <string name="search_error">La cerca ha fallat, intenteu-ho més tard.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Afegeix-ho tot</string>
   <string name="add_multiple">Totes les sèries apareixeran de seguida a la vostra llista de sèries.</string>
   <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
@@ -245,7 +246,6 @@
   <string name="hexagon_remove_account_success">Compte esborrat.</string>
   <string name="hexagon_remove_account_failure">No s\'ha pogut esborrar el compte.</string>
   <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
-  <string name="hexagon_api_error">No s\'ha pogut connectar amb SeriesGuide Cloud. Prova-ho més tard.</string>
   <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
@@ -262,7 +262,6 @@
   <string name="traktcheckin_wait">Esperaré</string>
   <string name="trakt_success">Enviat a trakt.</string>
   <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
-  <string name="trakt_error_general">No funciona la comunicació amb trakt. Intenteu-ho més tard.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">Nėra tinkamų programėlių.</string>
   <string name="people_empty">Nieko nėra?! Bandykite dar kartą.</string>
   <string name="database_error">Nepavyko modifikuoti duomenų.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Dalintis</string>
   <string name="share_show">Dalintis serialu</string>
@@ -171,7 +172,7 @@
   <string name="no_results">Rezultatų nėra, pabandykite įvesti pilnus žodžius.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Bandykite dar kartą</string>
-  <string name="search_error">Paieška nepavyko, bandykite dar kartą vėliau.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Pridėti visus</string>
   <string name="add_multiple">Visi serialai netrukus atsiras jūsų serialų sąraše.</string>
   <string name="add_started">%s netrukus atsiras jūsų serialų sąraše.</string>
@@ -249,7 +250,6 @@
   <string name="hexagon_remove_account_success">Paskyra panaikinta.</string>
   <string name="hexagon_remove_account_failure">Nepavyko pašalinti paskyros.</string>
   <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
-  <string name="hexagon_api_error">Nepavyksta susisiekti su SeriesGuide Cloud. Pabandykite vėliau.</string>
   <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Norint naudotis SeriesGuide Cloud, leiskite prieeiga prie savo paskyrų.</string>
   <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
@@ -266,7 +266,6 @@
   <string name="traktcheckin_wait">Palauksiu</string>
   <string name="trakt_success">Nusiųsta į trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-  <string name="trakt_error_general">Nepavyko susisiekti su trakt. Badykite vėliau.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->

@@ -45,6 +45,7 @@
   <string name="app_not_available">ไม่มีแอปที่สามารถจัดการกับสิ่งนี้</string>
   <string name="people_empty">ไม่มีใครอยู่ที่นี่เลยหรือ? แตะเพื่อลองอีกครั้ง</string>
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>
   <string name="share_show">แบ่งปันซีรีส์</string>
@@ -169,7 +170,7 @@
   <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
   <string name="action_try_any_language">ลองภาษาใดก็ได้</string>
   <string name="action_try_again">ลองอีกครั้ง</string>
-  <string name="search_error">การค้นหาล้มเหลว ลองอีกครั้งในภายหลัง</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">เพิ่มทั้งหมด</string>
   <string name="add_multiple">ซีรีส์ทั้งหมดจะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
   <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
@@ -241,7 +242,6 @@
   <string name="hexagon_remove_account_success">ลบบัญชีแล้ว</string>
   <string name="hexagon_remove_account_failure">ไม่สามารถลบบัญชี</string>
   <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
-  <string name="hexagon_api_error">ไม่สามารถติดต่อกับ SeriesGuide Cloud ลองอีกครั้งในภายหลัง</string>
   <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
   <string name="hexagon_permission_missing">ในการใช้ SeriesGuide Cloud, อนุญาตให้เราเข้าถึงบัญชีของคุณ</string>
   <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
@@ -258,7 +258,6 @@
   <string name="traktcheckin_wait">ฉันจะรอ</string>
   <string name="trakt_success">ส่งไปยัง trakt</string>
   <string name="trakt_error_credentials">มีบางอย่างผิดพลาด ตรวจสอบข้อมูล trakt ของคุณและลองอีกครั้ง</string>
-  <string name="trakt_error_general">ไม่สามารถติดต่อกับ trakt ได้ ลองอีกครั้งในภายหลัง</string>
   <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
   <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
   <!-- Connect trakt -->
