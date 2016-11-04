@@ -22,6 +22,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
 
 /**
@@ -76,7 +77,13 @@ public class SgApp extends Application {
         }
 
         // initialize EventBus
-        EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+        try {
+            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+        } catch (EventBusException e) {
+            // looks like instance sometimes still lingers around,
+            // so far happening from services, though no exact cause found, yet
+            Timber.e(e, "EventBus already installed.");
+        }
 
         // initialize joda-time-android
         JodaTimeAndroid.init(this);
