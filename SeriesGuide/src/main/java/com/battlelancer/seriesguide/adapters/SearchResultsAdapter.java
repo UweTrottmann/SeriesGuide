@@ -70,7 +70,8 @@ public class SearchResultsAdapter extends CursorAdapter {
                                 R.attr.drawableWatch));
 
         // ensure matched term is bold
-        viewHolder.searchSnippet.setText(Html.fromHtml(mCursor.getString(SearchQuery.OVERVIEW)));
+        String snippet = mCursor.getString(SearchQuery.OVERVIEW);
+        viewHolder.searchSnippet.setText(snippet != null ? Html.fromHtml(snippet) : null);
 
         // episode
         int number = mCursor.getInt(SearchQuery.NUMBER);
