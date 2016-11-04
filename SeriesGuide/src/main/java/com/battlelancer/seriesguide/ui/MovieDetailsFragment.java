@@ -583,7 +583,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         restartMovieLoader();
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
-        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
+        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
                 mMovieTrailerLoaderCallbacks);
     }
 
