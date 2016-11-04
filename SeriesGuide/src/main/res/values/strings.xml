@@ -50,6 +50,7 @@
     <string name="app_not_available">No app available to handle this.</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data.</string>
+    <string name="api_error_generic">Could not talk to %s. Try again later.</string>
 
     <!-- Sharing -->
     <string name="share">Share</string>
@@ -191,8 +192,7 @@
     <string name="no_results">No results, try complete words.</string>
     <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
-    <string name="error_api_generic">Could not talk to %s. Try again later.</string>
-    <string name="error_tvdb_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Add all</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>
     <string name="add_started">%s will appear in your show list shortly.</string>

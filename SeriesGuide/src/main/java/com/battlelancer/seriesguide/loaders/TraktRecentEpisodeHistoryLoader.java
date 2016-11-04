@@ -164,7 +164,7 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     private Result buildResultFailure() {
-        return new Result(null, getContext().getString(R.string.error_api_generic,
+        return new Result(null, getContext().getString(R.string.api_error_generic,
                 getContext().getString(R.string.trakt)));
     }
 

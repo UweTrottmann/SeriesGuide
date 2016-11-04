@@ -138,7 +138,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
                 errorText = getString(R.string.offline);
                 break;
             case TraktResult.API_ERROR:
-                errorText = getString(R.string.error_api_generic, getString(R.string.trakt));
+                errorText = getString(R.string.api_error_generic, getString(R.string.trakt));
                 break;
             case TraktResult.AUTH_ERROR:
             case TraktResult.ERROR:

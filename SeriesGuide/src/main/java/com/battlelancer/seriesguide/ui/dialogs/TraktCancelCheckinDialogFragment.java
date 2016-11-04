@@ -98,7 +98,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                             SgTrakt.trackFailedRequest(context, "delete check-in", e);
                         }
 
-                        return context.getString(R.string.error_api_generic,
+                        return context.getString(R.string.api_error_generic,
                                 context.getString(R.string.trakt));
                     }
 

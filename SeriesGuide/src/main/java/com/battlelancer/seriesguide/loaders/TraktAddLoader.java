@@ -133,7 +133,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     private Result buildResultGenericFailure() {
         return new Result(new LinkedList<SearchResult>(),
-                getContext().getString(R.string.error_api_generic,
+                getContext().getString(R.string.api_error_generic,
                         getContext().getString(R.string.trakt)));
     }
 

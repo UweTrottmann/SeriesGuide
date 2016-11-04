@@ -220,7 +220,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 break;
             case ADD_TRAKT_API_ERROR:
                 event = new OnShowAddedEvent(
-                        app.getString(R.string.error_api_generic, app.getString(R.string.trakt)));
+                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
                 break;
             case ADD_TRAKT_AUTH_ERROR:
                 event = new OnShowAddedEvent(app.getString(R.string.trakt_error_credentials));

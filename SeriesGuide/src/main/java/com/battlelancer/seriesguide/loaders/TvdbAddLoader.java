@@ -164,7 +164,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         // only check for network here to allow hitting the response cache
         String emptyText;
         if (AndroidUtils.isNetworkConnected(getContext())) {
-            emptyText = getContext().getString(R.string.error_api_generic,
+            emptyText = getContext().getString(R.string.api_error_generic,
                     getContext().getString(serviceResId));
         } else {
             emptyText = getContext().getString(R.string.offline);

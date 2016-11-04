@@ -377,7 +377,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private TraktResponse buildErrorResponse() {
         return new TraktResponse(false,
-                mContext.getString(R.string.error_api_generic, mContext.getString(R.string.trakt)));
+                mContext.getString(R.string.api_error_generic, mContext.getString(R.string.trakt)));
     }
 
     @Override

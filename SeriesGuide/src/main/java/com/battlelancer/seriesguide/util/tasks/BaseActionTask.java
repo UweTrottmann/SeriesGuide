@@ -70,14 +70,14 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
                 error = context.getString(R.string.trakt_error_credentials);
                 break;
             case ERROR_TRAKT_API:
-                error = context.getString(R.string.error_api_generic,
+                error = context.getString(R.string.api_error_generic,
                         context.getString(R.string.trakt));
                 break;
             case ERROR_TRAKT_API_NOT_FOUND:
                 error = context.getString(R.string.trakt_error_not_exists);
                 break;
             case ERROR_HEXAGON_API:
-                error = context.getString(R.string.error_api_generic,
+                error = context.getString(R.string.api_error_generic,
                         context.getString(R.string.hexagon));
                 break;
         }

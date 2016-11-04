@@ -234,9 +234,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
             } else if (result.doesNotExist) {
-                overview.setText(R.string.error_tvdb_does_not_exist);
+                overview.setText(R.string.tvdb_error_does_not_exist);
             } else {
-                overview.setText(getString(R.string.error_api_generic,
+                overview.setText(getString(R.string.api_error_generic,
                         String.format("%s/%s", getString(R.string.tvdb),
                                 getString(R.string.trakt))));
             }

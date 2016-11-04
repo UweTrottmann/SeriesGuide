@@ -623,7 +623,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 // if there is no local data and loading from network failed
                 String emptyText;
                 if (AndroidUtils.isNetworkConnected(getContext())) {
-                    emptyText = getString(R.string.error_api_generic, getString(R.string.tmdb));
+                    emptyText = getString(R.string.api_error_generic, getString(R.string.tmdb));
                 } else {
                     emptyText = getString(R.string.offline);
                 }

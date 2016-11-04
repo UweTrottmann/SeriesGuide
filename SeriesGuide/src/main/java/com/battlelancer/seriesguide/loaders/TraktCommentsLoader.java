@@ -160,7 +160,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
     private Result buildResultFailureWithOfflineCheck() {
         String emptyText;
         if (AndroidUtils.isNetworkConnected(getContext())) {
-            emptyText = getContext().getString(R.string.error_api_generic,
+            emptyText = getContext().getString(R.string.api_error_generic,
                     getContext().getString(R.string.trakt));
         } else {
             emptyText = getContext().getString(R.string.offline);
