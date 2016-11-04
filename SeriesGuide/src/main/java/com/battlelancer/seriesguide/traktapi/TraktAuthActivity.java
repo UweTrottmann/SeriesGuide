@@ -132,21 +132,21 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         }
 
         // handle errors
-        int errorResId;
+        String errorText;
         switch (resultCode) {
             case TraktResult.OFFLINE:
-                errorResId = R.string.offline;
+                errorText = getString(R.string.offline);
                 break;
             case TraktResult.API_ERROR:
-                errorResId = R.string.trakt_error_general;
+                errorText = getString(R.string.error_api_generic, getString(R.string.trakt));
                 break;
             case TraktResult.AUTH_ERROR:
             case TraktResult.ERROR:
             default:
-                errorResId = R.string.trakt_error_credentials;
+                errorText = getString(R.string.trakt_error_credentials);
                 break;
         }
-        setMessage(getString(errorResId));
+        setMessage(errorText);
         activateFallbackButtons();
     }
 }

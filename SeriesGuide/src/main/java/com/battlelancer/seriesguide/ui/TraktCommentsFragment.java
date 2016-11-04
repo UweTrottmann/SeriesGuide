@@ -258,7 +258,7 @@ public class TraktCommentsFragment extends Fragment {
                 return;
             }
             adapter.setData(data.results);
-            setEmptyMessage(data.emptyTextResId);
+            setEmptyMessage(data.emptyText);
             showProgressBar(false);
         }
 
@@ -272,7 +272,7 @@ public class TraktCommentsFragment extends Fragment {
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             // keep existing data, but update empty view anyhow
             showProgressBar(false);
-            setEmptyMessage(R.string.offline);
+            setEmptyMessage(getString(R.string.offline));
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -288,7 +288,7 @@ public class TraktCommentsFragment extends Fragment {
     /**
      * Changes the empty message.
      */
-    private void setEmptyMessage(int stringResourceId) {
+    private void setEmptyMessage(String stringResourceId) {
         emptyView.setText(stringResourceId);
     }
 

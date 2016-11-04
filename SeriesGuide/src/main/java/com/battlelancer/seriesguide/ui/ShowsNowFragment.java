@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.StringRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -86,7 +86,7 @@ public class ShowsNowFragment extends Fragment {
 
         emptyView.setText(R.string.now_empty);
 
-        showError(false, 0);
+        showError(null);
         snackbarButton.setText(R.string.refresh);
         snackbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,7 +247,7 @@ public class ShowsNowFragment extends Fragment {
 
     private void refreshStream() {
         showProgressBar(true);
-        showError(false, 0);
+        showError(null);
 
         // reload released today, if enabled
         if (NowSettings.isDisplayingReleasedToday(getActivity())) {
@@ -274,7 +274,7 @@ public class ShowsNowFragment extends Fragment {
             // destroy trakt loaders and remove any shown error message
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_USER_LOADER_ID);
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
-            showError(false, 0);
+            showError(null);
 
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyLocalCallbacks);
@@ -302,9 +302,10 @@ public class ShowsNowFragment extends Fragment {
         );
     }
 
-    private void showError(boolean show, @StringRes int titleResId) {
-        if (titleResId != 0) {
-            snackbarText.setText(titleResId);
+    private void showError(@Nullable String errorText) {
+        boolean show = errorText != null;
+        if (show) {
+            snackbarText.setText(errorText);
         }
         if (snackbar.getVisibility() == (show ? View.VISIBLE : View.GONE)) {
             // already in desired state, avoid replaying animation
@@ -463,7 +464,7 @@ public class ShowsNowFragment extends Fragment {
             adapter.setRecentlyWatched(data.items);
             isLoadingRecentlyWatched = false;
             showProgressBar(false);
-            showError(data.errorTextResId != 0, data.errorTextResId);
+            showError(data.errorText);
         }
 
         @Override

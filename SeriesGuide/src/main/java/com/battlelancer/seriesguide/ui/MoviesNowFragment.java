@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -74,7 +73,7 @@ public class MoviesNowFragment extends Fragment {
 
         emptyView.setText(R.string.now_movies_empty);
 
-        showError(false, 0);
+        showError(null);
         snackbarButton.setText(R.string.refresh);
         snackbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +185,7 @@ public class MoviesNowFragment extends Fragment {
 
     private void refreshStream() {
         showProgressBar(true);
-        showError(false, 0);
+        showError(null);
 
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
@@ -201,7 +200,7 @@ public class MoviesNowFragment extends Fragment {
             // destroy trakt loaders and remove any shown error message
             destroyLoaderIfExists(MoviesActivity.NOW_TRAKT_USER_LOADER_ID);
             destroyLoaderIfExists(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
-            showError(false, 0);
+            showError(null);
         }
     }
 
@@ -211,9 +210,10 @@ public class MoviesNowFragment extends Fragment {
         }
     }
 
-    private void showError(boolean show, @StringRes int titleResId) {
-        if (titleResId != 0) {
-            snackbarText.setText(titleResId);
+    private void showError(@Nullable String errorText) {
+        boolean show = errorText != null;
+        if (show) {
+            snackbarText.setText(errorText);
         }
         if (snackbar.getVisibility() == (show ? View.VISIBLE : View.GONE)) {
             // already in desired state, avoid replaying animation
@@ -290,7 +290,7 @@ public class MoviesNowFragment extends Fragment {
             adapter.setRecentlyWatched(data.items);
             isLoadingRecentlyWatched = false;
             showProgressBar(false);
-            showError(data.errorTextResId != 0, data.errorTextResId);
+            showError(data.errorText);
         }
 
         @Override

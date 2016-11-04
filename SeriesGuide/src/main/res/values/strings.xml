@@ -301,7 +301,6 @@
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="trakt_success">Sent to trakt.</string>
     <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-    <string name="trakt_error_general">Could not talk to trakt. Try again later.</string>
     <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
 

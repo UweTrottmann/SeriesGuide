@@ -30,9 +30,9 @@ import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
 import dagger.Lazy;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 
 public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
@@ -311,7 +311,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
 
         // return generic failure message
-        return new TraktResponse(false, mContext.getString(R.string.trakt_error_general));
+        return buildErrorResponse();
     }
 
     private TraktResponse doCommentAction() {
@@ -343,7 +343,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
 
         // return generic failure message
-        return new TraktResponse(false, mContext.getString(R.string.trakt_error_general));
+        return buildErrorResponse();
     }
 
     private Comment buildComment() {
@@ -373,6 +373,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         comment.movie = new Movie();
         comment.movie.ids = MovieIds.tmdb(movieTmdbId);
         return comment;
+    }
+
+    private TraktResponse buildErrorResponse() {
+        return new TraktResponse(false,
+                mContext.getString(R.string.error_api_generic, mContext.getString(R.string.trakt)));
     }
 
     @Override

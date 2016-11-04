@@ -26,11 +26,11 @@ public class TraktEpisodeHistoryLoader
 
     public static class Result {
         public List<HistoryEntry> results;
-        public int emptyTextResId;
+        public String emptyText;
 
-        public Result(List<HistoryEntry> results, int emptyTextResId) {
+        public Result(List<HistoryEntry> results, String emptyText) {
             this.results = results;
-            this.emptyTextResId = emptyTextResId;
+            this.emptyText = emptyText;
         }
     }
 
@@ -60,15 +60,14 @@ public class TraktEpisodeHistoryLoader
             }
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(getContext(), getAction(), e);
-            return buildResultFailure(
-                    AndroidUtils.isNetworkConnected(getContext()) ? R.string.trakt_error_general
-                            : R.string.offline);
+            return AndroidUtils.isNetworkConnected(getContext())
+                    ? buildResultFailure() : buildResultFailure(R.string.offline);
         }
 
         if (history == null) {
-            return buildResultFailure(R.string.trakt_error_general);
+            return buildResultFailure();
         } else {
-            return new Result(history, getEmptyText());
+            return new Result(history, getContext().getString(getEmptyText()));
         }
     }
 
@@ -86,7 +85,12 @@ public class TraktEpisodeHistoryLoader
         return TraktRecentEpisodeHistoryLoader.buildUserEpisodeHistoryCall(traktUsers.get());
     }
 
-    private static Result buildResultFailure(int emptyTextResId) {
-        return new Result(null, emptyTextResId);
+    private Result buildResultFailure() {
+        return new Result(null, getContext().getString(R.string.error_api_generic,
+                getContext().getString(R.string.trakt)));
+    }
+
+    private Result buildResultFailure(@StringRes int emptyTextResId) {
+        return new Result(null, getContext().getString(emptyTextResId));
     }
 }
