@@ -9,6 +9,13 @@ Version 34
 ----------
 *(in development)*
 
+#### 34-beta2
+*(2016-11-04)*
+
+* TWEAK Add separate language selector for movies, supports all languages from TMDB.
+* TWEAK Show better error messages if loading shows and movies fails.
+* TWEAK Show better error message in add dialog if show does not exist on TheTVDB.
+
 #### 34-beta1
 *(2016-10-28)*
 
