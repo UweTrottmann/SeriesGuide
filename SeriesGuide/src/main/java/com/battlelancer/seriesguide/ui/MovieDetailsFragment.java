@@ -105,6 +105,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false);
 
         binding.progressBar.setVisibility(View.VISIBLE);
+        binding.textViewMovieGenresLabel.setVisibility(View.GONE);
+        binding.buttonMovieComments.setVisibility(View.GONE);
 
         // important action buttons
         binding.movieButtons.containerMovieButtons.setVisibility(View.GONE);
@@ -427,6 +429,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ratingsContainer.setVisibility(View.VISIBLE);
 
         // genres
+        binding.textViewMovieGenresLabel.setVisibility(View.VISIBLE);
         Utils.setValueOrPlaceholder(binding.textViewMovieGenres,
                 TmdbTools.buildGenresString(tmdbMovie.genres));
 
@@ -441,6 +444,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
+        binding.buttonMovieComments.setVisibility(View.VISIBLE);
 
         // load poster, cache on external storage
         FrameLayout moviePosterFrame = binding.frameLayoutMoviePoster;
@@ -617,7 +621,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 getActivity().invalidateOptionsMenu();
             } else {
                 // if there is no local data and loading from network failed
-                binding.textViewMovieDescription.setText(R.string.offline);
+                String emptyText;
+                if (AndroidUtils.isNetworkConnected(getContext())) {
+                    emptyText = getString(R.string.error_api_generic, getString(R.string.tmdb));
+                } else {
+                    emptyText = getString(R.string.offline);
+                }
+                binding.textViewMovieDescription.setText(emptyText);
             }
         }
 
