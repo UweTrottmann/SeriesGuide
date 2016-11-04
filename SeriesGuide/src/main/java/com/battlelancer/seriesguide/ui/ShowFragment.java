@@ -353,7 +353,7 @@ public class ShowFragment extends Fragment {
         if (TextUtils.isEmpty(overview) && showCursor != null) {
             // no description available, show no translation available message
             mTextViewOverview.setText(getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(getContext(),
+                    LanguageTools.getShowLanguageStringFor(getContext(),
                             showCursor.getString(ShowQuery.LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {
@@ -361,7 +361,7 @@ public class ShowFragment extends Fragment {
         }
 
         // language preferred for content
-        LanguageTools.LanguageData languageData = LanguageTools.getLanguageDataForCode(
+        LanguageTools.LanguageData languageData = LanguageTools.getShowLanguageDataFor(
                 getContext(), showCursor.getString(ShowQuery.LANGUAGE));
         if (languageData != null) {
             selectedLanguageIndex = languageData.languageIndex;
@@ -536,7 +536,7 @@ public class ShowFragment extends Fragment {
     private void changeShowLanguage(int languageCodeIndex) {
         selectedLanguageIndex = languageCodeIndex;
         String languageCode = getResources().getStringArray(
-                R.array.languageData)[languageCodeIndex];
+                R.array.languageCodesShows)[languageCodeIndex];
 
         Timber.d("Changing show language to %s", languageCode);
         ShowTools.get(getContext()).storeLanguage(getShowTvdbId(), languageCode);

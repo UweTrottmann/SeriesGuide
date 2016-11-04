@@ -44,7 +44,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     @Override
     public Result loadInBackground() {
-        String languageCode = DisplaySettings.getContentLanguage(getContext());
+        String languageCode = DisplaySettings.getMoviesLanguage(getContext());
 
         List<Movie> results = null;
         String action = null;

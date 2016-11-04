@@ -12,8 +12,8 @@
 
     <ListPreference
         android:defaultValue="en"
-        android:entries="@array/languages"
-        android:entryValues="@array/languageData"
+        android:entries="@array/languagesShows"
+        android:entryValues="@array/languageCodesShows"
         android:key="language"
         android:title="@string/pref_language" />
 

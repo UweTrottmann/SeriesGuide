@@ -101,7 +101,7 @@ public class FirstRunView extends CardView {
 
         // language chooser
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.languages, R.layout.item_spinner_title);
+                R.array.languagesShows, R.layout.item_spinner_title);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(adapter);
         languageSpinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
@@ -118,7 +118,7 @@ public class FirstRunView extends CardView {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getContext());
-            final String value = getResources().getStringArray(R.array.languageData)[pos];
+            final String value = getResources().getStringArray(R.array.languageCodesShows)[pos];
             prefs.edit().putString(DisplaySettings.KEY_LANGUAGE, value).apply();
         }
 
