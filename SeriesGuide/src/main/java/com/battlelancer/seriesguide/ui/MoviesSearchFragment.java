@@ -284,7 +284,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (!isAdded()) {
                 return;
             }
-            emptyView.setMessage(data.emptyTextResId);
+            emptyView.setMessage(data.emptyText);
             resultsAdapter.setData(data.results);
             setProgressVisible(false, true);
         }
