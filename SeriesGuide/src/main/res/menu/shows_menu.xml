@@ -46,7 +46,7 @@
 
     <item
         android:id="@+id/menu_action_shows_sort"
-        android:icon="@drawable/ic_action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:orderInCategory="3"
         android:title="@string/action_shows_sort"
         app:showAsAction="never">

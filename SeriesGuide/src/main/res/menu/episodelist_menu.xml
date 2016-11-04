@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_epsorting"
-        android:icon="@drawable/ic_action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/sort"
         app:showAsAction="never" />
 

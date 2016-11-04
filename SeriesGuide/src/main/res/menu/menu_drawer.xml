@@ -7,19 +7,19 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_item_shows"
-            android:icon="@drawable/ic_action_tv"
+            android:icon="@drawable/ic_tv_white_24dp"
             android:title="@string/shows" />
         <item
             android:id="@+id/navigation_item_lists"
-            android:icon="@drawable/ic_action_list"
+            android:icon="@drawable/ic_list_white_24dp"
             android:title="@string/lists" />
         <item
             android:id="@+id/navigation_item_movies"
-            android:icon="@drawable/ic_action_movie"
+            android:icon="@drawable/ic_movie_white_24dp"
             android:title="@string/movies" />
         <item
             android:id="@+id/navigation_item_stats"
-            android:icon="@drawable/ic_action_bargraph"
+            android:icon="@drawable/ic_stats_white_24dp"
             android:title="@string/statistics" />
     </group>
 
@@ -28,11 +28,11 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/navigation_sub_item_settings"
-            android:icon="@drawable/ic_action_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/preferences" />
         <item
             android:id="@+id/navigation_sub_item_help"
-            android:icon="@drawable/ic_action_help"
+            android:icon="@drawable/ic_help_white_24dp"
             android:title="@string/help_and_feedback" />
         <item
             android:id="@+id/navigation_sub_item_unlock"
