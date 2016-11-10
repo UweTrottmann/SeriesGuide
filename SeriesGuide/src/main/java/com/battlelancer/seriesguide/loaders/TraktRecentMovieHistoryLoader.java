@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
@@ -67,7 +67,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
     public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Users traktUsers) {
         return traktUsers
-                .history(Username.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.DEFAULT_MIN,
+                .history(UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.DEFAULT_MIN,
                         null, null);
     }
 }

@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
@@ -159,7 +159,7 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
-        return traktUsers.history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+        return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
                 Extended.DEFAULT_MIN, null, null);
     }
 

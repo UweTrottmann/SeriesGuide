@@ -156,7 +156,7 @@ dependencies {
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann.tmdb2:tmdb-java:1.2.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.3.0') {
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.4.0') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
         exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
