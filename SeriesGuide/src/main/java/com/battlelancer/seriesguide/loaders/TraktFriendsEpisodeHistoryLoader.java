@@ -46,7 +46,7 @@ public class TraktFriendsEpisodeHistoryLoader
 
         // get all trakt friends
         List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
-                traktUsers.get().friends(Username.ME, Extended.IMAGES), "get friends");
+                traktUsers.get().friends(Username.ME, Extended.FULL), "get friends");
         if (friends == null) {
             return null;
         }

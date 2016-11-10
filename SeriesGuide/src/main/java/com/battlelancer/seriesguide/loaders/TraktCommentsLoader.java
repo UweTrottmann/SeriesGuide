@@ -66,7 +66,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 }
                 try {
                     Response<List<Comment>> response = traktMovies.get()
-                            .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                            .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.FULL)
                             .execute();
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
@@ -111,7 +111,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 try {
                     Response<List<Comment>> response = traktEpisodes.get()
                             .comments(String.valueOf(showTraktId), season, episode,
-                                    1, PAGE_SIZE, Extended.IMAGES)
+                                    1, PAGE_SIZE, Extended.FULL)
                             .execute();
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
@@ -136,7 +136,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         }
         try {
             Response<List<Comment>> response = traktShows.get()
-                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.FULL)
                     .execute();
             if (response.isSuccessful()) {
                 return buildResultSuccess(response.body());

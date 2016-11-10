@@ -70,7 +70,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         if (TextUtils.isEmpty(query)) {
             // no query? load a list of trending shows from trakt
             List<TrendingShow> trendingShows = SgTrakt.executeCall(app,
-                    traktShows.get().trending(1, 35, Extended.FULLIMAGES),
+                    traktShows.get().trending(1, 35, Extended.FULL),
                     "get trending shows"
             );
             if (trendingShows != null) {
