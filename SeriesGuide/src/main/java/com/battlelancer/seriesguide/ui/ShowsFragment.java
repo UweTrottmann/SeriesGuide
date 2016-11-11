@@ -107,7 +107,7 @@ public class ShowsFragment extends Fragment implements
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
-                        .commit();
+                        .apply();
 
                 // refresh filter menu check box states
                 getActivity().supportInvalidateOptionsMenu();
@@ -252,7 +252,23 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter_hidden)
                 .setChecked(mIsFilterHidden);
 
-        // set sort check box state
+        // set current sort order and check box states
+        MenuItem sortTitleItem = menu.findItem(R.id.menu_action_shows_sort_title);
+        MenuItem sortLatestItem = menu.findItem(R.id.menu_action_shows_sort_latest_episode);
+        MenuItem sortOldestItem = menu.findItem(R.id.menu_action_shows_sort_oldest_episode);
+        MenuItem lastWatchedItem = menu.findItem(R.id.menu_action_shows_sort_last_watched);
+        sortTitleItem.setTitle(R.string.action_shows_sort_title);
+        sortLatestItem.setTitle(R.string.action_shows_sort_latest_episode);
+        sortOldestItem.setTitle(R.string.action_shows_sort_oldest_episode);
+        if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
+            sortTitleItem.setTitle(getString(R.string.action_shows_sort_title) + " •");
+        } else if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID) {
+            sortLatestItem.setTitle(getString(R.string.action_shows_sort_latest_episode) + " •");
+        } else if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID) {
+            sortOldestItem.setTitle(getString(R.string.action_shows_sort_oldest_episode) + " •");
+        } else if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID) {
+            lastWatchedItem.setTitle(getString(R.string.action_shows_sort_last_watched) + " •");
+        }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(mIsSortFavoritesFirst);
         menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
@@ -307,7 +323,7 @@ public class ShowsFragment extends Fragment implements
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
-                    .commit();
+                    .apply();
             // refresh filter icon state
             getActivity().supportInvalidateOptionsMenu();
 
@@ -336,24 +352,24 @@ public class ShowsFragment extends Fragment implements
             upcomingRangeDialog.show(getFragmentManager(), "upcomingRangeDialog");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
-            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_REVERSE_ID;
-            } else {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
-            }
+            mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
             changeSort();
-
             Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
-        } else if (itemId == R.id.menu_action_shows_sort_episode) {
-            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
-            } else {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID;
-            }
+        } else if (itemId == R.id.menu_action_shows_sort_latest_episode) {
+            mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID;
             changeSort();
-
-            Utils.trackAction(getActivity(), TAG, "Sort Episode");
+            Utils.trackAction(getActivity(), TAG, "Sort Episode (latest)");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_oldest_episode) {
+            mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID;
+            changeSort();
+            Utils.trackAction(getActivity(), TAG, "Sort Episode (oldest)");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_last_watched) {
+            mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID;
+            changeSort();
+            Utils.trackAction(getActivity(), TAG, "Sort Last watched");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
@@ -382,7 +398,7 @@ public class ShowsFragment extends Fragment implements
 
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putBoolean(key, state).commit();
+                .putBoolean(key, state).apply();
 
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
@@ -394,7 +410,10 @@ public class ShowsFragment extends Fragment implements
 
         // save new sort order to preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).commit();
+                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).apply();
+
+        // refresh menu state to indicate current order
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

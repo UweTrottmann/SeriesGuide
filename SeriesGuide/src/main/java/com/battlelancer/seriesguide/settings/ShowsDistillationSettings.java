@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
- * Provides settings used to filter and sort displayed shows in
- * {@link com.battlelancer.seriesguide.ui.ShowsFragment}.
+ * Provides settings used to filter and sort displayed shows in {@link
+ * com.battlelancer.seriesguide.ui.ShowsFragment}.
  */
 public class ShowsDistillationSettings {
 
@@ -30,13 +30,12 @@ public class ShowsDistillationSettings {
             query.append(ShowsSortOrder.FAVORITES_FIRST_PREFIX);
         }
 
-        if (sortOrderId == ShowsSortOrder.TITLE_REVERSE_ID) {
-            query.append(isSortIgnoreArticles ?
-                    ShowsSortOrder.TITLE_REVERSE_NOARTICLE : ShowsSortOrder.TITLE_REVERSE);
-        } else if (sortOrderId == ShowsSortOrder.EPISODE_ID) {
-            query.append(ShowsSortOrder.EPISODE);
-        } else if (sortOrderId == ShowsSortOrder.EPISODE_REVERSE_ID) {
-            query.append(ShowsSortOrder.EPISODE_REVERSE);
+        if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
+            query.append(ShowsSortOrder.OLDEST_EPISODE);
+        } else if (sortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
+            query.append(ShowsSortOrder.LATEST_EPISODE);
+        } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
+            query.append(ShowsSortOrder.LAST_WATCHED);
         } else {
             query.append(isSortIgnoreArticles ?
                     ShowsSortOrder.TITLE_NOARTICLE : ShowsSortOrder.TITLE);
@@ -46,8 +45,7 @@ public class ShowsDistillationSettings {
     }
 
     /**
-     * Returns the id as of
-     * {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
+     * Returns the id as of {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
      * of the current show sort order.
      */
     public static int getSortOrderId(Context context) {
@@ -88,22 +86,22 @@ public class ShowsDistillationSettings {
         String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         // alphabetical by title
         String TITLE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE ASC";
-        // reverse alphabetical by title
-        String TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC";
-        // reverse alphabetical by title
-        String TITLE_REVERSE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
         // by next episode release time, oldest first
-        String EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.STATUS + " DESC,"
+        String OLDEST_EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
         // by next episode release time, newest first
-        String EPISODE_REVERSE = Shows.NEXTAIRDATEMS + " DESC," + Shows.STATUS + " DESC,"
+        String LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC," + Shows.STATUS + " DESC,"
                 + Shows.TITLE + " COLLATE NOCASE ASC";
+        // by latest watched time first, then title alphabetically
+        String LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC";
         // add as prefix to sort favorites first
         String FAVORITES_FIRST_PREFIX = Shows.FAVORITE + " DESC,";
         // ids used for storing in preferences
         int TITLE_ID = 0;
-        int TITLE_REVERSE_ID = 1;
-        int EPISODE_ID = 2;
-        int EPISODE_REVERSE_ID = 3;
+        // @deprecated Only supporting alphabetical sort order going forward.
+        // int TITLE_REVERSE_ID = 1;
+        int OLDEST_EPISODE_ID = 2;
+        int LATEST_EPISODE_ID = 3;
+        int LAST_WATCHED_ID = 4;
     }
 }

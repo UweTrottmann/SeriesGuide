@@ -241,6 +241,11 @@ public class SeriesGuideContract {
         String LASTWATCHEDID = "series_lastwatchedid";
 
         /**
+         * Store the time an episode was last watched for this show. Added in
+         */
+        String LASTWATCHED_MS = "series_lastwatched_ms";
+
+        /**
          * Language the show should be downloaded in, in two letter ISO 639-1 format.
          *
          * <pre>

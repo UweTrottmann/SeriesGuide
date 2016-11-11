@@ -105,7 +105,7 @@ public class ShowSearchFragment extends ListFragment {
                                 + SeriesGuideContract.Shows.HIDDEN + "=0 AND "
                                 + SeriesGuideContract.Shows.NEXTAIRDATEMS + "<?",
                         new String[] { customTimeInOneHour },
-                        ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE);
+                        ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE);
             } else {
                 Uri uri = SeriesGuideContract.Shows.CONTENT_URI_FILTER.buildUpon()
                         .appendPath(query)

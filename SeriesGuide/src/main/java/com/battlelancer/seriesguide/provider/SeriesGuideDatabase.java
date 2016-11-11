@@ -132,7 +132,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_38_SHOW_TRAKT_ID = 38;
 
-    public static final int DATABASE_VERSION = DBVER_38_SHOW_TRAKT_ID;
+    /**
+     * Added last watched time to shows table.
+     */
+    private static final int DBVER_39_SHOW_LAST_WATCHED = 39;
+
+    public static final int DATABASE_VERSION = DBVER_39_SHOW_LAST_WATCHED;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -345,6 +350,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
 
             + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.LASTWATCHED_MS + " INTEGER DEFAULT 0,"
 
             + ShowsColumns.LANGUAGE + " TEXT DEFAULT ''"
 
@@ -602,7 +609,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtySeven(db);
             case DBVER_37_LANGUAGE_PER_SERIES:
                 upgradeToThirtyEight(db);
-                version = DBVER_38_SHOW_TRAKT_ID;
+            case DBVER_38_SHOW_TRAKT_ID:
+                upgradeToThirtyNine(db);
+                version = DBVER_39_SHOW_LAST_WATCHED;
         }
 
         // drop all tables if version is not right
@@ -628,6 +637,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_39_SHOW_LAST_WATCHED}.
+     */
+    private static void upgradeToThirtyNine(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LASTWATCHED_MS)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.LASTWATCHED_MS + " INTEGER DEFAULT 0;");
+        }
     }
 
     /**

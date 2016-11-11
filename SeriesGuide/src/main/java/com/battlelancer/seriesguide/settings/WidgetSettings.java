@@ -66,7 +66,7 @@ public class WidgetSettings {
         if (sortOrder == 1) {
             return ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
         } else {
-            return ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
+            return ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID;
         }
     }
 
