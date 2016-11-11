@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.view.View;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -45,6 +46,14 @@ public class ShowsAdapter extends BaseShowsAdapter {
             viewHolder.episodeTime.setText(fieldValue);
         }
 
+        int unwatched = cursor.getInt(Query.UNWATCHED_COUNT);
+        if (unwatched > 0) {
+            viewHolder.remainingCount.setText(
+                    context.getString(R.string.remaining, String.valueOf(unwatched)));
+        } else {
+            viewHolder.remainingCount.setText(null);
+        }
+
         // network, day and time
         viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
                 cursor.getInt(Query.RELEASE_TIME),
@@ -78,7 +87,8 @@ public class ShowsAdapter extends BaseShowsAdapter {
                 SeriesGuideContract.Shows.NEXTTEXT, // 10
                 SeriesGuideContract.Shows.NEXTAIRDATETEXT,
                 SeriesGuideContract.Shows.FAVORITE,
-                SeriesGuideContract.Shows.HIDDEN // 13
+                SeriesGuideContract.Shows.HIDDEN,
+                SeriesGuideContract.Shows.UNWATCHED_COUNT // 14
         };
 
         int _ID = 0;
@@ -95,5 +105,6 @@ public class ShowsAdapter extends BaseShowsAdapter {
         int NEXTAIRDATETEXT = 11;
         int FAVORITE = 12;
         int HIDDEN = 13;
+        int UNWATCHED_COUNT = 14;
     }
 }

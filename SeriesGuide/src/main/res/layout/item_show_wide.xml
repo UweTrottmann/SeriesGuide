@@ -97,5 +97,17 @@
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Jan 8, 2009 (Thu)" />
 
+        <TextView
+            android:id="@+id/textViewShowsRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/episodetime"
+            android:layout_toRightOf="@id/showposter"
+            android:ellipsize="end"
+            android:paddingBottom="@dimen/item_padding"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="42 remaining" />
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

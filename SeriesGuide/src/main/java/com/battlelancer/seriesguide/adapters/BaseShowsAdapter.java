@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -83,6 +84,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public TextView timeAndNetwork;
         public TextView episode;
         public TextView episodeTime;
+        public TextView remainingCount;
         public ImageView poster;
         public ImageView favorited;
         public ImageView contextMenu;
@@ -97,6 +99,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
             episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            remainingCount = ButterKnife.findById(v, R.id.textViewShowsRemaining);
             poster = (ImageView) v.findViewById(R.id.showposter);
             favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
             contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);

@@ -81,8 +81,8 @@
             android:layout_below="@id/TextViewShowListNextEpisode"
             android:layout_toRightOf="@id/showposter"
             android:ellipsize="end"
-            android:paddingRight="@dimen/inline_padding"
             android:paddingBottom="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="Jan 8, 2009 (Thur)" />
@@ -95,14 +95,29 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/episodetime"
             android:layout_marginRight="24dp"
-            android:layout_toRightOf="@+id/showposter"
             android:ellipsize="end"
             android:gravity="bottom|right"
+            android:maxWidth="200dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="Tue 08:00 PM | Showtime Network" />
+            tools:text="Showtime Network / Tue 08:00 PM" />
+
+        <TextView
+            android:id="@+id/textViewShowsRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/textViewShowsTimeAndNetwork"
+            android:layout_toRightOf="@+id/showposter"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:paddingBottom="8dp"
+            android:paddingRight="@dimen/default_padding"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            tools:text="42 remaining" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
