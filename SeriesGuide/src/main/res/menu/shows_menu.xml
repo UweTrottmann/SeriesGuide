@@ -64,6 +64,9 @@
                 android:id="@+id/menu_action_shows_sort_last_watched"
                 android:title="@string/action_shows_sort_last_watched" />
             <item
+                android:id="@+id/menu_action_shows_sort_remaining"
+                android:title="@string/action_shows_sort_remaining" />
+            <item
                 android:id="@+id/menu_action_shows_sort_favorites"
                 android:checkable="true"
                 android:title="@string/action_shows_sort_favorites" />

@@ -27,7 +27,7 @@ public class ShowsDistillationSettings {
         StringBuilder query = new StringBuilder();
 
         if (isSortFavoritesFirst) {
-            query.append(ShowsSortOrder.FAVORITES_FIRST_PREFIX);
+            query.append(ShowsSortOrder.FAVORITES_FIRST);
         }
 
         if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
@@ -36,10 +36,12 @@ public class ShowsDistillationSettings {
             query.append(ShowsSortOrder.LATEST_EPISODE);
         } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
             query.append(ShowsSortOrder.LAST_WATCHED);
-        } else {
-            query.append(isSortIgnoreArticles ?
-                    ShowsSortOrder.TITLE_NOARTICLE : ShowsSortOrder.TITLE);
+        } else if (sortOrderId == ShowsSortOrder.REMAINING_EPISODES_ID) {
+            query.append(ShowsSortOrder.REMAINING_EPISODES);
         }
+        // always sort by title at last
+        query.append(isSortIgnoreArticles ?
+                ShowsSortOrder.TITLE_NOARTICLE : ShowsSortOrder.TITLE);
 
         return query.toString();
     }
@@ -86,16 +88,21 @@ public class ShowsDistillationSettings {
         String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         // alphabetical by title
         String TITLE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE ASC";
-        // by next episode release time, oldest first
-        String OLDEST_EPISODE = Shows.NEXTAIRDATEMS + " ASC," + Shows.STATUS + " DESC,"
-                + Shows.TITLE + " COLLATE NOCASE ASC";
-        // by next episode release time, newest first
-        String LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC," + Shows.STATUS + " DESC,"
-                + Shows.TITLE + " COLLATE NOCASE ASC";
-        // by latest watched time first, then title alphabetically
-        String LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC";
+
+        // by oldest next episode, then continued first
+        String OLDEST_EPISODE = Shows.NEXTAIRDATEMS + " ASC,"
+                + Shows.STATUS + " DESC,";
+        // by latest next episode, then continued first
+        String LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.STATUS + " DESC,";
+        // by latest watched first
+        String LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC,";
+        // by least episodes remaining to watch, then continued first
+        String REMAINING_EPISODES = Shows.UNWATCHED_COUNT + " ASC,"
+                + Shows.STATUS + " DESC,";
         // add as prefix to sort favorites first
-        String FAVORITES_FIRST_PREFIX = Shows.FAVORITE + " DESC,";
+        String FAVORITES_FIRST = Shows.FAVORITE + " DESC,";
+
         // ids used for storing in preferences
         int TITLE_ID = 0;
         // @deprecated Only supporting alphabetical sort order going forward.
@@ -103,5 +110,6 @@ public class ShowsDistillationSettings {
         int OLDEST_EPISODE_ID = 2;
         int LATEST_EPISODE_ID = 3;
         int LAST_WATCHED_ID = 4;
+        int REMAINING_EPISODES_ID = 5;
     }
 }
