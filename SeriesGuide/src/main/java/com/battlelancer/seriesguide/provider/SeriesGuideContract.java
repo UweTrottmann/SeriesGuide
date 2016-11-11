@@ -591,14 +591,10 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
 
-        /**
-         * Default "ORDER BY" clause.
-         */
-        public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
+        public static final String SORT_LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.STATUS + " DESC";
 
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
-
-        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
 
         public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;

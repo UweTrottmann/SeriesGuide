@@ -27,21 +27,21 @@ public class ShowsDistillationSettings {
         StringBuilder query = new StringBuilder();
 
         if (isSortFavoritesFirst) {
-            query.append(ShowsSortOrder.FAVORITES_FIRST);
+            query.append(ShowsSortQuery.FAVORITES_FIRST);
         }
 
         if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
-            query.append(ShowsSortOrder.OLDEST_EPISODE);
+            query.append(ShowsSortQuery.OLDEST_EPISODE);
         } else if (sortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
-            query.append(ShowsSortOrder.LATEST_EPISODE);
+            query.append(ShowsSortQuery.LATEST_EPISODE);
         } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
-            query.append(ShowsSortOrder.LAST_WATCHED);
+            query.append(ShowsSortQuery.LAST_WATCHED);
         } else if (sortOrderId == ShowsSortOrder.REMAINING_EPISODES_ID) {
-            query.append(ShowsSortOrder.REMAINING_EPISODES);
+            query.append(ShowsSortQuery.REMAINING_EPISODES);
         }
         // always sort by title at last
         query.append(isSortIgnoreArticles ?
-                ShowsSortOrder.TITLE_NOARTICLE : ShowsSortOrder.TITLE);
+                ShowsSortQuery.TITLE_NOARTICLE : ShowsSortQuery.TITLE);
 
         return query.toString();
     }
@@ -79,22 +79,19 @@ public class ShowsDistillationSettings {
                 .getBoolean(KEY_FILTER_HIDDEN, false);
     }
 
-    /**
-     * Used by {@link com.battlelancer.seriesguide.ui.ShowsFragment} loader to sort the list of
-     * shows.
-     */
-    public interface ShowsSortOrder {
+    private interface ShowsSortQuery {
         // alphabetical by title
         String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         // alphabetical by title
         String TITLE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE ASC";
 
+        // ** The following are all prefixes, notice the ',' at the end **
+
         // by oldest next episode, then continued first
         String OLDEST_EPISODE = Shows.NEXTAIRDATEMS + " ASC,"
                 + Shows.STATUS + " DESC,";
         // by latest next episode, then continued first
-        String LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
-                + Shows.STATUS + " DESC,";
+        String LATEST_EPISODE = Shows.SORT_LATEST_EPISODE + ",";
         // by latest watched first
         String LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC,";
         // by least episodes remaining to watch, then continued first
@@ -102,8 +99,13 @@ public class ShowsDistillationSettings {
                 + Shows.STATUS + " DESC,";
         // add as prefix to sort favorites first
         String FAVORITES_FIRST = Shows.FAVORITE + " DESC,";
+    }
 
-        // ids used for storing in preferences
+    /**
+     * Used by {@link com.battlelancer.seriesguide.ui.ShowsFragment} loader to sort the list of
+     * shows.
+     */
+    public interface ShowsSortOrder {
         int TITLE_ID = 0;
         // @deprecated Only supporting alphabetical sort order going forward.
         // int TITLE_REVERSE_ID = 1;
