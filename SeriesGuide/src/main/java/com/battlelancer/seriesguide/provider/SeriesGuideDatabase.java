@@ -133,7 +133,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private static final int DBVER_38_SHOW_TRAKT_ID = 38;
 
     /**
-     * Added last watched time to shows table.
+     * Added last watched time and unwatched counter to shows table.
      */
     private static final int DBVER_39_SHOW_LAST_WATCHED = 39;
 
@@ -353,7 +353,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTWATCHED_MS + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.LANGUAGE + " TEXT DEFAULT ''"
+            + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
+
+            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
 
             + ");";
 
@@ -646,6 +648,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         if (isTableColumnMissing(db, Tables.SHOWS, Shows.LASTWATCHED_MS)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
                     + Shows.LASTWATCHED_MS + " INTEGER DEFAULT 0;");
+        }
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.UNWATCHED_COUNT)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+                    + ";");
         }
     }
 

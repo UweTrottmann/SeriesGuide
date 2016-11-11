@@ -235,8 +235,8 @@ public class SeriesGuideContract {
         String GETGLUEID = "series_getglueid";
 
         /**
-         * Id of the last watched episode, used to calculate the next episode to watch. Added in db
-         * version 31.
+         * Id of the last watched episode, used to calculate the next episode to watch. Added with
+         * {@link SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
 
@@ -254,6 +254,12 @@ public class SeriesGuideContract {
          * </pre>
          */
         String LANGUAGE = "series_language";
+
+        /**
+         * The remaining number of episodes to watch for this show. Added with {@link
+         * SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
+         */
+        String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
     interface SeasonsColumns {

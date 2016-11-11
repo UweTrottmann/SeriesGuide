@@ -45,6 +45,13 @@ public class DBUtils {
      */
     public static final String UNKNOWN_NEXT_RELEASE_DATE = String.valueOf(Long.MAX_VALUE);
 
+    /**
+     * Used if the number of remaining episodes to watch for a show is not (yet) known.
+     *
+     * @see Shows#UNWATCHED_COUNT
+     */
+    public static final int UNKNOWN_UNWATCHED_COUNT = -1;
+
     private static final int SMALL_BATCH_SIZE = 50;
 
     public static class DatabaseErrorEvent {
@@ -187,10 +194,12 @@ public class DBUtils {
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
      * episodes with no air date and without specials).
+     *
+     * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
      */
     public static int getUnwatchedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
-            return -1;
+            return UNKNOWN_UNWATCHED_COUNT;
         }
 
         // unwatched, aired episodes
@@ -202,7 +211,7 @@ public class DBUtils {
                         }, null
                 );
         if (unwatched == null) {
-            return -1;
+            return UNKNOWN_UNWATCHED_COUNT;
         }
 
         final int count = unwatched.getCount();
