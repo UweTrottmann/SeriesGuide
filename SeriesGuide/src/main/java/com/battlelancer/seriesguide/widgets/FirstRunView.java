@@ -8,14 +8,14 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.TaskManager;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.greenrobot.eventbus.EventBus;
@@ -65,12 +65,30 @@ public class FirstRunView extends CardView {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        Spinner languageSpinner = ButterKnife.findById(this, R.id.welcome_setuplanguage);
+        RelativeLayout noSpoilerView = ButterKnife.findById(this, R.id.containerFirstRunNoSpoilers);
+        final CheckBox noSpoilerCheckBox = ButterKnife.findById(noSpoilerView,
+                R.id.checkboxFirstRunNoSpoilers);
         Button addShowButton = ButterKnife.findById(this, R.id.buttonFirstRunAddShow);
         Button connectTraktButton = ButterKnife.findById(this, R.id.buttonFirstRunTrakt);
         Button restoreBackupButton = ButterKnife.findById(this, R.id.buttonFirstRunRestore);
         ImageButton dismissButton = ButterKnife.findById(this, R.id.buttonFirstRunDismiss);
 
+        noSpoilerView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // new state is inversion of current state
+                boolean noSpoilers = !noSpoilerCheckBox.isChecked();
+                // save
+                PreferenceManager.getDefaultSharedPreferences(v.getContext()).edit()
+                        .putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
+                        .apply();
+                // update next episode strings right away
+                TaskManager.getInstance(v.getContext()).tryNextEpisodeUpdateTask();
+                // show
+                noSpoilerCheckBox.setChecked(noSpoilers);
+            }
+        });
+        noSpoilerCheckBox.setChecked(DisplaySettings.preventSpoilers(getContext()));
         addShowButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,32 +116,11 @@ public class FirstRunView extends CardView {
                 EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.DISMISS));
             }
         });
-
-        // language chooser
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.languagesShows, R.layout.item_spinner_title);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        languageSpinner.setAdapter(adapter);
-        languageSpinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
     }
 
     private void setFirstRunDismissed() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
         prefs.edit().putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, true).apply();
-    }
-
-    public class OnLanguageSelectedListener implements AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getContext());
-            final String value = getResources().getStringArray(R.array.languageCodesShows)[pos];
-            prefs.edit().putString(DisplaySettings.KEY_LANGUAGE, value).apply();
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {
-            // Do nothing.
-        }
     }
 }
