@@ -27,12 +27,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
-import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
@@ -109,8 +109,17 @@ public class DBUtils {
                 Episodes._ID
         };
 
+        // this works because we use a SQLite database,
+        // planning to support _COUNT base column going forward
+        String[] PROJECTION_COUNT = new String[] {
+                "count(*) AS count"
+        };
+
         String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + " !=-1 AND " + Episodes.FIRSTAIREDMS + "<=?";
+
+        String AIRED_SELECTION_NO_SPECIALS = AIRED_SELECTION
+                + " AND " + Episodes.SELECTION_NO_SPECIALS;
 
         String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + ">?";
@@ -204,8 +213,8 @@ public class DBUtils {
 
         // unwatched, aired episodes
         final Cursor unwatched = context.getContentResolver()
-                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION,
-                        UnwatchedQuery.AIRED_SELECTION + " AND " + Episodes.SELECTION_NO_SPECIALS,
+                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION_COUNT,
+                        UnwatchedQuery.AIRED_SELECTION_NO_SPECIALS,
                         new String[] {
                                 String.valueOf(TimeTools.getCurrentTime(context))
                         }, null
@@ -214,7 +223,13 @@ public class DBUtils {
             return UNKNOWN_UNWATCHED_COUNT;
         }
 
-        final int count = unwatched.getCount();
+        int count;
+        if (unwatched.moveToFirst()) {
+            count = unwatched.getInt(0);
+        } else {
+            count = UNKNOWN_UNWATCHED_COUNT;
+        }
+
         unwatched.close();
 
         return count;
@@ -619,8 +634,8 @@ public class DBUtils {
     }
 
     /**
-     * Update next episode field of the given show. If no show id is passed, will update next
-     * episodes for all shows.
+     * Update next episode field and unwatched episode count for the given show. If no show id is
+     * passed, will update next episodes for all shows.
      *
      * @return If only one show was passed, the TVDb id of the new next episode. Otherwise -1.
      */
@@ -760,6 +775,10 @@ public class DBUtils {
                 newShowValues.put(Shows.NEXTAIRDATETEXT, "");
             }
             next.close();
+
+            // STEP 4: get remaining episodes count
+            int unwatchedEpisodesCount = getUnwatchedEpisodesOfShow(context, showTvdbId);
+            newShowValues.put(Shows.UNWATCHED_COUNT, unwatchedEpisodesCount);
 
             // update the show with the new next episode values
             batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))
