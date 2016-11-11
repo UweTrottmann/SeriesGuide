@@ -10,13 +10,6 @@
             android:targetPackage="@string/package_name" />
     </Preference>
 
-    <ListPreference
-        android:defaultValue="en"
-        android:entries="@array/languagesShows"
-        android:entryValues="@array/languageCodesShows"
-        android:key="language"
-        android:title="@string/pref_language" />
-
     <SwitchPreference
         android:defaultValue="True"
         android:key="com.battlelancer.seriesguide.autoupdate"

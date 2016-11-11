@@ -96,6 +96,7 @@
     </string-array>
 
     <!-- Content languages -->
+    <string name="show_default_language">en</string>
     <string-array name="languagesShows">
         <item>English</item>
         <item>čeština</item>
@@ -122,7 +123,7 @@
         <item>日本語 (Japanese)</item>
     </string-array>
     <string-array name="languageCodesShows">
-        <item>en</item>
+        <item>@string/show_default_language</item>
         <item>cs</item>
         <item>da</item>
         <item>de</item>
