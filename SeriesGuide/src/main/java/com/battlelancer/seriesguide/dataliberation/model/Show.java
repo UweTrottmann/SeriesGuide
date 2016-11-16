@@ -26,6 +26,7 @@ public class Show {
 
     @SerializedName("last_watched_episode")
     public int lastWatchedEpisode;
+    public long last_watched_ms;
 
     public String poster;
 

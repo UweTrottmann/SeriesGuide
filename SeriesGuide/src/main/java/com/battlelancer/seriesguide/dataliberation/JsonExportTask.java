@@ -374,6 +374,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
             show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
+            show.last_watched_ms = shows.getLong(ShowsQuery.LASTWATCHED_MS);
             show.poster = shows.getString(ShowsQuery.POSTER);
             show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);
             show.status = DataLiberationTools.decodeShowStatus(shows.getInt(ShowsQuery.STATUS));
@@ -583,6 +584,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RELEASE_TIMEZONE,
                 Shows.RELEASE_COUNTRY,
                 Shows.LASTWATCHEDID,
+                Shows.LASTWATCHED_MS,
                 Shows.POSTER,
                 Shows.CONTENTRATING,
                 Shows.STATUS,
@@ -604,6 +606,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RELEASE_TIMEZONE,
                 Shows.RELEASE_COUNTRY,
                 Shows.LASTWATCHEDID,
+                Shows.LASTWATCHED_MS,
                 Shows.POSTER,
                 Shows.CONTENTRATING,
                 Shows.STATUS,
@@ -631,23 +634,24 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int RELEASE_TIMEZONE = 6;
         int RELEASE_COUNTRY = 7;
         int LASTWATCHEDID = 8;
-        int POSTER = 9;
-        int CONTENTRATING = 10;
-        int STATUS = 11;
-        int RUNTIME = 12;
-        int NETWORK = 13;
-        int IMDBID = 14;
-        int TRAKT_ID = 15;
-        int FIRSTAIRED = 16;
-        int RATING_USER = 17;
-        int LANGUAGE = 18;
+        int LASTWATCHED_MS = 9;
+        int POSTER = 10;
+        int CONTENTRATING = 11;
+        int STATUS = 12;
+        int RUNTIME = 13;
+        int NETWORK = 14;
+        int IMDBID = 15;
+        int TRAKT_ID = 16;
+        int FIRSTAIRED = 17;
+        int RATING_USER = 18;
+        int LANGUAGE = 19;
         // Full dump only
-        int OVERVIEW = 19;
-        int RATING_GLOBAL = 20;
-        int RATING_VOTES = 21;
-        int GENRES = 22;
-        int LAST_UPDATED = 23;
-        int LAST_EDITED = 24;
+        int OVERVIEW = 20;
+        int RATING_GLOBAL = 21;
+        int RATING_VOTES = 22;
+        int GENRES = 23;
+        int LAST_UPDATED = 24;
+        int LAST_EDITED = 25;
     }
 
     public interface EpisodesQuery {

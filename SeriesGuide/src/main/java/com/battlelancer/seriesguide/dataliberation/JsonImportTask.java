@@ -350,6 +350,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
         showValues.put(Shows.RELEASE_COUNTRY, show.country);
         showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
+        showValues.put(Shows.LASTWATCHED_MS, show.last_watched_ms);
         showValues.put(Shows.POSTER, show.poster);
         showValues.put(Shows.CONTENTRATING, show.contentRating);
         if (show.runtime < 0) {
