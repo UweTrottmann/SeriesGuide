@@ -422,7 +422,7 @@ public class DBUtils {
         if (details != null) {
             if (details.moveToFirst()) {
                 show = new Show();
-                show.tvdbId = details.getInt(0);
+                show.tvdb_id = details.getInt(0);
                 show.poster = details.getString(1);
                 show.title = details.getString(2);
             }
@@ -467,25 +467,25 @@ public class DBUtils {
         values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.POSTER, show.poster);
-        values.put(Shows.CONTENTRATING, show.contentRating);
+        values.put(Shows.CONTENTRATING, show.content_rating);
         values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
         values.put(Shows.RUNTIME, show.runtime);
         values.put(Shows.RATING_GLOBAL, show.rating);
         values.put(Shows.NETWORK, show.network);
         values.put(Shows.GENRES, show.genres);
-        values.put(Shows.FIRST_RELEASE, show.firstAired);
+        values.put(Shows.FIRST_RELEASE, show.first_aired);
         values.put(Shows.RELEASE_TIME, show.release_time);
         values.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
         values.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
         values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.IMDBID, show.imdbId);
-        values.put(Shows.TRAKT_ID, show.traktId);
+        values.put(Shows.IMDBID, show.imdb_id);
+        values.put(Shows.TRAKT_ID, show.trakt_id);
         values.put(Shows.LASTUPDATED, System.currentTimeMillis());
-        values.put(Shows.LASTEDIT, show.lastEdited);
+        values.put(Shows.LASTEDIT, show.last_edited);
 
         if (isNew) {
             // set TheTVDB id
-            values.put(Shows._ID, show.tvdbId);
+            values.put(Shows._ID, show.tvdb_id);
             values.put(Shows.LANGUAGE, show.language);
             // set user values
             values.put(Shows.FAVORITE, show.favorite);
@@ -502,7 +502,7 @@ public class DBUtils {
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
             return ContentProviderOperation
-                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
+                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdb_id)))
                     .withValues(values).build();
         }
     }

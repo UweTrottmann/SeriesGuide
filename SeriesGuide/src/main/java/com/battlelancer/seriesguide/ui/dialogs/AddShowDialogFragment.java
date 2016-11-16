@@ -278,7 +278,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // release year
         SpannableStringBuilder statusText = new SpannableStringBuilder();
-        String releaseYear = TimeTools.getShowReleaseYear(show.firstAired);
+        String releaseYear = TimeTools.getShowReleaseYear(show.first_aired);
         if (releaseYear != null) {
             statusText.append(releaseYear);
         }

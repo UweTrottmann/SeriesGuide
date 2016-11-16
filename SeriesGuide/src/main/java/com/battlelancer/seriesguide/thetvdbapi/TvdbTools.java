@@ -495,7 +495,7 @@ public class TvdbTools {
         // fill in data from trakt
         if (traktShow != null) {
             if (traktShow.ids != null && traktShow.ids.trakt != null) {
-                show.traktId = traktShow.ids.trakt;
+                show.trakt_id = traktShow.ids.trakt;
             }
             if (traktShow.airs != null) {
                 show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
@@ -503,16 +503,16 @@ public class TvdbTools {
                 show.release_timezone = traktShow.airs.timezone;
             }
             show.country = traktShow.country;
-            show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+            show.first_aired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
             show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
         } else {
             // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
             Timber.w("getShowDetails: failed to get trakt show details.");
-            show.traktId = ShowTools.getShowTraktId(app, showTvdbId);
+            show.trakt_id = ShowTools.getShowTraktId(app, showTvdbId);
             // set default values
             show.release_time = -1;
             show.release_weekday = -1;
-            show.firstAired = "";
+            show.first_aired = "";
             show.rating = 0.0;
         }
 
@@ -566,15 +566,15 @@ public class TvdbTools {
         }
 
         Show result = new Show();
-        result.tvdbId = showTvdbId;
+        result.tvdb_id = showTvdbId;
         // actors are unused, are fetched from tmdb
         result.title = series.seriesName;
         result.network = series.network;
-        result.contentRating = series.rating;
-        result.imdbId = series.imdbId;
+        result.content_rating = series.rating;
+        result.imdb_id = series.imdbId;
         result.genres = TextTools.mendTvdbStrings(series.genre);
         result.language = desiredLanguage; // requested language, might not be the content language.
-        result.lastEdited = series.lastUpdated;
+        result.last_edited = series.lastUpdated;
         if (noTranslation || TextUtils.isEmpty(series.overview)) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = series.overview;
@@ -665,7 +665,7 @@ public class TvdbTools {
 
     private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
             Show show, String language) throws TvdbException {
-        String url = TVDB_API_SERIES + show.tvdbId + "/" + TVDB_PATH_ALL
+        String url = TVDB_API_SERIES + show.tvdb_id + "/" + TVDB_PATH_ALL
                 + (language != null ? language + TVDB_EXTENSION_COMPRESSED : TVDB_FILE_DEFAULT);
 
         return parseEpisodes(batch, show, url);
@@ -690,10 +690,10 @@ public class TvdbTools {
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
-                show.tvdbId);
+                show.tvdb_id);
         final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(
                 localEpisodeIds); // just copy episodes list, then remove valid ones
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdbId);
+        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdb_id);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
         final ContentValues values = new ContentValues();
