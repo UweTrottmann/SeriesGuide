@@ -682,25 +682,34 @@
     </string-array>
 
     <!-- Widget types -->
+    <string name="widget_default_type">0</string>
+    <string name="widget_type_shows">2</string>
     <string-array name="widgetType">
         <item>@string/upcoming</item>
         <item>@string/recent</item>
         <item>@string/shows</item>
     </string-array>
     <string-array name="widgetTypeData">
-        <item>0</item>
+        <item>@string/widget_default_type</item>
         <item>1</item>
-        <item>2</item>
+        <item>@string/widget_type_shows</item>
     </string-array>
 
     <!-- Widget Show sort order -->
+    <string name="widget_default_show_sort_order">0</string>
     <string-array name="widgetShowSortOrder">
-        <item>@string/action_shows_sort_episode</item>
         <item>@string/action_shows_sort_title</item>
+        <item>@string/action_shows_sort_latest_episode</item>
+        <item>@string/action_shows_sort_oldest_episode</item>
+        <item>@string/action_shows_sort_last_watched</item>
+        <item>@string/action_shows_sort_remaining</item>
     </string-array>
     <string-array name="widgetShowSortOrderData">
-        <item>0</item>
         <item>1</item>
+        <item>@string/widget_default_show_sort_order</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <!-- Widget themes -->
