@@ -591,8 +591,12 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
 
+        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC";
+        public static final String SORT_STATUS = Shows.STATUS + " DESC";
         public static final String SORT_LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
-                + Shows.STATUS + " DESC";
+                + Shows.SORT_STATUS;
 
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
 
@@ -842,20 +846,23 @@ public class SeriesGuideContract {
         public static final String SELECTION_EPISODES = ListItems.TYPE + "="
                 + ListItemTypes.EPISODE;
 
-        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC, "
+        public static final String SORT_TITLE = Shows.SORT_TITLE + ", "
                 + ListItems.TYPE + " ASC";
         public static final String SORT_TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC, "
                 + ListItems.TYPE + " ASC";
-        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
-                + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.SORT_TITLE_NOARTICLE + ", "
+                + ListItems.TYPE + " ASC";
         public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
-                + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
+                + " COLLATE NOCASE DESC, "
+                + ListItems.TYPE + " ASC";
         public static final String SORT_NEWEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " DESC,"
-                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
-                + " ASC";
+                + Shows.SORT_STATUS + ","
+                + Shows.SORT_TITLE + ","
+                + ListItems.TYPE + " ASC";
         public static final String SORT_OLDEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " ASC,"
-                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
-                + " ASC";
+                + Shows.SORT_STATUS + ","
+                + Shows.SORT_TITLE + ","
+                + ListItems.TYPE + " ASC";
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();

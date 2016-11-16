@@ -41,7 +41,7 @@ public class ShowsDistillationSettings {
         }
         // always sort by title at last
         query.append(isSortIgnoreArticles ?
-                ShowsSortQuery.TITLE_NOARTICLE : ShowsSortQuery.TITLE);
+                Shows.SORT_TITLE_NOARTICLE : Shows.SORT_TITLE);
 
         return query.toString();
     }
@@ -80,23 +80,16 @@ public class ShowsDistillationSettings {
     }
 
     private interface ShowsSortQuery {
-        // alphabetical by title
-        String TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
-        // alphabetical by title
-        String TITLE_NOARTICLE = Shows.TITLE_NOARTICLE + " COLLATE NOCASE ASC";
-
-        // ** The following are all prefixes, notice the ',' at the end **
-
         // by oldest next episode, then continued first
         String OLDEST_EPISODE = Shows.NEXTAIRDATEMS + " ASC,"
-                + Shows.STATUS + " DESC,";
+                + Shows.SORT_STATUS + ",";
         // by latest next episode, then continued first
         String LATEST_EPISODE = Shows.SORT_LATEST_EPISODE + ",";
         // by latest watched first
         String LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC,";
         // by least episodes remaining to watch, then continued first
         String REMAINING_EPISODES = Shows.UNWATCHED_COUNT + " ASC,"
-                + Shows.STATUS + " DESC,";
+                + Shows.SORT_STATUS + ",";
         // add as prefix to sort favorites first
         String FAVORITES_FIRST = Shows.FAVORITE + " DESC,";
     }

@@ -70,7 +70,8 @@ public class NotificationService extends IntentService {
     };
 
     // by airdate, then by show, then lowest number first
-    private static final String SORTING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
+    private static final String SORTING = Episodes.FIRSTAIREDMS + " ASC,"
+            + Shows.SORT_TITLE + ","
             + Episodes.NUMBER + " ASC";
 
     // only within time frame, unwatched episodes

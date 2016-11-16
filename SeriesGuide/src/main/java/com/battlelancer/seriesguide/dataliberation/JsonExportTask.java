@@ -298,7 +298,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return context.getContentResolver().query(
                     Shows.CONTENT_URI,
                     isFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
-                    null, null, ShowsQuery.SORT);
+                    null, null, Shows.SORT_TITLE);
         }
         if (type == BACKUP_LISTS) {
             return context.getContentResolver()
@@ -621,8 +621,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.LASTUPDATED,
                 Shows.LASTEDIT
         };
-
-        String SORT = Shows.TITLE + " COLLATE NOCASE ASC";
 
         int ID = 0;
         int TITLE = 1;

@@ -1217,7 +1217,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // ordering
         query.append(" ORDER BY ");
-        query.append(Shows.TITLE).append(" ASC,");
+        query.append(Shows.SORT_TITLE).append(",");
         query.append(Episodes.SEASON).append(" ASC,");
         query.append(Episodes.NUMBER).append(" ASC");
 
