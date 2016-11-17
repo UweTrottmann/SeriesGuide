@@ -28,7 +28,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     private final int resIdStar;
     private final int resIdStarZero;
 
-    public BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
+    BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
         super(context, null, 0);
         this.onContextMenuClickListener = listener;
 
@@ -48,16 +48,24 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return v;
     }
 
-    public void setFavoriteState(ImageView view, boolean isFavorite) {
+    void setFavoriteState(ImageView view, boolean isFavorite) {
         view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
         view.setContentDescription(view.getContext()
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
+    void setRemainingCount(Context context, TextView textView, int unwatched) {
+        if (unwatched > 0) {
+            textView.setText(context.getString(R.string.remaining, String.valueOf(unwatched)));
+        } else {
+            textView.setText(null);
+        }
+    }
+
     /**
      * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
      */
-    public static String buildNetworkAndTimeString(Context context, int time, int weekday,
+    static String buildNetworkAndTimeString(Context context, int time, int weekday,
             String timeZone, String country, String network) {
         // network
         StringBuilder networkAndTime = new StringBuilder();

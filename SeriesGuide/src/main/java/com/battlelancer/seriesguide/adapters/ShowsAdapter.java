@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.view.View;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -46,13 +45,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
             viewHolder.episodeTime.setText(fieldValue);
         }
 
-        int unwatched = cursor.getInt(Query.UNWATCHED_COUNT);
-        if (unwatched > 0) {
-            viewHolder.remainingCount.setText(
-                    context.getString(R.string.remaining, String.valueOf(unwatched)));
-        } else {
-            viewHolder.remainingCount.setText(null);
-        }
+        setRemainingCount(context, viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
 
         // network, day and time
         viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
