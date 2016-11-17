@@ -568,7 +568,7 @@ public class TvdbTools {
         Show result = new Show();
         result.tvdb_id = showTvdbId;
         // actors are unused, are fetched from tmdb
-        result.title = series.seriesName;
+        result.title = series.seriesName != null ? series.seriesName.trim() : null;
         result.network = series.network;
         result.content_rating = series.rating;
         result.imdb_id = series.imdbId;
