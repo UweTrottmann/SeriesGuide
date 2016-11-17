@@ -36,7 +36,7 @@ public class ShowsDistillationSettings {
             query.append(ShowsSortQuery.LATEST_EPISODE);
         } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
             query.append(ShowsSortQuery.LAST_WATCHED);
-        } else if (sortOrderId == ShowsSortOrder.REMAINING_EPISODES_ID) {
+        } else if (sortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
             query.append(ShowsSortQuery.REMAINING_EPISODES);
         }
         // always sort by title at last
@@ -105,6 +105,6 @@ public class ShowsDistillationSettings {
         int OLDEST_EPISODE_ID = 2;
         int LATEST_EPISODE_ID = 3;
         int LAST_WATCHED_ID = 4;
-        int REMAINING_EPISODES_ID = 5;
+        int LEAST_REMAINING_EPISODES_ID = 5;
     }
 }

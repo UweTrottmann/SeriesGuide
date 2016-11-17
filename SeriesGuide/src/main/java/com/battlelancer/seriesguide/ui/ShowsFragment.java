@@ -265,24 +265,20 @@ public class ShowsFragment extends Fragment implements
         MenuItem remainingItem = menu.findItem(R.id.menu_action_shows_sort_remaining);
         remainingItem.setTitle(R.string.action_shows_sort_remaining);
         if (mSortOrderId == ShowsSortOrder.TITLE_ID) {
-            setMenuItemActiveString(sortTitleItem);
+            Utils.setMenuItemActiveString(sortTitleItem);
         } else if (mSortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
-            setMenuItemActiveString(sortLatestItem);
+            Utils.setMenuItemActiveString(sortLatestItem);
         } else if (mSortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
-            setMenuItemActiveString(sortOldestItem);
+            Utils.setMenuItemActiveString(sortOldestItem);
         } else if (mSortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
-            setMenuItemActiveString(lastWatchedItem);
-        } else if (mSortOrderId == ShowsSortOrder.REMAINING_EPISODES_ID) {
-            setMenuItemActiveString(remainingItem);
+            Utils.setMenuItemActiveString(lastWatchedItem);
+        } else if (mSortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
+            Utils.setMenuItemActiveString(remainingItem);
         }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(mIsSortFavoritesFirst);
         menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
                 .setChecked(mIsSortIgnoreArticles);
-    }
-
-    private void setMenuItemActiveString(MenuItem item) {
-        item.setTitle(item.getTitle() + " ◀");
     }
 
     @Override
@@ -382,7 +378,7 @@ public class ShowsFragment extends Fragment implements
             Utils.trackAction(getActivity(), TAG, "Sort Last watched");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_remaining) {
-            mSortOrderId = ShowsSortOrder.REMAINING_EPISODES_ID;
+            mSortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Remaining episodes");
             return true;

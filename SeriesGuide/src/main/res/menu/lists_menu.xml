@@ -30,8 +30,17 @@
                 android:id="@+id/menu_action_lists_sort_title"
                 android:title="@string/action_shows_sort_title" />
             <item
-                android:id="@+id/menu_action_lists_sort_episode"
-                android:title="@string/action_shows_sort_episode" />
+                android:id="@+id/menu_action_lists_sort_latest_episode"
+                android:title="@string/action_shows_sort_latest_episode" />
+            <item
+                android:id="@+id/menu_action_lists_sort_oldest_episode"
+                android:title="@string/action_shows_sort_oldest_episode" />
+            <item
+                android:id="@+id/menu_action_lists_sort_last_watched"
+                android:title="@string/action_shows_sort_last_watched" />
+            <item
+                android:id="@+id/menu_action_lists_sort_remaining"
+                android:title="@string/action_shows_sort_remaining" />
             <item
                 android:id="@+id/menu_action_lists_sort_ignore_articles"
                 android:checkable="true"

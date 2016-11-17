@@ -250,7 +250,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.FAVORITE + ","
                         + Shows.RELEASE_WEEKDAY + ","
                         + Shows.RELEASE_TIMEZONE + ","
-                        + Shows.RELEASE_COUNTRY;
+                        + Shows.RELEASE_COUNTRY + ","
+                        + Shows.LASTWATCHED_MS + ","
+                        + Shows.UNWATCHED_COUNT;
 
         String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
                 + Qualified.SHOWS_ID + " as " + Shows.REF_SHOW_ID + ","

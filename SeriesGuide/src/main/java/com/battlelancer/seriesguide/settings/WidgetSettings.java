@@ -72,7 +72,7 @@ public class WidgetSettings {
             case 3:
                 return ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID;
             case 4:
-                return ShowsDistillationSettings.ShowsSortOrder.REMAINING_EPISODES_ID;
+                return ShowsDistillationSettings.ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
             default:
                 return ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID;
         }
