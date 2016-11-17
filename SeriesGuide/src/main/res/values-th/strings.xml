@@ -45,7 +45,7 @@
   <string name="app_not_available">ไม่มีแอปที่สามารถจัดการกับสิ่งนี้</string>
   <string name="people_empty">ไม่มีใครอยู่ที่นี่เลยหรือ? แตะเพื่อลองอีกครั้ง</string>
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>
   <string name="share_show">แบ่งปันซีรีส์</string>
@@ -170,7 +170,7 @@
   <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
   <string name="action_try_any_language">ลองภาษาใดก็ได้</string>
   <string name="action_try_again">ลองอีกครั้ง</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">รายการนี้(ยัง)ไม่มีบน TheTVDB ลองอีกครั้งในภายหลัง</string>
   <string name="add_all">เพิ่มทั้งหมด</string>
   <string name="add_multiple">ซีรีส์ทั้งหมดจะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
   <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>

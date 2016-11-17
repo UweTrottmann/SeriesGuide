@@ -45,7 +45,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>
@@ -171,7 +171,7 @@
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
   <string name="action_try_any_language">Keresés bármely nyelven</string>
   <string name="action_try_again">Próbáld újra</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>
   <string name="add_all">Add hozzá mindet</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>

@@ -45,7 +45,7 @@
   <string name="app_not_available">Нет приложения для обработки этой команды.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="database_error">Не получается модифицирофавать данные.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
@@ -83,7 +83,7 @@
   <string name="episode_gueststars">Приглашенные звёзды</string>
   <string name="episode_writers">Сценаристы</string>
   <string name="show_isalive">Продолжается</string>
-  <string name="show_isnotalive">Закончился</string>
+  <string name="show_isnotalive">Завершён</string>
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
@@ -172,7 +172,7 @@
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
   <string name="action_try_any_language">Попробовать любой язык</string>
   <string name="action_try_again">Повторить попытку</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
   <string name="add_all">Добавить все</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
   <string name="add_started">%s скоро появится в вашем списке.</string>
@@ -223,7 +223,7 @@
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d день</item>
+    <item quantity="few">%d дня</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">

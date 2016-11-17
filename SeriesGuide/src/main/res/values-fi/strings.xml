@@ -45,7 +45,7 @@
   <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Kommunikointi %s kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
@@ -171,7 +171,7 @@
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
   <string name="add_all">Lisää kaikki</string>
   <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
   <string name="add_started">%s ilmestyy pian ohjelmalistaasi.</string>

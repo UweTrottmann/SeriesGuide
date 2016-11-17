@@ -45,7 +45,7 @@
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
   <string name="people_empty">Ingen her?! Tryk for at forsøge igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -171,7 +171,7 @@
   <string name="no_results">Ingen resultater, prøv med hele ord.</string>
   <string name="action_try_any_language">Prøv med ethvert sprog</string>
   <string name="action_try_again">Prøv igen</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">Serien findes ikke (endnu) på TheTVDB. Forsøg venligst igen senere.</string>
   <string name="add_all">Tilføj alle</string>
   <string name="add_multiple">Alle serier vil blive vist på din liste om lidt.</string>
   <string name="add_started">%s vil blive vist på din serieliste om lidt.</string>

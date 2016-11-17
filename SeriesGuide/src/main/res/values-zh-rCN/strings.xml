@@ -45,7 +45,7 @@
   <string name="app_not_available">没有可用的应用程序来处理此项。</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>
   <string name="database_error">无法修改数据：数据库操作出错。</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>
@@ -170,7 +170,7 @@
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
   <string name="action_try_again">重试</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">此节目在 TheTVDB 上（尚）不存在。请稍后再试。</string>
   <string name="add_all">全部添加</string>
   <string name="add_multiple">已选项将很快出现在节目单中。</string>
   <string name="add_started">%s 将很快出现在节目单中。</string>

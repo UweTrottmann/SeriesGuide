@@ -45,7 +45,7 @@
   <string name="app_not_available">Aucune application disponible pour gérer cette action.</string>
   <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>
   <string name="database_error">Les données n\'ont pu être modifiées.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
@@ -171,7 +171,7 @@
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="action_try_any_language">Essayer n\'importe quelle langue</string>
   <string name="action_try_again">Réessayer</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">La série n’existe pas (encore) sur TheTVDB. Réessayez plus tard.</string>
   <string name="add_all">Tout ajouter</string>
   <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
   <string name="add_started">%s apparaîtra dans votre liste de séries sous peu.</string>

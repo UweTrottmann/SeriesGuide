@@ -32,7 +32,7 @@
   <string name="action_display_all">Прикажи се</string>
   <string name="web_search">Веб пребарување</string>
   <string name="add_to_homescreen">Shortcut</string>
-  <string name="action_open">Open</string>
+  <string name="action_open">Отвори</string>
   <!-- Search -->
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
@@ -45,7 +45,7 @@
   <string name="app_not_available">Не постои апликација која може да го отвори ова.</string>
   <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
   <string name="database_error">Не е возможно да ги променити податоците.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели серија</string>
@@ -54,7 +54,7 @@
   <string name="share_checkout">Види %s</string>
   <string name="addtocalendar">Додај во календар</string>
   <string name="addtocalendar_failed">Не може да се креира настан во календарот.</string>
-  <string name="links">Links</string>
+  <string name="links">Линкови</string>
   <!-- Comments -->
   <string name="comments">Коментари</string>
   <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
@@ -85,7 +85,7 @@
   <string name="show_isnotalive">Завршена</string>
   <string name="lastEdit">Последна промена // Tvdb</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
+  <string name="no_translation_title">Не преведено</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
   <!-- Date and Time -->
   <string name="today">денес</string>
@@ -192,7 +192,7 @@
   <string name="list_empty">Можете да додате серија, сезона или епизода на оваа листа.</string>
   <string name="action_lists_sort">Листа за сортирање</string>
   <string name="action_lists_reorder">Поново сортирајте листа</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Една група со ова име веќе постои</string>
   <!-- Movies -->
   <string name="movies_collection">Колекција</string>
   <string name="movies_watchlist">Листа за гледање</string>
@@ -210,7 +210,7 @@
   <string name="action_movies_sort_title">Наслов</string>
   <string name="action_movies_sort_release">Датум на емитување</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Неможе да се пресмета статистика.</string>
   <string name="statistics_shows">Серии</string>
   <string name="statistics_episodes">Епизоди</string>
   <string name="statistics_movies">Филмови</string>
@@ -262,8 +262,8 @@
   <string name="traktcheckin_wait">Ќе почекам</string>
   <string name="trakt_success">Прати на trakt.</string>
   <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
+  <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt акаунт</string>
   <string name="trakt_connect_instructions">На следниот екран логирај се со trakt или креирај нов профил. SeriesGuide потоа ви овозможува пристап до вашиот trakt профил.</string>
@@ -302,7 +302,7 @@
   <string name="checkin_hint">Напиши порака (опционално)</string>
   <string name="paste_title">Залепи наслов</string>
   <string name="pref_quick_checkin">Брзa нaјaвa</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin_summary">Не прашувај за чекирање на порака</string>
   <!-- Help -->
   <string name="feedback">Прати повратна информација</string>
   <string name="action_open_in_browser">Отвори browser</string>
@@ -316,9 +316,9 @@
   <string name="pref_onlyseasoneps">Сокриј специјални епизоди</string>
   <string name="pref_onlyseasonepssummary">Специјалните епизоди исчезнаа од секаде освен од листата со сезони</string>
   <string name="pref_exactdates">Прикaжи тoчен дaтум</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_exactdates_summary">\"Октомври 31\" отколку \"во 3 денови\"</string>
+  <string name="pref_nospoilers">Спречи спојлери</string>
+  <string name="pref_nospoilers_summary">Сокриј детали додека епизодата не е гледана</string>
   <string name="pref_seasonsorting">Сортирај сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирај по епизоди&#8230;</string>
   <string name="pref_language">Предпрoчитaн јaзик нa сoдржинaтa</string>
@@ -361,7 +361,7 @@
   <string name="pref_autoupdate">Вклучи автоматско ажурирање</string>
   <string name="pref_autoupdatesummary">Периодично ажурирање на вашите серии</string>
   <string name="pref_autobackup">Автoмaтски бекaп</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
   <string name="backup">Backup/Restore</string>
   <string name="backup_summary">Backup или обновување на вашиите серии</string>
   <string name="pref_number">Формат бројки</string>
@@ -369,7 +369,7 @@
   <string name="pref_offsetsummary">Опсег на временски %s саати</string>
   <string name="clear_cache">Избриши кеширани слики</string>
   <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Пратете анонимни статистики за користење на Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Вклучи ги сите метаподатоци како описи, актери и рејтинзи.</string>
   <string name="backup_path">Фолдер за архивирање</string>
@@ -394,7 +394,7 @@
   <string name="restore_auto_backup">Обнови автоматски Backup</string>
   <string name="dataliberation_permission_missing">За да направите backup или restore, дозволете пристап до вашите фајлови.</string>
   <string name="autobackup_permission_missing">За да можете да користите автоматски backup, овозможете пристап до вашите фајлови.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="autobackup_files_missing">За да користите автоматски бекап, селектирајте валиден бекап фајл.</string>
   <string name="no_file_selected">нема одбрано датотека</string>
   <string name="action_select_file">Изберете дадотека</string>
   <string name="backup_use_default_files">Кoристи предефинирaни бекaп фaјлoви</string>
@@ -472,12 +472,12 @@
   <!-- People -->
   <string name="person_biography">Биографија</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Дали уживате во SeriesGuide?</string>
+  <string name="feedback_action_yes">Да!</string>
+  <string name="feedback_action_notreally">Не баш</string>
+  <string name="feedback_question_rate_google">Оцени на Google Play?</string>
+  <string name="feedback_question_rate_amazon">Оцени на Амазон?</string>
+  <string name="feedback_question_feedback">Кажи ми како да го подобрам?</string>
+  <string name="feedback_action_ok">OK, се разбира</string>
+  <string name="feedback_action_nothanks">Не, благодарам</string>
 </resources>
