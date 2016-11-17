@@ -247,7 +247,6 @@ public class EpisodeTools {
 
             // update local database (if uploading went smoothly or not uploading at all)
             flagType.updateDatabase();
-            flagType.storeLastEpisode();
             flagType.onPostExecute();
 
             return SUCCESS;

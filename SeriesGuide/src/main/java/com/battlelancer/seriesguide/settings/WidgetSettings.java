@@ -59,14 +59,22 @@ public class WidgetSettings {
         int sortOrder = 0;
         try {
             sortOrder = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
-                    .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId, "0"));
+                    .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId,
+                            context.getString(R.string.widget_default_show_sort_order)));
         } catch (NumberFormatException ignored) {
         }
 
-        if (sortOrder == 1) {
-            return ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
-        } else {
-            return ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
+        switch (sortOrder) {
+            case 1:
+                return ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
+            case 2:
+                return ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID;
+            case 3:
+                return ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID;
+            case 4:
+                return ShowsDistillationSettings.ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
+            default:
+                return ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID;
         }
     }
 

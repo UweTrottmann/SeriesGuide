@@ -103,6 +103,30 @@ public class ListsActivity extends BaseTopActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lists_menu, menu);
 
+        // set current sort order and check box states
+        int sortOrderId = ListsDistillationSettings.getSortOrderId(this);
+        MenuItem sortTitleItem = menu.findItem(R.id.menu_action_lists_sort_title);
+        sortTitleItem.setTitle(R.string.action_shows_sort_title);
+        MenuItem sortLatestItem = menu.findItem(R.id.menu_action_lists_sort_latest_episode);
+        sortLatestItem.setTitle(R.string.action_shows_sort_latest_episode);
+        MenuItem sortOldestItem = menu.findItem(R.id.menu_action_lists_sort_oldest_episode);
+        sortOldestItem.setTitle(R.string.action_shows_sort_oldest_episode);
+        MenuItem lastWatchedItem = menu.findItem(R.id.menu_action_lists_sort_last_watched);
+        lastWatchedItem.setTitle(R.string.action_shows_sort_last_watched);
+        MenuItem remainingItem = menu.findItem(R.id.menu_action_lists_sort_remaining);
+        remainingItem.setTitle(R.string.action_shows_sort_remaining);
+        if (sortOrderId == ListsSortOrder.TITLE_ALPHABETICAL_ID) {
+            Utils.setMenuItemActiveString(sortTitleItem);
+        } else if (sortOrderId == ListsSortOrder.LATEST_EPISODE_ID) {
+            Utils.setMenuItemActiveString(sortLatestItem);
+        } else if (sortOrderId == ListsSortOrder.OLDEST_EPISODE_ID) {
+            Utils.setMenuItemActiveString(sortOldestItem);
+        } else if (sortOrderId == ListsSortOrder.LAST_WATCHED_ID) {
+            Utils.setMenuItemActiveString(lastWatchedItem);
+        } else if (sortOrderId == ListsSortOrder.LEAST_REMAINING_EPISODES_ID) {
+            Utils.setMenuItemActiveString(remainingItem);
+        }
+
         menu.findItem(R.id.menu_action_lists_sort_ignore_articles)
                 .setChecked(DisplaySettings.isSortOrderIgnoringArticles(this));
 
@@ -127,21 +151,23 @@ public class ListsActivity extends BaseTopActivity {
             return true;
         }
         if (itemId == R.id.menu_action_lists_sort_title) {
-            if (ListsDistillationSettings.getSortOrderId(this)
-                    == ListsSortOrder.TITLE_ALPHABETICAL_ID) {
-                changeSortOrder(ListsSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
-            } else {
-                changeSortOrder(ListsSortOrder.TITLE_ALPHABETICAL_ID);
-            }
+            changeSortOrder(ListsSortOrder.TITLE_ALPHABETICAL_ID);
             return true;
         }
-        if (itemId == R.id.menu_action_lists_sort_episode) {
-            if (ListsDistillationSettings.getSortOrderId(this)
-                    == ListsSortOrder.NEWEST_EPISODE_FIRST_ID) {
-                changeSortOrder(ListsSortOrder.OLDEST_EPISODE_FIRST_ID);
-            } else {
-                changeSortOrder(ListsSortOrder.NEWEST_EPISODE_FIRST_ID);
-            }
+        if (itemId == R.id.menu_action_lists_sort_latest_episode) {
+            changeSortOrder(ListsSortOrder.LATEST_EPISODE_ID);
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_sort_oldest_episode) {
+            changeSortOrder(ListsSortOrder.OLDEST_EPISODE_ID);
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_sort_last_watched) {
+            changeSortOrder(ListsSortOrder.LAST_WATCHED_ID);
+            return true;
+        }
+        if (itemId == R.id.menu_action_lists_sort_remaining) {
+            changeSortOrder(ListsSortOrder.LEAST_REMAINING_EPISODES_ID);
             return true;
         }
         if (itemId == R.id.menu_action_lists_sort_ignore_articles) {
@@ -177,6 +203,9 @@ public class ListsActivity extends BaseTopActivity {
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(ListsDistillationSettings.KEY_SORT_ORDER, sortOrderId)
                 .apply();
+
+        // refresh icon state
+        supportInvalidateOptionsMenu();
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());

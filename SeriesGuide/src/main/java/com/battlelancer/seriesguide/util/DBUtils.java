@@ -27,12 +27,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
-import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
@@ -44,6 +44,13 @@ public class DBUtils {
      * is {@link Long#MAX_VALUE}). See {@link Shows#NEXTAIRDATEMS}.
      */
     public static final String UNKNOWN_NEXT_RELEASE_DATE = String.valueOf(Long.MAX_VALUE);
+
+    /**
+     * Used if the number of remaining episodes to watch for a show is not (yet) known.
+     *
+     * @see Shows#UNWATCHED_COUNT
+     */
+    public static final int UNKNOWN_UNWATCHED_COUNT = -1;
 
     private static final int SMALL_BATCH_SIZE = 50;
 
@@ -102,8 +109,17 @@ public class DBUtils {
                 Episodes._ID
         };
 
+        // this works because we use a SQLite database,
+        // planning to support _COUNT base column going forward
+        String[] PROJECTION_COUNT = new String[] {
+                "count(*) AS count"
+        };
+
         String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + " !=-1 AND " + Episodes.FIRSTAIREDMS + "<=?";
+
+        String AIRED_SELECTION_NO_SPECIALS = AIRED_SELECTION
+                + " AND " + Episodes.SELECTION_NO_SPECIALS;
 
         String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + ">?";
@@ -187,25 +203,33 @@ public class DBUtils {
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
      * episodes with no air date and without specials).
+     *
+     * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
      */
     public static int getUnwatchedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
-            return -1;
+            return UNKNOWN_UNWATCHED_COUNT;
         }
 
         // unwatched, aired episodes
         final Cursor unwatched = context.getContentResolver()
-                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION,
-                        UnwatchedQuery.AIRED_SELECTION + " AND " + Episodes.SELECTION_NO_SPECIALS,
+                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION_COUNT,
+                        UnwatchedQuery.AIRED_SELECTION_NO_SPECIALS,
                         new String[] {
                                 String.valueOf(TimeTools.getCurrentTime(context))
                         }, null
                 );
         if (unwatched == null) {
-            return -1;
+            return UNKNOWN_UNWATCHED_COUNT;
         }
 
-        final int count = unwatched.getCount();
+        int count;
+        if (unwatched.moveToFirst()) {
+            count = unwatched.getInt(0);
+        } else {
+            count = UNKNOWN_UNWATCHED_COUNT;
+        }
+
         unwatched.close();
 
         return count;
@@ -398,7 +422,7 @@ public class DBUtils {
         if (details != null) {
             if (details.moveToFirst()) {
                 show = new Show();
-                show.tvdbId = details.getInt(0);
+                show.tvdb_id = details.getInt(0);
                 show.poster = details.getString(1);
                 show.title = details.getString(2);
             }
@@ -443,25 +467,25 @@ public class DBUtils {
         values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
         values.put(Shows.OVERVIEW, show.overview);
         values.put(Shows.POSTER, show.poster);
-        values.put(Shows.CONTENTRATING, show.contentRating);
+        values.put(Shows.CONTENTRATING, show.content_rating);
         values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
         values.put(Shows.RUNTIME, show.runtime);
         values.put(Shows.RATING_GLOBAL, show.rating);
         values.put(Shows.NETWORK, show.network);
         values.put(Shows.GENRES, show.genres);
-        values.put(Shows.FIRST_RELEASE, show.firstAired);
+        values.put(Shows.FIRST_RELEASE, show.first_aired);
         values.put(Shows.RELEASE_TIME, show.release_time);
         values.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
         values.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
         values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.IMDBID, show.imdbId);
-        values.put(Shows.TRAKT_ID, show.traktId);
+        values.put(Shows.IMDBID, show.imdb_id);
+        values.put(Shows.TRAKT_ID, show.trakt_id);
         values.put(Shows.LASTUPDATED, System.currentTimeMillis());
-        values.put(Shows.LASTEDIT, show.lastEdited);
+        values.put(Shows.LASTEDIT, show.last_edited);
 
         if (isNew) {
             // set TheTVDB id
-            values.put(Shows._ID, show.tvdbId);
+            values.put(Shows._ID, show.tvdb_id);
             values.put(Shows.LANGUAGE, show.language);
             // set user values
             values.put(Shows.FAVORITE, show.favorite);
@@ -478,7 +502,7 @@ public class DBUtils {
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
             return ContentProviderOperation
-                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
+                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdb_id)))
                     .withValues(values).build();
         }
     }
@@ -610,8 +634,8 @@ public class DBUtils {
     }
 
     /**
-     * Update next episode field of the given show. If no show id is passed, will update next
-     * episodes for all shows.
+     * Update next episode field and unwatched episode count for the given show. If no show id is
+     * passed, will update next episodes for all shows.
      *
      * @return If only one show was passed, the TVDb id of the new next episode. Otherwise -1.
      */
@@ -751,6 +775,10 @@ public class DBUtils {
                 newShowValues.put(Shows.NEXTAIRDATETEXT, "");
             }
             next.close();
+
+            // STEP 4: get remaining episodes count
+            int unwatchedEpisodesCount = getUnwatchedEpisodesOfShow(context, showTvdbId);
+            newShowValues.put(Shows.UNWATCHED_COUNT, unwatchedEpisodesCount);
 
             // update the show with the new next episode values
             batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))

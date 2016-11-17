@@ -52,7 +52,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         typePref.setTitle(R.string.pref_widget_type);
         typePref.setEntries(R.array.widgetType);
         typePref.setEntryValues(R.array.widgetTypeData);
-        typePref.setDefaultValue("0");
+        typePref.setDefaultValue(getString(R.string.widget_default_type));
         typePref.setPositiveButtonText(null);
         typePref.setNegativeButtonText(null);
         preferenceScreen.addPreference(typePref);
@@ -63,7 +63,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         sortPref.setTitle(R.string.action_shows_sort);
         sortPref.setEntries(R.array.widgetShowSortOrder);
         sortPref.setEntryValues(R.array.widgetShowSortOrderData);
-        sortPref.setDefaultValue("0");
+        sortPref.setDefaultValue(getString(R.string.widget_default_show_sort_order));
         sortPref.setPositiveButtonText(null);
         sortPref.setNegativeButtonText(null);
         preferenceScreen.addPreference(sortPref);
@@ -129,7 +129,8 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
                     String key) {
                 if (typePref.getKey().equals(key)) {
                     String newTypeValue = typePref.getValue();
-                    boolean displayingShows = "2".equals(newTypeValue);
+                    boolean displayingShows = getString(R.string.widget_type_shows)
+                            .equals(newTypeValue);
                     sortPref.setEnabled(displayingShows);
                     hideWatchedPreference.setEnabled(!displayingShows);
                 }

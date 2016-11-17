@@ -132,7 +132,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_38_SHOW_TRAKT_ID = 38;
 
-    public static final int DATABASE_VERSION = DBVER_38_SHOW_TRAKT_ID;
+    /**
+     * Added last watched time and unwatched counter to shows table.
+     */
+    private static final int DBVER_39_SHOW_LAST_WATCHED = 39;
+
+    public static final int DATABASE_VERSION = DBVER_39_SHOW_LAST_WATCHED;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -245,7 +250,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.FAVORITE + ","
                         + Shows.RELEASE_WEEKDAY + ","
                         + Shows.RELEASE_TIMEZONE + ","
-                        + Shows.RELEASE_COUNTRY;
+                        + Shows.RELEASE_COUNTRY + ","
+                        + Shows.LASTWATCHED_MS + ","
+                        + Shows.UNWATCHED_COUNT;
 
         String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
                 + Qualified.SHOWS_ID + " as " + Shows.REF_SHOW_ID + ","
@@ -346,7 +353,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.LANGUAGE + " TEXT DEFAULT ''"
+            + ShowsColumns.LASTWATCHED_MS + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
+
+            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
 
             + ");";
 
@@ -602,7 +613,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtySeven(db);
             case DBVER_37_LANGUAGE_PER_SERIES:
                 upgradeToThirtyEight(db);
-                version = DBVER_38_SHOW_TRAKT_ID;
+            case DBVER_38_SHOW_TRAKT_ID:
+                upgradeToThirtyNine(db);
+                version = DBVER_39_SHOW_LAST_WATCHED;
         }
 
         // drop all tables if version is not right
@@ -628,6 +641,21 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_39_SHOW_LAST_WATCHED}.
+     */
+    private static void upgradeToThirtyNine(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LASTWATCHED_MS)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.LASTWATCHED_MS + " INTEGER DEFAULT 0;");
+        }
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.UNWATCHED_COUNT)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+                    + ";");
+        }
     }
 
     /**
@@ -1191,7 +1219,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // ordering
         query.append(" ORDER BY ");
-        query.append(Shows.TITLE).append(" ASC,");
+        query.append(Shows.SORT_TITLE).append(",");
         query.append(Episodes.SEASON).append(" ASC,");
         query.append(Episodes.NUMBER).append(" ASC");
 

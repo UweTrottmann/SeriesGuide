@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
@@ -121,8 +122,8 @@ public class EpisodeTaskTypes {
         protected abstract void setEpisodeProperties(Episode episode);
 
         /**
-         * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit
-         * to trakt.
+         * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
+         * trakt.
          */
         protected List<SyncSeason> buildTraktEpisodeList() {
             List<SyncSeason> seasons = new ArrayList<>();
@@ -193,32 +194,37 @@ public class EpisodeTaskTypes {
                     .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
         }
 
-        /**
-         * Determines the last watched episode and returns its TVDb id or -1 if it can't be
-         * determined.
-         */
-        protected abstract int getLastWatchedEpisodeTvdbId();
+        public void onPostExecute() {
+            // by default
+            // - do not update last watched episode
+            // - do not set last watched time to now
+            performPostExecute(-1, false);
+        }
 
         /**
-         * Saves the last watched episode for a show to the database.
+         * Will be called after {@link #updateDatabase()}. Do any additional operations here. Make
+         * sure to call through to super.
+         *
+         * @param lastWatchedEpisodeId The last watched episode for a show to save to the database.
+         * -1 for no-op.
+         * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
          */
-        public void storeLastEpisode() {
-            int lastWatchedId = getLastWatchedEpisodeTvdbId();
-            if (lastWatchedId != -1) {
-                // set latest watched
+        @CallSuper
+        protected void performPostExecute(int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
                 ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Shows.LASTWATCHEDID, lastWatchedId);
+                if (lastWatchedEpisodeId != -1) {
+                    values.put(SeriesGuideContract.Shows.LASTWATCHEDID, lastWatchedEpisodeId);
+                }
+                if (setLastWatchedToNow) {
+                    values.put(SeriesGuideContract.Shows.LASTWATCHED_MS,
+                            System.currentTimeMillis());
+                }
                 context.getContentResolver().update(
                         SeriesGuideContract.Shows.buildShowUri(String.valueOf(showTvdbId)),
                         values, null, null);
             }
         }
-
-        /**
-         * Will be called after {@link #updateDatabase()} and {@link #storeLastEpisode()}. Do any
-         * additional operations here.
-         */
-        public abstract void onPostExecute();
 
         /**
          * Returns the text which should be prepended to the submission status message. Tells e.g.
@@ -302,8 +308,7 @@ public class EpisodeTaskTypes {
             return SeriesGuideContract.Episodes.WATCHED;
         }
 
-        @Override
-        protected int getLastWatchedEpisodeTvdbId() {
+        private int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(getFlagValue())) {
                 // unwatched episode
 
@@ -359,11 +364,16 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public void onPostExecute() {
+        public void performPostExecute(int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            // set a new last watched episode
+            // set last watched time to now if marking as watched or skipped
+            boolean unwatched = EpisodeTools.isUnwatched(getFlagValue());
+            super.performPostExecute(getLastWatchedEpisodeTvdbId(), !unwatched);
+
             if (EpisodeTools.isWatched(getFlagValue())) {
                 // create activity entry for watched episode
                 ActivityTools.addActivity(getContext(), episodeTvdbId, getShowTvdbId());
-            } else if (EpisodeTools.isUnwatched(getFlagValue())) {
+            } else if (unwatched) {
                 // remove any previous activity entries for this episode
                 // use case: user accidentally toggled watched flag
                 ActivityTools.removeActivity(getContext(), episodeTvdbId);
@@ -407,17 +417,6 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        protected int getLastWatchedEpisodeTvdbId() {
-            // we don't care
-            return -1;
-        }
-
-        @Override
-        public void onPostExecute() {
-            // do nothing
-        }
-
-        @Override
         public String getNotificationText() {
             String number = TextTools.getEpisodeNumber(getContext(), season, episode);
             return getContext().getString(getFlagValue() == 1 ? R.string.trakt_collected
@@ -455,11 +454,6 @@ public class EpisodeTaskTypes {
             ContentValues values = new ContentValues();
             values.put(getColumn(), getFlagValue());
             return values;
-        }
-
-        @Override
-        public void onPostExecute() {
-            // do nothing
         }
     }
 
@@ -502,7 +496,11 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        protected int getLastWatchedEpisodeTvdbId() {
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
+        }
+
+        private int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(getFlagValue())) {
                 // unwatched season
                 // just reset
@@ -533,12 +531,12 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            return buildTraktEpisodeList();
-        }
+        public void performPostExecute(int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            // set a new last watched episode
+            // set last watched time to now if marking as watched or skipped
+            super.performPostExecute(getLastWatchedEpisodeTvdbId(),
+                    !EpisodeTools.isUnwatched(getFlagValue()));
 
-        @Override
-        public void onPostExecute() {
             ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
         }
 
@@ -583,11 +581,6 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        protected int getLastWatchedEpisodeTvdbId() {
-            return -1;
-        }
-
-        @Override
         public List<SyncSeason> getEpisodesForTrakt() {
             // flag the whole season
             List<SyncSeason> seasons = new LinkedList<>();
@@ -620,11 +613,6 @@ public class EpisodeTaskTypes {
             ContentValues values = new ContentValues();
             values.put(getColumn(), getFlagValue());
             return values;
-        }
-
-        @Override
-        public void onPostExecute() {
-            // do nothing
         }
 
         @Override
@@ -672,7 +660,11 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        protected int getLastWatchedEpisodeTvdbId() {
+        public List<SyncSeason> getEpisodesForTrakt() {
+            return buildTraktEpisodeList();
+        }
+
+        private int getLastWatchedEpisodeTvdbId() {
             if (EpisodeTools.isUnwatched(getFlagValue())) {
                 // just reset
                 return 0;
@@ -683,12 +675,12 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public List<SyncSeason> getEpisodesForTrakt() {
-            return buildTraktEpisodeList();
-        }
+        public void performPostExecute(int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            // set a new last watched episode
+            // set last watched time to now if marking as watched or skipped
+            super.performPostExecute(getLastWatchedEpisodeTvdbId(),
+                    !EpisodeTools.isUnwatched(getFlagValue()));
 
-        @Override
-        public void onPostExecute() {
             ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
         }
     }
@@ -713,12 +705,6 @@ public class EpisodeTaskTypes {
         @Override
         protected String getColumn() {
             return SeriesGuideContract.Episodes.COLLECTED;
-        }
-
-        @Override
-        protected int getLastWatchedEpisodeTvdbId() {
-            // we don't care
-            return -1;
         }
 
         @Override
@@ -779,13 +765,11 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        protected int getLastWatchedEpisodeTvdbId() {
-            // we don't care
-            return -1;
-        }
+        public void performPostExecute(int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            // we don't care about the last watched episode value
+            // always update last watched time, this type only marks as watched
+            super.performPostExecute(-1, true);
 
-        @Override
-        public void onPostExecute() {
             ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
         }
 

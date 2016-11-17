@@ -323,14 +323,14 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addShowToDatabase(Show show) {
-        if (show.tvdbId <= 0) {
+        if (show.tvdb_id <= 0) {
             // valid id required
             return;
         }
 
         // Insert the show
         ContentValues showValues = new ContentValues();
-        showValues.put(Shows._ID, show.tvdbId);
+        showValues.put(Shows._ID, show.tvdb_id);
         showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
@@ -349,19 +349,20 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
         showValues.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
         showValues.put(Shows.RELEASE_COUNTRY, show.country);
-        showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
+        showValues.put(Shows.LASTWATCHEDID, show.last_watched_episode);
+        showValues.put(Shows.LASTWATCHED_MS, show.last_watched_ms);
         showValues.put(Shows.POSTER, show.poster);
-        showValues.put(Shows.CONTENTRATING, show.contentRating);
+        showValues.put(Shows.CONTENTRATING, show.content_rating);
         if (show.runtime < 0) {
             show.runtime = 0;
         }
         showValues.put(Shows.RUNTIME, show.runtime);
         showValues.put(Shows.NETWORK, show.network);
-        showValues.put(Shows.IMDBID, show.imdbId);
-        if (show.traktId != null && show.traktId > 0) {
-            showValues.put(Shows.TRAKT_ID, show.traktId);
+        showValues.put(Shows.IMDBID, show.imdb_id);
+        if (show.trakt_id != null && show.trakt_id > 0) {
+            showValues.put(Shows.TRAKT_ID, show.trakt_id);
         }
-        showValues.put(Shows.FIRST_RELEASE, show.firstAired);
+        showValues.put(Shows.FIRST_RELEASE, show.first_aired);
         if (show.rating_user < 0 || show.rating_user > 10) {
             show.rating_user = 0;
         }
@@ -378,11 +379,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
         showValues.put(Shows.RATING_VOTES, show.rating_votes);
         showValues.put(Shows.GENRES, show.genres);
-        if (show.lastUpdated > System.currentTimeMillis()) {
-            show.lastUpdated = 0;
+        if (show.last_updated > System.currentTimeMillis()) {
+            show.last_updated = 0;
         }
-        showValues.put(Shows.LASTUPDATED, show.lastUpdated);
-        showValues.put(Shows.LASTEDIT, show.lastEdited);
+        showValues.put(Shows.LASTUPDATED, show.last_updated);
+        showValues.put(Shows.LASTEDIT, show.last_edited);
 
         context.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
@@ -422,7 +423,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             // add the season...
             ContentValues seasonValues = new ContentValues();
             seasonValues.put(Seasons._ID, season.tvdbId);
-            seasonValues.put(Shows.REF_SHOW_ID, show.tvdbId);
+            seasonValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
             if (season.season < 0) {
                 season.season = 0;
             }
@@ -439,7 +440,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
                 ContentValues episodeValues = new ContentValues();
                 episodeValues.put(Episodes._ID, episode.tvdbId);
-                episodeValues.put(Shows.REF_SHOW_ID, show.tvdbId);
+                episodeValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
                 episodeValues.put(Seasons.REF_SEASON_ID, season.tvdbId);
                 if (episode.episode < 0) {
                     episode.episode = 0;

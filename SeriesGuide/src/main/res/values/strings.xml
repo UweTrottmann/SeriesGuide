@@ -144,7 +144,10 @@
     <string name="action_shows_filter_hidden">Hidden</string>
     <string name="action_shows_sort">Sort shows</string>
     <string name="action_shows_sort_title">Title</string>
-    <string name="action_shows_sort_episode">Next episode</string>
+    <string name="action_shows_sort_latest_episode">Latest episode</string>
+    <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+    <string name="action_shows_sort_last_watched">Last watched</string>
+    <string name="action_shows_sort_remaining">Remaining episodes</string>
     <string name="action_shows_sort_favorites">Favorites first</string>
     <string name="updateall_yes">Update (all)</string>
     <string name="menu_update_delta">Update (outdated only)</string>

@@ -287,11 +287,11 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
                 + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
 
         String SORTING_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + " ASC,"
-                + SeriesGuideContract.Shows.TITLE + " ASC,"
+                + SeriesGuideContract.Shows.SORT_TITLE + ","
                 + SeriesGuideContract.Episodes.NUMBER + " ASC";
 
         String SORTING_RECENT = SeriesGuideContract.Episodes.FIRSTAIREDMS + " DESC,"
-                + SeriesGuideContract.Shows.TITLE + " ASC,"
+                + SeriesGuideContract.Shows.SORT_TITLE + ","
                 + SeriesGuideContract.Episodes.NUMBER + " DESC";
 
         int _ID = 0;

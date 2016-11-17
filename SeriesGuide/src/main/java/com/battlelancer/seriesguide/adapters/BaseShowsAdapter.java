@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -27,7 +28,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     private final int resIdStar;
     private final int resIdStarZero;
 
-    public BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
+    BaseShowsAdapter(Context context, OnContextMenuClickListener listener) {
         super(context, null, 0);
         this.onContextMenuClickListener = listener;
 
@@ -47,16 +48,24 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return v;
     }
 
-    public void setFavoriteState(ImageView view, boolean isFavorite) {
+    void setFavoriteState(ImageView view, boolean isFavorite) {
         view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
         view.setContentDescription(view.getContext()
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
+    void setRemainingCount(Context context, TextView textView, int unwatched) {
+        if (unwatched > 0) {
+            textView.setText(context.getString(R.string.remaining, String.valueOf(unwatched)));
+        } else {
+            textView.setText(null);
+        }
+    }
+
     /**
      * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
      */
-    public static String buildNetworkAndTimeString(Context context, int time, int weekday,
+    static String buildNetworkAndTimeString(Context context, int time, int weekday,
             String timeZone, String country, String network) {
         // network
         StringBuilder networkAndTime = new StringBuilder();
@@ -83,6 +92,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public TextView timeAndNetwork;
         public TextView episode;
         public TextView episodeTime;
+        public TextView remainingCount;
         public ImageView poster;
         public ImageView favorited;
         public ImageView contextMenu;
@@ -97,6 +107,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
             episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            remainingCount = ButterKnife.findById(v, R.id.textViewShowsRemaining);
             poster = (ImageView) v.findViewById(R.id.showposter);
             favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
             contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);

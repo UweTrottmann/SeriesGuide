@@ -4,6 +4,7 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -653,17 +654,20 @@ public class TraktTools {
 
     private int processTraktShows(@NonNull List<BaseShow> remoteShows,
             @NonNull HashSet<Integer> localShows, boolean isInitialSync, Flag flag) {
-        HashMap<Integer, BaseShow> traktShow = buildTraktShowsMap(remoteShows);
+        HashMap<Integer, BaseShow> traktShows = buildTraktShowsMap(remoteShows);
 
         int uploadedShowsCount = 0;
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (Integer localShow : localShows) {
-            if (traktShow.containsKey(localShow)) {
+            if (traktShows.containsKey(localShow)) {
                 // show watched/collected on trakt
-                int result = processTraktSeasons(isInitialSync,
-                        localShow, traktShow.get(localShow), flag);
+                BaseShow traktShow = traktShows.get(localShow);
+                int result = processTraktSeasons(isInitialSync, localShow, traktShow, flag);
                 if (result < SUCCESS) {
                     return result; // processing seasons failed, give up.
+                }
+                if (flag == Flag.WATCHED) {
+                    updateLastWatchedTime(localShow, traktShow, batch);
                 }
             } else {
                 // show not watched/collected on trakt
@@ -699,6 +703,37 @@ public class TraktTools {
                     localShows.size());
         }
         return SUCCESS;
+    }
+
+    /**
+     * Adds an update op for the last watched time of the given show if the last watched time on
+     * trakt is later.
+     */
+    private void updateLastWatchedTime(Integer showTvdbId, BaseShow traktShow,
+            ArrayList<ContentProviderOperation> batch) {
+        if (traktShow.last_watched_at == null) {
+            return;
+        }
+
+        Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
+        Cursor query = context.getContentResolver().query(uri, new String[] {
+                SeriesGuideContract.Shows.LASTWATCHED_MS }, null, null, null);
+        if (query == null) {
+            return;
+        }
+        if (!query.moveToFirst()) {
+            query.close();
+            return;
+        }
+        long lastWatchedMs = query.getLong(0);
+        query.close();
+
+        long lastWatchedMsNew = traktShow.last_watched_at.getMillis();
+        if (lastWatchedMs < lastWatchedMsNew) {
+            batch.add(ContentProviderOperation.newUpdate(uri)
+                    .withValue(SeriesGuideContract.Shows.LASTWATCHED_MS, lastWatchedMsNew)
+                    .build());
+        }
     }
 
     /**

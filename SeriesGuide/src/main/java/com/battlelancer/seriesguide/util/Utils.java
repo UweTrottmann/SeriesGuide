@@ -34,6 +34,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -282,6 +283,10 @@ public class Utils {
             text.setVisibility(View.GONE);
             return false;
         }
+    }
+
+    public static void setMenuItemActiveString(@NonNull MenuItem item) {
+        item.setTitle(item.getTitle() + " ◀");
     }
 
     /**
