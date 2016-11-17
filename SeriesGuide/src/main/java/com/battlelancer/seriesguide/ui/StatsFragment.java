@@ -28,11 +28,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Locale;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -413,22 +414,18 @@ public class StatsFragment extends Fragment {
                 int showTvdbId = showRuntimes.keyAt(i);
                 long runtimeOfShowMin = showRuntimes.valueAt(i);
 
-                final Cursor episodesWatchedOfShow = resolver.query(
+                int watchedEpisodesOfShowCount = DBUtils.getCountOf(resolver,
                         Episodes.buildEpisodesOfShowUri(showTvdbId),
-                        new String[] { Episodes._ID },
                         Episodes.SELECTION_WATCHED
-                                + (includeSpecials
-                                ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
-                        null, null
-                );
-                if (episodesWatchedOfShow == null) {
+                                + (includeSpecials ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
+                        null, -1);
+                if (watchedEpisodesOfShowCount == -1) {
                     // episode query failed, return what we have so far
                     stats.episodesWatchedRuntime(totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS);
                     return buildFailure(stats);
                 }
                 // make sure we calculate with long here (first arg is long) to avoid overflows
-                long runtimeOfEpisodesMin = runtimeOfShowMin * episodesWatchedOfShow.getCount();
-                episodesWatchedOfShow.close();
+                long runtimeOfEpisodesMin = runtimeOfShowMin * watchedEpisodesOfShowCount;
 
                 totalRuntimeMin += runtimeOfEpisodesMin;
                 // post regular update of minimum
@@ -532,28 +529,22 @@ public class StatsFragment extends Fragment {
         private boolean processEpisodes(ContentResolver resolver, Stats stats,
                 boolean includeSpecials) {
             // all episodes
-            Cursor allEpisodesQuery = resolver.query(Episodes.CONTENT_URI,
-                    new String[] { Episodes._ID },
-                    includeSpecials ? null : Episodes.SELECTION_NO_SPECIALS,
-                    null, null);
-            if (allEpisodesQuery == null) {
+            int allEpisodesCount = DBUtils.getCountOf(resolver, Episodes.CONTENT_URI,
+                    includeSpecials ? null : Episodes.SELECTION_NO_SPECIALS, null, -1);
+            if (allEpisodesCount == -1) {
                 return false;
             }
-            stats.episodes(allEpisodesQuery.getCount());
-            allEpisodesQuery.close();
+            stats.episodes(allEpisodesCount);
 
             // watched episodes
-            Cursor watchedEpisodesQuery = resolver.query(Episodes.CONTENT_URI,
-                    new String[] { Episodes._ID },
+            int watchedEpisodesCount = DBUtils.getCountOf(resolver, Episodes.CONTENT_URI,
                     Episodes.SELECTION_WATCHED
                             + (includeSpecials ? "" : " AND " + Episodes.SELECTION_NO_SPECIALS),
-                    null, null
-            );
-            if (watchedEpisodesQuery == null) {
+                    null, -1);
+            if (watchedEpisodesCount == -1) {
                 return false;
             }
-            stats.episodesWatched(watchedEpisodesQuery.getCount());
-            watchedEpisodesQuery.close();
+            stats.episodesWatched(watchedEpisodesCount);
 
             return true;
         }

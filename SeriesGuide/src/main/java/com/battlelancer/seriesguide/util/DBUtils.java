@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -51,8 +53,13 @@ public class DBUtils {
      * @see Shows#UNWATCHED_COUNT
      */
     public static final int UNKNOWN_UNWATCHED_COUNT = -1;
+    public static final int UNKNOWN_COLLECTED_COUNT = -1;
 
     private static final int SMALL_BATCH_SIZE = 50;
+
+    private static final String[] PROJECTION_COUNT = new String[] {
+            BaseColumns._COUNT
+    };
 
     public static class DatabaseErrorEvent {
 
@@ -104,17 +111,6 @@ public class DBUtils {
     }
 
     interface UnwatchedQuery {
-
-        String[] PROJECTION = new String[] {
-                Episodes._ID
-        };
-
-        // this works because we use a SQLite database,
-        // planning to support _COUNT base column going forward
-        String[] PROJECTION_COUNT = new String[] {
-                "count(*) AS count"
-        };
-
         String AIRED_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
                 + " !=-1 AND " + Episodes.FIRSTAIREDMS + "<=?";
 
@@ -131,71 +127,53 @@ public class DBUtils {
     }
 
     /**
-     * Looks up the episodes of a given season and stores the count of already aired, but not
-     * watched ones in the seasons watchcount.
+     * Looks up the episodes of a given season and stores the count of all, unwatched and skipped
+     * ones in the seasons watch counters.
      */
     public static void updateUnwatchedCount(Context context, String seasonid) {
         final ContentResolver resolver = context.getContentResolver();
-        final String customCurrentTime = String.valueOf(TimeTools.getCurrentTime(context));
-        final Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
+        final Uri uri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
-        final Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
-                Episodes._ID
-        }, null, null, null);
-        if (total == null) {
+        final int totalCount = getCountOf(resolver, uri, null, null, -1);
+        if (totalCount == -1) {
             return;
         }
-        final int totalCount = total.getCount();
-        total.close();
 
         // unwatched, aired episodes
-        final Cursor unwatched = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.AIRED_SELECTION, new String[] {
-                        customCurrentTime
-                }, null
-        );
-        if (unwatched == null) {
+        String[] customCurrentTimeArgs = { String.valueOf(TimeTools.getCurrentTime(context)) };
+        final int count = getCountOf(resolver, uri, UnwatchedQuery.AIRED_SELECTION,
+                customCurrentTimeArgs, -1);
+        if (count == -1) {
             return;
         }
-        final int count = unwatched.getCount();
-        unwatched.close();
 
         // unwatched, aired in the future episodes
-        final Cursor unAired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.FUTURE_SELECTION, new String[] {
-                        customCurrentTime
-                }, null
-        );
-        if (unAired == null) {
+        final int unairedCount = getCountOf(resolver, uri, UnwatchedQuery.FUTURE_SELECTION,
+                customCurrentTimeArgs, -1);
+        if (unairedCount == -1) {
             return;
         }
-        final int unairedCount = unAired.getCount();
-        unAired.close();
 
         // unwatched, no airdate
-        final Cursor noAirDate = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.NOAIRDATE_SELECTION, null, null);
-        if (noAirDate == null) {
+        final int noAirDateCount = getCountOf(resolver, uri,
+                UnwatchedQuery.NOAIRDATE_SELECTION, null, -1);
+        if (noAirDateCount == -1) {
             return;
         }
-        final int noAirDateCount = noAirDate.getCount();
-        noAirDate.close();
 
         // any skipped episodes
-        final Cursor skipped = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.SKIPPED_SELECTION, null, null);
-        if (skipped == null) {
+        int skippedCount = getCountOf(resolver, uri, UnwatchedQuery.SKIPPED_SELECTION, null,
+                -1);
+        if (skippedCount == -1) {
             return;
         }
-        boolean hasSkippedEpisodes = skipped.getCount() > 0;
-        skipped.close();
 
         final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unairedCount);
         update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
-        update.put(Seasons.TAGS, hasSkippedEpisodes ? SeasonTags.SKIPPED : SeasonTags.NONE);
+        update.put(Seasons.TAGS, skippedCount > 0 ? SeasonTags.SKIPPED : SeasonTags.NONE);
         update.put(Seasons.TOTALCOUNT, totalCount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
@@ -212,27 +190,12 @@ public class DBUtils {
         }
 
         // unwatched, aired episodes
-        final Cursor unwatched = context.getContentResolver()
-                .query(Episodes.buildEpisodesOfShowUri(showId), UnwatchedQuery.PROJECTION_COUNT,
-                        UnwatchedQuery.AIRED_SELECTION_NO_SPECIALS,
-                        new String[] {
-                                String.valueOf(TimeTools.getCurrentTime(context))
-                        }, null
-                );
-        if (unwatched == null) {
-            return UNKNOWN_UNWATCHED_COUNT;
-        }
-
-        int count;
-        if (unwatched.moveToFirst()) {
-            count = unwatched.getInt(0);
-        } else {
-            count = UNKNOWN_UNWATCHED_COUNT;
-        }
-
-        unwatched.close();
-
-        return count;
+        return getCountOf(context.getContentResolver(),
+                Episodes.buildEpisodesOfShowUri(showId),
+                UnwatchedQuery.AIRED_SELECTION_NO_SPECIALS,
+                new String[] {
+                        String.valueOf(TimeTools.getCurrentTime(context))
+                }, UNKNOWN_UNWATCHED_COUNT);
     }
 
     /**
@@ -241,29 +204,33 @@ public class DBUtils {
      */
     public static int getUncollectedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
-            return -1;
+            return UNKNOWN_COLLECTED_COUNT;
         }
 
         // not collected, no special, previously released episodes
-        final Cursor uncollected = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showId),
-                new String[] {
-                        Episodes._ID, Episodes.COLLECTED
-                },
+        return getCountOf(context.getContentResolver(), Episodes.buildEpisodesOfShowUri(showId),
                 Episodes.SELECTION_NOT_COLLECTED
                         + " AND " + Episodes.SELECTION_NO_SPECIALS
                         + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
                         + " AND " + Episodes.SELECTION_RELEASED_BEFORE_X,
                 new String[] {
                         String.valueOf(TimeTools.getCurrentTime(context))
-                }, null
-        );
-        if (uncollected == null) {
-            return -1;
-        }
-        final int count = uncollected.getCount();
-        uncollected.close();
+                },
+                UNKNOWN_COLLECTED_COUNT);
+    }
 
+    public static int getCountOf(@NonNull ContentResolver resolver, @NonNull Uri uri,
+            @Nullable String selection, @Nullable String[] selectionArgs, int defaultValue) {
+        Cursor cursor = resolver.query(uri, PROJECTION_COUNT, selection, selectionArgs, null);
+        if (cursor == null) {
+            return defaultValue;
+        }
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return defaultValue;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
         return count;
     }
 

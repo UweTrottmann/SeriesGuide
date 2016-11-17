@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.DBUtils;
 import timber.log.Timber;
 
 public class AppSettings {
@@ -86,13 +87,8 @@ public class AppSettings {
             return false; // failed to find our package
         }
 
-        Cursor showsQuery = context.getContentResolver()
-                .query(SeriesGuideContract.Shows.CONTENT_URI, null, null, null, null);
-        if (showsQuery == null) {
-            return false;
-        }
-        int showsCount = showsQuery.getCount();
-        showsQuery.close();
+        int showsCount = DBUtils.getCountOf(context.getContentResolver(),
+                SeriesGuideContract.Shows.CONTENT_URI, null, null, -1);
 
         return showsCount >= 5; // only if 5+ shows are added
     }
