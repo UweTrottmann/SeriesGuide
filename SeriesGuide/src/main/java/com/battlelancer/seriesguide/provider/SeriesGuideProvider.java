@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -259,6 +260,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 Cursor query = null;
                 try {
                     query = builder
+                            .map(BaseColumns._COUNT, "count(*)") // support count base column
                             .where(selection, selectionArgs)
                             .query(db, projection, sortOrder);
                 } catch (SQLiteException e) {
