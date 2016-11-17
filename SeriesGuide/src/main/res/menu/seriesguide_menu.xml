@@ -11,15 +11,15 @@
     <item
         android:id="@+id/menu_action_shows_advanced"
         android:orderInCategory="6"
-        android:title="@string/prefs_category_advanced"
+        android:title="@string/sync_manually"
         app:showAsAction="never">
         <menu>
             <item
                 android:id="@+id/menu_update"
-                android:title="@string/menu_update_delta" />
+                android:title="@string/sync_and_update" />
             <item
                 android:id="@+id/menu_fullupdate"
-                android:title="@string/updateall_yes" />
+                android:title="@string/sync_and_download_all" />
         </menu>
     </item>
 

@@ -36,6 +36,9 @@
     <string name="web_search">Web search</string>
     <string name="add_to_homescreen">Shortcut</string>
     <string name="action_open">Open</string>
+    <string name="sync_manually">Sync manually</string>
+    <string name="sync_and_update">Sync &amp; Update</string>
+    <string name="sync_and_download_all">Sync &amp; Download all</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
@@ -149,8 +152,6 @@
     <string name="action_shows_sort_last_watched">Last watched</string>
     <string name="action_shows_sort_remaining">Remaining episodes</string>
     <string name="action_shows_sort_favorites">Favorites first</string>
-    <string name="updateall_yes">Update (all)</string>
-    <string name="menu_update_delta">Update (outdated only)</string>
     <string name="context_updateshow">Update</string>
     <string name="context_marknext">Watched next episode</string>
 
@@ -416,8 +417,7 @@
 
     <!-- Other advanced settings -->
     <string name="pref_other">Other</string>
-    <string name="pref_autoupdate">Turn on Auto Update</string>
-    <string name="pref_autoupdatesummary">Periodically update your shows</string>
+    <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
     <string name="pref_autobackup">Auto Backup</string>
     <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
     <string name="backup">Backup/Restore</string>

@@ -18,6 +18,9 @@
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
     <string name="not_available">n/a</string>
 
+    <!-- References -->
+    <string name="pref_autoupdate">@string/sync_and_update</string>
+
     <!-- URLs -->
     <string name="url_website">https://seriesgui.de</string>
     <string name="help_url">https://seriesgui.de/help</string>
