@@ -33,6 +33,9 @@
   <string name="web_search">البحث في الويب</string>
   <string name="add_to_homescreen">اختصار</string>
   <string name="action_open">افتح</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
@@ -133,10 +136,11 @@
   <string name="action_shows_filter_hidden">المخفي</string>
   <string name="action_shows_sort">ترتيب المسلسلات</string>
   <string name="action_shows_sort_title">العنوان</string>
-  <string name="action_shows_sort_episode">الحلقة القادمة</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">المفضلة أولاً</string>
-  <string name="updateall_yes">تحديث (الكل)</string>
-  <string name="menu_update_delta">تحديث (الغير محدثة فقط)</string>
   <string name="context_updateshow">تحديث</string>
   <string name="context_marknext">شاهد الحلقة التالية</string>
   <!-- Now -->
@@ -378,8 +382,7 @@
   <string name="pref_theme">التصميم</string>
   <!-- Other advanced settings -->
   <string name="pref_other">أخرى</string>
-  <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
-  <string name="pref_autoupdatesummary">تحديث المسلسلات بشكل دوري</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
   <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>

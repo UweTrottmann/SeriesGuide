@@ -33,6 +33,9 @@
   <string name="web_search">Paieška žiniatinklyje</string>
   <string name="add_to_homescreen">Nuoroda</string>
   <string name="action_open">Atidaryti</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Išvalyti paieškos istoriją</string>
   <string name="search_hint">Ieškoti serijų</string>
@@ -130,10 +133,11 @@
   <string name="action_shows_filter_hidden">Paslėpti</string>
   <string name="action_shows_sort">Rūšiuoti serialus</string>
   <string name="action_shows_sort_title">Pavadinimas</string>
-  <string name="action_shows_sort_episode">Kita serija</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Mėgstamų sąrašas</string>
-  <string name="updateall_yes">Atnaujinti (visus)</string>
-  <string name="menu_update_delta">Atnaujinti (tik pasenusius)</string>
   <string name="context_updateshow">Atnaujinti</string>
   <string name="context_marknext">Pažiūrėta kita serija</string>
   <!-- Now -->
@@ -237,7 +241,7 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Eksperimentinis!</string>
+  <string name="hexagon_warning">Eksperimentinis</string>
   <string name="hexagon_description">Prisijungti prie Cloud, kad padaryti atsargines kopijas ir sinchronizuoti savo laidas bei filmus.</string>
   <string name="hexagon_warning_lists">Sąrašai neįtraukiami.</string>
   <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
@@ -363,15 +367,14 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Kita</string>
-  <string name="pref_autoupdate">Įjungti automatinį atnaujinimą</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Atsarginė kopija/atstatymas</string>
   <string name="backup_summary">Padaryti atsarginę kopiją arba atkurti serialus</string>
   <string name="pref_number">Skaičių formatas</string>
   <string name="pref_offset">Rankinis laiko postūmis</string>
-  <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val.</string>
+  <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val</string>
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -383,7 +386,7 @@
   <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful.</string>
   <string name="backup_failed">Nepavyko padaryti atsarginės kopijos.</string>
-  <string name="import_inprogress">Atkurti duomenų bazę...</string>
+  <string name="import_inprogress">Atkurti duomenų bazę&#8230;</string>
   <string name="import_failed_nosd">Negalima atkurti atsarginės kopijos. Nėra atsarginių kopijų aplanko.</string>
   <string name="import_failed_nofile">Atsarginis failas nepasiekiamas.</string>
   <string name="import_failed_noread">The backup file is not readable.</string>

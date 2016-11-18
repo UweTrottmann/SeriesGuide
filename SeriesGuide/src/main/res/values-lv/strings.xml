@@ -33,6 +33,9 @@
   <string name="web_search">Web meklēšana</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Dzēst meklēšanas vēsturi</string>
   <string name="search_hint">Meklēt epizodēs</string>
@@ -130,10 +133,11 @@
   <string name="action_shows_filter_hidden">Slēptās</string>
   <string name="action_shows_sort">Kārtot seriālus</string>
   <string name="action_shows_sort_title">Nosaukums</string>
-  <string name="action_shows_sort_episode">Nākamā epizode</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Sākot ar izlasi</string>
-  <string name="updateall_yes">Atjaunināt (visus)</string>
-  <string name="menu_update_delta">Atjaunināt (tikai novecojušos)</string>
   <string name="context_updateshow">Atjaunināt</string>
   <string name="context_marknext">Nākamā epizode noskatīta</string>
   <!-- Now -->
@@ -275,7 +279,7 @@
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
   <string name="username">Lietotājvārds</string>
-  <string name="waitplease">Vienu momentu, lūdzu...</string>
+  <string name="waitplease">Vienu momentu, lūdzu&#8230;</string>
   <string name="connect">Savienot</string>
   <string name="disconnect">Atvienot</string>
   <string name="use_integrated_browser">Use integrated browser</string>
@@ -324,8 +328,8 @@
   <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
   <string name="pref_nospoilers">Prevent spoilers</string>
   <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-  <string name="pref_seasonsorting">Kārtot epizodes pēc...</string>
-  <string name="pref_episodesorting">Kārtot epizodes pēc...</string>
+  <string name="pref_seasonsorting">Kārtot epizodes pēc&#8230;</string>
+  <string name="pref_episodesorting">Kārtot epizodes pēc&#8230;</string>
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
@@ -363,8 +367,7 @@
   <string name="pref_theme">Theme</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Citi</string>
-  <string name="pref_autoupdate">Ieslēgt automātiskos atjauninājumus</string>
-  <string name="pref_autoupdatesummary">Periodiski atjaunot tavus šovus</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Dublēt/Atjaunot</string>
@@ -442,7 +445,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Epizode tuvojas</string>
   <string name="dashclock_extension_description">Uzrāda nākamās tavu SeriesGuide šovu epizodes.</string>
-  <string name="dashclock_pref_upcoming_threshold">Uz rādīt epizodi...</string>
+  <string name="dashclock_pref_upcoming_threshold">Uz rādīt epizodi&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>

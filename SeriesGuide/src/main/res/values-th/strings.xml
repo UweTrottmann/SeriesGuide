@@ -33,6 +33,9 @@
   <string name="web_search">ค้นเว็บ</string>
   <string name="add_to_homescreen">ทางลัด</string>
   <string name="action_open">เปิด</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -128,10 +131,11 @@
   <string name="action_shows_filter_hidden">ซ่อน</string>
   <string name="action_shows_sort">แสดงซีรีส์</string>
   <string name="action_shows_sort_title">ชื่อเรื่อง</string>
-  <string name="action_shows_sort_episode">ตอนถัดไป</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
-  <string name="updateall_yes">อัปเดต (ทั้งหมด)</string>
-  <string name="menu_update_delta">อัปเดต (เก่าแล้วเท่านั้น)</string>
   <string name="context_updateshow">อัปเดต</string>
   <string name="context_marknext">ดูตอนถัดไป</string>
   <!-- Now -->
@@ -353,8 +357,7 @@
   <string name="pref_theme">ธีม</string>
   <!-- Other advanced settings -->
   <string name="pref_other">อื่นๆ</string>
-  <string name="pref_autoupdate">เปิดใช้งานการอัปเดตอัตโนมัติ</string>
-  <string name="pref_autoupdatesummary">อัปเดตซีรีส์ของคุณเป็นระยะๆ</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">สำรองอัตโนมัติ</string>
   <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
   <string name="backup">สำรอง/กู้คืน</string>

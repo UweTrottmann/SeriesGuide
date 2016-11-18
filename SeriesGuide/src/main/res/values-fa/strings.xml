@@ -33,6 +33,9 @@
   <string name="web_search">جست‌وجوی وب</string>
   <string name="add_to_homescreen">میانبر</string>
   <string name="action_open">باز کردن</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">نهفته</string>
   <string name="action_shows_sort">چینش نمایش‌ها</string>
   <string name="action_shows_sort_title">عنوان</string>
-  <string name="action_shows_sort_episode">قسمت بعدی</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
-  <string name="updateall_yes">به‌روز رسانی (همه)</string>
-  <string name="menu_update_delta">به‌روز رسانی (فقط قدیمی‌ها)</string>
   <string name="context_updateshow">به‌روز رسانی</string>
   <string name="context_marknext">قسمت بعدی تماشا شده</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">زمینه</string>
   <!-- Other advanced settings -->
   <string name="pref_other">سایر موارد</string>
-  <string name="pref_autoupdate">روشن کردن بروز رسانی خودکار</string>
-  <string name="pref_autoupdatesummary">به‌روز رسانی دوره‌ای نمایش‌هایتان</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
   <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
   <string name="backup">پشتیبان گیری / بازیابی</string>

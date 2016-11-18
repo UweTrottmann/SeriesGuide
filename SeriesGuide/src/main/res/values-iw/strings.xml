@@ -33,6 +33,9 @@
   <string name="web_search">חיפוש באינטרנט</string>
   <string name="add_to_homescreen">קיצור-דרך</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>
@@ -131,10 +134,11 @@
   <string name="action_shows_filter_hidden">מוסתר</string>
   <string name="action_shows_sort">מיון סדרות</string>
   <string name="action_shows_sort_title">שם</string>
-  <string name="action_shows_sort_episode">הפרק הבא</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
-  <string name="updateall_yes">(עדכן (הכל</string>
-  <string name="menu_update_delta">עדכן (ישנים בלבד)</string>
   <string name="context_updateshow">עדכן</string>
   <string name="context_marknext">צפה בפרק הבא</string>
   <!-- Now -->
@@ -368,8 +372,7 @@
   <string name="pref_theme">ערכת נושא</string>
   <!-- Other advanced settings -->
   <string name="pref_other">אחר</string>
-  <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
-  <string name="pref_autoupdatesummary">עדכן את הסדרות שלך מדי פעם</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">גיבוי אוטומטי</string>
   <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
   <string name="backup">גיבוי/שחזור</string>

@@ -33,6 +33,9 @@
   <string name="web_search">Hľadať na webe</string>
   <string name="add_to_homescreen">Odkaz</string>
   <string name="action_open">Otvoriť</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
   <string name="search_hint">Hľadať epizódy</string>
@@ -130,10 +133,11 @@
   <string name="action_shows_filter_hidden">Skryté</string>
   <string name="action_shows_sort">Zoradiť seriály</string>
   <string name="action_shows_sort_title">Názov</string>
-  <string name="action_shows_sort_episode">Ďalšia epizóda</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Uprednostniť obľúbené</string>
-  <string name="updateall_yes">Aktualizovať (všetky)</string>
-  <string name="menu_update_delta">Aktualizácia (iba zastaralé)</string>
   <string name="context_updateshow">Aktualizovať</string>
   <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
   <!-- Now -->
@@ -363,8 +367,7 @@
   <string name="pref_theme">Téma</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Ostatné</string>
-  <string name="pref_autoupdate">Aktualizovať automaticky</string>
-  <string name="pref_autoupdatesummary">Pravidelne aktualizovať vaše seriály</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Automatické zálohovanie</string>
   <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
   <string name="backup">Zálohovanie/Obnovenie</string>

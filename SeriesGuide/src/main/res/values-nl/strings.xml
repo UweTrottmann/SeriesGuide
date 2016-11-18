@@ -33,6 +33,9 @@
   <string name="web_search">Zoeken op het web</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Verborgen</string>
   <string name="action_shows_sort">Series sorteren</string>
   <string name="action_shows_sort_title">Titel</string>
-  <string name="action_shows_sort_episode">Volgende aflevering</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Favorieten eerst</string>
-  <string name="updateall_yes">Bijwerken (alles)</string>
-  <string name="menu_update_delta">Bijwerken (alleen verouderde)</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_marknext">Volgende aflevering bekeken</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Thema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Andere</string>
-  <string name="pref_autoupdate">Automatisch bijwerken inschakelen</string>
-  <string name="pref_autoupdatesummary">Uw series periodiek bijwerken</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Automatische back-up</string>
   <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
   <string name="backup">Back-up maken/herstellen</string>

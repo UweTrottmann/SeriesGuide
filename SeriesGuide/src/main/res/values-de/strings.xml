@@ -33,6 +33,9 @@
   <string name="web_search">Web-Suche</string>
   <string name="add_to_homescreen">Verknüpfung</string>
   <string name="action_open">Öffnen</string>
+  <string name="sync_manually">Manuell synchronisieren</string>
+  <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
+  <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
   <!-- Search -->
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Ausgeblendet</string>
   <string name="action_shows_sort">Serien sortieren</string>
   <string name="action_shows_sort_title">Titel</string>
-  <string name="action_shows_sort_episode">Nächste Folge</string>
+  <string name="action_shows_sort_latest_episode">Neueste Folge</string>
+  <string name="action_shows_sort_oldest_episode">Älteste Folge</string>
+  <string name="action_shows_sort_last_watched">Zuletzt angesehen</string>
+  <string name="action_shows_sort_remaining">Verbleibende Folgen</string>
   <string name="action_shows_sort_favorites">Favoriten zuerst</string>
-  <string name="updateall_yes">Aktualisieren (alle)</string>
-  <string name="menu_update_delta">Aktualisieren (nur veraltete)</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Design</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Anderes</string>
-  <string name="pref_autoupdate">Auto-Aktualisierung aktivieren</string>
-  <string name="pref_autoupdatesummary">Aktualisiert regelmäßig Ihre Serien</string>
+  <string name="pref_autoupdatesummary">Daten von SeriesGuide automatisch synchronisieren und aktualisieren</string>
   <string name="pref_autobackup">Automatische Sicherung</string>
   <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme</string>
   <string name="backup">Sichern/Wiederherstellen</string>

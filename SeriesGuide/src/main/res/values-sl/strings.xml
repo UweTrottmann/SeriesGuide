@@ -33,6 +33,9 @@
   <string name="web_search">Spletno iskanje</string>
   <string name="add_to_homescreen">Bližnjica</string>
   <string name="action_open">Odpri</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="search_hint">Iskanje epizode</string>
@@ -131,10 +134,11 @@
   <string name="action_shows_filter_hidden">Skrito</string>
   <string name="action_shows_sort">Razvrsti oddaje</string>
   <string name="action_shows_sort_title">Naslov</string>
-  <string name="action_shows_sort_episode">Naslednja epizoda</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Najprej priljubljene</string>
-  <string name="updateall_yes">Posodobi (vse)</string>
-  <string name="menu_update_delta">Posodobi (samo zastarele)</string>
   <string name="context_updateshow">Posodobi</string>
   <string name="context_marknext">Pogledana naslednja epizoda</string>
   <!-- Now -->
@@ -368,8 +372,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Ostalo</string>
-  <string name="pref_autoupdate">Vklopite samodejne posodobitve</string>
-  <string name="pref_autoupdatesummary">Periodično posodobi svoje oddaje</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>

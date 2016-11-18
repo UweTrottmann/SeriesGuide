@@ -33,6 +33,9 @@
   <string name="web_search">Web araması</string>
   <string name="add_to_homescreen">Kısayol</string>
   <string name="action_open">Açık</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Gizli</string>
   <string name="action_shows_sort">Dizileri sırala</string>
   <string name="action_shows_sort_title">Başlık</string>
-  <string name="action_shows_sort_episode">Gelecek bölüm</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Önce favoriler</string>
-  <string name="updateall_yes">Güncelleştir (tümü)</string>
-  <string name="menu_update_delta">Güncelleştir (yalnızca eski)</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_marknext">Sıradaki bölüm izlendi</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Diğer</string>
-  <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
-  <string name="pref_autoupdatesummary">Dizilerinizi düzenli olarak güncelleyin</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Otomatik yedekleme</string>
   <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
   <string name="backup">Yedekle/Geri Yükle</string>

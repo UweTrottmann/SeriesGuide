@@ -33,6 +33,9 @@
   <string name="web_search">Wyszukiwarka</string>
   <string name="add_to_homescreen">Skrót</string>
   <string name="action_open">Otwórz</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -130,10 +133,11 @@
   <string name="action_shows_filter_hidden">Ukryty</string>
   <string name="action_shows_sort">Sortuj seriale</string>
   <string name="action_shows_sort_title">Tytuł</string>
-  <string name="action_shows_sort_episode">Następny odcinek</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Najpierw ulubione</string>
-  <string name="updateall_yes">Aktualizuj (wszystko)</string>
-  <string name="menu_update_delta">Aktualizuj (stare)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_marknext">Odcinek obejrzany</string>
   <!-- Now -->
@@ -181,7 +185,7 @@
   <string name="recommended">Zalecane</string>
   <string name="watched_shows">Obejrzane</string>
   <string name="shows_collection">Kolekcja</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Lista oglądanych</string>
   <!-- Lists -->
   <string name="first_list">Pierwsza lista</string>
   <string name="list_add">Dodaj listę</string>
@@ -196,14 +200,14 @@
   <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcja</string>
-  <string name="movies_watchlist">Watchlist</string>
-  <string name="watchlist_add">Add to watchlist</string>
-  <string name="watchlist_remove">Remove from watchlist</string>
-  <string name="watchlist_added">Added to watchlist</string>
-  <string name="watchlist_removed">Removed from watchlist</string>
+  <string name="movies_watchlist">Lista oglądanych</string>
+  <string name="watchlist_add">Dodaj do listy oglądanych</string>
+  <string name="watchlist_remove">Usuń z listy oglądanych</string>
+  <string name="watchlist_added">Dodano do listy oglądanych</string>
+  <string name="watchlist_removed">Usunięto z listy oglądanych</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
   <string name="movies_collection_empty">Brak filmów w kolekcji.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+  <string name="movies_watchlist_empty">Nie dodano filmów do listy oglądanych.</string>
   <string name="trailer">Zwiastun</string>
   <string name="movie_cast">Obsada</string>
   <string name="movie_crew">Ekipa filmowa</string>
@@ -219,8 +223,8 @@
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
   <string name="runtime_all_episodes">Czas wyświetlania wszystkich obejrzanych odcinków</string>
-  <string name="movies_on_watchlist">%s on watchlist</string>
-  <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
+  <string name="movies_on_watchlist">%s na liście oglądanych</string>
+  <string name="runtime_movies_watchlist">czas trwania filmów na liście oglądanych</string>
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
     <item quantity="few">%d dni</item>
@@ -363,8 +367,7 @@
   <string name="pref_theme">Motyw</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Inne</string>
-  <string name="pref_autoupdate">Uruchom aktualizacje automatyczne</string>
-  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
   <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
   <string name="backup">Kopia zapasowa</string>

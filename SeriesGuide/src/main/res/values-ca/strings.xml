@@ -33,6 +33,9 @@
   <string name="web_search">Cerca web</string>
   <string name="add_to_homescreen">Drecera</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Ocults</string>
   <string name="action_shows_sort">Ordena sèries</string>
   <string name="action_shows_sort_title">Títol</string>
-  <string name="action_shows_sort_episode">Proper episodi</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Preferits primer</string>
-  <string name="updateall_yes">Actualitza (tot)</string>
-  <string name="menu_update_delta">Actualitza (només obsolets)</string>
   <string name="context_updateshow">Actualitza</string>
   <string name="context_marknext">Següent episodi vist</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Altres</string>
-  <string name="pref_autoupdate">Actualitzacions automàtiques</string>
-  <string name="pref_autoupdatesummary">Actualitza periòdicament les sèries</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Còpies de seguretat</string>

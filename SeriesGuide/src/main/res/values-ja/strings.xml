@@ -33,6 +33,9 @@
   <string name="web_search">ウェブ検索</string>
   <string name="add_to_homescreen">ショートカット</string>
   <string name="action_open">開く</string>
+  <string name="sync_manually">手動で同期</string>
+  <string name="sync_and_update">同期と更新</string>
+  <string name="sync_and_download_all">すべて同期とダウンロード</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>
@@ -128,10 +131,11 @@
   <string name="action_shows_filter_hidden">非表示</string>
   <string name="action_shows_sort">番組を並び替え</string>
   <string name="action_shows_sort_title">タイトル</string>
-  <string name="action_shows_sort_episode">次のエピソード</string>
+  <string name="action_shows_sort_latest_episode">最新のエピソード</string>
+  <string name="action_shows_sort_oldest_episode">最も古いエピソード</string>
+  <string name="action_shows_sort_last_watched">最後に視聴</string>
+  <string name="action_shows_sort_remaining">残りのエピソード</string>
   <string name="action_shows_sort_favorites">お気に入りを最初に</string>
-  <string name="updateall_yes">更新 (すべて)</string>
-  <string name="menu_update_delta">更新 (古いもののみ)</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">視聴済次のエピソード</string>
   <!-- Now -->
@@ -353,8 +357,7 @@
   <string name="pref_theme">テーマ</string>
   <!-- Other advanced settings -->
   <string name="pref_other">その他</string>
-  <string name="pref_autoupdate">自動更新をオンにする</string>
-  <string name="pref_autoupdatesummary">定期的に番組を更新します</string>
+  <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
   <string name="pref_autobackup">自動バックアップ</string>
   <string name="pref_autobackupsummary">番組、リスト、映画の週次バックアップ</string>
   <string name="backup">バックアップ/復元</string>

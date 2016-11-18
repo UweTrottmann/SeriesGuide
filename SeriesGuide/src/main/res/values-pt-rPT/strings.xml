@@ -33,6 +33,9 @@
   <string name="web_search">Pesquisa Web</string>
   <string name="add_to_homescreen">Atalho</string>
   <string name="action_open">Abrir</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episódios</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Ocultados</string>
   <string name="action_shows_sort">Ordenar séries</string>
   <string name="action_shows_sort_title">Título</string>
-  <string name="action_shows_sort_episode">Próximo episódio</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
-  <string name="updateall_yes">Atualização (tudo)</string>
-  <string name="menu_update_delta">Atualização (apenas desatualizada)</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Marcar próximo episódio como visto</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Outro</string>
-  <string name="pref_autoupdate">Activar actualização automática</string>
-  <string name="pref_autoupdatesummary">Actualizar periodicamente as tuas séries</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Backup Automático</string>
   <string name="pref_autobackupsummary">Backup semanal de seus programas, listas e filmes</string>
   <string name="backup">Backup/Restaurar</string>

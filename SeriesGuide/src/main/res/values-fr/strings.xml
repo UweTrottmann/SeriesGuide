@@ -33,6 +33,9 @@
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
   <string name="action_open">Ouvert</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Cachés</string>
   <string name="action_shows_sort">Trier les séries</string>
   <string name="action_shows_sort_title">Titre</string>
-  <string name="action_shows_sort_episode">Prochain épisode</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Favoris en premier</string>
-  <string name="updateall_yes">Mise à jour (tous)</string>
-  <string name="menu_update_delta">Mise à jour (juste les obsolètes)</string>
   <string name="context_updateshow">Mettre à jour</string>
   <string name="context_marknext">Prochain épisode vu</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Thème</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Autres</string>
-  <string name="pref_autoupdate">Activer la mise à jour automatique</string>
-  <string name="pref_autoupdatesummary">Mise à jour périodique de vos séries</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Sauvegarde automatique</string>
   <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
   <string name="backup">Sauvegarde/Restauration</string>

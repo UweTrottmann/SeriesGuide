@@ -33,6 +33,9 @@
   <string name="web_search">Búsqueda en la web</string>
   <string name="add_to_homescreen">Acceso directo</string>
   <string name="action_open">Abierto</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Escondidos</string>
   <string name="action_shows_sort">Ordenar series</string>
   <string name="action_shows_sort_title">Título</string>
-  <string name="action_shows_sort_episode">Próximo episodio</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Favoritos primero</string>
-  <string name="updateall_yes">Actualizar (todos)</string>
-  <string name="menu_update_delta">Actualizar (solo desactualizados)</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Siguiente episodio visto</string>
   <!-- Now -->
@@ -359,8 +363,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Otros</string>
-  <string name="pref_autoupdate">Activar la actualización automática</string>
-  <string name="pref_autoupdatesummary">Actualizar periódicamente tus shows</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Copia de seguridad automática</string>
   <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
   <string name="backup">Respaldo/Restauración</string>

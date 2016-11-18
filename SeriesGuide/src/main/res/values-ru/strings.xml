@@ -33,6 +33,9 @@
   <string name="web_search">Веб-поиск</string>
   <string name="add_to_homescreen">Ярлык</string>
   <string name="action_open">Открыть</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -130,10 +133,11 @@
   <string name="action_shows_filter_hidden">Скрытые</string>
   <string name="action_shows_sort">Сортировать сериалы</string>
   <string name="action_shows_sort_title">Название</string>
-  <string name="action_shows_sort_episode">Следующий эпизод</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Сначала избранные</string>
-  <string name="updateall_yes">Обновить (все)</string>
-  <string name="menu_update_delta">Обновить (только устаревшие)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_marknext">Смотреть следующий эпизод</string>
   <!-- Now -->
@@ -363,8 +367,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Другое</string>
-  <string name="pref_autoupdate">Автоматическое обновление</string>
-  <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Автоматическое резервное копирование</string>
   <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
   <string name="backup">Резервное копирование/восстановление</string>

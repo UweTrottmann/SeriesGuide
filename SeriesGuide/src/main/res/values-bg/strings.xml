@@ -33,6 +33,9 @@
   <string name="web_search">Търсене в мрежата</string>
   <string name="add_to_homescreen">Пряк път</string>
   <string name="action_open">Отвори</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>
@@ -129,10 +132,11 @@
   <string name="action_shows_filter_hidden">Скрити</string>
   <string name="action_shows_sort">Сортирай сериалите</string>
   <string name="action_shows_sort_title">Заглавие</string>
-  <string name="action_shows_sort_episode">Следващ епизод</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Първо Любими</string>
-  <string name="updateall_yes">Актуализирай (всички)</string>
-  <string name="menu_update_delta">Актуализирай (само остарелите)</string>
   <string name="context_updateshow">Актуализирай</string>
   <string name="context_marknext">Гледан следващ епизод</string>
   <!-- Now -->
@@ -358,8 +362,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Други</string>
-  <string name="pref_autoupdate">Включване на автоматичното актуализиране</string>
-  <string name="pref_autoupdatesummary">Периодично обновявайте сериалите си</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Архивиране/Възстановяване</string>

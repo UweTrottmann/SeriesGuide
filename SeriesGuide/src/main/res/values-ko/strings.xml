@@ -33,6 +33,9 @@
   <string name="web_search">웹 검색</string>
   <string name="add_to_homescreen">바로가기</string>
   <string name="action_open">열기</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">검색기록 지우기</string>
   <string name="search_hint">에피소드 검색</string>
@@ -128,10 +131,11 @@
   <string name="action_shows_filter_hidden">숨긴 것</string>
   <string name="action_shows_sort">쇼 정렬</string>
   <string name="action_shows_sort_title">제목</string>
-  <string name="action_shows_sort_episode">다음 에피소드</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">즐겨찾기 먼저</string>
-  <string name="updateall_yes">업데이트 (모두)</string>
-  <string name="menu_update_delta">업데이트 (오래된 것만)</string>
   <string name="context_updateshow">업데이트</string>
   <string name="context_marknext">다음 에피소드 시청완료</string>
   <!-- Now -->
@@ -353,8 +357,7 @@
   <string name="pref_theme">테마</string>
   <!-- Other advanced settings -->
   <string name="pref_other">기타</string>
-  <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">주기적으로 쇼 업데이트</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">자동 백업</string>
   <string name="pref_autobackupsummary">매주 쇼, 리스트 및 영화를 백업합니다.</string>
   <string name="backup">백업/복원</string>
