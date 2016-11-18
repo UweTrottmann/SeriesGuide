@@ -715,25 +715,8 @@ public class TraktTools {
             return;
         }
 
-        Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
-        Cursor query = context.getContentResolver().query(uri, new String[] {
-                SeriesGuideContract.Shows.LASTWATCHED_MS }, null, null, null);
-        if (query == null) {
-            return;
-        }
-        if (!query.moveToFirst()) {
-            query.close();
-            return;
-        }
-        long lastWatchedMs = query.getLong(0);
-        query.close();
-
-        long lastWatchedMsNew = traktShow.last_watched_at.getMillis();
-        if (lastWatchedMs < lastWatchedMsNew) {
-            batch.add(ContentProviderOperation.newUpdate(uri)
-                    .withValue(SeriesGuideContract.Shows.LASTWATCHED_MS, lastWatchedMsNew)
-                    .build());
-        }
+        ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
+                traktShow.last_watched_at.getMillis());
     }
 
     /**

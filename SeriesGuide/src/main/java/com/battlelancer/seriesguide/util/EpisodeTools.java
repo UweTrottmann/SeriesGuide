@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.os.AsyncTaskCompat;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
@@ -464,6 +465,7 @@ public class EpisodeTools {
 
             Timber.d("flagsFromHexagon: downloading changed episode flags since %s", lastSyncTime);
 
+            SparseArrayCompat<Long> showsLastWatchedMs = new SparseArrayCompat<>();
             while (hasMoreEpisodes) {
                 try {
                     Episodes episodesService = HexagonTools.getEpisodesService(context);
@@ -506,8 +508,19 @@ public class EpisodeTools {
                 ArrayList<ContentProviderOperation> batch = new ArrayList<>();
                 for (Episode episode : episodes) {
                     ContentValues values = new ContentValues();
-                    if (episode.getWatchedFlag() != null) {
-                        values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                    Integer showTvdbId = episode.getShowTvdbId();
+                    Integer watchedFlag = episode.getWatchedFlag();
+                    if (watchedFlag != null) {
+                        values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
+                        // record the latest last watched time for a show
+                        if (!EpisodeTools.isUnwatched(watchedFlag)) {
+                            Long lastWatchedMs = showsLastWatchedMs.get(showTvdbId);
+                            // episodes returned in reverse chrono order, so just get the first time
+                            if (lastWatchedMs == null && episode.getUpdatedAt() != null) {
+                                long updatedAtMs = episode.getUpdatedAt().getValue();
+                                showsLastWatchedMs.put(showTvdbId, updatedAtMs);
+                            }
+                        }
                     }
                     if (episode.getIsInCollection() != null) {
                         values.put(SeriesGuideContract.Episodes.COLLECTED,
@@ -517,7 +530,7 @@ public class EpisodeTools {
                     ContentProviderOperation op = ContentProviderOperation
                             .newUpdate(SeriesGuideContract.Episodes.CONTENT_URI)
                             .withSelection(SeriesGuideContract.Shows.REF_SHOW_ID + "="
-                                    + episode.getShowTvdbId() + " AND "
+                                    + showTvdbId + " AND "
                                     + SeriesGuideContract.Episodes.SEASON + "="
                                     + episode.getSeasonNumber() + " AND "
                                     + SeriesGuideContract.Episodes.NUMBER + "="
@@ -537,10 +550,41 @@ public class EpisodeTools {
                 }
             }
 
+            if (!updateShowsLastWatchedTime(context, showsLastWatchedMs)) {
+                return false;
+            }
+
             // store new last sync time
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
                     .commit();
+
+            return true;
+        }
+
+        private static boolean updateShowsLastWatchedTime(Context context,
+                SparseArrayCompat<Long> showsLastWatchedMs) {
+            if (showsLastWatchedMs.size() == 0) {
+                return true; // no episodes were watched, no last watched time to update
+            }
+
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+            for (int i = 0; i < showsLastWatchedMs.size(); i++) {
+                int showTvdbId = showsLastWatchedMs.keyAt(i);
+                long lastWatchedMsNew = showsLastWatchedMs.valueAt(i);
+                if (!ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
+                        lastWatchedMsNew)) {
+                    return false; // failed to query current last watched ms
+                }
+            }
+
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e(e,
+                        "updateShowsLastWatchedTime: failed to apply last watched time updates");
+                return false;
+            }
 
             return true;
         }
