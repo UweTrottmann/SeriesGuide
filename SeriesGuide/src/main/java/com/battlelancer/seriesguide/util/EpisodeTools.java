@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
@@ -550,7 +551,7 @@ public class EpisodeTools {
                 }
             }
 
-            if (!updateShowsLastWatchedTime(context, showsLastWatchedMs)) {
+            if (!updateLastWatchedTimeOfShows(context, showsLastWatchedMs)) {
                 return false;
             }
 
@@ -562,7 +563,7 @@ public class EpisodeTools {
             return true;
         }
 
-        private static boolean updateShowsLastWatchedTime(Context context,
+        private static boolean updateLastWatchedTimeOfShows(Context context,
                 SparseArrayCompat<Long> showsLastWatchedMs) {
             if (showsLastWatchedMs.size() == 0) {
                 return true; // no episodes were watched, no last watched time to update
@@ -602,7 +603,7 @@ public class EpisodeTools {
             String cursor = null;
 
             Uri episodesOfShowUri = SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId);
-
+            Long lastWatchedMs = null;
             while (hasMoreEpisodes) {
                 // abort if connection is lost
                 if (!AndroidUtils.isNetworkConnected(context)) {
@@ -654,6 +655,14 @@ public class EpisodeTools {
                     if (episode.getWatchedFlag() != null
                             && episode.getWatchedFlag() != EpisodeFlags.UNWATCHED) {
                         values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                        // record last watched time by taking latest updatedAt of watched/skipped
+                        DateTime updatedAt = episode.getUpdatedAt();
+                        if (updatedAt != null) {
+                            long lastWatchedMsNew = updatedAt.getValue();
+                            if (lastWatchedMs == null || lastWatchedMs < lastWatchedMsNew) {
+                                lastWatchedMs = lastWatchedMsNew;
+                            }
+                        }
                     }
                     if (episode.getIsInCollection() != null
                             && episode.getIsInCollection()) {
@@ -687,6 +696,35 @@ public class EpisodeTools {
                             showTvdbId);
                     return false;
                 }
+            }
+
+            //noinspection RedundantIfStatement
+            if (!updateLastWatchedTimeOfShow(context, showTvdbId, lastWatchedMs)) {
+                return false; // failed to update last watched time
+            }
+
+            return true;
+        }
+
+        private static boolean updateLastWatchedTimeOfShow(Context context, int showTvdbId,
+                @Nullable Long lastWatchedMs) {
+            if (lastWatchedMs == null) {
+                return true; // no last watched time, nothing to update
+            }
+
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>(1);
+            if (!ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
+                    lastWatchedMs)) {
+                return false; // failed to query current last watched ms
+            }
+
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e(e,
+                        "updateLastWatchedTimeOfShow: failed to update last watched ms for show %s",
+                        showTvdbId);
+                return false;
             }
 
             return true;
