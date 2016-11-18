@@ -9,6 +9,16 @@ Version 34
 ----------
 *(in development)*
 
+#### 34-beta3
+*(2016-11-18)*
+
+* FEATURE Changed show sort options. Shows can now be sorted by title, latest or oldest next episode, last watched or remaining number of episodes.
+* FEATURE Support new show sort options for lists and widgets.
+* TWEAK In the show list and in lists, shows display the remaining number of released, unwatched episodes right on their card.
+* TWEAK Display spoiler setting instead of language setting on getting started card.
+* FIX Trim leading and trailing white spaces from show titles.
+* NOTE Latest translations from crowdin.
+
 #### 34-beta2
 *(2016-11-04)*
 
