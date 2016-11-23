@@ -297,8 +297,8 @@ public class DBUtils {
             query = new StringBuilder(CalendarAdapter.Query.QUERY_RECENT);
             sortOrder = CalendarAdapter.Query.SORTING_RECENT;
             if (numberOfDaysToInclude < 1) {
-                // at least has an air date
-                timeThreshold = 0;
+                // to the past!
+                timeThreshold = Long.MIN_VALUE;
             } else {
                 // last x days
                 timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
@@ -308,7 +308,7 @@ public class DBUtils {
             query = new StringBuilder(CalendarAdapter.Query.QUERY_UPCOMING);
             sortOrder = CalendarAdapter.Query.SORTING_UPCOMING;
             if (numberOfDaysToInclude < 1) {
-                // to infinity!
+                // to the future!
                 timeThreshold = Long.MAX_VALUE;
             } else {
                 timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS

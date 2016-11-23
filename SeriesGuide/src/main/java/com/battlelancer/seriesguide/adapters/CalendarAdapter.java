@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment;
@@ -265,34 +266,35 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     public interface Query {
 
         String[] PROJECTION = new String[] {
-                SeriesGuideDatabase.Tables.EPISODES + "." + SeriesGuideContract.Episodes._ID,
-                SeriesGuideContract.Episodes.TITLE,
-                SeriesGuideContract.Episodes.NUMBER,
-                SeriesGuideContract.Episodes.SEASON,
-                SeriesGuideContract.Episodes.FIRSTAIREDMS,
-                SeriesGuideContract.Episodes.WATCHED,
-                SeriesGuideContract.Episodes.COLLECTED,
+                SeriesGuideDatabase.Tables.EPISODES + "." + Episodes._ID,
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.SEASON,
+                Episodes.FIRSTAIREDMS,
+                Episodes.WATCHED,
+                Episodes.COLLECTED,
                 SeriesGuideContract.Shows.REF_SHOW_ID,
                 SeriesGuideContract.Shows.TITLE,
                 SeriesGuideContract.Shows.NETWORK,
                 SeriesGuideContract.Shows.POSTER
         };
 
-        String QUERY_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + ">=? AND "
-                + SeriesGuideContract.Episodes.FIRSTAIREDMS
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND "
+                + Episodes.FIRSTAIREDMS
                 + "<? AND " + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
 
-        String QUERY_RECENT = SeriesGuideContract.Episodes.FIRSTAIREDMS + "<? AND "
-                + SeriesGuideContract.Episodes.FIRSTAIREDMS + ">? AND "
+        String QUERY_RECENT = Episodes.SELECTION_HAS_RELEASE_DATE + " AND "
+                + Episodes.FIRSTAIREDMS + "<? AND "
+                + Episodes.FIRSTAIREDMS + ">? AND "
                 + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
 
-        String SORTING_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + " ASC,"
+        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC,"
                 + SeriesGuideContract.Shows.SORT_TITLE + ","
-                + SeriesGuideContract.Episodes.NUMBER + " ASC";
+                + Episodes.NUMBER + " ASC";
 
-        String SORTING_RECENT = SeriesGuideContract.Episodes.FIRSTAIREDMS + " DESC,"
+        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC,"
                 + SeriesGuideContract.Shows.SORT_TITLE + ","
-                + SeriesGuideContract.Episodes.NUMBER + " DESC";
+                + Episodes.NUMBER + " DESC";
 
         int _ID = 0;
         int TITLE = 1;
