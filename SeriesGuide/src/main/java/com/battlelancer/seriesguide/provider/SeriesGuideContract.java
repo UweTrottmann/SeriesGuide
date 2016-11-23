@@ -516,7 +516,7 @@ public class SeriesGuideContract {
 
     interface ActivityColumns {
 
-        String TIMESTAMP = "activity_time";
+        String TIMESTAMP_MS = "activity_time";
 
         String EPISODE_TVDB_ID = "activity_episode";
 
@@ -956,6 +956,8 @@ public class SeriesGuideContract {
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
+
+        public static final String SORT_LATEST = Activity.TIMESTAMP_MS + " DESC";
 
         public static Uri buildActivityUri(String episodeTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();

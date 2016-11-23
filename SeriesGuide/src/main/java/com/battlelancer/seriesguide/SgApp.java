@@ -52,6 +52,10 @@ public class SgApp extends Application {
      * Requires full show update due to switch to locally stored trakt ids.
      */
     public static final int RELEASE_VERSION_26_BETA3 = 15142;
+    /**
+     * Populate shows last watched field from activity table.
+     */
+    public static final int RELEASE_VERSION_34_BETA4 = 15223;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}

@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
@@ -448,6 +449,9 @@ public class ShowsActivity extends BaseTopActivity implements
                 scheduleAllShowsUpdate();
                 // force a sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+            }
+            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
+                ActivityTools.populateShowsLastWatchedTime(this);
             }
 
             // set this as lastVersion

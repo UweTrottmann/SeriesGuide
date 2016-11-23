@@ -529,7 +529,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
             + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + ActivityColumns.TIMESTAMP_MS + " INTEGER NOT NULL,"
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
