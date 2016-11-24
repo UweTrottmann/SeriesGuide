@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
@@ -64,15 +65,20 @@ public class DBUtils {
     public static class DatabaseErrorEvent {
 
         private final String message;
+        private final boolean isCorrupted;
 
-        public DatabaseErrorEvent(String message) {
+        DatabaseErrorEvent(String message, boolean isCorrupted) {
             this.message = message;
+            this.isCorrupted = isCorrupted;
         }
 
         public void handle(Context context) {
-            Toast.makeText(context,
-                    context.getString(R.string.app_name) + " database error. (" + message + ")",
-                    Toast.LENGTH_SHORT).show();
+            StringBuilder errorText = new StringBuilder(context.getString(R.string.database_error));
+            if (isCorrupted) {
+                errorText.append(" ").append(context.getString(R.string.reinstall_info));
+            }
+            errorText.append(" (").append(message).append(")");
+            Toast.makeText(context, errorText, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -80,7 +86,9 @@ public class DBUtils {
      * Post an event to simply show a toast with the error message.
      */
     public static void postDatabaseError(SQLiteException e) {
-        EventBus.getDefault().post(new DatabaseErrorEvent(e.getMessage()));
+        EventBus.getDefault()
+                .post(new DatabaseErrorEvent(e.getMessage(),
+                        e instanceof SQLiteDatabaseCorruptException));
     }
 
     /**
