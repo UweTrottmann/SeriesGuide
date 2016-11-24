@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.util.Utils;
  * Shows settings fragment for a specific app widget, hosted inside a {@link ListWidgetConfigure}
  * activity.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
 
     @SuppressWarnings("FieldCanBeLocal") private SharedPreferences.OnSharedPreferenceChangeListener
@@ -127,6 +126,9 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
                     String key) {
+                if (!isAdded()) {
+                    return; // no longer attached to activity
+                }
                 if (typePref.getKey().equals(key)) {
                     String newTypeValue = typePref.getValue();
                     boolean displayingShows = getString(R.string.widget_type_shows)
