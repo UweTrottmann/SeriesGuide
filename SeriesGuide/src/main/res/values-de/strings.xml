@@ -97,9 +97,9 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
-  <string name="mark_all">Alle gesehen</string>
-  <string name="unmark_all">Keine gesehen</string>
-  <string name="mark_untilhere">Alle älteren gesehen markieren</string>
+  <string name="mark_all">Alle angesehen</string>
+  <string name="unmark_all">Keine angesehen</string>
+  <string name="mark_untilhere">Ältere angesehen markieren</string>
   <string name="collect_all">Alle gesammelt</string>
   <string name="uncollect_all">Keine gesammelt</string>
   <string name="action_skip">Überspringen</string>
@@ -108,8 +108,8 @@
   <string name="action_collection_remove">Aus Sammlung entfernen</string>
   <string name="action_collection_added">Zur Sammlung hinzugefügt</string>
   <string name="action_collection_removed">Aus Sammlung entfernt</string>
-  <string name="action_watched">Gesehen markieren</string>
-  <string name="action_unwatched">Nicht gesehen markieren</string>
+  <string name="action_watched">Angesehen markieren</string>
+  <string name="action_unwatched">Nicht angesehen markieren</string>
   <!-- Shows -->
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
@@ -127,7 +127,7 @@
   <string name="action_shows_filter">Serien filtern</string>
   <string name="empty_filter">Alle Filter entfernen</string>
   <string name="action_shows_filter_favorites">Favoriten</string>
-  <string name="action_shows_filter_unwatched">Ungesehen</string>
+  <string name="action_shows_filter_unwatched">Nicht angesehen</string>
   <string name="action_shows_filter_upcoming">Demnächst</string>
   <string name="action_shows_filter_hidden">Ausgeblendet</string>
   <string name="action_shows_sort">Serien sortieren</string>
@@ -138,10 +138,10 @@
   <string name="action_shows_sort_remaining">Verbleibende Folgen</string>
   <string name="action_shows_sort_favorites">Favoriten zuerst</string>
   <string name="context_updateshow">Aktualisieren</string>
-  <string name="context_marknext">Nächste Folge gesehen</string>
+  <string name="context_marknext">Nächste Folge angesehen</string>
   <!-- Now -->
   <string name="now_tab">Jetzt</string>
-  <string name="recently_watched">Vor kurzem gesehen</string>
+  <string name="recently_watched">Vor kurzem angesehen</string>
   <string name="released_today">Heute veröffentlicht</string>
   <string name="friends_recently">Ihre trakt Freunde</string>
   <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
@@ -162,9 +162,9 @@
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">ungesehene Folgen</string>
-  <string name="season_allwatched">Alle Folgen gesehen</string>
-  <string name="season_onenotwatched">ungesehene Folge</string>
+  <string name="season_watchcount">Folgen nicht angesehen</string>
+  <string name="season_allwatched">Alle Folgen angesehen</string>
+  <string name="season_onenotwatched">Folge nicht angesehen</string>
   <string name="season_unaired">zukünftige</string>
   <string name="oneotherepisode">andere Folge</string>
   <string name="otherepisodes">andere Folgen</string>
@@ -182,7 +182,7 @@
   <string name="add_error">%s konnte nicht hinzugefügt werden.</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste.</string>
   <string name="recommended">Empfehlungen</string>
-  <string name="watched_shows">Gesehen</string>
+  <string name="watched_shows">Angesehen</string>
   <string name="shows_collection">Sammlung</string>
   <string name="watchlist">Ansehen-Liste</string>
   <!-- Lists -->
@@ -255,8 +255,8 @@
   <string name="hexagon_google_play_missing">Um SeriesGuide Cloud zu verwenden sind Google Play Services erforderlich.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sende an trakt.</string>
-  <string name="trakt_seen">%s gesehen.</string>
-  <string name="trakt_notseen">%s nicht gesehen.</string>
+  <string name="trakt_seen">%s angesehen.</string>
+  <string name="trakt_notseen">%s nicht angesehen.</string>
   <string name="trakt_collected">%s gesammelt.</string>
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
@@ -340,7 +340,7 @@
   <!-- Sort orders -->
   <string name="sort_order_latest_first">Aktuellste zuerst</string>
   <string name="sort_order_oldest_first">Älteste zuerst</string>
-  <string name="sort_order_unwatched_first">Ungesehene zuerst</string>
+  <string name="sort_order_unwatched_first">Nicht angesehene zuerst</string>
   <string name="sort_order_alphabetical">A - Z</string>
   <string name="sort_order_top_rated_first">Top bewertet</string>
   <string name="sort_order_latest_first_dvd">Aktuellste zuerst (DVD)</string>
@@ -428,7 +428,7 @@
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
   <!-- List Widget -->
-  <string name="hide_watched">Verstecke gesehene Folgen</string>
+  <string name="hide_watched">Angesehene Folgen verstecken</string>
   <string name="pref_widget_opacity">Widget-Hintergrund</string>
   <string name="pref_widget_type">Widget-Typ</string>
   <!-- Widget background options -->

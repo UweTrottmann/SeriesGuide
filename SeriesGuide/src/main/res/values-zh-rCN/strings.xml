@@ -33,9 +33,9 @@
   <string name="web_search">网页搜索</string>
   <string name="add_to_homescreen">置于桌面</string>
   <string name="action_open">打开</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">手动同步</string>
+  <string name="sync_and_update">同步 &amp; 更新</string>
+  <string name="sync_and_download_all">同步 &amp; 下载全部</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
@@ -131,10 +131,10 @@
   <string name="action_shows_filter_hidden">已被标记为隐藏</string>
   <string name="action_shows_sort">重新排序</string>
   <string name="action_shows_sort_title">依据节目名称</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">最新一集</string>
+  <string name="action_shows_sort_oldest_episode">最早一集</string>
+  <string name="action_shows_sort_last_watched">最新观看</string>
+  <string name="action_shows_sort_remaining">剩余集数</string>
   <string name="action_shows_sort_favorites">依据喜爱状态</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">标记本集为已观看</string>
@@ -357,7 +357,7 @@
   <string name="pref_theme">主题</string>
   <!-- Other advanced settings -->
   <string name="pref_other">其它</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">自动同步并更新 SeriesGuide 数据</string>
   <string name="pref_autobackup">自动备份</string>
   <string name="pref_autobackupsummary">每周定期备份剧集、列表和电影数据</string>
   <string name="backup">备份与还原</string>

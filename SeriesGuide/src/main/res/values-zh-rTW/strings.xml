@@ -33,9 +33,9 @@
   <string name="web_search">網頁搜尋</string>
   <string name="add_to_homescreen">快速鍵</string>
   <string name="action_open">開啟</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">手動同步</string>
+  <string name="sync_and_update">同步 &amp; 和更新</string>
+  <string name="sync_and_download_all">同步&amp; 及下載</string>
   <!-- Search -->
   <string name="clear_search_history">清除搜尋記錄</string>
   <string name="search_hint">搜尋集數</string>
@@ -48,7 +48,7 @@
   <string name="app_not_available">沒有應用程式可以處理此需求</string>
   <string name="people_empty">什麼東西都沒有？ ！點擊以在試一次。</string>
   <string name="database_error">無法修改資料。</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享節目</string>
@@ -131,10 +131,10 @@
   <string name="action_shows_filter_hidden">隱藏</string>
   <string name="action_shows_sort">排序影集</string>
   <string name="action_shows_sort_title">依影集名稱</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">最新一集</string>
+  <string name="action_shows_sort_oldest_episode">最舊一集</string>
+  <string name="action_shows_sort_last_watched">上一次觀看</string>
+  <string name="action_shows_sort_remaining">剩餘的集數</string>
   <string name="action_shows_sort_favorites">喜愛影集優先</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">觀看下一集</string>
@@ -174,7 +174,7 @@
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="action_try_any_language">嘗試其他種語言</string>
   <string name="action_try_again">再試一次</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">TheTVDB 上不存在。稍後再試。</string>
   <string name="add_all">全部加入</string>
   <string name="add_multiple">所有節目將會顯示在你的清單中。</string>
   <string name="add_started">%s將會顯示在你的清單中。</string>
@@ -357,7 +357,7 @@
   <string name="pref_theme">主題</string>
   <!-- Other advanced settings -->
   <string name="pref_other">其他</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
   <string name="pref_autobackup">自動備份</string>
   <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
   <string name="backup">備份/還原</string>
@@ -366,7 +366,7 @@
   <string name="pref_offset">手動時間換算</string>
   <string name="pref_offsetsummary">%s 小時的時差</string>
   <string name="clear_cache">清除圖片暫存檔</string>
-  <string name="clear_cache_summary">從您的設備中刪除所有戰存的圖片</string>
+  <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">包括所有的資料描述、 演員和評級等。</string>

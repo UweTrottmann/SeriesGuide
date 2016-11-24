@@ -33,9 +33,9 @@
   <string name="web_search">Verkkohaku</string>
   <string name="add_to_homescreen">Pikakuvake</string>
   <string name="action_open">Avaa</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Synkronoi manuaalisesti</string>
+  <string name="sync_and_update">Synkronoi ja päivitä</string>
+  <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
@@ -135,7 +135,7 @@
   <string name="action_shows_sort_latest_episode">Uusin jakso</string>
   <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
   <string name="action_shows_sort_last_watched">Viimeksi katsottu</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_remaining">Loput jaksot</string>
   <string name="action_shows_sort_favorites">Suosikit ensin</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -362,7 +362,7 @@
   <string name="pref_theme">Teema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Muu</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automaattisesti synkronoi ja päivitä SeriesGuiden tiedot</string>
   <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
   <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
