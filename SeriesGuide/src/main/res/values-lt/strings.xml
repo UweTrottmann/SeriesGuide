@@ -48,6 +48,7 @@
   <string name="app_not_available">Nėra tinkamų programėlių.</string>
   <string name="people_empty">Nieko nėra?! Bandykite dar kartą.</string>
   <string name="database_error">Nepavyko modifikuoti duomenų.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Dalintis</string>

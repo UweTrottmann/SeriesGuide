@@ -48,6 +48,7 @@
   <string name="app_not_available">Нет приложения для обработки этой команды.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="database_error">Не получается модифицирофавать данные.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>

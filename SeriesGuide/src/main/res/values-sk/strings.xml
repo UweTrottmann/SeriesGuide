@@ -48,6 +48,7 @@
   <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
   <string name="database_error">Nie je možné zmeniť dáta.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>

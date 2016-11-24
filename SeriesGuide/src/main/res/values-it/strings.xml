@@ -48,6 +48,7 @@
   <string name="app_not_available">Nessuna app disponibile per gestire questo contenuto.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Non è possibile contattare %s. Riprova più tardi.</string>
   <!-- Sharing -->
   <string name="share">Condividi</string>

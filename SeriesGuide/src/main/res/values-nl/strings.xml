@@ -48,6 +48,7 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="people_empty">Niemand?! Probeer opnieuw.</string>
   <string name="database_error">Wijziging niet mogelijk.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Delen</string>

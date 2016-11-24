@@ -48,6 +48,7 @@
   <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
   <string name="people_empty">Ingen her?! Tryk for at forsøge igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
   <!-- Sharing -->
   <string name="share">Del</string>

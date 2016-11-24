@@ -48,6 +48,7 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
   <string name="database_error">Nie można zmodyfikować danych.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>

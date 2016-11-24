@@ -48,6 +48,7 @@
   <string name="app_not_available">Keine App verfügbar um dies zu handhaben.</string>
   <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
   <string name="database_error">Daten konnten nicht geändert werden.</string>
+  <string name="reinstall_info">Versuchen Sie ein Backup in den Einstellungen, eine Neu-Installation und Wiederherstellung.</string>
   <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
   <!-- Sharing -->
   <string name="share">Teilen</string>

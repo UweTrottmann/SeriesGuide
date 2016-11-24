@@ -48,6 +48,7 @@
   <string name="app_not_available">これを処理するために利用できるアプリはありません。</string>
   <string name="people_empty">誰もいません?! タップして、もう一度やり直してください。</string>
   <string name="database_error">データを更新できませんでした。</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">%s に通信できませんでした。後でもう一度やり直してください。</string>
   <!-- Sharing -->
   <string name="share">共有</string>

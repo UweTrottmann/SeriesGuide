@@ -48,6 +48,7 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
   <string name="database_error">Не може да промени данните.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>

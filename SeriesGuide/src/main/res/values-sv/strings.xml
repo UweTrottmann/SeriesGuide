@@ -49,6 +49,7 @@
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="people_empty">Ingen här? Tryck för att försöka igen.</string>
   <string name="database_error">Kunde inte modifiera data.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Dela</string>

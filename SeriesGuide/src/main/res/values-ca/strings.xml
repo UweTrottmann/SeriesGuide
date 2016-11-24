@@ -48,6 +48,7 @@
   <string name="app_not_available">No hi ha cap aplicació per gestionar-ho.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>

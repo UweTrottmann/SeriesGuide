@@ -48,6 +48,7 @@
   <string name="app_not_available">Немає доступних застосунків для виконання даної операції.</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
   <string name="database_error">Не вдалося змінити дані.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Поділитись</string>

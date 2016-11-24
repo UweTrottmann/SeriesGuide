@@ -48,6 +48,7 @@
   <string name="app_not_available">Не постои апликација која може да го отвори ова.</string>
   <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
   <string name="database_error">Не е возможно да ги променити податоците.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>

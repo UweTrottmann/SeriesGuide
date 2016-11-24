@@ -48,6 +48,7 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
@@ -450,7 +451,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">פרקים קרובים</string>
   <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
-  <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב... הבאות</string>
+  <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב&#8230; הבאות</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">עמום</string>
   <string name="action_upgrade">פתח את כל האפשרויות</string>

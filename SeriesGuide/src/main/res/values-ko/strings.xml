@@ -48,6 +48,7 @@
   <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
   <string name="people_empty">다시 시도해보세요.</string>
   <string name="database_error">데이터 수정에 실패하였습니다.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">공유</string>

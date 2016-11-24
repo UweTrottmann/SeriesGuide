@@ -48,6 +48,7 @@
   <string name="app_not_available">Nenhum app disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toque para tentar novamente.</string>
   <string name="database_error">Não pode modificar os dados.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>

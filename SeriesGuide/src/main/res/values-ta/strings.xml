@@ -48,6 +48,7 @@
   <string name="app_not_available">எந்த பயன்பாட்டு நிரலும் இது.</string>
   <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
   <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">பகிர்</string>

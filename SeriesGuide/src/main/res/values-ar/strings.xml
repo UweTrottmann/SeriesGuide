@@ -48,6 +48,7 @@
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">المشاركة</string>

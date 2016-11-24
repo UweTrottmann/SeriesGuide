@@ -48,6 +48,7 @@
   <string name="app_not_available">هیچ برنامه ای برای این کار موجود نیست.</string>
   <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">اشتراک گذاری</string>
