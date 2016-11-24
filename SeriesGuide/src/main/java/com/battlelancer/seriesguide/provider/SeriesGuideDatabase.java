@@ -1115,6 +1115,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             }
         } catch (SQLiteException e) {
             Timber.e(e, "rebuildFtsTable: failed to populate table.");
+            DBUtils.postDatabaseError(e);
         }
     }
 
@@ -1131,6 +1132,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             return true;
         } catch (SQLiteException e) {
             Timber.e(e, "recreateFtsTable: failed.");
+            DBUtils.postDatabaseError(e);
             return false;
         }
     }
