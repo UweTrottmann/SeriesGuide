@@ -48,7 +48,7 @@
   <string name="app_not_available">没有可用的应用程序来处理此项。</string>
   <string name="people_empty">没有看到演员？点按以刷新。</string>
   <string name="database_error">无法修改数据：数据库操作出错。</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">请尝试在设置中进行备份，然后重新安装本程序并恢复备份。</string>
   <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
   <!-- Sharing -->
   <string name="share">分享</string>
