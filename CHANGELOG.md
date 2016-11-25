@@ -9,6 +9,15 @@ Version 34
 ----------
 *(in development)*
 
+#### 34-beta4
+*(2016-11-25)*
+
+* TWEAK Last watched filter is initialized with data from recently watched episodes in Now tab.
+* TWEAK Display message if database is corrupted, advice to backup, re-install and restore.
+* FIX Display episodes released before 1970 in infinite calendar.
+* FIX Crash in list widget settings.
+* NOTE Latest translations from crowdin.
+
 #### 34-beta3
 *(2016-11-18)*
 
