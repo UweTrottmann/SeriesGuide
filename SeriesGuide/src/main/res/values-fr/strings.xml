@@ -48,7 +48,7 @@
   <string name="app_not_available">Aucune application disponible pour gérer cette action.</string>
   <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>
   <string name="database_error">Les données n\'ont pu être modifiées.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
   <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
