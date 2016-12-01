@@ -9,10 +9,10 @@ Version 34
 ----------
 *(2016-12-01)*
 
-* For Android 7.1: add round launcher icon, launcher shortcuts.
-* Add separate language selector for movies, supports all languages of The Movie Database.
 * Change show sort options: sort by title, latest or oldest next episode, last watched show or remaining number of episodes.
 * Display the remaining number of episodes right in the shows list.
+* Add separate language selector for movies, supports all languages of The Movie Database.
+* For Android 7.1: add round launcher icon, launcher shortcuts.
 
 #### 34
 *(2016-12-01)*
