@@ -31,18 +31,6 @@
 -keep class com.amazon.** { *; }
 #-keepattributes *Annotation* // already in default config
 
-# ButterKnife 7
--dontwarn butterknife.internal.**
-
--keep class butterknife.** { *; }
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
-
 # Crashlytics 2.+
 -keep class com.crashlytics.** { *; }
 -keep class com.crashlytics.android.**
