@@ -7,7 +7,17 @@ All dates are in the European Central timezone.
 
 Version 34
 ----------
-*(in development)*
+*(2016-12-01)*
+
+* For Android 7.1: add round launcher icon, launcher shortcuts.
+* Add separate language selector for movies, supports all languages of The Movie Database.
+* Change show sort options: sort by title, latest or oldest next episode, last watched show or remaining number of episodes.
+* Display the remaining number of episodes right in the shows list.
+
+#### 34
+*(2016-12-01)*
+
+* NOTE Latest translations from crowdin.
 
 #### 34-beta4
 *(2016-11-25)*
