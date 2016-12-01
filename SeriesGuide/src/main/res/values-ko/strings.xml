@@ -33,6 +33,9 @@
   <string name="web_search">웹 검색</string>
   <string name="add_to_homescreen">바로가기</string>
   <string name="action_open">열기</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">검색기록 지우기</string>
   <string name="search_hint">에피소드 검색</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
   <string name="people_empty">다시 시도해보세요.</string>
   <string name="database_error">데이터 수정에 실패하였습니다.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">공유</string>
   <string name="share_show">쇼 공유</string>
@@ -127,10 +132,11 @@
   <string name="action_shows_filter_hidden">숨긴 것</string>
   <string name="action_shows_sort">쇼 정렬</string>
   <string name="action_shows_sort_title">제목</string>
-  <string name="action_shows_sort_episode">다음 에피소드</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">즐겨찾기 먼저</string>
-  <string name="updateall_yes">업데이트 (모두)</string>
-  <string name="menu_update_delta">업데이트 (오래된 것만)</string>
   <string name="context_updateshow">업데이트</string>
   <string name="context_marknext">다음 에피소드 시청완료</string>
   <!-- Now -->
@@ -169,7 +175,7 @@
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="action_try_any_language">모든 언어로 시도</string>
   <string name="action_try_again">재시도</string>
-  <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">모두 추가</string>
   <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
   <string name="add_started">%s는 당신의 쇼 리스트에 곧 나타날 것입니다.</string>
@@ -241,7 +247,6 @@
   <string name="hexagon_remove_account_success">계정이 삭제됩니다.</string>
   <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다.</string>
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
-  <string name="hexagon_api_error">SeriesGuide 클라우드에 접속할 수 없습니다. 나중에 다시 시도해주세요.</string>
   <string name="hexagon_api_queued">SeriesGuide 클라우드로 전송합니다.</string>
   <string name="hexagon_permission_missing">SeriesGuide Cloud를 사용하기위해서 로그인 해주세요.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloud를 사용하기위해서 구글플레이에 로그인해주세요</string>
@@ -258,7 +263,6 @@
   <string name="traktcheckin_wait">기다리겠소</string>
   <string name="trakt_success">trakt로 전송하였습니다.</string>
   <string name="trakt_error_credentials">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
-  <string name="trakt_error_general">Trakt 와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
   <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
   <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
   <!-- Connect trakt -->
@@ -354,8 +358,7 @@
   <string name="pref_theme">테마</string>
   <!-- Other advanced settings -->
   <string name="pref_other">기타</string>
-  <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">주기적으로 쇼 업데이트</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">자동 백업</string>
   <string name="pref_autobackupsummary">매주 쇼, 리스트 및 영화를 백업합니다.</string>
   <string name="backup">백업/복원</string>

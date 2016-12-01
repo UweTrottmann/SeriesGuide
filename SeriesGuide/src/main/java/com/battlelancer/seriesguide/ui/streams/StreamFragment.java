@@ -118,7 +118,7 @@ public abstract class StreamFragment extends Fragment implements
         // once trakt data has proper cache headers this might become irrelevant
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
             showProgressBar(false);
-            setEmptyMessage(R.string.offline);
+            setEmptyMessage(getString(R.string.offline));
             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -129,8 +129,8 @@ public abstract class StreamFragment extends Fragment implements
     /**
      * Changes the empty message.
      */
-    protected void setEmptyMessage(int stringResourceId) {
-        emptyView.setText(stringResourceId);
+    protected void setEmptyMessage(String emptyMessage) {
+        emptyView.setText(emptyMessage);
     }
 
     /**

@@ -132,7 +132,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_38_SHOW_TRAKT_ID = 38;
 
-    public static final int DATABASE_VERSION = DBVER_38_SHOW_TRAKT_ID;
+    /**
+     * Added last watched time and unwatched counter to shows table.
+     */
+    private static final int DBVER_39_SHOW_LAST_WATCHED = 39;
+
+    public static final int DATABASE_VERSION = DBVER_39_SHOW_LAST_WATCHED;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -245,7 +250,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                         + Shows.FAVORITE + ","
                         + Shows.RELEASE_WEEKDAY + ","
                         + Shows.RELEASE_TIMEZONE + ","
-                        + Shows.RELEASE_COUNTRY;
+                        + Shows.RELEASE_COUNTRY + ","
+                        + Shows.LASTWATCHED_MS + ","
+                        + Shows.UNWATCHED_COUNT;
 
         String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
                 + Qualified.SHOWS_ID + " as " + Shows.REF_SHOW_ID + ","
@@ -346,7 +353,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.LANGUAGE + " TEXT DEFAULT ''"
+            + ShowsColumns.LASTWATCHED_MS + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
+
+            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
 
             + ");";
 
@@ -419,11 +430,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ");";
 
     private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
-            + Tables.EPISODES_SEARCH + " USING FTS3("
+            + Tables.EPISODES_SEARCH + " USING fts4("
 
-            + EpisodeSearchColumns.TITLE + " TEXT,"
+            // set episodes table as external content table
+            + "content='" + Tables.EPISODES + "',"
 
-            + EpisodeSearchColumns.OVERVIEW + " TEXT"
+            + EpisodeSearchColumns.TITLE + ","
+
+            + EpisodeSearchColumns.OVERVIEW
 
             + ");";
 
@@ -515,7 +529,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
             + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.TIMESTAMP + " INTEGER NOT NULL,"
+            + ActivityColumns.TIMESTAMP_MS + " INTEGER NOT NULL,"
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
@@ -599,7 +613,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtySeven(db);
             case DBVER_37_LANGUAGE_PER_SERIES:
                 upgradeToThirtyEight(db);
-                version = DBVER_38_SHOW_TRAKT_ID;
+            case DBVER_38_SHOW_TRAKT_ID:
+                upgradeToThirtyNine(db);
+                version = DBVER_39_SHOW_LAST_WATCHED;
         }
 
         // drop all tables if version is not right
@@ -625,6 +641,21 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_39_SHOW_LAST_WATCHED}.
+     */
+    private static void upgradeToThirtyNine(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LASTWATCHED_MS)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.LASTWATCHED_MS + " INTEGER DEFAULT 0;");
+        }
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.UNWATCHED_COUNT)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+                    + ";");
+        }
     }
 
     /**
@@ -1076,20 +1107,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + "," + Episodes.OVERVIEW
-                                + " from " + Tables.EPISODES + ";");
+                db.execSQL("INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
+                        + "(" + Tables.EPISODES_SEARCH + ") VALUES('rebuild')");
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         } catch (SQLiteException e) {
             Timber.e(e, "rebuildFtsTable: failed to populate table.");
-            // try to build a basic table with only episode titles
-            rebuildBasicFtsTable(db);
+            DBUtils.postDatabaseError(e);
         }
     }
 
@@ -1106,33 +1132,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             return true;
         } catch (SQLiteException e) {
             Timber.e(e, "recreateFtsTable: failed.");
+            DBUtils.postDatabaseError(e);
             return false;
-        }
-    }
-
-    /**
-     * Similar to {@link #rebuildFtsTable(SQLiteDatabase)}. However only inserts the episode title,
-     * not the overviews to conserve space.
-     */
-    private static void rebuildBasicFtsTable(SQLiteDatabase db) {
-        if (!recreateFtsTable(db)) {
-            return;
-        }
-
-        try {
-            db.beginTransaction();
-            try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + " from " + Tables.EPISODES + ";");
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-        } catch (SQLiteException e) {
-            Timber.e(e, "rebuildBasicFtsTable: failed to populate table.");
         }
     }
 
@@ -1220,7 +1221,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // ordering
         query.append(" ORDER BY ");
-        query.append(Shows.TITLE).append(" ASC,");
+        query.append(Shows.SORT_TITLE).append(",");
         query.append(Episodes.SEASON).append(" ASC,");
         query.append(Episodes.NUMBER).append(" ASC");
 

@@ -46,7 +46,7 @@
 
     <item
         android:id="@+id/menu_action_shows_sort"
-        android:icon="@drawable/ic_action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:orderInCategory="3"
         android:title="@string/action_shows_sort"
         app:showAsAction="never">
@@ -55,8 +55,17 @@
                 android:id="@+id/menu_action_shows_sort_title"
                 android:title="@string/action_shows_sort_title" />
             <item
-                android:id="@+id/menu_action_shows_sort_episode"
-                android:title="@string/action_shows_sort_episode" />
+                android:id="@+id/menu_action_shows_sort_latest_episode"
+                android:title="@string/action_shows_sort_latest_episode" />
+            <item
+                android:id="@+id/menu_action_shows_sort_oldest_episode"
+                android:title="@string/action_shows_sort_oldest_episode" />
+            <item
+                android:id="@+id/menu_action_shows_sort_last_watched"
+                android:title="@string/action_shows_sort_last_watched" />
+            <item
+                android:id="@+id/menu_action_shows_sort_remaining"
+                android:title="@string/action_shows_sort_remaining" />
             <item
                 android:id="@+id/menu_action_shows_sort_favorites"
                 android:checkable="true"

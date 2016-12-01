@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
+import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
@@ -33,11 +35,11 @@ import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -247,7 +249,6 @@ public class EpisodeTools {
 
             // update local database (if uploading went smoothly or not uploading at all)
             flagType.updateDatabase();
-            flagType.storeLastEpisode();
             flagType.onPostExecute();
 
             return SUCCESS;
@@ -392,23 +393,25 @@ public class EpisodeTools {
         @Override
         protected void onPostExecute(Integer result) {
             // handle errors
-            Integer errorResId = null;
+            String error = null;
             switch (result) {
                 case ERROR_NETWORK:
-                    errorResId = R.string.offline;
+                    error = context.getString(R.string.offline);
                     break;
                 case ERROR_TRAKT_AUTH:
-                    errorResId = R.string.trakt_error_credentials;
+                    error = context.getString(R.string.trakt_error_credentials);
                     break;
                 case ERROR_TRAKT_API:
-                    errorResId = R.string.trakt_error_general;
+                    error = context.getString(R.string.api_error_generic,
+                            context.getString(R.string.trakt));
                     break;
                 case ERROR_HEXAGON_API:
-                    errorResId = R.string.hexagon_api_error;
+                    error = context.getString(R.string.api_error_generic,
+                            context.getString(R.string.hexagon));
                     break;
             }
-            if (errorResId != null) {
-                Toast.makeText(context, errorResId, Toast.LENGTH_LONG).show();
+            if (error != null) {
+                Toast.makeText(context, error, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -463,6 +466,7 @@ public class EpisodeTools {
 
             Timber.d("flagsFromHexagon: downloading changed episode flags since %s", lastSyncTime);
 
+            SparseArrayCompat<Long> showsLastWatchedMs = new SparseArrayCompat<>();
             while (hasMoreEpisodes) {
                 try {
                     Episodes episodesService = HexagonTools.getEpisodesService(context);
@@ -505,8 +509,19 @@ public class EpisodeTools {
                 ArrayList<ContentProviderOperation> batch = new ArrayList<>();
                 for (Episode episode : episodes) {
                     ContentValues values = new ContentValues();
-                    if (episode.getWatchedFlag() != null) {
-                        values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                    Integer showTvdbId = episode.getShowTvdbId();
+                    Integer watchedFlag = episode.getWatchedFlag();
+                    if (watchedFlag != null) {
+                        values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
+                        // record the latest last watched time for a show
+                        if (!EpisodeTools.isUnwatched(watchedFlag)) {
+                            Long lastWatchedMs = showsLastWatchedMs.get(showTvdbId);
+                            // episodes returned in reverse chrono order, so just get the first time
+                            if (lastWatchedMs == null && episode.getUpdatedAt() != null) {
+                                long updatedAtMs = episode.getUpdatedAt().getValue();
+                                showsLastWatchedMs.put(showTvdbId, updatedAtMs);
+                            }
+                        }
                     }
                     if (episode.getIsInCollection() != null) {
                         values.put(SeriesGuideContract.Episodes.COLLECTED,
@@ -516,7 +531,7 @@ public class EpisodeTools {
                     ContentProviderOperation op = ContentProviderOperation
                             .newUpdate(SeriesGuideContract.Episodes.CONTENT_URI)
                             .withSelection(SeriesGuideContract.Shows.REF_SHOW_ID + "="
-                                    + episode.getShowTvdbId() + " AND "
+                                    + showTvdbId + " AND "
                                     + SeriesGuideContract.Episodes.SEASON + "="
                                     + episode.getSeasonNumber() + " AND "
                                     + SeriesGuideContract.Episodes.NUMBER + "="
@@ -536,10 +551,41 @@ public class EpisodeTools {
                 }
             }
 
+            if (!updateLastWatchedTimeOfShows(context, showsLastWatchedMs)) {
+                return false;
+            }
+
             // store new last sync time
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
                     .commit();
+
+            return true;
+        }
+
+        private static boolean updateLastWatchedTimeOfShows(Context context,
+                SparseArrayCompat<Long> showsLastWatchedMs) {
+            if (showsLastWatchedMs.size() == 0) {
+                return true; // no episodes were watched, no last watched time to update
+            }
+
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+            for (int i = 0; i < showsLastWatchedMs.size(); i++) {
+                int showTvdbId = showsLastWatchedMs.keyAt(i);
+                long lastWatchedMsNew = showsLastWatchedMs.valueAt(i);
+                if (!ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
+                        lastWatchedMsNew)) {
+                    return false; // failed to query current last watched ms
+                }
+            }
+
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e(e,
+                        "updateShowsLastWatchedTime: failed to apply last watched time updates");
+                return false;
+            }
 
             return true;
         }
@@ -557,7 +603,7 @@ public class EpisodeTools {
             String cursor = null;
 
             Uri episodesOfShowUri = SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId);
-
+            Long lastWatchedMs = null;
             while (hasMoreEpisodes) {
                 // abort if connection is lost
                 if (!AndroidUtils.isNetworkConnected(context)) {
@@ -609,6 +655,14 @@ public class EpisodeTools {
                     if (episode.getWatchedFlag() != null
                             && episode.getWatchedFlag() != EpisodeFlags.UNWATCHED) {
                         values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+                        // record last watched time by taking latest updatedAt of watched/skipped
+                        DateTime updatedAt = episode.getUpdatedAt();
+                        if (updatedAt != null) {
+                            long lastWatchedMsNew = updatedAt.getValue();
+                            if (lastWatchedMs == null || lastWatchedMs < lastWatchedMsNew) {
+                                lastWatchedMs = lastWatchedMsNew;
+                            }
+                        }
                     }
                     if (episode.getIsInCollection() != null
                             && episode.getIsInCollection()) {
@@ -642,6 +696,35 @@ public class EpisodeTools {
                             showTvdbId);
                     return false;
                 }
+            }
+
+            //noinspection RedundantIfStatement
+            if (!updateLastWatchedTimeOfShow(context, showTvdbId, lastWatchedMs)) {
+                return false; // failed to update last watched time
+            }
+
+            return true;
+        }
+
+        private static boolean updateLastWatchedTimeOfShow(Context context, int showTvdbId,
+                @Nullable Long lastWatchedMs) {
+            if (lastWatchedMs == null) {
+                return true; // no last watched time, nothing to update
+            }
+
+            ArrayList<ContentProviderOperation> batch = new ArrayList<>(1);
+            if (!ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
+                    lastWatchedMs)) {
+                return false; // failed to query current last watched ms
+            }
+
+            try {
+                DBUtils.applyInSmallBatches(context, batch);
+            } catch (OperationApplicationException e) {
+                Timber.e(e,
+                        "updateLastWatchedTimeOfShow: failed to update last watched ms for show %s",
+                        showTvdbId);
+                return false;
             }
 
             return true;

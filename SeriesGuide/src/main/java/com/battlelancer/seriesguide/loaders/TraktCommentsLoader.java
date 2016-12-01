@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -30,11 +31,11 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
     public static class Result {
         public List<Comment> results;
-        public int emptyTextResId;
+        public String emptyText;
 
-        public Result(List<Comment> results, int emptyTextResId) {
+        public Result(List<Comment> results, String emptyText) {
             this.results = results;
-            this.emptyTextResId = emptyTextResId;
+            this.emptyText = emptyText;
         }
     }
 
@@ -65,7 +66,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 }
                 try {
                     Response<List<Comment>> response = traktMovies.get()
-                            .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                            .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.FULL)
                             .execute();
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
@@ -77,7 +78,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     SgTrakt.trackFailedRequest(getContext(), "get movie comments", e);
                 }
             }
-            return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
+            return buildResultFailureWithOfflineCheck();
         }
 
         // episode comments?
@@ -110,7 +111,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 try {
                     Response<List<Comment>> response = traktEpisodes.get()
                             .comments(String.valueOf(showTraktId), season, episode,
-                                    1, PAGE_SIZE, Extended.IMAGES)
+                                    1, PAGE_SIZE, Extended.FULL)
                             .execute();
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
@@ -120,7 +121,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 } catch (IOException e) {
                     SgTrakt.trackFailedRequest(getContext(), "get episode comments", e);
                 }
-                return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
+                return buildResultFailureWithOfflineCheck();
             } else {
                 Timber.e("loadInBackground: could not find episode in database");
                 return buildResultFailure(R.string.unknown);
@@ -135,7 +136,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         }
         try {
             Response<List<Comment>> response = traktShows.get()
-                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.IMAGES)
+                    .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.FULL)
                     .execute();
             if (response.isSuccessful()) {
                 return buildResultSuccess(response.body());
@@ -145,19 +146,25 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(getContext(), "get show comments", e);
         }
-        return buildResultFailureWithOfflineCheck(R.string.trakt_error_general);
+        return buildResultFailureWithOfflineCheck();
     }
 
-    private static Result buildResultSuccess(List<Comment> results) {
-        return new Result(results, R.string.no_shouts);
+    private Result buildResultSuccess(List<Comment> results) {
+        return new Result(results, getContext().getString(R.string.no_shouts));
     }
 
-    private static Result buildResultFailure(int emptyTextResId) {
-        return new Result(null, emptyTextResId);
+    private Result buildResultFailure(@StringRes int emptyTextResId) {
+        return new Result(null, getContext().getString(emptyTextResId));
     }
 
-    private Result buildResultFailureWithOfflineCheck(int emptyTextResId) {
-        return new Result(null,
-                AndroidUtils.isNetworkConnected(getContext()) ? emptyTextResId : R.string.offline);
+    private Result buildResultFailureWithOfflineCheck() {
+        String emptyText;
+        if (AndroidUtils.isNetworkConnected(getContext())) {
+            emptyText = getContext().getString(R.string.api_error_generic,
+                    getContext().getString(R.string.trakt));
+        } else {
+            emptyText = getContext().getString(R.string.offline);
+        }
+        return new Result(null, emptyText);
     }
 }

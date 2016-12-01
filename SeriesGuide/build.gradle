@@ -4,13 +4,11 @@ buildscript {
     }
     dependencies {
         classpath dep.androidPlugin
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'io.fabric.tools:gradle:1.22.0'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -43,6 +41,14 @@ android {
         buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
         buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
         buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
+        buildConfigField("String", "IMAGE_CACHE_URL", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_URL")}\"")
+        buildConfigField("String", "IMAGE_CACHE_SECRET", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_SECRET")}\"")
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ eventBusIndex : 'com.battlelancer.seriesguide.SgEventBusIndex' ]
+            }
+        }
     }
 
     compileOptions {
@@ -132,17 +138,17 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     // https://github.com/google/dagger/releases
     def daggerVersion = "2.7"
-    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
     def butterKnifeVersion = "8.4.0"
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
-    apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
     compile 'com.jakewharton.timber:timber:4.3.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // temporarily add okhttp 3 support to picasso
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
@@ -150,20 +156,21 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile 'com.uwetrottmann.photoview:library:1.2.4'
-    compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.2.0'
+    // https://github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
+    compile 'com.uwetrottmann.thetvdb-java:thetvdb-java:1.3.0'
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann.tmdb2:tmdb-java:1.2.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.2.1') {
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.4.0') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
         exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
     }
     // http://greenrobot.org/eventbus/changelog/
     compile 'org.greenrobot:eventbus:3.0.0'
-    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    def jodaTimeVersion = '2.9.4'
+    def jodaTimeVersion = '2.9.5'
     compile "net.danlew:android.joda:$jodaTimeVersion"
 
     // Android support libraries
@@ -205,10 +212,4 @@ dependencies {
     // include regular joda-time to have access to the tz database without init call
     testCompile "joda-time:joda-time:$jodaTimeVersion"
 
-}
-
-apt {
-    arguments {
-        eventBusIndex 'com.battlelancer.seriesguide.SgEventBusIndex'
-    }
 }

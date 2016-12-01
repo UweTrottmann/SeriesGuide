@@ -32,7 +32,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,6 +54,10 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -59,6 +65,8 @@ import timber.log.Timber;
  * Various generic helper methods that do not fit other tool categories.
  */
 public class Utils {
+
+    private static Mac sha256_hmac;
 
     private Utils() {
         // prevent instantiation
@@ -277,6 +285,10 @@ public class Utils {
         }
     }
 
+    public static void setMenuItemActiveString(@NonNull MenuItem item) {
+        item.setTitle(item.getTitle() + " ◀");
+    }
+
     /**
      * Clear all files in files directory on external storage.
      */
@@ -337,6 +349,48 @@ public class Utils {
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .error(R.drawable.ic_image_missing)
                 .into(imageView);
+    }
+
+    /**
+     * Loads the TheTVDB poster via our image proxy + caching server to reduce load on TheTVDB's
+     * image server.
+     */
+    public static void loadTvdbShowPosterFromCache(Context context, ImageView imageView,
+            String posterPath) {
+        String posterUrl;
+        if (TextUtils.isEmpty(posterPath)) {
+            posterUrl = null;
+        } else {
+            posterUrl = TvdbTools.buildPosterUrl(posterPath);
+            String mac = encode(BuildConfig.IMAGE_CACHE_SECRET, posterUrl);
+            if (mac != null) {
+                posterUrl = String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrl);
+            } else {
+                posterUrl = null;
+            }
+        }
+
+        ServiceUtils.loadWithPicasso(context, posterUrl)
+                .centerCrop()
+                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
+    @Nullable
+    public static synchronized String encode(String key, String data) {
+        try {
+            if (sha256_hmac == null) {
+                sha256_hmac = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+                sha256_hmac.init(secret_key);
+            }
+
+            return Base64.encodeToString(sha256_hmac.doFinal(data.getBytes()), Base64.NO_WRAP | Base64.URL_SAFE);
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            Timber.e(e, "Signing image URL failed.");
+            return null;
+        }
     }
 
     public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,

@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/menu_action_movies_sort"
-        android:icon="@drawable/ic_action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/action_movies_sort"
         app:showAsAction="ifRoom">
         <menu>

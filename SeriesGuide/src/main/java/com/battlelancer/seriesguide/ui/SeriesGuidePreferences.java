@@ -271,7 +271,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
 
             // show currently set values for list prefs
-            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
             setListPreferenceSummary(
                     (ListPreference) findPreference(DisplaySettings.KEY_NUMBERFORMAT));
 
@@ -359,6 +358,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     });
 
             // show currently set values for list prefs
+            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
             ListPreference offsetListPref = (ListPreference) findPreference(KEY_OFFSET);
             offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
                     offsetListPref.getEntry()));

@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.widgets.FirstRunView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
  * shortcuts and triggering AutoUpdates and AutoBackups. <p> Also registers with {@link
- * de.greenrobot.event.EventBus#getDefault()} by default to handle various common events, see {@link
+ * EventBus#getDefault()} by default to handle various common events, see {@link
  * #registerEventBus()} and {@link #unregisterEventBus()} to prevent that.
  */
 public abstract class BaseActivity extends AppCompatActivity {
@@ -70,8 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Override this to avoid registering with {@link de.greenrobot.event.EventBus#getDefault()} in
-     * {@link #onStart()}.
+     * Override this to avoid registering with {@link EventBus#getDefault()} in {@link #onStart()}.
      *
      * <p> See {@link #unregisterEventBus()} as well.
      */
@@ -92,8 +92,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Override this to avoid unregistering from {@link EventBus#getDefault()}
-     * in {@link #onStop()}.
+     * Override this to avoid unregistering from {@link EventBus#getDefault()} in {@link
+     * #onStop()}.
      *
      * <p> See {@link #registerEventBus()} as well.
      */
@@ -153,7 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // only show warning if the user is done with first run
-            if (FirstRunFragment.hasSeenFirstRunFragment(this)) {
+            if (FirstRunView.hasSeenFirstRunFragment(this)) {
                 onShowAutoBackupPermissionWarning();
             }
             return false;

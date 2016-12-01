@@ -19,6 +19,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
     public static class Result {
         public Show show;
         public boolean isAdded;
+        public boolean doesNotExist;
     }
 
     private final SgApp app;
@@ -46,6 +47,9 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
             result.show = null;
+            if (e.getItemDoesNotExist()) {
+                result.doesNotExist = true;
+            }
         }
 
         return result;

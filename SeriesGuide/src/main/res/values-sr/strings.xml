@@ -33,6 +33,9 @@
   <string name="web_search">Веб претрага</string>
   <string name="add_to_homescreen">Пречица</string>
   <string name="action_open">Отворено</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Немате потребну апликацију за ово.</string>
   <string name="people_empty">Нема никога?! Поновите претрагу.</string>
   <string name="database_error">Није могуће променити податке.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Подели</string>
   <string name="share_show">Подели серију</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Сакривен</string>
   <string name="action_shows_sort">Сортирај серије</string>
   <string name="action_shows_sort_title">Наслов</string>
-  <string name="action_shows_sort_episode">Следећа епизода</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Прво омиљене</string>
-  <string name="updateall_yes">Ажурирај (све)</string>
-  <string name="menu_update_delta">Ажурирање (само застареле)</string>
   <string name="context_updateshow">Ажурирање</string>
   <string name="context_marknext">Погледана, следећа епизода</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Нема резултата, покушајте са целим речима.</string>
   <string name="action_try_any_language">Покушајте било који језик</string>
   <string name="action_try_again">Поушајте поново</string>
-  <string name="search_error">Неуспела претрага, покушајте поново касније.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Додај све</string>
   <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
   <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
@@ -236,7 +242,7 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Експериментално!</string>
+  <string name="hexagon_warning">Експериментално</string>
   <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
   <string name="hexagon_warning_lists">Листе нису укључене.</string>
   <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Налог обрисан.</string>
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
-  <string name="hexagon_api_error">Није успостављен контакт са SeriesGuide Cloud. Покушајте поново касније.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Да би користили SeriesGuide Cloud, дозволите приступ вашим налозима.</string>
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
@@ -259,14 +264,13 @@
   <string name="trakt_notseen">%s неодгледано.</string>
   <string name="trakt_collected">%s у колекцији.</string>
   <string name="trakt_notcollected">%s није у колекцији.</string>
-  <string name="checkin_success_trakt">Пријављено гледање %s на trakt.tv</string>
+  <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отказана пријава гледања на тракту.</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>
   <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
   <string name="traktcheckin_wait">Сачекаћу</string>
   <string name="trakt_success">Пошаљу на Trakt.</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
-  <string name="trakt_error_general">Не могу да комуницирам са trakt-ом. Покушајте поново касније.</string>
   <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
@@ -364,8 +368,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Остало</string>
-  <string name="pref_autoupdate">Укључи аутоматско ажурирање</string>
-  <string name="pref_autoupdatesummary">Повремено ажурирај своје серије</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Архивирање/ повраћај архиве</string>
@@ -377,7 +380,7 @@
   <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене...)</string>
+  <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене).</string>
   <string name="backup_path">Фасцикла за архивирање</string>
   <string name="backup_version">Верзија базе података</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -443,7 +446,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Предстојећа епизода</string>
   <string name="dashclock_extension_description">Прикажу предстојећу епизоду Ваших SeriesGuide серија.</string>
-  <string name="dashclock_pref_upcoming_threshold">Прикажи епизоде у следећем</string>
+  <string name="dashclock_pref_upcoming_threshold">Прикажи епизоде у следећем&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Само за кориснике који су подржали развитак апликације</string>
   <string name="action_upgrade">Откључај све опције</string>

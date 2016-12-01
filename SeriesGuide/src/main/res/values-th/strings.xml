@@ -33,6 +33,9 @@
   <string name="web_search">ค้นเว็บ</string>
   <string name="add_to_homescreen">ทางลัด</string>
   <string name="action_open">เปิด</string>
+  <string name="sync_manually">ซิงค์ด้วยตนเอง</string>
+  <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
+  <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">ไม่มีแอปที่สามารถจัดการกับสิ่งนี้</string>
   <string name="people_empty">ไม่มีใครอยู่ที่นี่เลยหรือ? แตะเพื่อลองอีกครั้ง</string>
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
+  <string name="reinstall_info">ลองสำรองข้อมูลในการตั้งค่า, ติดตั้งแอปใหม่ และเรียกคืนข้อมูล</string>
+  <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>
   <string name="share_show">แบ่งปันซีรีส์</string>
@@ -127,10 +132,11 @@
   <string name="action_shows_filter_hidden">ซ่อน</string>
   <string name="action_shows_sort">แสดงซีรีส์</string>
   <string name="action_shows_sort_title">ชื่อเรื่อง</string>
-  <string name="action_shows_sort_episode">ตอนถัดไป</string>
+  <string name="action_shows_sort_latest_episode">ตอนล่าสุด</string>
+  <string name="action_shows_sort_oldest_episode">ตอนเก่าที่สุด</string>
+  <string name="action_shows_sort_last_watched">ดูล่าสุด</string>
+  <string name="action_shows_sort_remaining">ตอนที่เหลือ</string>
   <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
-  <string name="updateall_yes">อัปเดต (ทั้งหมด)</string>
-  <string name="menu_update_delta">อัปเดต (เก่าแล้วเท่านั้น)</string>
   <string name="context_updateshow">อัปเดต</string>
   <string name="context_marknext">ดูตอนถัดไป</string>
   <!-- Now -->
@@ -169,7 +175,7 @@
   <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
   <string name="action_try_any_language">ลองภาษาใดก็ได้</string>
   <string name="action_try_again">ลองอีกครั้ง</string>
-  <string name="search_error">การค้นหาล้มเหลว ลองอีกครั้งในภายหลัง</string>
+  <string name="tvdb_error_does_not_exist">รายการนี้(ยัง)ไม่มีบน TheTVDB ลองอีกครั้งในภายหลัง</string>
   <string name="add_all">เพิ่มทั้งหมด</string>
   <string name="add_multiple">ซีรีส์ทั้งหมดจะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
   <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
@@ -241,7 +247,6 @@
   <string name="hexagon_remove_account_success">ลบบัญชีแล้ว</string>
   <string name="hexagon_remove_account_failure">ไม่สามารถลบบัญชี</string>
   <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
-  <string name="hexagon_api_error">ไม่สามารถติดต่อกับ SeriesGuide Cloud ลองอีกครั้งในภายหลัง</string>
   <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
   <string name="hexagon_permission_missing">ในการใช้ SeriesGuide Cloud, อนุญาตให้เราเข้าถึงบัญชีของคุณ</string>
   <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
@@ -258,7 +263,6 @@
   <string name="traktcheckin_wait">ฉันจะรอ</string>
   <string name="trakt_success">ส่งไปยัง trakt</string>
   <string name="trakt_error_credentials">มีบางอย่างผิดพลาด ตรวจสอบข้อมูล trakt ของคุณและลองอีกครั้ง</string>
-  <string name="trakt_error_general">ไม่สามารถติดต่อกับ trakt ได้ ลองอีกครั้งในภายหลัง</string>
   <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
   <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
   <!-- Connect trakt -->
@@ -354,8 +358,7 @@
   <string name="pref_theme">ธีม</string>
   <!-- Other advanced settings -->
   <string name="pref_other">อื่นๆ</string>
-  <string name="pref_autoupdate">เปิดใช้งานการอัปเดตอัตโนมัติ</string>
-  <string name="pref_autoupdatesummary">อัปเดตซีรีส์ของคุณเป็นระยะๆ</string>
+  <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
   <string name="pref_autobackup">สำรองอัตโนมัติ</string>
   <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
   <string name="backup">สำรอง/กู้คืน</string>

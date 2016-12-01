@@ -33,6 +33,9 @@
   <string name="web_search">網頁搜尋</string>
   <string name="add_to_homescreen">快速鍵</string>
   <string name="action_open">開啟</string>
+  <string name="sync_manually">手動同步</string>
+  <string name="sync_and_update">同步 &amp; 和更新</string>
+  <string name="sync_and_download_all">同步&amp; 及下載</string>
   <!-- Search -->
   <string name="clear_search_history">清除搜尋記錄</string>
   <string name="search_hint">搜尋集數</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">沒有應用程式可以處理此需求</string>
   <string name="people_empty">什麼東西都沒有？ ！點擊以在試一次。</string>
   <string name="database_error">無法修改資料。</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享節目</string>
@@ -72,7 +77,7 @@
   <string name="episode_firstaired_unknown">播出日期不明</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="original_release">原始版本</string>
-  <string name="show_on_network">在 %s 上</string>
+  <string name="show_on_network">於 %s 播出</string>
   <string name="show_genres">戲劇類別</string>
   <string name="show_contentrating">節目分級</string>
   <string name="show_release_times">發布時間</string>
@@ -127,10 +132,11 @@
   <string name="action_shows_filter_hidden">隱藏</string>
   <string name="action_shows_sort">排序影集</string>
   <string name="action_shows_sort_title">依影集名稱</string>
-  <string name="action_shows_sort_episode">依最新集數</string>
+  <string name="action_shows_sort_latest_episode">最新一集</string>
+  <string name="action_shows_sort_oldest_episode">最舊一集</string>
+  <string name="action_shows_sort_last_watched">上一次觀看</string>
+  <string name="action_shows_sort_remaining">剩餘的集數</string>
   <string name="action_shows_sort_favorites">喜愛影集優先</string>
-  <string name="updateall_yes">更新(全部)</string>
-  <string name="menu_update_delta">更新(僅已過時資料)</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">觀看下一集</string>
   <!-- Now -->
@@ -169,7 +175,7 @@
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="action_try_any_language">嘗試其他種語言</string>
   <string name="action_try_again">再試一次</string>
-  <string name="search_error">搜尋失敗，請稍後再試。</string>
+  <string name="tvdb_error_does_not_exist">TheTVDB 上不存在。稍後再試。</string>
   <string name="add_all">全部加入</string>
   <string name="add_multiple">所有節目將會顯示在你的清單中。</string>
   <string name="add_started">%s將會顯示在你的清單中。</string>
@@ -241,7 +247,6 @@
   <string name="hexagon_remove_account_success">帳戶已刪除。</string>
   <string name="hexagon_remove_account_failure">無法刪除帳戶。</string>
   <string name="hexagon_remove_account_confirmation">移除你的帳戶將會刪除SeriesGuide Cloud上所有節目與電影的紀錄。請確認其他裝置上的資料也一併刪除。</string>
-  <string name="hexagon_api_error">無法連接SeriesGuide Cloud，再試一次。</string>
   <string name="hexagon_api_queued">發送至SeriesGuide Cloud。</string>
   <string name="hexagon_permission_missing">若要使用SeriesGuide Cloud，請允許存取您的帳戶。</string>
   <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
@@ -258,7 +263,6 @@
   <string name="traktcheckin_wait">等待</string>
   <string name="trakt_success">已發送至trakt。</string>
   <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
-  <string name="trakt_error_general">無法與trakt連線，稍後再試。</string>
   <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
   <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>
   <!-- Connect trakt -->
@@ -268,7 +272,7 @@
   <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
   <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>
   <string name="username">帳號</string>
-  <string name="waitplease">請稍候...</string>
+  <string name="waitplease">請稍候&#8230;</string>
   <string name="connect">連接</string>
   <string name="disconnect">中斷連接</string>
   <string name="use_integrated_browser">使用內建瀏覽器</string>
@@ -315,8 +319,8 @@
   <string name="pref_exactdates_summary">\"10 月 31日\" 而不是 \"3天後\"</string>
   <string name="pref_nospoilers">避免劇透</string>
   <string name="pref_nospoilers_summary">隱藏詳細資訊直到看過一集</string>
-  <string name="pref_seasonsorting">以...排序每一季</string>
-  <string name="pref_episodesorting">以...排序每一集</string>
+  <string name="pref_seasonsorting">以&#8230;排序每一季</string>
+  <string name="pref_episodesorting">以&#8230;排序每一集</string>
   <string name="pref_language">偏好的語言</string>
   <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
   <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
@@ -354,8 +358,7 @@
   <string name="pref_theme">主題</string>
   <!-- Other advanced settings -->
   <string name="pref_other">其他</string>
-  <string name="pref_autoupdate">開啟自動更新</string>
-  <string name="pref_autoupdatesummary">定期更新你的節目</string>
+  <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
   <string name="pref_autobackup">自動備份</string>
   <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
   <string name="backup">備份/還原</string>
@@ -364,17 +367,17 @@
   <string name="pref_offset">手動時間換算</string>
   <string name="pref_offsetsummary">%s 小時的時差</string>
   <string name="clear_cache">清除圖片暫存檔</string>
-  <string name="clear_cache_summary">從您的設備中刪除所有戰存的圖片</string>
+  <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">包括所有的資料描述、 演員和評級等。</string>
   <string name="backup_path">備份資料夾</string>
   <string name="backup_version">資料庫版本</string>
   <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
-  <string name="backup_inprogress">備份資料庫...</string>
+  <string name="backup_inprogress">備份資料庫&#8230;</string>
   <string name="backup_success">備份成功。</string>
   <string name="backup_failed">備份失敗。</string>
-  <string name="import_inprogress">正在還原資料庫...</string>
+  <string name="import_inprogress">正在還原資料庫&#8230;</string>
   <string name="import_failed_nosd">無法還原備份。備份資料夾無法使用。</string>
   <string name="import_failed_nofile">沒有可讀的備份檔案。</string>
   <string name="import_failed_noread">無法讀取備份檔。</string>
@@ -433,7 +436,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">即將撥出的集數</string>
   <string name="dashclock_extension_description">顯示您SeriesGuide中即將到來的下一集。</string>
-  <string name="dashclock_pref_upcoming_threshold">顯示集數於...</string>
+  <string name="dashclock_pref_upcoming_threshold">顯示集數於&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">僅供贊助者</string>
   <string name="action_upgrade">解鎖所有功能</string>

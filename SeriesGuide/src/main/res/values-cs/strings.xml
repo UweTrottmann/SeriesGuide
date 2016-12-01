@@ -33,6 +33,9 @@
   <string name="web_search">Webové vyhledávání</string>
   <string name="add_to_homescreen">Odkaz</string>
   <string name="action_open">Otevřít</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Není k dispozici použitelná aplikace.</string>
   <string name="people_empty">Nikde nikdo? Zkus to znovu.</string>
   <string name="database_error">Nelze upravovat data.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Sdílet</string>
   <string name="share_show">Sdílet seriál</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Skryté</string>
   <string name="action_shows_sort">Seřadit seriály</string>
   <string name="action_shows_sort_title">Titul</string>
-  <string name="action_shows_sort_episode">Další epizoda</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Oblíbené předně</string>
-  <string name="updateall_yes">Aktualizovat (vše)</string>
-  <string name="menu_update_delta">Aktualizovat (jen staré)</string>
   <string name="context_updateshow">Aktualizovat</string>
   <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="action_try_any_language">Zkuste jiný jazyk</string>
   <string name="action_try_again">Zkusit znovu</string>
-  <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Přidat vše</string>
   <string name="add_multiple">Všechny seriály se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Účet vymazán.</string>
   <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
-  <string name="hexagon_api_error">Nelze se spojit s SeriesGuide Cloud. Opakujte akci později.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Pro použití SeriesGuide Cloudu povolte přístup k vašim účtům.</string>
   <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
@@ -266,7 +271,6 @@
   <string name="traktcheckin_wait">Budu čekat</string>
   <string name="trakt_success">Odesláno do trakt.tv.</string>
   <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
-  <string name="trakt_error_general">Nelze se připojit na trakt.tv. Opakujte akci později.</string>
   <string name="trakt_error_not_exists">Není k dispozici na traktu (zatím). Zkuste to později.</string>
   <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
   <!-- Connect trakt -->
@@ -364,8 +368,7 @@
   <string name="pref_theme">Téma</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Ostatní</string>
-  <string name="pref_autoupdate">Aktualizovat automaticky</string>
-  <string name="pref_autoupdatesummary">Pravidelně aktualizovat vaše seriály</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Automatická záloha</string>
   <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
   <string name="backup">Zálohování/obnovení</string>

@@ -341,7 +341,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             mDescription.setText(getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(getContext(),
+                    LanguageTools.getShowLanguageStringFor(getContext(),
                             cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {

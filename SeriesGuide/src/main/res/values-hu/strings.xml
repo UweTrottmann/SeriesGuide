@@ -33,6 +33,9 @@
   <string name="web_search">Internetes keresés</string>
   <string name="add_to_homescreen">Parancsikon</string>
   <string name="action_open">Megnyit</string>
+  <string name="sync_manually">Manuális szinkronizálás</string>
+  <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
+  <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Rejtett</string>
   <string name="action_shows_sort">Sorozatok rendezése</string>
   <string name="action_shows_sort_title">Cím</string>
-  <string name="action_shows_sort_episode">Következő epizód</string>
+  <string name="action_shows_sort_latest_episode">Legújabb epizód</string>
+  <string name="action_shows_sort_oldest_episode">Legrégebbi epizód</string>
+  <string name="action_shows_sort_last_watched">Utoljára megnézett</string>
+  <string name="action_shows_sort_remaining">Hátralévő epizódok</string>
   <string name="action_shows_sort_favorites">Kedvencek előre</string>
-  <string name="updateall_yes">Összes frissítése</string>
-  <string name="menu_update_delta">Gyors frissítés</string>
   <string name="context_updateshow">Frissítés</string>
   <string name="context_marknext">Láttam a következő epizódot</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
   <string name="action_try_any_language">Keresés bármely nyelven</string>
   <string name="action_try_again">Próbáld újra</string>
-  <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
+  <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>
   <string name="add_all">Add hozzá mindet</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Fiók törölve.</string>
   <string name="hexagon_remove_account_failure">A fiók eltávolítása sikertelen.</string>
   <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
-  <string name="hexagon_api_error">Nem sikerült a kapcsolat a SeriesGuide felhőszolgáltatással. Próbáld újra később.</string>
   <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
   <string name="hexagon_permission_missing">A SeriesGuide Cloud használatához engedélyezd a fiókodhoz való hozzáférést.</string>
   <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Várok</string>
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
-  <string name="trakt_error_general">Nincs kapcsolat a trakttal. Próbáld újra később.</string>
   <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
   <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a traktal.</string>
   <!-- Connect trakt -->
@@ -359,8 +363,7 @@
   <string name="pref_theme">Téma</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Egyéb</string>
-  <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
-  <string name="pref_autoupdatesummary">A sorozataid időszakonként frissítésre kerülnek</string>
+  <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
   <string name="pref_autobackup">Automatikus biztonsági másolat</string>
   <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
   <string name="backup">Biztonsági Mentés/Visszaállítás</string>

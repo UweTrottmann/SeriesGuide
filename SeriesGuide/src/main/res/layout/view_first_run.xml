@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FirstRunColumn">
+
+    <ImageButton
+        android:id="@+id/buttonFirstRunDismiss"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/dismiss"
+        android:src="?attr/drawableCancel" />
+
+    <TextView
+        android:id="@+id/textViewFirstRunTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/get_started"
+        android:textAppearance="@style/TextAppearance.Headline" />
+
+    <RelativeLayout
+        android:id="@+id/containerFirstRunNoSpoilers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewFirstRunTitle"
+        android:layout_marginTop="@dimen/large_padding"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding">
+
+        <CheckBox
+            android:id="@+id/checkboxFirstRunNoSpoilers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:focusable="false" />
+
+        <TextView
+            android:id="@+id/textViewFirstRunNoSpoilerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/checkboxFirstRunNoSpoilers"
+            android:layout_toRightOf="@id/checkboxFirstRunNoSpoilers"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:text="@string/pref_nospoilers"
+            android:textAppearance="@style/TextAppearance.Subhead" />
+
+        <TextView
+            android:id="@+id/textViewFirstRunNoSpoilerSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/textViewFirstRunNoSpoilerText"
+            android:layout_below="@id/textViewFirstRunNoSpoilerText"
+            android:paddingBottom="@dimen/inline_padding"
+            android:text="@string/pref_nospoilers_summary"
+            android:textAppearance="@style/TextAppearance.Body.Dim" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/containerFirstRunButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerFirstRunNoSpoilers"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/inline_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="@dimen/large_padding">
+
+        <Button
+            android:id="@+id/buttonFirstRunAddShow"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_add" />
+
+        <Button
+            android:id="@+id/buttonFirstRunTrakt"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connect_trakt" />
+
+        <Button
+            android:id="@+id/buttonFirstRunRestore"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/import_button" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/dividerFirstRun"
+        layout="@layout/divider_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/containerFirstRunButtons" />
+
+    <TextView
+        android:id="@+id/textViewFirstRunPrivacyLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerFirstRun"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:autoLink="web"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/url_privacy" />
+
+</RelativeLayout>

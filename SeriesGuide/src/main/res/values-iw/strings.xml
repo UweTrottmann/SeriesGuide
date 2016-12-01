@@ -33,6 +33,9 @@
   <string name="web_search">חיפוש באינטרנט</string>
   <string name="add_to_homescreen">קיצור-דרך</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
@@ -130,10 +135,11 @@
   <string name="action_shows_filter_hidden">מוסתר</string>
   <string name="action_shows_sort">מיון סדרות</string>
   <string name="action_shows_sort_title">שם</string>
-  <string name="action_shows_sort_episode">הפרק הבא</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
-  <string name="updateall_yes">(עדכן (הכל</string>
-  <string name="menu_update_delta">עדכן (ישנים בלבד)</string>
   <string name="context_updateshow">עדכן</string>
   <string name="context_marknext">צפה בפרק הבא</string>
   <!-- Now -->
@@ -172,7 +178,7 @@
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
   <string name="action_try_any_language">נסה בכל שפה</string>
   <string name="action_try_again">נסה שוב</string>
-  <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">הוסף הכל</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
   <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
@@ -253,7 +259,6 @@
   <string name="hexagon_remove_account_success">החשבון נמחק.</string>
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
-  <string name="hexagon_api_error">לא הייתה אפשרות לדבר עם SeriesGuide Cloud. נסה שוב מאוחר יותר.</string>
   <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">כדי להשתמש ב-SeriesGuide בענן, אפשר גישה לחשבונות שלך.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
@@ -270,7 +275,6 @@
   <string name="traktcheckin_wait">אני אחכה</string>
   <string name="trakt_success">נשלח ל-trakt.</string>
   <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
-  <string name="trakt_error_general">לא ניתן להתחבר ל-Trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
   <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
   <!-- Connect trakt -->
@@ -369,8 +373,7 @@
   <string name="pref_theme">ערכת נושא</string>
   <!-- Other advanced settings -->
   <string name="pref_other">אחר</string>
-  <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
-  <string name="pref_autoupdatesummary">עדכן את הסדרות שלך מדי פעם</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">גיבוי אוטומטי</string>
   <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
   <string name="backup">גיבוי/שחזור</string>
@@ -448,7 +451,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">פרקים קרובים</string>
   <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
-  <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב... הבאות</string>
+  <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב&#8230; הבאות</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">עמום</string>
   <string name="action_upgrade">פתח את כל האפשרויות</string>

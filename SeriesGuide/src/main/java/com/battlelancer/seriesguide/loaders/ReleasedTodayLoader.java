@@ -95,7 +95,7 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
                 + Shows.SELECTION_NO_HIDDEN;
 
         String SORT_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
-                + Shows.TITLE + " ASC,"
+                + Shows.SORT_TITLE + ","
                 + Episodes.NUMBER + " DESC";
 
         String[] PROJECTION = new String[] {

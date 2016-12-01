@@ -11,8 +11,8 @@ import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**
- * A dialog displaying a list of languages to choose from, applying the selected language to the
- * given show if changed.
+ * A dialog displaying a list of languages to choose from, posting a {@link LanguageChangedEvent} if
+ * a language different from the given one was chosen.
  */
 public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
 
@@ -29,6 +29,9 @@ public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
     public static final String ARG_SELECTED_LANGUAGE_POSITION = "selectedPosition";
     private static final String ARG_SHOW_TVDBID = "showTvdbId";
 
+    /**
+     * Creates a language choice dialog for a specific show.
+     */
     public static LanguageChoiceDialogFragment newInstance(int showTvdbId,
             int selectedLanguageIndex) {
         LanguageChoiceDialogFragment f = new LanguageChoiceDialogFragment();
@@ -41,10 +44,31 @@ public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
         return f;
     }
 
+    /**
+     * Creates a language choice dialog for movie languages.
+     */
+    public static LanguageChoiceDialogFragment newInstance(int selectedLanguageIndex) {
+        LanguageChoiceDialogFragment f = new LanguageChoiceDialogFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_SELECTED_LANGUAGE_POSITION, selectedLanguageIndex);
+        f.setArguments(args);
+
+        return f;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final CharSequence[] items = getResources().getStringArray(R.array.languages);
+        final int showTvdbId = getArguments().getInt(ARG_SHOW_TVDBID);
+        final CharSequence[] items;
+        if (showTvdbId != 0) {
+            // show languages
+            items = getResources().getStringArray(R.array.languagesShows);
+        } else {
+            // movie languages
+            items = getResources().getStringArray(R.array.languagesMovies);
+        }
         final int currentLanguagePosition = getArguments().getInt(ARG_SELECTED_LANGUAGE_POSITION);
 
         return new AlertDialog.Builder(getActivity())
@@ -61,8 +85,7 @@ public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
                                 }
 
                                 EventBus.getDefault()
-                                        .post(new LanguageChangedEvent(
-                                                getArguments().getInt(ARG_SHOW_TVDBID), item));
+                                        .post(new LanguageChangedEvent(showTvdbId, item));
                                 dismiss();
                             }
                         }).create();

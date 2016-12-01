@@ -33,6 +33,9 @@
   <string name="web_search">Ricerca Web</string>
   <string name="add_to_homescreen">Aggiungi alla Home</string>
   <string name="action_open">Aperto</string>
+  <string name="sync_manually">Sincronizza manualmente</string>
+  <string name="sync_and_update">Sincronizza e Aggiorna</string>
+  <string name="sync_and_download_all">Sincronizza e Scarica tutto</string>
   <!-- Search -->
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Nessuna app disponibile per gestire questo contenuto.</string>
   <string name="people_empty">Non c\'è nessuno?! Tocca per riprovare.</string>
   <string name="database_error">Impossibile modificare i dati.</string>
+  <string name="reinstall_info">Prova a eseguire un backup dalle impostazioni, reinstalla e ripristina.</string>
+  <string name="api_error_generic">Non è possibile contattare %s. Riprova più tardi.</string>
   <!-- Sharing -->
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Nascosti</string>
   <string name="action_shows_sort">Ordina le serie</string>
   <string name="action_shows_sort_title">Titolo</string>
-  <string name="action_shows_sort_episode">Prossimo episodio</string>
+  <string name="action_shows_sort_latest_episode">Episodio più recente</string>
+  <string name="action_shows_sort_oldest_episode">Episodio più vecchio</string>
+  <string name="action_shows_sort_last_watched">Ultimo visto</string>
+  <string name="action_shows_sort_remaining">Episodi rimanenti</string>
   <string name="action_shows_sort_favorites">Prima i preferiti</string>
-  <string name="updateall_yes">Aggiorna (Tutti)</string>
-  <string name="menu_update_delta">Aggiorna (solo vecchi)</string>
   <string name="context_updateshow">Aggiorna</string>
   <string name="context_marknext">Episodio seguente visto</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Nessun risultato, prova parole complete.</string>
   <string name="action_try_any_language">Prova in altre lingue</string>
   <string name="action_try_again">Riprova</string>
-  <string name="search_error">Ricerca non riuscita, riprovare più tardi.</string>
+  <string name="tvdb_error_does_not_exist">La serie non esiste (ancora) su TheTVDB. Riprova più tardi.</string>
   <string name="add_all">Aggiungi tutto</string>
   <string name="add_multiple">Tutte le serie appariranno nella tua lista tra poco.</string>
   <string name="add_started">%s apparirà nella tua lista degli show tra poco.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Account rimosso.</string>
   <string name="hexagon_remove_account_failure">Impossibile rimuovere l\'account.</string>
   <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
-  <string name="hexagon_api_error">Impossibile comunicare con SeriesGuide Cloud. Prova più tardi.</string>
   <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Per utilizzare SeriesGuide Cloud, autorizza l\'accesso agli account.</string>
   <string name="hexagon_google_play_missing">Per utilizzare SeriesGuide Clouds è necessario avere installato Google Play Services.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Aspetterò</string>
   <string name="trakt_success">Inviato a trakt.</string>
   <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
-  <string name="trakt_error_general">Non è possibile contattare trakt. Riprova più tardi.</string>
   <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
   <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
   <!-- Connect trakt -->
@@ -359,8 +363,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Altro</string>
-  <string name="pref_autoupdate">Attiva aggiornamento automatico</string>
-  <string name="pref_autoupdatesummary">Aggiorna periodicamente le tue serie</string>
+  <string name="pref_autoupdatesummary">Sincronizza e aggiorna automaticamente i dati di SeriesGuide</string>
   <string name="pref_autobackup">Backup automatico</string>
   <string name="pref_autobackupsummary">Backup settimanali delle tue serie, liste e film</string>
   <string name="backup">Backup/Ripristino</string>

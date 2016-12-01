@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
@@ -17,7 +18,7 @@ import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
@@ -39,11 +40,15 @@ public class TraktRecentEpisodeHistoryLoader
 
     public static class Result {
         public List<NowAdapter.NowItem> items;
-        public @StringRes int errorTextResId;
+        @Nullable public String errorText;
 
-        public Result(List<NowAdapter.NowItem> items, @StringRes int errorTextResId) {
+        public Result(List<NowAdapter.NowItem> items) {
+            this(items, null);
+        }
+
+        public Result(List<NowAdapter.NowItem> items, @Nullable String errorText) {
             this.items = items;
-            this.errorTextResId = errorTextResId;
+            this.errorText = errorText;
         }
     }
 
@@ -74,15 +79,14 @@ public class TraktRecentEpisodeHistoryLoader
             }
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(getContext(), getAction(), e);
-            return buildResultFailure(
-                    AndroidUtils.isNetworkConnected(getContext()) ? R.string.trakt_error_general
-                            : R.string.offline);
+            return AndroidUtils.isNetworkConnected(getContext())
+                    ? buildResultFailure() : buildResultFailure(R.string.offline);
         }
 
         if (history == null) {
-            return buildResultFailure(R.string.trakt_error_general);
+            return buildResultFailure();
         } else if (history.isEmpty()) {
-            return new Result(null, 0); // no history available (yet)
+            return new Result(null); // no history available (yet)
         }
 
         // add header
@@ -94,7 +98,7 @@ public class TraktRecentEpisodeHistoryLoader
         // add link to more history
         items.add(new NowAdapter.NowItem().moreLink(getContext().getString(R.string.user_stream)));
 
-        return new Result(items, 0);
+        return new Result(items);
     }
 
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
@@ -155,11 +159,16 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
-        return traktUsers.history(Username.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+        return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
                 Extended.DEFAULT_MIN, null, null);
     }
 
-    protected static Result buildResultFailure(int emptyTextResId) {
-        return new Result(null, emptyTextResId);
+    private Result buildResultFailure() {
+        return new Result(null, getContext().getString(R.string.api_error_generic,
+                getContext().getString(R.string.trakt)));
+    }
+
+    private Result buildResultFailure(@StringRes int emptyTextResId) {
+        return new Result(null, getContext().getString(emptyTextResId));
     }
 }

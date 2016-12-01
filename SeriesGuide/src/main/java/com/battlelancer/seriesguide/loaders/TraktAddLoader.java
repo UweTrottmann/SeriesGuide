@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.loaders;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
@@ -21,10 +22,8 @@ import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
 
@@ -35,11 +34,16 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     public static class Result {
         public List<SearchResult> results;
-        public int emptyTextResId;
+        public String emptyText;
 
-        public Result(List<SearchResult> results, int emptyTextResId) {
+        public Result(List<SearchResult> results, String emptyText) {
             this.results = results;
-            this.emptyTextResId = emptyTextResId;
+            this.emptyText = emptyText;
+        }
+
+        public Result(List<SearchResult> results, Context context, @StringRes int emptyTextResId) {
+            this.results = results;
+            this.emptyText = context.getString(emptyTextResId);
         }
     }
 
@@ -70,6 +74,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     } else {
                         SgTrakt.trackFailedRequest(getContext(), action, response);
+                        return buildResultGenericFailure();
                     }
                 }
             } else {
@@ -94,13 +99,14 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     }
                     SgTrakt.trackFailedRequest(getContext(), action, response);
+                    return buildResultGenericFailure();
                 }
             }
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(getContext(), action, e);
             // only check for network here to allow hitting the response cache
-            return buildResultFailure(AndroidUtils.isNetworkConnected(getContext())
-                    ? R.string.trakt_error_general : R.string.offline);
+            return AndroidUtils.isNetworkConnected(getContext())
+                    ? buildResultGenericFailure() : buildResultFailure(R.string.offline);
         }
 
         // return empty list right away if there are no results
@@ -121,15 +127,21 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
     }
 
-    private static Result buildResultSuccess(List<SearchResult> results) {
-        return new Result(results, R.string.add_empty);
+    private Result buildResultSuccess(List<SearchResult> results) {
+        return new Result(results, getContext(), R.string.add_empty);
     }
 
-    private static Result buildResultFailure(int errorResId) {
-        return new Result(new LinkedList<SearchResult>(), errorResId);
+    private Result buildResultGenericFailure() {
+        return new Result(new LinkedList<SearchResult>(),
+                getContext().getString(R.string.api_error_generic,
+                        getContext().getString(R.string.trakt)));
     }
 
-    public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
+    private Result buildResultFailure(@StringRes int errorResId) {
+        return new Result(new LinkedList<SearchResult>(), getContext(), errorResId);
+    }
+
+    private static List<SearchResult> parseTraktShowsToSearchResults(Context context,
             @NonNull List<Show> traktShows) {
         return parseTraktShowsToSearchResults(context, traktShows, null);
     }

@@ -815,7 +815,7 @@ public class OverviewFragment extends Fragment implements
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             textDescription.setText(getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(getContext(),
+                    LanguageTools.getShowLanguageStringFor(getContext(),
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
                     getString(R.string.tvdb)));
         } else {

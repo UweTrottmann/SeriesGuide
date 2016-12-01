@@ -20,12 +20,12 @@ import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -219,7 +219,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 event = new OnShowAddedEvent(app.getString(R.string.offline));
                 break;
             case ADD_TRAKT_API_ERROR:
-                event = new OnShowAddedEvent(app.getString(R.string.trakt_error_general));
+                event = new OnShowAddedEvent(
+                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
                 break;
             case ADD_TRAKT_AUTH_ERROR:
                 event = new OnShowAddedEvent(app.getString(R.string.trakt_error_credentials));

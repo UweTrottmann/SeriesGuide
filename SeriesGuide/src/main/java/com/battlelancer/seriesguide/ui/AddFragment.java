@@ -97,8 +97,8 @@ public abstract class AddFragment extends Fragment {
     /**
      * Changes the empty message.
      */
-    public void setEmptyMessage(int stringResourceId) {
-        emptyView.setMessage(stringResourceId);
+    public void setEmptyMessage(CharSequence message) {
+        emptyView.setMessage(message);
     }
 
     public void setSearchResults(List<SearchResult> searchResults) {
@@ -210,11 +210,17 @@ public abstract class AddFragment extends Fragment {
             holder.title.setText(showTitle);
             holder.description.setText(item.overview);
 
-            // if there is no poster path, try to fall back to the first uploaded TVDB poster
-            String poster = item.poster == null
-                    ? TvdbTools.buildFallbackPosterPath(item.tvdbid)
-                    : item.poster;
-            Utils.loadTvdbShowPoster(getContext(), holder.poster, poster);
+            // only local shows will have a poster path set
+            // try to fall back to the first uploaded TVDB poster for all others
+            if (item.poster == null) {
+                // only load posters from caching server that are not from local shows
+                // because those are still loaded from TVDB directly
+                // and we do not want to cache them on device twice
+                Utils.loadTvdbShowPosterFromCache(getContext(), holder.poster,
+                        TvdbTools.buildFallbackPosterPath(item.tvdbid));
+            } else {
+                Utils.loadTvdbShowPoster(getContext(), holder.poster, item.poster);
+            }
 
             return convertView;
         }

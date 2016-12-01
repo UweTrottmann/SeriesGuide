@@ -33,6 +33,9 @@
   <string name="web_search">ウェブ検索</string>
   <string name="add_to_homescreen">ショートカット</string>
   <string name="action_open">開く</string>
+  <string name="sync_manually">手動で同期</string>
+  <string name="sync_and_update">同期と更新</string>
+  <string name="sync_and_download_all">すべて同期とダウンロード</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">これを処理するために利用できるアプリはありません。</string>
   <string name="people_empty">誰もいません?! タップして、もう一度やり直してください。</string>
   <string name="database_error">データを更新できませんでした。</string>
+  <string name="reinstall_info">設定で、バックアップ、再インストール、復元を試してください。</string>
+  <string name="api_error_generic">%s に通信できませんでした。後でもう一度やり直してください。</string>
   <!-- Sharing -->
   <string name="share">共有</string>
   <string name="share_show">番組を共有</string>
@@ -127,10 +132,11 @@
   <string name="action_shows_filter_hidden">非表示</string>
   <string name="action_shows_sort">番組を並び替え</string>
   <string name="action_shows_sort_title">タイトル</string>
-  <string name="action_shows_sort_episode">次のエピソード</string>
+  <string name="action_shows_sort_latest_episode">最新のエピソード</string>
+  <string name="action_shows_sort_oldest_episode">最も古いエピソード</string>
+  <string name="action_shows_sort_last_watched">最後に視聴</string>
+  <string name="action_shows_sort_remaining">残りのエピソード</string>
   <string name="action_shows_sort_favorites">お気に入りを最初に</string>
-  <string name="updateall_yes">更新 (すべて)</string>
-  <string name="menu_update_delta">更新 (古いもののみ)</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">視聴済次のエピソード</string>
   <!-- Now -->
@@ -169,7 +175,7 @@
   <string name="no_results">結果はありません。完全な単語で試してください。</string>
   <string name="action_try_any_language">任意の言語を試してください</string>
   <string name="action_try_again">もう一度やり直してください</string>
-  <string name="search_error">検索が失敗しました、後でもう一度やり直してください。</string>
+  <string name="tvdb_error_does_not_exist">番組は (まだ) TheTVDB に存在しません。後でもう一度試してください。</string>
   <string name="add_all">すべて追加</string>
   <string name="add_multiple">すぐにすべての番組が番組リストに表示されます。</string>
   <string name="add_started">すぐに %s が番組リストに表示されます。</string>
@@ -241,7 +247,6 @@
   <string name="hexagon_remove_account_success">アカウントを抹消しました。</string>
   <string name="hexagon_remove_account_failure">アカウントを削除できませんでした。</string>
   <string name="hexagon_remove_account_confirmation">アカウントを削除すると、SeriesGuide クラウドからすべての番組や映画が削除されます。他の接続されているデバイスも同様に削除することを確認してください。</string>
-  <string name="hexagon_api_error">SeriesGuide クラウドに通信できませんでした。後でもう一度やり直してください。</string>
   <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
   <string name="hexagon_permission_missing">SeriesGuide クラウドを使用するために、あなたのアカウントへのアクセスを許可してください。</string>
   <string name="hexagon_google_play_missing">SeriesGuide クラウドを使用するために、Google Play サービスが必要です。</string>
@@ -258,7 +263,6 @@
   <string name="traktcheckin_wait">待ちます</string>
   <string name="trakt_success">Trakt に送信しました。</string>
   <string name="trakt_error_credentials">何か問題があります。Trakt 資格情報を確認して、もう一度やり直してください。</string>
-  <string name="trakt_error_general">Trakt に通信できませんでした。後でもう一度やり直してください。</string>
   <string name="trakt_error_not_exists">(まだ) Trakt で利用できません。後でもう一度やり直してください。</string>
   <string name="trakt_notice_not_exists">Trakt で (まだ) トラックすることはできません。</string>
   <!-- Connect trakt -->
@@ -354,8 +358,7 @@
   <string name="pref_theme">テーマ</string>
   <!-- Other advanced settings -->
   <string name="pref_other">その他</string>
-  <string name="pref_autoupdate">自動更新をオンにする</string>
-  <string name="pref_autoupdatesummary">定期的に番組を更新します</string>
+  <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
   <string name="pref_autobackup">自動バックアップ</string>
   <string name="pref_autobackupsummary">番組、リスト、映画の週次バックアップ</string>
   <string name="backup">バックアップ/復元</string>

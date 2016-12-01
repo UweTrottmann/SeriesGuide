@@ -9,7 +9,7 @@
   <string name="search">Procurar</string>
   <string name="preferences">Configurações</string>
   <string name="help">Ajuda</string>
-  <string name="help_and_feedback">Ajuda &amp; Comentários</string>
+  <string name="help_and_feedback">Ajuda e comentários</string>
   <string name="drawer_open">Abrir gaveta de navegação</string>
   <!-- Media items -->
   <string name="show">Série</string>
@@ -33,6 +33,9 @@
   <string name="web_search">Pesquisa na Web</string>
   <string name="add_to_homescreen">Atalho</string>
   <string name="action_open">Abrir</string>
+  <string name="sync_manually">Sincronizar manualmente</string>
+  <string name="sync_and_update">Sincronizar e atualizar</string>
+  <string name="sync_and_download_all">Sincronizar e baixar dados</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Nenhum app disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toque para tentar novamente.</string>
   <string name="database_error">Não pode modificar os dados.</string>
+  <string name="reinstall_info">Tente fazer o backup nas configurações, reinstalar e restaurar o backup.</string>
+  <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>
@@ -85,7 +90,7 @@
   <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
-  <string name="no_spoilers">Alguns detalhes estão escondidos para evitar spoilers. Para desativar vá até as configurações.</string>
+  <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar vá até as configurações.</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Ocultos</string>
   <string name="action_shows_sort">Ordenar séries</string>
   <string name="action_shows_sort_title">Título</string>
-  <string name="action_shows_sort_episode">Próximo episódio</string>
+  <string name="action_shows_sort_latest_episode">Último episódio</string>
+  <string name="action_shows_sort_oldest_episode">Episódio mais antigo</string>
+  <string name="action_shows_sort_last_watched">Último visto</string>
+  <string name="action_shows_sort_remaining">Episódios restantes</string>
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
-  <string name="updateall_yes">Atualizar (tudo)</string>
-  <string name="menu_update_delta">Atualizar (obsoletas apenas)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="action_try_any_language">Tentar qualquer idioma</string>
   <string name="action_try_again">Tentar novamente</string>
-  <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
+  <string name="tvdb_error_does_not_exist">A série não existe (ainda) no TheTVDB. Tente mais tarde.</string>
   <string name="add_all">Adicionar tudo</string>
   <string name="add_multiple">Todas as séries aparecerão na sua lista em breve.</string>
   <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Conta obliterada.</string>
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
-  <string name="hexagon_api_error">Não conseguiu se comunicar com SeriesGuide Cloud. Tente novamente mais tarde.</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Para usar o SeriesGuide Cloud, permita o acesso às suas contas.</string>
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="trakt_success">Enviado ao trakt.</string>
   <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
-  <string name="trakt_error_general">Não foi possível se comunicar com o trakt. Tente novamente mais tarde.</string>
   <string name="trakt_error_not_exists">(Ainda) Não disponível no trakt.. Tente novamente mais tarde.</string>
   <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt.</string>
   <!-- Connect trakt -->
@@ -319,7 +323,7 @@
   <string name="pref_exactdates">Mostrar datas exatas</string>
   <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"em 3 dias\"</string>
   <string name="pref_nospoilers">Evitar spoilers</string>
-  <string name="pref_nospoilers_summary">Esconda detalhes até que o episódio seja assistido</string>
+  <string name="pref_nospoilers_summary">Oculte detalhes até que o episódio seja assistido</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Idioma preferido do conteúdo</string>
@@ -359,8 +363,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Outro</string>
-  <string name="pref_autoupdate">Ativar atualização automática</string>
-  <string name="pref_autoupdatesummary">Atualizar periodicamente suas séries</string>
+  <string name="pref_autoupdatesummary">Sincronizar e atualizar os dados automaticamente</string>
   <string name="pref_autobackup">Backup Automático</string>
   <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
   <string name="backup">Backup/Restauração</string>

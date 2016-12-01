@@ -36,8 +36,8 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
@@ -52,7 +52,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * Provides the apps main screen, displaying a list of shows and their next episodes.
  */
 public class ShowsActivity extends BaseTopActivity implements
-        AddShowDialogFragment.OnAddShowListener, OnFirstRunDismissedListener {
+        AddShowDialogFragment.OnAddShowListener {
 
     protected static final String TAG = "Shows";
 
@@ -198,12 +198,8 @@ public class ShowsActivity extends BaseTopActivity implements
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
                 (SlidingTabLayout) findViewById(R.id.tabLayoutTabs), buttonAddShow);
 
-        // shows tab (or first run fragment)
-        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-            tabsAdapter.addTab(R.string.shows, FirstRunFragment.class, null);
-        } else {
-            tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
-        }
+        // shows tab
+        tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
 
         // now tab
         tabsAdapter.addTab(R.string.now_tab, ShowsNowFragment.class, null);
@@ -454,6 +450,9 @@ public class ShowsActivity extends BaseTopActivity implements
                 // force a sync
                 SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
             }
+            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
+                ActivityTools.populateShowsLastWatchedTime(this);
+            }
 
             // set this as lastVersion
             Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -467,13 +466,6 @@ public class ShowsActivity extends BaseTopActivity implements
         ContentValues values = new ContentValues();
         values.put(Shows.LASTUPDATED, 0);
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
-    }
-
-    @Override
-    public void onFirstRunDismissed() {
-        // replace the first run fragment with a show fragment
-        tabsAdapter.updateTab(R.string.shows, ShowsFragment.class, null, 0);
-        tabsAdapter.notifyTabsChanged();
     }
 
     /**
@@ -490,15 +482,6 @@ public class ShowsActivity extends BaseTopActivity implements
             super(fm, context, pager, tabs);
             this.floatingActionButton = floatingActionButton;
             tabs.setOnPageChangeListener(this);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            if (object instanceof FirstRunFragment) {
-                return POSITION_NONE;
-            } else {
-                return super.getItemPosition(object);
-            }
         }
 
         @Override

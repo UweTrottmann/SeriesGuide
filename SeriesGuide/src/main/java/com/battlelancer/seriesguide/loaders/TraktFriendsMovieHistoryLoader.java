@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
@@ -40,7 +40,7 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
 
         // get all trakt friends
         List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
-                traktUsers.get().friends(Username.ME, Extended.IMAGES), "get friends");
+                traktUsers.get().friends(UserSlug.ME, Extended.FULL), "get friends");
         if (friends == null) {
             return null;
         }
@@ -61,18 +61,18 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
 
-            // at least need a username
+            // at least need a userSlug
             if (friend.user == null) {
                 continue;
             }
-            String username = friend.user.username;
-            if (TextUtils.isEmpty(username)) {
+            String userSlug = friend.user.ids.slug;
+            if (TextUtils.isEmpty(userSlug)) {
                 continue;
             }
 
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
-                    traktUsers.get().history(new Username(username), HistoryType.MOVIES, 1, 1,
+                    traktUsers.get().history(new UserSlug(userSlug), HistoryType.MOVIES, 1, 1,
                             Extended.DEFAULT_MIN, null, null), "get friend movie history");
             if (history == null || history.size() == 0) {
                 continue; // no history
@@ -95,7 +95,7 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
                             null
                     )
                     .tmdbId(entry.movie.ids == null ? null : entry.movie.ids.tmdb)
-                    .friend(username, avatar, entry.action);
+                    .friend(friend.user.username, avatar, entry.action);
             items.add(nowItem);
         }
 

@@ -23,9 +23,9 @@ import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.uwetrottmann.trakt5.services.Checkin;
 import dagger.Lazy;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Warns about an ongoing check-in, how long it takes until it is finished. Offers to override or
@@ -98,7 +98,8 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                             SgTrakt.trackFailedRequest(context, "delete check-in", e);
                         }
 
-                        return context.getString(R.string.trakt_error_general);
+                        return context.getString(R.string.api_error_generic,
+                                context.getString(R.string.trakt));
                     }
 
                     @Override

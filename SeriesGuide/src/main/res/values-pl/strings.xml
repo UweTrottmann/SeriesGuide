@@ -33,6 +33,9 @@
   <string name="web_search">Wyszukiwarka</string>
   <string name="add_to_homescreen">Skrót</string>
   <string name="action_open">Otwórz</string>
+  <string name="sync_manually">Synchronizuj ręcznie</string>
+  <string name="sync_and_update">Synchronizuj i aktualizuj</string>
+  <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
   <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
   <string name="database_error">Nie można zmodyfikować danych.</string>
+  <string name="reinstall_info">Spróbuj zrobić kopię zapasową w ustawieniach, przeinstalować program i przywrócić ustawienia.</string>
+  <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Ukryty</string>
   <string name="action_shows_sort">Sortuj seriale</string>
   <string name="action_shows_sort_title">Tytuł</string>
-  <string name="action_shows_sort_episode">Następny odcinek</string>
+  <string name="action_shows_sort_latest_episode">Najnowszy odcinek</string>
+  <string name="action_shows_sort_oldest_episode">Najstarszy odcinek</string>
+  <string name="action_shows_sort_last_watched">Ostatnio obejrzany</string>
+  <string name="action_shows_sort_remaining">Pozostałe odcinki</string>
   <string name="action_shows_sort_favorites">Najpierw ulubione</string>
-  <string name="updateall_yes">Aktualizuj (wszystko)</string>
-  <string name="menu_update_delta">Aktualizuj (stare)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_marknext">Odcinek obejrzany</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="action_try_any_language">Szukaj w innych językach</string>
   <string name="action_try_again">Spróbuj ponownie</string>
-  <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
+  <string name="tvdb_error_does_not_exist">Serial nie istnieje (jeszcze) w TVDB. Spróbuj ponownie później.</string>
   <string name="add_all">Dodaj wszystkie</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
   <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
@@ -180,7 +186,7 @@
   <string name="recommended">Zalecane</string>
   <string name="watched_shows">Obejrzane</string>
   <string name="shows_collection">Kolekcja</string>
-  <string name="watchlist">Lista obejrzanych</string>
+  <string name="watchlist">Do obejrzenia</string>
   <!-- Lists -->
   <string name="first_list">Pierwsza lista</string>
   <string name="list_add">Dodaj listę</string>
@@ -195,14 +201,14 @@
   <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
   <!-- Movies -->
   <string name="movies_collection">Kolekcja</string>
-  <string name="movies_watchlist">Lista obejrzanych</string>
-  <string name="watchlist_add">Dodaj do listy oglądanych</string>
-  <string name="watchlist_remove">Usuń z listy oglądanych</string>
-  <string name="watchlist_added">Dodano do listy oglądanych</string>
-  <string name="watchlist_removed">Usunięto z listy oglądanych</string>
+  <string name="movies_watchlist">Do obejrzenia</string>
+  <string name="watchlist_add">Do obejrzenia</string>
+  <string name="watchlist_remove">Usuń z listy do obejrzenia</string>
+  <string name="watchlist_added">Dodano do listy do obejrzenia</string>
+  <string name="watchlist_removed">Usunięto z listy do obejrzenia</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
   <string name="movies_collection_empty">Brak filmów w kolekcji.</string>
-  <string name="movies_watchlist_empty">Brak filmów na liście do obejrzenia.</string>
+  <string name="movies_watchlist_empty">Brak filmów do obejrzenia na liście.</string>
   <string name="trailer">Zwiastun</string>
   <string name="movie_cast">Obsada</string>
   <string name="movie_crew">Ekipa filmowa</string>
@@ -218,8 +224,8 @@
   <string name="shows_continuing">%s w toku</string>
   <string name="episodes_watched">%s obejrzanych</string>
   <string name="runtime_all_episodes">Czas wyświetlania wszystkich obejrzanych odcinków</string>
-  <string name="movies_on_watchlist">%s na liście oglądanych</string>
-  <string name="runtime_movies_watchlist">Czas wyświetlania obejrzanych filmów</string>
+  <string name="movies_on_watchlist">%s pozycji do obejrzenia</string>
+  <string name="runtime_movies_watchlist">czas pozycji na liście do obejrzenia</string>
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
     <item quantity="few">%d dni</item>
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Konto zostało usunięte.</string>
   <string name="hexagon_remove_account_failure">Usuwanie konta nie powiodło się.</string>
   <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
-  <string name="hexagon_api_error">Brak komunikacji z chmurą SeriesGuide. Spróbuj ponownie później.</string>
   <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
   <string name="hexagon_permission_missing">Umożliwiają dostęp do Twojego konta, aby użyć chmury SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Aby użyć chmury SeriesGuide Cloud wymagane jest Google Play Services.</string>
@@ -266,7 +271,6 @@
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="trakt_success">Wysłano do trakt.</string>
   <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
-  <string name="trakt_error_general">Nie można połączyć z trakt. Spróbuj ponownie później.</string>
   <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
   <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
   <!-- Connect trakt -->
@@ -364,8 +368,7 @@
   <string name="pref_theme">Motyw</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Inne</string>
-  <string name="pref_autoupdate">Uruchom aktualizacje automatyczne</string>
-  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale</string>
+  <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
   <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
   <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
   <string name="backup">Kopia zapasowa</string>

@@ -5,6 +5,56 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 34
+----------
+*(2016-12-01)*
+
+* Change show sort options: sort by title, latest or oldest next episode, last watched show or remaining number of episodes.
+* Display the remaining number of episodes right in the shows list.
+* Add separate language selector for movies, supports all languages of The Movie Database.
+* For Android 7.1: add round launcher icon, launcher shortcuts.
+
+#### 34
+*(2016-12-01)*
+
+* NOTE Latest translations from crowdin.
+
+#### 34-beta4
+*(2016-11-25)*
+
+* TWEAK Last watched sort order is initialized with data from recently watched episodes in Now tab.
+* TWEAK Display message if database is corrupted, advice to backup, re-install and restore.
+* FIX Display episodes released before 1970 in infinite calendar.
+* FIX Crash in list widget settings.
+* NOTE Latest translations from crowdin.
+
+#### 34-beta3
+*(2016-11-18)*
+
+* FEATURE Changed show sort options. Shows can now be sorted by title, latest or oldest next episode, last watched or remaining number of episodes.
+* FEATURE Support new show sort options for lists and widgets.
+* TWEAK In the show list and in lists, shows display the remaining number of released, unwatched episodes right on their card.
+* TWEAK Display spoiler setting instead of language setting on getting started card.
+* FIX Trim leading and trailing white spaces from show titles.
+* NOTE Latest translations from crowdin.
+
+#### 34-beta2
+*(2016-11-04)*
+
+* TWEAK Add separate language selector for movies, supports all languages from TMDB.
+* TWEAK Show better error messages if loading shows and movies fails.
+* TWEAK Show better error message in add dialog if show does not exist on TheTVDB.
+
+#### 34-beta1
+*(2016-10-28)*
+
+* TWEAK Use an image caching server, currently only for images from TheTVDB in the show search screen.
+* TWEAK Add round launcher icon.
+* TWEAK Add launcher shortcuts to "Add show", "Lists" and "Movies".
+* TWEAK Improvements to search index generation (use FTS4 instead of FTS3), should require less disk space.
+* FIX Text overlaps other content if movie title is very long.
+* FIX Handle duplicates when adding episodes while adding or updating a show.
+
 Version 33
 ----------
 *(2016-10-20)*

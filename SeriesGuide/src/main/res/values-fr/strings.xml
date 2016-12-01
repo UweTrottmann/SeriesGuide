@@ -33,6 +33,9 @@
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
   <string name="action_open">Ouvert</string>
+  <string name="sync_manually">Synchroniser manuellement</string>
+  <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
+  <string name="sync_and_download_all">Synchroniser &amp; Télécharger tout</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Aucune application disponible pour gérer cette action.</string>
   <string name="people_empty">Personne ici ?! Touchez pour réessayer.</string>
   <string name="database_error">Les données n\'ont pu être modifiées.</string>
+  <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
+  <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
@@ -85,7 +90,7 @@
   <string name="lastEdit">Dernière modification // TVDb</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
   <string name="no_translation_title">Non traduit</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
   <!-- Date and Time -->
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Cachés</string>
   <string name="action_shows_sort">Trier les séries</string>
   <string name="action_shows_sort_title">Titre</string>
-  <string name="action_shows_sort_episode">Prochain épisode</string>
+  <string name="action_shows_sort_latest_episode">Dernier épisode</string>
+  <string name="action_shows_sort_oldest_episode">Épisode le plus ancien</string>
+  <string name="action_shows_sort_last_watched">Dernière regardé</string>
+  <string name="action_shows_sort_remaining">Episodes restants</string>
   <string name="action_shows_sort_favorites">Favoris en premier</string>
-  <string name="updateall_yes">Mise à jour (tous)</string>
-  <string name="menu_update_delta">Mise à jour (juste les obsolètes)</string>
   <string name="context_updateshow">Mettre à jour</string>
   <string name="context_marknext">Prochain épisode vu</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="action_try_any_language">Essayer n\'importe quelle langue</string>
   <string name="action_try_again">Réessayer</string>
-  <string name="search_error">Recherche échouée, réessayez plus tard.</string>
+  <string name="tvdb_error_does_not_exist">La série n’existe pas (encore) sur TheTVDB. Réessayez plus tard.</string>
   <string name="add_all">Tout ajouter</string>
   <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
   <string name="add_started">%s apparaîtra dans votre liste de séries sous peu.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Compte supprimé.</string>
   <string name="hexagon_remove_account_failure">Problème lors de la suppression du compte.</string>
   <string name="hexagon_remove_account_confirmation">Retirer votre compte supprimera tous les films et séries se trouvant sur le cloud SeriesGuide. Assurez-vous de le retirer également sur vos autres appareils connectés.</string>
-  <string name="hexagon_api_error">Impossible de communiquer avec SeriesGuide Cloud. Réessayez plus tard.</string>
   <string name="hexagon_api_queued">Envoi vers SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Pour utiliser SeriesGuide Cloud, autoriser l’accès à vos comptes.</string>
   <string name="hexagon_google_play_missing">Pour utiliser SeriesGuide Cloud les Services Google Play sont nécessaires.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">J\'attends</string>
   <string name="trakt_success">Envoyé à trakt.</string>
   <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
-  <string name="trakt_error_general">Impossible de communiquer avec trakt. Réessayez ultérieurement.</string>
   <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
   <string name="trakt_notice_not_exists">Ne peut pas (encore) être suivis avec trakt.</string>
   <!-- Connect trakt -->
@@ -318,8 +322,8 @@
   <string name="pref_onlyseasonepssummary">Les épisodes spéciaux n\'apparaissent plus excepté dans la liste des saisons</string>
   <string name="pref_exactdates">Afficher les dates exactes</string>
   <string name="pref_exactdates_summary">« 31 octobre » au lieu de « dans 3 jours »</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Éviter les spoilers</string>
+  <string name="pref_nospoilers_summary">Masquer les détails jusqu\'à ce qu’un épisode soit vu</string>
   <string name="pref_seasonsorting">Trier les saisons par&#8230;</string>
   <string name="pref_episodesorting">Trier les épisodes par&#8230;</string>
   <string name="pref_language">Langue préférée pour le contenu</string>
@@ -359,8 +363,7 @@
   <string name="pref_theme">Thème</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Autres</string>
-  <string name="pref_autoupdate">Activer la mise à jour automatique</string>
-  <string name="pref_autoupdatesummary">Mise à jour périodique de vos séries</string>
+  <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>
   <string name="pref_autobackup">Sauvegarde automatique</string>
   <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
   <string name="backup">Sauvegarde/Restauration</string>

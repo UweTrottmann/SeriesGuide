@@ -22,6 +22,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
 
 /**
@@ -51,6 +52,10 @@ public class SgApp extends Application {
      * Requires full show update due to switch to locally stored trakt ids.
      */
     public static final int RELEASE_VERSION_26_BETA3 = 15142;
+    /**
+     * Populate shows last watched field from activity table.
+     */
+    public static final int RELEASE_VERSION_34_BETA4 = 15223;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
@@ -76,7 +81,13 @@ public class SgApp extends Application {
         }
 
         // initialize EventBus
-        EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+        try {
+            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+        } catch (EventBusException e) {
+            // looks like instance sometimes still lingers around,
+            // so far happening from services, though no exact cause found, yet
+            Timber.e(e, "EventBus already installed.");
+        }
 
         // initialize joda-time-android
         JodaTimeAndroid.init(this);

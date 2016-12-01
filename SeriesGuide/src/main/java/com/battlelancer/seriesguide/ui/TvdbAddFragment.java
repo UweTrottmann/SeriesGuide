@@ -68,7 +68,7 @@ public class TvdbAddFragment extends AddFragment {
         unbinder = ButterKnife.bind(this, v);
 
         // language chooser (Supported languages + any as first option)
-        CharSequence[] languageNamesArray = getResources().getTextArray(R.array.languages);
+        CharSequence[] languageNamesArray = getResources().getTextArray(R.array.languagesShows);
         ArrayList<CharSequence> languageNamesList = new ArrayList<>(languageNamesArray.length + 1);
         languageNamesList.add(getString(R.string.any_language));
         Collections.addAll(languageNamesList, languageNamesArray);
@@ -76,7 +76,7 @@ public class TvdbAddFragment extends AddFragment {
                 android.R.layout.simple_spinner_item, languageNamesList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(adapter);
-        final String[] languageCodes = getResources().getStringArray(R.array.languageData);
+        final String[] languageCodes = getResources().getStringArray(R.array.languageCodesShows);
         language = DisplaySettings.getSearchLanguage(getContext());
         if (!TextUtils.isEmpty(language)) {
             for (int i = 0; i < languageCodes.length; i++) {
@@ -245,7 +245,7 @@ public class TvdbAddFragment extends AddFragment {
                 return;
             }
             setSearchResults(data.results);
-            setEmptyMessage(data.emptyTextResId);
+            setEmptyMessage(data.emptyText);
             if (data.successful && data.results.size() == 0 && !TextUtils.isEmpty(language)) {
                 shouldTryAnyLanguage = true;
                 emptyView.setButtonText(R.string.action_try_any_language);

@@ -32,7 +32,7 @@
         android:visibility="gone" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
-    <GridView
+    <com.battlelancer.seriesguide.widgets.HeaderGridView
         android:id="@+android:id/list"
         style="@style/Widget.SeriesGuide.CardGrid"
         android:layout_width="match_parent"

@@ -33,6 +33,9 @@
   <string name="web_search">Веб пошук</string>
   <string name="add_to_homescreen">Ярлик</string>
   <string name="action_open">Відкрити</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Очистити історію пошуку</string>
   <string name="search_hint">Пошук серій</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Немає доступних застосунків для виконання даної операції.</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
   <string name="database_error">Не вдалося змінити дані.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Поділитись</string>
   <string name="share_show">Поділитись серіалом</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Приховані</string>
   <string name="action_shows_sort">Сортувати серіали за</string>
   <string name="action_shows_sort_title">Назвою</string>
-  <string name="action_shows_sort_episode">Наступною серією</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Улюблене спочатку</string>
-  <string name="updateall_yes">Оновити (все)</string>
-  <string name="menu_update_delta">Оновити (лише ті, що вже вийшли)</string>
   <string name="context_updateshow">Оновити</string>
   <string name="context_marknext">Переглянута наступна серія</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
   <string name="action_try_any_language">Виберіть будь-яку мову</string>
   <string name="action_try_again">Спробувати ще раз</string>
-  <string name="search_error">Пошук не вдався, спробуйте пізніше.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Додати усі</string>
   <string name="add_multiple">Усі серіали з\'являться у вашому списку найближчим часом.</string>
   <string name="add_started">%s з\'явиться у вашому списку серіалів  найближчим часом.</string>
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Обліковий запис видалено.</string>
   <string name="hexagon_remove_account_failure">Не вдалося видалити обліковий запис.</string>
   <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
-  <string name="hexagon_api_error">Не вдалося з\'єднатися з хмарою SeriesGuide. Спробуйте знову пізніше.</string>
   <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
   <string name="hexagon_permission_missing">Щоб використати Хмару SeriesGuide, дозвольте доступ до ваших аккаунтів.</string>
   <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
@@ -266,7 +271,6 @@
   <string name="traktcheckin_wait">Я зачекаю</string>
   <string name="trakt_success">Надіслано до trakt.</string>
   <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
-  <string name="trakt_error_general">Не можу з\'єднатись із trakt. Повторіть спробу пізніше.</string>
   <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
   <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
   <!-- Connect trakt -->
@@ -364,8 +368,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Інші</string>
-  <string name="pref_autoupdate">Увімкнути Автооновлення</string>
-  <string name="pref_autoupdatesummary">Періодично оновлювати ваші серіали</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Автоматичне резервне копіювання</string>
   <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
   <string name="backup">Бекап/Відновлення</string>

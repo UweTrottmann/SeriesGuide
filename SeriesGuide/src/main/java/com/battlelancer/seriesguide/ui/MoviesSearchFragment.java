@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -35,12 +37,18 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.tmdb2.entities.Movie;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Allows searching for movies on themoviedb.org, displays results in a nice grid.
@@ -149,6 +157,20 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -157,13 +179,23 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_history_menu, menu);
+        inflater.inflate(R.menu.movies_search_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_search_clear_history) {
+        if (itemId == R.id.menu_action_movies_search_change_language) {
+            LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(
+                    getContext());
+            if (languageData != null) {
+                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                        languageData.languageIndex);
+                dialog.show(getFragmentManager(), "dialog-language");
+            }
+            return true;
+        }
+        if (itemId == R.id.menu_action_movies_search_clear_history) {
             if (searchHistory != null && searchHistoryAdapter != null) {
                 searchHistory.clearHistory();
                 searchHistoryAdapter.clear();
@@ -201,6 +233,9 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = resultsAdapter.getItem(position);
+        if (movie == null) {
+            return;
+        }
 
         // launch details activity
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
@@ -266,6 +301,21 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         popupMenu.show();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleLanguageEvent(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        String languageCode = getResources().getStringArray(
+                R.array.languageCodesMovies)[event.selectedLanguageIndex];
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .apply();
+
+        // just run the current search again
+        search();
+    }
+
     private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
             = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
         @Override
@@ -284,7 +334,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
             if (!isAdded()) {
                 return;
             }
-            emptyView.setMessage(data.emptyTextResId);
+            emptyView.setMessage(data.emptyText);
             resultsAdapter.setData(data.results);
             setProgressVisible(false, true);
         }

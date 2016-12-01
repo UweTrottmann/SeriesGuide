@@ -235,10 +235,15 @@ public class SeriesGuideContract {
         String GETGLUEID = "series_getglueid";
 
         /**
-         * Id of the last watched episode, used to calculate the next episode to watch. Added in db
-         * version 31.
+         * Id of the last watched episode, used to calculate the next episode to watch. Added with
+         * {@link SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
          */
         String LASTWATCHEDID = "series_lastwatchedid";
+
+        /**
+         * Store the time an episode was last watched for this show. Added in
+         */
+        String LASTWATCHED_MS = "series_lastwatched_ms";
 
         /**
          * Language the show should be downloaded in, in two letter ISO 639-1 format.
@@ -249,6 +254,12 @@ public class SeriesGuideContract {
          * </pre>
          */
         String LANGUAGE = "series_language";
+
+        /**
+         * The remaining number of episodes to watch for this show. Added with {@link
+         * SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
+         */
+        String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
     interface SeasonsColumns {
@@ -505,7 +516,7 @@ public class SeriesGuideContract {
 
     interface ActivityColumns {
 
-        String TIMESTAMP = "activity_time";
+        String TIMESTAMP_MS = "activity_time";
 
         String EPISODE_TVDB_ID = "activity_episode";
 
@@ -580,14 +591,14 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
 
-        /**
-         * Default "ORDER BY" clause.
-         */
-        public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
+        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
+        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
+                + " COLLATE NOCASE ASC";
+        public static final String SORT_STATUS = Shows.STATUS + " DESC";
+        public static final String SORT_LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
+                + Shows.SORT_STATUS;
 
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
-
-        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTEPISODE + "!=''";
 
         public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
@@ -835,20 +846,7 @@ public class SeriesGuideContract {
         public static final String SELECTION_EPISODES = ListItems.TYPE + "="
                 + ListItemTypes.EPISODE;
 
-        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC, "
-                + ListItems.TYPE + " ASC";
-        public static final String SORT_TITLE_REVERSE = Shows.TITLE + " COLLATE NOCASE DESC, "
-                + ListItems.TYPE + " ASC";
-        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
-                + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
-        public static final String SORT_TITLE_NOARTICLE_REVERSE = Shows.TITLE_NOARTICLE
-                + " COLLATE NOCASE DESC, " + ListItems.TYPE + " ASC";
-        public static final String SORT_NEWEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " DESC,"
-                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
-                + " ASC";
-        public static final String SORT_OLDEST_EPISODE_FIRST = Shows.NEXTAIRDATEMS + " ASC,"
-                + Shows.STATUS + " DESC," + Shows.TITLE + " COLLATE NOCASE ASC," + ListItems.TYPE
-                + " ASC";
+        public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
@@ -958,6 +956,8 @@ public class SeriesGuideContract {
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
+
+        public static final String SORT_LATEST = Activity.TIMESTAMP_MS + " DESC";
 
         public static Uri buildActivityUri(String episodeTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();

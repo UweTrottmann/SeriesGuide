@@ -93,12 +93,7 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableMovie">@drawable/ic_action_movie</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
-        <item name="drawableStats">@drawable/ic_action_bargraph</item>
-        <item name="drawableTv">@drawable/ic_action_tv</item>
-        <item name="drawableSettings">@drawable/ic_action_settings</item>
-        <item name="drawableHelp">@drawable/ic_action_help</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
@@ -183,12 +178,7 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableMovie">@drawable/ic_action_movie</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
-        <item name="drawableStats">@drawable/ic_action_bargraph</item>
-        <item name="drawableTv">@drawable/ic_action_tv</item>
-        <item name="drawableSettings">@drawable/ic_action_settings</item>
-        <item name="drawableHelp">@drawable/ic_action_help</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
@@ -285,12 +275,7 @@
         <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
-        <item name="drawableMovie">@drawable/ic_action_movie_inverse</item>
         <item name="drawableShare">@drawable/ic_action_share_inverse</item>
-        <item name="drawableStats">@drawable/ic_action_bargraph_inverse</item>
-        <item name="drawableTv">@drawable/ic_action_tv_inverse</item>
-        <item name="drawableSettings">@drawable/ic_action_settings_inverse</item>
-        <item name="drawableHelp">@drawable/ic_action_help_inverse</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
     </style>

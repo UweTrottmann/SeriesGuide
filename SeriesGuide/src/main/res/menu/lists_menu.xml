@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/menu_action_lists_add"
-        android:icon="@drawable/ic_action_new_list"
+        android:icon="@drawable/ic_list_add_white_24dp"
         android:orderInCategory="0"
         android:title="@string/list_add"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_action_lists_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="1"
         android:title="@string/search"
         app:showAsAction="ifRoom" />
@@ -21,7 +21,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_action_lists_sort"
-        android:icon="@drawable/ic_action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:orderInCategory="3"
         android:title="@string/action_lists_sort"
         app:showAsAction="never">
@@ -30,8 +30,17 @@
                 android:id="@+id/menu_action_lists_sort_title"
                 android:title="@string/action_shows_sort_title" />
             <item
-                android:id="@+id/menu_action_lists_sort_episode"
-                android:title="@string/action_shows_sort_episode" />
+                android:id="@+id/menu_action_lists_sort_latest_episode"
+                android:title="@string/action_shows_sort_latest_episode" />
+            <item
+                android:id="@+id/menu_action_lists_sort_oldest_episode"
+                android:title="@string/action_shows_sort_oldest_episode" />
+            <item
+                android:id="@+id/menu_action_lists_sort_last_watched"
+                android:title="@string/action_shows_sort_last_watched" />
+            <item
+                android:id="@+id/menu_action_lists_sort_remaining"
+                android:title="@string/action_shows_sort_remaining" />
             <item
                 android:id="@+id/menu_action_lists_sort_ignore_articles"
                 android:checkable="true"

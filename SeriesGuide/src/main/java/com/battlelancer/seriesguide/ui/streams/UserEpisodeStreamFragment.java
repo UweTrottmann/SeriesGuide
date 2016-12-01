@@ -99,7 +99,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                         return;
                     }
                     mAdapter.setData(data.results);
-                    setEmptyMessage(data.emptyTextResId);
+                    setEmptyMessage(data.emptyText);
                     showProgressBar(false);
                 }
 

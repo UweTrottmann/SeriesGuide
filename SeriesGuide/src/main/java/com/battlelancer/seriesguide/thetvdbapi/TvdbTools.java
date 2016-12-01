@@ -36,11 +36,12 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.thetvdb.entities.Series;
-import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResults;
-import com.uwetrottmann.thetvdb.entities.SeriesResultsWrapper;
-import com.uwetrottmann.thetvdb.entities.SeriesWrapper;
-import com.uwetrottmann.thetvdb.services.Search;
-import com.uwetrottmann.thetvdb.services.SeriesService;
+import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResult;
+import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
+import com.uwetrottmann.thetvdb.entities.SeriesResponse;
+import com.uwetrottmann.thetvdb.entities.SeriesResultsResponse;
+import com.uwetrottmann.thetvdb.services.TheTvdbSearch;
+import com.uwetrottmann.thetvdb.services.TheTvdbSeries;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
@@ -91,8 +92,8 @@ public class TvdbTools {
 
     private static TvdbTools tvdbTools;
     private final SgApp app;
-    @Inject Lazy<Search> tvdbSearch;
-    @Inject Lazy<SeriesService> tvdbSeries;
+    @Inject Lazy<TheTvdbSearch> tvdbSearch;
+    @Inject Lazy<TheTvdbSeries> tvdbSeries;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
     @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
     @Inject Lazy<OkHttpClient> okHttpClient;
@@ -263,7 +264,7 @@ public class TvdbTools {
     @Nullable
     public List<SearchResult> searchSeries(@NonNull String query, @Nullable final String language)
             throws TvdbException {
-        retrofit2.Response<SeriesResultsWrapper> response;
+        retrofit2.Response<SeriesResultsResponse> response;
         try {
             response = tvdbSearch.get()
                     .series(query, null, null, language)
@@ -495,7 +496,7 @@ public class TvdbTools {
         // fill in data from trakt
         if (traktShow != null) {
             if (traktShow.ids != null && traktShow.ids.trakt != null) {
-                show.traktId = traktShow.ids.trakt;
+                show.trakt_id = traktShow.ids.trakt;
             }
             if (traktShow.airs != null) {
                 show.release_time = TimeTools.parseShowReleaseTime(traktShow.airs.time);
@@ -503,16 +504,16 @@ public class TvdbTools {
                 show.release_timezone = traktShow.airs.timezone;
             }
             show.country = traktShow.country;
-            show.firstAired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
+            show.first_aired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
             show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
         } else {
             // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
             Timber.w("getShowDetails: failed to get trakt show details.");
-            show.traktId = ShowTools.getShowTraktId(app, showTvdbId);
+            show.trakt_id = ShowTools.getShowTraktId(app, showTvdbId);
             // set default values
             show.release_time = -1;
             show.release_weekday = -1;
-            show.firstAired = "";
+            show.first_aired = "";
             show.rating = 0.0;
         }
 
@@ -566,20 +567,20 @@ public class TvdbTools {
         }
 
         Show result = new Show();
-        result.tvdbId = showTvdbId;
+        result.tvdb_id = showTvdbId;
         // actors are unused, are fetched from tmdb
-        result.title = series.seriesName;
+        result.title = series.seriesName != null ? series.seriesName.trim() : null;
         result.network = series.network;
-        result.contentRating = series.rating;
-        result.imdbId = series.imdbId;
+        result.content_rating = series.rating;
+        result.imdb_id = series.imdbId;
         result.genres = TextTools.mendTvdbStrings(series.genre);
         result.language = desiredLanguage; // requested language, might not be the content language.
-        result.lastEdited = series.lastUpdated;
+        result.last_edited = series.lastUpdated;
         if (noTranslation || TextUtils.isEmpty(series.overview)) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = series.overview;
             result.overview = app.getString(R.string.no_translation,
-                    LanguageTools.getLanguageStringForCode(app, desiredLanguage),
+                    LanguageTools.getShowLanguageStringFor(app, desiredLanguage),
                     app.getString(R.string.tvdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 result.overview += "\n\n" + untranslatedOverview;
@@ -605,7 +606,7 @@ public class TvdbTools {
         }
 
         // poster
-        retrofit2.Response<SeriesImageQueryResults> posterResponse;
+        retrofit2.Response<SeriesImageQueryResultResponse> posterResponse;
         posterResponse = getSeriesPosters(showTvdbId, desiredLanguage);
         if (posterResponse.code() == 404) {
             // no posters for this language, fall back to default
@@ -621,7 +622,7 @@ public class TvdbTools {
 
     @NonNull
     private Series getSeries(int showTvdbId, @Nullable String language) throws TvdbException {
-        retrofit2.Response<SeriesWrapper> response;
+        retrofit2.Response<SeriesResponse> response;
         try {
             response = tvdbSeries.get().series(showTvdbId, language).execute();
         } catch (IOException e) {
@@ -633,7 +634,7 @@ public class TvdbTools {
         return response.body().data;
     }
 
-    private retrofit2.Response<SeriesImageQueryResults> getSeriesPosters(int showTvdbId,
+    private retrofit2.Response<SeriesImageQueryResultResponse> getSeriesPosters(int showTvdbId,
             @Nullable String language) throws TvdbException {
         try {
             return tvdbSeries.get()
@@ -645,12 +646,11 @@ public class TvdbTools {
     }
 
     @Nullable
-    private static String getHighestRatedPoster(
-            List<SeriesImageQueryResults.SeriesImageQueryResult> posters) {
+    private static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
         int highestRatedIndex = 0;
         double highestRating = 0.0;
         for (int i = 0; i < posters.size(); i++) {
-            SeriesImageQueryResults.SeriesImageQueryResult poster = posters.get(i);
+            SeriesImageQueryResult poster = posters.get(i);
             if (poster.ratingsInfo == null || poster.ratingsInfo.average == null) {
                 continue;
             }
@@ -665,7 +665,7 @@ public class TvdbTools {
 
     private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
             Show show, String language) throws TvdbException {
-        String url = TVDB_API_SERIES + show.tvdbId + "/" + TVDB_PATH_ALL
+        String url = TVDB_API_SERIES + show.tvdb_id + "/" + TVDB_PATH_ALL
                 + (language != null ? language + TVDB_EXTENSION_COMPRESSED : TVDB_FILE_DEFAULT);
 
         return parseEpisodes(batch, show, url);
@@ -690,10 +690,10 @@ public class TvdbTools {
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
-                show.tvdbId);
+                show.tvdb_id);
         final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(
                 localEpisodeIds); // just copy episodes list, then remove valid ones
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdbId);
+        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdb_id);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
         final ContentValues values = new ContentValues();

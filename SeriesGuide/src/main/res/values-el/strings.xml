@@ -33,6 +33,9 @@
   <string name="web_search">Αναζήτηση στον ιστό</string>
   <string name="add_to_homescreen">Συντόμευση</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί.</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Κρυφά</string>
   <string name="action_shows_sort">Ταξινόμηση σειρών</string>
   <string name="action_shows_sort_title">Τίτλος</string>
-  <string name="action_shows_sort_episode">Επόμενο επεισόδιο</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
-  <string name="updateall_yes">Ενημέρωση (όλα)</string>
-  <string name="menu_update_delta">Ενημέρωση (παλιά μόνο)</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
-  <string name="search_error">Η αναζήτηση απέτυχε, δοκιμάστε ξανά αργότερα.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Προσθήκη όλων</string>
   <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
   <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Ο λογαριασμός διαγράφηκε.</string>
   <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
-  <string name="hexagon_api_error">Αποτηχία σύνδεσης με SeriesGuide. Προσπαθήστε αργότερα.</string>
   <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Θα περιμένω</string>
   <string name="trakt_success">Στάλθηκε στο trakt.</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
-  <string name="trakt_error_general">Δεν μπορέσαμε να μιλήσουμε στο trakt. Προσπαθήστε ξανά αργότερα.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
@@ -359,8 +363,7 @@
   <string name="pref_theme">Θέμα</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Άλλα</string>
-  <string name="pref_autoupdate">Aυτόματη ενημέρωση</string>
-  <string name="pref_autoupdatesummary">Ενημερώνετε περιοδικά τις σειρές σας</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>

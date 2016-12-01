@@ -41,9 +41,9 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -233,6 +233,12 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             // failed to load, can't be added
             if (!AndroidUtils.isNetworkConnected(getActivity())) {
                 overview.setText(R.string.offline);
+            } else if (result.doesNotExist) {
+                overview.setText(R.string.tvdb_error_does_not_exist);
+            } else {
+                overview.setText(getString(R.string.api_error_generic,
+                        String.format("%s/%s", getString(R.string.tvdb),
+                                getString(R.string.trakt))));
             }
             return;
         }
@@ -272,7 +278,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // release year
         SpannableStringBuilder statusText = new SpannableStringBuilder();
-        String releaseYear = TimeTools.getShowReleaseYear(show.firstAired);
+        String releaseYear = TimeTools.getShowReleaseYear(show.first_aired);
         if (releaseYear != null) {
             statusText.append(releaseYear);
         }
@@ -315,7 +321,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         // network, runtime
         timeAndNetworkText.append(show.network);
         timeAndNetworkText.append("\n");
-        timeAndNetworkText.append(getString(R.string.runtime_minutes, show.runtime));
+        timeAndNetworkText.append(
+                getString(R.string.runtime_minutes, String.valueOf(show.runtime)));
 
         showmeta.setText(timeAndNetworkText);
 

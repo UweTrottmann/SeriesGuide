@@ -1,7 +1,8 @@
 package com.battlelancer.seriesguide.loaders;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
@@ -21,7 +22,6 @@ import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
 import dagger.Lazy;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
@@ -30,14 +30,15 @@ import timber.log.Timber;
 public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
     public static class Result {
+        @NonNull
         public List<SearchResult> results;
-        public int emptyTextResId;
+        public String emptyText;
         /** Whether the network call completed. Does not mean there are any results. */
         public boolean successful;
 
-        public Result(List<SearchResult> results, int emptyTextResId, boolean successful) {
+        public Result(@NonNull List<SearchResult> results, String emptyText, boolean successful) {
             this.results = results;
-            this.emptyTextResId = emptyTextResId;
+            this.emptyText = emptyText;
             this.successful = successful;
         }
     }
@@ -69,7 +70,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         if (TextUtils.isEmpty(query)) {
             // no query? load a list of trending shows from trakt
             List<TrendingShow> trendingShows = SgTrakt.executeCall(app,
-                    traktShows.get().trending(1, 35, Extended.FULLIMAGES),
+                    traktShows.get().trending(1, 35, Extended.FULL),
                     "get trending shows"
             );
             if (trendingShows != null) {
@@ -84,9 +85,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 // manually set the language to the current search language
                 results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows,
                         language);
-                return buildResultSuccess(results, R.string.no_results);
+                return buildResultSuccess(results, R.string.add_empty);
             } else {
-                return buildResultFailure(getContext(), R.string.trakt_error_general);
+                return buildResultFailure(R.string.trakt);
             }
         } else {
             // have a query?
@@ -113,6 +114,8 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                     results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(),
                             shows, DisplaySettings.LANGUAGE_EN);
                     return buildResultSuccess(results, R.string.no_results);
+                } else {
+                    return buildResultFailure(R.string.trakt);
                 }
             } else {
                 try {
@@ -122,18 +125,18 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                     } else {
                         results = TvdbTools.getInstance(app).searchSeries(query, language);
                     }
-                    markLocalShows(getContext(), results);
+                    markLocalShows(results);
                     return buildResultSuccess(results, R.string.no_results);
                 } catch (TvdbException e) {
                     Timber.e(e, "Searching show failed");
                 }
+                return buildResultFailure(R.string.tvdb);
             }
-            return buildResultFailure(getContext(), R.string.search_error);
         }
     }
 
-    private static void markLocalShows(Context context, @Nullable List<SearchResult> results) {
-        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(context);
+    private void markLocalShows(@Nullable List<SearchResult> results) {
+        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
         if (localShows == null || results == null) {
             return;
         }
@@ -150,18 +153,22 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
     }
 
-    private static Result buildResultSuccess(List<SearchResult> results, int emptyTextResId) {
+    private Result buildResultSuccess(List<SearchResult> results, @StringRes int emptyTextResId) {
         if (results == null) {
             results = new LinkedList<>();
         }
-        return new Result(results, emptyTextResId, true);
+        return new Result(results, getContext().getString(emptyTextResId), true);
     }
 
-    private static Result buildResultFailure(Context context, int emptyTextResId) {
+    private Result buildResultFailure(@StringRes int serviceResId) {
         // only check for network here to allow hitting the response cache
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            emptyTextResId = R.string.offline;
+        String emptyText;
+        if (AndroidUtils.isNetworkConnected(getContext())) {
+            emptyText = getContext().getString(R.string.api_error_generic,
+                    getContext().getString(serviceResId));
+        } else {
+            emptyText = getContext().getString(R.string.offline);
         }
-        return new Result(new LinkedList<SearchResult>(), emptyTextResId, false);
+        return new Result(new LinkedList<SearchResult>(), emptyText, false);
     }
 }

@@ -24,11 +24,11 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     public static class Result {
         public List<Movie> results;
-        public int emptyTextResId;
+        public String emptyText;
 
-        public Result(List<Movie> results, int emptyTextResId) {
+        public Result(List<Movie> results, String emptyText) {
             this.results = results;
-            this.emptyTextResId = emptyTextResId;
+            this.emptyText = emptyText;
         }
     }
 
@@ -44,7 +44,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     @Override
     public Result loadInBackground() {
-        String languageCode = DisplaySettings.getContentLanguage(getContext());
+        String languageCode = DisplaySettings.getMoviesLanguage(getContext());
 
         List<Movie> results = null;
         String action = null;
@@ -70,15 +70,21 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                 }
             } else {
                 SgTmdb.trackFailedRequest(getContext(), action, response);
+                return buildErrorResult();
             }
         } catch (IOException e) {
             SgTmdb.trackFailedRequest(getContext(), action, e);
             // only check for connection here to allow hitting the response cache
-            return new Result(null,
-                    AndroidUtils.isNetworkConnected(getContext()) ? R.string.search_error
-                            : R.string.offline);
+            return AndroidUtils.isNetworkConnected(getContext())
+                    ? buildErrorResult()
+                    : new Result(null, getContext().getString(R.string.offline));
         }
 
-        return new Result(results, R.string.no_results);
+        return new Result(results, getContext().getString(R.string.no_results));
+    }
+
+    private Result buildErrorResult() {
+        return new Result(null, getContext().getString(R.string.api_error_generic,
+                getContext().getString(R.string.tmdb)));
     }
 }

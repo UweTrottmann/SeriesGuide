@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -16,8 +17,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**
-* Adapter for a list in the Lists section.
-*/
+ * Adapter for a list in the Lists section.
+ */
 public class ListItemsAdapter extends BaseShowsAdapter {
 
     public interface OnContextMenuClickListener {
@@ -66,19 +67,24 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                     // display show status if there is no next episode
                     viewHolder.episodeTime.setText(ShowTools.getStatus(context,
                             cursor.getInt(Query.SHOW_STATUS)));
-                    viewHolder.episode.setText("");
+                    viewHolder.episode.setText(null);
                 } else {
                     viewHolder.episode.setText(fieldValue);
                     fieldValue = cursor.getString(Query.SHOW_NEXTAIRDATETEXT);
                     viewHolder.episodeTime.setText(fieldValue);
                 }
+
+                // remaining count
+                setRemainingCount(context, viewHolder.remainingCount,
+                        cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
                 break;
             case 2:
                 // seasons
                 viewHolder.timeAndNetwork.setText(R.string.season);
                 viewHolder.episode.setText(SeasonTools.getSeasonString(context,
                         cursor.getInt(Query.ITEM_TITLE)));
-                viewHolder.episodeTime.setText("");
+                viewHolder.episodeTime.setText(null);
+                viewHolder.remainingCount.setText(null);
                 break;
             case 3:
                 // episodes
@@ -96,6 +102,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                             TimeTools.formatToLocalRelativeTime(context, actualRelease),
                             TimeTools.formatToLocalDay(actualRelease)));
                 }
+                viewHolder.remainingCount.setText(null);
                 break;
         }
 
@@ -142,23 +149,24 @@ public class ListItemsAdapter extends BaseShowsAdapter {
     public interface Query {
 
         String[] PROJECTION = new String[] {
-                SeriesGuideContract.ListItems._ID, // 0
-                SeriesGuideContract.ListItems.LIST_ITEM_ID,
-                SeriesGuideContract.ListItems.ITEM_REF_ID,
-                SeriesGuideContract.ListItems.TYPE,
-                SeriesGuideContract.Shows.REF_SHOW_ID,
-                SeriesGuideContract.Shows.TITLE, // 5
-                SeriesGuideContract.Shows.OVERVIEW,
-                SeriesGuideContract.Shows.POSTER,
-                SeriesGuideContract.Shows.NETWORK,
-                SeriesGuideContract.Shows.RELEASE_TIME,
-                SeriesGuideContract.Shows.RELEASE_WEEKDAY, // 10
-                SeriesGuideContract.Shows.RELEASE_TIMEZONE,
-                SeriesGuideContract.Shows.RELEASE_COUNTRY,
-                SeriesGuideContract.Shows.STATUS,
-                SeriesGuideContract.Shows.NEXTTEXT,
-                SeriesGuideContract.Shows.NEXTAIRDATETEXT,
-                SeriesGuideContract.Shows.FAVORITE // 16
+                ListItems._ID, // 0
+                ListItems.LIST_ITEM_ID,
+                ListItems.ITEM_REF_ID,
+                ListItems.TYPE,
+                Shows.REF_SHOW_ID,
+                Shows.TITLE, // 5
+                Shows.OVERVIEW,
+                Shows.POSTER,
+                Shows.NETWORK,
+                Shows.RELEASE_TIME,
+                Shows.RELEASE_WEEKDAY, // 10
+                Shows.RELEASE_TIMEZONE,
+                Shows.RELEASE_COUNTRY,
+                Shows.STATUS,
+                Shows.NEXTTEXT,
+                Shows.NEXTAIRDATETEXT, // 15
+                Shows.FAVORITE,
+                Shows.UNWATCHED_COUNT // 17
         };
 
         int LIST_ITEM_ID = 1;
@@ -177,5 +185,6 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         int SHOW_NEXTTEXT = 14;
         int SHOW_NEXTAIRDATETEXT = 15;
         int SHOW_FAVORITE = 16;
+        int SHOW_UNWATCHED_COUNT = 17;
     }
 }

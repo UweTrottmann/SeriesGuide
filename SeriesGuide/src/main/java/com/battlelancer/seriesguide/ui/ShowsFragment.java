@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -26,22 +25,28 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.FirstRunView;
+import com.battlelancer.seriesguide.widgets.HeaderGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -51,10 +56,11 @@ public class ShowsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
+    private static final String TAG_FIRST_RUN = "First Run";
 
     private ShowsAdapter mAdapter;
 
-    private GridView mGrid;
+    private HeaderGridView mGrid;
 
     private int mSortOrderId;
 
@@ -102,7 +108,7 @@ public class ShowsFragment extends Fragment implements
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
                         .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
-                        .commit();
+                        .apply();
 
                 // refresh filter menu check box states
                 getActivity().supportInvalidateOptionsMenu();
@@ -123,9 +129,14 @@ public class ShowsFragment extends Fragment implements
         mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
-        mGrid = (GridView) getView().findViewById(android.R.id.list);
+        mGrid = (HeaderGridView) getView().findViewById(android.R.id.list);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
+        if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
+            FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
+                    .inflate(R.layout.item_first_run, mGrid, false);
+            mGrid.addHeaderView(headerView);
+        }
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
 
@@ -177,6 +188,13 @@ public class ShowsFragment extends Fragment implements
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -201,6 +219,13 @@ public class ShowsFragment extends Fragment implements
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -216,7 +241,7 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
                         || mIsFilterHidden ?
-                        R.drawable.ic_action_filter_selected : R.drawable.ic_action_filter);
+                        R.drawable.ic_action_filter_selected_24dp : R.drawable.ic_action_filter);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
@@ -228,7 +253,28 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter_hidden)
                 .setChecked(mIsFilterHidden);
 
-        // set sort check box state
+        // set current sort order and check box states
+        MenuItem sortTitleItem = menu.findItem(R.id.menu_action_shows_sort_title);
+        sortTitleItem.setTitle(R.string.action_shows_sort_title);
+        MenuItem sortLatestItem = menu.findItem(R.id.menu_action_shows_sort_latest_episode);
+        sortLatestItem.setTitle(R.string.action_shows_sort_latest_episode);
+        MenuItem sortOldestItem = menu.findItem(R.id.menu_action_shows_sort_oldest_episode);
+        sortOldestItem.setTitle(R.string.action_shows_sort_oldest_episode);
+        MenuItem lastWatchedItem = menu.findItem(R.id.menu_action_shows_sort_last_watched);
+        lastWatchedItem.setTitle(R.string.action_shows_sort_last_watched);
+        MenuItem remainingItem = menu.findItem(R.id.menu_action_shows_sort_remaining);
+        remainingItem.setTitle(R.string.action_shows_sort_remaining);
+        if (mSortOrderId == ShowsSortOrder.TITLE_ID) {
+            Utils.setMenuItemActiveString(sortTitleItem);
+        } else if (mSortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
+            Utils.setMenuItemActiveString(sortLatestItem);
+        } else if (mSortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
+            Utils.setMenuItemActiveString(sortOldestItem);
+        } else if (mSortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
+            Utils.setMenuItemActiveString(lastWatchedItem);
+        } else if (mSortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
+            Utils.setMenuItemActiveString(remainingItem);
+        }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(mIsSortFavoritesFirst);
         menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
@@ -283,7 +329,7 @@ public class ShowsFragment extends Fragment implements
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
-                    .commit();
+                    .apply();
             // refresh filter icon state
             getActivity().supportInvalidateOptionsMenu();
 
@@ -312,24 +358,29 @@ public class ShowsFragment extends Fragment implements
             upcomingRangeDialog.show(getFragmentManager(), "upcomingRangeDialog");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
-            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.TITLE_ID) {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_REVERSE_ID;
-            } else {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
-            }
+            mSortOrderId = ShowsSortOrder.TITLE_ID;
             changeSort();
-
             Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
-        } else if (itemId == R.id.menu_action_shows_sort_episode) {
-            if (mSortOrderId == ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID) {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_REVERSE_ID;
-            } else {
-                mSortOrderId = ShowsDistillationSettings.ShowsSortOrder.EPISODE_ID;
-            }
+        } else if (itemId == R.id.menu_action_shows_sort_latest_episode) {
+            mSortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
             changeSort();
-
-            Utils.trackAction(getActivity(), TAG, "Sort Episode");
+            Utils.trackAction(getActivity(), TAG, "Sort Episode (latest)");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_oldest_episode) {
+            mSortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
+            changeSort();
+            Utils.trackAction(getActivity(), TAG, "Sort Episode (oldest)");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_last_watched) {
+            mSortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
+            changeSort();
+            Utils.trackAction(getActivity(), TAG, "Sort Last watched");
+            return true;
+        } else if (itemId == R.id.menu_action_shows_sort_remaining) {
+            mSortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
+            changeSort();
+            Utils.trackAction(getActivity(), TAG, "Sort Remaining episodes");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
@@ -358,7 +409,7 @@ public class ShowsFragment extends Fragment implements
 
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putBoolean(key, state).commit();
+                .putBoolean(key, state).apply();
 
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
@@ -370,7 +421,39 @@ public class ShowsFragment extends Fragment implements
 
         // save new sort order to preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).commit();
+                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).apply();
+
+        // refresh menu state to indicate current order
+        getActivity().supportInvalidateOptionsMenu();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleFirstRunButtonEvent(FirstRunView.ButtonEvent event) {
+        switch (event.type) {
+            case FirstRunView.ButtonType.ADD_SHOW: {
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
+                break;
+            }
+            case FirstRunView.ButtonType.CONNECT_TRAKT: {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Connect trakt");
+                break;
+            }
+            case FirstRunView.ButtonType.RESTORE_BACKUP: {
+                startActivity(new Intent(getActivity(), DataLiberationActivity.class));
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Restore backup");
+                break;
+            }
+            case FirstRunView.ButtonType.DISMISS: {
+                if (mGrid != null) {
+                    mGrid.removeHeaderView(event.firstRunView);
+                    Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
+                }
+                break;
+            }
+        }
     }
 
     @Override
@@ -378,7 +461,6 @@ public class ShowsFragment extends Fragment implements
         getActivity().openContextMenu(v);
     }
 
-    @TargetApi(16)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // display overview for this show

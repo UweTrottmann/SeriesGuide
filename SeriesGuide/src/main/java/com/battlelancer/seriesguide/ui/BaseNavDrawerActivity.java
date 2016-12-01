@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -134,8 +135,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         textViewHeaderUser = (TextView) headerView.findViewById(R.id.textViewDrawerItemUsername);
 
         // setup nav drawer items
-        navigationView.inflateMenu(SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
-                ? R.menu.menu_drawer_light : R.menu.menu_drawer);
+        navigationView.inflateMenu(R.menu.menu_drawer);
         navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
         navigationView.setItemTextColor(ContextCompat.getColorStateList(this,
@@ -145,7 +145,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         onNavItemClick(menuItem.getItemId());
                         return false;
                     }

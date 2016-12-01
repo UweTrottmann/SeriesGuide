@@ -58,29 +58,31 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // handle errors
-        Integer errorResId = null;
+        String error = null;
         switch (result) {
             case ERROR_NETWORK:
-                errorResId = R.string.offline;
+                error = context.getString(R.string.offline);
                 break;
             case ERROR_DATABASE:
-                errorResId = R.string.database_error;
+                error = context.getString(R.string.database_error);
                 break;
             case ERROR_TRAKT_AUTH:
-                errorResId = R.string.trakt_error_credentials;
+                error = context.getString(R.string.trakt_error_credentials);
                 break;
             case ERROR_TRAKT_API:
-                errorResId = R.string.trakt_error_general;
+                error = context.getString(R.string.api_error_generic,
+                        context.getString(R.string.trakt));
                 break;
             case ERROR_TRAKT_API_NOT_FOUND:
-                errorResId = R.string.trakt_error_not_exists;
+                error = context.getString(R.string.trakt_error_not_exists);
                 break;
             case ERROR_HEXAGON_API:
-                errorResId = R.string.hexagon_api_error;
+                error = context.getString(R.string.api_error_generic,
+                        context.getString(R.string.hexagon));
                 break;
         }
-        if (errorResId != null) {
-            Toast.makeText(context, errorResId, Toast.LENGTH_LONG).show();
+        if (error != null) {
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
         }
     }
 

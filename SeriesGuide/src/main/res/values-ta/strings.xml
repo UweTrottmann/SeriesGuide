@@ -33,6 +33,9 @@
   <string name="web_search">வலை தேடல்</string>
   <string name="add_to_homescreen">எளியவழி</string>
   <string name="action_open">திற</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
   <string name="search_hint">தேடல் episodes</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">எந்த பயன்பாட்டு நிரலும் இது.</string>
   <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
   <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">பகிர்</string>
   <string name="share_show">பங்கு காண்பி</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">மறைந்திருக்கும்</string>
   <string name="action_shows_sort">அடுக்கு காட்சிகள்</string>
   <string name="action_shows_sort_title">தலைப்பு</string>
-  <string name="action_shows_sort_episode">அடுத்த சம்பவம்</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
-  <string name="updateall_yes">(எல்லாம்) புதுப்பி</string>
-  <string name="menu_update_delta">புதுப்பித்தல் (முறைமைகளும் மட்டும்)</string>
   <string name="context_updateshow">புதுப்பித்தல்</string>
   <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
   <string name="action_try_any_language">எந்த மொழி முயற்சிக்கவும்</string>
   <string name="action_try_again">மீண்டும் முயற்சி</string>
-  <string name="search_error">தேடல் தோல்வியுற்றது, பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">எல்லாம் சேர்</string>
   <string name="add_multiple">அனைத்து காட்சிகள் தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
   <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">கணக்கு obliterated.</string>
   <string name="hexagon_remove_account_failure">கணக்கை அகற்ற முடியவில்லை.</string>
   <string name="hexagon_remove_account_confirmation">உங்கள் கணக்கு அகற்றுவது இருக்கும் அனைத்து காட்சிகள் மற்றும் திரைப்படங்கள் இருந்து நீக்க SeriesGuide மேகம். மற்ற இணைக்கப்பட்ட சாதனங்கள் நன்றாக அதை அகற்ற உறுதி.</string>
-  <string name="hexagon_api_error">முடியவில்லை இல்லை உதவியைக் கண்டறிவதற்கு உங்களுக்கு அருகே செய்ய SeriesGuide மேகம். பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
   <string name="hexagon_api_queued">SeriesGuide மேகம் அனுப்புகிறது.</string>
   <string name="hexagon_permission_missing">SeriesGuide மேகம் பயன்படுத்த, உங்கள் கணக்குகளை பெற அனுமதி.</string>
   <string name="hexagon_google_play_missing">SeriesGuide மேகம் பயன்படுத்த, விளையாட சேவைகளை Google தேவைப்படுகின்றது.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">நான் காத்திருக்க இருக்கும்</string>
   <string name="trakt_success">Trakt அனுப்பப்படும்.</string>
   <string name="trakt_error_credentials">ஏதோ தவறான சென்று. Trakt அறிமுகங்களை சரிபார்க்கவும் மற்றும் மீண்டும் முயற்சிக்கவும்.</string>
-  <string name="trakt_error_general">முடியவில்லை இல்லை உதவியைக் கண்டறிவதற்கு உங்களுக்கு அருகே trakt வேண்டும். பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
   <string name="trakt_error_not_exists">(இதுவரை) இல்லை அன்று trakt. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
   <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
   <!-- Connect trakt -->
@@ -321,7 +325,7 @@
   <string name="pref_nospoilers">Prevent spoilers</string>
   <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
   <string name="pref_seasonsorting">மூலம் அடுக்கு சீசன்ஸ்&#8230;</string>
-  <string name="pref_episodesorting">மூலம் அடுக்கு episodes...</string>
+  <string name="pref_episodesorting">மூலம் அடுக்கு episodes&#8230;</string>
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
@@ -359,8 +363,7 @@
   <string name="pref_theme">கருப்பொருள்</string>
   <!-- Other advanced settings -->
   <string name="pref_other">மற்ற</string>
-  <string name="pref_autoupdate">தானியங்கு புதுப்பித்தலை இயக்கு</string>
-  <string name="pref_autoupdatesummary">உங்கள் காட்சிகள் அவ்வப்போது புதுப்பி</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
   <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
   <string name="backup">மறுபிரதி/மீட்டெடுத்தல்</string>

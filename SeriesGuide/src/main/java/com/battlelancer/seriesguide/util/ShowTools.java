@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -567,6 +568,31 @@ public class ShowTools {
                     .setShowTvdbId(showTvdbId)
                     .execute();
         }
+    }
+
+    public static boolean addLastWatchedUpdateOpIfNewer(Context context,
+            ArrayList<ContentProviderOperation> batch, int showTvdbId, long lastWatchedMsNew) {
+        Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
+        Cursor query = context.getContentResolver().query(uri, new String[] {
+                SeriesGuideContract.Shows.LASTWATCHED_MS }, null, null, null);
+        if (query == null) {
+            Timber.e("addLastWatchedTimeUpdateOpIfNewer: query was null.");
+            return false;
+        }
+        if (!query.moveToFirst()) {
+            Timber.e("addLastWatchedTimeUpdateOpIfNewer: query has no results.");
+            query.close();
+            return false;
+        }
+        long lastWatchedMs = query.getLong(0);
+        query.close();
+
+        if (lastWatchedMs < lastWatchedMsNew) {
+            batch.add(ContentProviderOperation.newUpdate(uri)
+                    .withValue(SeriesGuideContract.Shows.LASTWATCHED_MS, lastWatchedMsNew)
+                    .build());
+        }
+        return true;
     }
 
     /**

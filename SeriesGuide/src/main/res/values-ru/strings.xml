@@ -33,6 +33,9 @@
   <string name="web_search">Веб-поиск</string>
   <string name="add_to_homescreen">Ярлык</string>
   <string name="action_open">Открыть</string>
+  <string name="sync_manually">Синхронизировать вручную</string>
+  <string name="sync_and_update">Синхронизировать и обновить</string>
+  <string name="sync_and_download_all">Синхронизировать и загрузить все</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Нет приложения для обработки этой команды.</string>
   <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
   <string name="database_error">Не получается модифицирофавать данные.</string>
+  <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
+  <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
@@ -82,7 +87,7 @@
   <string name="episode_gueststars">Приглашенные звёзды</string>
   <string name="episode_writers">Сценаристы</string>
   <string name="show_isalive">Продолжается</string>
-  <string name="show_isnotalive">Закончился</string>
+  <string name="show_isnotalive">Завершён</string>
   <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Скрытые</string>
   <string name="action_shows_sort">Сортировать сериалы</string>
   <string name="action_shows_sort_title">Название</string>
-  <string name="action_shows_sort_episode">Следующий эпизод</string>
+  <string name="action_shows_sort_latest_episode">Последний эпизод</string>
+  <string name="action_shows_sort_oldest_episode">Старейший эпизод</string>
+  <string name="action_shows_sort_last_watched">Последний просмотренный</string>
+  <string name="action_shows_sort_remaining">Оставшиеся эпизоды</string>
   <string name="action_shows_sort_favorites">Сначала избранные</string>
-  <string name="updateall_yes">Обновить (все)</string>
-  <string name="menu_update_delta">Обновить (только устаревшие)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_marknext">Смотреть следующий эпизод</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
   <string name="action_try_any_language">Попробовать любой язык</string>
   <string name="action_try_again">Повторить попытку</string>
-  <string name="search_error">Найти не удалось, повторите попытку позже.</string>
+  <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
   <string name="add_all">Добавить все</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
   <string name="add_started">%s скоро появится в вашем списке.</string>
@@ -222,7 +228,7 @@
   <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d день</item>
+    <item quantity="few">%d дня</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
   <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
-  <string name="hexagon_api_error">Нет доступа к облаку SeriesGuid. Повторите попытку позже.</string>
   <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
   <string name="hexagon_permission_missing">Чтобы использовать облако SeriesGuide, разрешите доступ к вашим аккаунтам.</string>
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
@@ -263,12 +268,11 @@
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
   <string name="traktcheckin_cancel">Отменить</string>
   <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
-  <string name="traktcheckin_wait">Согласен</string>
+  <string name="traktcheckin_wait">Я подожду</string>
   <string name="trakt_success">Отправлено в trakt.</string>
   <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
-  <string name="trakt_error_general">Trakt не отвечает. Повторите попытку позже.</string>
-  <string name="trakt_error_not_exists">(Пока) недоступен на trakt. Попробуйте позже.</string>
-  <string name="trakt_notice_not_exists">(Пока) не может быть отслежен с помощью trakt.</string>
+  <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
+  <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Аккаунт trakt</string>
   <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>
@@ -364,8 +368,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Другое</string>
-  <string name="pref_autoupdate">Автоматическое обновление</string>
-  <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы</string>
+  <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
   <string name="pref_autobackup">Автоматическое резервное копирование</string>
   <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
   <string name="backup">Резервное копирование/восстановление</string>

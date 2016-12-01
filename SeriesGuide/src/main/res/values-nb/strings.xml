@@ -33,6 +33,9 @@
   <string name="web_search">Nettsøk</string>
   <string name="add_to_homescreen">Snarvei</string>
   <string name="action_open">Åpne</string>
+  <string name="sync_manually">Synkroniser manuelt</string>
+  <string name="sync_and_update">Synkronisering og oppdatering</string>
+  <string name="sync_and_download_all">Synkroniser og last ned alle</string>
   <!-- Search -->
   <string name="clear_search_history">Tøm søkelogg</string>
   <string name="search_hint">Søk episoder</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
   <string name="database_error">Klarte ikke endre dataene.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -53,12 +58,12 @@
   <string name="share_checkout">Sjekk ut %s</string>
   <string name="addtocalendar">Legg til i kalender</string>
   <string name="addtocalendar_failed">Kan ikke opprette en kalenderhendelse.</string>
-  <string name="links">Links</string>
+  <string name="links">Linker</string>
   <!-- Comments -->
   <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv en kommentar på engelsk. (Minst 5 ord)</string>
   <string name="shout_invalid">Kommentaren din ble avslått, grunnet regelbrudd.</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Innlegg</string>
   <string name="isspoiler">Spoileradvarsel!</string>
   <string name="no_shouts">Vær den første til å rope!</string>
   <string name="refresh">Oppdater</string>
@@ -83,9 +88,9 @@
   <string name="show_isalive">Fortsetter</string>
   <string name="show_isnotalive">Avsluttet</string>
   <string name="lastEdit">Sist endret // TVDb</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_translation">Det er ingen beskrivelse oversatt til %1$s på %2$s.</string>
+  <string name="no_translation_title">Ikke oversatt</string>
+  <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nå</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Skjult</string>
   <string name="action_shows_sort">Sorter serier</string>
   <string name="action_shows_sort_title">Tittel</string>
-  <string name="action_shows_sort_episode">Neste episode</string>
+  <string name="action_shows_sort_latest_episode">Nyeste episode</string>
+  <string name="action_shows_sort_oldest_episode">Eldste episode</string>
+  <string name="action_shows_sort_last_watched">Sist sett</string>
+  <string name="action_shows_sort_remaining">Resterende episoder</string>
   <string name="action_shows_sort_favorites">Favoritter først</string>
-  <string name="updateall_yes">Oppdater (alle)</string>
-  <string name="menu_update_delta">Oppdater (bare utdaterte)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_marknext">Sett neste episode</string>
   <!-- Now -->
@@ -168,9 +174,9 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="no_results">Ingen treff, prøv hele ord.</string>
-  <string name="action_try_any_language">Try any language</string>
+  <string name="action_try_any_language">Prøv alle språk</string>
   <string name="action_try_again">Prøv igjen</string>
-  <string name="search_error">Søk feilet. Prøv på nytt senere.</string>
+  <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
   <string name="add_all">Legg til alle</string>
   <string name="add_multiple">Alle serier vil vises i serielisten om kort tid.</string>
   <string name="add_started">%s vil vises i serielisten om kort tid.</string>
@@ -191,7 +197,7 @@
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
   <string name="action_lists_sort">Sorter lister</string>
   <string name="action_lists_reorder">Omorganiser lister</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>
   <!-- Movies -->
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvåkningsliste</string>
@@ -209,7 +215,7 @@
   <string name="action_movies_sort_title">Tittel</string>
   <string name="action_movies_sort_release">Utgivelsesdato</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Kunne ikke beregne statistikk.</string>
   <string name="statistics_shows">Serier</string>
   <string name="statistics_episodes">Episoder</string>
   <string name="statistics_movies">Filmer</string>
@@ -235,7 +241,7 @@
   <string name="hexagon_warning">Eksperimentell!</string>
   <string name="hexagon_description">Koble til skyen for å sikkerhetskopiere og synkronisere dine serier og filmer.</string>
   <string name="hexagon_warning_lists">Lister er ikke inkludert.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">Når SeriesGuide Cloud er tilkoblet, deaktiveres trakt synkronisering.</string>
   <string name="hexagon_signin">Logg inn</string>
   <string name="hexagon_signed_in">Du er tilkoblet SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Logg ut</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Konto utslettet.</string>
   <string name="hexagon_remove_account_failure">Klarte ikke fjerne kontoen.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
-  <string name="hexagon_api_error">Klarte ikke koble til SeriesGuide Cloud. Prøv igjen senere.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">For å kunne bruke SeriesGuide Cloud må du gi tilgang til kontoene dine.</string>
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="trakt_success">Sendt til Trakt.</string>
   <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
-  <string name="trakt_error_general">Klarte ikke koble til trakt. Prøv igjen senere.</string>
   <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>
   <string name="trakt_notice_not_exists">Kan ikke spores med trakt.</string>
   <!-- Connect trakt -->
@@ -318,13 +322,13 @@
   <string name="pref_onlyseasonepssummary">Spesialepisoder forsvinner fra alle lister utenom sesonglisten</string>
   <string name="pref_exactdates">Vis nøyaktige datoer</string>
   <string name="pref_exactdates_summary">\"31. Oktober\" i stedet for \"om 3 dager\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Unngå spoilere</string>
+  <string name="pref_nospoilers_summary">Skjul detaljer til episoden er sett</string>
   <string name="pref_seasonsorting">Sorter sesonger etter&#8230;</string>
   <string name="pref_episodesorting">Sorter episoder etter&#8230;</string>
   <string name="pref_language">Foretrukket språk</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
   <!-- About screen -->
   <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
@@ -359,8 +363,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Annet</string>
-  <string name="pref_autoupdate">Slå på automatisk oppdatering</string>
-  <string name="pref_autoupdatesummary">Oppdater dine serier regelmessig</string>
+  <string name="pref_autoupdatesummary">Synkroniser automatisk og oppdater SeriesGuide data</string>
   <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
   <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
@@ -370,7 +373,7 @@
   <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
   <string name="clear_cache">Tøm hurtiglageret</string>
   <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
   <string name="backup_path">Sikkerhetskopimappe</string>
@@ -473,12 +476,12 @@
   <!-- People -->
   <string name="person_biography">Biografi</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Liker du SeriesGuide?</string>
+  <string name="feedback_action_yes">Ja!</string>
+  <string name="feedback_action_notreally">Egentlig ikke</string>
+  <string name="feedback_question_rate_google">Vurder den på Google Play?</string>
+  <string name="feedback_question_rate_amazon">Vurder den på Amazon?</string>
+  <string name="feedback_question_feedback">Gi tilbakemelding på hvordan den kan forbedre?</string>
+  <string name="feedback_action_ok">OK</string>
+  <string name="feedback_action_nothanks">Nei takk</string>
 </resources>

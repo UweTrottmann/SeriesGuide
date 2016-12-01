@@ -33,6 +33,9 @@
   <string name="web_search">Căutare pe web</string>
   <string name="add_to_homescreen">Scurtătură</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Sync manually</string>
+  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>
@@ -43,8 +46,10 @@
   <string name="unknown">necunoscut</string>
   <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
-  <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou. </string>
+  <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou.</string>
   <string name="database_error">Datele nu pot fi modificate.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -129,10 +134,11 @@
   <string name="action_shows_filter_hidden">Ascunse</string>
   <string name="action_shows_sort">Sortați serialele</string>
   <string name="action_shows_sort_title">Titlu</string>
-  <string name="action_shows_sort_episode">Următorul episod</string>
+  <string name="action_shows_sort_latest_episode">Latest episode</string>
+  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
+  <string name="action_shows_sort_last_watched">Last watched</string>
+  <string name="action_shows_sort_remaining">Remaining episodes</string>
   <string name="action_shows_sort_favorites">Favoritele primele</string>
-  <string name="updateall_yes">Actualizează (toate)</string>
-  <string name="menu_update_delta">Actualizează (doar pe cele învechite)</string>
   <string name="context_updateshow">Actualizare</string>
   <string name="context_marknext">Episodul următor a fost vizionat</string>
   <!-- Now -->
@@ -171,7 +177,7 @@
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
-  <string name="search_error">Căutarea nu a reuşit, încercaţi din nou mai târziu.</string>
+  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Adaugă-le pe toate</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
@@ -236,7 +242,7 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Experimental!</string>
+  <string name="hexagon_warning">Experimental</string>
   <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
   <string name="hexagon_warning_lists">Listele nu sunt incluse.</string>
   <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
@@ -249,7 +255,6 @@
   <string name="hexagon_remove_account_success">Contul a fost șters.</string>
   <string name="hexagon_remove_account_failure">Nu se poate șterge contul.</string>
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
-  <string name="hexagon_api_error">Comunicare cu SeriesGuide Cloud eșuată. Încearcă mai târziu.</string>
   <string name="hexagon_api_queued">Se trimite către SeriesGuide Cloud.</string>
   <string name="hexagon_permission_missing">Pentru a folosi SeriesGuide Cloud, apermite accesul la conturile tale.</string>
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
@@ -266,7 +271,6 @@
   <string name="traktcheckin_wait">Voi aștepta</string>
   <string name="trakt_success">Trimis către trakt.</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
-  <string name="trakt_error_general">Nu s-a putut comunica cu trakt. Încercați mai tarziu.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
@@ -284,7 +288,7 @@
   <string name="connect_trakt_done_explanation">SeriesGuide va sincroniza emisiunile și filmele de pe dispozitivul acesta cu trakt. Acest lucru poate dura ceva timp.</string>
   <string name="add_trakt_shows">Adaugă emisiuni din biblioteca trakt:</string>
   <string name="show_library">Arată biblioteca dvs. trakt</string>
-  <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
+  <string name="about_trakt">trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi. <a href="https://trakt.tv">Află mai multe</a></string>
   <!-- trakt ratings -->
   <string name="action_rate">Evaluare</string>
   <string name="your_rating">Nota ta</string>
@@ -364,8 +368,7 @@
   <string name="pref_theme">Temă</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Alte</string>
-  <string name="pref_autoupdate">Porniţi Actualizarea Automată</string>
-  <string name="pref_autoupdatesummary">Actualizați periodic emisiunile</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
   <string name="pref_autobackup">Backup automat</string>
   <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
   <string name="backup">Arhivare/Restaurare</string>
@@ -381,7 +384,7 @@
   <string name="backup_path">Fișier de arhive</string>
   <string name="backup_version">Versiunea bazei de date</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Baza de date se arhivează...</string>
+  <string name="backup_inprogress">Baza de date se arhivează&#8230;</string>
   <string name="backup_success">Arhivare reușită.</string>
   <string name="backup_failed">Arhivare eșuată.</string>
   <string name="import_inprogress">Restaurarea bazei de date&#8230;</string>

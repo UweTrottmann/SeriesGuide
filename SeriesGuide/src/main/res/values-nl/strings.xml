@@ -10,7 +10,7 @@
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
   <string name="help_and_feedback">Hulp &amp; Terugkoppeling</string>
-  <string name="drawer_open">Navigatiedrawer openen</string>
+  <string name="drawer_open">Navigatie menu openen</string>
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
@@ -33,6 +33,9 @@
   <string name="web_search">Zoeken op het web</string>
   <string name="add_to_homescreen">Snelkoppeling</string>
   <string name="action_open">Open</string>
+  <string name="sync_manually">Handmatig synchroniseren</string>
+  <string name="sync_and_update">Synchroniseer &amp; Update</string>
+  <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -45,6 +48,8 @@
   <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
   <string name="people_empty">Niemand?! Probeer opnieuw.</string>
   <string name="database_error">Wijziging niet mogelijk.</string>
+  <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
+  <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -128,10 +133,11 @@
   <string name="action_shows_filter_hidden">Verborgen</string>
   <string name="action_shows_sort">Series sorteren</string>
   <string name="action_shows_sort_title">Titel</string>
-  <string name="action_shows_sort_episode">Volgende aflevering</string>
+  <string name="action_shows_sort_latest_episode">Laatste aflevering</string>
+  <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
+  <string name="action_shows_sort_last_watched">Laatst bekeken</string>
+  <string name="action_shows_sort_remaining">Overige afleveringen</string>
   <string name="action_shows_sort_favorites">Favorieten eerst</string>
-  <string name="updateall_yes">Bijwerken (alles)</string>
-  <string name="menu_update_delta">Bijwerken (alleen verouderde)</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_marknext">Volgende aflevering bekeken</string>
   <!-- Now -->
@@ -170,7 +176,7 @@
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
   <string name="action_try_any_language">Probeer elke taal</string>
   <string name="action_try_again">Probeer nogmaals</string>
-  <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
+  <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
   <string name="add_all">Alles toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
   <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
@@ -245,7 +251,6 @@
   <string name="hexagon_remove_account_success">Account vernietigd.</string>
   <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
-  <string name="hexagon_api_error">Communicatie met SeriesGuide Cloud mislukt, Probeer later opnieuw.</string>
   <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
   <string name="hexagon_permission_missing">Voor het gebruik van Seriesguide Cloud is toegang tot uw account(s) noodzakelijk.</string>
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
@@ -262,7 +267,6 @@
   <string name="traktcheckin_wait">Wachten</string>
   <string name="trakt_success">Verzonden naar Trakt.</string>
   <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
-  <string name="trakt_error_general">Communicatie met trakt is niet mogelijk. Probeer later opnieuw.</string>
   <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
   <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
   <!-- Connect trakt -->
@@ -359,8 +363,7 @@
   <string name="pref_theme">Thema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Andere</string>
-  <string name="pref_autoupdate">Automatisch bijwerken inschakelen</string>
-  <string name="pref_autoupdatesummary">Uw series periodiek bijwerken</string>
+  <string name="pref_autoupdatesummary">Sync en update SeriesGuide data automatisch</string>
   <string name="pref_autobackup">Automatische back-up</string>
   <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
   <string name="backup">Back-up maken/herstellen</string>

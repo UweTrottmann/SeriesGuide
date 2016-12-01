@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -29,11 +30,10 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
 
         // get activity of the last 24 hours with the latest one first
         Cursor query = getContext().getContentResolver()
-                .query(SeriesGuideContract.Activity.CONTENT_URI,
-                        new String[] { SeriesGuideContract.Activity.TIMESTAMP,
-                                SeriesGuideContract.Activity.EPISODE_TVDB_ID },
-                        SeriesGuideContract.Activity.TIMESTAMP + ">" + timeDayAgo, null,
-                        SeriesGuideContract.Activity.TIMESTAMP + " DESC");
+                .query(Activity.CONTENT_URI,
+                        new String[] { Activity.TIMESTAMP_MS, Activity.EPISODE_TVDB_ID },
+                        Activity.TIMESTAMP_MS + ">" + timeDayAgo, null,
+                        Activity.SORT_LATEST);
         if (query == null) {
             return null;
         }
