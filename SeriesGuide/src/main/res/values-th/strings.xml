@@ -48,7 +48,7 @@
   <string name="app_not_available">ไม่มีแอปที่สามารถจัดการกับสิ่งนี้</string>
   <string name="people_empty">ไม่มีใครอยู่ที่นี่เลยหรือ? แตะเพื่อลองอีกครั้ง</string>
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">ลองสำรองข้อมูลในการตั้งค่า, ติดตั้งแอปใหม่ และเรียกคืนข้อมูล</string>
   <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>

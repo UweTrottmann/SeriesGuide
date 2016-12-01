@@ -9,7 +9,7 @@
   <string name="search">Procurar</string>
   <string name="preferences">Configurações</string>
   <string name="help">Ajuda</string>
-  <string name="help_and_feedback">Ajuda &amp; Comentários</string>
+  <string name="help_and_feedback">Ajuda e comentários</string>
   <string name="drawer_open">Abrir gaveta de navegação</string>
   <!-- Media items -->
   <string name="show">Série</string>
@@ -34,8 +34,8 @@
   <string name="add_to_homescreen">Atalho</string>
   <string name="action_open">Abrir</string>
   <string name="sync_manually">Sincronizar manualmente</string>
-  <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
-  <string name="sync_and_download_all">Sincronizar &amp; Baixar tudo</string>
+  <string name="sync_and_update">Sincronizar e atualizar</string>
+  <string name="sync_and_download_all">Sincronizar e baixar dados</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>

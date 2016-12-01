@@ -48,7 +48,7 @@
   <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
   <string name="database_error">Nie je možné zmeniť dáta.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
   <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>
@@ -435,8 +435,8 @@
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->
   <string name="hide_watched">Skryť videné epizódy</string>
-  <string name="pref_widget_opacity">Pozadie widgetu</string>
-  <string name="pref_widget_type">Typ widgetu</string>
+  <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
+  <string name="pref_widget_type">Typ miniaplikácie</string>
   <!-- Widget background options -->
   <string name="widget_background_transparent">Priehľadné</string>
   <string name="widget_background_25">25%</string>
