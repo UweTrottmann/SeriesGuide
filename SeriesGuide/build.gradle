@@ -186,7 +186,7 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    def playServicesVersion = '9.4.0'
+    def playServicesVersion = '10.0.1'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
