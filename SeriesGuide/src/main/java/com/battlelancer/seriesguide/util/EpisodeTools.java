@@ -165,18 +165,6 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once sending to services and the database ops are finished.
-     */
-    public static class EpisodeActionCompletedEvent {
-
-        public EpisodeTaskTypes.FlagType flagType;
-
-        public EpisodeActionCompletedEvent(EpisodeTaskTypes.FlagType type) {
-            flagType = type;
-        }
-    }
-
-    /**
      * Posted sticky while the episode task is running.
      */
     public static class EpisodeTaskActiveEvent {
@@ -212,11 +200,11 @@ public class EpisodeTools {
      */
     public static class EpisodeTaskCompletedEvent {
         public final EpisodeTaskTypes.FlagType flagType;
-        public final boolean successful;
+        public final boolean isSuccessful;
 
-        public EpisodeTaskCompletedEvent(EpisodeTaskTypes.FlagType type, boolean successful) {
-            flagType = type;
-            this.successful = successful;
+        public EpisodeTaskCompletedEvent(EpisodeTaskTypes.FlagType flagType, boolean isSuccessful) {
+            this.flagType = flagType;
+            this.isSuccessful = isSuccessful;
         }
     }
 
@@ -249,7 +237,8 @@ public class EpisodeTools {
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
 
-            EventBus.getDefault().postSticky(new EpisodeTaskActiveEvent(shouldSendToHexagon, shouldSendToTrakt));
+            EventBus.getDefault()
+                    .postSticky(new EpisodeTaskActiveEvent(shouldSendToHexagon, shouldSendToTrakt));
         }
 
         @Override
@@ -461,23 +450,17 @@ public class EpisodeTools {
             EventBus.getDefault().removeStickyEvent(EpisodeTaskActiveEvent.class);
             EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
 
-            if (!isSuccessful) {
-                return;
-            }
+            if (isSuccessful) {
+                // update latest episode for the changed show
+                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
+                        flagType.getShowTvdbId());
 
-            // success!
-            // notify UI it may do relevant updates
-            EventBus.getDefault().post(new EpisodeActionCompletedEvent(flagType));
-
-            // update latest episode for the changed show
-            AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
-                    flagType.getShowTvdbId());
-
-            // display trakt issue message
-            if (shouldSendToTrakt && !canSendToTrakt) {
-                // tell the user this change can not be sent to trakt for now
-                Toast.makeText(context, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
-                        .show();
+                // display trakt issue message
+                if (shouldSendToTrakt && !canSendToTrakt) {
+                    // tell the user this change can not be sent to trakt for now
+                    Toast.makeText(context, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         }
     }

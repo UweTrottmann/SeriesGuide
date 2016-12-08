@@ -337,9 +337,12 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
+    public void onEventMainThread(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        if (!event.isSuccessful) {
+            return; // no changes applied
+        }
         if (!isAdded()) {
-            return;
+            return; // no longer added to activity
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
