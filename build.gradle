@@ -32,6 +32,6 @@ ext {
     supportVersion = '25.0.1'
 
     dep = [
-            androidPlugin: 'com.android.tools.build:gradle:2.2.2'
+            androidPlugin: 'com.android.tools.build:gradle:2.2.3'
     ]
 }
