@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -94,5 +95,10 @@ public class MoviesActivity extends BaseTopActivity {
             // update tabs
             tabsAdapter.notifyTabsChanged();
         }
+    }
+
+    @Override
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.rootLayoutTabs);
     }
 }

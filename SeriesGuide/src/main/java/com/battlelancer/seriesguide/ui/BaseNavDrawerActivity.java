@@ -352,10 +352,18 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         handleEpisodeActionProgress(null);
     }
 
+    /**
+     * Return a view to pass to {@link Snackbar#make(View, CharSequence, int) Snackbar.make},
+     * ideally a {@link android.support.design.widget.CoordinatorLayout CoordinatorLayout}.
+     */
+    protected View getSnackbarParentView() {
+        return findViewById(android.R.id.content);
+    }
+
     private void handleEpisodeActionProgress(@Nullable EpisodeTools.EpisodeTaskActiveEvent event) {
         if (event != null && event.shouldDisplayMessage()) {
             if (snackbarProgress == null) {
-                snackbarProgress = Snackbar.make(findViewById(android.R.id.content),
+                snackbarProgress = Snackbar.make(getSnackbarParentView(),
                         event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
             }
             snackbarProgress.show();
