@@ -69,9 +69,9 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
 import com.uwetrottmann.androidutils.CheatSheet;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -178,7 +178,7 @@ public class OverviewFragment extends Fragment implements
         });
         containerEpisode.setVisibility(View.GONE);
 
-        // check-in button
+        // episode buttons
         buttonCheckin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,39 +186,25 @@ public class OverviewFragment extends Fragment implements
             }
         });
         CheatSheet.setup(buttonCheckin);
-
-        // watched button
         buttonWatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 setEpisodeWatched();
             }
         });
-        buttonWatch.setEnabled(true);
         CheatSheet.setup(buttonWatch);
-
-        // collected button
         buttonCollect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 toggleEpisodeCollected();
             }
         });
-
-        // skip button
         buttonSkip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 setEpisodeSkipped();
             }
         });
-        buttonSkip.setEnabled(true);
         CheatSheet.setup(buttonSkip);
 
         // ratings
@@ -257,6 +243,10 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        EpisodeTools.EpisodeTaskActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(EpisodeTools.EpisodeTaskActiveEvent.class);
+        setEpisodeButtonsEnabled(event == null);
 
         EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
@@ -586,6 +576,27 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskActiveEvent event) {
+        setEpisodeButtonsEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        setEpisodeButtonsEnabled(true);
+    }
+
+    private void setEpisodeButtonsEnabled(boolean enabled) {
+        if (getView() == null) {
+            return;
+        }
+
+        buttonWatch.setEnabled(enabled);
+        buttonCollect.setEnabled(enabled);
+        buttonSkip.setEnabled(enabled);
+        buttonCheckin.setEnabled(enabled);
+    }
+
     private void populateEpisodeViews(Cursor episode) {
         maybeAddFeedbackView();
 
@@ -661,11 +672,6 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-
-            // buttons might have been disabled by action, re-enable
-            buttonWatch.setEnabled(true);
-            buttonCollect.setEnabled(true);
-            buttonSkip.setEnabled(true);
 
             // load all other info
             populateEpisodeDetails(episode);

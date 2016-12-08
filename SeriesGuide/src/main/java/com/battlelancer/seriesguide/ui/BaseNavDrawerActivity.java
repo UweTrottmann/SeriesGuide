@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,7 +32,11 @@ import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
@@ -47,6 +53,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     private NavigationView navigationView;
     private TextView textViewHeaderAccountType;
     private TextView textViewHeaderUser;
+    private Snackbar snackbarProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        EpisodeTools.EpisodeTaskActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(EpisodeTools.EpisodeTaskActiveEvent.class);
+        handleEpisodeActionProgress(event);
 
         boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
         if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
@@ -329,5 +340,27 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskActiveEvent event) {
+        handleEpisodeActionProgress(event);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        handleEpisodeActionProgress(null);
+    }
+
+    private void handleEpisodeActionProgress(@Nullable EpisodeTools.EpisodeTaskActiveEvent event) {
+        if (event != null && event.shouldDisplayMessage()) {
+            if (snackbarProgress == null) {
+                snackbarProgress = Snackbar.make(findViewById(android.R.id.content),
+                        event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
+            }
+            snackbarProgress.show();
+        } else if (snackbarProgress != null) {
+            snackbarProgress.dismiss();
+        }
     }
 }

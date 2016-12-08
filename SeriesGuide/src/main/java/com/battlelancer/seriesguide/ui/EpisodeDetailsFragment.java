@@ -113,10 +113,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.textViewRatingsUser) TextView mTextUserRating;
 
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
-    @BindView(R.id.buttonEpisodeCheckin) Button mCheckinButton;
-    @BindView(R.id.buttonEpisodeWatched) Button mWatchedButton;
-    @BindView(R.id.buttonEpisodeCollected) Button mCollectedButton;
-    @BindView(R.id.buttonEpisodeSkip) Button mSkipButton;
+    @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
+    @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
+    @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
 
     @BindView(R.id.buttonShowInfoIMDB) View mImdbButton;
     @BindView(R.id.buttonTVDB) View mTvdbButton;
@@ -181,6 +181,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Override
     public void onResume() {
         super.onResume();
+
+        EpisodeTools.EpisodeTaskActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(EpisodeTools.EpisodeTaskActiveEvent.class);
+        setEpisodeButtonsEnabled(event == null);
 
         EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
@@ -287,6 +291,23 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (getEpisodeTvdbId() == event.episodeTvdbId) {
             loadEpisodeActionsDelayed();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskActiveEvent event) {
+        setEpisodeButtonsEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        setEpisodeButtonsEnabled(true);
+    }
+
+    private void setEpisodeButtonsEnabled(boolean enabled) {
+        buttonWatch.setEnabled(enabled);
+        buttonCollect.setEnabled(enabled);
+        buttonSkip.setEnabled(enabled);
+        buttonCheckin.setEnabled(enabled);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mEpisodeDataLoaderCallbacks
@@ -450,7 +471,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // check in button
         final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
-        mCheckinButton.setOnClickListener(new OnClickListener() {
+        buttonCheckin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a check-in dialog
@@ -462,82 +483,73 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 }
             }
         });
-        CheatSheet.setup(mCheckinButton);
+        CheatSheet.setup(buttonCheckin);
 
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
-        mCheckinButton.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+        buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
         dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mWatchedButton, 0,
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonWatch, 0,
                 isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableWatch), 0, 0);
-        mWatchedButton.setOnClickListener(new OnClickListener() {
+        buttonWatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 onToggleWatched();
                 Utils.trackAction(getActivity(), TAG, "Toggle watched");
             }
         });
-        mWatchedButton.setEnabled(true);
-        mWatchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
-        CheatSheet.setup(mWatchedButton, isWatched ? R.string.action_unwatched
+        buttonWatch.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
+        CheatSheet.setup(buttonWatch, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
 
         // collected button
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mCollectedButton, 0,
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
                 mCollected ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableCollect), 0, 0);
-        mCollectedButton.setOnClickListener(new OnClickListener() {
+        buttonCollect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 onToggleCollected();
                 Utils.trackAction(getActivity(), TAG, "Toggle collected");
             }
         });
-        mCollectedButton.setEnabled(true);
-        mCollectedButton.setText(mCollected
+        buttonCollect.setText(mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
-        CheatSheet.setup(mCollectedButton, mCollected
+        CheatSheet.setup(buttonCollect, mCollected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
         // skip button
         boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
         if (isWatched) {
             // if watched do not allow skipping
-            mSkipButton.setVisibility(View.INVISIBLE);
+            buttonSkip.setVisibility(View.INVISIBLE);
         } else {
-            mSkipButton.setVisibility(View.VISIBLE);
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mSkipButton, 0,
+            buttonSkip.setVisibility(View.VISIBLE);
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonSkip, 0,
                     isSkipped
                             ? R.drawable.ic_skipped
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableSkip), 0, 0);
-            mSkipButton.setOnClickListener(new OnClickListener() {
+            buttonSkip.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // disable button, will be re-enabled on data reload once action completes
-                    v.setEnabled(false);
                     onToggleSkipped();
                     Utils.trackAction(getActivity(), TAG, "Toggle skipped");
                 }
             });
-            mSkipButton.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
-            CheatSheet.setup(mSkipButton,
+            buttonSkip.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
+            CheatSheet.setup(buttonSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
-        mSkipButton.setEnabled(true);
 
         // service buttons
         ServiceUtils.setUpTraktEpisodeButton(mTraktButton, getEpisodeTvdbId(), TAG);
