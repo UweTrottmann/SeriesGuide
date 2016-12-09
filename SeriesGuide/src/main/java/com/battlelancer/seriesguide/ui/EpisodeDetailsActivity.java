@@ -283,6 +283,11 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         }
     }
 
+    @Override
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.coordinatorLayoutEpisode);
+    }
+
     public static class SeasonSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
 
         private final Context context;

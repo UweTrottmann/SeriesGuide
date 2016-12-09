@@ -165,14 +165,46 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once sending to services and the database ops are finished.
+     * Posted sticky while the episode task is running.
      */
-    public static class EpisodeActionCompletedEvent {
+    public static class EpisodeTaskActiveEvent {
+        private final boolean shouldSendToHexagon;
+        private final boolean shouldSendToTrakt;
 
-        public EpisodeTaskTypes.FlagType flagType;
+        public EpisodeTaskActiveEvent(boolean shouldSendToHexagon, boolean shouldSendToTrakt) {
+            this.shouldSendToHexagon = shouldSendToHexagon;
+            this.shouldSendToTrakt = shouldSendToTrakt;
+        }
 
-        public EpisodeActionCompletedEvent(EpisodeTaskTypes.FlagType type) {
-            flagType = type;
+        public boolean shouldDisplayMessage() {
+            return shouldSendToHexagon || shouldSendToTrakt;
+        }
+
+        public String getStatusMessage(Context context) {
+            StringBuilder statusText = new StringBuilder();
+            if (shouldSendToHexagon) {
+                statusText.append(context.getString(R.string.hexagon_api_queued));
+            }
+            if (shouldSendToTrakt) {
+                if (statusText.length() > 0) {
+                    statusText.append(" ");
+                }
+                statusText.append(context.getString(R.string.trakt_submitqueued));
+            }
+            return statusText.toString();
+        }
+    }
+
+    /**
+     * Posted once the episode task has completed. It may not have been successful.
+     */
+    public static class EpisodeTaskCompletedEvent {
+        public final EpisodeTaskTypes.FlagType flagType;
+        public final boolean isSuccessful;
+
+        public EpisodeTaskCompletedEvent(EpisodeTaskTypes.FlagType flagType, boolean isSuccessful) {
+            this.flagType = flagType;
+            this.isSuccessful = isSuccessful;
         }
     }
 
@@ -201,13 +233,12 @@ public class EpisodeTools {
 
         @Override
         protected void onPreExecute() {
-            // network ops may run long, so immediately show a status toast
             shouldSendToHexagon = HexagonTools.isSignedIn(context);
-            if (shouldSendToHexagon) {
-                Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
-            }
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
+
+            EventBus.getDefault()
+                    .postSticky(new EpisodeTaskActiveEvent(shouldSendToHexagon, shouldSendToTrakt));
         }
 
         @Override
@@ -410,39 +441,22 @@ public class EpisodeTools {
                             context.getString(R.string.hexagon));
                     break;
             }
+            boolean isSuccessful = true;
             if (error != null) {
+                isSuccessful = false;
                 Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-                return;
             }
 
-            // success!
-            // notify UI it may do relevant updates
-            EventBus.getDefault().post(new EpisodeActionCompletedEvent(flagType));
+            EventBus.getDefault().removeStickyEvent(EpisodeTaskActiveEvent.class);
+            EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
 
-            // update latest episode for the changed show
-            AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
-                    flagType.getShowTvdbId());
+            if (isSuccessful) {
+                // update latest episode for the changed show
+                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
+                        flagType.getShowTvdbId());
 
-            // display success message
-            if (shouldSendToTrakt) {
-                if (canSendToTrakt) {
-                    int status = R.string.trakt_success;
-                    EpisodeTaskTypes.Action action = flagType.getAction();
-                    if (action == EpisodeTaskTypes.Action.SHOW_WATCHED
-                            || action == EpisodeTaskTypes.Action.SHOW_COLLECTED
-                            || action == EpisodeTaskTypes.Action.EPISODE_WATCHED_PREVIOUS) {
-                        // simple ack
-                        Toast.makeText(context,
-                                context.getString(status),
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        // detailed ack
-                        String message = flagType.getNotificationText();
-                        Toast.makeText(context,
-                                message + " " + context.getString(status),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else {
+                // display trakt issue message
+                if (shouldSendToTrakt && !canSendToTrakt) {
                     // tell the user this change can not be sent to trakt for now
                     Toast.makeText(context, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
                             .show();

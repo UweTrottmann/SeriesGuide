@@ -42,6 +42,7 @@ import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -530,5 +531,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         // display add dialog
         AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+    }
+
+    @Override
+    protected View getSnackbarParentView() {
+        if (AndroidUtils.isLollipopOrHigher()) {
+            return findViewById(R.id.coordinatorLayoutSearch);
+        } else {
+            return super.getSnackbarParentView();
+        }
     }
 }

@@ -468,6 +468,11 @@ public class ShowsActivity extends BaseTopActivity implements
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
     }
 
+    @Override
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.rootLayoutShows);
+    }
+
     /**
      * Special {@link TabStripAdapter} which saves the currently selected page to preferences, so we
      * can restore it when the user comes back later.
