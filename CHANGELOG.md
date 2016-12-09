@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 35
+----------
+*(in development)*
+
+#### 35-beta1
+*(2016-12-09)*
+
+* TWEAK Display status message while trakt or Cloud network action is processing.
+* NOTE Update HTTP networking library.
+* NOTE Latest translations from crowdin.
+
 Version 34
 ----------
 *(2016-12-01)*
