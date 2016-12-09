@@ -203,7 +203,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Amazon flavor specific
-    amazonCompile files('libs/amazon/in-app-purchasing-2.0.61.jar')
+    amazonCompile files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
     // Android unit tests
     testCompile 'junit:junit:4.12'
