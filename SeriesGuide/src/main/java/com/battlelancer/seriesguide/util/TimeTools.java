@@ -4,6 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.AnalyticsTree;
@@ -34,28 +35,6 @@ public class TimeTools {
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
 
-    private static final String AUSTRALIA = "Australia";
-    private static final String ISO3166_1_AUSTRALIA = "au";
-
-    private static final String CANADA = "Canada";
-    private static final String ISO3166_1_CANADA = "ca";
-
-    private static final String FINLAND = "Finland";
-    private static final String ISO3166_1_FINLAND = "fi";
-
-    private static final String GERMANY = "Germany";
-    private static final String ISO3166_1_GERMANY = "de";
-
-    private static final String JAPAN = "Japan";
-    private static final String ISO3166_1_JAPAN = "jp";
-
-    private static final String NETHERLANDS = "Netherlands";
-    private static final String ISO3166_1_NETHERLANDS = "nl";
-
-    private static final String UNITED_KINGDOM = "United Kingdom";
-    private static final String ISO3166_1_UNITED_KINGDOM = "gb";
-
-    private static final String UNITED_STATES = "United States";
     private static final String ISO3166_1_UNITED_STATES = "us";
     private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
     private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
@@ -371,26 +350,11 @@ public class TimeTools {
         if (releaseCountry == null || releaseCountry.length() == 0) {
             return context.getString(R.string.unknown);
         }
-        switch (releaseCountry) {
-            case ISO3166_1_AUSTRALIA:
-                return AUSTRALIA;
-            case ISO3166_1_CANADA:
-                return CANADA;
-            case ISO3166_1_JAPAN:
-                return JAPAN;
-            case ISO3166_1_FINLAND:
-                return FINLAND;
-            case ISO3166_1_GERMANY:
-                return GERMANY;
-            case ISO3166_1_NETHERLANDS:
-                return NETHERLANDS;
-            case ISO3166_1_UNITED_KINGDOM:
-                return UNITED_KINGDOM;
-            case ISO3166_1_UNITED_STATES:
-                return UNITED_STATES;
-            default:
-                return context.getString(R.string.unknown);
+        String country = new Locale("", releaseCountry).getDisplayCountry(Locale.getDefault());
+        if (TextUtils.isEmpty(country)) {
+            return context.getString(R.string.unknown);
         }
+        return country;
     }
 
     /**
