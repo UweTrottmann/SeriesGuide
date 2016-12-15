@@ -134,7 +134,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     private void setUpAutoBackupSnackbar(Snackbar snackbar) {
-        snackbar.setCallback(new Snackbar.Callback() {
+        snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
@@ -172,7 +172,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         Snackbar newSnackbar = Snackbar
                 .make(getSnackbarParentView(), R.string.hexagon_permission_missing,
                         Snackbar.LENGTH_INDEFINITE);
-        newSnackbar.setCallback(new Snackbar.Callback() {
+        newSnackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
