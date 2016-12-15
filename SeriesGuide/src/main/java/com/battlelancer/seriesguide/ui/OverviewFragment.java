@@ -68,6 +68,7 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.Date;
 import java.util.List;
@@ -267,7 +268,7 @@ public class OverviewFragment extends Fragment implements
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        ServiceUtils.getPicasso(getActivity()).cancelRequest(imageEpisode);
+        Picasso.with(getContext()).cancelRequest(imageEpisode);
 
         unbinder.unbind();
     }

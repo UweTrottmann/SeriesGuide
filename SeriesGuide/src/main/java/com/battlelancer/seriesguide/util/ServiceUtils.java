@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.battlelancer.seriesguide.R;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -46,20 +45,8 @@ public final class ServiceUtils {
 
     private static final String YOUTUBE_PACKAGE = "com.google.android.youtube";
 
-    private static Picasso sPicasso;
-
     /* This class is never initialized */
     private ServiceUtils() {
-    }
-
-    @NonNull
-    public static synchronized Picasso getPicasso(Context context) {
-        if (sPicasso == null) {
-            sPicasso = new Picasso.Builder(context)
-                    .downloader(new OkHttp3Downloader(context))
-                    .build();
-        }
-        return sPicasso;
     }
 
     /**
@@ -69,11 +56,14 @@ public final class ServiceUtils {
      * <p>If {@link Utils#isAllowedLargeDataConnection} is false, will set {@link
      * com.squareup.picasso.NetworkPolicy#OFFLINE} (which will set {@link
      * okhttp3.CacheControl#FORCE_CACHE} on requests) to skip the network and accept stale images.
+     *
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
      */
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
-        RequestCreator requestCreator = ServiceUtils.getPicasso(context).load(path);
-        if (!Utils.isAllowedLargeDataConnection(context)) {
+        RequestCreator requestCreator = Picasso.with(context).load(path);
+        if (!Utils.isAllowedLargeDataConnection(context.getApplicationContext())) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
         }

@@ -59,11 +59,12 @@ import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -208,7 +209,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        ServiceUtils.getPicasso(getActivity()).cancelRequest(mEpisodeImage);
+        Picasso.with(getContext()).cancelRequest(mEpisodeImage);
         unbinder.unbind();
     }
 

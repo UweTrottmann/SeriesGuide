@@ -412,7 +412,7 @@ public class NotificationService extends IntentService {
             if (count == 1) {
                 // single episode
                 upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                maybeSetPoster(context, nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
+                maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
                 if (!DisplaySettings.preventSpoilers(context)) {
                     final String episodeTitle = upcomingEpisodes
@@ -506,7 +506,7 @@ public class NotificationService extends IntentService {
             if (count == 1) {
                 // single episode
                 upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                maybeSetPoster(context, nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
+                maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
             }
         }
 
@@ -555,9 +555,9 @@ public class NotificationService extends IntentService {
                 latestAirtime);
     }
 
-    private void maybeSetPoster(Context context, NotificationCompat.Builder nb, String posterPath) {
+    private void maybeSetPoster(NotificationCompat.Builder nb, String posterPath) {
         try {
-            Bitmap poster = ServiceUtils.loadWithPicasso(context,
+            Bitmap poster = ServiceUtils.loadWithPicasso(this,
                     TvdbTools.buildPosterUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
@@ -566,7 +566,7 @@ public class NotificationService extends IntentService {
 
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
-            Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
+            Bitmap posterSquare = ServiceUtils.loadWithPicasso(this,
                     TvdbTools.buildScreenshotUrl(posterPath))
                     .centerCrop()
                     .resize(400, 400)
@@ -576,7 +576,7 @@ public class NotificationService extends IntentService {
                             .setBackground(posterSquare);
             nb.extend(wearableExtender);
         } catch (IOException e) {
-            Timber.e(e, "Failed to load poster for notification: %s", posterPath);
+            Timber.e(e, "maybeSetPoster: failed.");
         }
     }
 }

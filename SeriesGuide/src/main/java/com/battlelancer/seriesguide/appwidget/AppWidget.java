@@ -157,17 +157,7 @@ public class AppWidget extends AppWidgetProvider {
                     // show poster
                     String posterPath = upcomingEpisodes.getString(
                             CalendarAdapter.Query.SHOW_POSTER);
-                    try {
-                        Bitmap poster = ServiceUtils.loadWithPicasso(this,
-                                TvdbTools.buildPosterUrl(posterPath))
-                                .centerCrop()
-                                .resizeDimen(R.dimen.show_poster_width,
-                                        R.dimen.show_poster_height)
-                                .get();
-                        item.setImageViewBitmap(R.id.widgetPoster, poster);
-                    } catch (IOException e) {
-                        Timber.e(e, "Failed to load show poster for widget item: %s", posterPath);
-                    }
+                    maybeSetPoster(item, posterPath);
 
                     views.addView(R.id.LinearLayoutWidget, item);
                 }
@@ -193,6 +183,19 @@ public class AppWidget extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.ImageButtonWidget, pi);
 
             return views;
+        }
+
+        private void maybeSetPoster(RemoteViews item, String posterPath) {
+            try {
+                Bitmap poster = ServiceUtils.loadWithPicasso(this,
+                        TvdbTools.buildPosterUrl(posterPath))
+                        .centerCrop()
+                        .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                        .get();
+                item.setImageViewBitmap(R.id.widgetPoster, poster);
+            } catch (IOException e) {
+                Timber.e(e, "maybeSetPoster: failed.");
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SystemUiHider;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -144,7 +145,7 @@ public class FullscreenImageActivity extends BaseActivity {
             // This ensures that the anonymous callback we have does not prevent the activity from
             // being garbage collected. It also prevents our callback from getting invoked even after the
             // activity has finished.
-            ServiceUtils.getPicasso(this).cancelRequest(photoView);
+            Picasso.with(this).cancelRequest(photoView);
         }
     }
 
