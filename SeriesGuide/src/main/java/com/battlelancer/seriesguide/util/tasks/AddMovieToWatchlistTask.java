@@ -22,7 +22,7 @@ public class AddMovieToWatchlistTask extends BaseMovieActionTask {
 
     @Override
     protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return MovieTools.getInstance(app).addToList(movieTmdbId, MovieTools.Lists.WATCHLIST);
+        return app.getMovieTools().addToList(movieTmdbId, MovieTools.Lists.WATCHLIST);
     }
 
     @Override

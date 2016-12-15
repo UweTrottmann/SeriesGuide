@@ -88,22 +88,13 @@ public class MovieTools {
             SeriesGuideContract.Movies.IN_WATCHLIST // 2
     };
 
-    private static MovieTools movieTools;
-
     private final Context context;
     @Inject Lazy<MoviesService> tmdbMovies;
     @Inject Lazy<Movies> traktMovies;
     @Inject Lazy<Search> traktSearch;
     @Inject Lazy<Sync> traktSync;
 
-    public static synchronized MovieTools getInstance(SgApp app) {
-        if (movieTools == null) {
-            movieTools = new MovieTools(app);
-        }
-        return movieTools;
-    }
-
-    private MovieTools(SgApp app) {
+    public MovieTools(SgApp app) {
         context = app.getApplicationContext();
         app.getServicesComponent().inject(this);
     }

@@ -512,7 +512,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
-        if (MovieTools.getInstance(app).syncMovieListsWithTrakt(lastActivity.movies)
+        if (app.getMovieTools().syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }

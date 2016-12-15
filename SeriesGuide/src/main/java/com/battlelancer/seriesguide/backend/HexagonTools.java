@@ -347,7 +347,7 @@ public class HexagonTools {
         }
 
         // add new movies with the just downloaded properties
-        SgSyncAdapter.UpdateResult result = MovieTools.getInstance(app)
+        SgSyncAdapter.UpdateResult result = app.getMovieTools()
                 .addMovies(newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
