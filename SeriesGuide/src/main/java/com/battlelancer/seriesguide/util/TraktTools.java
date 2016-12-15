@@ -4,7 +4,6 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,19 +58,10 @@ public class TraktTools {
     public static final int FAILED = -2;
     public static final int FAILED_CREDENTIALS = -3;
 
-    private static TraktTools traktTools;
-
     private final Context context;
     @Inject Lazy<Sync> traktSync;
 
-    public static synchronized TraktTools getInstance(SgApp app) {
-        if (traktTools == null) {
-            traktTools = new TraktTools(app);
-        }
-        return traktTools;
-    }
-
-    private TraktTools(SgApp app) {
+    public TraktTools(SgApp app) {
         context = app.getApplicationContext();
         app.getServicesComponent().inject(this);
     }

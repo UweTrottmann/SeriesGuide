@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import io.fabric.sdk.android.Fabric;
@@ -67,6 +68,7 @@ public class SgApp extends Application {
     private ServicesComponent servicesComponent;
     private MovieTools movieTools;
     private ShowTools showTools;
+    private TraktTools traktTools;
 
     @Override
     public void onCreate() {
@@ -138,6 +140,13 @@ public class SgApp extends Application {
             showTools = new ShowTools(this);
         }
         return showTools;
+    }
+
+    public synchronized TraktTools getTraktTools() {
+        if (traktTools == null) {
+            traktTools = new TraktTools(this);
+        }
+        return traktTools;
     }
 
     /**

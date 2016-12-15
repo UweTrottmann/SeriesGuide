@@ -203,7 +203,7 @@ public class TvdbTools {
             app.getShowTools().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktTools traktTools = TraktTools.getInstance(app);
+            TraktTools traktTools = app.getTraktTools();
             if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
                 throw new TvdbException("addShow: storing trakt watched episodes failed.");

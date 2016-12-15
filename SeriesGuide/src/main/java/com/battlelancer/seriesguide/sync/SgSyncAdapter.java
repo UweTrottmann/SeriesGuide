@@ -465,7 +465,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // get last activity timestamps
-        TraktTools traktTools = TraktTools.getInstance(app);
+        TraktTools traktTools = app.getTraktTools();
         LastActivities lastActivity = traktTools.getLastActivity();
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
@@ -552,7 +552,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // download watched and collected flags
         // if initial sync, upload any flags missing on trakt
         // otherwise clear all local flags not on trakt
-        int resultCode = TraktTools.getInstance(app).syncEpisodeFlags(localShows, lastActivity,
+        int resultCode = app.getTraktTools().syncEpisodeFlags(localShows, lastActivity,
                 isInitialSync);
 
         if (resultCode < 0) {
