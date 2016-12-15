@@ -563,7 +563,7 @@ public class ShowFragment extends Fragment {
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getActivity(), showTitle, showPoster, getShowTvdbId());
+        ShortcutUtils.createShortcut(getContext(), showTitle, showPoster, getShowTvdbId());
 
         // drop to home screen
         startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(

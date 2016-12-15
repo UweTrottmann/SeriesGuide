@@ -116,7 +116,7 @@ public class MoviesNowFragment extends Fragment {
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
 
         // define dataset
-        adapter = new MoviesNowAdapter(getActivity(), itemClickListener);
+        adapter = new MoviesNowAdapter(getContext(), itemClickListener);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {

@@ -57,8 +57,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
                 cursor.getString(Query.NETWORK)));
 
         // set poster
-        Utils.loadTvdbShowPoster(context, viewHolder.poster,
-                cursor.getString(Query.POSTER));
+        Utils.loadTvdbShowPoster(context, viewHolder.poster, cursor.getString(Query.POSTER));
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));

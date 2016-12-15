@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,13 +24,11 @@ import java.util.List;
  */
 public class MoviesAdapter extends ArrayAdapter<Movie> {
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater inflater;
 
-    private String mImageBaseUrl;
-
+    private String imageBaseUrl;
     private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
-
-    private PopupMenuClickListener mPopupMenuClickListener;
+    private PopupMenuClickListener popupMenuClickListener;
 
     public interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int movieTmdbId);
@@ -37,29 +36,30 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     public MoviesAdapter(Context context, PopupMenuClickListener listener) {
         super(context, 0);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPopupMenuClickListener = listener;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        popupMenuClickListener = listener;
 
         // figure out which size of posters to load based on screen density
         if (DisplaySettings.isVeryHighDensityScreen(context)) {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+            imageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342;
         } else {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
+            imageBaseUrl = TmdbSettings.getImageBaseUrl(context)
                     + TmdbSettings.POSTER_SIZE_SPEC_W154;
         }
     }
 
-    @SuppressLint("InflateParams")
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @SuppressLint("InflateParams")
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // A ViewHolder keeps references to children views to avoid
         // unnecessary calls to findViewById() on each row.
         ViewHolder holder;
 
         if (convertView == null) {
             // do not use parent layout params to avoid padding issues
-            convertView = mInflater.inflate(R.layout.item_movie, null);
+            convertView = inflater.inflate(R.layout.item_movie, null);
 
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
@@ -75,6 +75,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         // Bind the data efficiently with the holder.
         Movie movie = getItem(position);
+        if (movie == null) {
+            return convertView;
+        }
 
         holder.title.setText(movie.title);
         if (movie.release_date != null) {
@@ -85,7 +88,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         // poster
         // use fixed size so bitmaps can be re-used on config change
-        ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
+        ServiceUtils.loadWithPicasso(getContext(), imageBaseUrl + movie.poster_path)
                 .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
                 .centerCrop()
                 .into(holder.poster);
@@ -95,8 +98,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         holder.contextMenu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPopupMenuClickListener != null) {
-                    mPopupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
+                if (popupMenuClickListener != null) {
+                    popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
                 }
             }
         });

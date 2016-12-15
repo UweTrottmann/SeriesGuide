@@ -2,6 +2,8 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.TextViewCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,11 @@ import java.util.List;
  */
 public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
-    private final LayoutInflater mInflater;
+    private final LayoutInflater inflater;
 
     public TraktCommentsAdapter(Context context) {
         super(context, R.layout.item_comment);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public void setData(List<Comment> data) {
@@ -35,14 +37,15 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         }
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // A ViewHolder keeps references to children views to avoid
         // unnecessary calls to findViewById() on each row.
         TraktCommentsAdapter.ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_comment, parent, false);
+            convertView = inflater.inflate(R.layout.item_comment, parent, false);
 
             holder = new ViewHolder();
             holder.username = (TextView) convertView.findViewById(R.id.textViewCommentUsername);
@@ -58,6 +61,9 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
         // Bind the data efficiently with the holder.
         final Comment comment = getItem(position);
+        if (comment == null) {
+            return convertView;
+        }
 
         String name = null;
         String avatarPath = null;
@@ -68,16 +74,15 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
             }
         }
         holder.username.setText(name);
-        ServiceUtils.loadWithPicasso(getContext(), avatarPath)
-                .into(holder.avatar);
+        ServiceUtils.loadWithPicasso(getContext(), avatarPath).into(holder.avatar);
 
         if (comment.spoiler) {
             holder.comment.setText(R.string.isspoiler);
-            holder.comment.setTextAppearance(getContext(),
+            TextViewCompat.setTextAppearance(holder.comment,
                     R.style.TextAppearance_Body_Highlight_Red);
         } else {
             holder.comment.setText(comment.comment);
-            holder.comment.setTextAppearance(getContext(), R.style.TextAppearance_Body);
+            TextViewCompat.setTextAppearance(holder.comment, R.style.TextAppearance_Body);
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(

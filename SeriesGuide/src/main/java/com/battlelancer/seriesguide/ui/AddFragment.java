@@ -162,10 +162,10 @@ public abstract class AddFragment extends Fragment {
                 OnContextMenuClickListener menuClickListener,
                 boolean hideContextMenuIfAdded) {
             super(activity, 0, objects);
-            app = SgApp.from(activity);
+            this.app = SgApp.from(activity);
             this.menuClickListener = menuClickListener;
             this.hideContextMenuIfAdded = hideContextMenuIfAdded;
-            inflater = LayoutInflater.from(activity);
+            this.inflater = LayoutInflater.from(activity);
         }
 
         @NonNull

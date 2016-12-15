@@ -38,7 +38,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
             int uniqueId) {
         super(context, null, 0);
         this.uniqueId = uniqueId;
-        layoutInflater = (LayoutInflater) context
+        this.layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.popupMenuClickListener = popupMenuClickListener;
 
