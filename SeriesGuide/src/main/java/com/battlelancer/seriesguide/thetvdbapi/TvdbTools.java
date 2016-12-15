@@ -200,7 +200,7 @@ public class TvdbTools {
             }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
-            ShowTools.get(app).sendIsAdded(showTvdbId, language);
+            app.getShowTools().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
             TraktTools traktTools = TraktTools.getInstance(app);

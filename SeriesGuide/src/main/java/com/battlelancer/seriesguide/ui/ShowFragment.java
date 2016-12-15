@@ -48,8 +48,8 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -344,7 +344,9 @@ public class ShowFragment extends Fragment {
             public void onClick(View v) {
                 // disable until action is complete
                 v.setEnabled(false);
-                ShowTools.get(v.getContext()).storeIsFavorite(getShowTvdbId(), !isFavorite);
+                SgApp.from(getActivity())
+                        .getShowTools()
+                        .storeIsFavorite(getShowTvdbId(), !isFavorite);
             }
         });
 
@@ -539,7 +541,7 @@ public class ShowFragment extends Fragment {
                 R.array.languageCodesShows)[languageCodeIndex];
 
         Timber.d("Changing show language to %s", languageCode);
-        ShowTools.get(getContext()).storeLanguage(getShowTvdbId(), languageCode);
+        SgApp.from(getActivity()).getShowTools().storeLanguage(getShowTvdbId(), languageCode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

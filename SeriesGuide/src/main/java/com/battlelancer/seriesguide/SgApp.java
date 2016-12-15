@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.modules.TraktModule;
 import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -63,6 +64,7 @@ public class SgApp extends Application {
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     private ServicesComponent servicesComponent;
+    private ShowTools showTools;
 
     @Override
     public void onCreate() {
@@ -120,6 +122,13 @@ public class SgApp extends Application {
 
     public ServicesComponent getServicesComponent() {
         return servicesComponent;
+    }
+
+    public synchronized ShowTools getShowTools() {
+        if (showTools == null) {
+            showTools = new ShowTools(this);
+        }
+        return showTools;
     }
 
     /**

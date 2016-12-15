@@ -425,7 +425,7 @@ public class OverviewFragment extends Fragment implements
 
         // store new value
         boolean isFavorite = (Boolean) v.getTag();
-        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, !isFavorite);
+        SgApp.from(getActivity()).getShowTools().storeIsFavorite(showTvdbId, !isFavorite);
     }
 
     public static class EpisodeLoader extends CursorLoader {
