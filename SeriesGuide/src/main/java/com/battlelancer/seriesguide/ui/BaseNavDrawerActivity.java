@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -32,7 +33,6 @@ import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,6 +42,45 @@ import org.greenrobot.eventbus.ThreadMode;
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
  */
 public abstract class BaseNavDrawerActivity extends BaseActivity {
+
+    /**
+     * Posted sticky while a service task is running.
+     */
+    public static class ServiceActiveEvent {
+        private final boolean shouldSendToHexagon;
+        private final boolean shouldSendToTrakt;
+
+        public ServiceActiveEvent(boolean shouldSendToHexagon, boolean shouldSendToTrakt) {
+            this.shouldSendToHexagon = shouldSendToHexagon;
+            this.shouldSendToTrakt = shouldSendToTrakt;
+        }
+
+        public boolean shouldDisplayMessage() {
+            return shouldSendToHexagon || shouldSendToTrakt;
+        }
+
+        public String getStatusMessage(Context context) {
+            StringBuilder statusText = new StringBuilder();
+            if (shouldSendToHexagon) {
+                statusText.append(context.getString(R.string.hexagon_api_queued));
+            }
+            if (shouldSendToTrakt) {
+                if (statusText.length() > 0) {
+                    statusText.append(" ");
+                }
+                statusText.append(context.getString(R.string.trakt_submitqueued));
+            }
+            return statusText.toString();
+        }
+    }
+
+    /**
+     * Posted once a service action has completed. It may not have been successful.
+     */
+    public static class ServiceCompletedEvent {
+        public ServiceCompletedEvent() {
+        }
+    }
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
@@ -77,8 +116,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        EpisodeTools.EpisodeTaskActiveEvent event = EventBus.getDefault()
-                .getStickyEvent(EpisodeTools.EpisodeTaskActiveEvent.class);
+        ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleEpisodeActionProgress(event);
 
         boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
@@ -343,12 +381,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskActiveEvent event) {
+    public void onEventEpisodeTask(ServiceActiveEvent event) {
         handleEpisodeActionProgress(event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+    public void onEventEpisodeTask(ServiceCompletedEvent event) {
         handleEpisodeActionProgress(null);
     }
 
@@ -360,7 +398,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         return findViewById(android.R.id.content);
     }
 
-    private void handleEpisodeActionProgress(@Nullable EpisodeTools.EpisodeTaskActiveEvent event) {
+    private void handleEpisodeActionProgress(@Nullable ServiceActiveEvent event) {
         if (event != null && event.shouldDisplayMessage()) {
             if (snackbarProgress == null) {
                 snackbarProgress = Snackbar.make(getSnackbarParentView(),

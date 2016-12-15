@@ -6,7 +6,9 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
 
 public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
@@ -40,17 +42,16 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
             }
         }
 
-        // show toast to which service we send
-        if (isSendingToHexagon()) {
-            Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
-        }
-        if (isSendingToTrakt()) {
-            Toast.makeText(context, R.string.trakt_submitqueued, Toast.LENGTH_SHORT).show();
-        }
+        // show message to which service we send
+        EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
+                isSendingToHexagon(), isSendingToTrakt()));
     }
 
     @Override
     protected void onPostExecute(Integer result) {
+        EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        EventBus.getDefault().post(new BaseNavDrawerActivity.ServiceCompletedEvent());
+
         if (result == SUCCESS && getSuccessTextResId() != 0) {
             // success!
             Toast.makeText(context, getSuccessTextResId(), Toast.LENGTH_SHORT).show();

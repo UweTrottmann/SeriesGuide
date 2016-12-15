@@ -183,8 +183,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     public void onResume() {
         super.onResume();
 
-        EpisodeTools.EpisodeTaskActiveEvent event = EventBus.getDefault()
-                .getStickyEvent(EpisodeTools.EpisodeTaskActiveEvent.class);
+        BaseNavDrawerActivity.ServiceActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
         setEpisodeButtonsEnabled(event == null);
 
         EventBus.getDefault().register(this);
@@ -295,12 +295,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskActiveEvent event) {
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceActiveEvent event) {
         setEpisodeButtonsEnabled(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
         setEpisodeButtonsEnabled(true);
     }
 

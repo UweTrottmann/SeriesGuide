@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -165,37 +166,6 @@ public class EpisodeTools {
     }
 
     /**
-     * Posted sticky while the episode task is running.
-     */
-    public static class EpisodeTaskActiveEvent {
-        private final boolean shouldSendToHexagon;
-        private final boolean shouldSendToTrakt;
-
-        public EpisodeTaskActiveEvent(boolean shouldSendToHexagon, boolean shouldSendToTrakt) {
-            this.shouldSendToHexagon = shouldSendToHexagon;
-            this.shouldSendToTrakt = shouldSendToTrakt;
-        }
-
-        public boolean shouldDisplayMessage() {
-            return shouldSendToHexagon || shouldSendToTrakt;
-        }
-
-        public String getStatusMessage(Context context) {
-            StringBuilder statusText = new StringBuilder();
-            if (shouldSendToHexagon) {
-                statusText.append(context.getString(R.string.hexagon_api_queued));
-            }
-            if (shouldSendToTrakt) {
-                if (statusText.length() > 0) {
-                    statusText.append(" ");
-                }
-                statusText.append(context.getString(R.string.trakt_submitqueued));
-            }
-            return statusText.toString();
-        }
-    }
-
-    /**
      * Posted once the episode task has completed. It may not have been successful.
      */
     public static class EpisodeTaskCompletedEvent {
@@ -237,8 +207,8 @@ public class EpisodeTools {
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
 
-            EventBus.getDefault()
-                    .postSticky(new EpisodeTaskActiveEvent(shouldSendToHexagon, shouldSendToTrakt));
+            EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
+                    shouldSendToHexagon, shouldSendToTrakt));
         }
 
         @Override
@@ -447,7 +417,8 @@ public class EpisodeTools {
                 Toast.makeText(context, error, Toast.LENGTH_LONG).show();
             }
 
-            EventBus.getDefault().removeStickyEvent(EpisodeTaskActiveEvent.class);
+            EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+            EventBus.getDefault().post(new BaseNavDrawerActivity.ServiceCompletedEvent());
             EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
 
             if (isSuccessful) {
