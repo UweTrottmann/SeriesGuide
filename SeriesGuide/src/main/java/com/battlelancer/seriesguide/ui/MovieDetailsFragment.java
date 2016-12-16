@@ -205,6 +205,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     public void onStart() {
         super.onStart();
 
+        BaseNavDrawerActivity.ServiceActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        setMovieButtonsEnabled(event == null);
+
         EventBus.getDefault().register(this);
     }
 
@@ -342,8 +346,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             watchedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // disable button, will be re-enabled on data reload once action completes
-                    v.setEnabled(false);
                     if (isWatched) {
                         MovieTools.unwatchedMovie(SgApp.from(getActivity()), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
@@ -353,7 +355,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     }
                 }
             });
-            watchedButton.setEnabled(true);
             watchedButton.setVisibility(View.VISIBLE);
         } else {
             watchedButton.setVisibility(View.GONE);
@@ -373,8 +374,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         collectedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 if (inCollection) {
                     MovieTools.removeFromCollection(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
@@ -384,7 +383,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 }
             }
         });
-        collectedButton.setEnabled(true);
 
         // watchlist button
         Button watchlistedButton = binding.movieButtons.buttonMovieWatchlisted;
@@ -400,8 +398,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         watchlistedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 if (inWatchlist) {
                     MovieTools.removeFromWatchlist(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
@@ -411,7 +407,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 }
             }
         });
-        watchlistedButton.setEnabled(true);
 
         // show button bar
         binding.movieButtons.containerMovieButtons.setVisibility(View.VISIBLE);
@@ -545,16 +540,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
     }
 
-    @SuppressWarnings("unused")
-    @Subscribe
-    public void onEvent(MovieTools.MovieChangedEvent event) {
-        if (event.movieTmdbId != tmdbId) {
-            return;
-        }
-        // re-query some movie details to update button states
-        restartMovieLoader();
-    }
-
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.MovieActionReceivedEvent event) {
@@ -562,6 +547,32 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
         loadMovieActionsDelayed();
+    }
+
+    @Subscribe
+    public void onEvent(MovieTools.MovieChangedEvent event) {
+        if (event.movieTmdbId != tmdbId) {
+            return;
+        }
+        // re-query to update movie details
+        restartMovieLoader();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceActiveEvent event) {
+        setMovieButtonsEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        setMovieButtonsEnabled(true);
+    }
+
+    private void setMovieButtonsEnabled(boolean enabled) {
+        binding.movieButtons.buttonMovieCheckIn.setEnabled(enabled);
+        binding.movieButtons.buttonMovieWatched.setEnabled(enabled);
+        binding.movieButtons.buttonMovieCollected.setEnabled(enabled);
+        binding.movieButtons.buttonMovieWatchlisted.setEnabled(enabled);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
