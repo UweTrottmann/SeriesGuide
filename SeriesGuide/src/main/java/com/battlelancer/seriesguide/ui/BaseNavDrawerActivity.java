@@ -78,7 +78,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * Posted once a service action has completed. It may not have been successful.
      */
     public static class ServiceCompletedEvent {
+
+        @Nullable public final String confirmationText;
+        public boolean isSuccessful;
+
         public ServiceCompletedEvent() {
+            confirmationText = null;
+        }
+
+        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful) {
+            this.confirmationText = confirmationText;
+            this.isSuccessful = isSuccessful;
         }
     }
 
@@ -117,7 +127,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         super.onStart();
 
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
-        handleEpisodeActionProgress(event);
+        handleServiceActiveEvent(event);
 
         boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
         if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
@@ -382,12 +392,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventEpisodeTask(ServiceActiveEvent event) {
-        handleEpisodeActionProgress(event);
+        handleServiceActiveEvent(event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventEpisodeTask(ServiceCompletedEvent event) {
-        handleEpisodeActionProgress(null);
+        if (event.confirmationText != null) {
+            // show a confirmation/error text, update any existing progress snackbar
+            if (snackbarProgress != null) {
+                snackbarProgress.setText(event.confirmationText);
+                snackbarProgress.setDuration(
+                        event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+                snackbarProgress.show();
+            }
+        } else {
+            handleServiceActiveEvent(null);
+        }
     }
 
     /**
@@ -398,11 +418,14 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         return findViewById(android.R.id.content);
     }
 
-    private void handleEpisodeActionProgress(@Nullable ServiceActiveEvent event) {
+    private void handleServiceActiveEvent(@Nullable ServiceActiveEvent event) {
         if (event != null && event.shouldDisplayMessage()) {
             if (snackbarProgress == null) {
                 snackbarProgress = Snackbar.make(getSnackbarParentView(),
                         event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
+            } else {
+                snackbarProgress.setText(event.getStatusMessage(this));
+                snackbarProgress.setDuration(Snackbar.LENGTH_INDEFINITE);
             }
             snackbarProgress.show();
         } else if (snackbarProgress != null) {

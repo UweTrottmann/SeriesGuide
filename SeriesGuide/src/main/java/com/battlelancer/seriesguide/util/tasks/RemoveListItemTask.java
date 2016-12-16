@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
@@ -31,12 +30,8 @@ public class RemoveListItemTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
+    protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return ERROR_NETWORK;
-            }
-
             Lists listsService = HexagonTools.getListsService(getContext());
             if (listsService == null) {
                 return ERROR_HEXAGON_API; // no longer signed in

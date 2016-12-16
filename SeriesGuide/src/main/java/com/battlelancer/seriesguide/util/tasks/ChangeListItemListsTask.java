@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
@@ -42,13 +41,8 @@ public class ChangeListItemListsTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
-        // if sending to service, check for connection
+    protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return ERROR_NETWORK;
-            }
-
             Lists listsService = HexagonTools.getListsService(getContext());
             if (listsService == null) {
                 return ERROR_HEXAGON_API;

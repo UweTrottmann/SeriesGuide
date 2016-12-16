@@ -40,18 +40,7 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
-        if (isCancelled()) {
-            return null;
-        }
-
-        // if sending to service, check for connection
-        if (isSendingToHexagon() || isSendingToTrakt()) {
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return ERROR_NETWORK;
-            }
-        }
-
+    protected Integer doBackgroundAction(Void... params) {
         // send to hexagon
         if (isSendingToHexagon()) {
             Movie movie = new Movie();

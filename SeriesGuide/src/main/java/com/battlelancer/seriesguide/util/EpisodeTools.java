@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -393,6 +392,8 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute(Integer result) {
+            EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+
             // handle errors
             String error = null;
             switch (result) {
@@ -411,27 +412,28 @@ public class EpisodeTools {
                             context.getString(R.string.hexagon));
                     break;
             }
-            boolean isSuccessful = true;
-            if (error != null) {
-                isSuccessful = false;
-                Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-            }
+            boolean isSuccessful = error == null;
 
-            EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
-            EventBus.getDefault().post(new BaseNavDrawerActivity.ServiceCompletedEvent());
+            // post completed status
+            String confirmationText;
+            boolean displaySuccess;
+            if (isSuccessful && shouldSendToTrakt && !canSendToTrakt) {
+                // tell the user this change can not be sent to trakt for now
+                confirmationText = context.getString(R.string.trakt_notice_not_exists);
+                displaySuccess = false;
+            } else {
+                confirmationText = isSuccessful ? flagType.getConfirmationText() : error;
+                displaySuccess = isSuccessful;
+            }
+            EventBus.getDefault()
+                    .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
+                            displaySuccess));
             EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
 
             if (isSuccessful) {
                 // update latest episode for the changed show
                 AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
                         flagType.getShowTvdbId());
-
-                // display trakt issue message
-                if (shouldSendToTrakt && !canSendToTrakt) {
-                    // tell the user this change can not be sent to trakt for now
-                    Toast.makeText(context, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
-                            .show();
-                }
             }
         }
     }
