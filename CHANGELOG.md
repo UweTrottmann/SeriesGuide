@@ -14,7 +14,7 @@ Version 35
 
 * TWEAK Display status message while trakt or Cloud network action is processing for movies.
 * TWEAK Display localized string for release country.
-* FIX Crash when trying to upgrade the database, but it is not readable.
+* FIX Crash when trying to upgrade the database, but it is not writable.
 * NOTE Latest translations from crowdin.
 
 #### 35-beta1
@@ -37,7 +37,7 @@ Version 34
 *(2016-12-19)*
 
 * TWEAK Display localized string for release country.
-* FIX Crash when trying to upgrade the database, but it is not readable.
+* FIX Crash when trying to upgrade the database, but it is not writable.
 
 #### 34
 *(2016-12-01)*
