@@ -33,9 +33,9 @@
   <string name="web_search">Búsqueda en la web</string>
   <string name="add_to_homescreen">Acceso directo</string>
   <string name="action_open">Abierto</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Sincronizar manualmente</string>
+  <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
+  <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">No existe ninguna aplicación disponible para manejar esto.</string>
   <string name="people_empty">¿Nadie aquí? Toque para intentarlo de nuevo.</string>
   <string name="database_error">No se pueden modificar los datos.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Intenta salvar los datos en Opciones, re-instalar y restauralos.</string>
+  <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
   <!-- Sharing -->
   <string name="share">Compartir</string>
   <string name="share_show">Compartir serie</string>
@@ -133,10 +133,10 @@
   <string name="action_shows_filter_hidden">Escondidos</string>
   <string name="action_shows_sort">Ordenar series</string>
   <string name="action_shows_sort_title">Título</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Último episodio</string>
+  <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>
+  <string name="action_shows_sort_last_watched">Último visto</string>
+  <string name="action_shows_sort_remaining">Episodios faltantes</string>
   <string name="action_shows_sort_favorites">Favoritos primero</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_marknext">Siguiente episodio visto</string>
@@ -176,7 +176,7 @@
   <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
   <string name="action_try_any_language">Proponer cualquier idioma</string>
   <string name="action_try_again">Intentar de nuevo</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">El show no existe (aún) en TheTVDB. Intenta más tarde.</string>
   <string name="add_all">Añadir todo</string>
   <string name="add_multiple">Todos los programas aparecerán en su lista de programas en breve.</string>
   <string name="add_started">%s aparecerá en tu lista dentro de poco.</string>
@@ -364,7 +364,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Otros</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Sincronizar y actualizar automáticamente datos de SeriesGuide</string>
   <string name="pref_autobackup">Copia de seguridad automática</string>
   <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
   <string name="backup">Respaldo/Restauración</string>

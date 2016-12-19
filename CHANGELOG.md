@@ -14,6 +14,12 @@ Version 34
 * Add separate language selector for movies, supports all languages of The Movie Database.
 * For Android 7.1: add round launcher icon, launcher shortcuts.
 
+#### 34.1
+*(2016-12-19)*
+
+* TWEAK Display localized string for release country.
+* FIX Crash when trying to upgrade the database, but it is not readable.
+
 #### 34
 *(2016-12-01)*
 

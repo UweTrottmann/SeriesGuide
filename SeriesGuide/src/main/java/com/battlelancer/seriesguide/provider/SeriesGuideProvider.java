@@ -232,7 +232,8 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
-        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        // always get writable database, might have to be upgraded
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
