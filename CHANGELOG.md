@@ -14,6 +14,11 @@ Version 34
 * Add separate language selector for movies, supports all languages of The Movie Database.
 * For Android 7.1: add round launcher icon, launcher shortcuts.
 
+#### 34.2
+*(2016-12-27)*
+
+* FIX Crash on some Android 4.0 devices which are missing a standard database feature introduced for search.
+
 #### 34.1
 *(2016-12-19)*
 
