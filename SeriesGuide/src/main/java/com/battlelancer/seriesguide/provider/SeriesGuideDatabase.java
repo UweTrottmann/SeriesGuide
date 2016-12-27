@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.joda.time.DateTimeZone;
@@ -441,6 +442,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    /** Some Android 4.0 devices do not support FTS4, despite being standard since 3.0. */
+    private static final String CREATE_SEARCH_TABLE_API_ICS = "CREATE VIRTUAL TABLE "
+            + Tables.EPISODES_SEARCH + " USING FTS3("
+
+            + EpisodeSearchColumns.TITLE + " TEXT,"
+
+            + EpisodeSearchColumns.OVERVIEW + " TEXT"
+
+            + ");";
+
     private static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS
             + " ("
 
@@ -545,7 +556,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_EPISODES_TABLE);
 
-        db.execSQL(CREATE_SEARCH_TABLE);
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            db.execSQL(CREATE_SEARCH_TABLE);
+        } else {
+            db.execSQL(CREATE_SEARCH_TABLE_API_ICS);
+        }
 
         db.execSQL(CREATE_LISTS_TABLE);
 
@@ -1104,6 +1119,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             return;
         }
 
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            rebuildFtsTableJellyBean(db);
+        } else {
+            rebuildFtsTableIcs(db);
+        }
+    }
+
+    /**
+     * Works with FTS4 search table.
+     */
+    private static void rebuildFtsTableJellyBean(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
@@ -1114,17 +1140,73 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 db.endTransaction();
             }
         } catch (SQLiteException e) {
-            Timber.e(e, "rebuildFtsTable: failed to populate table.");
+            Timber.e(e, "rebuildFtsTableJellyBean: failed to populate table.");
             DBUtils.postDatabaseError(e);
         }
     }
+
+    /**
+     * Works with FTS3 search table.
+     */
+    private static void rebuildFtsTableIcs(SQLiteDatabase db) {
+        try {
+            db.beginTransaction();
+            try {
+                db.execSQL(
+                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
+                                + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
+                                + " select " + Episodes._ID + "," + Episodes.TITLE
+                                + "," + Episodes.OVERVIEW
+                                + " from " + Tables.EPISODES + ";");
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            Timber.e(e, "rebuildFtsTableIcs: failed to populate table.");
+            // try to build a basic table with only episode titles
+            rebuildBasicFtsTableIcs(db);
+        }
+    }
+
+    /**
+     * Similar to {@link #rebuildFtsTableIcs(SQLiteDatabase)}. However only inserts the episode
+     * title, not the overviews to conserve space.
+     */
+    private static void rebuildBasicFtsTableIcs(SQLiteDatabase db) {
+        if (!recreateFtsTable(db)) {
+            return;
+        }
+
+        try {
+            db.beginTransaction();
+            try {
+                db.execSQL(
+                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
+                                + "(docid," + Episodes.TITLE + ")"
+                                + " select " + Episodes._ID + "," + Episodes.TITLE
+                                + " from " + Tables.EPISODES + ";");
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            Timber.e(e, "rebuildBasicFtsTableIcs: failed to populate table.");
+            DBUtils.postDatabaseError(e);
+        }
+    }
+
 
     private static boolean recreateFtsTable(SQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
                 db.execSQL("drop table if exists " + Tables.EPISODES_SEARCH);
-                db.execSQL(CREATE_SEARCH_TABLE);
+                if (AndroidUtils.isJellyBeanOrHigher()) {
+                    db.execSQL(CREATE_SEARCH_TABLE);
+                } else {
+                    db.execSQL(CREATE_SEARCH_TABLE_API_ICS);
+                }
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
