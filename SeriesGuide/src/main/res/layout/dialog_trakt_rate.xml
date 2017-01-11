@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,11 +15,11 @@
             android:background="#7F0707">
 
             <Button
-                android:id="@+id/totallyninja"
+                android:id="@+id/rating10"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/love" />
+                tools:text="@string/love" />
         </FrameLayout>
 
         <FrameLayout
@@ -31,7 +32,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating9" />
+                tools:text="@string/rating9" />
         </FrameLayout>
 
         <FrameLayout
@@ -44,7 +45,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating8" />
+                tools:text="@string/rating8" />
         </FrameLayout>
 
         <FrameLayout
@@ -57,7 +58,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating7" />
+                tools:text="@string/rating7" />
         </FrameLayout>
 
         <FrameLayout
@@ -70,7 +71,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating6" />
+                tools:text="@string/rating6" />
         </FrameLayout>
 
         <FrameLayout
@@ -83,7 +84,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating5" />
+                tools:text="@string/rating5" />
         </FrameLayout>
 
         <FrameLayout
@@ -96,7 +97,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating4" />
+                tools:text="@string/rating4" />
         </FrameLayout>
 
         <FrameLayout
@@ -109,7 +110,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating3" />
+                tools:text="@string/rating3" />
         </FrameLayout>
 
         <FrameLayout
@@ -122,7 +123,7 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rating2" />
+                tools:text="@string/rating2" />
         </FrameLayout>
 
         <FrameLayout
@@ -131,11 +132,11 @@
             android:background="#444444">
 
             <Button
-                android:id="@+id/weaksauce"
+                android:id="@+id/rating1"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hate" />
+                tools:text="@string/hate" />
         </FrameLayout>
 
     </LinearLayout>

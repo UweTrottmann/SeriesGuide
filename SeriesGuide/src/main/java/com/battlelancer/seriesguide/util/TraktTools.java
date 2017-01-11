@@ -8,6 +8,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -1071,48 +1072,45 @@ public class TraktTools {
     }
 
     /**
-     * Converts a rating index from 1 to 10 into a localized string representation. Any other value
-     * will return the local variant of "n/a".
+     * Converts a rating index from 1 to 10 into the localized string representation. Any other
+     * value will return the rate action string.
      */
     public static String buildUserRatingString(Context context, int rating) {
-        int resId;
+        int resId = getRatingStringRes(rating);
+        if (resId == 0) {
+            return context.getString(R.string.action_rate);
+        } else {
+            return context.getString(R.string.rating_number_text_format, rating,
+                    context.getString(resId));
+        }
+    }
+
+    @StringRes
+    private static int getRatingStringRes(int rating) {
         switch (rating) {
             case 1:
-                resId = R.string.hate;
-                break;
+                return R.string.hate;
             case 2:
-                resId = R.string.rating2;
-                break;
+                return R.string.rating2;
             case 3:
-                resId = R.string.rating3;
-                break;
+                return R.string.rating3;
             case 4:
-                resId = R.string.rating4;
-                break;
+                return R.string.rating4;
             case 5:
-                resId = R.string.rating5;
-                break;
+                return R.string.rating5;
             case 6:
-                resId = R.string.rating6;
-                break;
+                return R.string.rating6;
             case 7:
-                resId = R.string.rating7;
-                break;
+                return R.string.rating7;
             case 8:
-                resId = R.string.rating8;
-                break;
+                return R.string.rating8;
             case 9:
-                resId = R.string.rating9;
-                break;
+                return R.string.rating9;
             case 10:
-                resId = R.string.love;
-                break;
+                return R.string.love;
             default:
-                resId = R.string.action_rate;
-                break;
+                return 0;
         }
-
-        return context.getString(resId);
     }
 
     @Nullable
