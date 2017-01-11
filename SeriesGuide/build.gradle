@@ -32,6 +32,7 @@ android {
         targetSdkVersion 25
 
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
@@ -205,7 +206,13 @@ dependencies {
     // Amazon flavor specific
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
-    // Android unit tests
+    // Instrumented unit tests
+    androidTestCompile 'com.android.support:support-annotations:25.1.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
+
+    // Local unit tests
     testCompile 'junit:junit:4.12'
     testCompile "com.android.support:support-annotations:$supportVersion"
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'

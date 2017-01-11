@@ -4,6 +4,7 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1037,11 +1039,25 @@ public class TraktTools {
     }
 
     /**
-     * Returns the given double as number string with one decimal digit, like "1.5".
+     * Returns the given double as number string with one decimal digit, like "1.5". Formatted using
+     * the default locale.
      */
-    public static String buildRatingString(Double rating) {
-        return rating == null || rating == 0 ? "--"
-                : String.format(Locale.getDefault(), "%.1f", rating);
+    public static String buildRatingString(@Nullable Double rating) {
+        return buildRatingString(rating, Locale.getDefault());
+    }
+
+    public static String buildRatingString(@Nullable Double rating, @NonNull Locale locale) {
+        if (rating == null || rating == 0) {
+            return "--";
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            // before Android 7.0 string format seems to round half down, despite docs saying half up
+            // it likely used DecimalFormat, which defaults to half even
+            BigDecimal bigDecimal = new BigDecimal(rating);
+            bigDecimal = bigDecimal.setScale(1, BigDecimal.ROUND_HALF_UP);
+            rating = bigDecimal.doubleValue();
+        }
+        return String.format(locale, "%.1f", rating);
     }
 
     /**

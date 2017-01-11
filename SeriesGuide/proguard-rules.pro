@@ -98,3 +98,11 @@
 
 # joda time
 -dontwarn org.joda.time.**
+
+# data binding: unit tests fail due to library class depending on program class
+# https://code.google.com/p/android/issues/detail?id=196238
+-dontwarn android.databinding.**
+-keep class com.battlelancer.seriesguide.databinding.** {
+    <fields>;
+    <methods>;
+}
