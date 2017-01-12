@@ -3,6 +3,7 @@
 <!-- The scroll flags are only useful on the L+ coordinator layouts and are otherwise ignored. -->
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sgToolbar"
     style="@style/Widget.SeriesGuide.ActionBar"
     android:layout_width="match_parent"
@@ -15,15 +16,17 @@
 
     <RelativeLayout
         android:id="@+id/containerSearchBar"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <AutoCompleteTextView
             android:id="@+id/editTextSearchBar"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/search"
-            android:paddingRight="48dp" />
+            android:minWidth="250dp"
+            android:paddingRight="44dp"
+            tools:ignore="RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/imageButtonSearchClear"
