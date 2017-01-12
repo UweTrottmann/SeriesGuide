@@ -183,6 +183,13 @@ public class ShowsActivity extends BaseTopActivity implements
         }
     }
 
+    public static class TabClickEvent {
+        public final int position;
+        public TabClickEvent(int position) {
+            this.position = position;
+        }
+    }
+
     private void setupViews() {
         // setup floating action button for adding shows
         FloatingActionButton buttonAddShow = ButterKnife.findById(this, R.id.buttonShowsAdd);
@@ -195,8 +202,17 @@ public class ShowsActivity extends BaseTopActivity implements
         });
 
         viewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
+        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
+        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                if (viewPager.getCurrentItem() == position) {
+                    EventBus.getDefault().post(new TabClickEvent(position));
+                }
+            }
+        });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
-                (SlidingTabLayout) findViewById(R.id.tabLayoutTabs), buttonAddShow);
+                tabs, buttonAddShow);
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);

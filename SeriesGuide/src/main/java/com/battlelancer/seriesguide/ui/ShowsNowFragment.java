@@ -40,8 +40,8 @@ import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
-import org.greenrobot.eventbus.EventBus;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -351,6 +351,13 @@ public class ShowsNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyLocalCallbacks);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTabClickEvent(ShowsActivity.TabClickEvent event) {
+        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
+            recyclerView.smoothScrollToPosition(0);
         }
     }
 

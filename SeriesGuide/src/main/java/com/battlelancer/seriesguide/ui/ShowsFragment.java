@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
@@ -58,25 +59,17 @@ public class ShowsFragment extends Fragment implements
     private static final String TAG = "Shows";
     private static final String TAG_FIRST_RUN = "First Run";
 
-    private ShowsAdapter mAdapter;
-
-    private HeaderGridView mGrid;
-
     private int mSortOrderId;
-
     private boolean mIsSortFavoritesFirst;
-
     private boolean mIsSortIgnoreArticles;
-
     private boolean mIsFilterFavorites;
-
     private boolean mIsFilterUnwatched;
-
     private boolean mIsFilterUpcoming;
-
     private boolean mIsFilterHidden;
 
-    private Handler mHandler;
+    private ShowsAdapter adapter;
+    private HeaderGridView gridView;
+    private Handler handler;
 
     public static ShowsFragment newInstance() {
         return new ShowsFragment();
@@ -87,6 +80,7 @@ public class ShowsFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
+        gridView = ButterKnife.findById(v, android.R.id.list);
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,24 +120,23 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
+        adapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
-        mGrid = (HeaderGridView) getView().findViewById(android.R.id.list);
         // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
+        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
             FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
-                    .inflate(R.layout.item_first_run, mGrid, false);
-            mGrid.addHeaderView(headerView);
+                    .inflate(R.layout.item_first_run, gridView, false);
+            gridView.addHeaderView(headerView);
         }
-        mGrid.setAdapter(mAdapter);
-        mGrid.setOnItemClickListener(this);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
 
         // hide floating action button when scrolling shows
         FloatingActionButton buttonAddShow = (FloatingActionButton) getActivity().findViewById(
                 R.id.buttonShowsAdd);
-        mGrid.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
+        gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
@@ -169,7 +162,7 @@ public class ShowsFragment extends Fragment implements
             return;
         }
 
-        View oldEmptyView = mGrid.getEmptyView();
+        View oldEmptyView = gridView.getEmptyView();
 
         View emptyView;
         if (mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming || mIsFilterHidden) {
@@ -183,7 +176,7 @@ public class ShowsFragment extends Fragment implements
         }
 
         if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+            gridView.setEmptyView(emptyView);
         }
     }
 
@@ -447,12 +440,19 @@ public class ShowsFragment extends Fragment implements
                 break;
             }
             case FirstRunView.ButtonType.DISMISS: {
-                if (mGrid != null) {
-                    mGrid.removeHeaderView(event.firstRunView);
+                if (gridView != null) {
+                    gridView.removeHeaderView(event.firstRunView);
                     Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
                 }
                 break;
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTabClickEvent(ShowsActivity.TabClickEvent event) {
+        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
+            gridView.smoothScrollToPosition(0);
         }
     }
 
@@ -546,7 +546,7 @@ public class ShowsFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Swap the new cursor in. (The framework will take care of closing the
         // old cursor once we return.)
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
 
         // prepare an updated empty view
         updateEmptyView();
@@ -557,7 +557,7 @@ public class ShowsFragment extends Fragment implements
         // This is called when the last Cursor provided to onLoadFinished()
         // above is about to be closed. We need to make sure we are no
         // longer using it.
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     /**
@@ -568,12 +568,12 @@ public class ShowsFragment extends Fragment implements
      * passed).
      */
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
-        if (mHandler == null) {
-            mHandler = new Handler();
+        if (handler == null) {
+            handler = new Handler();
         }
-        mHandler.removeCallbacks(mDataRefreshRunnable);
+        handler.removeCallbacks(mDataRefreshRunnable);
         if (enableRefresh) {
-            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 

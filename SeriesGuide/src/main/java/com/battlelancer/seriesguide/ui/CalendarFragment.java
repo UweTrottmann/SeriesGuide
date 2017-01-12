@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -37,6 +38,9 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays upcoming or recent episodes in a scrollable grid, by default grouped by day.
@@ -46,42 +50,37 @@ public class CalendarFragment extends Fragment implements
         OnSharedPreferenceChangeListener, AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "Calendar";
-
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
-
     private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
-
     private static final int CONTEXT_CHECKIN_ID = 2;
-
     private static final int CONTEXT_COLLECTION_ADD_ID = 3;
-
     private static final int CONTEXT_COLLECTION_REMOVE_ID = 4;
 
-    private StickyGridHeadersGridView mGridView;
-
-    private CalendarAdapter mAdapter;
-
-    private Handler mHandler;
+    private StickyGridHeadersGridView gridView;
+    private CalendarAdapter adapter;
+    private Handler handler;
+    private String type;
 
     /**
      * Data which has to be passed when creating {@link CalendarFragment}. All Bundle extras are
      * strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
-
         String TYPE = "type";
-
         String ANALYTICS_TAG = "analyticstag";
-
         String LOADER_ID = "loaderid";
-
         String EMPTY_STRING_ID = "emptyid";
     }
 
     public interface CalendarType {
-
         String UPCOMING = "upcoming";
         String RECENT = "recent";
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        type = getArguments().getString(InitBundle.TYPE);
     }
 
     @Override
@@ -92,11 +91,11 @@ public class CalendarFragment extends Fragment implements
         TextView emptyView = (TextView) v.findViewById(R.id.emptyViewCalendar);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
-        mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
+        gridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
         // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(mGridView, AndroidUtils.isLollipopOrHigher());
-        mGridView.setEmptyView(emptyView);
-        mGridView.setAreHeadersSticky(false);
+        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        gridView.setEmptyView(emptyView);
+        gridView.setAreHeadersSticky(false);
 
         return v;
     }
@@ -106,20 +105,27 @@ public class CalendarFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        mAdapter = new CalendarAdapter(getActivity());
+        adapter = new CalendarAdapter(getActivity());
         boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
-        mAdapter.setIsShowingHeaders(!infiniteScrolling);
+        adapter.setIsShowingHeaders(!infiniteScrolling);
 
         // setup grid view
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnItemClickListener(this);
-        mGridView.setOnItemLongClickListener(this);
-        mGridView.setFastScrollEnabled(infiniteScrolling);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
+        gridView.setOnItemLongClickListener(this);
+        gridView.setFastScrollEnabled(infiniteScrolling);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -145,6 +151,13 @@ public class CalendarFragment extends Fragment implements
 
         // avoid CPU activity
         schedulePeriodicDataRefresh(false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -238,7 +251,7 @@ public class CalendarFragment extends Fragment implements
         PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
         Menu menu = popupMenu.getMenu();
 
-        Cursor episode = (Cursor) mAdapter.getItem(position);
+        Cursor episode = (Cursor) adapter.getItem(position);
         if (episode == null) {
             return false;
         }
@@ -306,8 +319,17 @@ public class CalendarFragment extends Fragment implements
         return getArguments().getInt("loaderid");
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTabClickEvent(ShowsActivity.TabClickEvent event) {
+        if ((CalendarType.UPCOMING.equals(type)
+                && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING) ||
+                CalendarType.RECENT.equals(type)
+                        && event.position == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
+            gridView.smoothScrollToPosition(0);
+        }
+    }
+
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String type = getArguments().getString(InitBundle.TYPE);
         boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
 
         // infinite or 30 days activity stream
@@ -322,20 +344,20 @@ public class CalendarFragment extends Fragment implements
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
-        if (mHandler == null) {
-            mHandler = new Handler();
+        if (handler == null) {
+            handler = new Handler();
         }
-        mHandler.removeCallbacks(mDataRefreshRunnable);
+        handler.removeCallbacks(mDataRefreshRunnable);
         if (enableRefresh) {
-            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 
@@ -352,8 +374,8 @@ public class CalendarFragment extends Fragment implements
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
-            mAdapter.setIsShowingHeaders(!infiniteScrolling);
-            mGridView.setFastScrollEnabled(infiniteScrolling);
+            adapter.setIsShowingHeaders(!infiniteScrolling);
+            gridView.setFastScrollEnabled(infiniteScrolling);
         }
         if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
