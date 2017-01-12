@@ -31,6 +31,9 @@ import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays recently watched movies, today's releases and recent watches from trakt friends (if
@@ -150,6 +153,20 @@ public class MoviesNowFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -236,6 +253,13 @@ public class MoviesNowFragment extends Fragment {
             }
         }
         swipeRefreshLayout.setRefreshing(show);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
+        if (event.position == MoviesActivity.TAB_POSITION_SEARCH) {
+            recyclerView.smoothScrollToPosition(0);
+        }
     }
 
     private void updateEmptyState() {

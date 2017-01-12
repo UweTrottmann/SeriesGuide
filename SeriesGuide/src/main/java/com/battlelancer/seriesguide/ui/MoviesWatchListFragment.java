@@ -64,4 +64,11 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     protected int getLoaderId() {
         return MoviesActivity.WATCHLIST_LOADER_ID;
     }
+
+    @Override
+    protected int getTabPosition(boolean showingNowTab) {
+        return showingNowTab
+                ? MoviesActivity.TAB_POSITION_WATCHLIST_WITH_NOW
+                : MoviesActivity.TAB_POSITION_WATCHLIST_DEFAULT;
+    }
 }

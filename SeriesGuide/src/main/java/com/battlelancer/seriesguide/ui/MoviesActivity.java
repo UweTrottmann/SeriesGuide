@@ -11,11 +11,22 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Movie section of the app, displays various movie tabs.
  */
 public class MoviesActivity extends BaseTopActivity {
+
+    public class MoviesTabClickEvent {
+        public final int position;
+        public final boolean showingNowTab;
+
+        public MoviesTabClickEvent(int position, boolean showingNowTab) {
+            this.position = position;
+            this.showingNowTab = showingNowTab;
+        }
+    }
 
     public static final int SEARCH_LOADER_ID = 100;
     public static final int NOW_TRAKT_USER_LOADER_ID = 101;
@@ -23,11 +34,18 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int WATCHLIST_LOADER_ID = 103;
     public static final int COLLECTION_LOADER_ID = 104;
 
+    public static final int TAB_POSITION_SEARCH = 0;
+    public static final int TAB_POSITION_WATCHLIST_DEFAULT = 1;
+    public static final int TAB_POSITION_COLLECTION_DEFAULT = 2;
+    public static final int TAB_POSITION_NOW = 1;
+    public static final int TAB_POSITION_WATCHLIST_WITH_NOW = 2;
+    public static final int TAB_POSITION_COLLECTION_WITH_NOW = 3;
     private static final int TAB_COUNT_WITH_TRAKT = 4;
 
     @BindView(R.id.viewPagerTabs) ViewPager viewPager;
     @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
     private TabStripAdapter tabsAdapter;
+    private boolean showNowTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +60,22 @@ public class MoviesActivity extends BaseTopActivity {
 
     private void setupViews(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+
         // tabs
+        showNowTab = TraktCredentials.get(this).hasCredentials();
+        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                if (viewPager.getCurrentItem() == position) {
+                    EventBus.getDefault().post(new MoviesTabClickEvent(position, showNowTab));
+                }
+            }
+        });
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);
         // search
         tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
         // trakt-only tabs should only be visible if connected
-        if (TraktCredentials.get(this).hasCredentials()) {
+        if (showNowTab) {
             // (what to watch) now
             tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
         }
@@ -89,8 +117,8 @@ public class MoviesActivity extends BaseTopActivity {
 
     private void maybeAddNowTab() {
         int currentTabCount = tabsAdapter.getCount();
-        boolean shouldShowTraktTabs = TraktCredentials.get(this).hasCredentials();
-        if (shouldShowTraktTabs && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+        showNowTab = TraktCredentials.get(this).hasCredentials();
+        if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
             tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
             // update tabs
             tabsAdapter.notifyTabsChanged();

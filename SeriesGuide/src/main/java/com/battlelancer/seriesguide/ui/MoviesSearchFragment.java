@@ -302,7 +302,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleLanguageEvent(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+    public void onEventLanguageChanged(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
         if (!isAdded()) {
             return;
         }
@@ -314,6 +314,13 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
         // just run the current search again
         search();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
+        if (event.position == MoviesActivity.TAB_POSITION_SEARCH) {
+            resultsGridView.smoothScrollToPosition(0);
+        }
     }
 
     private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
