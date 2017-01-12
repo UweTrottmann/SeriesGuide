@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSort
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
 import com.battlelancer.seriesguide.widgets.HeaderGridView;
@@ -425,7 +426,7 @@ public class ShowsFragment extends Fragment implements
         switch (event.type) {
             case FirstRunView.ButtonType.ADD_SHOW: {
                 startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
                 break;
             }
@@ -450,7 +451,7 @@ public class ShowsFragment extends Fragment implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(ShowsActivity.TabClickEvent event) {
+    public void onEventTabClick(TabClickEvent event) {
         if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
             gridView.smoothScrollToPosition(0);
         }
@@ -589,7 +590,7 @@ public class ShowsFragment extends Fragment implements
 
     private void startActivityAddShows() {
         startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
     private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener

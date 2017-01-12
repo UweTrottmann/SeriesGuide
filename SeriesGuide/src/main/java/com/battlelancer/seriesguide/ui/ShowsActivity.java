@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -183,13 +184,6 @@ public class ShowsActivity extends BaseTopActivity implements
         }
     }
 
-    public static class TabClickEvent {
-        public final int position;
-        public TabClickEvent(int position) {
-            this.position = position;
-        }
-    }
-
     private void setupViews() {
         // setup floating action button for adding shows
         FloatingActionButton buttonAddShow = ButterKnife.findById(this, R.id.buttonShowsAdd);
@@ -197,7 +191,7 @@ public class ShowsActivity extends BaseTopActivity implements
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ShowsActivity.this, SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
             }
         });
 

@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -320,7 +321,7 @@ public class CalendarFragment extends Fragment implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(ShowsActivity.TabClickEvent event) {
+    public void onEventTabClick(TabClickEvent event) {
         if ((CalendarType.UPCOMING.equals(type)
                 && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING) ||
                 CalendarType.RECENT.equals(type)

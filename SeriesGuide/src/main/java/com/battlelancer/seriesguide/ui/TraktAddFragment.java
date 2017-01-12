@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -39,27 +40,24 @@ public class TraktAddFragment extends AddFragment {
      * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
      */
     public final static String ARG_TYPE = "traktListType";
-    private Unbinder unbinder;
-
-    @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface ListType {
-    }
 
     public final static int TYPE_RECOMMENDED = 0;
     public final static int TYPE_WATCHED = 1;
     public final static int TYPE_COLLECTION = 2;
     public final static int TYPE_WATCHLIST = 3;
+    @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ListType {
+    }
 
-    public static TraktAddFragment newInstance(int type) {
-        TraktAddFragment f = new TraktAddFragment();
+    private Unbinder unbinder;
+    private int listType;
 
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt(ARG_TYPE, type);
-        f.setArguments(args);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        return f;
+        listType = getArguments().getInt(ARG_TYPE);
     }
 
     @Override
@@ -79,7 +77,6 @@ public class TraktAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter, enable context menu only for recommendations and watchlist
-        int listType = getListType();
         adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(),
                 listType == TYPE_RECOMMENDED || listType == TYPE_WATCHLIST ? showMenuClickListener
                         : null, listType != TYPE_WATCHLIST);
@@ -99,7 +96,6 @@ public class TraktAddFragment extends AddFragment {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
-            int listType = getListType();
             if (listType == TYPE_RECOMMENDED) {
                 popupMenu.getMenu()
                         .findItem(R.id.menu_action_show_watchlist_remove)
@@ -177,9 +173,7 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(
-            @SuppressWarnings("UnusedParameters") ShowTools.ShowChangedEvent event) {
-        int listType = getListType();
+    public void onEventMainThread(ShowTools.ShowChangedEvent event) {
         if (listType == TYPE_WATCHLIST) {
             // reload watchlist if a show was removed
             getLoaderManager().restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
@@ -194,25 +188,25 @@ public class TraktAddFragment extends AddFragment {
             public void onClick(View v) {
                 setProgressVisible(true, false);
                 getLoaderManager().restartLoader(
-                        SearchActivity.TRAKT_BASE_LOADER_ID + getListType(), null,
+                        SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
                         mTraktAddCallbacks);
             }
         });
     }
 
-    @ListType
-    private int getListType() {
-        final int type = getArguments().getInt(ARG_TYPE);
-        switch (type) {
+    @Override
+    protected int getTabPosition() {
+        switch (listType) {
             case TYPE_RECOMMENDED:
-                return TYPE_RECOMMENDED;
+                return SearchActivity.TAB_POSITION_RECOMMENDED;
             case TYPE_COLLECTION:
-                return TYPE_COLLECTION;
-            case TYPE_WATCHLIST:
-                return TYPE_WATCHLIST;
+                return SearchActivity.TAB_POSITION_COLLECTION;
             case TYPE_WATCHED:
+                return SearchActivity.TAB_POSITION_WATCHED;
+            case TYPE_WATCHLIST:
+                return SearchActivity.TAB_POSITION_WATCHLIST;
             default:
-                return TYPE_WATCHED;
+                return -1;
         }
     }
 
@@ -220,7 +214,7 @@ public class TraktAddFragment extends AddFragment {
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktAddLoader(SgApp.from(getActivity()), getListType());
+            return new TraktAddLoader(SgApp.from(getActivity()), listType);
         }
 
         @Override

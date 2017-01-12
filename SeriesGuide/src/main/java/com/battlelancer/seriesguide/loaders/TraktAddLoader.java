@@ -51,7 +51,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     @Inject Lazy<Sync> traktSync;
     private final int type;
 
-    public TraktAddLoader(SgApp app, @TraktAddFragment.ListType int type) {
+    public TraktAddLoader(SgApp app, int type) {
         super(app);
         app.getServicesComponent().inject(this);
         this.type = type;

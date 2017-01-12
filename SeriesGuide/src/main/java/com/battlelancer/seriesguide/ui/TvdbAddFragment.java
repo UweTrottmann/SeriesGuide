@@ -213,6 +213,11 @@ public class TvdbAddFragment extends AddFragment {
         });
     }
 
+    @Override
+    protected int getTabPosition() {
+        return SearchActivity.TAB_POSITION_SEARCH;
+    }
+
     private void search() {
         Bundle args = new Bundle();
         args.putString(KEY_QUERY, currentQuery);

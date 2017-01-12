@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,6 +74,13 @@ public class EpisodeSearchFragment extends ListFragment {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {
         search(event.args);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(TabClickEvent event) {
+        if (event.position == SearchActivity.TAB_POSITION_EPISODES) {
+            getListView().smoothScrollToPosition(0);
+        }
     }
 
     public void search(Bundle args) {

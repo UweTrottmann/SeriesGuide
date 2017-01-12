@@ -35,7 +35,7 @@ public class ConnectTraktFinishedFragment extends Fragment {
             public void onClick(View v) {
                 // open library tab
                 startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.WATCHED_TAB_POSITION));
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_WATCHED));
                 getActivity().finish();
             }
         });
