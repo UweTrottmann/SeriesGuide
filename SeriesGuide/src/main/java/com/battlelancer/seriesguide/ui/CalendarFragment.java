@@ -320,7 +320,7 @@ public class CalendarFragment extends Fragment implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onTabClickEvent(ShowsActivity.TabClickEvent event) {
+    public void onEventTabClick(ShowsActivity.TabClickEvent event) {
         if ((CalendarType.UPCOMING.equals(type)
                 && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING) ||
                 CalendarType.RECENT.equals(type)

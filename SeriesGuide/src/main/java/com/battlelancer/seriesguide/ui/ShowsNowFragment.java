@@ -337,7 +337,7 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(EpisodeTools.EpisodeTaskCompletedEvent event) {
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
         if (!event.isSuccessful) {
             return; // no changes applied
         }
@@ -355,7 +355,7 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onTabClickEvent(ShowsActivity.TabClickEvent event) {
+    public void onEventTabClick(ShowsActivity.TabClickEvent event) {
         if (event.position == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
             recyclerView.smoothScrollToPosition(0);
         }
