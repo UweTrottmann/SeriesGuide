@@ -96,7 +96,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
             if (DisplaySettings.LANGUAGE_EN.equals(language)) {
                 List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults
                         = SgTrakt.executeCall(app,
-                        traktSearch.get().textQuery(query, Type.SHOW, null, 1, 30),
+                        traktSearch.get().textQueryShow(query,
+                                null, null, null, null, null, null, null, null, null,
+                                Extended.FULL, 1, 30),
                         "search shows"
                 );
                 if (searchResults != null) {

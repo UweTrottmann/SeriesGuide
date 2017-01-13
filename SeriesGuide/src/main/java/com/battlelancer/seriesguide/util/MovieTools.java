@@ -43,6 +43,7 @@ import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
+import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Sync;
@@ -415,18 +416,16 @@ public class MovieTools {
     public Integer lookupTraktId(int movieTmdbId) {
         try {
             Response<List<SearchResult>> response = traktSearch.get().idLookup(IdType.TMDB,
-                    String.valueOf(movieTmdbId), 1, 10).execute();
+                    String.valueOf(movieTmdbId), Type.MOVIE, null, 1, 1).execute();
             if (response.isSuccessful()) {
-                List<SearchResult> lookup = response.body();
-                if (lookup == null || lookup.size() == 0) {
+                List<SearchResult> results = response.body();
+                if (results == null || results.size() != 1) {
                     Timber.e("Finding trakt movie failed (no results)");
                     return -1;
                 }
-                for (SearchResult result : lookup) {
-                    // find movie (tmdb ids are not unique for tv and movies)
-                    if (result.movie != null && result.movie.ids != null) {
-                        return result.movie.ids.trakt;
-                    }
+                SearchResult result = results.get(0);
+                if (result.movie != null && result.movie.ids != null) {
+                    return result.movie.ids.trakt;
                 }
                 Timber.e("Finding trakt movie failed (not in results)");
                 return -1;
