@@ -123,7 +123,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.buttonTVDB) View mTvdbButton;
     @BindView(R.id.buttonTrakt) View mTraktButton;
     @BindView(R.id.buttonWebSearch) View mWebSearchButton;
-    @BindView(R.id.buttonShouts) View mCommentsButton;
+    @BindView(R.id.buttonShouts) Button mCommentsButton;
 
     private Unbinder unbinder;
 
@@ -162,6 +162,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         unbinder = ButterKnife.bind(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
+
+        // comments button
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), mCommentsButton,
+                R.attr.drawableComments);
 
         // web search button unused, is available as extension
         mWebSearchButton.setVisibility(View.GONE);
@@ -657,7 +661,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                                 getEpisodeTvdbId());
                     }
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            mActionsContainer, data, TAG);
+                            getActivity().getTheme(), mActionsContainer, data, TAG);
                 }
 
                 @Override

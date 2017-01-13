@@ -3,12 +3,15 @@ package com.battlelancer.seriesguide.extensions;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -22,13 +25,13 @@ public class ActionsHelper {
 
     /**
      * Replaces all child views of the given {@link android.view.ViewGroup} with a {@link
-     * android.widget.TextView} per action plus one linking to {@link com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity}.
+     * android.widget.Button} per action plus one linking to {@link com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity}.
      * Sets up {@link android.view.View.OnClickListener} if {@link com.battlelancer.seriesguide.api.Action#getViewIntent()}
      * of an  {@link com.battlelancer.seriesguide.api.Action} is not null.
      */
     public static void populateActions(@NonNull LayoutInflater layoutInflater,
-            @Nullable ViewGroup actionsContainer, @Nullable List<Action> data,
-            @NonNull final String logCategory) {
+            @NonNull Resources.Theme theme, @Nullable ViewGroup actionsContainer,
+            @Nullable List<Action> data, @NonNull final String logCategory) {
         if (actionsContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateActions: action view container gone, aborting");
@@ -36,12 +39,20 @@ public class ActionsHelper {
         }
         actionsContainer.removeAllViews();
 
+        // re-use drawable for all buttons
+        int vectorResId = Utils.resolveAttributeToResourceId(theme, R.attr.drawableExtension);
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(actionsContainer.getResources(),
+                vectorResId, theme);
+
         // add a view per action
         if (data != null) {
             for (Action action : data) {
-                TextView actionView = (TextView) layoutInflater.inflate(R.layout.item_action,
+                Button actionView = (Button) layoutInflater.inflate(R.layout.item_action,
                         actionsContainer, false);
                 actionView.setText(action.getTitle());
+                Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(actionView, drawable, null,
+                        null, null);
+
                 CheatSheet.setup(actionView, action.getTitle());
 
                 final Intent viewIntent = action.getViewIntent();

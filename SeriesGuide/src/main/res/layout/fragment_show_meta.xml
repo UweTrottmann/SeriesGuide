@@ -5,11 +5,10 @@
     <Button
         android:id="@+id/buttonShowLanguage"
         style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:drawablePadding="@dimen/default_padding"
+        android:layout_marginLeft="@dimen/padding_button"
+        android:layout_marginRight="@dimen/padding_button"
         tools:text="Deutsch" />
 
     <TextView

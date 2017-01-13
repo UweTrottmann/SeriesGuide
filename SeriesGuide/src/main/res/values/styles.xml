@@ -127,6 +127,18 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+        <item name="android:drawablePadding">@dimen/default_padding</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Sheet">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+        <item name="android:textAppearance">@style/TextAppearance.Menu</item>
+        <item name="android:paddingLeft">@dimen/large_padding</item>
+        <item name="android:paddingRight">@dimen/large_padding</item>
+        <item name="android:drawablePadding">32dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Blue">
@@ -266,8 +278,8 @@
     </style>
 
     <style name="Block">
-        <item name="android:layout_marginLeft">24dp</item>
-        <item name="android:layout_marginRight">24dp</item>
+        <item name="android:layout_marginLeft">@dimen/large_padding</item>
+        <item name="android:layout_marginRight">@dimen/large_padding</item>
     </style>
 
     <style name="Block.WithTopMargin">
@@ -277,6 +289,7 @@
 
     <style name="Block.FlowText">
         <item name="android:lineSpacingMultiplier">1.25</item>
+        <item name="android:maxEms">20</item>
     </style>
 
     <style name="Page">

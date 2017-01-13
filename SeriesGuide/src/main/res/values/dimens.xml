@@ -6,7 +6,7 @@
     <dimen name="large_padding">16dp</dimen>
     <dimen name="item_padding">2dp</dimen>
     <dimen name="larger_padding">24dp</dimen>
-    <dimen name="icon_padding">12dp</dimen>
+    <dimen name="padding_button">12dp</dimen>
 
     <dimen name="keyline">16dp</dimen>
     <dimen name="keyline_minus_16">0dp</dimen>

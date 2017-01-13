@@ -621,7 +621,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
         ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                binding.containerMovieActions, actions, TAG);
+                getActivity().getTheme(), binding.containerMovieActions, actions, TAG);
     }
 
     Runnable movieActionsRunnable = new Runnable() {

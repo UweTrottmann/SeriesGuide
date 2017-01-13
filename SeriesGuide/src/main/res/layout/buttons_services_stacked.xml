@@ -4,23 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/large_padding"
-    android:paddingLeft="@dimen/large_padding"
-    android:paddingRight="@dimen/large_padding"
-    android:paddingTop="@dimen/inline_padding">
+    android:paddingTop="@dimen/default_padding">
+
+    <include layout="@layout/buttons_more" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="@dimen/default_padding"
+        android:background="?attr/sgColorDivider" />
 
     <LinearLayout
         android:id="@+id/containerEpisodeActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/inline_padding"
-        android:layout_marginTop="@dimen/inline_padding"
-        android:background="?attr/sgColorDivider" />
-
-    <include layout="@layout/buttons_more" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -105,8 +106,8 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
     @BindView(R.id.buttonTVDB) View mButtonTvdb;
     @BindView(R.id.buttonTrakt) View mButtonTrakt;
-    @BindView(R.id.buttonWebSearch) View mButtonWebSearch;
-    @BindView(R.id.buttonShouts) View mButtonComments;
+    @BindView(R.id.buttonWebSearch) Button mButtonWebSearch;
+    @BindView(R.id.buttonShouts) Button mButtonComments;
 
     @BindView(R.id.labelCast) TextView castLabel;
     @BindView(R.id.containerCast) LinearLayout castContainer;
@@ -145,8 +146,8 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonShortcut);
 
         // language button
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonLanguage,
-                R.attr.drawableLanguage);
+        Resources.Theme theme = getActivity().getTheme();
+        Utils.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +164,10 @@ public class ShowFragment extends Fragment {
             }
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
+
+        // search and comments button
+        Utils.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
+        Utils.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
 
         setCastVisibility(false);
         setCrewVisibility(false);

@@ -120,8 +120,8 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonShowInfoIMDB) View buttonImdb;
     @BindView(R.id.buttonTVDB) View buttonTvdb;
     @BindView(R.id.buttonTrakt) View buttonTrakt;
-    @BindView(R.id.buttonWebSearch) View buttonWebSearch;
-    @BindView(R.id.buttonShouts) View buttonComments;
+    @BindView(R.id.buttonWebSearch) Button buttonWebSearch;
+    @BindView(R.id.buttonShouts) Button buttonComments;
 
     private Handler handler = new Handler();
     private TraktRatingsTask traktRatingsTask;
@@ -216,6 +216,10 @@ public class OverviewFragment extends Fragment implements
             }
         });
         CheatSheet.setup(containerRatings, R.string.action_rate);
+
+        // comments button
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
+                R.attr.drawableComments);
 
         // hide web search button
         buttonWebSearch.setVisibility(View.GONE);
@@ -990,13 +994,13 @@ public class OverviewFragment extends Fragment implements
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            containerActions, data, TAG);
+                            getActivity().getTheme(), containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            containerActions, null, TAG);
+                            getActivity().getTheme(), containerActions, null, TAG);
                 }
             };
 }
