@@ -30,7 +30,10 @@
         <item name="android:maxLines">2</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform" />
+    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform">
+        <item name="android:padding">4dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
 
     <!-- Action bar -->
     <style name="Widget.SeriesGuide.ActionBar">
