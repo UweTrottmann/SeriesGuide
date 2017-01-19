@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
@@ -76,6 +77,7 @@ public class MoviesDiscoverFragment extends Fragment {
         });
 
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new GridInsetDecoration(getResources(), 3));
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
