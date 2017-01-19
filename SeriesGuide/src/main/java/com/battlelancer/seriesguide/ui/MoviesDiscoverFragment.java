@@ -23,6 +23,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
+import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
@@ -115,17 +116,19 @@ public class MoviesDiscoverFragment extends Fragment {
     private MoviesDiscoverAdapter.ItemClickListener itemClickListener
             = new MoviesDiscoverAdapter.ItemClickListener() {
         @Override
-        public void onClickLink(MoviesDiscoverAdapter.Link link) {
-            // TODO ut: launch new search activity, load list for link
+        public void onClickLink(MoviesDiscoverLink link, View anchor) {
+            Intent intent = new Intent(getContext(), MoviesSearchActivity.class);
+            intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id);
+            Utils.startActivityWithAnimation(getActivity(), intent, anchor);
         }
 
         @Override
         public void onClickMovie(int movieTmdbId, ImageView posterView) {
             // launch details activity
-            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-            i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+            intent.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
             // transition poster
-            Utils.startActivityWithTransition(getActivity(), i, posterView,
+            Utils.startActivityWithTransition(getActivity(), intent, posterView,
                     R.string.transitionNameMoviePoster);
         }
 
@@ -188,7 +191,8 @@ public class MoviesDiscoverFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result>() {
         @Override
         public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TmdbMoviesLoader(SgApp.from(getActivity()), null);
+            return new TmdbMoviesLoader(SgApp.from(getActivity()),
+                    MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT, null);
         }
 
         @Override

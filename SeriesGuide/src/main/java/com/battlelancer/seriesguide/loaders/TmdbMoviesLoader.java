@@ -1,8 +1,11 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -15,6 +18,7 @@ import dagger.Lazy;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import retrofit2.Call;
 import retrofit2.Response;
 
 /**
@@ -34,12 +38,18 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     @Inject Lazy<MoviesService> moviesService;
     @Inject Lazy<SearchService> searchService;
-    private String mQuery;
+    @NonNull private final MoviesDiscoverLink link;
+    @Nullable private String query;
 
-    public TmdbMoviesLoader(SgApp app, String query) {
+    /**
+     * If a query is given, will load search results for that query. Otherwise will load a list of
+     * movies based on the given link.
+     */
+    public TmdbMoviesLoader(SgApp app, @NonNull MoviesDiscoverLink link, @Nullable String query) {
         super(app);
         app.getServicesComponent().inject(this);
-        mQuery = query;
+        this.link = link;
+        this.query = query;
     }
 
     @Override
@@ -51,15 +61,27 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         try {
             Response<MovieResultsPage> response;
 
-            if (TextUtils.isEmpty(mQuery)) {
-                action = "get now playing movies";
-                response = moviesService.get()
-                        .nowPlaying(null, languageCode)
-                        .execute();
+            if (TextUtils.isEmpty(query)) {
+                MoviesService moviesService = this.moviesService.get();
+                Call<MovieResultsPage> call;
+                switch (link) {
+                    case POPULAR:
+                        action = "get popular movies";
+                        call = moviesService.popular(null, languageCode);
+                        break;
+                    case DIGITAL:
+                    case DISC:
+                    case IN_THEATERS:
+                    default:
+                        action = "get now playing movies";
+                        call = moviesService.nowPlaying(null, languageCode);
+                        break;
+                }
+                response = call.execute();
             } else {
                 action = "search for movies";
                 response = searchService.get()
-                        .movie(mQuery, null, languageCode, false, null, null, null)
+                        .movie(query, null, languageCode, false, null, null, null)
                         .execute();
             }
 

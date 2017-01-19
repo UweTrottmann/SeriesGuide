@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -24,32 +24,18 @@ import java.util.List;
 public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface ItemClickListener {
-        void onClickLink(Link link);
+        void onClickLink(MoviesDiscoverLink link, View anchor);
         void onClickMovie(int movieTmdbId, ImageView posterView);
         void onClickMovieMoreOptions(int movieTmdbId, View anchor);
     }
 
-    public enum Link {
-        POPULAR(0, R.string.title_popular),
-        DIGITAL(1, R.string.title_digital_releases),
-        DISC(2, R.string.title_disc_releases);
-
-        public final int id;
-        public final int titleRes;
-
-        Link(int id, @StringRes int titleRes) {
-            this.id = id;
-            this.titleRes = titleRes;
-        }
-    }
-
-    @NonNull private static final List<Link> links;
-
+    public static final MoviesDiscoverLink DISCOVER_LINK_DEFAULT = MoviesDiscoverLink.IN_THEATERS;
+    @NonNull private static final List<MoviesDiscoverLink> links;
     static {
         links = new ArrayList<>(3);
-        links.add(Link.POPULAR);
-        links.add(Link.DIGITAL);
-        links.add(Link.DISC);
+        links.add(MoviesDiscoverLink.POPULAR);
+        links.add(MoviesDiscoverLink.DIGITAL);
+        links.add(MoviesDiscoverLink.DISC);
     }
 
     private final Context context;
@@ -102,13 +88,13 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LinkViewHolder) {
             LinkViewHolder holderActual = (LinkViewHolder) holder;
-            Link link = getLink(position);
+            MoviesDiscoverLink link = getLink(position);
             holderActual.link = link;
             holderActual.title.setText(link.titleRes);
         }
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder holderActual = (HeaderViewHolder) holder;
-            holderActual.header.setText(R.string.movies_in_theatres);
+            holderActual.header.setText(DISCOVER_LINK_DEFAULT.titleRes);
         }
         if (holder instanceof MovieViewHolder) {
             MovieViewHolder holderActual = (MovieViewHolder) holder;
@@ -140,7 +126,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return links.size() + 1 /* header */ + movies.size();
     }
 
-    private Link getLink(int position) {
+    private MoviesDiscoverLink getLink(int position) {
         return links.get(position);
     }
 
@@ -172,7 +158,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     static class LinkViewHolder extends RecyclerView.ViewHolder {
 
-        Link link;
+        MoviesDiscoverLink link;
         @BindView(R.id.textViewDiscoverLink) TextView title;
 
         public LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
@@ -183,7 +169,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
-                        itemClickListener.onClickLink(link);
+                        itemClickListener.onClickLink(link, LinkViewHolder.this.itemView);
                     }
                 }
             });
