@@ -5,21 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
-    android:minHeight="56dp"
     app:cardBackgroundColor="?attr/sgColorBackgroundCard"
     app:cardPreventCornerOverlap="false"
     tools:layout_width="150dp">
 
     <TextView
         android:id="@+id/textViewDiscoverLink"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
+        android:minHeight="56dp"
+        android:paddingBottom="@dimen/inline_padding"
         android:paddingLeft="@dimen/large_padding"
         android:paddingRight="@dimen/large_padding"
+        android:paddingTop="@dimen/inline_padding"
         android:textAppearance="@style/TextAppearance.Button"
         tools:text="Digital releases" />
 
