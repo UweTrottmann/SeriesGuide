@@ -10,12 +10,18 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
+import com.uwetrottmann.tmdb2.entities.TmdbDate;
+import com.uwetrottmann.tmdb2.enumerations.ReleaseType;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.tmdb2.services.SearchService;
 import dagger.Lazy;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Call;
@@ -36,6 +42,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         }
     }
 
+    @Inject Lazy<Tmdb> tmdb;
     @Inject Lazy<MoviesService> moviesService;
     @Inject Lazy<SearchService> searchService;
     @NonNull private final MoviesDiscoverLink link;
@@ -70,7 +77,25 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                         call = moviesService.popular(null, languageCode);
                         break;
                     case DIGITAL:
+                        action = "get movie digital releases";
+                        call = tmdb.get().discoverMovie()
+                                .with_release_type(new DiscoverFilter(DiscoverFilter.Separator.AND,
+                                        ReleaseType.DIGITAL))
+                                .release_date_lte(getDateNow())
+                                .release_date_gte(getDateOneWeekAgo())
+                                .language(languageCode)
+                                .build();
+                        break;
                     case DISC:
+                        action = "get movie disc releases";
+                        call = tmdb.get().discoverMovie()
+                                .with_release_type(new DiscoverFilter(DiscoverFilter.Separator.AND,
+                                        ReleaseType.PHYSICAL))
+                                .release_date_lte(getDateNow())
+                                .release_date_gte(getDateOneWeekAgo())
+                                .language(languageCode)
+                                .build();
+                        break;
                     case IN_THEATERS:
                     default:
                         action = "get now playing movies";
@@ -103,6 +128,16 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         }
 
         return new Result(results, getContext().getString(R.string.no_results));
+    }
+
+    private TmdbDate getDateNow() {
+        return new TmdbDate(new Date());
+    }
+
+    private TmdbDate getDateOneWeekAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        return new TmdbDate(calendar.getTime());
     }
 
     private Result buildErrorResult() {
