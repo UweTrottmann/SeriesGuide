@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,8 +11,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,7 +24,10 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,9 +53,10 @@ public class MoviesDiscoverFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         swipeRefreshLayout.setRefreshing(false);
 
-        adapter = new MoviesDiscoverAdapter(getContext());
+        adapter = new MoviesDiscoverAdapter(getContext(), itemClickListener);
 
-        layoutManager = new AutoGridLayoutManager(getContext(), R.dimen.movie_grid_columnWidth, 2, 6);
+        layoutManager = new AutoGridLayoutManager(getContext(),
+                R.dimen.movie_grid_columnWidth, 2, 6);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -101,6 +111,78 @@ public class MoviesDiscoverFragment extends Fragment {
             recyclerView.smoothScrollToPosition(0);
         }
     }
+
+    private MoviesDiscoverAdapter.ItemClickListener itemClickListener
+            = new MoviesDiscoverAdapter.ItemClickListener() {
+        @Override
+        public void onClickLink(MoviesDiscoverAdapter.Link link) {
+            // TODO ut: launch new search activity, load list for link
+        }
+
+        @Override
+        public void onClickMovie(int movieTmdbId, ImageView posterView) {
+            // launch details activity
+            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+            i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+            // transition poster
+            Utils.startActivityWithTransition(getActivity(), i, posterView,
+                    R.string.transitionNameMoviePoster);
+        }
+
+        @Override
+        public void onClickMovieMoreOptions(final int movieTmdbId, View anchor) {
+            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+            popupMenu.inflate(R.menu.movies_popup_menu);
+
+            // check if movie is already in watchlist or collection
+            boolean isInWatchlist = false;
+            boolean isInCollection = false;
+            Cursor movie = getContext().getContentResolver().query(
+                    SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
+                    new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
+                            SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
+            );
+            if (movie != null) {
+                if (movie.moveToFirst()) {
+                    isInWatchlist = movie.getInt(0) == 1;
+                    isInCollection = movie.getInt(1) == 1;
+                }
+                movie.close();
+            }
+
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_movies_watchlist_add).setVisible(!isInWatchlist);
+            menu.findItem(R.id.menu_action_movies_watchlist_remove).setVisible(isInWatchlist);
+            menu.findItem(R.id.menu_action_movies_collection_add).setVisible(!isInCollection);
+            menu.findItem(R.id.menu_action_movies_collection_remove).setVisible(isInCollection);
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.menu_action_movies_watchlist_add: {
+                            MovieTools.addToWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_watchlist_remove: {
+                            MovieTools.removeFromWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_collection_add: {
+                            MovieTools.addToCollection(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_collection_remove: {
+                            MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+            popupMenu.show();
+        }
+    };
 
     private LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result> nowPlayingLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result>() {

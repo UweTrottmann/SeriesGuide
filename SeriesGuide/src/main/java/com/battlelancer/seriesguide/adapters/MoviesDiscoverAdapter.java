@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +23,45 @@ import java.util.List;
 
 public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public interface ItemClickListener {
+        void onClickLink(Link link);
+        void onClickMovie(int movieTmdbId, ImageView posterView);
+        void onClickMovieMoreOptions(int movieTmdbId, View anchor);
+    }
+
+    public enum Link {
+        POPULAR(0, R.string.title_popular),
+        DIGITAL(1, R.string.title_digital_releases),
+        DISC(2, R.string.title_disc_releases);
+
+        public final int id;
+        public final int titleRes;
+
+        Link(int id, @StringRes int titleRes) {
+            this.id = id;
+            this.titleRes = titleRes;
+        }
+    }
+
+    @NonNull private static final List<Link> links;
+
+    static {
+        links = new ArrayList<>(3);
+        links.add(Link.POPULAR);
+        links.add(Link.DIGITAL);
+        links.add(Link.DISC);
+    }
+
     private final Context context;
     private final DateFormat dateFormatMovieReleaseDate;
+    @Nullable private final ItemClickListener itemClickListener;
     private final String posterBaseUrl;
-    @NonNull
-    private final List<String> links;
-    @NonNull
-    private final List<Movie> movies;
+    @NonNull private final List<Movie> movies;
 
-    public MoviesDiscoverAdapter(Context context) {
+    public MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {
         this.context = context;
+        this.itemClickListener = itemClickListener;
         this.dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        this.links = new ArrayList<>();
-        this.links.add("Popular");
-        this.links.add("Digital releases");
-        this.links.add("Disc releases");
         this.movies = new ArrayList<>();
         this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
     }
@@ -58,7 +83,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (viewType == R.layout.item_discover_link) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_discover_link, parent, false);
-            return new LinkViewHolder(itemView);
+            return new LinkViewHolder(itemView, itemClickListener);
         }
         if (viewType == R.layout.item_grid_header) {
             View itemView = LayoutInflater.from(parent.getContext())
@@ -68,7 +93,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (viewType == R.layout.item_movie) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_movie, parent, false);
-            return new MovieViewHolder(itemView);
+            return new MovieViewHolder(itemView, itemClickListener);
         }
         return null;
     }
@@ -77,8 +102,9 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LinkViewHolder) {
             LinkViewHolder holderActual = (LinkViewHolder) holder;
-            String link = getLink(position);
-            holderActual.link.setText(link);
+            Link link = getLink(position);
+            holderActual.link = link;
+            holderActual.title.setText(link.titleRes);
         }
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder holderActual = (HeaderViewHolder) holder;
@@ -87,6 +113,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder instanceof MovieViewHolder) {
             MovieViewHolder holderActual = (MovieViewHolder) holder;
             Movie movie = getMovie(position);
+            holderActual.movieTmdbId = movie.id;
             holderActual.title.setText(movie.title);
             if (movie.release_date != null) {
                 holderActual.date.setText(dateFormatMovieReleaseDate.format(movie.release_date));
@@ -113,7 +140,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return links.size() + 1 /* header */ + movies.size();
     }
 
-    private String getLink(int position) {
+    private Link getLink(int position) {
         return links.get(position);
     }
 
@@ -145,24 +172,52 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     static class LinkViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textViewDiscoverLink) TextView link;
+        Link link;
+        @BindView(R.id.textViewDiscoverLink) TextView title;
 
-        public LinkViewHolder(View itemView) {
+        public LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onClickLink(link);
+                    }
+                }
+            });
         }
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textViewMovieTitle) public TextView title;
-        @BindView(R.id.textViewMovieDate) public TextView date;
-        @BindView(R.id.imageViewMoviePoster) public ImageView poster;
-        @BindView(R.id.imageViewMovieItemContextMenu) public ImageView contextMenu;
+        int movieTmdbId;
+        @BindView(R.id.textViewMovieTitle) TextView title;
+        @BindView(R.id.textViewMovieDate) TextView date;
+        @BindView(R.id.imageViewMoviePoster) ImageView poster;
+        @BindView(R.id.imageViewMovieItemContextMenu) ImageView contextMenu;
 
-        public MovieViewHolder(View itemView) {
+        public MovieViewHolder(View itemView, final ItemClickListener itemClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onClickMovie(movieTmdbId, poster);
+                    }
+                }
+            });
+            contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onClickMovieMoreOptions(movieTmdbId, v);
+                    }
+                }
+            });
         }
     }
 }
