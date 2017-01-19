@@ -318,7 +318,7 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
-        if (event.position == MoviesActivity.TAB_POSITION_SEARCH) {
+        if (event.position == MoviesActivity.TAB_POSITION_DISCOVER) {
             resultsGridView.smoothScrollToPosition(0);
         }
     }

@@ -34,7 +34,7 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int WATCHLIST_LOADER_ID = 103;
     public static final int COLLECTION_LOADER_ID = 104;
 
-    public static final int TAB_POSITION_SEARCH = 0;
+    public static final int TAB_POSITION_DISCOVER = 0;
     public static final int TAB_POSITION_WATCHLIST_DEFAULT = 1;
     public static final int TAB_POSITION_COLLECTION_DEFAULT = 2;
     public static final int TAB_POSITION_NOW = 1;
@@ -72,8 +72,8 @@ public class MoviesActivity extends BaseTopActivity {
             }
         });
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);
-        // search
-        tabsAdapter.addTab(R.string.search, MoviesSearchFragment.class, null);
+        // discover
+        tabsAdapter.addTab(R.string.title_discover, MoviesDiscoverFragment.class, null);
         // trakt-only tabs should only be visible if connected
         if (showNowTab) {
             // (what to watch) now

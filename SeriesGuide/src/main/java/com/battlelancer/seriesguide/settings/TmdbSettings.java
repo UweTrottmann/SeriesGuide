@@ -20,4 +20,14 @@ public class TmdbSettings {
                 .getString(KEY_TMDB_BASE_URL, DEFAULT_BASE_URL);
     }
 
+    /**
+     * Returns base image URL based on screen density.
+     */
+    public static String getPosterBaseUrl(Context context) {
+        if (DisplaySettings.isVeryHighDensityScreen(context)) {
+            return TmdbSettings.getImageBaseUrl(context) + TmdbSettings.POSTER_SIZE_SPEC_W342;
+        } else {
+            return TmdbSettings.getImageBaseUrl(context) + TmdbSettings.POSTER_SIZE_SPEC_W154;
+        }
+    }
 }
