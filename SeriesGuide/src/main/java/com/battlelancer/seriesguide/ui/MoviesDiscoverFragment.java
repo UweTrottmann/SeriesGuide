@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -28,6 +29,7 @@ public class MoviesDiscoverFragment extends Fragment {
     @BindView(R.id.recyclerViewMoviesDiscover) RecyclerView recyclerView;
 
     private MoviesDiscoverAdapter adapter;
+    private GridLayoutManager layoutManager;
     private Unbinder unbinder;
 
     public MoviesDiscoverFragment() {
@@ -42,11 +44,28 @@ public class MoviesDiscoverFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         swipeRefreshLayout.setRefreshing(false);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
         adapter = new MoviesDiscoverAdapter(getContext());
+
+        layoutManager = new AutoGridLayoutManager(getContext(), R.dimen.movie_grid_columnWidth, 2, 6);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int viewType = adapter.getItemViewType(position);
+                if (viewType == R.layout.item_discover_link) {
+                    return 3;
+                }
+                if (viewType == R.layout.item_grid_header) {
+                    return layoutManager.getSpanCount();
+                }
+                if (viewType == R.layout.item_movie) {
+                    return 2;
+                }
+                return 0;
+            }
+        });
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         return view;
