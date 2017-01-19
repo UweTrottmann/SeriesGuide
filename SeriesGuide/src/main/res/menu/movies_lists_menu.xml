@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_action_movies_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/action_movies_sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_action_movies_sort_title"
+                android:title="@string/action_movies_sort_title" />
+            <item
+                android:id="@+id/menu_action_movies_sort_release"
+                android:title="@string/action_movies_sort_release" />
+            <item
+                android:id="@+id/menu_action_movies_sort_ignore_articles"
+                android:checkable="true"
+                android:title="@string/action_sort_ignore_articles" />
+        </menu>
+    </item>
+
+</menu>

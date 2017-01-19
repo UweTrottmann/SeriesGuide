@@ -1,8 +1,11 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,18 +104,28 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        supportInvalidateOptionsMenu();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(DisplaySettings.KEY_LAST_ACTIVE_MOVIES_TAB, viewPager.getCurrentItem())
                 .apply();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.movies_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_movies_search) {
+            startActivity(new Intent(this, MoviesSearchActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void maybeAddNowTab() {

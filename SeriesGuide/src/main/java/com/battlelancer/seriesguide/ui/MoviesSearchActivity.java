@@ -46,12 +46,8 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         setContentView(R.layout.activity_movies_search);
         setupNavDrawer();
 
-        if (getIntent().getExtras() == null) {
-            finish();
-            return;
-        }
-
-        int linkId = getIntent().getIntExtra(EXTRA_ID_LINK, MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id);
+        int linkId = getIntent().getIntExtra(EXTRA_ID_LINK,
+                MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id);
         MoviesDiscoverLink link = MoviesDiscoverLink.fromId(linkId);
 
         setupActionBar(link);

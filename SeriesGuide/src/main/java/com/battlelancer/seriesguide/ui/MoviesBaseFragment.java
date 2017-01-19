@@ -94,7 +94,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
             return;
         }
 
-        inflater.inflate(R.menu.movies_menu, menu);
+        inflater.inflate(R.menu.movies_lists_menu, menu);
 
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
                 .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getContext()));
