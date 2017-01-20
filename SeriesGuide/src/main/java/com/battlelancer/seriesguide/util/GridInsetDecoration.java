@@ -15,10 +15,16 @@ public class GridInsetDecoration extends RecyclerView.ItemDecoration {
 
     private int insetHorizontal;
     private int insetVertical;
+    private final int topRowSpanSize;
 
     public GridInsetDecoration(Resources resources) {
+        this(resources, 1);
+    }
+
+    public GridInsetDecoration(Resources resources, int topRowSpanSize) {
         insetHorizontal = resources.getDimensionPixelSize(R.dimen.grid_horizontal_spacing);
         insetVertical = resources.getDimensionPixelOffset(R.dimen.grid_vertical_spacing);
+        this.topRowSpanSize = topRowSpanSize;
     }
 
     @Override
@@ -35,10 +41,10 @@ public class GridInsetDecoration extends RecyclerView.ItemDecoration {
 
         // add edge margin only if item edge is not the grid edge
         int itemSpanIndex = layoutParams.getSpanIndex();
-        // is left grid edge?
+        // is item at left grid edge?
         outRect.left = itemSpanIndex == 0 ? 0 : insetHorizontal;
-        // is top grid edge?
-        outRect.top = itemSpanIndex == position ? 0 : insetVertical;
+        // is item at top grid edge?
+        outRect.top = itemSpanIndex / topRowSpanSize == position ? 0 : insetVertical;
         outRect.right = 0;
         outRect.bottom = 0;
     }
