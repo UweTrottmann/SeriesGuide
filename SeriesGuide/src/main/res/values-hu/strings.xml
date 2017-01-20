@@ -48,7 +48,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
   <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>

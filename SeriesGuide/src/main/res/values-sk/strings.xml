@@ -260,7 +260,7 @@
   <string name="hexagon_google_play_missing">Pre použitie SeriesGuide Cloud sú potrebné Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
-  <string name="trakt_seen">%s pozrené.</string>
+  <string name="trakt_seen">%s videné.</string>
   <string name="trakt_notseen">%s nových.</string>
   <string name="trakt_collected">%s zozbieraných.</string>
   <string name="trakt_notcollected">%s nezozbieraných.</string>
@@ -346,7 +346,7 @@
   <!-- Sort orders -->
   <string name="sort_order_latest_first">Od najnovších</string>
   <string name="sort_order_oldest_first">Od najstarších</string>
-  <string name="sort_order_unwatched_first">Najprv nevidené</string>
+  <string name="sort_order_unwatched_first">Najskôr nevidené</string>
   <string name="sort_order_alphabetical">A - Z</string>
   <string name="sort_order_top_rated_first">Najlepšie hodnotené</string>
   <string name="sort_order_latest_first_dvd">Od najnovších (DVD)</string>
@@ -391,7 +391,7 @@
   <string name="import_failed_nosd">Nie je možné obnoviť zálohu. Priečinok zálohy nie je dostupný.</string>
   <string name="import_failed_nofile">Nie je čitateľný záložný súbor.</string>
   <string name="import_failed_noread">Záloha sa nedá načítať.</string>
-  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohu verzie nižšej ako 2.0 obnovte najprv vo verzii 1.9.x.</string>
+  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohu verzie nižšej ako 2.0 obnovte najskôr vo verzii 1.9.x.</string>
   <string name="import_success">Obnova zo zálohy úspešná.</string>
   <string name="import_failed">Obnova zo zálohy zlyhala.</string>
   <string name="backup_button">Zálohovať</string>

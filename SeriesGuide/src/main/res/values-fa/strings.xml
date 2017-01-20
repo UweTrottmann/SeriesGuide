@@ -33,9 +33,9 @@
   <string name="web_search">جست‌وجوی وب</string>
   <string name="add_to_homescreen">میانبر</string>
   <string name="action_open">باز کردن</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">همگام سازی دستی</string>
+  <string name="sync_and_update">همگام سازی &amp; و بروزرسانی</string>
+  <string name="sync_and_download_all">همگام سازی &amp; و دانلود همه</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -48,11 +48,11 @@
   <string name="app_not_available">هیچ برنامه ای برای این کار موجود نیست.</string>
   <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">برای پشتیبان گیری دوباره تلاش کنید. مجدد نصب کنید.</string>
+  <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
   <!-- Sharing -->
   <string name="share">اشتراک گذاری</string>
-  <string name="share_show">اشتراک گذاری نمایش</string>
+  <string name="share_show">نمایش اشتراک گذاری </string>
   <string name="share_episode">هم‌رسانی قسمت</string>
   <string name="share_movie">هم‌رسانی فیلم</string>
   <string name="share_checkout">بررسی %s</string>
@@ -90,7 +90,7 @@
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">بعضی از جزئیات برای جلوگیری از بازی پنهان شده است. برای رفتن به تنظیمات این خاموش کردن.</string>
   <!-- Date and Time -->
   <string name="today">امروز</string>
   <string name="now">اکنون</string>
@@ -133,10 +133,10 @@
   <string name="action_shows_filter_hidden">نهفته</string>
   <string name="action_shows_sort">چینش نمایش‌ها</string>
   <string name="action_shows_sort_title">عنوان</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">آخرین قسمت</string>
+  <string name="action_shows_sort_oldest_episode">قدیمی ترین قسمت</string>
+  <string name="action_shows_sort_last_watched">آخرین تماشا</string>
+  <string name="action_shows_sort_remaining">قسمت های باقی مانده</string>
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
   <string name="context_updateshow">به‌روز رسانی</string>
   <string name="context_marknext">قسمت بعدی تماشا شده</string>
@@ -176,7 +176,7 @@
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
   <string name="action_try_any_language">هر زبانی را امتحان کنید</string>
   <string name="action_try_again">تلاش دوباره</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">نمایش (هنوز) در TheTVDB وجود ندارد. بعدا دوباره تلاش کنید.</string>
   <string name="add_all">افزودن همه</string>
   <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
   <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -363,7 +363,7 @@
   <string name="pref_theme">زمینه</string>
   <!-- Other advanced settings -->
   <string name="pref_other">سایر موارد</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">به صورت خودکار داده های SeriesGuide را همگام سازی و بروزرسانی کن</string>
   <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
   <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
   <string name="backup">پشتیبان گیری / بازیابی</string>

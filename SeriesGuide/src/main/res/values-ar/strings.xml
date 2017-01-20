@@ -10,7 +10,7 @@
   <string name="preferences">الإعدادات</string>
   <string name="help">مساعدة</string>
   <string name="help_and_feedback">مساعدة واقتراحات</string>
-  <string name="drawer_open">فتح لوحة الملاحة</string>
+  <string name="drawer_open">فتح قائمة التنقل</string>
   <!-- Media items -->
   <string name="show">العرض</string>
   <string name="episode">الحلقة</string>
@@ -33,9 +33,9 @@
   <string name="web_search">البحث في الويب</string>
   <string name="add_to_homescreen">اختصار</string>
   <string name="action_open">افتح</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">قم بالمزامنة يدويا</string>
+  <string name="sync_and_update">المزامنة والتحديث</string>
+  <string name="sync_and_download_all">المزامنة وتحميل كل البيانات</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
+  <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
   <!-- Sharing -->
   <string name="share">المشاركة</string>
   <string name="share_show">مشاركة العرض</string>
@@ -137,10 +137,10 @@
   <string name="action_shows_filter_hidden">المخفي</string>
   <string name="action_shows_sort">ترتيب المسلسلات</string>
   <string name="action_shows_sort_title">العنوان</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">آخر حلقة</string>
+  <string name="action_shows_sort_oldest_episode">أقدم حلقة</string>
+  <string name="action_shows_sort_last_watched">آخر حلقة شاهدتها</string>
+  <string name="action_shows_sort_remaining">الحلقات المتبقية</string>
   <string name="action_shows_sort_favorites">المفضلة أولاً</string>
   <string name="context_updateshow">تحديث</string>
   <string name="context_marknext">شاهد الحلقة التالية</string>
@@ -180,7 +180,7 @@
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
   <string name="action_try_any_language">حاول بأي لغة</string>
   <string name="action_try_again">حاول مرة أخرى</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
   <string name="add_all">إضافة الكل </string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
   <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
@@ -383,7 +383,7 @@
   <string name="pref_theme">التصميم</string>
   <!-- Other advanced settings -->
   <string name="pref_other">أخرى</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
   <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
   <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
   <string name="backup">النسخ الإحتياطي / الإستعادة</string>

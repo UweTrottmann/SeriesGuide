@@ -32,10 +32,10 @@
   <string name="action_display_all">הצג הכל</string>
   <string name="web_search">חיפוש באינטרנט</string>
   <string name="add_to_homescreen">קיצור-דרך</string>
-  <string name="action_open">Open</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_open">פתח</string>
+  <string name="sync_manually">סנכרון ידני</string>
+  <string name="sync_and_update">סנכרון &amp; עדכון</string>
+  <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
   <!-- Search -->
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">אין יישום זמין בשביל זה.</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
+  <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
@@ -91,8 +91,8 @@
   <string name="show_isnotalive">הסתיימה</string>
   <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
-  <string name="no_translation_title">Not translated</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_translation_title">לא תורגם</string>
+  <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
   <!-- Date and Time -->
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
@@ -135,10 +135,10 @@
   <string name="action_shows_filter_hidden">מוסתר</string>
   <string name="action_shows_sort">מיון סדרות</string>
   <string name="action_shows_sort_title">שם</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">הפרק האחרון</string>
+  <string name="action_shows_sort_oldest_episode">הפרק הכי ישן</string>
+  <string name="action_shows_sort_last_watched">האחרון שנצפה</string>
+  <string name="action_shows_sort_remaining">פרקים שנותרו</string>
   <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
   <string name="context_updateshow">עדכן</string>
   <string name="context_marknext">צפה בפרק הבא</string>
@@ -178,7 +178,7 @@
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
   <string name="action_try_any_language">נסה בכל שפה</string>
   <string name="action_try_again">נסה שוב</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
   <string name="add_all">הוסף הכל</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
   <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
@@ -199,7 +199,7 @@
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="action_lists_sort">מיין רשימה</string>
   <string name="action_lists_reorder">סדר מחדש רשימות</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
   <!-- Movies -->
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
@@ -217,7 +217,7 @@
   <string name="action_movies_sort_title">שם</string>
   <string name="action_movies_sort_release">תאריך שחרור</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">לא ניתן לחשב את הסטטיסטיקה.</string>
   <string name="statistics_shows">סדרות</string>
   <string name="statistics_episodes">פרקים</string>
   <string name="statistics_movies">סרטים</string>
@@ -249,7 +249,7 @@
   <string name="hexagon_warning">ניסיוני!</string>
   <string name="hexagon_description">התחבר לענן בכדי לגבות ולסנכרן את התוכניות והסרטים שלך.</string>
   <string name="hexagon_warning_lists">רשימות אינן כלולות.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">כל עוד ענן SeriesGuide מחובר, סנכרון trakt יושבת.</string>
   <string name="hexagon_signin">התחבר</string>
   <string name="hexagon_signed_in">אתה מחובר ל-SeriesGuide Cloud.</string>
   <string name="hexagon_signout">התנתק</string>
@@ -332,8 +332,8 @@
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
   <string name="pref_exactdates">הצג תאריכים מדויקים</string>
   <string name="pref_exactdates_summary">\"31 באוקטובר\" במקום \"ב-3 ימים\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">מנע ספוילרים</string>
+  <string name="pref_nospoilers_summary">הסתר פרטים עד שנצפה בפרק</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
   <string name="pref_language">שפת תוכן מועדפת</string>
@@ -373,7 +373,7 @@
   <string name="pref_theme">ערכת נושא</string>
   <!-- Other advanced settings -->
   <string name="pref_other">אחר</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
   <string name="pref_autobackup">גיבוי אוטומטי</string>
   <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
   <string name="backup">גיבוי/שחזור</string>
@@ -383,7 +383,7 @@
   <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">כלול את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
   <string name="backup_path">תיקיית גיבוי</string>
@@ -486,12 +486,12 @@
   <!-- People -->
   <string name="person_biography">ביוגרפיה</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_question_enjoy">אתה נהנה מ-SeriesGuide?</string>
   <string name="feedback_action_yes">כן!</string>
   <string name="feedback_action_notreally">לא ממש</string>
   <string name="feedback_question_rate_google">דרג/י אותנו ב- Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_question_rate_amazon">דרג אותו באמזון?</string>
+  <string name="feedback_question_feedback">תגיד לי איך לשפר אותו?</string>
+  <string name="feedback_action_ok">כן, בוודאי</string>
   <string name="feedback_action_nothanks">לא, תודה</string>
 </resources>

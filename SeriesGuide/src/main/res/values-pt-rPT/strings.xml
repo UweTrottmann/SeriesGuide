@@ -33,9 +33,9 @@
   <string name="web_search">Pesquisa Web</string>
   <string name="add_to_homescreen">Atalho</string>
   <string name="action_open">Abrir</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Sincronizar manualmente</string>
+  <string name="sync_and_update">Sincronizar &amp;amp Atualizar</string>
+  <string name="sync_and_download_all">Sincronizar e Download tudo</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episódios</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toque no ecrã para actualizar.</string>
   <string name="database_error">Não é possível modificar os dados.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Tente fazer um backup nas Definições, reinstale e restaure.</string>
+  <string name="api_error_generic">Falha a comunicar com %s. Tente mais tarde.</string>
   <!-- Sharing -->
   <string name="share">Partilhar</string>
   <string name="share_show">Partilhar série</string>

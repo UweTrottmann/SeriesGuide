@@ -32,7 +32,7 @@
   <string name="action_display_all">Afficher tout</string>
   <string name="web_search">Recherche Web</string>
   <string name="add_to_homescreen">Raccourci</string>
-  <string name="action_open">Ouvert</string>
+  <string name="action_open">Ouvrir</string>
   <string name="sync_manually">Synchroniser manuellement</string>
   <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
   <string name="sync_and_download_all">Synchroniser &amp; Télécharger tout</string>
