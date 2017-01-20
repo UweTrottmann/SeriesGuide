@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
   <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">தொகுப்பு</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Watchlist சேர்</string>

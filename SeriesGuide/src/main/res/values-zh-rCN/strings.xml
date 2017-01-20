@@ -198,6 +198,11 @@
   <string name="action_lists_reorder">重新排序</string>
   <string name="error_name_already_exists">同名列表已存在。</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">收藏</string>
   <string name="movies_watchlist">待看列表</string>
   <string name="watchlist_add">加入待看列表</string>

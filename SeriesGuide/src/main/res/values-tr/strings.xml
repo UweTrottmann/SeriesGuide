@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Listeleri tekrar sırala</string>
   <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">Koleksiyon</string>
   <string name="movies_watchlist">İzleme listesi</string>
   <string name="watchlist_add">İzleme Listesine Ekle</string>
