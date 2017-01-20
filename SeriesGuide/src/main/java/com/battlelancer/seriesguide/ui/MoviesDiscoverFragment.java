@@ -3,7 +3,9 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -12,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +29,10 @@ import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
-import com.battlelancer.seriesguide.util.GridInsetDecoration;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
@@ -44,6 +49,12 @@ public class MoviesDiscoverFragment extends Fragment {
     private Unbinder unbinder;
 
     public MoviesDiscoverFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -105,6 +116,39 @@ public class MoviesDiscoverFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.movies_discover_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_movies_search_change_language) {
+            LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(
+                    getContext());
+            if (languageData != null) {
+                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                        languageData.languageIndex);
+                dialog.show(getFragmentManager(), "dialog-language");
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventLanguageChanged(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        String languageCode = getResources().getStringArray(
+                R.array.languageCodesMovies)[event.selectedLanguageIndex];
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .apply();
+
+        getLoaderManager().restartLoader(0, null, nowPlayingLoaderCallbacks);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
