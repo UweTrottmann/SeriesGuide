@@ -82,8 +82,9 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                                 .with_release_type(new DiscoverFilter(DiscoverFilter.Separator.AND,
                                         ReleaseType.DIGITAL))
                                 .release_date_lte(getDateNow())
-                                .release_date_gte(getDateOneWeekAgo())
+                                .release_date_gte(getDateOneMonthAgo())
                                 .language(languageCode)
+                                .region(languageCode.substring(3)) // take US from en-US
                                 .build();
                         break;
                     case DISC:
@@ -92,14 +93,22 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                                 .with_release_type(new DiscoverFilter(DiscoverFilter.Separator.AND,
                                         ReleaseType.PHYSICAL))
                                 .release_date_lte(getDateNow())
-                                .release_date_gte(getDateOneWeekAgo())
+                                .release_date_gte(getDateOneMonthAgo())
                                 .language(languageCode)
+                                .region(languageCode.substring(3)) // take US from en-US
                                 .build();
                         break;
                     case IN_THEATERS:
                     default:
                         action = "get now playing movies";
-                        call = moviesService.nowPlaying(null, languageCode);
+                        call = tmdb.get().discoverMovie()
+                                .with_release_type(new DiscoverFilter(DiscoverFilter.Separator.OR,
+                                        ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED))
+                                .release_date_lte(getDateNow())
+                                .release_date_gte(getDateOneMonthAgo())
+                                .language(languageCode)
+                                .region(languageCode.substring(3)) // take US from en-US
+                                .build();
                         break;
                 }
                 response = call.execute();
@@ -134,9 +143,9 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         return new TmdbDate(new Date());
     }
 
-    private TmdbDate getDateOneWeekAgo() {
+    private TmdbDate getDateOneMonthAgo() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
         return new TmdbDate(calendar.getTime());
     }
 
