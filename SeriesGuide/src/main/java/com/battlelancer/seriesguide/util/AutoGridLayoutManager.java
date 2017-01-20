@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.DimenRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.battlelancer.seriesguide.R;
 
 public class AutoGridLayoutManager extends GridLayoutManager {
 
@@ -12,15 +14,17 @@ public class AutoGridLayoutManager extends GridLayoutManager {
     private final int minSpanCount;
     private boolean columnWidthChanged;
 
-    public AutoGridLayoutManager(Context context, @DimenRes int columnWidthRes, int minItemSpanSize,
+    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
             int minSpanCount) {
         super(context, minSpanCount);
 
-        int columnWidth = context.getResources().getDimensionPixelSize(columnWidthRes);
-        if (columnWidth < 1) {
-            throw new IllegalArgumentException("Column width should be 1 or bigger.");
+        Resources resources = context.getResources();
+        int itemWidth = resources.getDimensionPixelSize(itemWidthRes);
+        if (itemWidth < 1) {
+            throw new IllegalArgumentException("Item width should be 1 or bigger.");
         }
-        this.columnWidth = columnWidth;
+        int itemMargin = resources.getDimensionPixelSize(R.dimen.grid_item_margin_horizontal);
+        this.columnWidth = itemWidth + 2 * itemMargin;
         columnWidthChanged = true;
 
         if (minItemSpanSize < 1) {

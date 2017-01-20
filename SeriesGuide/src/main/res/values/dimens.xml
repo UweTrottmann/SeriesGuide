@@ -40,6 +40,9 @@
     <dimen name="grid_leftright_padding">6dp</dimen>
     <dimen name="grid_vertical_spacing">3dp</dimen>
     <dimen name="grid_horizontal_spacing">4dp</dimen>
+    <!-- Workaround margins due to grid inset breaking percent layouts. -->
+    <dimen name="grid_item_margin_vertical">1dp</dimen>
+    <dimen name="grid_item_margin_horizontal">2dp</dimen>
 
     <!-- Show posters, 2:3 aspect ratio -->
     <dimen name="show_poster_width_default">69dp</dimen>

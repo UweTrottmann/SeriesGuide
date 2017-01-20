@@ -63,13 +63,13 @@ public class MoviesDiscoverFragment extends Fragment {
             @Override
             public int getSpanSize(int position) {
                 int viewType = adapter.getItemViewType(position);
-                if (viewType == R.layout.item_discover_link) {
+                if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_LINK) {
                     return 3;
                 }
-                if (viewType == R.layout.item_grid_header) {
+                if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_HEADER) {
                     return layoutManager.getSpanCount();
                 }
-                if (viewType == R.layout.item_movie) {
+                if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_MOVIE) {
                     return 2;
                 }
                 return 0;
@@ -77,7 +77,6 @@ public class MoviesDiscoverFragment extends Fragment {
         });
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new GridInsetDecoration(getResources(), 3));
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

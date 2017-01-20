@@ -23,6 +23,10 @@ import java.util.List;
 
 public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
+    public static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
+    public static final int VIEW_TYPE_MOVIE = R.layout.item_discover_movie;
+
     public interface ItemClickListener {
         void onClickLink(MoviesDiscoverLink link, View anchor);
         void onClickMovie(int movieTmdbId, ImageView posterView);
@@ -56,29 +60,29 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         int linksCount = links.size();
         if (position < linksCount) {
-            return R.layout.item_discover_link;
+            return VIEW_TYPE_LINK;
         }
         if (position == positionHeader()) {
-            return R.layout.item_grid_header;
+            return VIEW_TYPE_HEADER;
         }
-        return R.layout.item_movie;
+        return VIEW_TYPE_MOVIE;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == R.layout.item_discover_link) {
+        if (viewType == VIEW_TYPE_LINK) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_discover_link, parent, false);
+                    .inflate(VIEW_TYPE_LINK, parent, false);
             return new LinkViewHolder(itemView, itemClickListener);
         }
-        if (viewType == R.layout.item_grid_header) {
+        if (viewType == VIEW_TYPE_HEADER) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_grid_header, parent, false);
+                    .inflate(VIEW_TYPE_HEADER, parent, false);
             return new HeaderViewHolder(itemView);
         }
-        if (viewType == R.layout.item_movie) {
+        if (viewType == VIEW_TYPE_MOVIE) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_movie, parent, false);
+                    .inflate(VIEW_TYPE_MOVIE, parent, false);
             return new MovieViewHolder(itemView, itemClickListener);
         }
         return null;
