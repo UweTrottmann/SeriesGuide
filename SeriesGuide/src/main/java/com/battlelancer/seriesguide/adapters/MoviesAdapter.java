@@ -106,7 +106,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         // set unique transition names
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.poster.setTransitionName("moviesAdapterPoster_" + position);
+            holder.poster.setTransitionName("moviesAdapterPoster_" + movieTmdbId);
         }
 
         return convertView;
