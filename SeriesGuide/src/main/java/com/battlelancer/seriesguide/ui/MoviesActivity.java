@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -38,6 +40,20 @@ public class MoviesActivity extends BaseTopActivity {
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (savedInstanceState != null) {
+                postponeEnterTransition();
+                viewPager.post(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+                        // Allow the adapters to repopulate during the next layout pass before starting the transition animation
+                        startPostponedEnterTransition();
+                    }
+                });
+            }
+        }
     }
 
     private void setupViews(Bundle savedInstanceState) {
