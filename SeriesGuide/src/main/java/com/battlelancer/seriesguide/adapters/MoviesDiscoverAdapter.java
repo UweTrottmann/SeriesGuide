@@ -120,7 +120,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             // set unique transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                holderActual.poster.setTransitionName(position + "_moviesDiscoverAdapterPoster");
+                holderActual.poster.setTransitionName("moviesDiscoverAdapterPoster_" + movie.id);
             }
         }
     }
