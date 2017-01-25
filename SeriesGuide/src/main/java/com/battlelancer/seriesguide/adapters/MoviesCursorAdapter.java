@@ -106,7 +106,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // set unique transition names
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.poster.setTransitionName(
-                    "moviesCursorAdapterPoster_" + uniqueId + "_" + cursor.getPosition());
+                    "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
         }
     }
 

@@ -68,7 +68,7 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
         // set unique transition names
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + position);
+            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + person.tmdbId);
         }
 
         return convertView;
