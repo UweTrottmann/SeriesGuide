@@ -23,10 +23,6 @@ android {
     compileSdkVersion project.androidCompileSdkVersion
     buildToolsVersion project.androidBuildToolsVersion
 
-    dataBinding {
-        enabled = true
-    }
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
@@ -165,7 +161,6 @@ dependencies {
     compile ('com.uwetrottmann.trakt5:trakt-java:5.5.1') {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
-        exclude group: 'commons-codec', module: 'commons-codec' // databinding already has it
     }
     // http://greenrobot.org/eventbus/changelog/
     compile 'org.greenrobot:eventbus:3.0.0'
@@ -196,7 +191,6 @@ dependencies {
     // https://github.com/google/google-api-java-client/commits/dev
     compile('com.google.api-client:google-api-client-android:1.22.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
-        exclude group: 'com.google.guava', module: 'guava-jdk5' // data binding using regular guava
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
     }
 
