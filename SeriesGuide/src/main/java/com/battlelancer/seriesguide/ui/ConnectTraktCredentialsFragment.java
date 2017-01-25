@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,9 +8,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 
@@ -20,9 +23,16 @@ import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
  */
 public class ConnectTraktCredentialsFragment extends Fragment {
 
-    private FragmentConnectTraktCredentialsBinding binding;
-
     private boolean isConnecting;
+
+    private Unbinder unbinder;
+    @BindView(R.id.buttonPositive) Button buttonConnect;
+    @BindView(R.id.buttonNegative) Button buttonDisconnect;
+    @BindView(R.id.textViewConnectTraktUsernameLabel) View textViewUsernameLabel;
+    @BindView(R.id.textViewConnectTraktUsername) TextView textViewUsername;
+    @BindView(R.id.textViewConnectTraktHexagonWarning) TextView textViewHexagonWarning;
+    @BindView(R.id.progressBarConnectTrakt) View progressBar;
+    @BindView(R.id.textViewConnectTraktStatus) TextView textViewStatus;
 
     public static ConnectTraktCredentialsFragment newInstance() {
         return new ConnectTraktCredentialsFragment();
@@ -31,12 +41,12 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_connect_trakt_credentials, container, false);
+        View view = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         // connect button
-        binding.buttons.buttonPositive.setText(R.string.connect);
-        binding.buttons.buttonPositive.setOnClickListener(new View.OnClickListener() {
+        buttonConnect.setText(R.string.connect);
+        buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 connect();
@@ -44,15 +54,15 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         });
 
         // disconnect button
-        binding.buttons.buttonNegative.setText(R.string.disconnect);
-        binding.buttons.buttonNegative.setOnClickListener(new View.OnClickListener() {
+        buttonDisconnect.setText(R.string.disconnect);
+        buttonDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 disconnect();
             }
         });
 
-        return binding.getRoot();
+        return view;
     }
 
     @Override
@@ -78,7 +88,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
                 if (!TextUtils.isEmpty(displayName)) {
                     username += " (" + displayName + ")";
                 }
-                binding.textViewConnectTraktUsername.setText(username);
+                textViewUsername.setText(username);
                 setButtonStates(false, true);
                 setUsernameViewsStates(true);
                 setStatus(false, -1);
@@ -89,6 +99,13 @@ public class ConnectTraktCredentialsFragment extends Fragment {
             setUsernameViewsStates(false);
             setStatus(false, R.string.trakt_connect_instructions);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        unbinder.unbind();
     }
 
     private void connect() {
@@ -106,8 +123,8 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     }
 
     private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
-        binding.buttons.buttonPositive.setEnabled(connectEnabled);
-        binding.buttons.buttonNegative.setEnabled(disconnectEnabled);
+        buttonConnect.setEnabled(connectEnabled);
+        buttonDisconnect.setEnabled(disconnectEnabled);
     }
 
     /**
@@ -117,20 +134,19 @@ public class ConnectTraktCredentialsFragment extends Fragment {
      */
     private void setStatus(boolean progressVisible, int statusTextResourceId) {
         isConnecting = progressVisible;
-        binding.progressBarConnectTrakt.setVisibility(
-                progressVisible ? View.VISIBLE : View.INVISIBLE);
+        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.INVISIBLE);
         if (statusTextResourceId == -1) {
-            binding.textViewConnectTraktStatus.setVisibility(View.INVISIBLE);
+            textViewStatus.setVisibility(View.INVISIBLE);
         } else {
-            binding.textViewConnectTraktStatus.setText(statusTextResourceId);
-            binding.textViewConnectTraktStatus.setVisibility(View.VISIBLE);
+            textViewStatus.setText(statusTextResourceId);
+            textViewStatus.setVisibility(View.VISIBLE);
         }
     }
 
     private void setUsernameViewsStates(boolean visible) {
-        binding.textViewConnectTraktUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
-        binding.textViewConnectTraktUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
-        binding.textViewConnectTraktHexagonWarning.setVisibility(
+        textViewUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
+        textViewUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        textViewHexagonWarning.setVisibility(
                 visible && HexagonTools.isSignedIn(getContext()) ? View.VISIBLE : View.GONE);
     }
 }
