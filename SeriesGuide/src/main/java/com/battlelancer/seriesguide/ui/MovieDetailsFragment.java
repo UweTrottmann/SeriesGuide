@@ -617,7 +617,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         String languageCode = getResources().getStringArray(
                 R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
                 .apply();
 
         progressBar.setVisibility(View.VISIBLE);

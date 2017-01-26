@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -31,8 +30,8 @@ import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
-import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
@@ -128,13 +127,8 @@ public class MoviesDiscoverFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_movies_search_change_language) {
-            LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(
-                    getContext());
-            if (languageData != null) {
-                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                        languageData.languageIndex);
-                dialog.show(getFragmentManager(), "dialog-language");
-            }
+            MovieLocalizationDialogFragment dialog = MovieLocalizationDialogFragment.newInstance(0);
+            dialog.show(getFragmentManager(), "dialog-language");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,7 +139,7 @@ public class MoviesDiscoverFragment extends Fragment {
         String languageCode = getResources().getStringArray(
                 R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
                 .apply();
 
         getLoaderManager().restartLoader(0, null, nowPlayingLoaderCallbacks);

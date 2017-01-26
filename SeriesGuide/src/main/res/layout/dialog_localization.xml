@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minWidth="@dimen/dialog_min_width"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewLocalizationLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
+            android:paddingTop="@dimen/larger_padding"
+            android:text="@string/pref_language"
+            android:textAppearance="@style/TextAppearance.Caption" />
+
+        <Button
+            android:id="@+id/buttonLocalizationLanguage"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inline_padding"
+            android:minHeight="48dp"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
+            tools:text="German (de-DE)" />
+
+        <TextView
+            android:id="@+id/textViewLocalizationRegion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
+            android:text="@string/show_release_times"
+            android:textAppearance="@style/TextAppearance.Caption" />
+
+        <Button
+            android:id="@+id/buttonLocalizationRegion"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:minHeight="48dp"
+            android:paddingLeft="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
+            tools:text="Deutschland" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewLocalization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_dropdown" />
+
+    </LinearLayout>
+
+    <include layout="@layout/dialog_buttons_divided" />
+
+</LinearLayout>

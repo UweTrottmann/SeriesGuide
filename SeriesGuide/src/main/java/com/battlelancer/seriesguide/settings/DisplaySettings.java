@@ -3,10 +3,12 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import java.util.Locale;
 
 /**
  * Settings related to appearance, display formats and sort orders.
@@ -19,7 +21,9 @@ public class DisplaySettings {
 
     public static final String KEY_LANGUAGE = "language";
 
-    public static final String KEY_LANGUAGE_MOVIES = "com.battlelancer.seriesguide.languagemovies";
+    public static final String KEY_MOVIES_LANGUAGE = "com.battlelancer.seriesguide.languagemovies";
+
+    public static final String KEY_MOVIES_REGION = "com.battlelancer.seriesguide.regionmovies";
 
     public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
 
@@ -100,7 +104,23 @@ public class DisplaySettings {
      */
     public static String getMoviesLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_MOVIES, context.getString(R.string.movie_default_language));
+                .getString(KEY_MOVIES_LANGUAGE, context.getString(R.string.movie_default_language));
+    }
+
+    /**
+     * @return Two letter ISO-3166-1 region tag used by TMDB as preferred by the user. Or the
+     * default region of the device. Or as a last resort "US".
+     */
+    public static String getMoviesRegion(Context context) {
+        String countryCode = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_MOVIES_REGION, null);
+        if (TextUtils.isEmpty(countryCode)) {
+            countryCode = Locale.getDefault().getCountry();
+            if (TextUtils.isEmpty(countryCode)) {
+                countryCode = Locale.US.getCountry();
+            }
+        }
+        return countryCode;
     }
 
     /**

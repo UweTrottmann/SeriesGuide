@@ -62,6 +62,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
     @Override
     public Result loadInBackground() {
         String languageCode = DisplaySettings.getMoviesLanguage(getContext());
+        String regionCode = DisplaySettings.getMoviesRegion(getContext());
 
         List<Movie> results = null;
         String action = null;
@@ -84,7 +85,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                                 .release_date_lte(getDateNow())
                                 .release_date_gte(getDateOneMonthAgo())
                                 .language(languageCode)
-                                .region(languageCode.substring(3)) // take US from en-US
+                                .region(regionCode)
                                 .build();
                         break;
                     case DISC:
@@ -95,7 +96,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                                 .release_date_lte(getDateNow())
                                 .release_date_gte(getDateOneMonthAgo())
                                 .language(languageCode)
-                                .region(languageCode.substring(3)) // take US from en-US
+                                .region(regionCode)
                                 .build();
                         break;
                     case IN_THEATERS:
@@ -107,7 +108,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                                 .release_date_lte(getDateNow())
                                 .release_date_gte(getDateOneMonthAgo())
                                 .language(languageCode)
-                                .region(languageCode.substring(3)) // take US from en-US
+                                .region(regionCode)
                                 .build();
                         break;
                 }

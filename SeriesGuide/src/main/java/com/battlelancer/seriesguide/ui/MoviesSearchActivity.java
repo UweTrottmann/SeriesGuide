@@ -153,7 +153,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         String languageCode = getResources().getStringArray(
                 R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
                 .apply();
 
         // just run the current search again
