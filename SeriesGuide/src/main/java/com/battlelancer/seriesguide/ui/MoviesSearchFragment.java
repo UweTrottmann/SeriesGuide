@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -116,7 +117,7 @@ public class MoviesSearchFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        adapter = new MoviesAdapter(getContext(), itemClickListener);
+        adapter = new MoviesAdapter(getContext(), new MovieItemClickListener(getActivity()));
         recyclerView.setAdapter(adapter);
 
         getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
@@ -154,8 +155,52 @@ public class MoviesSearchFragment extends Fragment {
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    private MoviesAdapter.ItemClickListener itemClickListener
-            = new MoviesAdapter.ItemClickListener() {
+    private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
+            = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
+        @Override
+        public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
+            setProgressVisible(true, false);
+            MoviesDiscoverLink link = MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT;
+            String query = null;
+            if (args != null) {
+                link = MoviesDiscoverLink.fromId(args.getInt(ARG_ID_LINK));
+                query = args.getString(ARG_SEARCH_QUERY);
+            }
+            return new TmdbMoviesLoader(SgApp.from(getActivity()), link, query);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<TmdbMoviesLoader.Result> loader,
+                TmdbMoviesLoader.Result data) {
+            if (!isAdded()) {
+                return;
+            }
+            emptyView.setMessage(data.emptyText);
+            boolean hasNoResults = data.results.size() == 0;
+            emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
+            adapter.updateMovies(data.results);
+            setProgressVisible(false, true);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
+            adapter.updateMovies(null);
+        }
+    };
+
+    public static class MovieItemClickListener implements MoviesAdapter.ItemClickListener {
+
+        private Activity activity;
+
+        public MovieItemClickListener(Activity activity) {
+            this.activity = activity;
+        }
+
+        public Activity getActivity() {
+            return activity;
+        }
+
         @Override
         public void onClickMovie(int movieTmdbId, ImageView posterView) {
             // launch details activity
@@ -174,7 +219,7 @@ public class MoviesSearchFragment extends Fragment {
             // check if movie is already in watchlist or collection
             boolean isInWatchlist = false;
             boolean isInCollection = false;
-            Cursor movie = getContext().getContentResolver().query(
+            Cursor movie = getActivity().getContentResolver().query(
                     SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
                     new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
                             SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
@@ -219,39 +264,5 @@ public class MoviesSearchFragment extends Fragment {
             });
             popupMenu.show();
         }
-    };
-
-    private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
-            = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
-        @Override
-        public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            setProgressVisible(true, false);
-            MoviesDiscoverLink link = MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT;
-            String query = null;
-            if (args != null) {
-                link = MoviesDiscoverLink.fromId(args.getInt(ARG_ID_LINK));
-                query = args.getString(ARG_SEARCH_QUERY);
-            }
-            return new TmdbMoviesLoader(SgApp.from(getActivity()), link, query);
-        }
-
-        @Override
-        public void onLoadFinished(Loader<TmdbMoviesLoader.Result> loader,
-                TmdbMoviesLoader.Result data) {
-            if (!isAdded()) {
-                return;
-            }
-            emptyView.setMessage(data.emptyText);
-            boolean hasNoResults = data.results.size() == 0;
-            emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
-            adapter.updateMovies(data.results);
-            setProgressVisible(false, true);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
-            adapter.updateMovies(null);
-        }
-    };
+    }
 }
