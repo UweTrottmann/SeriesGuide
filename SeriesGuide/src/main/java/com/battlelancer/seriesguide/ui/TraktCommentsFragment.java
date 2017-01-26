@@ -81,9 +81,7 @@ public class TraktCommentsFragment extends Fragment {
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
-        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         list.setOnItemClickListener(mOnClickListener);
         list.setEmptyView(emptyView);

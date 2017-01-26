@@ -95,6 +95,7 @@ public class MoviesSearchFragment extends Fragment {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
                 R.id.recyclerViewMoviesSearch);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // setup grid view
         AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),

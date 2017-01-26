@@ -125,9 +125,7 @@ public class ShowsNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);

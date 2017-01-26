@@ -57,6 +57,7 @@ public class MoviesDiscoverFragment extends Fragment {
 
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         swipeRefreshLayout.setRefreshing(false);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         adapter = new MoviesDiscoverAdapter(getContext(),
                 new MovieItemClickListener(getActivity()));

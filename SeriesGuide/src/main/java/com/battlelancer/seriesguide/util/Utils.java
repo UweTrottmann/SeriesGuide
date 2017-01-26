@@ -30,6 +30,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Base64;
@@ -288,6 +289,12 @@ public class Utils {
 
     public static void setMenuItemActiveString(@NonNull MenuItem item) {
         item.setTitle(item.getTitle() + " ◀");
+    }
+
+    public static void setSwipeRefreshLayoutColors(Resources.Theme theme,
+            SwipeRefreshLayout swipeRefreshLayout) {
+        int accentColorResId = Utils.resolveAttributeToResourceId(theme, R.attr.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
     }
 
     public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
@@ -720,5 +727,4 @@ public class Utils {
             AsyncTask<Params, Progress, Result> task, Params... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
-
 }
