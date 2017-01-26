@@ -1,6 +1,8 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -35,6 +37,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     @BindView(R.id.containerSearchBar) View containerSearchBar;
     @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
     @BindView(R.id.imageButtonSearchClear) View clearButton;
+    @BindView(R.id.containerMoviesSearchFragment) View containerMoviesSearchFragment;
 
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
@@ -66,6 +69,19 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
                     .add(R.id.containerMoviesSearchFragment,
                             MoviesSearchFragment.newInstance(link))
                     .commit();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                postponeEnterTransition();
+                containerMoviesSearchFragment.post(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+                        // allow the adapter to repopulate during the next layout pass
+                        // before starting the transition animation
+                        startPostponedEnterTransition();
+                    }
+                });
+            }
         }
     }
 
