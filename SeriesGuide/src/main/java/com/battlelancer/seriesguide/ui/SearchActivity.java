@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -23,7 +22,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -41,6 +39,7 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -240,25 +239,12 @@ public class SearchActivity extends BaseNavDrawerActivity implements
                 viewPager.setCurrentItem(defaultTab);
             }
             if (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES) {
-                showSoftKeyboardOnSearchView();
+                Utils.showSoftKeyboardOnSearchView(this, searchView);
             }
         } else {
             // also show keyboard when showing first tab (added tab)
-            showSoftKeyboardOnSearchView();
+            Utils.showSoftKeyboardOnSearchView(this, searchView);
         }
-    }
-
-    private void showSoftKeyboardOnSearchView() {
-        searchView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (searchView.requestFocus()) {
-                    InputMethodManager imm = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
-                }
-            }
-        }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
     }
 
     private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,

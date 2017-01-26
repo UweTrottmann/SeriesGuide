@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -29,12 +30,15 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         MoviesSearchFragment.OnSearchClickListener {
 
     public static final String EXTRA_ID_LINK = "idLink";
+    private static final String STATE_SEARCH_VISIBLE = "searchVisible";
 
+    @BindView(R.id.containerSearchBar) View containerSearchBar;
     @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
     @BindView(R.id.imageButtonSearchClear) View clearButton;
 
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
+    private boolean showSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,38 +49,42 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         int linkId = getIntent().getIntExtra(EXTRA_ID_LINK,
                 MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id);
         MoviesDiscoverLink link = MoviesDiscoverLink.fromId(linkId);
+        showSearchView = link == MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT;
+        if (savedInstanceState != null) {
+            showSearchView = savedInstanceState.getBoolean(STATE_SEARCH_VISIBLE, showSearchView);
+        }
 
+        ButterKnife.bind(this);
         setupActionBar(link);
 
         if (savedInstanceState == null) {
+            if (showSearchView) {
+                Utils.showSoftKeyboardOnSearchView(this, searchView);
+            }
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.containerMoviesSearchFragment,
                             MoviesSearchFragment.newInstance(link))
                     .commit();
         }
-
-        setupViews();
     }
 
     private void setupActionBar(MoviesDiscoverLink link) {
-        setupActionBar();
+        super.setupActionBar();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // set title for screen readers
-        if (link == MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT) {
+        if (showSearchView) {
             setTitle(R.string.search);
         } else {
             setTitle(link.titleRes);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
-    private void setupViews() {
-        ButterKnife.bind(this);
+        setSearchViewVisible(showSearchView);
 
         // setup search box
         searchView.setThreshold(1);
@@ -119,6 +127,11 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.movies_search_menu, menu);
+
+        MenuItem itemSearch = menu.findItem(R.id.menu_action_movies_search_display_search);
+        itemSearch.setVisible(!showSearchView);
+        itemSearch.setEnabled(!showSearchView);
+
         return true;
     }
 
@@ -129,6 +142,13 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
             MovieLocalizationDialogFragment.show(getSupportFragmentManager());
             return true;
         }
+        if (itemId == R.id.menu_action_movies_search_display_search) {
+            setSearchViewVisible(true);
+            Utils.showSoftKeyboardOnSearchView(this, searchView);
+            showSearchView = true;
+            supportInvalidateOptionsMenu();
+            return true;
+        }
         if (itemId == R.id.menu_action_movies_search_clear_history) {
             searchHistory.clearHistory();
             searchHistoryAdapter.clear();
@@ -137,6 +157,12 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_SEARCH_VISIBLE, showSearchView);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -166,6 +192,14 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         if (searchHistory.saveRecentSearch(query)) {
             searchHistoryAdapter.clear();
             searchHistoryAdapter.addAll(searchHistory.getSearchHistory());
+        }
+    }
+
+    private void setSearchViewVisible(boolean visible) {
+        containerSearchBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(!visible);
         }
     }
 

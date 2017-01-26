@@ -36,6 +36,7 @@ import android.util.Base64;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -287,6 +288,19 @@ public class Utils {
 
     public static void setMenuItemActiveString(@NonNull MenuItem item) {
         item.setTitle(item.getTitle() + " ◀");
+    }
+
+    public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
+        searchView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (searchView.requestFocus()) {
+                    InputMethodManager imm = (InputMethodManager)
+                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
     }
 
     /**
@@ -706,4 +720,5 @@ public class Utils {
             AsyncTask<Params, Progress, Result> task, Params... args) {
         return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
+
 }

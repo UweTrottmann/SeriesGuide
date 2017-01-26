@@ -10,6 +10,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_action_movies_search_display_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_action_movies_search_clear_history"
         android:title="@string/clear_search_history"
         app:showAsAction="never" />
