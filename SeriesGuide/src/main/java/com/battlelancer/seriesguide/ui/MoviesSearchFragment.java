@@ -3,14 +3,13 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,17 +30,16 @@ import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.uwetrottmann.tmdb2.entities.Movie;
 
 /**
  * Integrates with a search interface and displays movies based on query results. Can pre-populate
  * the displayed movies based on a sent link.
  */
-public class MoviesSearchFragment extends Fragment implements OnItemClickListener,
-        MoviesAdapter.PopupMenuClickListener {
+public class MoviesSearchFragment extends Fragment {
 
     public interface OnSearchClickListener {
         void onSearchClick();
@@ -54,12 +50,12 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
 
     @BindView(R.id.containerMoviesSearchContent) View resultsContainer;
     @BindView(R.id.progressBarMoviesSearch) View progressBar;
-    @BindView(R.id.gridViewMoviesSearch) GridView resultsGridView;
+    @BindView(R.id.recyclerViewMoviesSearch) RecyclerView recyclerView;
     @BindView(R.id.emptyViewMoviesSearch) EmptyView emptyView;
 
     @Nullable private MoviesDiscoverLink link;
     private OnSearchClickListener searchClickListener;
-    private MoviesAdapter resultsAdapter;
+    private MoviesAdapter adapter;
     private Unbinder unbinder;
 
     public static MoviesSearchFragment newInstance(@NonNull MoviesDiscoverLink link) {
@@ -97,11 +93,10 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         unbinder = ButterKnife.bind(this, v);
 
         // setup grid view
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(resultsGridView,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        resultsGridView.setEmptyView(emptyView);
-        resultsGridView.setOnItemClickListener(this);
+        AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
+                R.dimen.movie_grid_columnWidth, 1, 1);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
 
         // setup empty view button
         emptyView.setButtonClickListener(new OnClickListener() {
@@ -121,8 +116,8 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        resultsAdapter = new MoviesAdapter(getContext(), this);
-        resultsGridView.setAdapter(resultsAdapter);
+        adapter = new MoviesAdapter(getContext(), itemClickListener);
+        recyclerView.setAdapter(adapter);
 
         getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
                 searchLoaderCallbacks);
@@ -159,76 +154,72 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie movie = resultsAdapter.getItem(position);
-        if (movie == null) {
-            return;
+    private MoviesAdapter.ItemClickListener itemClickListener
+            = new MoviesAdapter.ItemClickListener() {
+        @Override
+        public void onClickMovie(int movieTmdbId, ImageView posterView) {
+            // launch details activity
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+            intent.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+            // transition poster
+            Utils.startActivityWithTransition(getActivity(), intent, posterView,
+                    R.string.transitionNameMoviePoster);
         }
 
-        // launch details activity
-        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
+        @Override
+        public void onClickMovieMoreOptions(final int movieTmdbId, View anchor) {
+            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+            popupMenu.inflate(R.menu.movies_popup_menu);
 
-        MoviesAdapter.ViewHolder viewHolder
-                = (MoviesAdapter.ViewHolder) view.getTag();
-        Utils.startActivityWithTransition(getActivity(), i, viewHolder.poster,
-                R.string.transitionNameMoviePoster);
-    }
-
-    @Override
-    public void onPopupMenuClick(View v, final int movieTmdbId) {
-        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-        popupMenu.inflate(R.menu.movies_popup_menu);
-
-        // check if movie is already in watchlist or collection
-        boolean isInWatchlist = false;
-        boolean isInCollection = false;
-        Cursor movie = getContext().getContentResolver().query(
-                SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
-                        SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
-        );
-        if (movie != null) {
-            if (movie.moveToFirst()) {
-                isInWatchlist = movie.getInt(0) == 1;
-                isInCollection = movie.getInt(1) == 1;
-            }
-            movie.close();
-        }
-
-        Menu menu = popupMenu.getMenu();
-        menu.findItem(R.id.menu_action_movies_watchlist_add).setVisible(!isInWatchlist);
-        menu.findItem(R.id.menu_action_movies_watchlist_remove).setVisible(isInWatchlist);
-        menu.findItem(R.id.menu_action_movies_collection_add).setVisible(!isInCollection);
-        menu.findItem(R.id.menu_action_movies_collection_remove).setVisible(isInCollection);
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_movies_watchlist_add: {
-                        MovieTools.addToWatchlist(SgApp.from(getActivity()), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_watchlist_remove: {
-                        MovieTools.removeFromWatchlist(SgApp.from(getActivity()), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_collection_add: {
-                        MovieTools.addToCollection(SgApp.from(getActivity()), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_collection_remove: {
-                        MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
-                        return true;
-                    }
+            // check if movie is already in watchlist or collection
+            boolean isInWatchlist = false;
+            boolean isInCollection = false;
+            Cursor movie = getContext().getContentResolver().query(
+                    SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
+                    new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
+                            SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
+            );
+            if (movie != null) {
+                if (movie.moveToFirst()) {
+                    isInWatchlist = movie.getInt(0) == 1;
+                    isInCollection = movie.getInt(1) == 1;
                 }
-                return false;
+                movie.close();
             }
-        });
-        popupMenu.show();
-    }
+
+            Menu menu = popupMenu.getMenu();
+            menu.findItem(R.id.menu_action_movies_watchlist_add).setVisible(!isInWatchlist);
+            menu.findItem(R.id.menu_action_movies_watchlist_remove).setVisible(isInWatchlist);
+            menu.findItem(R.id.menu_action_movies_collection_add).setVisible(!isInCollection);
+            menu.findItem(R.id.menu_action_movies_collection_remove).setVisible(isInCollection);
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.menu_action_movies_watchlist_add: {
+                            MovieTools.addToWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_watchlist_remove: {
+                            MovieTools.removeFromWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_collection_add: {
+                            MovieTools.addToCollection(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                        case R.id.menu_action_movies_collection_remove: {
+                            MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+            popupMenu.show();
+        }
+    };
 
     private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
             = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
@@ -251,13 +242,16 @@ public class MoviesSearchFragment extends Fragment implements OnItemClickListene
                 return;
             }
             emptyView.setMessage(data.emptyText);
-            resultsAdapter.setData(data.results);
+            boolean hasNoResults = data.results.size() == 0;
+            emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
+            adapter.updateMovies(data.results);
             setProgressVisible(false, true);
         }
 
         @Override
         public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
-            resultsAdapter.setData(null);
+            adapter.updateMovies(null);
         }
     };
 }

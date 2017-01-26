@@ -18,14 +18,17 @@
             app:emptyViewButtonText="@string/action_try_again"
             app:emptyViewMessage="@string/no_results" />
 
-        <GridView
-            android:id="@+id/gridViewMoviesSearch"
-            style="@style/Widget.SeriesGuide.CardGrid"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewMoviesSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="@dimen/movie_grid_columnWidth"
-            android:numColumns="auto_fit"
-            android:stretchMode="columnWidth"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/grid_item_margin_vertical"
+            android:paddingLeft="@dimen/grid_item_margin_horizontal"
+            android:paddingRight="@dimen/grid_item_margin_horizontal"
+            android:paddingTop="@dimen/grid_item_margin_vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
             tools:listitem="@layout/item_movie" />
 
     </FrameLayout>
