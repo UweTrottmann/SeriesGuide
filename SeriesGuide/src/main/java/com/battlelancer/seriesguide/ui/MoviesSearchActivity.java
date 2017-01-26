@@ -158,7 +158,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
             return;
         }
 
-        String query = searchView.getText().toString();
+        String query = searchView.getText().toString().trim();
         // perform search
         MoviesSearchFragment searchFragment = (MoviesSearchFragment) fragment;
         searchFragment.search(query);
