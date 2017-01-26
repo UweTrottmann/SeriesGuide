@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -28,8 +27,6 @@ import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -127,21 +124,15 @@ public class MoviesDiscoverFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_movies_search_change_language) {
-            MovieLocalizationDialogFragment dialog = MovieLocalizationDialogFragment.newInstance(0);
-            dialog.show(getFragmentManager(), "dialog-language");
+            MovieLocalizationDialogFragment.show(getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventLanguageChanged(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesMovies)[event.selectedLanguageIndex];
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
-                .apply();
-
+    public void onEventLanguageChanged(
+            MovieLocalizationDialogFragment.LocalizationChangedEvent event) {
         getLoaderManager().restartLoader(0, null, nowPlayingLoaderCallbacks);
     }
 

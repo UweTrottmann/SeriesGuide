@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,11 +38,6 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     private static final String STATE_LIST_VISIBLE = "listVisible";
 
     public static class LocalizationChangedEvent {
-        public final int selectedLanguageIndex;
-
-        public LocalizationChangedEvent(int selectedLanguageIndex) {
-            this.selectedLanguageIndex = selectedLanguageIndex;
-        }
     }
 
     public static class ItemsLoadedEvent {
@@ -54,19 +51,9 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         }
     }
 
-    public static final String ARG_SELECTED_LANGUAGE_POSITION = "selectedPosition";
-
-    /**
-     * Creates a language choice dialog for movie languages.
-     */
-    public static MovieLocalizationDialogFragment newInstance(int selectedLanguageIndex) {
-        MovieLocalizationDialogFragment f = new MovieLocalizationDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_SELECTED_LANGUAGE_POSITION, selectedLanguageIndex);
-        f.setArguments(args);
-
-        return f;
+    public static void show(FragmentManager fragmentManager) {
+        MovieLocalizationDialogFragment dialog = new MovieLocalizationDialogFragment();
+        dialog.show(fragmentManager, "dialog-language");
     }
 
     private Unbinder unbinder;
@@ -189,14 +176,12 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
         EventBus.getDefault().unregister(this);
     }
 
@@ -209,8 +194,13 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         unbinder.unbind();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        EventBus.getDefault().post(new LocalizationChangedEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

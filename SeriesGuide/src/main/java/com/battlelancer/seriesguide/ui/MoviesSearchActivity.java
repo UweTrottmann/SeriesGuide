@@ -2,8 +2,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -21,10 +19,8 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.SearchSettings;
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
-import com.battlelancer.seriesguide.util.LanguageTools;
+import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -130,12 +126,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_movies_search_change_language) {
-            LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(this);
-            if (languageData != null) {
-                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                        languageData.languageIndex);
-                dialog.show(getSupportFragmentManager(), "dialog-language");
-            }
+            MovieLocalizationDialogFragment.show(getSupportFragmentManager());
             return true;
         }
         if (itemId == R.id.menu_action_movies_search_clear_history) {
@@ -149,13 +140,8 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventLanguageChanged(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesMovies)[event.selectedLanguageIndex];
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
-                .apply();
-
+    public void onEventLanguageChanged(
+            MovieLocalizationDialogFragment.LocalizationChangedEvent event) {
         // just run the current search again
         search();
     }
