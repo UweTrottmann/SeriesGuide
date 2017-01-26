@@ -16,6 +16,6 @@
         android:paddingTop="@dimen/grid_item_margin_vertical"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        tools:listitem="@layout/item_movie" />
+        tools:listitem="@layout/item_discover_movie" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
