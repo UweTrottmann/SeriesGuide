@@ -486,6 +486,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();
             searchHistoryAdapter.clear();
+            // setting text to null seems to fix the dropdown from not clearing
+            searchView.setText(null);
         }
     }
 
