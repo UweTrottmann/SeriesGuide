@@ -5,7 +5,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@mipmap/ic_shortcut_movies"
+        android:icon="@mipmap/ic_shortcut_movie"
         android:shortcutDisabledMessage="@string/app_not_available"
         android:shortcutId="movies"
         android:shortcutLongLabel="@string/movies"
@@ -22,7 +22,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@mipmap/ic_shortcut_lists"
+        android:icon="@mipmap/ic_shortcut_list"
         android:shortcutDisabledMessage="@string/app_not_available"
         android:shortcutId="lists"
         android:shortcutLongLabel="@string/lists"
