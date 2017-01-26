@@ -116,7 +116,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         setupActionBar();
         setupNavDrawer();
 
-        setupViews();
+        setupViews(savedInstanceState == null);
 
         handleSearchIntent(getIntent());
     }
@@ -131,7 +131,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    private void setupViews() {
+    private void setupViews(boolean mayShowKeyboard) {
         ButterKnife.bind(this);
         clearButton.setVisibility(View.GONE);
         clearButton.setOnClickListener(new View.OnClickListener() {
@@ -238,10 +238,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             if (defaultTab < tabsAdapter.getCount()) {
                 viewPager.setCurrentItem(defaultTab);
             }
-            if (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES) {
+            if (mayShowKeyboard &&
+                    (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
                 Utils.showSoftKeyboardOnSearchView(this, searchView);
             }
-        } else {
+        } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
             Utils.showSoftKeyboardOnSearchView(this, searchView);
         }
