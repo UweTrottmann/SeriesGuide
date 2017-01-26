@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final String posterBaseUrl;
     private final DateFormat dateFormatMovieReleaseDate;
     private final ItemClickListener itemClickListener;
-    private final List<Movie> movies;
+    protected final List<Movie> movies;
 
     public MoviesAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
@@ -63,7 +64,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MovieViewHolder) {
             MovieViewHolder actualHolder = (MovieViewHolder) holder;
-            Movie movie = movies.get(position);
+            Movie movie = getMovie(position);
             actualHolder.movieTmdbId = movie.id;
             actualHolder.title.setText(movie.title);
             if (movie.release_date != null) {
@@ -81,7 +82,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             // set unique transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                actualHolder.poster.setTransitionName("moviesAdapterPoster_" + movie.id);
+                actualHolder.poster.setTransitionName(getTransitionNamePrefix() + movie.id);
             }
         }
     }
@@ -89,6 +90,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
         return movies.size();
+    }
+
+    protected Movie getMovie(int position) {
+        return movies.get(position);
+    }
+
+    @NonNull
+    protected String getTransitionNamePrefix() {
+        return "moviesAdapterPoster_";
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
