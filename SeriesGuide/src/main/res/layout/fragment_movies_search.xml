@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerMoviesSearch"
+    android:id="@+id/swipeRefreshLayoutMoviesSearch"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/containerMoviesSearchContent"
+        android:id="@+id/frameLayoutMoviesSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.battlelancer.seriesguide.widgets.EmptyView
-            android:id="@+id/emptyViewMoviesSearch"
+        <ScrollView
+            android:id="@+id/scrollViewMoviesSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:emptyViewButtonText="@string/action_try_again"
-            app:emptyViewMessage="@string/no_results" />
+            android:layout_height="match_parent">
+
+            <com.battlelancer.seriesguide.widgets.EmptyView
+                android:id="@+id/emptyViewMoviesSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                app:emptyViewButtonText="@string/action_try_again"
+                app:emptyViewMessage="@string/no_results" />
+
+        </ScrollView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewMoviesSearch"
@@ -31,22 +39,16 @@
             android:scrollbars="vertical"
             tools:listitem="@layout/item_discover_movie" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:background="@color/protection_dark"
+            android:padding="@dimen/default_padding"
+            android:text="@string/powered_by_tmdb"
+            android:textAppearance="@style/TextAppearance.Caption.Narrow"
+            android:textColor="@color/black_11" />
+
     </FrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBarMoviesSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:background="@color/protection_dark"
-        android:padding="@dimen/default_padding"
-        android:text="@string/powered_by_tmdb"
-        android:textAppearance="@style/TextAppearance.Caption.Narrow"
-        android:textColor="@color/black_11" />
-
-</FrameLayout>
+</com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>

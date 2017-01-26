@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import butterknife.BindView;
@@ -35,6 +34,7 @@ import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
+import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 
 /**
  * Integrates with a search interface and displays movies based on query results. Can pre-populate
@@ -49,8 +49,7 @@ public class MoviesSearchFragment extends Fragment {
     private static final String ARG_SEARCH_QUERY = "search_query";
     private static final String ARG_ID_LINK = "linkId";
 
-    @BindView(R.id.containerMoviesSearchContent) View resultsContainer;
-    @BindView(R.id.progressBarMoviesSearch) View progressBar;
+    @BindView(R.id.swipeRefreshLayoutMoviesSearch) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerViewMoviesSearch) RecyclerView recyclerView;
     @BindView(R.id.emptyViewMoviesSearch) EmptyView emptyView;
 
@@ -93,6 +92,10 @@ public class MoviesSearchFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
+                R.id.recyclerViewMoviesSearch);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+
         // setup grid view
         AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
                 R.dimen.movie_grid_columnWidth, 1, 1);
@@ -106,8 +109,6 @@ public class MoviesSearchFragment extends Fragment {
                 searchClickListener.onSearchClick();
             }
         });
-
-        setProgressVisible(false, false);
 
         return v;
     }
@@ -140,26 +141,17 @@ public class MoviesSearchFragment extends Fragment {
     }
 
     public void search(String query) {
+        if (!swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
         getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(query),
                 searchLoaderCallbacks);
-    }
-
-    private void setProgressVisible(boolean visible, boolean animate) {
-        if (animate) {
-            Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
-            Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
-            resultsContainer.startAnimation(visible ? out : in);
-            progressBar.startAnimation(visible ? in : out);
-        }
-        resultsContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
-        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks
             = new LoaderCallbacks<TmdbMoviesLoader.Result>() {
         @Override
         public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            setProgressVisible(true, false);
             MoviesDiscoverLink link = MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT;
             String query = null;
             if (args != null) {
@@ -180,12 +172,20 @@ public class MoviesSearchFragment extends Fragment {
             emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
             recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
             adapter.updateMovies(data.results);
-            setProgressVisible(false, true);
+            swipeRefreshLayout.setRefreshing(false);
         }
 
         @Override
         public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
             adapter.updateMovies(null);
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener
+            = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            searchClickListener.onSearchClick();
         }
     };
 
