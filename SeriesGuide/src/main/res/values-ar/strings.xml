@@ -52,7 +52,7 @@
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
   <!-- Sharing -->
   <string name="share">المشاركة</string>
-  <string name="share_show">مشاركة العرض</string>
+  <string name="share_show">مشاركة المسلسل</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
   <string name="share_checkout">تتحق من %s</string>
@@ -203,11 +203,11 @@
   <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
   <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">استكشاف</string>
+  <string name="title_popular">الأكثر شعبية</string>
+  <string name="title_digital_releases">الإصدارات الرقمية</string>
+  <string name="title_disc_releases">إصدارات القرص</string>
+  <string name="movies_in_theatres">حاليا في السينما</string>
   <string name="movies_collection">مجموعة</string>
   <string name="movies_watchlist">قائمة المشاهدة</string>
   <string name="watchlist_add">إضافة لقائمة المشاهدة</string>

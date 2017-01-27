@@ -201,8 +201,8 @@
   <!-- Movies -->
   <string name="title_discover">Entdecken</string>
   <string name="title_popular">Beliebt</string>
-  <string name="title_digital_releases">Digitale Neuerscheinungen</string>
-  <string name="title_disc_releases">Disc Neuerscheinungen</string>
+  <string name="title_digital_releases">Neues - Digital</string>
+  <string name="title_disc_releases">Neues - Disc</string>
   <string name="movies_in_theatres">Im Kino</string>
   <string name="movies_collection">Sammlung</string>
   <string name="movies_watchlist">Ansehen-Liste</string>

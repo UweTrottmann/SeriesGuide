@@ -88,7 +88,7 @@
   <string name="show_isalive">Lopende serie</string>
   <string name="show_isnotalive">Afgelopen</string>
   <string name="lastEdit">Laatste bewerking //TVDb</string>
-  <string name="no_translation">Er is geen be schrijving vertaald naar %1$s beschikbaar op %2$s.</string>
+  <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="no_translation_title">Niet vertaald</string>
   <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat je spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
   <!-- Date and Time -->
@@ -116,8 +116,8 @@
   <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
-  <string name="context_favorite">Toevoegen aan favorieten</string>
-  <string name="context_unfavorite">Verwijderen uit favorieten</string>
+  <string name="context_favorite">Favoriet</string>
+  <string name="context_unfavorite">Geen favoriet</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
   <string name="context_hide">Verbergen</string>
@@ -150,7 +150,7 @@
   <!-- History -->
   <string name="user_stream">Geschiedenis</string>
   <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
-  <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
+  <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
   <!-- Calendar -->
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
@@ -199,11 +199,11 @@
   <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
   <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Ontdekken</string>
+  <string name="title_popular">Populair</string>
+  <string name="title_digital_releases">Digitale releases</string>
+  <string name="title_disc_releases">CD releases</string>
+  <string name="movies_in_theatres">In de bioscoop</string>
   <string name="movies_collection">Collectie</string>
   <string name="movies_watchlist">Lijst</string>
   <string name="watchlist_add">Toevoegen aan watchlist</string>
@@ -240,7 +240,7 @@
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minuut</item>
-    <item quantity="other">%d minuut</item>
+    <item quantity="other">%d minuten</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimenteel!</string>
@@ -446,7 +446,7 @@
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Volgende aflevering</string>
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
-  <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende</string>
+  <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Alleen voor leden</string>
   <string name="action_upgrade">Open alle restricties</string>
