@@ -33,6 +33,8 @@
     <color name="widget_default_background">#80000000</color>
     <color name="widget_default_background_light">#80ffffff</color>
 
+    <color name="shortcut_background">#fff5f5f5</color>
+
     <color name="white">#ffffffff</color> <!-- primary text dark -->
     <color name="white_70">#b3ffffff</color> <!-- secondary text dark -->
     <color name="black_87">#de000000</color> <!-- primary text light -->
