@@ -9,6 +9,15 @@ Version 35
 ----------
 *(in development)*
 
+#### 35-beta4
+*(2017-01-27)*
+
+* FEATURE Add region selector to movie discovery. Tap the globe to see release dates for your region in discover and search.
+* TWEAK Movie search: show keyboard when opening it, add swipe to refresh.
+* TWEAK Improve launcher shortcuts icons (Android 7.1). Thanks @cbeyls!
+* FIX Image transitions fail after rotating the device. Thanks @cbeyls!
+* NOTE Latest translations from crowdin.
+
 #### 35-beta3
 *(2017-01-20)*
 
