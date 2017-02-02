@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -64,6 +65,7 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -138,6 +140,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private Videos.Video trailer;
     private int currentLanguageIndex;
     private Handler handler = new Handler();
+    private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -264,6 +267,16 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // Always cancel the request here, this is safe to call even if the image has been loaded.
+        // This ensures that the anonymous callback we have does not prevent the fragment from
+        // being garbage collected. It also prevents our callback from getting invoked even after the
+        // fragment is destroyed.
+        Picasso.with(getContext()).cancelRequest(imageViewMoviePoster);
+        // same for Palette task
+        if (paletteAsyncTask != null) {
+            paletteAsyncTask.cancel(true);
+        }
 
         unbinder.unbind();
     }
@@ -520,16 +533,17 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     .into(imageViewMoviePoster, new Callback.EmptyCallback() {
                         @Override
                         public void onSuccess() {
-                            Bitmap bitmap
-                                    = ((BitmapDrawable) imageViewMoviePoster.getDrawable()).getBitmap();
-                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    int color = palette.getVibrantColor(Color.WHITE);
-                                    color = ColorUtils.setAlphaComponent(color, 50);
-                                    rootLayoutMovie.setBackgroundColor(color);
-                                }
-                            });
+                            Bitmap bitmap = ((BitmapDrawable) imageViewMoviePoster
+                                    .getDrawable()).getBitmap();
+                            paletteAsyncTask = Palette.from(bitmap)
+                                    .generate(new Palette.PaletteAsyncListener() {
+                                        @Override
+                                        public void onGenerated(Palette palette) {
+                                            int color = palette.getVibrantColor(Color.WHITE);
+                                            color = ColorUtils.setAlphaComponent(color, 50);
+                                            rootLayoutMovie.setBackgroundColor(color);
+                                        }
+                                    });
                         }
                     });
             // click listener for high resolution poster
