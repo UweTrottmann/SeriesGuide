@@ -184,7 +184,9 @@ public class ListsActivity extends BaseTopActivity {
 
     private void showListManageDialog(int selectedListIndex) {
         String listId = listsAdapter.getListId(selectedListIndex);
-        ListManageDialogFragment.show(listId, getSupportFragmentManager());
+        if (listId != null) {
+            ListManageDialogFragment.show(listId, getSupportFragmentManager());
+        }
     }
 
     @SuppressWarnings("UnusedParameters")
