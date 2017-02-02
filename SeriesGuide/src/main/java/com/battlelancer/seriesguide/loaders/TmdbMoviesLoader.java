@@ -33,10 +33,11 @@ import retrofit2.Response;
 public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Result> {
 
     public static class Result {
-        public List<Movie> results;
-        public String emptyText;
+        /** If loading failed, is null. Empty if no results. */
+        @Nullable public List<Movie> results;
+        @NonNull public String emptyText;
 
-        public Result(List<Movie> results, String emptyText) {
+        public Result(@Nullable List<Movie> results, @NonNull String emptyText) {
             this.results = results;
             this.emptyText = emptyText;
         }

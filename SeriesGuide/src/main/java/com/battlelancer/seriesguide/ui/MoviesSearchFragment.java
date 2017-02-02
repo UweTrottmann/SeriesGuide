@@ -169,7 +169,7 @@ public class MoviesSearchFragment extends Fragment {
                 return;
             }
             emptyView.setMessage(data.emptyText);
-            boolean hasNoResults = data.results.size() == 0;
+            boolean hasNoResults = data.results == null || data.results.size() == 0;
             emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
             recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
             adapter.updateMovies(data.results);
