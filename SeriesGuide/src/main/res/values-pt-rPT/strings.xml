@@ -46,7 +46,7 @@
   <string name="unknown">desconhecido</string>
   <string name="offline">Liga-te a uma rede e tenta novamente.</string>
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
-  <string name="people_empty">Ninguém aqui?! Toque no ecrã para actualizar.</string>
+  <string name="people_empty">Ninguém aqui?! Toca no ecrã para actualizar.</string>
   <string name="database_error">Não é possível modificar os dados.</string>
   <string name="reinstall_info">Tente fazer um backup nas Definições, reinstale e restaure.</string>
   <string name="api_error_generic">Falha a comunicar com %s. Tente mais tarde.</string>
@@ -338,7 +338,7 @@
   <string name="licence_tvdb">Esta app faz uso de informação e imagens de TheTVDB licenciado sob a CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não é aprovado ou certificado pela TMDb.</string>
   <string name="licence_trakt">Esta app utiliza informação e imagens do trakt.</string>
-  <string name="about_open_source">SeriesGuide foi desenhado com software open source.</string>
+  <string name="about_open_source">SeriesGuide foi desenvolvido em software open source.</string>
   <string name="licences_and_credits">Licenças e créditos</string>
   <!-- Sort -->
   <string name="sort">Ordenar por</string>
@@ -370,7 +370,7 @@
   <string name="pref_other">Outro</string>
   <string name="pref_autoupdatesummary">Sincroniza e actualiza automaticamente os dados do SeriesGuide</string>
   <string name="pref_autobackup">Backup Automático</string>
-  <string name="pref_autobackupsummary">Backup semanal de seus programas, listas e filmes</string>
+  <string name="pref_autobackupsummary">Backup semanal das tuas listas, séries e filmes</string>
   <string name="backup">Backup/Restaurar</string>
   <string name="backup_summary">Fazer backup ou restaurar as tuas séries</string>
   <string name="pref_number">Formato numérico</string>
@@ -398,15 +398,15 @@
   <string name="import_button">Restaurar backup</string>
   <string name="backup_question">Isso irá substituir o ficheiro de backup actual na pasta de backup!</string>
   <string name="import_question">A lista actual de séries será perdida! Certifique-se que o ficheiro de backup se encontra na pasta de backup.</string>
-  <string name="import_warning">Eu entendo que os meus programas, listas e filmes serão substituídos!</string>
+  <string name="import_warning">Estou ciente que as minhas listas, séries e filmes serão substituídos!</string>
   <string name="last_auto_backup">Último Backup Automático: %s</string>
   <string name="restore_auto_backup">Restaurar Backup Automático</string>
   <string name="dataliberation_permission_missing">Para fazeres Backup ou Restaurares, permite o acesso aos teus ficheiros.</string>
   <string name="autobackup_permission_missing">Para usar o backup automático, permite o acesso aos teus ficheiros.</string>
-  <string name="autobackup_files_missing">Para usar o backup automático, selecione arquivos de backup válidos.</string>
-  <string name="no_file_selected">Nenhum ficheiro selecionado</string>
-  <string name="action_select_file">Selecionar ficheiro</string>
-  <string name="backup_use_default_files">Use arquivos de backup padrão</string>
+  <string name="autobackup_files_missing">Para usar o backup automático, seleccione ficheiros de backup válidos.</string>
+  <string name="no_file_selected">Nenhum ficheiro seleccionado</string>
+  <string name="action_select_file">Seleccionar ficheiro</string>
+  <string name="backup_use_default_files">Usar ficheiros de backup originais</string>
   <!-- Welcome dialog -->
   <string name="get_started">Introdução</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
@@ -454,24 +454,24 @@
   <string name="billing_action_pass">Obter X Pass</string>
   <string name="billing_price_subscribe">%s/ano, experimente gratuitamente</string>
   <string name="billing_price_pass">compra única</string>
-  <string name="upgrade_description">Desbloquear todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. Ajude-me a fazer updates futuros.</string>
-  <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você tem acesso a todas as funcionalidades.</string>
+  <string name="upgrade_description">Desbloqueias todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. E ajudas-me a fazer actualizações futuras.</string>
+  <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
   <string name="billing_learn_more">Porquê pagar? Saiba mais.</string>
   <string name="subscription_expired">Assinatura expirada</string>
   <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
   <!-- Amazon In-App Billing -->
   <string name="subscription_not_signed_in">Entra na tua conta Amazon!</string>
-  <string name="subscription_unavailable">A subscrição não está disponível de momento.</string>
+  <string name="subscription_unavailable">De momento, a subscrição não está disponível.</string>
   <string name="subscription_failed">Compra não concluída.</string>
-  <string name="pass_unavailable">Atualmente, o passe X não está disponível.</string>
+  <string name="pass_unavailable">De momento, o passe X não está disponível.</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizar extensões</string>
   <string name="action_extensions_add">Adicionar extensão</string>
-  <string name="action_extensions_limit">Adquire o X para adicionar mais extensões</string>
+  <string name="action_extensions_limit">Adquira o X para adicionar mais extensões</string>
   <string name="action_extensions_search">Obter mais extensões</string>
   <string name="action_extension_remove">Remover</string>
   <string name="extension_amazon">Pesquisar na Amazon</string>
-  <string name="description_extension_amazon">Pesquisar na Amazon local</string>
+  <string name="description_extension_amazon">Pesquisar na Amazon do seu país</string>
   <string name="pref_amazon_domain">Site da Amazon</string>
   <string name="extension_google_play">Pesquisa na Google Play</string>
   <string name="description_extension_google_play">Pesquisa na Google Play Store</string>
@@ -481,12 +481,12 @@
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Diga-me como o melhorar?</string>
+  <string name="feedback_question_enjoy">Estás a gostar do SeriesGuide?</string>
+  <string name="feedback_action_yes">Sim!</string>
+  <string name="feedback_action_notreally">Nem por isso</string>
+  <string name="feedback_question_rate_google">Classificá-lo na Google Play?</string>
+  <string name="feedback_question_rate_amazon">Classificá-lo na Amazon?</string>
+  <string name="feedback_question_feedback">Diz-me o que devo melhorar?</string>
   <string name="feedback_action_ok">OK, claro</string>
   <string name="feedback_action_nothanks">Não, obrigado</string>
 </resources>

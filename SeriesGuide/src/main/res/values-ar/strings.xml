@@ -24,7 +24,7 @@
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
   <string name="description_image">صورة الحلقة</string>
-  <string name="description_menu_overflow">خيارات أخرى</string>
+  <string name="description_menu_overflow">خيارات اضافية</string>
   <!-- Actions -->
   <string name="clear">تنظيف</string>
   <string name="discard">تجاهل</string>
@@ -51,7 +51,7 @@
   <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
   <!-- Sharing -->
-  <string name="share">المشاركة</string>
+  <string name="share">مشاركة</string>
   <string name="share_show">مشاركة المسلسل</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
@@ -61,7 +61,7 @@
   <string name="links">الروابط</string>
   <!-- Comments -->
   <string name="comments">التعليقات</string>
-  <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 + كلمات)</string>
+  <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
   <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
   <string name="action_post">انشر</string>
   <string name="isspoiler">تنبيه حرق!</string>

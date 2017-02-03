@@ -7,7 +7,19 @@ All dates are in the European Central timezone.
 
 Version 35
 ----------
-*(in development)*
+*(2017-02-03)*
+
+* New movie discover section with regional selection, search moved to its own screen.
+* Tap a tab to scroll to the top in most places.
+* Improved status messages during trakt or Cloud actions.
+
+#### 35
+*(2017-02-03)*
+
+* TWEAK Display localized string for language in movie details.
+* FIX Crash when loading movie poster, but views are already gone.
+* FIX Crash if searching for movies fails.
+* NOTE Latest translations from crowdin.
 
 #### 35-beta4
 *(2017-01-27)*
