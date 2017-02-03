@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
@@ -30,6 +31,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Super class for fragments displaying a list of shows and allowing to add them to the database.
@@ -147,6 +149,19 @@ public abstract class AddFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * @return The tab position in the tab view.
+     * @see SearchActivity
+     */
+    protected abstract int getTabPosition();
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(TabClickEvent event) {
+        if (event.position == getTabPosition()) {
+            resultsGridView.smoothScrollToPosition(0);
+        }
+    }
+
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         public interface OnContextMenuClickListener {
@@ -162,10 +177,10 @@ public abstract class AddFragment extends Fragment {
                 OnContextMenuClickListener menuClickListener,
                 boolean hideContextMenuIfAdded) {
             super(activity, 0, objects);
-            app = SgApp.from(activity);
+            this.app = SgApp.from(activity);
             this.menuClickListener = menuClickListener;
             this.hideContextMenuIfAdded = hideContextMenuIfAdded;
-            inflater = LayoutInflater.from(activity);
+            this.inflater = LayoutInflater.from(activity);
         }
 
         @NonNull

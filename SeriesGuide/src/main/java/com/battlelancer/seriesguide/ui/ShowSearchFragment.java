@@ -24,8 +24,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ShowResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -83,6 +83,13 @@ public class ShowSearchFragment extends ListFragment {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {
         search(event.args);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(TabClickEvent event) {
+        if (event.position == SearchActivity.TAB_POSITION_SHOWS) {
+            getListView().smoothScrollToPosition(0);
+        }
     }
 
     public void search(Bundle args) {

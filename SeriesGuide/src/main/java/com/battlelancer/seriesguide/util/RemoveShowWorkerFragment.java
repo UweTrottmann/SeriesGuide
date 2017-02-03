@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.util;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import org.greenrobot.eventbus.EventBus;
 
@@ -67,7 +67,7 @@ public class RemoveShowWorkerFragment extends Fragment {
 
         // do not overwrite existing task
         if (mTask == null) {
-            mTask = new RemoveShowTask(getActivity().getApplicationContext(),
+            mTask = new RemoveShowTask(SgApp.from(getActivity()),
                     getArguments().getInt(KEY_SHOW_TVDBID));
             Utils.executeInOrder(mTask);
         }
@@ -79,11 +79,11 @@ public class RemoveShowWorkerFragment extends Fragment {
 
     private static class RemoveShowTask extends AsyncTask<Integer, Void, Integer> {
 
-        private final Context context;
+        private final SgApp app;
         private final int showTvdbId;
 
-        public RemoveShowTask(Context context, int showTvdbId) {
-            this.context = context;
+        public RemoveShowTask(SgApp app, int showTvdbId) {
+            this.app = app;
             this.showTvdbId = showTvdbId;
         }
 
@@ -94,15 +94,15 @@ public class RemoveShowWorkerFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Integer... params) {
-            return ShowTools.get(context).removeShow(showTvdbId);
+            return app.getShowTools().removeShow(showTvdbId);
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             if (result == NetworkResult.OFFLINE) {
-                Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+                Toast.makeText(app, R.string.offline, Toast.LENGTH_LONG).show();
             } else if (result == NetworkResult.ERROR) {
-                Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(app, R.string.delete_error, Toast.LENGTH_LONG).show();
             }
 
             EventBus.getDefault().post(new OnShowRemovedEvent(result));

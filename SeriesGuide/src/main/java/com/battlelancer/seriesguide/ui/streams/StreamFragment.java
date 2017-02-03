@@ -74,9 +74,7 @@ public abstract class StreamFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
-        contentContainer.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), contentContainer);
 
         if (adapter == null) {
             adapter = getListAdapter();

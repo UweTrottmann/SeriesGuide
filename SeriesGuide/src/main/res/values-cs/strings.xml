@@ -200,6 +200,11 @@
   <string name="action_lists_reorder">Uspořádat seznamy</string>
   <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">Sbírka</string>
   <string name="movies_watchlist">Chci vidět</string>
   <string name="watchlist_add">Přidat do seznamu Chci vidět</string>

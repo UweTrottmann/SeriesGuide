@@ -37,11 +37,12 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
-import org.greenrobot.eventbus.EventBus;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -124,9 +125,7 @@ public class ShowsNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int accentColorResId = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);
@@ -337,9 +336,12 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(EpisodeTools.EpisodeActionCompletedEvent event) {
+    public void onEventEpisodeTask(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        if (!event.isSuccessful) {
+            return; // no changes applied
+        }
         if (!isAdded()) {
-            return;
+            return; // no longer added to activity
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
@@ -348,6 +350,13 @@ public class ShowsNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyLocalCallbacks);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(TabClickEvent event) {
+        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
+            recyclerView.smoothScrollToPosition(0);
         }
     }
 

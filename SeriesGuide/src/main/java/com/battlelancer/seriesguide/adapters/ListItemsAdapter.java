@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.SeasonTools;
@@ -27,9 +29,8 @@ public class ListItemsAdapter extends BaseShowsAdapter {
 
     public OnContextMenuClickListener onContextMenuClickListener;
 
-    public ListItemsAdapter(Context context, OnContextMenuClickListener listener) {
-        super(context, null);
-
+    public ListItemsAdapter(Activity activity, OnContextMenuClickListener listener) {
+        super(activity, null);
         this.onContextMenuClickListener = listener;
     }
 
@@ -120,7 +121,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ListItemViewHolder viewHolder = new ListItemViewHolder(v, onContextMenuClickListener);
+        ListItemViewHolder viewHolder = new ListItemViewHolder(v, app, onContextMenuClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -132,8 +133,8 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         public int itemTvdbId;
         public int itemType;
 
-        public ListItemViewHolder(View v, final OnContextMenuClickListener listener) {
-            super(v, null);
+        public ListItemViewHolder(View v, SgApp app, final OnContextMenuClickListener listener) {
+            super(v, app, null);
 
             contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override

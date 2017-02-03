@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Reordenar listas</string>
   <string name="error_name_already_exists">Já existe uma lista com este nome</string>
   <!-- Movies -->
+  <string name="title_discover">Descubra</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Lançamentos digitais</string>
+  <string name="title_disc_releases">Lançamentos em disco</string>
+  <string name="movies_in_theatres">No cinema</string>
   <string name="movies_collection">Coleção</string>
   <string name="movies_watchlist">A assistir</string>
   <string name="watchlist_add">Adicionar à lista</string>

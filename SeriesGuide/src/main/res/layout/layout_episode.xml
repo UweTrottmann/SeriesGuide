@@ -17,8 +17,8 @@
         android:id="@+id/textViewEpisodeTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="12dp"
         android:textAppearance="@style/TextAppearance.Title"
         android:textIsSelectable="true"
@@ -197,8 +197,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="@dimen/large_padding"
         android:background="?attr/sgColorDivider" />
 

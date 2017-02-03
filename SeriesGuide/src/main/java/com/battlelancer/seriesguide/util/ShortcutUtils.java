@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 import java.io.IOException;
 import timber.log.Timber;
@@ -45,6 +46,7 @@ public final class ShortcutUtils {
      */
     public static void createShortcut(Context localContext, final String showTitle,
             final String posterPath, final int showTvdbId) {
+        // do not pass activity reference to AsyncTask, activity might leak if destroyed
         final Context context = localContext.getApplicationContext();
 
         AsyncTask<Void, Void, Intent> shortCutTask = new AsyncTask<Void, Void, Intent>() {
@@ -56,7 +58,7 @@ public final class ShortcutUtils {
 
                 try {
                     final String posterUrl = TvdbTools.buildPosterUrl(posterPath);
-                    posterBitmap = ServiceUtils.getPicasso(context)
+                    posterBitmap = Picasso.with(context)
                             .load(posterUrl)
                             .centerCrop()
                             .memoryPolicy(MemoryPolicy.NO_STORE)

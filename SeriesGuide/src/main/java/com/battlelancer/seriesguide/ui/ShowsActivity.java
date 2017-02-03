@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -190,13 +191,22 @@ public class ShowsActivity extends BaseTopActivity implements
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ShowsActivity.this, SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
             }
         });
 
         viewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
+        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
+        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                if (viewPager.getCurrentItem() == position) {
+                    EventBus.getDefault().post(new TabClickEvent(position));
+                }
+            }
+        });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
-                (SlidingTabLayout) findViewById(R.id.tabLayoutTabs), buttonAddShow);
+                tabs, buttonAddShow);
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
@@ -466,6 +476,11 @@ public class ShowsActivity extends BaseTopActivity implements
         ContentValues values = new ContentValues();
         values.put(Shows.LASTUPDATED, 0);
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
+    }
+
+    @Override
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.rootLayoutShows);
     }
 
     /**

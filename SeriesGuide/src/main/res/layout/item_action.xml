@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textViewItemActionTitle"
-    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="end"
-    android:gravity="center_vertical|start"
+    tools:drawableLeft="?attr/drawableLink"
     tools:text="Some Extension Action" />

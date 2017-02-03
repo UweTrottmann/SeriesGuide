@@ -1,14 +1,15 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -31,14 +32,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.databinding.FragmentMovieBinding;
-import com.battlelancer.seriesguide.databinding.RatingsMoviesBinding;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
@@ -63,6 +65,7 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -98,32 +101,66 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
     private static final String TAG = "Movie Details";
 
-    private FragmentMovieBinding binding;
+    private Unbinder unbinder;
+    @BindView(R.id.rootLayoutMovie) FrameLayout rootLayoutMovie;
+    @BindView(R.id.progressBar) View progressBar;
+    @BindView(R.id.containerMovieButtons) View containerMovieButtons;
+    @BindView(R.id.dividerMovieButtons) View dividerMovieButtons;
+    @BindView(R.id.buttonMovieCheckIn) Button buttonMovieCheckIn;
+    @BindView(R.id.buttonMovieWatched) Button buttonMovieWatched;
+    @BindView(R.id.buttonMovieCollected) Button buttonMovieCollected;
+    @BindView(R.id.buttonMovieWatchlisted) Button buttonMovieWatchlisted;
+    @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.textViewRatingsTmdbValue) TextView textViewRatingsTmdbValue;
+    @BindView(R.id.textViewRatingsTmdbVotes) TextView textViewRatingsTmdbVotes;
+    @BindView(R.id.textViewRatingsTraktVotes) TextView textViewRatingsTraktVotes;
+    @BindView(R.id.textViewRatingsTraktValue) TextView textViewRatingsTraktValue;
+    @BindView(R.id.textViewRatingsTraktUserLabel) TextView textViewRatingsTraktUserLabel;
+    @BindView(R.id.textViewRatingsTraktUser) TextView textViewRatingsTraktUser;
+    @BindView(R.id.contentContainerMovie) NestedScrollView contentContainerMovie;
+    @Nullable @BindView(R.id.contentContainerMovieRight) NestedScrollView
+            contentContainerMovieRight;
+    @BindView(R.id.frameLayoutMoviePoster) FrameLayout frameLayoutMoviePoster;
+    @BindView(R.id.imageViewMoviePoster) ImageView imageViewMoviePoster;
+    @BindView(R.id.textViewMovieTitle) TextView textViewMovieTitle;
+    @BindView(R.id.textViewMovieDescription) TextView textViewMovieDescription;
+    @BindView(R.id.textViewMovieDate) TextView textViewMovieDate;
+    @BindView(R.id.textViewMovieGenresLabel) View textViewMovieGenresLabel;
+    @BindView(R.id.textViewMovieGenres) TextView textViewMovieGenres;
+    @BindView(R.id.containerCast) ViewGroup containerCast;
+    @BindView(R.id.labelCast) View labelCast;
+    @BindView(R.id.containerCrew) ViewGroup containerCrew;
+    @BindView(R.id.labelCrew) View labelCrew;
+    @BindView(R.id.buttonMovieLanguage) Button buttonMovieLanguage;
+    @BindView(R.id.buttonMovieComments) Button buttonMovieComments;
+    @BindView(R.id.containerMovieActions) ViewGroup containerMovieActions;
 
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
     private int currentLanguageIndex;
     private Handler handler = new Handler();
+    private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false);
+        View view = inflater.inflate(R.layout.fragment_movie, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.textViewMovieGenresLabel.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        textViewMovieGenresLabel.setVisibility(View.GONE);
 
         // important action buttons
-        binding.movieButtons.containerMovieButtons.setVisibility(View.GONE);
-        binding.movieRatings.containerRatings.setVisibility(View.GONE);
+        containerMovieButtons.setVisibility(View.GONE);
+        containerRatings.setVisibility(View.GONE);
 
         // language button
-        binding.buttonMovieLanguage.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), binding.buttonMovieLanguage,
+        buttonMovieLanguage.setVisibility(View.GONE);
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieLanguage,
                 R.attr.drawableLanguage);
-        CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language);
-        binding.buttonMovieLanguage.setOnClickListener(new OnClickListener() {
+        CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
+        buttonMovieLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
@@ -133,15 +170,15 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
 
         // comments button
-        binding.buttonMovieComments.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), binding.buttonMovieComments,
+        buttonMovieComments.setVisibility(View.GONE);
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieComments,
                 R.attr.drawableComments);
 
         // cast and crew
         setCastVisibility(false);
         setCrewVisibility(false);
 
-        return binding.getRoot();
+        return view;
     }
 
     @Override
@@ -179,31 +216,35 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             int pixelInsetTop = config.getPixelInsetTop(false);
 
             // action bar height is pre-set as top margin, add to it
-            decorationHeightPx = pixelInsetTop + binding.contentContainerMovie.getPaddingTop();
-            binding.contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0);
+            decorationHeightPx = pixelInsetTop + contentContainerMovie.getPaddingTop();
+            contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0);
 
             // dual pane layout?
-            if (binding.contentContainerMovieRight != null) {
-                binding.contentContainerMovieRight.setPadding(0, decorationHeightPx, 0, 0);
+            if (contentContainerMovieRight != null) {
+                contentContainerMovieRight.setPadding(0, decorationHeightPx, 0, 0);
             }
         } else {
             // content container has actionBarSize top padding by default
-            decorationHeightPx = binding.contentContainerMovie.getPaddingTop();
+            decorationHeightPx = contentContainerMovie.getPaddingTop();
         }
 
         // show toolbar title and background when scrolling
         final int defaultPaddingPx = getResources().getDimensionPixelSize(R.dimen.default_padding);
         NestedScrollView.OnScrollChangeListener scrollChangeListener
                 = new ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx);
-        binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener);
-        if (binding.contentContainerMovieRight != null) {
-            binding.contentContainerMovieRight.setOnScrollChangeListener(scrollChangeListener);
+        contentContainerMovie.setOnScrollChangeListener(scrollChangeListener);
+        if (contentContainerMovieRight != null) {
+            contentContainerMovieRight.setOnScrollChangeListener(scrollChangeListener);
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        BaseNavDrawerActivity.ServiceActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        setMovieButtonsEnabled(event == null);
 
         EventBus.getDefault().register(this);
     }
@@ -221,6 +262,23 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         super.onStop();
 
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Always cancel the request here, this is safe to call even if the image has been loaded.
+        // This ensures that the anonymous callback we have does not prevent the fragment from
+        // being garbage collected. It also prevents our callback from getting invoked even after the
+        // fragment is destroyed.
+        Picasso.with(getContext()).cancelRequest(imageViewMoviePoster);
+        // same for Palette task
+        if (paletteAsyncTask != null) {
+            paletteAsyncTask.cancel(true);
+        }
+
+        unbinder.unbind();
     }
 
     @Override
@@ -291,9 +349,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         final boolean isWatched = movieDetails.isWatched;
         final int rating = movieDetails.userRating;
 
-        binding.textViewMovieTitle.setText(tmdbMovie.title);
+        textViewMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);
-        binding.textViewMovieDescription.setText(tmdbMovie.overview);
+        textViewMovieDescription.setText(tmdbMovie.overview);
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
@@ -304,12 +362,11 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
         releaseAndRuntime.append(
                 getString(R.string.runtime_minutes, String.valueOf(tmdbMovie.runtime)));
-        binding.textViewMovieDate.setText(releaseAndRuntime.toString());
+        textViewMovieDate.setText(releaseAndRuntime.toString());
 
         // check-in button
         final String title = tmdbMovie.title;
-        Button checkinButton = binding.movieButtons.buttonMovieCheckIn;
-        checkinButton.setOnClickListener(new OnClickListener() {
+        buttonMovieCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a check-in dialog
@@ -319,31 +376,29 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 Utils.trackAction(getActivity(), TAG, "Check-In");
             }
         });
-        CheatSheet.setup(checkinButton);
+        CheatSheet.setup(buttonMovieCheckIn);
 
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
-        checkinButton.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-        binding.movieButtons.dividerMovieButtons.setVisibility(
+        buttonMovieCheckIn.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+        dividerMovieButtons.setVisibility(
                 displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
-        Button watchedButton = binding.movieButtons.buttonMovieWatched;
         if (isConnectedToTrakt) {
-            watchedButton.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
-            CheatSheet.setup(watchedButton,
+            buttonMovieWatched.setText(
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(watchedButton, 0, isWatched
+            CheatSheet.setup(buttonMovieWatched,
+                    isWatched ? R.string.action_unwatched : R.string.action_watched);
+            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0, isWatched
                     ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                     R.attr.drawableWatched)
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                             R.attr.drawableWatch), 0, 0);
-            watchedButton.setOnClickListener(new OnClickListener() {
+            buttonMovieWatched.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // disable button, will be re-enabled on data reload once action completes
-                    v.setEnabled(false);
                     if (isWatched) {
                         MovieTools.unwatchedMovie(SgApp.from(getActivity()), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
@@ -353,28 +408,24 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     }
                 }
             });
-            watchedButton.setEnabled(true);
-            watchedButton.setVisibility(View.VISIBLE);
+            buttonMovieWatched.setVisibility(View.VISIBLE);
         } else {
-            watchedButton.setVisibility(View.GONE);
+            buttonMovieWatched.setVisibility(View.GONE);
         }
 
         // collected button
-        Button collectedButton = binding.movieButtons.buttonMovieCollected;
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(collectedButton, 0,
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
                 inCollection
                         ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableCollect), 0, 0);
-        collectedButton.setText(inCollection ? R.string.action_collection_remove
+        buttonMovieCollected.setText(inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
-        CheatSheet.setup(collectedButton, inCollection ? R.string.action_collection_remove
+        CheatSheet.setup(buttonMovieCollected, inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
-        collectedButton.setOnClickListener(new OnClickListener() {
+        buttonMovieCollected.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 if (inCollection) {
                     MovieTools.removeFromCollection(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
@@ -384,24 +435,20 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 }
             }
         });
-        collectedButton.setEnabled(true);
 
         // watchlist button
-        Button watchlistedButton = binding.movieButtons.buttonMovieWatchlisted;
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(watchlistedButton, 0,
+        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
                 inWatchlist
                         ? R.drawable.ic_listed
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableList), 0, 0);
-        watchlistedButton.setText(
+        buttonMovieWatchlisted.setText(
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
-        CheatSheet.setup(watchlistedButton,
+        CheatSheet.setup(buttonMovieWatchlisted,
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
-        watchlistedButton.setOnClickListener(new OnClickListener() {
+        buttonMovieWatchlisted.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 if (inWatchlist) {
                     MovieTools.removeFromWatchlist(SgApp.from(getActivity()), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
@@ -411,62 +458,59 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 }
             }
         });
-        watchlistedButton.setEnabled(true);
 
         // show button bar
-        binding.movieButtons.containerMovieButtons.setVisibility(View.VISIBLE);
+        containerMovieButtons.setVisibility(View.VISIBLE);
 
         // language button
         LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(getContext());
         if (languageData != null) {
             currentLanguageIndex = languageData.languageIndex;
-            binding.buttonMovieLanguage.setText(languageData.languageString);
+            buttonMovieLanguage.setText(languageData.languageString);
         } else {
-            binding.buttonMovieLanguage.setText(null);
+            buttonMovieLanguage.setText(null);
         }
-        binding.buttonMovieLanguage.setVisibility(View.VISIBLE);
+        buttonMovieLanguage.setVisibility(View.VISIBLE);
 
         // ratings
-        RatingsMoviesBinding ratings = binding.movieRatings;
-        ratings.textViewRatingsTmdbValue.setText(
+        textViewRatingsTmdbValue.setText(
                 TraktTools.buildRatingString(tmdbMovie.vote_average));
-        ratings.textViewRatingsTmdbVotes.setText(
+        textViewRatingsTmdbVotes.setText(
                 TraktTools.buildRatingVotesString(getActivity(), tmdbMovie.vote_count));
         if (traktRatings != null) {
-            ratings.textViewRatingsTraktVotes.setText(
+            textViewRatingsTraktVotes.setText(
                     TraktTools.buildRatingVotesString(getActivity(), traktRatings.votes));
-            ratings.textViewRatingsTraktValue.setText(
+            textViewRatingsTraktValue.setText(
                     TraktTools.buildRatingString(traktRatings.rating));
         }
         // if movie is not in database, can't handle user ratings
-        RelativeLayout ratingsContainer = binding.movieRatings.containerRatings;
         if (!inCollection && !inWatchlist && !isWatched) {
-            ratings.textViewRatingsTraktUserLabel.setVisibility(View.GONE);
-            ratings.textViewRatingsTraktUser.setVisibility(View.GONE);
-            ratingsContainer.setClickable(false);
-            ratingsContainer.setLongClickable(false); // cheat sheet
+            textViewRatingsTraktUserLabel.setVisibility(View.GONE);
+            textViewRatingsTraktUser.setVisibility(View.GONE);
+            containerRatings.setClickable(false);
+            containerRatings.setLongClickable(false); // cheat sheet
         } else {
-            ratings.textViewRatingsTraktUserLabel.setVisibility(View.VISIBLE);
-            ratings.textViewRatingsTraktUser.setVisibility(View.VISIBLE);
-            ratings.textViewRatingsTraktUser.setText(
+            textViewRatingsTraktUserLabel.setVisibility(View.VISIBLE);
+            textViewRatingsTraktUser.setVisibility(View.VISIBLE);
+            textViewRatingsTraktUser.setText(
                     TraktTools.buildUserRatingString(getActivity(), rating));
-            ratingsContainer.setOnClickListener(new OnClickListener() {
+            containerRatings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     rateMovie();
                 }
             });
-            CheatSheet.setup(ratingsContainer, R.string.action_rate);
+            CheatSheet.setup(containerRatings, R.string.action_rate);
         }
-        ratingsContainer.setVisibility(View.VISIBLE);
+        containerRatings.setVisibility(View.VISIBLE);
 
         // genres
-        binding.textViewMovieGenresLabel.setVisibility(View.VISIBLE);
-        Utils.setValueOrPlaceholder(binding.textViewMovieGenres,
+        textViewMovieGenresLabel.setVisibility(View.VISIBLE);
+        Utils.setValueOrPlaceholder(textViewMovieGenres,
                 TmdbTools.buildGenresString(tmdbMovie.genres));
 
         // trakt comments link
-        binding.buttonMovieComments.setOnClickListener(new OnClickListener() {
+        buttonMovieComments.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -476,36 +520,35 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         });
-        binding.buttonMovieComments.setVisibility(View.VISIBLE);
+        buttonMovieComments.setVisibility(View.VISIBLE);
 
         // load poster, cache on external storage
-        FrameLayout moviePosterFrame = binding.frameLayoutMoviePoster;
         if (TextUtils.isEmpty(tmdbMovie.poster_path)) {
-            moviePosterFrame.setClickable(false);
-            moviePosterFrame.setFocusable(false);
+            frameLayoutMoviePoster.setClickable(false);
+            frameLayoutMoviePoster.setFocusable(false);
         } else {
             final String smallImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path;
-            final ImageView movieImageView = binding.imageViewMoviePoster;
             ServiceUtils.loadWithPicasso(getActivity(), smallImageUrl)
-                    .into(movieImageView, new Callback.EmptyCallback() {
+                    .into(imageViewMoviePoster, new Callback.EmptyCallback() {
                         @Override
                         public void onSuccess() {
-                            Bitmap bitmap
-                                    = ((BitmapDrawable) movieImageView.getDrawable()).getBitmap();
-                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    int color = palette.getVibrantColor(Color.WHITE);
-                                    color = ColorUtils.setAlphaComponent(color, 50);
-                                    binding.rootLayoutMovie.setBackgroundColor(color);
-                                }
-                            });
+                            Bitmap bitmap = ((BitmapDrawable) imageViewMoviePoster
+                                    .getDrawable()).getBitmap();
+                            paletteAsyncTask = Palette.from(bitmap)
+                                    .generate(new Palette.PaletteAsyncListener() {
+                                        @Override
+                                        public void onGenerated(Palette palette) {
+                                            int color = palette.getVibrantColor(Color.WHITE);
+                                            color = ColorUtils.setAlphaComponent(color, 50);
+                                            rootLayoutMovie.setBackgroundColor(color);
+                                        }
+                                    });
                         }
                     });
             // click listener for high resolution poster
-            moviePosterFrame.setFocusable(true);
-            moviePosterFrame.setOnClickListener(new OnClickListener() {
+            frameLayoutMoviePoster.setFocusable(true);
+            frameLayoutMoviePoster.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
@@ -531,8 +574,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             setCastVisibility(false);
         } else {
             setCastVisibility(true);
-            PeopleListHelper.populateMovieCast(getActivity(), binding.moviePeople.containerCast,
-                    credits, TAG);
+            PeopleListHelper.populateMovieCast(getActivity(), containerCast, credits, TAG);
         }
 
         // crew members
@@ -540,19 +582,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             setCrewVisibility(false);
         } else {
             setCrewVisibility(true);
-            PeopleListHelper.populateMovieCrew(getActivity(), binding.moviePeople.containerCrew,
-                    credits, TAG);
+            PeopleListHelper.populateMovieCrew(getActivity(), containerCrew, credits, TAG);
         }
-    }
-
-    @SuppressWarnings("unused")
-    @Subscribe
-    public void onEvent(MovieTools.MovieChangedEvent event) {
-        if (event.movieTmdbId != tmdbId) {
-            return;
-        }
-        // re-query some movie details to update button states
-        restartMovieLoader();
     }
 
     @Override
@@ -562,6 +593,32 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
         loadMovieActionsDelayed();
+    }
+
+    @Subscribe
+    public void onEvent(MovieTools.MovieChangedEvent event) {
+        if (event.movieTmdbId != tmdbId) {
+            return;
+        }
+        // re-query to update movie details
+        restartMovieLoader();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceActiveEvent event) {
+        setMovieButtonsEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        setMovieButtonsEnabled(true);
+    }
+
+    private void setMovieButtonsEnabled(boolean enabled) {
+        buttonMovieCheckIn.setEnabled(enabled);
+        buttonMovieWatched.setEnabled(enabled);
+        buttonMovieCollected.setEnabled(enabled);
+        buttonMovieWatchlisted.setEnabled(enabled);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -574,10 +631,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         String languageCode = getResources().getStringArray(
                 R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_MOVIES, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
                 .apply();
 
-        binding.progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         // reload movie details and trailers (but not cast/crew info which is not language dependent)
         restartMovieLoader();
@@ -610,7 +667,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
         ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                binding.containerMovieActions, actions, TAG);
+                getActivity().getTheme(), containerMovieActions, actions, TAG);
     }
 
     Runnable movieActionsRunnable = new Runnable() {
@@ -638,13 +695,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private void setCrewVisibility(boolean visible) {
-        binding.moviePeople.labelCrew.setVisibility(visible ? View.VISIBLE : View.GONE);
-        binding.moviePeople.containerCrew.setVisibility(visible ? View.VISIBLE : View.GONE);
+        labelCrew.setVisibility(visible ? View.VISIBLE : View.GONE);
+        containerCrew.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void setCastVisibility(boolean visible) {
-        binding.moviePeople.labelCast.setVisibility(visible ? View.VISIBLE : View.GONE);
-        binding.moviePeople.containerCast.setVisibility(visible ? View.VISIBLE : View.GONE);
+        labelCast.setVisibility(visible ? View.VISIBLE : View.GONE);
+        containerCast.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void restartMovieLoader() {
@@ -667,7 +724,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 return;
             }
             MovieDetailsFragment.this.movieDetails = movieDetails;
-            binding.progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
 
             // we need at least values from database or tmdb
             if (movieDetails.tmdbMovie() != null) {
@@ -682,7 +739,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 } else {
                     emptyText = getString(R.string.offline);
                 }
-                binding.textViewMovieDescription.setText(emptyText);
+                textViewMovieDescription.setText(emptyText);
             }
         }
 

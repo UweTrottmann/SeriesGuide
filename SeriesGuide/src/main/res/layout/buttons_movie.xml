@@ -1,85 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:showIn="@layout/fragment_movie">
 
     <LinearLayout
-        android:id="@+id/containerMovieButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/containerMovieHeader"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:minHeight="@dimen/buttons_min_height"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonMovieWatched"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="?attr/drawableWatch"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="8dp"
-                android:text="@string/action_watched" />
-
-            <Button
-                android:id="@+id/buttonMovieWatchlisted"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="?attr/drawableList"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="8dp"
-                android:text="@string/watchlist_add" />
-
-            <Button
-                android:id="@+id/buttonMovieCollected"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="?attr/drawableCollect"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="8dp"
-                android:text="@string/action_collection_add" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/dividerMovieButtons"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
+        android:minHeight="@dimen/buttons_min_height"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonMovieCheckIn"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:contentDescription="@string/checkin"
-            android:drawableLeft="?attr/drawableCheckin"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical|start"
-            android:text="@string/checkin"
-            android:textAllCaps="false"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="@dimen/text_size_caption_sg" />
+            android:id="@+id/buttonMovieWatched"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableWatch"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/action_watched" />
+
+        <Button
+            android:id="@+id/buttonMovieWatchlisted"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableList"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/watchlist_add" />
+
+        <Button
+            android:id="@+id/buttonMovieCollected"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="?attr/drawableCollect"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="@string/action_collection_add" />
 
     </LinearLayout>
 
-</layout>
+    <View
+        android:id="@+id/dividerMovieButtons"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
+        android:background="?attr/sgColorDivider" />
+
+    <Button
+        android:id="@+id/buttonMovieCheckIn"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_button"
+        android:layout_marginRight="@dimen/padding_button"
+        android:contentDescription="@string/checkin"
+        android:drawableLeft="?attr/drawableCheckin"
+        android:text="@string/checkin" />
+
+</LinearLayout>

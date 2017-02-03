@@ -30,12 +30,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -289,6 +291,25 @@ public class Utils {
         item.setTitle(item.getTitle() + " ◀");
     }
 
+    public static void setSwipeRefreshLayoutColors(Resources.Theme theme,
+            SwipeRefreshLayout swipeRefreshLayout) {
+        int accentColorResId = Utils.resolveAttributeToResourceId(theme, R.attr.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+    }
+
+    public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
+        searchView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (searchView.requestFocus()) {
+                    InputMethodManager imm = (InputMethodManager)
+                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
+    }
+
     /**
      * Clear all files in files directory on external storage.
      */
@@ -311,6 +332,9 @@ public class Utils {
     /**
      * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
      * without any resizing or cropping.
+     *
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
      */
     public static void loadPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
@@ -321,6 +345,9 @@ public class Utils {
     /**
      * Tries to load the given TVDb show poster into the given {@link ImageView} without any
      * resizing or cropping. In addition sets alpha on the view.
+     *
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
      */
     public static void loadPosterBackground(Context context, @NonNull ImageView imageView,
             String posterPath) {
@@ -341,6 +368,9 @@ public class Utils {
      *
      * <p>The resize dimensions are those used for posters in the show list and change depending on
      * screen size.
+     *
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
      */
     public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
         ServiceUtils.loadWithPicasso(context,
@@ -386,13 +416,18 @@ public class Utils {
                 sha256_hmac.init(secret_key);
             }
 
-            return Base64.encodeToString(sha256_hmac.doFinal(data.getBytes()), Base64.NO_WRAP | Base64.URL_SAFE);
+            return Base64.encodeToString(sha256_hmac.doFinal(data.getBytes()),
+                    Base64.NO_WRAP | Base64.URL_SAFE);
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             Timber.e(e, "Signing image URL failed.");
             return null;
         }
     }
 
+    /**
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
+     */
     public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,
             String posterPath) {
         ServiceUtils.loadWithPicasso(context,
@@ -409,8 +444,10 @@ public class Utils {
      * (ensure image view is set to center inside).
      *
      * <p>The resize dimensions are fixed for all screen sizes. E.g. for items using the show list
-     * layout, use {@link #loadTvdbShowPoster(android.content.Context, android.widget.ImageView,
-     * String)}.
+     * layout, use {@link #loadTvdbShowPoster(Context, ImageView, String)}.
+     *
+     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
+     * be used.
      */
     public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
         ServiceUtils.loadWithPicasso(context, posterUrl)

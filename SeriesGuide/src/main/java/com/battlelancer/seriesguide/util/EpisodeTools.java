@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -22,6 +21,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -165,14 +165,15 @@ public class EpisodeTools {
     }
 
     /**
-     * Sent once sending to services and the database ops are finished.
+     * Posted once the episode task has completed. It may not have been successful.
      */
-    public static class EpisodeActionCompletedEvent {
+    public static class EpisodeTaskCompletedEvent {
+        public final EpisodeTaskTypes.FlagType flagType;
+        public final boolean isSuccessful;
 
-        public EpisodeTaskTypes.FlagType flagType;
-
-        public EpisodeActionCompletedEvent(EpisodeTaskTypes.FlagType type) {
-            flagType = type;
+        public EpisodeTaskCompletedEvent(EpisodeTaskTypes.FlagType flagType, boolean isSuccessful) {
+            this.flagType = flagType;
+            this.isSuccessful = isSuccessful;
         }
     }
 
@@ -201,13 +202,12 @@ public class EpisodeTools {
 
         @Override
         protected void onPreExecute() {
-            // network ops may run long, so immediately show a status toast
             shouldSendToHexagon = HexagonTools.isSignedIn(context);
-            if (shouldSendToHexagon) {
-                Toast.makeText(context, R.string.hexagon_api_queued, Toast.LENGTH_SHORT).show();
-            }
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
+
+            EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
+                    shouldSendToHexagon, shouldSendToTrakt));
         }
 
         @Override
@@ -392,6 +392,8 @@ public class EpisodeTools {
 
         @Override
         protected void onPostExecute(Integer result) {
+            EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+
             // handle errors
             String error = null;
             switch (result) {
@@ -410,43 +412,28 @@ public class EpisodeTools {
                             context.getString(R.string.hexagon));
                     break;
             }
-            if (error != null) {
-                Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-                return;
+            boolean isSuccessful = error == null;
+
+            // post completed status
+            String confirmationText;
+            boolean displaySuccess;
+            if (isSuccessful && shouldSendToTrakt && !canSendToTrakt) {
+                // tell the user this change can not be sent to trakt for now
+                confirmationText = context.getString(R.string.trakt_notice_not_exists);
+                displaySuccess = false;
+            } else {
+                confirmationText = isSuccessful ? flagType.getConfirmationText() : error;
+                displaySuccess = isSuccessful;
             }
+            EventBus.getDefault()
+                    .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
+                            displaySuccess));
+            EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
 
-            // success!
-            // notify UI it may do relevant updates
-            EventBus.getDefault().post(new EpisodeActionCompletedEvent(flagType));
-
-            // update latest episode for the changed show
-            AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
-                    flagType.getShowTvdbId());
-
-            // display success message
-            if (shouldSendToTrakt) {
-                if (canSendToTrakt) {
-                    int status = R.string.trakt_success;
-                    EpisodeTaskTypes.Action action = flagType.getAction();
-                    if (action == EpisodeTaskTypes.Action.SHOW_WATCHED
-                            || action == EpisodeTaskTypes.Action.SHOW_COLLECTED
-                            || action == EpisodeTaskTypes.Action.EPISODE_WATCHED_PREVIOUS) {
-                        // simple ack
-                        Toast.makeText(context,
-                                context.getString(status),
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        // detailed ack
-                        String message = flagType.getNotificationText();
-                        Toast.makeText(context,
-                                message + " " + context.getString(status),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // tell the user this change can not be sent to trakt for now
-                    Toast.makeText(context, R.string.trakt_notice_not_exists, Toast.LENGTH_LONG)
-                            .show();
-                }
+            if (isSuccessful) {
+                // update latest episode for the changed show
+                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
+                        flagType.getShowTvdbId());
             }
         }
     }

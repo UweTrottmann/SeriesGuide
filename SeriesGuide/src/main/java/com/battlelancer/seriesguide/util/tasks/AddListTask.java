@@ -6,14 +6,13 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Task to add a new list.
@@ -33,14 +32,10 @@ public class AddListTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
+    protected Integer doBackgroundAction(Void... params) {
         String listId = getListId();
 
         if (isSendingToHexagon()) {
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return ERROR_NETWORK;
-            }
-
             Lists listsService = HexagonTools.getListsService(getContext());
             if (listsService == null) {
                 return ERROR_HEXAGON_API; // no longer signed in

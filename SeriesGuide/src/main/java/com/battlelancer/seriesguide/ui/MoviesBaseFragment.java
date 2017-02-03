@@ -94,7 +94,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
             return;
         }
 
-        inflater.inflate(R.menu.movies_menu, menu);
+        inflater.inflate(R.menu.movies_lists_menu, menu);
 
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
                 .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getContext()));
@@ -134,7 +134,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     private void changeSortOrder(int sortOrderId) {
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
                 .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
-                .commit();
+                .apply();
 
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
@@ -142,7 +142,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     private void changeSortIgnoreArticles(boolean value) {
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
                 .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
-                .commit();
+                .apply();
 
         // refresh icon state
         getActivity().supportInvalidateOptionsMenu();
@@ -154,6 +154,19 @@ public abstract class MoviesBaseFragment extends Fragment implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
         getLoaderManager().restartLoader(getLoaderId(), null, this);
+    }
+
+    /**
+     * @return The current position in the tab strip.
+     * @see MoviesActivity
+     */
+    protected abstract int getTabPosition(boolean showingNowTab);
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
+        if (event.position == getTabPosition(event.showingNowTab)) {
+            gridView.smoothScrollToPosition(0);
+        }
     }
 
     @Override

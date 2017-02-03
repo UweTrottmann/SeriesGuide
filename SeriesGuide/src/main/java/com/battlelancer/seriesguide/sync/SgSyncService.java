@@ -13,15 +13,15 @@ import timber.log.Timber;
  */
 public class SgSyncService extends Service {
 
-    private static final Object sSyncAdapterLock = new Object();
-    private SgSyncAdapter sSyncAdapter;
+    private static final Object syncAdapterLock = new Object();
+    private static SgSyncAdapter syncAdapter = null;
 
     @Override
     public void onCreate() {
         Timber.d("Creating sync service");
-        synchronized (sSyncAdapterLock) {
-            if (sSyncAdapter == null) {
-                sSyncAdapter = new SgSyncAdapter((SgApp) getApplication(), true);
+        synchronized (syncAdapterLock) {
+            if (syncAdapter == null) {
+                syncAdapter = new SgSyncAdapter((SgApp) getApplication(), true);
             }
         }
     }
@@ -29,7 +29,7 @@ public class SgSyncService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Timber.d("Binding sync adapter");
-        return sSyncAdapter.getSyncAdapterBinder();
+        return syncAdapter.getSyncAdapterBinder();
     }
 
 }

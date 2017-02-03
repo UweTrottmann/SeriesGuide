@@ -33,9 +33,9 @@
   <string name="web_search">Web araması</string>
   <string name="add_to_homescreen">Kısayol</string>
   <string name="action_open">Açık</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Manuel senkronizasyon</string>
+  <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
+  <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
   <!-- Search -->
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
   <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
   <string name="database_error">Veri değiştirilemedi.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
+  <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
@@ -83,7 +83,7 @@
   <string name="show_contentrating">İçerik Derecelendirmesi</string>
   <string name="show_release_times">Yayın zamanı</string>
   <string name="episode_directors">Yönetmen</string>
-  <string name="episode_gueststars">Konuk oyuncular</string>
+  <string name="episode_gueststars">Konuk Oyuncular</string>
   <string name="episode_writers">Yazarlar</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
@@ -133,10 +133,10 @@
   <string name="action_shows_filter_hidden">Gizli</string>
   <string name="action_shows_sort">Dizileri sırala</string>
   <string name="action_shows_sort_title">Başlık</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Son bölüme göre</string>
+  <string name="action_shows_sort_oldest_episode">En eski bölüme göre</string>
+  <string name="action_shows_sort_last_watched">Son izlenenlere göre</string>
+  <string name="action_shows_sort_remaining">Kalan bölümlere göre</string>
   <string name="action_shows_sort_favorites">Önce favoriler</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_marknext">Sıradaki bölüm izlendi</string>
@@ -176,7 +176,7 @@
   <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
   <string name="action_try_any_language">Herhangi bir dil deneyin</string>
   <string name="action_try_again">Yeniden deneyin</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
   <string name="add_all">Tümünü ekle</string>
   <string name="add_multiple">Tüm diziler kısa süre içinde listenizde görünecektir.</string>
   <string name="add_started">%s az sonra dizi listenizde görünecek.</string>
@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Listeleri tekrar sırala</string>
   <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
   <!-- Movies -->
+  <string name="title_discover">Keşfet</string>
+  <string name="title_popular">Popüler</string>
+  <string name="title_digital_releases">Dijital Yayınlanan</string>
+  <string name="title_disc_releases">Disk\'i Yayınlanan</string>
+  <string name="movies_in_theatres">Vizyonda</string>
   <string name="movies_collection">Koleksiyon</string>
   <string name="movies_watchlist">İzleme listesi</string>
   <string name="watchlist_add">İzleme Listesine Ekle</string>
@@ -363,7 +368,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Diğer</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">SeriesGuide verilerini otomatik olarak senkronize et ve güncelle</string>
   <string name="pref_autobackup">Otomatik yedekleme</string>
   <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
   <string name="backup">Yedekle/Geri Yükle</string>

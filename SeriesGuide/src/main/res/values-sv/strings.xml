@@ -34,9 +34,9 @@
   <string name="web_search">Webbsökning</string>
   <string name="add_to_homescreen">Genväg</string>
   <string name="action_open">Öppna</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Synkronisera manuellt</string>
+  <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
+  <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
   <!-- Search -->
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
@@ -49,8 +49,8 @@
   <string name="app_not_available">Ingen app tillgänglig för att hantera detta.</string>
   <string name="people_empty">Ingen här? Tryck för att försöka igen.</string>
   <string name="database_error">Kunde inte modifiera data.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Försök att säkerhetskopiera i inställningar, installera om och återställ.</string>
+  <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
   <!-- Sharing -->
   <string name="share">Dela</string>
   <string name="share_show">Dela serie</string>
@@ -134,10 +134,10 @@
   <string name="action_shows_filter_hidden">Dolda</string>
   <string name="action_shows_sort">Sortera serier</string>
   <string name="action_shows_sort_title">Titel</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Senaste avsnitt</string>
+  <string name="action_shows_sort_oldest_episode">Äldsta avsnitt</string>
+  <string name="action_shows_sort_last_watched">Senast sedd</string>
+  <string name="action_shows_sort_remaining">Återstående avsnitt</string>
   <string name="action_shows_sort_favorites">Favoriter först</string>
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_marknext">Sett nästa avsnitt</string>
@@ -177,7 +177,7 @@
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="action_try_any_language">Testa alla språk</string>
   <string name="action_try_again">Försök igen</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
   <string name="add_all">Lägg till alla</string>
   <string name="add_multiple">Alla serier kommer att visas i din serielista snart.</string>
   <string name="add_started">%s kommer snart att visas i din serielista.</string>
@@ -200,6 +200,11 @@
   <string name="action_lists_reorder">Sortera om listor</string>
   <string name="error_name_already_exists">En lista med det här namnet finns redan</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Bevakningslista</string>
   <string name="watchlist_add">Lägg till i bevakningslistan</string>
@@ -329,7 +334,7 @@
   <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
   <!-- About screen -->
   <string name="licence_tvdb">Den här appen använder data och bilder från TheTVDB under licensen CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>
@@ -364,7 +369,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Övrigt</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Synkronisera och uppdatera SeriesGuide data automatiskt</string>
   <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
   <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
   <string name="backup">Säkerhetskopiera/återställ</string>

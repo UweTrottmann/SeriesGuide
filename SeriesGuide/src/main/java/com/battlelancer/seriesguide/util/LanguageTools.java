@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import java.util.Locale;
 
 /**
  * Helper methods for language strings and codes.
@@ -93,9 +94,18 @@ public class LanguageTools {
      */
     @Nullable
     public static LanguageData getMovieLanguageData(Context context) {
-        return getLanguageDataFor(context,
-                DisplaySettings.getMoviesLanguage(context),
-                R.array.languageCodesMovies, R.array.languagesMovies);
+        String languageCodeCurrent = DisplaySettings.getMoviesLanguage(context);
+        String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesMovies);
+        for (int i = 0; i < languageCodes.length; i++) {
+            String languageCode = languageCodes[i];
+            if (languageCode.equals(languageCodeCurrent)) {
+                String languageDisplayName = new Locale(languageCode.substring(0, 2),
+                        languageCode.substring(3)).getDisplayName();
+                return new LanguageData(i, languageCode, languageDisplayName);
+            }
+        }
+
+        return null;
     }
 
     @Nullable

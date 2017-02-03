@@ -59,7 +59,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         // movie comments?
         int movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            Integer movieTraktId = MovieTools.getInstance(app).lookupTraktId(movieTmdbId);
+            Integer movieTraktId = app.getMovieTools().lookupTraktId(movieTmdbId);
             if (movieTraktId != null) {
                 if (movieTraktId == -1) {
                     return buildResultFailure(R.string.trakt_error_not_exists);

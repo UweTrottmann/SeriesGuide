@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -183,7 +184,9 @@ public class ListsActivity extends BaseTopActivity {
 
     private void showListManageDialog(int selectedListIndex) {
         String listId = listsAdapter.getListId(selectedListIndex);
-        ListManageDialogFragment.show(listId, getSupportFragmentManager());
+        if (listId != null) {
+            ListManageDialogFragment.show(listId, getSupportFragmentManager());
+        }
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -225,5 +228,10 @@ public class ListsActivity extends BaseTopActivity {
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());
+    }
+
+    @Override
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.rootLayoutTabs);
     }
 }

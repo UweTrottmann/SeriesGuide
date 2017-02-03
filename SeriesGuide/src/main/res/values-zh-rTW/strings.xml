@@ -48,7 +48,7 @@
   <string name="app_not_available">沒有應用程式可以處理此需求</string>
   <string name="people_empty">什麼東西都沒有？ ！點擊以在試一次。</string>
   <string name="database_error">無法修改資料。</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">嘗試在設置中備份，然後重新安裝應用並恢復備份。</string>
   <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
   <!-- Sharing -->
   <string name="share">分享</string>
@@ -198,6 +198,11 @@
   <string name="action_lists_reorder">重新排序清單</string>
   <string name="error_name_already_exists">此名稱的清單已存在。</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">收藏</string>
   <string name="movies_watchlist">待看清單</string>
   <string name="watchlist_add">新增至待看清單</string>

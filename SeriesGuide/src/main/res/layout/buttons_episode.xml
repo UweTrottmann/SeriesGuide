@@ -65,18 +65,15 @@
 
     <Button
         android:id="@+id/buttonEpisodeCheckin"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginLeft="@dimen/padding_button"
+        android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
         android:drawableLeft="?attr/drawableCheckin"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/checkin"
-        android:textAllCaps="false"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="@dimen/text_size_caption_sg" />
+        android:text="@string/checkin" />
 
 </LinearLayout>

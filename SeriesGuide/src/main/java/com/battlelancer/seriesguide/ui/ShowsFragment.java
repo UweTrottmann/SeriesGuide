@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
@@ -40,6 +41,7 @@ import com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSort
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
 import com.battlelancer.seriesguide.widgets.HeaderGridView;
@@ -58,25 +60,17 @@ public class ShowsFragment extends Fragment implements
     private static final String TAG = "Shows";
     private static final String TAG_FIRST_RUN = "First Run";
 
-    private ShowsAdapter mAdapter;
+    private int sortOrderId;
+    private boolean isSortFavoritesFirst;
+    private boolean isSortIgnoreArticles;
+    private boolean isFilterFavorites;
+    private boolean isFilterUnwatched;
+    private boolean isFilterUpcoming;
+    private boolean isFilterHidden;
 
-    private HeaderGridView mGrid;
-
-    private int mSortOrderId;
-
-    private boolean mIsSortFavoritesFirst;
-
-    private boolean mIsSortIgnoreArticles;
-
-    private boolean mIsFilterFavorites;
-
-    private boolean mIsFilterUnwatched;
-
-    private boolean mIsFilterUpcoming;
-
-    private boolean mIsFilterHidden;
-
-    private Handler mHandler;
+    private ShowsAdapter adapter;
+    private HeaderGridView gridView;
+    private Handler handler;
 
     public static ShowsFragment newInstance() {
         return new ShowsFragment();
@@ -87,6 +81,7 @@ public class ShowsFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
+        gridView = ButterKnife.findById(v, android.R.id.list);
         v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +91,7 @@ public class ShowsFragment extends Fragment implements
         v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mIsFilterFavorites = mIsFilterUnwatched = mIsFilterUpcoming = mIsFilterHidden
+                isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden
                         = false;
 
                 // already start loading, do not need to wait on saving prefs
@@ -126,24 +121,23 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        mAdapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
+        adapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
 
         // setup grid view
-        mGrid = (HeaderGridView) getView().findViewById(android.R.id.list);
         // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(mGrid, AndroidUtils.isLollipopOrHigher());
+        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
             FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
-                    .inflate(R.layout.item_first_run, mGrid, false);
-            mGrid.addHeaderView(headerView);
+                    .inflate(R.layout.item_first_run, gridView, false);
+            gridView.addHeaderView(headerView);
         }
-        mGrid.setAdapter(mAdapter);
-        mGrid.setOnItemClickListener(this);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
 
         // hide floating action button when scrolling shows
         FloatingActionButton buttonAddShow = (FloatingActionButton) getActivity().findViewById(
                 R.id.buttonShowsAdd);
-        mGrid.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
+        gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
@@ -154,14 +148,14 @@ public class ShowsFragment extends Fragment implements
     }
 
     private void getSortAndFilterSettings() {
-        mIsFilterFavorites = ShowsDistillationSettings.isFilteringFavorites(getActivity());
-        mIsFilterUnwatched = ShowsDistillationSettings.isFilteringUnwatched(getActivity());
-        mIsFilterUpcoming = ShowsDistillationSettings.isFilteringUpcoming(getActivity());
-        mIsFilterHidden = ShowsDistillationSettings.isFilteringHidden(getActivity());
+        isFilterFavorites = ShowsDistillationSettings.isFilteringFavorites(getActivity());
+        isFilterUnwatched = ShowsDistillationSettings.isFilteringUnwatched(getActivity());
+        isFilterUpcoming = ShowsDistillationSettings.isFilteringUpcoming(getActivity());
+        isFilterHidden = ShowsDistillationSettings.isFilteringHidden(getActivity());
 
-        mSortOrderId = ShowsDistillationSettings.getSortOrderId(getActivity());
-        mIsSortFavoritesFirst = ShowsDistillationSettings.isSortFavoritesFirst(getActivity());
-        mIsSortIgnoreArticles = DisplaySettings.isSortOrderIgnoringArticles(getActivity());
+        sortOrderId = ShowsDistillationSettings.getSortOrderId(getActivity());
+        isSortFavoritesFirst = ShowsDistillationSettings.isSortFavoritesFirst(getActivity());
+        isSortIgnoreArticles = DisplaySettings.isSortOrderIgnoringArticles(getActivity());
     }
 
     private void updateEmptyView() {
@@ -169,10 +163,10 @@ public class ShowsFragment extends Fragment implements
             return;
         }
 
-        View oldEmptyView = mGrid.getEmptyView();
+        View oldEmptyView = gridView.getEmptyView();
 
         View emptyView;
-        if (mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming || mIsFilterHidden) {
+        if (isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden) {
             emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
         } else {
             emptyView = getView().findViewById(R.id.emptyViewShows);
@@ -183,7 +177,7 @@ public class ShowsFragment extends Fragment implements
         }
 
         if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
+            gridView.setEmptyView(emptyView);
         }
     }
 
@@ -239,19 +233,19 @@ public class ShowsFragment extends Fragment implements
 
         // set filter icon state
         menu.findItem(R.id.menu_action_shows_filter)
-                .setIcon(mIsFilterFavorites || mIsFilterUnwatched || mIsFilterUpcoming
-                        || mIsFilterHidden ?
+                .setIcon(isFilterFavorites || isFilterUnwatched || isFilterUpcoming
+                        || isFilterHidden ?
                         R.drawable.ic_action_filter_selected_24dp : R.drawable.ic_action_filter);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
-                .setChecked(mIsFilterFavorites);
+                .setChecked(isFilterFavorites);
         menu.findItem(R.id.menu_action_shows_filter_unwatched)
-                .setChecked(mIsFilterUnwatched);
+                .setChecked(isFilterUnwatched);
         menu.findItem(R.id.menu_action_shows_filter_upcoming)
-                .setChecked(mIsFilterUpcoming);
+                .setChecked(isFilterUpcoming);
         menu.findItem(R.id.menu_action_shows_filter_hidden)
-                .setChecked(mIsFilterHidden);
+                .setChecked(isFilterHidden);
 
         // set current sort order and check box states
         MenuItem sortTitleItem = menu.findItem(R.id.menu_action_shows_sort_title);
@@ -264,21 +258,21 @@ public class ShowsFragment extends Fragment implements
         lastWatchedItem.setTitle(R.string.action_shows_sort_last_watched);
         MenuItem remainingItem = menu.findItem(R.id.menu_action_shows_sort_remaining);
         remainingItem.setTitle(R.string.action_shows_sort_remaining);
-        if (mSortOrderId == ShowsSortOrder.TITLE_ID) {
+        if (sortOrderId == ShowsSortOrder.TITLE_ID) {
             Utils.setMenuItemActiveString(sortTitleItem);
-        } else if (mSortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
+        } else if (sortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
             Utils.setMenuItemActiveString(sortLatestItem);
-        } else if (mSortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
+        } else if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
             Utils.setMenuItemActiveString(sortOldestItem);
-        } else if (mSortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
+        } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
             Utils.setMenuItemActiveString(lastWatchedItem);
-        } else if (mSortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
+        } else if (sortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
             Utils.setMenuItemActiveString(remainingItem);
         }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
-                .setChecked(mIsSortFavoritesFirst);
+                .setChecked(isSortFavoritesFirst);
         menu.findItem(R.id.menu_action_shows_sort_ignore_articles)
-                .setChecked(mIsSortIgnoreArticles);
+                .setChecked(isSortIgnoreArticles);
     }
 
     @Override
@@ -288,37 +282,37 @@ public class ShowsFragment extends Fragment implements
             startActivityAddShows();
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_favorites) {
-            mIsFilterFavorites = !mIsFilterFavorites;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, mIsFilterFavorites
+            isFilterFavorites = !isFilterFavorites;
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, isFilterFavorites
             );
 
             Utils.trackAction(getActivity(), TAG, "Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
-            mIsFilterUnwatched = !mIsFilterUnwatched;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, mIsFilterUnwatched
+            isFilterUnwatched = !isFilterUnwatched;
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, isFilterUnwatched
             );
 
             Utils.trackAction(getActivity(), TAG, "Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
-            mIsFilterUpcoming = !mIsFilterUpcoming;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, mIsFilterUpcoming
+            isFilterUpcoming = !isFilterUpcoming;
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, isFilterUpcoming
             );
 
             Utils.trackAction(getActivity(), TAG, "Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
-            mIsFilterHidden = !mIsFilterHidden;
-            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, mIsFilterHidden);
+            isFilterHidden = !isFilterHidden;
+            changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, isFilterHidden);
 
             Utils.trackAction(getActivity(), TAG, "Filter Hidden");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_remove) {
-            mIsFilterFavorites = false;
-            mIsFilterUnwatched = false;
-            mIsFilterUpcoming = false;
-            mIsFilterHidden = false;
+            isFilterFavorites = false;
+            isFilterUnwatched = false;
+            isFilterUpcoming = false;
+            isFilterHidden = false;
 
             // already start loading, do not need to wait on saving prefs
             getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
@@ -358,41 +352,41 @@ public class ShowsFragment extends Fragment implements
             upcomingRangeDialog.show(getFragmentManager(), "upcomingRangeDialog");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
-            mSortOrderId = ShowsSortOrder.TITLE_ID;
+            sortOrderId = ShowsSortOrder.TITLE_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_latest_episode) {
-            mSortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
+            sortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Episode (latest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_oldest_episode) {
-            mSortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
+            sortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Episode (oldest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_last_watched) {
-            mSortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
+            sortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Last watched");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_remaining) {
-            mSortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
+            sortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
             changeSort();
             Utils.trackAction(getActivity(), TAG, "Sort Remaining episodes");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
-            mIsSortFavoritesFirst = !mIsSortFavoritesFirst;
+            isSortFavoritesFirst = !isSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
-                    mIsSortFavoritesFirst);
+                    isSortFavoritesFirst);
 
             Utils.trackAction(getActivity(), TAG, "Sort Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
-            mIsSortIgnoreArticles = !mIsSortIgnoreArticles;
+            isSortIgnoreArticles = !isSortIgnoreArticles;
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                    mIsSortIgnoreArticles);
+                    isSortIgnoreArticles);
             // refresh all list widgets
             ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
 
@@ -421,18 +415,18 @@ public class ShowsFragment extends Fragment implements
 
         // save new sort order to preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, mSortOrderId).apply();
+                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, sortOrderId).apply();
 
         // refresh menu state to indicate current order
         getActivity().supportInvalidateOptionsMenu();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleFirstRunButtonEvent(FirstRunView.ButtonEvent event) {
+    public void onEventFirstRunButton(FirstRunView.ButtonEvent event) {
         switch (event.type) {
             case FirstRunView.ButtonType.ADD_SHOW: {
                 startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
                 break;
             }
@@ -447,12 +441,19 @@ public class ShowsFragment extends Fragment implements
                 break;
             }
             case FirstRunView.ButtonType.DISMISS: {
-                if (mGrid != null) {
-                    mGrid.removeHeaderView(event.firstRunView);
+                if (gridView != null) {
+                    gridView.removeHeaderView(event.firstRunView);
                     Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
                 }
                 break;
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventTabClick(TabClickEvent event) {
+        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
+            gridView.smoothScrollToPosition(0);
         }
     }
 
@@ -480,10 +481,10 @@ public class ShowsFragment extends Fragment implements
         StringBuilder selection = new StringBuilder();
 
         // create temporary copies
-        final boolean isFilterFavorites = mIsFilterFavorites;
-        final boolean isFilterUnwatched = mIsFilterUnwatched;
-        final boolean isFilterUpcoming = mIsFilterUpcoming;
-        final boolean isFilterHidden = mIsFilterHidden;
+        final boolean isFilterFavorites = this.isFilterFavorites;
+        final boolean isFilterUnwatched = this.isFilterUnwatched;
+        final boolean isFilterUpcoming = this.isFilterUpcoming;
+        final boolean isFilterHidden = this.isFilterHidden;
 
         // restrict to favorites?
         if (isFilterFavorites) {
@@ -537,8 +538,8 @@ public class ShowsFragment extends Fragment implements
 
         return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsAdapter.Query.PROJECTION,
                 selection.toString(), null,
-                ShowsDistillationSettings.getSortQuery(mSortOrderId, mIsSortFavoritesFirst,
-                        mIsSortIgnoreArticles)
+                ShowsDistillationSettings.getSortQuery(sortOrderId, isSortFavoritesFirst,
+                        isSortIgnoreArticles)
         );
     }
 
@@ -546,7 +547,7 @@ public class ShowsFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Swap the new cursor in. (The framework will take care of closing the
         // old cursor once we return.)
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
 
         // prepare an updated empty view
         updateEmptyView();
@@ -557,7 +558,7 @@ public class ShowsFragment extends Fragment implements
         // This is called when the last Cursor provided to onLoadFinished()
         // above is about to be closed. We need to make sure we are no
         // longer using it.
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     /**
@@ -568,12 +569,12 @@ public class ShowsFragment extends Fragment implements
      * passed).
      */
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
-        if (mHandler == null) {
-            mHandler = new Handler();
+        if (handler == null) {
+            handler = new Handler();
         }
-        mHandler.removeCallbacks(mDataRefreshRunnable);
+        handler.removeCallbacks(mDataRefreshRunnable);
         if (enableRefresh) {
-            mHandler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 
@@ -589,7 +590,7 @@ public class ShowsFragment extends Fragment implements
 
     private void startActivityAddShows() {
         startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.SEARCH_TAB_POSITION));
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
     private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayoutMoviesDiscover"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewMoviesDiscover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/grid_item_margin_vertical"
+        android:paddingLeft="@dimen/grid_item_margin_horizontal"
+        android:paddingRight="@dimen/grid_item_margin_horizontal"
+        android:paddingTop="@dimen/grid_item_margin_vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_discover_movie" />
+
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -11,14 +11,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.uwetrottmann.trakt5.enums.Rating;
+import java.util.List;
 
 /**
  * Displays a 10 value rating scale. If a rating is clicked it will be stored to the database and
@@ -89,6 +95,20 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         return f;
     }
 
+    @BindViews({
+            R.id.rating1,
+            R.id.rating2,
+            R.id.rating3,
+            R.id.rating4,
+            R.id.rating5,
+            R.id.rating6,
+            R.id.rating7,
+            R.id.rating8,
+            R.id.rating9,
+            R.id.rating10
+    }) List<Button> ratingButtons;
+    private Unbinder unbinder;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -99,53 +119,60 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.dialog_trakt_rate,
                 null);
 
+        unbinder = ButterKnife.bind(this, layout);
+
+        for (int i = 0; i < ratingButtons.size(); i++) {
+            Button ratingButton = ratingButtons.get(i);
+            ratingButton.setText(TraktTools.buildUserRatingString(getContext(), i + 1));
+        }
+
         // rating buttons from 1 (worst) to 10 (best)
-        layout.findViewById(R.id.weaksauce).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(0).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.WEAKSAUCE);
             }
         });
-        layout.findViewById(R.id.rating2).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(1).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.TERRIBLE);
             }
         });
-        layout.findViewById(R.id.rating3).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(2).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.BAD);
             }
         });
-        layout.findViewById(R.id.rating4).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(3).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.POOR);
             }
         });
-        layout.findViewById(R.id.rating5).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(4).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.MEH);
             }
         });
-        layout.findViewById(R.id.rating6).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(5).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.FAIR);
             }
         });
-        layout.findViewById(R.id.rating7).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(6).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.GOOD);
             }
         });
-        layout.findViewById(R.id.rating8).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(7).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.GREAT);
             }
         });
-        layout.findViewById(R.id.rating9).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(8).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.SUPERB);
             }
         });
-        layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
+        ratingButtons.get(9).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 rate(Rating.TOTALLYNINJA);
             }
@@ -186,5 +213,13 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         }
 
         dismiss();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
     }
 }

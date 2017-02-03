@@ -5,6 +5,61 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 35
+----------
+*(2017-02-03)*
+
+* New movie discover section with regional selection, search moved to its own screen.
+* Tap a tab to scroll to the top in most places.
+* Improved status messages during trakt or Cloud actions.
+
+#### 35
+*(2017-02-03)*
+
+* TWEAK Display localized string for language in movie details.
+* FIX Crash when loading movie poster, but views are already gone.
+* FIX Crash if searching for movies fails.
+* NOTE Latest translations from crowdin.
+
+#### 35-beta4
+*(2017-01-27)*
+
+* FEATURE Add region selector to movie discovery. Tap the globe to see release dates for your region in discover and search.
+* TWEAK Movie search: show keyboard when opening it, add swipe to refresh.
+* TWEAK Improve launcher shortcuts icons (Android 7.1). Thanks @cbeyls!
+* FIX Image transitions fail after rotating the device. Thanks @cbeyls!
+* NOTE Latest translations from crowdin.
+
+#### 35-beta3
+*(2017-01-20)*
+
+* FEATURE Tap a tab to scroll to the top in most places.
+* TWEAK Improved movie discovery tab, includes in theaters/popular/digital and disc releases for the region of your selected language (like US for en-US).
+  A region (like GB, CA) setting will be added later.
+* TWEAK Moved movie search to its own screen, now accessible from any movie tab.
+* TWEAK Improved movie tablet portrait layout (also landscape on 7inch tablets).
+* TWEAK Improved action button design below episodes and movies.
+* TWEAK Display actual number for ratings.
+* FIX Crash on some Android 4.0 devices which are missing a standard database feature introduced for search.
+* FIX Search bar overlaps on small screen devices.
+* FIX Ratings are rounded incorrectly on Android 6 and below.
+* NOTE Latest translations from crowdin.
+
+#### 35-beta2
+*(2016-12-16)*
+
+* TWEAK Display status message while trakt or Cloud network action is processing for movies.
+* TWEAK Display localized string for release country.
+* FIX Crash when trying to upgrade the database, but it is not writable.
+* NOTE Latest translations from crowdin.
+
+#### 35-beta1
+*(2016-12-09)*
+
+* TWEAK Display status message while trakt or Cloud network action is processing.
+* NOTE Update HTTP networking library.
+* NOTE Latest translations from crowdin.
+
 Version 34
 ----------
 *(2016-12-01)*
@@ -23,7 +78,7 @@ Version 34
 *(2016-12-19)*
 
 * TWEAK Display localized string for release country.
-* FIX Crash when trying to upgrade the database, but it is not readable.
+* FIX Crash when trying to upgrade the database, but it is not writable.
 
 #### 34
 *(2016-12-01)*

@@ -3,5 +3,6 @@
 
     <bool name="isIceCreamSandwichOrLower">true</bool>
     <bool name="gridClipToPadding">false</bool>
+    <bool name="isSinglePane">true</bool>
 
 </resources>

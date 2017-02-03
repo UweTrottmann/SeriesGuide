@@ -82,7 +82,7 @@ public class HexagonTools {
         Account.Builder builder = new Account.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential
         );
-        return CloudEndpointUtils.updateBuilder(builder).build();
+        return CloudEndpointUtils.updateBuilder(context, builder).build();
     }
 
     /**
@@ -98,7 +98,7 @@ public class HexagonTools {
             Shows.Builder builder = new Shows.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sShowsService = CloudEndpointUtils.updateBuilder(builder).build();
+            sShowsService = CloudEndpointUtils.updateBuilder(context, builder).build();
         }
         return sShowsService;
     }
@@ -116,7 +116,7 @@ public class HexagonTools {
             Episodes.Builder builder = new Episodes.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sEpisodesService = CloudEndpointUtils.updateBuilder(builder).build();
+            sEpisodesService = CloudEndpointUtils.updateBuilder(context, builder).build();
         }
         return sEpisodesService;
     }
@@ -134,7 +134,7 @@ public class HexagonTools {
             Movies.Builder builder = new Movies.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sMoviesService = CloudEndpointUtils.updateBuilder(builder).build();
+            sMoviesService = CloudEndpointUtils.updateBuilder(context, builder).build();
         }
         return sMoviesService;
     }
@@ -152,7 +152,7 @@ public class HexagonTools {
             Lists.Builder builder = new Lists.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sListsService = CloudEndpointUtils.updateBuilder(builder).build();
+            sListsService = CloudEndpointUtils.updateBuilder(context, builder).build();
         }
         return sListsService;
     }
@@ -347,7 +347,7 @@ public class HexagonTools {
         }
 
         // add new movies with the just downloaded properties
-        SgSyncAdapter.UpdateResult result = MovieTools.getInstance(app)
+        SgSyncAdapter.UpdateResult result = app.getMovieTools()
                 .addMovies(newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {

@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -23,7 +22,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -39,12 +37,15 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
+import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
-import org.greenrobot.eventbus.EventBus;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -60,13 +61,13 @@ public class SearchActivity extends BaseNavDrawerActivity implements
      */
     public static final String EXTRA_DEFAULT_TAB = "default_tab";
 
-    public static final int ADDED_TAB_POSITION = 0;
-    public static final int EPISODES_TAB_POSITION = 1;
-    public static final int SEARCH_TAB_POSITION = 2;
-    public static final int RECOMMENDED_TAB_POSITION = 3;
-    public static final int WATCHED_TAB_POSITION = 4;
-    public static final int COLLECTION_TAB_POSITION = 5;
-    public static final int WATCHLIST_TAB_POSITION = 6;
+    public static final int TAB_POSITION_SHOWS = 0;
+    public static final int TAB_POSITION_EPISODES = 1;
+    public static final int TAB_POSITION_SEARCH = 2;
+    public static final int TAB_POSITION_RECOMMENDED = 3;
+    public static final int TAB_POSITION_WATCHED = 4;
+    public static final int TAB_POSITION_COLLECTION = 5;
+    public static final int TAB_POSITION_WATCHLIST = 6;
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
@@ -115,7 +116,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         setupActionBar();
         setupNavDrawer();
 
-        setupViews();
+        setupViews(savedInstanceState == null);
 
         handleSearchIntent(getIntent());
     }
@@ -130,7 +131,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
     }
 
-    private void setupViews() {
+    private void setupViews(boolean mayShowKeyboard) {
         ButterKnife.bind(this);
         clearButton.setVisibility(View.GONE);
         clearButton.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +211,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 viewPager, tabs);
         tabs.setOnPageChangeListener(pageChangeListener);
+        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                if (viewPager.getCurrentItem() == position) {
+                    EventBus.getDefault().post(new TabClickEvent(position));
+                }
+            }
+        });
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
@@ -229,26 +238,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             if (defaultTab < tabsAdapter.getCount()) {
                 viewPager.setCurrentItem(defaultTab);
             }
-            if (defaultTab == ADDED_TAB_POSITION || defaultTab == EPISODES_TAB_POSITION) {
-                showSoftKeyboardOnSearchView();
+            if (mayShowKeyboard &&
+                    (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
+                Utils.showSoftKeyboardOnSearchView(this, searchView);
             }
-        } else {
+        } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
-            showSoftKeyboardOnSearchView();
+            Utils.showSoftKeyboardOnSearchView(this, searchView);
         }
-    }
-
-    private void showSoftKeyboardOnSearchView() {
-        searchView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (searchView.requestFocus()) {
-                    InputMethodManager imm = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
-                }
-            }
-        }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
     }
 
     private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,
@@ -268,10 +265,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         @Override
         public void onPageSelected(int position) {
             // only display search box if it can be used
-            boolean searchVisible = position <= SEARCH_TAB_POSITION;
+            boolean searchVisible = position <= TAB_POSITION_SEARCH;
             searchContainer.setVisibility(searchVisible ? View.VISIBLE : View.GONE);
             if (searchVisible) {
-                tvdbSearchVisible = position == SEARCH_TAB_POSITION;
+                tvdbSearchVisible = position == TAB_POSITION_SEARCH;
                 searchView.setAdapter(tvdbSearchVisible ? searchHistoryAdapter : null);
                 searchView.setHint(
                         tvdbSearchVisible ? R.string.checkin_searchhint : R.string.search);
@@ -306,7 +303,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
                 String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
-                    viewPager.setCurrentItem(EPISODES_TAB_POSITION);
+                    viewPager.setCurrentItem(TAB_POSITION_EPISODES);
                 }
             }
 
@@ -350,7 +347,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
         } else {
             // no id, populate the search field instead
-            viewPager.setCurrentItem(SEARCH_TAB_POSITION);
+            viewPager.setCurrentItem(TAB_POSITION_SEARCH);
             searchView.setText(sharedText);
         }
     }
@@ -490,6 +487,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();
             searchHistoryAdapter.clear();
+            // setting text to null seems to fix the dropdown from not clearing
+            searchView.setText(null);
         }
     }
 
@@ -530,5 +529,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         // display add dialog
         AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+    }
+
+    @Override
+    protected View getSnackbarParentView() {
+        if (AndroidUtils.isLollipopOrHigher()) {
+            return findViewById(R.id.coordinatorLayoutSearch);
+        } else {
+            return super.getSnackbarParentView();
+        }
     }
 }

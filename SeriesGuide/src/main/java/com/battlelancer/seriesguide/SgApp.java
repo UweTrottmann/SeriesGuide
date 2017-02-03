@@ -16,9 +16,14 @@ import com.battlelancer.seriesguide.modules.TraktModule;
 import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
@@ -63,12 +68,39 @@ public class SgApp extends Application {
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     private ServicesComponent servicesComponent;
+    private MovieTools movieTools;
+    private ShowTools showTools;
+    private TraktTools traktTools;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // logging setup
+        if (BuildConfig.DEBUG) {
+            enableStrictMode();
+        }
+
+        // set up logging first so crashes during initialization are caught
+        initializeLogging();
+
+        JodaTimeAndroid.init(this);
+        initializeEventBus();
+        initializePicasso();
+
+        // Load the current theme into a global variable
+        ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
+
+        // dagger
+        servicesComponent = DaggerServicesComponent.builder()
+                .appModule(new AppModule(this))
+                .httpClientModule(new HttpClientModule())
+                .tmdbModule(new TmdbModule())
+                .traktModule(new TraktModule())
+                .tvdbModule(new TvdbModule())
+                .build();
+    }
+
+    private void initializeLogging() {
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
@@ -80,21 +112,6 @@ public class SgApp extends Application {
             }
         }
 
-        // initialize EventBus
-        try {
-            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
-        } catch (EventBusException e) {
-            // looks like instance sometimes still lingers around,
-            // so far happening from services, though no exact cause found, yet
-            Timber.e(e, "EventBus already installed.");
-        }
-
-        // initialize joda-time-android
-        JodaTimeAndroid.init(this);
-
-        // Load the current theme into a global variable
-        ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
-
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).setAppOptOut(AppSettings.isGaAppOptOut(this));
         if (BuildConfig.DEBUG) {
@@ -102,16 +119,25 @@ public class SgApp extends Application {
         }
         // Initialize tracker
         Analytics.getTracker(this);
+    }
 
-        enableStrictMode();
+    private void initializeEventBus() {
+        try {
+            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+        } catch (EventBusException ignored) {
+            // instance was already set
+        }
+    }
 
-        servicesComponent = DaggerServicesComponent.builder()
-                .appModule(new AppModule(this))
-                .httpClientModule(new HttpClientModule())
-                .tmdbModule(new TmdbModule())
-                .traktModule(new TraktModule())
-                .tvdbModule(new TvdbModule())
+    private void initializePicasso() {
+        Picasso picasso = new Picasso.Builder(getApplicationContext())
+                .downloader(new OkHttp3Downloader(getApplicationContext()))
                 .build();
+        try {
+            Picasso.setSingletonInstance(picasso);
+        } catch (IllegalStateException ignored) {
+            // instance was already set
+        }
     }
 
     public static SgApp from(Activity activity) {
@@ -122,13 +148,31 @@ public class SgApp extends Application {
         return servicesComponent;
     }
 
+    public synchronized MovieTools getMovieTools() {
+        if (movieTools == null) {
+            movieTools = new MovieTools(this);
+        }
+        return movieTools;
+    }
+
+    public synchronized ShowTools getShowTools() {
+        if (showTools == null) {
+            showTools = new ShowTools(getApplicationContext());
+        }
+        return showTools;
+    }
+
+    public synchronized TraktTools getTraktTools() {
+        if (traktTools == null) {
+            traktTools = new TraktTools(this);
+        }
+        return traktTools;
+    }
+
     /**
      * Used to enable {@link StrictMode} for debug builds.
      */
     private static void enableStrictMode() {
-        if (!BuildConfig.DEBUG) {
-            return;
-        }
         // Enable StrictMode
         final ThreadPolicy.Builder threadPolicyBuilder = new ThreadPolicy.Builder();
         threadPolicyBuilder.detectAll();

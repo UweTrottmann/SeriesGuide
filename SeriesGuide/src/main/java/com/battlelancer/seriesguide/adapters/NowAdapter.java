@@ -281,16 +281,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.episode.setText(item.description);
 
             // timestamp
-            Date actualRelease = TimeTools.applyUserOffset(context, item.timestamp);
-            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+            Date actualRelease = TimeTools.applyUserOffset(getContext(), item.timestamp);
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(getContext());
             holder.timestamp.setText(displayExactDate ?
-                    TimeTools.formatToLocalDateShort(context, actualRelease)
-                    : TimeTools.formatToLocalRelativeTime(context, actualRelease));
+                    TimeTools.formatToLocalDateShort(getContext(), actualRelease)
+                    : TimeTools.formatToLocalRelativeTime(getContext(), actualRelease));
 
             // absolute time and network
             StringBuilder releaseInfo = new StringBuilder();
             // "10:00 PM / Network", as left aligned, exactly mirrored from show list
-            releaseInfo.append(TimeTools.formatToLocalTime(context, actualRelease));
+            releaseInfo.append(TimeTools.formatToLocalTime(getContext(), actualRelease));
             if (!TextUtils.isEmpty(item.network)) {
                 releaseInfo.append(" / ").append(item.network);
             }

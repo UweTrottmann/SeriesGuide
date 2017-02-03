@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,8 +49,8 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -105,8 +106,8 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
     @BindView(R.id.buttonTVDB) View mButtonTvdb;
     @BindView(R.id.buttonTrakt) View mButtonTrakt;
-    @BindView(R.id.buttonWebSearch) View mButtonWebSearch;
-    @BindView(R.id.buttonShouts) View mButtonComments;
+    @BindView(R.id.buttonWebSearch) Button mButtonWebSearch;
+    @BindView(R.id.buttonShouts) Button mButtonComments;
 
     @BindView(R.id.labelCast) TextView castLabel;
     @BindView(R.id.containerCast) LinearLayout castContainer;
@@ -145,8 +146,8 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonShortcut);
 
         // language button
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonLanguage,
-                R.attr.drawableLanguage);
+        Resources.Theme theme = getActivity().getTheme();
+        Utils.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +164,10 @@ public class ShowFragment extends Fragment {
             }
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
+
+        // search and comments button
+        Utils.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
+        Utils.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -344,7 +349,9 @@ public class ShowFragment extends Fragment {
             public void onClick(View v) {
                 // disable until action is complete
                 v.setEnabled(false);
-                ShowTools.get(v.getContext()).storeIsFavorite(getShowTvdbId(), !isFavorite);
+                SgApp.from(getActivity())
+                        .getShowTools()
+                        .storeIsFavorite(getShowTvdbId(), !isFavorite);
             }
         });
 
@@ -539,7 +546,7 @@ public class ShowFragment extends Fragment {
                 R.array.languageCodesShows)[languageCodeIndex];
 
         Timber.d("Changing show language to %s", languageCode);
-        ShowTools.get(getContext()).storeLanguage(getShowTvdbId(), languageCode);
+        SgApp.from(getActivity()).getShowTools().storeLanguage(getShowTvdbId(), languageCode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -561,7 +568,7 @@ public class ShowFragment extends Fragment {
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getActivity(), showTitle, showPoster, getShowTvdbId());
+        ShortcutUtils.createShortcut(getContext(), showTitle, showPoster, getShowTvdbId());
 
         // drop to home screen
         startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(

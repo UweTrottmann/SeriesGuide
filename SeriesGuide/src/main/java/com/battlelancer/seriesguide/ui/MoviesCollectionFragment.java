@@ -65,4 +65,11 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
     protected int getLoaderId() {
         return MoviesActivity.COLLECTION_LOADER_ID;
     }
+
+    @Override
+    protected int getTabPosition(boolean showingNowTab) {
+        return showingNowTab
+                ? MoviesActivity.TAB_POSITION_COLLECTION_WITH_NOW
+                : MoviesActivity.TAB_POSITION_COLLECTION_DEFAULT;
+    }
 }

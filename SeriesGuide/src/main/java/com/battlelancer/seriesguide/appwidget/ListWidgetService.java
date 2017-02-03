@@ -34,7 +34,7 @@ public class ListWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListRemoteViewsFactory(this.getApplicationContext(), intent);
+        return new ListRemoteViewsFactory(getApplicationContext(), intent);
     }
 
     class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -220,14 +220,22 @@ public class ListWidgetService extends RemoteViewsService {
             // show poster
             String posterPath = dataCursor.getString(isShowQuery
                     ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER);
+            maybeSetPoster(rv, posterPath);
+
+            // Return the remote views object.
+            return rv;
+        }
+
+        private void maybeSetPoster(RemoteViews rv, String posterPath) {
             Bitmap poster;
             try {
-                poster = ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
+                poster = ServiceUtils.loadWithPicasso(context,
+                        TvdbTools.buildPosterUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();
             } catch (IOException e) {
-                Timber.w(e, "getViewAt: Loading show poster for widget item failed");
+                Timber.e(e, "maybeSetPoster: failed.");
                 poster = null;
             }
             if (poster != null) {
@@ -235,9 +243,6 @@ public class ListWidgetService extends RemoteViewsService {
             } else {
                 rv.setImageViewResource(R.id.widgetPoster, R.drawable.ic_image_missing);
             }
-
-            // Return the remote views object.
-            return rv;
         }
 
         @Override

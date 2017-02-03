@@ -108,6 +108,15 @@
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
         <activity
+            android:name="com.battlelancer.seriesguide.ui.MoviesSearchActivity"
+            android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
+            android:windowSoftInputMode="stateHidden">
+            <!-- Parent activity meta-data to support ICS -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
+        </activity>
+        <activity
             android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity">
             <!-- Parent activity meta-data to support ICS -->
@@ -175,7 +184,8 @@
             android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden">
             <!-- Make this activity accessible from global search -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

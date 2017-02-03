@@ -171,7 +171,7 @@
   <string name="otherepisodes">muuta jaksoa</string>
   <string name="remaining">%s jäljellä</string>
   <!-- Add show -->
-  <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
+  <string name="checkin_searchhint">Ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
@@ -199,13 +199,18 @@
   <string name="action_lists_reorder">Järjestä listat uudelleen</string>
   <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
   <!-- Movies -->
+  <string name="title_discover">Tutustu</string>
+  <string name="title_popular">Suosittu</string>
+  <string name="title_digital_releases">Digitaaliset julkaisut</string>
+  <string name="title_disc_releases">Levyjen julkaisut</string>
+  <string name="movies_in_theatres">Teattereissa</string>
   <string name="movies_collection">Kokoelma</string>
   <string name="movies_watchlist">Seurantalista</string>
   <string name="watchlist_add">Lisää seurantalistalle</string>
   <string name="watchlist_remove">Poista seurantalistalta</string>
   <string name="watchlist_added">Lisätty seurantalistalle</string>
   <string name="watchlist_removed">Poistettu seurantalistalta</string>
-  <string name="movies_search_hint">Kirjoita elokuvan nimi</string>
+  <string name="movies_search_hint">Elokuvan nimi</string>
   <string name="movies_collection_empty">Et ole lisännyt elokuvien kokoelmaasi.</string>
   <string name="movies_watchlist_empty">Et ole lisännyt elokuvia seurantalistallesi.</string>
   <string name="trailer">Traileri</string>

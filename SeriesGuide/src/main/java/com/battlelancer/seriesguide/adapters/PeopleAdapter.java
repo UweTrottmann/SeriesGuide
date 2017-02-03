@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +22,19 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
     private static int LAYOUT = R.layout.item_person;
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater inflater;
 
     public PeopleAdapter(Context context) {
         super(context, LAYOUT);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(LAYOUT, parent, false);
+            convertView = inflater.inflate(LAYOUT, parent, false);
 
             viewHolder = new ViewHolder();
 
@@ -47,6 +49,9 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
         }
 
         PeopleListHelper.Person person = getItem(position);
+        if (person == null) {
+            return convertView;
+        }
 
         // name and description
         viewHolder.name.setText(person.name);
@@ -63,7 +68,7 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
         // set unique transition names
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + position);
+            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + person.tmdbId);
         }
 
         return convertView;

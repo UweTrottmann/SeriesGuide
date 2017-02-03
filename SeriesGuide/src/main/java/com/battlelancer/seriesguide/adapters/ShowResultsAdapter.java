@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
@@ -12,8 +13,8 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class ShowResultsAdapter extends BaseShowsAdapter {
 
-    public ShowResultsAdapter(Context context, OnContextMenuClickListener listener) {
-        super(context, listener);
+    public ShowResultsAdapter(Activity activity, OnContextMenuClickListener listener) {
+        super(activity, listener);
     }
 
     @Override

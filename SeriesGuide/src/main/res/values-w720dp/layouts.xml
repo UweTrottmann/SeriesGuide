@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Screens with more than 720dp of available width. This would
+       include 7" in landscape and 10" devices in portrait. -->
+
+    <item name="buttons_services" type="layout">@layout/buttons_services_wide</item>
+
+</resources>

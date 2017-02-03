@@ -109,7 +109,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
 
         Snackbar newSnackbar = Snackbar
-                .make(findViewById(android.R.id.content),
+                .make(getSnackbarParentView(),
                         R.string.autobackup_files_missing, Snackbar.LENGTH_LONG);
         setUpAutoBackupSnackbar(newSnackbar);
         newSnackbar.show();
@@ -125,7 +125,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
 
         Snackbar newSnackbar = Snackbar
-                .make(findViewById(android.R.id.content),
+                .make(getSnackbarParentView(),
                         R.string.autobackup_permission_missing, Snackbar.LENGTH_INDEFINITE);
         setUpAutoBackupSnackbar(newSnackbar);
         newSnackbar.show();
@@ -170,7 +170,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
 
         Snackbar newSnackbar = Snackbar
-                .make(findViewById(android.R.id.content), R.string.hexagon_permission_missing,
+                .make(getSnackbarParentView(), R.string.hexagon_permission_missing,
                         Snackbar.LENGTH_INDEFINITE);
         newSnackbar.addCallback(new Snackbar.Callback() {
             @Override

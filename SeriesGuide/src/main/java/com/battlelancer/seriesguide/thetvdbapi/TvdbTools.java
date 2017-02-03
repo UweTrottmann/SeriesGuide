@@ -45,6 +45,7 @@ import com.uwetrottmann.thetvdb.services.TheTvdbSeries;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
+import com.uwetrottmann.trakt5.enums.Type;
 import dagger.Lazy;
 import java.io.IOException;
 import java.io.InputStream;
@@ -200,10 +201,10 @@ public class TvdbTools {
             }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
-            ShowTools.get(app).sendIsAdded(showTvdbId, language);
+            app.getShowTools().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktTools traktTools = TraktTools.getInstance(app);
+            TraktTools traktTools = app.getTraktTools();
             if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
                 throw new TvdbException("addShow: storing trakt watched episodes failed.");
@@ -482,10 +483,10 @@ public class TvdbTools {
         com.uwetrottmann.trakt5.entities.Show traktShow = null;
         // always look up the trakt id based on the TVDb id
         // e.g. a TVDb id might be linked against the wrong trakt entry, then get fixed
-        String showTraktId = lookupShowTraktId(showTvdbId);
+        Integer showTraktId = lookupShowTraktId(showTvdbId);
         if (showTraktId != null) {
             traktShow = SgTrakt.executeCall(app,
-                    traktShows.get().summary(showTraktId, Extended.FULL),
+                    traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
         }
@@ -523,30 +524,25 @@ public class TvdbTools {
     /**
      * Look up a show's trakt id, may return {@code null} if not found.
      */
-    private String lookupShowTraktId(int showTvdbId) {
-        // get up to 3 results: may be a show, season or episode (TVDb ids are not unique)
+    @Nullable
+    private Integer lookupShowTraktId(int showTvdbId) {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
                 app,
-                traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), 1, 3),
+                traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
+                        null, 1, 1),
                 "show trakt id lookup"
         );
 
-        if (searchResults == null) {
+        if (searchResults == null || searchResults.size() != 1) {
             return null;
         }
 
-        for (com.uwetrottmann.trakt5.entities.SearchResult result : searchResults) {
-            if (result.episode != null) {
-                // not a show result
-                continue;
-            }
-            com.uwetrottmann.trakt5.entities.Show show = result.show;
-            if (show != null && show.ids != null && show.ids.trakt != null) {
-                return String.valueOf(show.ids.trakt);
-            }
+        com.uwetrottmann.trakt5.entities.SearchResult result = searchResults.get(0);
+        if (result.show != null && result.show.ids != null) {
+            return result.show.ids.trakt;
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -10,8 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,11 +34,63 @@ import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.util.Utils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Adds onto {@link BaseActivity} by attaching a navigation drawer.
  */
 public abstract class BaseNavDrawerActivity extends BaseActivity {
+
+    /**
+     * Posted sticky while a service task is running.
+     */
+    public static class ServiceActiveEvent {
+        private final boolean shouldSendToHexagon;
+        private final boolean shouldSendToTrakt;
+
+        public ServiceActiveEvent(boolean shouldSendToHexagon, boolean shouldSendToTrakt) {
+            this.shouldSendToHexagon = shouldSendToHexagon;
+            this.shouldSendToTrakt = shouldSendToTrakt;
+        }
+
+        public boolean shouldDisplayMessage() {
+            return shouldSendToHexagon || shouldSendToTrakt;
+        }
+
+        public String getStatusMessage(Context context) {
+            StringBuilder statusText = new StringBuilder();
+            if (shouldSendToHexagon) {
+                statusText.append(context.getString(R.string.hexagon_api_queued));
+            }
+            if (shouldSendToTrakt) {
+                if (statusText.length() > 0) {
+                    statusText.append(" ");
+                }
+                statusText.append(context.getString(R.string.trakt_submitqueued));
+            }
+            return statusText.toString();
+        }
+    }
+
+    /**
+     * Posted once a service action has completed. It may not have been successful.
+     */
+    public static class ServiceCompletedEvent {
+
+        @Nullable public final String confirmationText;
+        public boolean isSuccessful;
+
+        public ServiceCompletedEvent() {
+            confirmationText = null;
+        }
+
+        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful) {
+            this.confirmationText = confirmationText;
+            this.isSuccessful = isSuccessful;
+        }
+    }
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
@@ -47,6 +102,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     private NavigationView navigationView;
     private TextView textViewHeaderAccountType;
     private TextView textViewHeaderUser;
+    private Snackbar snackbarProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +125,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
+        handleServiceActiveEvent(event);
 
         boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
         if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
@@ -329,5 +388,48 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(ServiceActiveEvent event) {
+        handleServiceActiveEvent(event);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(ServiceCompletedEvent event) {
+        if (event.confirmationText != null) {
+            // show a confirmation/error text, update any existing progress snackbar
+            if (snackbarProgress != null) {
+                snackbarProgress.setText(event.confirmationText);
+                snackbarProgress.setDuration(
+                        event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+                snackbarProgress.show();
+            }
+        } else {
+            handleServiceActiveEvent(null);
+        }
+    }
+
+    /**
+     * Return a view to pass to {@link Snackbar#make(View, CharSequence, int) Snackbar.make},
+     * ideally a {@link android.support.design.widget.CoordinatorLayout CoordinatorLayout}.
+     */
+    protected View getSnackbarParentView() {
+        return findViewById(android.R.id.content);
+    }
+
+    private void handleServiceActiveEvent(@Nullable ServiceActiveEvent event) {
+        if (event != null && event.shouldDisplayMessage()) {
+            if (snackbarProgress == null) {
+                snackbarProgress = Snackbar.make(getSnackbarParentView(),
+                        event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
+            } else {
+                snackbarProgress.setText(event.getStatusMessage(this));
+                snackbarProgress.setDuration(Snackbar.LENGTH_INDEFINITE);
+            }
+            snackbarProgress.show();
+        } else if (snackbarProgress != null) {
+            snackbarProgress.dismiss();
+        }
     }
 }

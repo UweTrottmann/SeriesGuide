@@ -540,24 +540,26 @@ public class SeasonsFragment extends ListFragment implements
         getActivity().invalidateOptionsMenu();
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Updates the total remaining episodes counter, updates season counters after episode actions.
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(EpisodeTools.EpisodeActionCompletedEvent event) {
-        /**
-         * Updates the total remaining episodes counter, updates season
-         * counters.
-         */
-        if (isAdded()) {
-            onLoadRemainingCounter();
-            if (event.flagType instanceof SeasonWatchedType) {
-                // If we can narrow it down to just one season...
-                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.flagType;
-                Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
-                        String.valueOf(seasonWatchedType.getSeasonTvdbId()));
-                t.start();
-            } else {
-                updateUnwatchedCounts();
-            }
+    public void onEvent(EpisodeTools.EpisodeTaskCompletedEvent event) {
+        if (!event.isSuccessful) {
+            return; // no changes applied
+        }
+        if (!isAdded()) {
+            return; // no longer added to activity
+        }
+        onLoadRemainingCounter();
+        if (event.flagType instanceof SeasonWatchedType) {
+            // If we can narrow it down to just one season...
+            SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.flagType;
+            Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
+                    String.valueOf(seasonWatchedType.getSeasonTvdbId()));
+            t.start();
+        } else {
+            updateUnwatchedCounts();
         }
     }
 

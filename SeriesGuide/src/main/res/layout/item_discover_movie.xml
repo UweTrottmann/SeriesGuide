@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/grid_item_margin_vertical"
+    android:layout_marginLeft="@dimen/grid_item_margin_horizontal"
+    android:layout_marginRight="@dimen/grid_item_margin_horizontal"
+    android:layout_marginTop="@dimen/grid_item_margin_vertical"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
+    cardview:cardPreventCornerOverlap="false"
+    tools:layout_width="100dp">
+
+    <include layout="@layout/layout_movie" />
+
+</android.support.v7.widget.CardView>

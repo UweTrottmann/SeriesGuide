@@ -1,129 +1,134 @@
 package com.battlelancer.seriesguide.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Displays movie titles of the given {@link Movie} array.
  */
-public class MoviesAdapter extends ArrayAdapter<Movie> {
+public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private LayoutInflater mInflater;
+    public interface ItemClickListener {
+        void onClickMovie(int movieTmdbId, ImageView posterView);
 
-    private String mImageBaseUrl;
-
-    private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
-
-    private PopupMenuClickListener mPopupMenuClickListener;
-
-    public interface PopupMenuClickListener {
-        void onPopupMenuClick(View v, int movieTmdbId);
+        void onClickMovieMoreOptions(int movieTmdbId, View anchor);
     }
 
-    public MoviesAdapter(Context context, PopupMenuClickListener listener) {
-        super(context, 0);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPopupMenuClickListener = listener;
+    private final Context context;
+    private final String posterBaseUrl;
+    private final DateFormat dateFormatMovieReleaseDate;
+    private final ItemClickListener itemClickListener;
+    protected final List<Movie> movies;
 
-        // figure out which size of posters to load based on screen density
-        if (DisplaySettings.isVeryHighDensityScreen(context)) {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
-                    + TmdbSettings.POSTER_SIZE_SPEC_W342;
-        } else {
-            mImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
-                    + TmdbSettings.POSTER_SIZE_SPEC_W154;
+    public MoviesAdapter(Context context, ItemClickListener itemClickListener) {
+        this.context = context;
+        this.itemClickListener = itemClickListener;
+        this.dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        this.movies = new ArrayList<>();
+        this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
+    }
+
+    public void updateMovies(@Nullable List<Movie> newMovies) {
+        movies.clear();
+        if (newMovies != null) {
+            movies.addAll(newMovies);
         }
+        notifyDataSetChanged();
     }
 
-    @SuppressLint("InflateParams")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // A ViewHolder keeps references to children views to avoid
-        // unnecessary calls to findViewById() on each row.
-        ViewHolder holder;
-
-        if (convertView == null) {
-            // do not use parent layout params to avoid padding issues
-            convertView = mInflater.inflate(R.layout.item_movie, null);
-
-            holder = new ViewHolder();
-            holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
-            holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
-            holder.poster = (ImageView) convertView.findViewById(R.id.imageViewMoviePoster);
-            holder.contextMenu = (ImageView) convertView
-                    .findViewById(R.id.imageViewMovieItemContextMenu);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        // Bind the data efficiently with the holder.
-        Movie movie = getItem(position);
-
-        holder.title.setText(movie.title);
-        if (movie.release_date != null) {
-            holder.date.setText(dateFormatMovieReleaseDate.format(movie.release_date));
-        } else {
-            holder.date.setText("");
-        }
-
-        // poster
-        // use fixed size so bitmaps can be re-used on config change
-        ServiceUtils.loadWithPicasso(getContext(), mImageBaseUrl + movie.poster_path)
-                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                .centerCrop()
-                .into(holder.poster);
-
-        // context menu
-        final int movieTmdbId = movie.id;
-        holder.contextMenu.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mPopupMenuClickListener != null) {
-                    mPopupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
-                }
-            }
-        });
-
-        // set unique transition names
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.poster.setTransitionName("moviesAdapterPoster_" + position);
-        }
-
-        return convertView;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_discover_movie, parent, false);
+        return new MovieViewHolder(view, itemClickListener);
     }
 
-    public void setData(List<Movie> data) {
-        clear();
-        if (data != null) {
-            for (Movie item : data) {
-                if (item != null) {
-                    add(item);
-                }
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MovieViewHolder) {
+            MovieViewHolder actualHolder = (MovieViewHolder) holder;
+            Movie movie = getMovie(position);
+            actualHolder.movieTmdbId = movie.id;
+            actualHolder.title.setText(movie.title);
+            if (movie.release_date != null) {
+                actualHolder.date.setText(dateFormatMovieReleaseDate.format(movie.release_date));
+            } else {
+                actualHolder.date.setText("");
+            }
+
+            // poster
+            // use fixed size so bitmaps can be re-used on config change
+            ServiceUtils.loadWithPicasso(context, posterBaseUrl + movie.poster_path)
+                    .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                    .centerCrop()
+                    .into(actualHolder.poster);
+
+            // set unique transition names
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                actualHolder.poster.setTransitionName(getTransitionNamePrefix() + movie.id);
             }
         }
     }
 
-    public static class ViewHolder {
-        public TextView title;
-        public TextView date;
-        public ImageView poster;
-        public ImageView contextMenu;
+    @Override
+    public int getItemCount() {
+        return movies.size();
+    }
+
+    protected Movie getMovie(int position) {
+        return movies.get(position);
+    }
+
+    @NonNull
+    protected String getTransitionNamePrefix() {
+        return "moviesAdapterPoster_";
+    }
+
+    static class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        int movieTmdbId;
+        @BindView(R.id.textViewMovieTitle) TextView title;
+        @BindView(R.id.textViewMovieDate) TextView date;
+        @BindView(R.id.imageViewMoviePoster) ImageView poster;
+        @BindView(R.id.imageViewMovieItemContextMenu) ImageView contextMenu;
+
+        public MovieViewHolder(View itemView, final ItemClickListener itemClickListener) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onClickMovie(movieTmdbId, poster);
+                    }
+                }
+            });
+            contextMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onClickMovieMoreOptions(movieTmdbId, v);
+                    }
+                }
+            });
+        }
     }
 }

@@ -227,10 +227,10 @@ public class EpisodeTaskTypes {
         }
 
         /**
-         * Returns the text which should be prepended to the submission status message. Tells e.g.
-         * which episode was flagged watched.
+         * Tells for example which episode was flagged watched.
          */
-        public abstract String getNotificationText();
+        @Nullable
+        public abstract String getConfirmationText();
     }
 
     /**
@@ -382,7 +382,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             if (EpisodeTools.isSkipped(getFlagValue())) {
                 // skipping is not sent to trakt, no need for a message
                 return null;
@@ -417,7 +417,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             String number = TextTools.getEpisodeNumber(getContext(), season, episode);
             return getContext().getString(getFlagValue() == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
@@ -541,7 +541,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             if (EpisodeTools.isSkipped(getFlagValue())) {
                 // skipping is not sent to trakt, no need for a message
                 return null;
@@ -589,7 +589,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             String number = TextTools.getEpisodeNumber(getContext(), season, -1);
             return getContext().getString(getFlagValue() == 1 ? R.string.trakt_collected
                     : R.string.trakt_notcollected, number);
@@ -616,7 +616,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             return null;
         }
     }
@@ -774,7 +774,7 @@ public class EpisodeTaskTypes {
         }
 
         @Override
-        public String getNotificationText() {
+        public String getConfirmationText() {
             return null;
         }
     }

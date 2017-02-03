@@ -39,22 +39,22 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_favorites_add: {
-                ShowTools.get(app).storeIsFavorite(showTvdbId, true);
+                app.getShowTools().storeIsFavorite(showTvdbId, true);
                 Utils.trackContextMenu(app, logTag, "Favorite show");
                 return true;
             }
             case R.id.menu_action_shows_favorites_remove: {
-                ShowTools.get(app).storeIsFavorite(showTvdbId, false);
+                app.getShowTools().storeIsFavorite(showTvdbId, false);
                 Utils.trackContextMenu(app, logTag, "Unfavorite show");
                 return true;
             }
             case R.id.menu_action_shows_hide: {
-                ShowTools.get(app).storeIsHidden(showTvdbId, true);
+                app.getShowTools().storeIsHidden(showTvdbId, true);
                 Utils.trackContextMenu(app, logTag, "Hide show");
                 return true;
             }
             case R.id.menu_action_shows_unhide: {
-                ShowTools.get(app).storeIsHidden(showTvdbId, false);
+                app.getShowTools().storeIsHidden(showTvdbId, false);
                 Utils.trackContextMenu(app, logTag, "Unhide show");
                 return true;
             }

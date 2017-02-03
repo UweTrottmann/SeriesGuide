@@ -38,7 +38,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
             int uniqueId) {
         super(context, null, 0);
         this.uniqueId = uniqueId;
-        layoutInflater = (LayoutInflater) context
+        this.layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.popupMenuClickListener = popupMenuClickListener;
 
@@ -106,7 +106,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
         // set unique transition names
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.poster.setTransitionName(
-                    "moviesCursorAdapterPoster_" + uniqueId + "_" + cursor.getPosition());
+                    "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
         }
     }
 

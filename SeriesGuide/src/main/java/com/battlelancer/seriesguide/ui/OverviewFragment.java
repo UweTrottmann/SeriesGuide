@@ -68,10 +68,11 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
-import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -119,8 +120,8 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonShowInfoIMDB) View buttonImdb;
     @BindView(R.id.buttonTVDB) View buttonTvdb;
     @BindView(R.id.buttonTrakt) View buttonTrakt;
-    @BindView(R.id.buttonWebSearch) View buttonWebSearch;
-    @BindView(R.id.buttonShouts) View buttonComments;
+    @BindView(R.id.buttonWebSearch) Button buttonWebSearch;
+    @BindView(R.id.buttonShouts) Button buttonComments;
 
     private Handler handler = new Handler();
     private TraktRatingsTask traktRatingsTask;
@@ -178,7 +179,7 @@ public class OverviewFragment extends Fragment implements
         });
         containerEpisode.setVisibility(View.GONE);
 
-        // check-in button
+        // episode buttons
         buttonCheckin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,39 +187,25 @@ public class OverviewFragment extends Fragment implements
             }
         });
         CheatSheet.setup(buttonCheckin);
-
-        // watched button
         buttonWatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 setEpisodeWatched();
             }
         });
-        buttonWatch.setEnabled(true);
         CheatSheet.setup(buttonWatch);
-
-        // collected button
         buttonCollect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 toggleEpisodeCollected();
             }
         });
-
-        // skip button
         buttonSkip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable button, will be re-enabled on data reload once action completes
-                v.setEnabled(false);
                 setEpisodeSkipped();
             }
         });
-        buttonSkip.setEnabled(true);
         CheatSheet.setup(buttonSkip);
 
         // ratings
@@ -229,6 +216,10 @@ public class OverviewFragment extends Fragment implements
             }
         });
         CheatSheet.setup(containerRatings, R.string.action_rate);
+
+        // comments button
+        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
+                R.attr.drawableComments);
 
         // hide web search button
         buttonWebSearch.setVisibility(View.GONE);
@@ -258,6 +249,10 @@ public class OverviewFragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
+        BaseNavDrawerActivity.ServiceActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        setEpisodeButtonsEnabled(event == null);
+
         EventBus.getDefault().register(this);
         loadEpisodeActionsDelayed();
     }
@@ -277,7 +272,7 @@ public class OverviewFragment extends Fragment implements
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        ServiceUtils.getPicasso(getActivity()).cancelRequest(imageEpisode);
+        Picasso.with(getContext()).cancelRequest(imageEpisode);
 
         unbinder.unbind();
     }
@@ -435,7 +430,7 @@ public class OverviewFragment extends Fragment implements
 
         // store new value
         boolean isFavorite = (Boolean) v.getTag();
-        ShowTools.get(getActivity()).storeIsFavorite(showTvdbId, !isFavorite);
+        SgApp.from(getActivity()).getShowTools().storeIsFavorite(showTvdbId, !isFavorite);
     }
 
     public static class EpisodeLoader extends CursorLoader {
@@ -586,6 +581,27 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceActiveEvent event) {
+        setEpisodeButtonsEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        setEpisodeButtonsEnabled(true);
+    }
+
+    private void setEpisodeButtonsEnabled(boolean enabled) {
+        if (getView() == null) {
+            return;
+        }
+
+        buttonWatch.setEnabled(enabled);
+        buttonCollect.setEnabled(enabled);
+        buttonSkip.setEnabled(enabled);
+        buttonCheckin.setEnabled(enabled);
+    }
+
     private void populateEpisodeViews(Cursor episode) {
         maybeAddFeedbackView();
 
@@ -661,11 +677,6 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-
-            // buttons might have been disabled by action, re-enable
-            buttonWatch.setEnabled(true);
-            buttonCollect.setEnabled(true);
-            buttonSkip.setEnabled(true);
 
             // load all other info
             populateEpisodeDetails(episode);
@@ -983,13 +994,13 @@ public class OverviewFragment extends Fragment implements
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            containerActions, data, TAG);
+                            getActivity().getTheme(), containerActions, data, TAG);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            containerActions, null, TAG);
+                            getActivity().getTheme(), containerActions, null, TAG);
                 }
             };
 }

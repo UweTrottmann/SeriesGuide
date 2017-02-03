@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
   <string name="error_name_already_exists">A list with this name already exists</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
   <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>

@@ -5,7 +5,7 @@
   <string name="shows">Serier</string>
   <string name="lists">Lister</string>
   <string name="movies">Film</string>
-  <string name="statistics">Statistikker</string>
+  <string name="statistics">Statistik</string>
   <string name="search">Søg</string>
   <string name="preferences">Indstillinger</string>
   <string name="help">Hjælp</string>
@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Omarrangér lister</string>
   <string name="error_name_already_exists">En liste med dette navn findes allerede</string>
   <!-- Movies -->
+  <string name="title_discover">Discover</string>
+  <string name="title_popular">Popular</string>
+  <string name="title_digital_releases">Digital releases</string>
+  <string name="title_disc_releases">Disc releases</string>
+  <string name="movies_in_theatres">In theaters</string>
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
   <string name="watchlist_add">Føj til overvågningsliste</string>
@@ -215,7 +220,7 @@
   <string name="action_movies_sort_title">Titel</string>
   <string name="action_movies_sort_release">Udgivelsesdato</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Kunne ikke beregne statistikker.</string>
+  <string name="statistics_failed">Kunne ikke beregne statistik.</string>
   <string name="statistics_shows">serier</string>
   <string name="statistics_episodes">episoder</string>
   <string name="statistics_movies">film</string>
@@ -373,7 +378,7 @@
   <string name="pref_offsetsummary">Forskyd sendetidspunkter med %s timer</string>
   <string name="clear_cache">Ryd billed-cache</string>
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
-  <string name="pref_ganalyticssummary">Send anonyme brugsstatistikker til en Google-tjeneste</string>
+  <string name="pref_ganalyticssummary">Send anonym brugsstatistik til en Google-tjeneste</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkludér alle meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
   <string name="backup_path">Sikkerhedskopieringsmappe</string>

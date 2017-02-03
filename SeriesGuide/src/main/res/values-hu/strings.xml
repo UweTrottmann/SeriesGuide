@@ -48,7 +48,7 @@
   <string name="app_not_available">Nincs kezelő alkalmazás.</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
   <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
@@ -199,6 +199,11 @@
   <string name="action_lists_reorder">Listák újrarendezése</string>
   <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
   <!-- Movies -->
+  <string name="title_discover">Felfedezés</string>
+  <string name="title_popular">Népszerű</string>
+  <string name="title_digital_releases">Digitalis megjelenések</string>
+  <string name="title_disc_releases">Lemez megjelenések</string>
+  <string name="movies_in_theatres">Mozikban</string>
   <string name="movies_collection">Gyűjtemény</string>
   <string name="movies_watchlist">Figyelőlista</string>
   <string name="watchlist_add">Figyelőlistához ad</string>

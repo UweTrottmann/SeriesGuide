@@ -198,6 +198,11 @@
   <string name="action_lists_reorder">リストの再並べ替え</string>
   <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
   <!-- Movies -->
+  <string name="title_discover">見つける</string>
+  <string name="title_popular">人気</string>
+  <string name="title_digital_releases">デジタル リリース</string>
+  <string name="title_disc_releases">ディスク リリース</string>
+  <string name="movies_in_theatres">上映中</string>
   <string name="movies_collection">コレクション</string>
   <string name="movies_watchlist">ウォッチリスト</string>
   <string name="watchlist_add">ウォッチリストに追加</string>

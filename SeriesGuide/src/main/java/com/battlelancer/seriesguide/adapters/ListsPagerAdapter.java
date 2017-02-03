@@ -1,9 +1,10 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DataSetObserver;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
@@ -17,52 +18,63 @@ import com.battlelancer.seriesguide.util.ListsTools;
  */
 public class ListsPagerAdapter extends MultiPagerAdapter {
 
-    private Context mContext;
-
-    private Cursor mLists;
+    private final Context context;
+    private final ListsDataSetObserver dataSetObserver;
+    @Nullable private Cursor cursorLists;
+    private boolean dataValid;
 
     public ListsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        mContext = context.getApplicationContext();
+        this.context = context.getApplicationContext();
+        this.dataSetObserver = new ListsDataSetObserver();
 
-        // load lists, order by order number, then name
-        mLists = mContext.getContentResolver()
-                .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
-                        Lists.SORT_ORDER_THEN_NAME);
+        cursorLists = queryLists();
 
         // precreate first list
-        if (mLists != null && mLists.getCount() == 0) {
-            String listName = mContext.getString(R.string.first_list);
+        if (cursorLists != null && cursorLists.getCount() == 0) {
+            String listName = this.context.getString(R.string.first_list);
             ListsTools.addList(context, listName);
         }
     }
 
+    @Nullable
+    private Cursor queryLists() {
+        // load lists, order by order number, then name
+        Cursor cursorNew = context.getContentResolver()
+                .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
+                        Lists.SORT_ORDER_THEN_NAME);
+        boolean cursorPresent = cursorNew != null;
+        dataValid = cursorPresent;
+        if (cursorPresent) {
+            cursorNew.registerDataSetObserver(dataSetObserver);
+        }
+        return cursorNew;
+    }
+
     @Override
     public Fragment getItem(int position) {
-        if (mLists == null) {
+        if (cursorLists == null || !dataValid) {
             return null;
         }
-
-        mLists.moveToPosition(position);
-        return ListsFragment.newInstance(mLists.getString(0));
+        cursorLists.moveToPosition(position);
+        return ListsFragment.newInstance(cursorLists.getString(0));
     }
 
     @Override
     public int getCount() {
-        if (mLists == null) {
-            return 1;
+        if (cursorLists == null || !dataValid) {
+            return 0;
         }
-        return mLists.getCount();
+        return cursorLists.getCount();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if (mLists == null) {
+        if (cursorLists == null || !dataValid) {
             return "";
         }
-
-        mLists.moveToPosition(position);
-        return mLists.getString(1);
+        cursorLists.moveToPosition(position);
+        return cursorLists.getString(ListsQuery.NAME);
     }
 
     @Override
@@ -70,36 +82,48 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         return POSITION_NONE;
     }
 
+    @Nullable
     public String getListId(int position) {
-        if (mLists == null) {
+        if (cursorLists == null || !dataValid) {
             return null;
         }
-
-        mLists.moveToPosition(position);
-        return mLists.getString(0);
+        cursorLists.moveToPosition(position);
+        return cursorLists.getString(ListsQuery.ID);
     }
 
     public void onListsChanged() {
-        if (mLists != null && !mLists.isClosed()) {
-            Cursor newCursor = mContext.getContentResolver()
-                    .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
-                            Lists.SORT_ORDER_THEN_NAME);
-
-            Cursor oldCursor = mLists;
-            mLists = newCursor;
+        Cursor oldCursor = cursorLists;
+        if (oldCursor != null) {
+            oldCursor.unregisterDataSetObserver(dataSetObserver);
             oldCursor.close();
-
-            notifyDataSetChanged();
         }
+
+        cursorLists = queryLists();
+
+        notifyDataSetChanged();
     }
 
     /**
      * Close the {@link Cursor} backing this {@link ListsPagerAdapter}.
      */
     public void onCleanUp() {
-        if (mLists != null && !mLists.isClosed()) {
-            mLists.close();
-            mLists = null;
+        if (cursorLists != null && !cursorLists.isClosed()) {
+            cursorLists.unregisterDataSetObserver(dataSetObserver);
+            cursorLists.close();
+            cursorLists = null;
+            dataValid = false;
+        }
+    }
+
+    private class ListsDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            dataValid = true;
+        }
+
+        @Override
+        public void onInvalidated() {
+            dataValid = false;
         }
     }
 
