@@ -1,17 +1,14 @@
+$brand-primary: #6545a0 !default;
+
 body {
 background: #fff;
 color:#333;
 font-size: 14px;
 }
 
-/**h1, h2, h3, h4, h5, h6 {
-font-family: 'Roboto', sans-serif;
-text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-}*/
-
 h1, h2 {
 font-weight: 300;
-color:#6545a0;
+color:$brand-primary;
 }
 
 h3, h4, h5, h6 {
@@ -28,7 +25,7 @@ line-height: 24px;
 }
 
 a {
-color:#6545a0;
+color:$brand-primary;
 text-decoration:none;
 line-height:inherit;
 font-weight:bold;
@@ -49,13 +46,12 @@ margin-top:5px;
 }
 
 .btn-link {
-  color:#6545a0;
+  color:$brand-primary;
   font-weight:400;
 }
 
-.navbar-brand {
-  font-weight:300;
-  color: #eee;
+.navbar-inverse {
+  background: linear-gradient(to top left, $brand-primary, lighten($brand-primary, 10%));
 }
 
 .navbar-nav > li > a {
