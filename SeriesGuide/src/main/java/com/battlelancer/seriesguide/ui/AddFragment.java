@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -134,9 +135,17 @@ public abstract class AddFragment extends Fragment {
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // display more details in a dialog
             SearchResult show = adapter.getItem(position);
-            AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+            if (show != null) {
+                if (show.isAdded) {
+                    // already in library, open it
+                    startActivity(new Intent(getContext(), OverviewActivity.class).putExtra(
+                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, show.tvdbid));
+                } else {
+                    // display more details in a dialog
+                    AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+                }
+            }
         }
     };
 
