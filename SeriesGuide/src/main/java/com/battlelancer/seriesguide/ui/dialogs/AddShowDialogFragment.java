@@ -259,7 +259,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     displayedShow.isAdded = true;
-                    EventBus.getDefault().post(new AddFragment.AddShowEvent());
+                    EventBus.getDefault().post(new AddFragment.OnAddingShowEvent());
 
                     addShowListener.onAddShow(displayedShow);
                     dismiss();

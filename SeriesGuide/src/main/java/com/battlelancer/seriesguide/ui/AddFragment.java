@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -41,7 +42,7 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class AddFragment extends Fragment {
 
-    public static class AddShowEvent {
+    public static class OnAddingShowEvent {
     }
 
     @BindView(R.id.containerAddContent) View contentContainer;
@@ -152,22 +153,35 @@ public abstract class AddFragment extends Fragment {
     };
 
     /**
-     * Called if the user adds a new show through the dialog.
+     * Called if the user adds a new show through the dialog. The show is not actually added, yet.
+     * But we display it as such until we know better.
+     *
+     * @see #onEvent(AddShowTask.OnShowAddedEvent)
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(AddShowEvent event) {
+    public void onEvent(OnAddingShowEvent event) {
         adapter.notifyDataSetChanged();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(AddShowTask.OnShowAddedEvent event) {
+        if (!event.successful) {
+            setShowNotAdded(event.showTvdbId);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
-        // set show as not added
         if (event.resultCode == NetworkResult.SUCCESS) {
-            SearchResult item = adapter.getItemForShowTvdbId(event.showTvdbId);
-            if (item != null) {
-                item.isAdded = false;
-                adapter.notifyDataSetChanged();
-            }
+            setShowNotAdded(event.showTvdbId);
+        }
+    }
+
+    private void setShowNotAdded(int showTvdbId) {
+        SearchResult item = adapter.getItemForShowTvdbId(showTvdbId);
+        if (item != null) {
+            item.isAdded = false;
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -249,7 +263,7 @@ public abstract class AddFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     item.isAdded = true;
-                    EventBus.getDefault().post(new AddShowEvent());
+                    EventBus.getDefault().post(new OnAddingShowEvent());
 
                     TaskManager.getInstance(getContext()).performAddTask(app, item);
                 }
