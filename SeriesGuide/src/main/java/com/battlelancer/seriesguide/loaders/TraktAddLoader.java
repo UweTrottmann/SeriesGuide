@@ -169,7 +169,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     : show.year != null ? String.valueOf(show.year) : "";
             if (existingShows != null && existingShows.indexOfKey(show.ids.tvdb) >= 0) {
                 // is already in local database
-                result.isAdded = true;
+                result.state = SearchResult.STATE_ADDED;
                 // use the poster we fetched for it (or null if there is none)
                 result.poster = existingShows.get(show.ids.tvdb);
             }

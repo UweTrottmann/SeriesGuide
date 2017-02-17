@@ -45,6 +45,7 @@ public class TraktAddFragment extends AddFragment {
     public final static int TYPE_WATCHED = 1;
     public final static int TYPE_COLLECTION = 2;
     public final static int TYPE_WATCHLIST = 3;
+
     @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ListType {
@@ -77,9 +78,9 @@ public class TraktAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter, enable context menu only for recommendations and watchlist
-        adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(),
-                listType == TYPE_RECOMMENDED || listType == TYPE_WATCHLIST ? showMenuClickListener
-                        : null, listType != TYPE_WATCHLIST);
+        adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(), itemClickListener,
+                listType == TYPE_RECOMMENDED || listType == TYPE_WATCHLIST,
+                listType == TYPE_RECOMMENDED);
 
         // load data
         getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
@@ -89,10 +90,17 @@ public class TraktAddFragment extends AddFragment {
         setHasOptionsMenu(true);
     }
 
-    private AddAdapter.OnContextMenuClickListener showMenuClickListener
-            = new AddAdapter.OnContextMenuClickListener() {
+    private AddAdapter.OnItemClickListener itemClickListener
+            = new AddAdapter.OnItemClickListener() {
+
         @Override
-        public void onClick(View view, int showTvdbId) {
+        public void onAddClick(SearchResult item) {
+            EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
+            TaskManager.getInstance(getContext()).performAddTask(SgApp.from(getActivity()), item);
+        }
+
+        @Override
+        public void onMenuWatchlistClick(View view, int showTvdbId) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
@@ -149,9 +157,9 @@ public class TraktAddFragment extends AddFragment {
                 List<SearchResult> showsToAdd = new LinkedList<>();
                 // only include shows not already added
                 for (SearchResult result : searchResults) {
-                    if (!result.isAdded) {
+                    if (result.state == SearchResult.STATE_ADD) {
                         showsToAdd.add(result);
-                        result.isAdded = true;
+                        result.state = SearchResult.STATE_ADDING;
                     }
                 }
                 EventBus.getDefault().post(new OnAddingShowEvent());

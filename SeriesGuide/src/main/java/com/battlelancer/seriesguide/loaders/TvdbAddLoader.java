@@ -148,7 +148,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
             if (localShows.indexOfKey(result.tvdbid) >= 0) {
                 // is already in local database
-                result.isAdded = true;
+                result.state = SearchResult.STATE_ADDED;
                 // use the poster we fetched for it (or null if there is none)
                 result.poster = localShows.get(result.tvdbid);
             }

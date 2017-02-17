@@ -258,8 +258,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             buttonPositive.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    displayedShow.isAdded = true;
-                    EventBus.getDefault().post(new AddFragment.OnAddingShowEvent());
+                    EventBus.getDefault()
+                            .post(new AddFragment.OnAddingShowEvent(displayedShow.tvdbid));
 
                     addShowListener.onAddShow(displayedShow);
                     dismiss();

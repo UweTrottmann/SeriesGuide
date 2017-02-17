@@ -8,6 +8,10 @@ import android.os.Parcelable;
  */
 public class SearchResult implements Parcelable {
 
+    public static final int STATE_ADD = 0;
+    public static final int STATE_ADDING = 1;
+    public static final int STATE_ADDED = 2;
+
     public int tvdbid;
 
     /** Two-letter ISO 639-1 language code. */
@@ -19,9 +23,10 @@ public class SearchResult implements Parcelable {
 
     public String poster;
 
-    public boolean isAdded;
+    public int state;
 
-    public static final Parcelable.Creator<SearchResult> CREATOR = new Parcelable.Creator<SearchResult>() {
+    public static final Parcelable.Creator<SearchResult> CREATOR
+            = new Parcelable.Creator<SearchResult>() {
         public SearchResult createFromParcel(Parcel in) {
             return new SearchResult(in);
         }
@@ -40,7 +45,7 @@ public class SearchResult implements Parcelable {
         title = in.readString();
         overview = in.readString();
         poster = in.readString();
-        isAdded = in.readInt() == 1;
+        state = in.readInt();
     }
 
     public SearchResult copy() {
@@ -50,7 +55,7 @@ public class SearchResult implements Parcelable {
         copy.title = this.title;
         copy.overview = this.overview;
         copy.poster = this.poster;
-        copy.isAdded = this.isAdded;
+        copy.state = this.state;
         return copy;
     }
 
@@ -66,7 +71,6 @@ public class SearchResult implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster);
-        dest.writeInt(isAdded ? 1 : 0);
+        dest.writeInt(state);
     }
-
 }

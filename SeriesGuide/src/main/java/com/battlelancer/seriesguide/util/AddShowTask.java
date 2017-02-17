@@ -37,6 +37,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     public class OnShowAddedEvent {
         public final boolean successful;
+        /** Is -1 if add task was aborted. */
         public final int showTvdbId;
         private final String message;
 
@@ -46,17 +47,33 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             this.successful = successful;
         }
 
+        /**
+         * Sets the message to null and successful to true to indicate a single show was added.
+         */
+        public OnShowAddedEvent(int showTvdbId) {
+            this(showTvdbId, null, true);
+        }
+
+        /**
+         * Sets successful to false and TVDB id to -1 to indicate the task was aborted.
+         */
+        public OnShowAddedEvent(String message) {
+            this(-1, message, false);
+        }
+
         public void handle(Context context) {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            if (message != null) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
-    private static final int ADD_ALREADYEXISTS = 0;
-    private static final int ADD_SUCCESS = 1;
-    private static final int ADD_ERROR = 2;
-    private static final int ADD_OFFLINE = 3;
-    private static final int ADD_TRAKT_API_ERROR = 4;
-    private static final int ADD_TRAKT_AUTH_ERROR = 5;
+    private static final int PROGRESS_EXISTS = 0;
+    private static final int PROGRESS_SUCCESS = 1;
+    private static final int PROGRESS_ERROR = 2;
+    private static final int RESULT_OFFLINE = 3;
+    private static final int RESULT_TRAKT_API_ERROR = 4;
+    private static final int RESULT_TRAKT_AUTH_ERROR = 5;
 
     private final SgApp app;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
@@ -112,7 +129,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         if (!AndroidUtils.isNetworkConnected(app)) {
             Timber.d("Finished. No internet connection.");
-            publishProgress(ADD_OFFLINE);
+            publishProgress(RESULT_OFFLINE);
             return null;
         }
 
@@ -159,7 +176,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
             if (!AndroidUtils.isNetworkConnected(app)) {
                 Timber.d("Finished. No connection.");
-                publishProgress(ADD_OFFLINE);
+                publishProgress(RESULT_OFFLINE);
                 failedMergingShows = true;
                 break;
             }
@@ -167,7 +184,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             try {
                 boolean addedShow = TvdbTools.getInstance(app)
                         .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched);
-                result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
+                result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
             } catch (TvdbException e) {
@@ -176,7 +193,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 if (!(isMergingShows && e.getItemDoesNotExist())) {
                     failedMergingShows = true;
                 }
-                result = ADD_ERROR;
+                result = PROGRESS_ERROR;
                 Timber.e(e, "Adding show failed");
             }
 
@@ -216,29 +233,27 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         OnShowAddedEvent event = null;
         switch (values[0]) {
-            case ADD_SUCCESS:
+            case PROGRESS_SUCCESS:
                 // do nothing, user will see show added to show list
-                return;
-            case ADD_ALREADYEXISTS:
+                event = new OnShowAddedEvent(currentShowTvdbId);
+                break;
+            case PROGRESS_EXISTS:
                 event = new OnShowAddedEvent(currentShowTvdbId,
                         app.getString(R.string.add_already_exists, currentShowName), true);
                 break;
-            case ADD_ERROR:
+            case PROGRESS_ERROR:
                 event = new OnShowAddedEvent(currentShowTvdbId,
                         app.getString(R.string.add_error, currentShowName), false);
                 break;
-            case ADD_OFFLINE:
-                event = new OnShowAddedEvent(currentShowTvdbId, app.getString(R.string.offline),
-                        false);
+            case RESULT_OFFLINE:
+                event = new OnShowAddedEvent(app.getString(R.string.offline));
                 break;
-            case ADD_TRAKT_API_ERROR:
-                event = new OnShowAddedEvent(currentShowTvdbId,
-                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)),
-                        false);
+            case RESULT_TRAKT_API_ERROR:
+                event = new OnShowAddedEvent(
+                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
                 break;
-            case ADD_TRAKT_AUTH_ERROR:
-                event = new OnShowAddedEvent(currentShowTvdbId,
-                        app.getString(R.string.trakt_error_credentials), false);
+            case RESULT_TRAKT_AUTH_ERROR:
+                event = new OnShowAddedEvent(app.getString(R.string.trakt_error_credentials));
                 break;
         }
 
@@ -261,7 +276,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return TraktTools.buildTraktShowsMap(response.body());
             } else {
                 if (SgTrakt.isUnauthorized(app, response)) {
-                    publishProgress(ADD_TRAKT_AUTH_ERROR);
+                    publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
                 SgTrakt.trackFailedRequest(app, action, response);
@@ -269,7 +284,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(app, action, e);
         }
-        publishProgress(ADD_TRAKT_API_ERROR);
+        publishProgress(RESULT_TRAKT_API_ERROR);
         return null;
     }
 }
