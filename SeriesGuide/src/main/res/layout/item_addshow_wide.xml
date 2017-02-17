@@ -28,6 +28,10 @@
                 android:scaleType="centerInside"
                 tools:src="#F50057" />
 
+            <!-- With maxLines ellipsis text is cut off or ellipsis character is not shown.
+            Fixed in later versions of Android, but there maxLines cuts off text
+            on the word level. We want the maximum amount of chars shown instead
+            (which is what singleLine is doing). -->
             <TextView
                 android:id="@+id/textViewAddTitle"
                 android:layout_width="wrap_content"
@@ -38,6 +42,7 @@
                 android:paddingTop="@dimen/large_padding"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Title"
+                tools:ignore="Deprecated"
                 tools:text="Cosmos: A Spacetime Odyssey" />
 
             <TextView
