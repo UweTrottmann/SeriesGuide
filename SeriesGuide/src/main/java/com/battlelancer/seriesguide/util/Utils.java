@@ -89,8 +89,13 @@ public class Utils {
      * Return a version string like "v42 (Database v42)".
      */
     public static String getVersionString(Context context) {
-        return "v" + getVersion(context)
-                + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")";
+        if (BuildConfig.DEBUG) {
+            return context.getString(R.string.format_version_debug, getVersion(context),
+                    SeriesGuideDatabase.DATABASE_VERSION, BuildConfig.VERSION_CODE);
+        } else {
+            return context.getString(R.string.format_version, getVersion(context),
+                    SeriesGuideDatabase.DATABASE_VERSION);
+        }
     }
 
     /**
