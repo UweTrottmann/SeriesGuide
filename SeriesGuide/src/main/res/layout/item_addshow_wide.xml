@@ -80,26 +80,10 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/viewAddButton"
+            <com.battlelancer.seriesguide.widgets.AddIndicator
+                android:id="@+id/addIndicatorAddShow"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/action_shows_add"
-                android:focusable="false"
-                android:padding="@dimen/large_padding"
-                android:src="?attr/drawableAddIcon" />
-
-            <!-- Content description is set in code. -->
-            <ImageView
-                android:id="@+id/imageViewAddedIndicator"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:contentDescription="@null"
-                android:scaleType="centerInside"
-                android:src="?attr/drawableWatched"
-                tools:visibility="gone" />
-
+                android:layout_height="56dp" />
 
         </LinearLayout>
 

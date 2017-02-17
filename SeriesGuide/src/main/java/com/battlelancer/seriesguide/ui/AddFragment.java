@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.NetworkResult;
@@ -30,6 +31,7 @@ import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.AddIndicator;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
@@ -254,12 +256,12 @@ public abstract class AddFragment extends Fragment {
             holder.buttonContextMenu.setVisibility(menuClickListener == null ||
                     (hideContextMenuIfAdded && item.isAdded) ? View.GONE : View.VISIBLE);
             // display added indicator instead of add button if already added that show
-            holder.addbutton.setVisibility(item.isAdded ? View.GONE : View.VISIBLE);
-            holder.addedIndicator.setVisibility(item.isAdded ? View.VISIBLE : View.GONE);
+            holder.addIndicator.setState(item.isAdded
+                    ? AddIndicator.STATE_ADDED : AddIndicator.STATE_ADD);
             String showTitle = item.title;
-            holder.addedIndicator.setContentDescription(
+            holder.addIndicator.setContentDescriptionAdded(
                     getContext().getString(R.string.add_already_exists, showTitle));
-            holder.addbutton.setOnClickListener(new OnClickListener() {
+            holder.addIndicator.setOnAddClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     item.isAdded = true;
@@ -292,21 +294,15 @@ public abstract class AddFragment extends Fragment {
 
             public int showTvdbId;
 
-            public TextView title;
-            public TextView description;
-            public ImageView poster;
-            public View addbutton;
-            public View addedIndicator;
-            public ImageView buttonContextMenu;
+            @BindView(R.id.textViewAddTitle) public TextView title;
+            @BindView(R.id.textViewAddDescription) public TextView description;
+            @BindView(R.id.imageViewAddPoster) public ImageView poster;
+            @BindView(R.id.addIndicatorAddShow) public AddIndicator addIndicator;
+            @BindView(R.id.buttonItemAddMore) public ImageView buttonContextMenu;
 
             public ViewHolder(View view,
                     final OnContextMenuClickListener contextMenuClickListener) {
-                title = (TextView) view.findViewById(R.id.textViewAddTitle);
-                description = (TextView) view.findViewById(R.id.textViewAddDescription);
-                poster = (ImageView) view.findViewById(R.id.imageViewAddPoster);
-                addbutton = view.findViewById(R.id.viewAddButton);
-                addedIndicator = view.findViewById(R.id.imageViewAddedIndicator);
-                buttonContextMenu = (ImageView) view.findViewById(R.id.buttonItemAddMore);
+                ButterKnife.bind(this, view);
                 buttonContextMenu.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
