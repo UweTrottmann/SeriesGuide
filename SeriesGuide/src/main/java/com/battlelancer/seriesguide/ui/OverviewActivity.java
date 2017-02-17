@@ -68,7 +68,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         setupNavDrawer();
 
         showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
-        if (showTvdbId < 0) {
+        if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {
             finish();
             return;
         }
