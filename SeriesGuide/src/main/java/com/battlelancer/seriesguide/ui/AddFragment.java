@@ -21,9 +21,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -152,10 +154,21 @@ public abstract class AddFragment extends Fragment {
     /**
      * Called if the user adds a new show through the dialog.
      */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(AddShowEvent event) {
         adapter.notifyDataSetChanged();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+        // set show as not added
+        if (event.resultCode == NetworkResult.SUCCESS) {
+            SearchResult item = adapter.getItemForShowTvdbId(event.showTvdbId);
+            if (item != null) {
+                item.isAdded = false;
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     /**
@@ -190,6 +203,18 @@ public abstract class AddFragment extends Fragment {
             this.menuClickListener = menuClickListener;
             this.hideContextMenuIfAdded = hideContextMenuIfAdded;
             this.inflater = LayoutInflater.from(activity);
+        }
+
+        @Nullable
+        public SearchResult getItemForShowTvdbId(int showTvdbId) {
+            int count = getCount();
+            for (int i = 0; i < count; i++) {
+                SearchResult item = getItem(i);
+                if (item != null && item.tvdbid == showTvdbId) {
+                    return item;
+                }
+            }
+            return null;
         }
 
         @NonNull
