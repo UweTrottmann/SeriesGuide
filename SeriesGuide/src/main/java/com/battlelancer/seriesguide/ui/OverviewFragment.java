@@ -83,6 +83,7 @@ import timber.log.Timber;
 public class OverviewFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
 
+    public static final String ARG_INT_SHOW_TVDBID = "show_tvdbid";
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
@@ -138,20 +139,12 @@ public class OverviewFragment extends Fragment implements
 
     private boolean hasSetEpisodeWatched;
 
-    /**
-     * All values have to be integer.
-     */
-    public interface InitBundle {
-
-        String SHOW_TVDBID = "show_tvdbid";
-    }
-
     public static OverviewFragment newInstance(int showTvdbId) {
         OverviewFragment f = new OverviewFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDBID, showTvdbId);
+        args.putInt(ARG_INT_SHOW_TVDBID, showTvdbId);
         f.setArguments(args);
 
         return f;
@@ -161,7 +154,7 @@ public class OverviewFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showTvdbId = getArguments().getInt(InitBundle.SHOW_TVDBID);
+        showTvdbId = getArguments().getInt(ARG_INT_SHOW_TVDBID);
     }
 
     @Override

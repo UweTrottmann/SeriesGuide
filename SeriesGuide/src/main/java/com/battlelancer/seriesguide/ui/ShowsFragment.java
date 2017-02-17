@@ -467,7 +467,7 @@ public class ShowsFragment extends Fragment implements
         // display overview for this show
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
-        i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
+        i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
 
         ActivityCompat.startActivity(getActivity(), i,
                 ActivityOptionsCompat

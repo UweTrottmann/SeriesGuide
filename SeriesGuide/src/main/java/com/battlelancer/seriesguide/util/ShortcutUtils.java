@@ -14,7 +14,6 @@ import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -74,7 +73,7 @@ public final class ShortcutUtils {
 
                 // Intent used when the icon is touched
                 final Intent shortcutIntent = new Intent(context, OverviewActivity.class);
-                shortcutIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+                shortcutIntent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
                 shortcutIntent.setAction(Intent.ACTION_MAIN);
                 shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

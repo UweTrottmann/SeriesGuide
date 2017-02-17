@@ -117,7 +117,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             case 1: {
                 // display show overview
                 intent = new Intent(getActivity(), OverviewActivity.class);
-                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
+                intent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID,
                         Integer.valueOf(itemRefId));
                 break;
             }

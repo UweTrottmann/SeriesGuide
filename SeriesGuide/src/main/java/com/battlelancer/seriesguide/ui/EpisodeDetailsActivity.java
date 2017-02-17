@@ -142,7 +142,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                         .addNextIntent(new Intent(this, ShowsActivity.class))
                         .addNextIntent(
                                 new Intent(this, OverviewActivity.class).putExtra(
-                                        OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId)
+                                        OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId)
                         )
                         .addNextIntent(upIntent)
                         .startActivities();

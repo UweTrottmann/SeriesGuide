@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -249,7 +248,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getActivity(), OverviewActivity.class).putExtra(
-                            OverviewFragment.InitBundle.SHOW_TVDBID, displayedShow.tvdbid));
+                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, displayedShow.tvdbid));
                     dismiss();
                 }
             });
