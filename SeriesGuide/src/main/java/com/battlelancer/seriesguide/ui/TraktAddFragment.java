@@ -154,9 +154,9 @@ public class TraktAddFragment extends AddFragment {
                         result.isAdded = true;
                     }
                 }
+                EventBus.getDefault().post(new OnAddingShowEvent());
                 TaskManager.getInstance(getActivity())
                         .performAddTask(SgApp.from(getActivity()), showsToAdd, false, false);
-                EventBus.getDefault().post(new OnAddingShowEvent());
             }
             // disable the item so the user has to come back
             item.setEnabled(false);
