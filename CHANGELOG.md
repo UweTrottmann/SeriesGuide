@@ -5,6 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 36
+----------
+*(in development)*
+
+#### 36-beta1
+*(2017-02-18)*
+
+* TWEAK Open show from search result directly if it is added.
+* TWEAK Show progress while adding a show.
+* TWEAK Show progress while loading popular/digital/disc movies.
+* NOTE Latest translations from crowdin.
+
 Version 35
 ----------
 *(2017-02-03)*
