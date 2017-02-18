@@ -326,7 +326,7 @@
   <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_exactdates">Mostrar datas exatas</string>
-  <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"em 3 dias\"</string>
+  <string name="pref_exactdates_summary">\"12 de Outubro\" em vez de \"em 3 dias\"</string>
   <string name="pref_nospoilers">Evitar spoilers</string>
   <string name="pref_nospoilers_summary">Oculte detalhes até que o episódio seja assistido</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>

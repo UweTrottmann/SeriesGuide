@@ -19,7 +19,7 @@
   <string name="season">Сезон</string>
   <string name="season_number">Сезон %s</string>
   <string name="seasons">Сезоны</string>
-  <string name="specialseason">Особые эпизоды</string>
+  <string name="specialseason">Особые выпуски</string>
   <!-- Descriptions -->
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
@@ -35,7 +35,7 @@
   <string name="action_open">Открыть</string>
   <string name="sync_manually">Синхронизировать вручную</string>
   <string name="sync_and_update">Синхронизировать и обновить</string>
-  <string name="sync_and_download_all">Синхронизировать и загрузить все</string>
+  <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -200,11 +200,11 @@
   <string name="action_lists_reorder">Сортировка списков</string>
   <string name="error_name_already_exists">Список с таким именем уже существует</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Подборка</string>
+  <string name="title_popular">Популярные</string>
+  <string name="title_digital_releases">Цифровые версии</string>
+  <string name="title_disc_releases">Диски</string>
+  <string name="movies_in_theatres">Смотрите в кинотеатрах</string>
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>
   <string name="watchlist_add">Добавить в список просмотра</string>
@@ -238,12 +238,12 @@
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d час</item>
+    <item quantity="few">%d часа</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минута</item>
+    <item quantity="few">%d минуты</item>
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
@@ -309,7 +309,7 @@
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
     <item quantity="one">%d голос</item>
-    <item quantity="few">%d голос</item>
+    <item quantity="few">%d голоса</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
@@ -327,7 +327,7 @@
   <string name="prefs_category_advanced">Дополнительно</string>
   <string name="prefs_category_about">О программе</string>
   <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
-  <string name="pref_onlyfuturesummary">Не показывать транслируемые эпизоды</string>
+  <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>
   <string name="pref_onlyseasoneps">Скрывать особые эпизоды</string>
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
   <string name="pref_exactdates">Отображать точные даты</string>

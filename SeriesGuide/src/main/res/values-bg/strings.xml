@@ -246,7 +246,7 @@
   <string name="hexagon_warning">Експериментално</string>
   <string name="hexagon_description">Свързване с облака за архивиране и синхронизиране на предаванията и филмите ти.</string>
   <string name="hexagon_warning_lists">Списъци не са включени.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">Докато SeriesGuide Cloud е свързан, синхронизирането с trakt е изключено.</string>
   <string name="hexagon_signin">Вписване</string>
   <string name="hexagon_signed_in">Вие сте свързани към SeriesGuide облака.</string>
   <string name="hexagon_signout">Отписване</string>
@@ -272,7 +272,7 @@
   <string name="traktcheckin_wait">Ще изчакам</string>
   <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
+  <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt профил</string>
@@ -304,14 +304,14 @@
   <string name="rating8">Страхотен</string>
   <string name="rating9">Превъзходен</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d глас</item>
+    <item quantity="other">%d гласове</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Гледано</string>
   <string name="checkin_hint">Напиши съобщение (по избор)</string>
   <string name="paste_title">Поставете заглавие</string>
-  <string name="pref_quick_checkin">Quick check in</string>
+  <string name="pref_quick_checkin">Бързо отбелязване</string>
   <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
   <!-- Help -->
   <string name="feedback">Обратна връзка</string>
@@ -352,7 +352,7 @@
   <string name="sort_order_latest_first_dvd">Най-новите отгоре (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Най-старите отгоре (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Диапазон на Предстоящи</string>
   <string name="upcoming_upto_now">сега</string>
   <string name="upcoming_upto_one_day">1 ден</string>
   <string name="upcoming_upto_three_days">3 дни</string>
@@ -483,10 +483,10 @@
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Радвате ли се на използването на SeriesGuide?</string>
   <string name="feedback_action_yes">Да!</string>
-  <string name="feedback_action_notreally">Not really</string>
+  <string name="feedback_action_notreally">Не точно</string>
   <string name="feedback_question_rate_google">Ще оцените ли приложението в Google Play?</string>
   <string name="feedback_question_rate_amazon">Ще оцените ли приложението в Amazon?</string>
   <string name="feedback_question_feedback">Кажете ми как да го подобрим?</string>
-  <string name="feedback_action_ok">OK, sure</string>
+  <string name="feedback_action_ok">Да, разбира се</string>
   <string name="feedback_action_nothanks">Не, благодаря</string>
 </resources>
