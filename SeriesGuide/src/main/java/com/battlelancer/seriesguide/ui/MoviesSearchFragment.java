@@ -122,6 +122,7 @@ public class MoviesSearchFragment extends Fragment {
         adapter = new MoviesAdapter(getContext(), new MovieItemClickListener(getActivity()));
         recyclerView.setAdapter(adapter);
 
+        swipeRefreshLayout.setRefreshing(true);
         getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
                 searchLoaderCallbacks);
     }
