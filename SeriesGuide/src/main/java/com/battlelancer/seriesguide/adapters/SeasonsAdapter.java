@@ -11,60 +11,39 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
 import com.battlelancer.seriesguide.util.SeasonTools;
 
 public class SeasonsAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.item_season;
-
-    private LayoutInflater mLayoutInflater;
-
-    private PopupMenuClickListener mPopupMenuClickListener;
-
     public interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
     }
 
-    public SeasonsAdapter(Context context,
-            PopupMenuClickListener listener) {
+    private PopupMenuClickListener popupMenuClickListener;
+
+    public SeasonsAdapter(Context context, PopupMenuClickListener listener) {
         super(context, null, 0);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPopupMenuClickListener = listener;
+        popupMenuClickListener = listener;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (!mDataValid) {
-            throw new IllegalStateException("this should only be called when the cursor is valid");
-        }
-        if (!mCursor.moveToPosition(position)) {
-            throw new IllegalStateException("couldn't move cursor to position " + position);
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_season, parent, false);
 
-        final ViewHolder viewHolder;
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-            convertView = newView(mContext, mCursor, parent);
+        return view;
+    }
 
-            viewHolder = new ViewHolder();
-            viewHolder.seasonTitle = (TextView) convertView.findViewById(R.id.textViewSeasonTitle);
-            viewHolder.seasonProgress = (TextView) convertView
-                    .findViewById(R.id.textViewSeasonProgress);
-            viewHolder.seasonProgressBar = (ProgressBar) convertView
-                    .findViewById(R.id.progressBarSeason);
-            viewHolder.seasonWatchCount = (TextView) convertView
-                    .findViewById(R.id.textViewSeasonWatchCount);
-            viewHolder.seasonSkipped = convertView.findViewById(R.id.imageViewSeasonSkipped);
-            viewHolder.contextMenu = (ImageView) convertView
-                    .findViewById(R.id.imageViewContextMenu);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // title
         final int seasonNumber = mCursor.getInt(SeasonsQuery.COMBINED);
@@ -127,37 +106,24 @@ public class SeasonsAdapter extends CursorAdapter {
         viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPopupMenuClickListener != null) {
-                    mPopupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
+                if (popupMenuClickListener != null) {
+                    popupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
                 }
             }
         });
-
-        return convertView;
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-    }
-
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mLayoutInflater.inflate(LAYOUT, parent, false);
     }
 
     static class ViewHolder {
 
-        TextView seasonTitle;
+        @BindView(R.id.textViewSeasonTitle) TextView seasonTitle;
+        @BindView(R.id.textViewSeasonProgress) TextView seasonProgress;
+        @BindView(R.id.progressBarSeason) ProgressBar seasonProgressBar;
+        @BindView(R.id.textViewSeasonWatchCount) TextView seasonWatchCount;
+        @BindView(R.id.imageViewSeasonSkipped) View seasonSkipped;
+        @BindView(R.id.imageViewContextMenu) ImageView contextMenu;
 
-        TextView seasonProgress;
-
-        ProgressBar seasonProgressBar;
-
-        TextView seasonWatchCount;
-
-        View seasonSkipped;
-
-        ImageView contextMenu;
+        public ViewHolder(View itemView) {
+            ButterKnife.bind(this, itemView);
+        }
     }
-
 }
