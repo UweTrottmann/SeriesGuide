@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
@@ -22,14 +24,6 @@ import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.item_episode;
-
-    private LayoutInflater mLayoutInflater;
-
-    private PopupMenuClickListener mPopupMenuClickListener;
-
-    private OnFlagEpisodeListener mOnFlagListener;
-
     public interface OnFlagEpisodeListener {
         void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
     }
@@ -39,13 +33,14 @@ public class EpisodesAdapter extends CursorAdapter {
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
+    private PopupMenuClickListener popupMenuClickListener;
+    private OnFlagEpisodeListener onFlagListener;
+
     public EpisodesAdapter(Context context, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
         super(context, null, 0);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPopupMenuClickListener = listener;
-        mOnFlagListener = flagListener;
+        popupMenuClickListener = listener;
+        onFlagListener = flagListener;
     }
 
     /**
@@ -69,39 +64,19 @@ public class EpisodesAdapter extends CursorAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (!mDataValid) {
-            throw new IllegalStateException("this should only be called when the cursor is valid");
-        }
-        if (!mCursor.moveToPosition(position)) {
-            throw new IllegalStateException("couldn't move cursor to position " + position);
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_episode, parent, false);
 
-        final ViewHolder viewHolder;
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-            convertView = newView(mContext, mCursor, parent);
+        return view;
+    }
 
-            viewHolder = new ViewHolder();
-            viewHolder.watchedBox = (WatchedBox) convertView
-                    .findViewById(R.id.watchedBoxEpisode);
-            viewHolder.episodeTitle = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeTitle);
-            viewHolder.episodeNumber = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeNumber);
-            viewHolder.episodeAirdate = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeAirdate);
-            viewHolder.episodeAlternativeNumbers = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeAlternativeNumbers);
-            viewHolder.collected = (ImageView) convertView
-                    .findViewById(R.id.imageViewCollected);
-            viewHolder.contextMenu = (ImageView) convertView
-                    .findViewById(R.id.imageViewContextMenu);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // episode title
         final int watchedFlag = mCursor.getInt(EpisodesQuery.WATCHED);
@@ -126,7 +101,7 @@ public class EpisodesAdapter extends CursorAdapter {
                 WatchedBox box = (WatchedBox) v;
                 // disable button, will be re-enabled on data reload once action completes
                 box.setEnabled(false);
-                mOnFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
+                onFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
                         !EpisodeTools.isWatched(box.getEpisodeFlag()));
             }
         });
@@ -177,32 +152,25 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPopupMenuClickListener != null) {
-                    mPopupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
+                if (popupMenuClickListener != null) {
+                    popupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
                             releaseTime, watchedFlag, isCollected);
                 }
             }
         });
-
-        return convertView;
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-    }
-
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mLayoutInflater.inflate(LAYOUT, parent, false);
     }
 
     static class ViewHolder {
-        TextView episodeAlternativeNumbers;
-        TextView episodeAirdate;
-        TextView episodeNumber;
-        TextView episodeTitle;
-        WatchedBox watchedBox;
-        ImageView collected;
-        ImageView contextMenu;
+        @BindView(R.id.textViewEpisodeAlternativeNumbers) TextView episodeAlternativeNumbers;
+        @BindView(R.id.textViewEpisodeAirdate) TextView episodeAirdate;
+        @BindView(R.id.textViewEpisodeNumber) TextView episodeNumber;
+        @BindView(R.id.textViewEpisodeTitle) TextView episodeTitle;
+        @BindView(R.id.watchedBoxEpisode) WatchedBox watchedBox;
+        @BindView(R.id.imageViewCollected) ImageView collected;
+        @BindView(R.id.imageViewContextMenu) ImageView contextMenu;
+
+        public ViewHolder(View itemView) {
+            ButterKnife.bind(this, itemView);
+        }
     }
 }
