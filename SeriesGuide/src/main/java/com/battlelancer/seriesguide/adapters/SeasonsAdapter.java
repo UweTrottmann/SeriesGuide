@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
@@ -58,7 +59,11 @@ public class SeasonsAdapter extends CursorAdapter {
         final int max = mCursor.getInt(SeasonsQuery.TOTALCOUNT);
         final int progress = max - count - unairedCount - noairdateCount;
         viewHolder.seasonProgressBar.setMax(max);
-        viewHolder.seasonProgressBar.setProgress(progress);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewHolder.seasonProgressBar.setProgress(progress, true);
+        } else {
+            viewHolder.seasonProgressBar.setProgress(progress);
+        }
         viewHolder.seasonProgress.setText(progress + "/" + max);
 
         // skipped label
