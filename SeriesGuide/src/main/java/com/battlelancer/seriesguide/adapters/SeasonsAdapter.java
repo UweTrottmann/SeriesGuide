@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,15 +83,15 @@ public class SeasonsAdapter extends CursorAdapter {
                 }
             }
 
-            viewHolder.seasonWatchCount.setTextAppearance(mContext,
+            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
                     R.style.TextAppearance_Caption_Narrow_Dim);
         } else if (count == 1) {
             episodeCount += count + " " + mContext.getString(R.string.season_onenotwatched);
-            viewHolder.seasonWatchCount.setTextAppearance(mContext,
+            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
                     R.style.TextAppearance_Caption_Narrow);
         } else {
             episodeCount += count + " " + mContext.getString(R.string.season_watchcount);
-            viewHolder.seasonWatchCount.setTextAppearance(mContext,
+            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
                     R.style.TextAppearance_Caption_Narrow);
         }
 
