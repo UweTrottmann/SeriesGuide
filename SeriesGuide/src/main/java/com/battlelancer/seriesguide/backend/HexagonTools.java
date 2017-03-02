@@ -18,6 +18,14 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -75,7 +83,7 @@ public class HexagonTools {
      */
     @Nullable
     public static synchronized Account buildAccountService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context);
+        GoogleAccountCredential credential = getAccountCredential(context, true);
         if (credential.getSelectedAccountName() == null) {
             return null;
         }
@@ -90,7 +98,7 @@ public class HexagonTools {
      */
     @Nullable
     public static synchronized Shows getShowsService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context);
+        GoogleAccountCredential credential = getAccountCredential(context, true);
         if (credential.getSelectedAccountName() == null) {
             return null;
         }
@@ -108,7 +116,7 @@ public class HexagonTools {
      */
     @Nullable
     public static synchronized Episodes getEpisodesService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context);
+        GoogleAccountCredential credential = getAccountCredential(context, true);
         if (credential.getSelectedAccountName() == null) {
             return null;
         }
@@ -126,7 +134,7 @@ public class HexagonTools {
      */
     @Nullable
     public static synchronized Movies getMoviesService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context);
+        GoogleAccountCredential credential = getAccountCredential(context, true);
         if (credential.getSelectedAccountName() == null) {
             return null;
         }
@@ -144,7 +152,7 @@ public class HexagonTools {
      */
     @Nullable
     public static synchronized Lists getListsService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context);
+        GoogleAccountCredential credential = getAccountCredential(context, true);
         if (credential.getSelectedAccountName() == null) {
             return null;
         }
@@ -158,36 +166,51 @@ public class HexagonTools {
     }
 
     /**
-     * Checks if the given Google account exists and can be accessed.
-     */
-    public static boolean validateAccount(Context context, String accountName) {
-        GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(
-                context.getApplicationContext(), HexagonSettings.AUDIENCE);
-        // set account, credential tries to fetch Google account from Android AccountManager
-        credential.setSelectedAccountName(accountName);
-
-        if (credential.getSelectedAccountName() == null) {
-            Timber.e("validateAccount: failed to get Google account from AccountManager.");
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Get the Google account credentials used for talking with Hexagon.
      *
-     * <p>Make sure to check {@link GoogleAccountCredential#getSelectedAccountName()} is not null
-     * (is null if e.g. do not have permission to access the account or the account was removed).
+     * <p>Make sure to check {@link GoogleAccountCredential#getSelectedAccount()} is not null (is
+     * null if e.g. do not have permission to access the account or the account was removed).
      */
-    public synchronized static GoogleAccountCredential getAccountCredential(Context context) {
+    private synchronized static GoogleAccountCredential getAccountCredential(Context context,
+            boolean autoSignIn) {
         if (credential == null) {
             credential = GoogleAccountCredential.usingAudience(
                     context.getApplicationContext(), HexagonSettings.AUDIENCE);
         }
-        // try to restore account name if none is set
-        if (credential.getSelectedAccountName() == null) {
-            credential.setSelectedAccountName(HexagonSettings.getAccountName(context));
+        // try to restore account if none is set
+        if (autoSignIn && credential.getSelectedAccount() == null) {
+            GoogleSignInOptions gso =
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build();
+
+            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
+            ConnectionResult connectionResult = googleApiClient.blockingConnect();
+            if (connectionResult.isSuccess()) {
+                OptionalPendingResult<GoogleSignInResult> pendingResult
+                        = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+                GoogleSignInResult result = pendingResult.await();
+                if (result.isSuccess()) {
+                    GoogleSignInAccount signInAccount = result.getSignInAccount();
+                    if (signInAccount != null) {
+                        Timber.i("Silent sign-in successful.");
+                        android.accounts.Account account = signInAccount.getAccount();
+                        credential.setSelectedAccount(account);
+                    } else {
+                        Timber.e("Silent sign-in failed: GoogleSignInAccount is null.");
+                    }
+                } else {
+                    Timber.e("Silent sign-in failed: %s",
+                            GoogleSignInStatusCodes.getStatusCodeString(
+                                    result.getStatus().getStatusCode()));
+                }
+                googleApiClient.disconnect();
+            } else {
+                Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
+                        connectionResult);
+            }
         }
         return credential;
     }
@@ -195,24 +218,29 @@ public class HexagonTools {
     /**
      * Sets the account name used for calls to Hexagon.
      */
-    public static void storeAccountName(@NonNull Context context, @Nullable String accountName) {
+    public static void storeAccount(@NonNull Context context,
+            @Nullable GoogleSignInAccount account) {
         // store or remove account name in settings
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putString(HexagonSettings.KEY_ACCOUNT_NAME, accountName)
-                .commit();
+                .putString(HexagonSettings.KEY_ACCOUNT_NAME, account != null
+                        ? account.getEmail()
+                        : null)
+                .apply();
 
         // try to set or remove account on credential
-        getAccountCredential(context).setSelectedAccountName(accountName);
+        getAccountCredential(context, false).setSelectedAccount(account != null
+                ? account.getAccount()
+                : null);
     }
 
     /**
      * Returns true if an account for Hexagon is set and the user is allowed to use Hexagon (has
      * access to X).
      */
-    public static boolean isSignedIn(Context context) {
+    public static boolean isConfigured(Context context) {
         return Utils.hasAccessToX(context)
-                && getAccountCredential(context).getSelectedAccountName() != null;
+                && getAccountCredential(context, false).getSelectedAccount() != null;
     }
 
     /**
