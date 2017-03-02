@@ -30,7 +30,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPreExecute() {
-        isSendingToHexagon = HexagonTools.isSignedIn(context);
+        isSendingToHexagon = HexagonTools.isConfigured(context);
         isSendingToTrakt = TraktCredentials.get(context).hasCredentials();
 
         // show message to which service we send

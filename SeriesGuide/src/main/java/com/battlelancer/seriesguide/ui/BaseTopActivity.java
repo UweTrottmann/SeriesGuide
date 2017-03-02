@@ -179,7 +179,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                         || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
                     // user has acknowledged warning
                     // so remove stored account name so this warning is not displayed again
-                    HexagonTools.storeAccountName(BaseTopActivity.this, null);
+                    HexagonTools.storeAccount(BaseTopActivity.this, null);
                 }
             }
         }).setAction(R.string.preferences, new View.OnClickListener() {

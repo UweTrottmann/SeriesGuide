@@ -188,7 +188,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
-        if (HexagonTools.isSignedIn(app)) {
+        if (HexagonTools.isConfigured(app)) {
             // ...from Hexagon
             boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {

@@ -34,7 +34,7 @@ public class ConnectTraktFinishedFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
 
         // hide sync message if hexagon is connected (so trakt sync is disabled)
-        if (HexagonTools.isSignedIn(getActivity())) {
+        if (HexagonTools.isConfigured(getActivity())) {
             textViewSyncMessage.setVisibility(View.GONE);
         }
 

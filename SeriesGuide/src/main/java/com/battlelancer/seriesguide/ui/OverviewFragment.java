@@ -667,7 +667,7 @@ public class OverviewFragment extends Fragment implements
 
             // hide check-in if not connected to trakt or hexagon is enabled
             boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
-            boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+            boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isConfigured(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 

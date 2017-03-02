@@ -147,6 +147,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         textViewUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
         textViewUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
         textViewHexagonWarning.setVisibility(
-                visible && HexagonTools.isSignedIn(getContext()) ? View.VISIBLE : View.GONE);
+                visible && HexagonTools.isConfigured(getContext()) ? View.VISIBLE : View.GONE);
     }
 }

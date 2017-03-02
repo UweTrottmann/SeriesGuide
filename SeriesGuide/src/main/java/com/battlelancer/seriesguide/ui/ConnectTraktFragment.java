@@ -57,7 +57,7 @@ public class ConnectTraktFragment extends Fragment {
 
         // show hexagon + trakt conflict warning
         textViewHexagonWarning.setVisibility(
-                HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
+                HexagonTools.isConfigured(getActivity()) ? View.VISIBLE : View.GONE);
 
         return v;
     }

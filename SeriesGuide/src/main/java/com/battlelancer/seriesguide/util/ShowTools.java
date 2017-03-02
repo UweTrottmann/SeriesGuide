@@ -75,7 +75,7 @@ public class ShowTools {
      * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
      */
     public int removeShow(int showTvdbId) {
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isConfigured(context)) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return NetworkResult.OFFLINE;
             }
@@ -167,7 +167,7 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isConfigured(context)) {
             if (Utils.isNotConnected(context, true)) {
                 return;
             }
@@ -201,7 +201,7 @@ public class ShowTools {
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isConfigured(context)) {
             if (Utils.isNotConnected(context, true)) {
                 return;
             }
@@ -227,7 +227,7 @@ public class ShowTools {
     }
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
-        if (HexagonTools.isSignedIn(context)) {
+        if (HexagonTools.isConfigured(context)) {
             if (Utils.isNotConnected(context, true)) {
                 return;
             }

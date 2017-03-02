@@ -129,7 +129,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleServiceActiveEvent(event);
 
-        boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
+        boolean isSignedIntoCloud = HexagonTools.isConfigured(this);
         if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
             // if not signed into hexagon, but still have an account name:
             // check if the required persmission is missing
@@ -256,7 +256,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         switch (itemId) {
             case NAV_ITEM_ACCOUNT_ID: {
                 // SG Cloud connection overrides trakt
-                if (HexagonTools.isSignedIn(this)) {
+                if (HexagonTools.isConfigured(this)) {
                     launchIntent = new Intent(this, CloudSetupActivity.class);
                 } else {
                     launchIntent = new Intent(this, ConnectTraktActivity.class);

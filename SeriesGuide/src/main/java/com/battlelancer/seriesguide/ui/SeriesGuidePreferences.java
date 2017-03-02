@@ -231,7 +231,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // SeriesGuide Cloud link
             Preference cloud = findPreference("com.battlelancer.seriesguide.cloud");
-            if (hasAccessToX && HexagonTools.isSignedIn(getActivity())) {
+            if (hasAccessToX && HexagonTools.isConfigured(getActivity())) {
                 cloud.setSummary(HexagonSettings.getAccountName(getActivity()));
             } else {
                 cloud.setSummary(R.string.hexagon_description);

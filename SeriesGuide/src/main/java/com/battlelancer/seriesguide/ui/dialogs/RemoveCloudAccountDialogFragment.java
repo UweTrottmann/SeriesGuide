@@ -78,7 +78,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
             }
 
             // sign out in SeriesGuide
-            HexagonTools.storeAccountName(mContext, null);
+            HexagonTools.storeAccount(mContext, null);
 
             return true;
         }

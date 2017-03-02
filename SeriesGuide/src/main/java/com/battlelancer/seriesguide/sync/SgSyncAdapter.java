@@ -331,7 +331,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                if (HexagonTools.isSignedIn(getContext())) {
+                if (HexagonTools.isConfigured(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
                     boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);
