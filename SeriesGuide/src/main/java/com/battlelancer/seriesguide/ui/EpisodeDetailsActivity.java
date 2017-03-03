@@ -75,12 +75,21 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         noSavedInstanceState = savedInstanceState == null;
+        if (!noSavedInstanceState) {
+            seasonTvdbId = savedInstanceState.getInt(ARGS_SEASON_TVDB_ID, 0);
+        }
 
         setContentView(R.layout.activity_episode);
         setupActionBar();
         setupNavDrawer();
 
         setupViews();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARGS_SEASON_TVDB_ID, seasonTvdbId);
     }
 
     @Override
@@ -197,9 +206,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         // set up season switcher
         spinnerAdapter = new SeasonSpinnerAdapter(this, basicInfo.seasonsOfShow);
         toolbarSpinner.setAdapter(spinnerAdapter);
-        // if there is saved state the spinner will restore the last selection (for example on
-        // config changes)
-        // this listener will be called and automatically re-load the last shown season
         toolbarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -228,6 +234,19 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             // ...and schedule a show update
             if (showTvdbId != 0) {
                 updateShowDelayed(showTvdbId);
+            }
+        } else {
+            // Restore previously selected season manually:
+            // Spinner will attempt to restore the last selection automatically but will only
+            // succeed if the data has already been loaded when the spinner is laid out for the
+            // first time.
+            for (int i = 0, size = basicInfo.seasonsOfShow.size(); i < size; i++) {
+                Season season = basicInfo.seasonsOfShow.get(i);
+                if (season.tvdbId == seasonTvdbId) {
+                    loadSeason(season, showTitle);
+                    toolbarSpinner.setSelection(i, false);
+                    break;
+                }
             }
         }
     }
