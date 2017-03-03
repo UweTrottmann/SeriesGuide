@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.backend;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -392,6 +393,7 @@ public class HexagonTools {
         return true;
     }
 
+    @SuppressLint("ApplySharedPref")
     private static boolean syncMovies(SgApp app) {
         boolean hasMergedMovies = HexagonSettings.hasMergedMovies(app);
 
@@ -430,6 +432,7 @@ public class HexagonTools {
         return addingSuccessful;
     }
 
+    @SuppressLint("ApplySharedPref")
     private static boolean syncLists(Context context) {
         boolean hasMergedLists = HexagonSettings.hasMergedLists(context);
 
