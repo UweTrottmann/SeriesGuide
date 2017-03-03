@@ -142,9 +142,7 @@ public class CloudSetupFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (handleSignInResult(result)) {
-                startHexagonSetup();
-            }
+            handleSignInResult(result);
         }
     }
 
@@ -177,9 +175,10 @@ public class CloudSetupFragment extends Fragment {
     }
 
     /**
-     * @return Whether there is now a signed in Google account available.
+     * On sign-in success, saves the signed in Google account and auto-starts setup if Cloud is not
+     * enabled, yet. On sign-in failure disables Cloud.
      */
-    private boolean handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(GoogleSignInResult result) {
         boolean signedIn = result.isSuccess();
         if (signedIn) {
             Timber.i("Signed in with Google.");
@@ -195,7 +194,11 @@ public class CloudSetupFragment extends Fragment {
         setProgressVisible(false);
         updateViews();
 
-        return signedIn;
+        if (signedIn && !HexagonSettings.isEnabled(getContext())) {
+            // auto-start setup if sign in succeeded and Cloud is not enabled, yet
+            Timber.i("Auto-start Cloud setup.");
+            startHexagonSetup();
+        }
     }
 
     private void signIn() {
@@ -296,7 +299,7 @@ public class CloudSetupFragment extends Fragment {
 
         if (signInAccount == null) {
             signIn();
-        } else {
+        } else if (!isHexagonSetupRunning()) {
             HexagonSettings.setSetupIncomplete(getContext());
             hexagonSetupTask = new HexagonSetupTask(getContext(), signInAccount,
                     onHexagonSetupFinishedListener);
