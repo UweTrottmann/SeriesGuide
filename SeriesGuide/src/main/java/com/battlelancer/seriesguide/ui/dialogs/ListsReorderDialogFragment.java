@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.ListsAdapter;
 import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
 import com.battlelancer.seriesguide.ui.ListsActivity;
@@ -116,7 +117,7 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
             OrderedListsLoader.OrderedList list = adapter.getItem(position);
             listIdsInOrder.add(list.id);
         }
-        ListsTools.reorderLists(getContext(), listIdsInOrder);
+        ListsTools.reorderLists(SgApp.from(getActivity()), listIdsInOrder);
     }
 
     private LoaderManager.LoaderCallbacks<List<OrderedListsLoader.OrderedList>> listsLoaderCallbacks

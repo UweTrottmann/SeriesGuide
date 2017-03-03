@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.HttpClientModule;
@@ -61,6 +62,10 @@ public class SgApp extends Application {
      * Populate shows last watched field from activity table.
      */
     public static final int RELEASE_VERSION_34_BETA4 = 15223;
+    /**
+     * Switched to Google Sign-In: notify existing Cloud users to sign in again.
+     */
+    public static final int RELEASE_VERSION_36_BETA2 = 15241;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
@@ -68,6 +73,7 @@ public class SgApp extends Application {
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     private ServicesComponent servicesComponent;
+    private HexagonTools hexagonTools;
     private MovieTools movieTools;
     private ShowTools showTools;
     private TraktTools traktTools;
@@ -148,6 +154,13 @@ public class SgApp extends Application {
         return servicesComponent;
     }
 
+    public synchronized HexagonTools getHexagonTools() {
+        if (hexagonTools == null) {
+            hexagonTools = new HexagonTools(this);
+        }
+        return hexagonTools;
+    }
+
     public synchronized MovieTools getMovieTools() {
         if (movieTools == null) {
             movieTools = new MovieTools(this);
@@ -157,7 +170,7 @@ public class SgApp extends Application {
 
     public synchronized ShowTools getShowTools() {
         if (showTools == null) {
-            showTools = new ShowTools(getApplicationContext());
+            showTools = new ShowTools(this);
         }
         return showTools;
     }

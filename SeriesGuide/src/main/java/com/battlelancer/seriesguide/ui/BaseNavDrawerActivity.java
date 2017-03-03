@@ -1,10 +1,8 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +23,6 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
@@ -129,18 +126,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleServiceActiveEvent(event);
 
-        boolean isSignedIntoCloud = HexagonTools.isSignedIn(this);
-        if (!isSignedIntoCloud && HexagonSettings.getAccountName(this) != null) {
-            // if not signed into hexagon, but still have an account name:
-            // check if the required persmission is missing
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                onShowCloudPermissionWarning();
-            }
+        if (HexagonSettings.shouldValidateAccount(this)) {
+            onShowCloudAccountWarning();
         }
 
         // update account type and signed in user
-        if (isSignedIntoCloud) {
+        if (HexagonSettings.isEnabled(this)) {
             // connected to SG Cloud
             textViewHeaderAccountType.setText(R.string.hexagon);
             textViewHeaderUser.setText(HexagonSettings.getAccountName(this));
@@ -161,10 +152,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     }
 
     /**
-     * Implementers may choose to show a warning that Cloud is not signed in due to missing
-     * permissions.
+     * Implementers may choose to show a warning that Cloud is not signed in.
      */
-    protected void onShowCloudPermissionWarning() {
+    protected void onShowCloudAccountWarning() {
         // do nothing
     }
 
@@ -256,7 +246,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         switch (itemId) {
             case NAV_ITEM_ACCOUNT_ID: {
                 // SG Cloud connection overrides trakt
-                if (HexagonTools.isSignedIn(this)) {
+                if (HexagonSettings.isEnabled(this)) {
                     launchIntent = new Intent(this, CloudSetupActivity.class);
                 } else {
                     launchIntent = new Intent(this, ConnectTraktActivity.class);

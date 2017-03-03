@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 
 /**
  * Tells about successful connection, allows to continue adding shows from users trakt library.
@@ -34,7 +34,7 @@ public class ConnectTraktFinishedFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
 
         // hide sync message if hexagon is connected (so trakt sync is disabled)
-        if (HexagonTools.isSignedIn(getActivity())) {
+        if (HexagonSettings.isEnabled(getActivity())) {
             textViewSyncMessage.setVisibility(View.GONE);
         }
 

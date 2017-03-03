@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -110,6 +111,14 @@ android {
     }
 }
 
+endpointsClient {
+    discoveryDocs = ['src/endpoints/account-v2-rest.discovery',
+                     'src/endpoints/episodes-v2-rest.discovery',
+                     'src/endpoints/lists-v2-rest.discovery',
+                     'src/endpoints/movies-v2-rest.discovery',
+                     'src/endpoints/shows-v2-rest.discovery']
+}
+
 dependencies {
     compile project(':api')
     compile project(':libraries:drag-sort-listview')
@@ -172,7 +181,7 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    def playServicesVersion = '10.0.1'
+    def playServicesVersion = '10.2.0'
     compile "com.google.android.gms:play-services-base:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
