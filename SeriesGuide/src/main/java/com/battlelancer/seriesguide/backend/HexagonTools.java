@@ -57,145 +57,134 @@ public class HexagonTools {
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
 
-    private static GoogleAccountCredential credential;
-
-    private static Shows sShowsService;
-    private static Episodes sEpisodesService;
-    private static Movies sMoviesService;
-    private static Lists sListsService;
     private static GoogleSignInOptions googleSignInOptions;
+
+    private final SgApp app;
+    private GoogleAccountCredential credential;
+    private Shows showsService;
+    private Episodes episodesService;
+    private Movies moviesService;
+    private Lists listsService;
+
+    public HexagonTools(SgApp app) {
+        this.app = app;
+    }
 
     /**
      * Enables Hexagon, resets sync state and saves account data.
      *
      * @return <code>false</code> if sync state could not be reset.
      */
-    public static boolean setEnabled(@NonNull Context context,
-            @NonNull GoogleSignInAccount account) {
-        if (!HexagonSettings.resetSyncState(context)) {
+    public boolean setEnabled(@NonNull GoogleSignInAccount account) {
+        if (!HexagonSettings.resetSyncState(app)) {
             return false;
         }
-        if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
+        if (!PreferenceManager.getDefaultSharedPreferences(app).edit()
                 .putBoolean(HexagonSettings.KEY_ENABLED, true)
                 .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
                 .commit()) {
             return false;
         }
-        storeAccount(context, account);
+        storeAccount(account);
         return true;
     }
 
     /**
      * Disables Hexagon and removes any account data.
      */
-    public static void setDisabled(@NonNull Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
+    public void setDisabled() {
+        PreferenceManager.getDefaultSharedPreferences(app).edit()
                 .putBoolean(HexagonSettings.KEY_ENABLED, false)
                 .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
                 .apply();
-        storeAccount(context, null);
-    }
-
-    public static void trackFailedRequest(Context context, String action, IOException e) {
-        if (e instanceof HttpResponseException) {
-            HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
-                    responseException.getStatusCode() + " " + responseException.getStatusMessage());
-            // log like "action: 404 not found"
-            Timber.e("%s: %s %s", action, responseException.getStatusCode(),
-                    responseException.getStatusMessage());
-        } else {
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action, e.getMessage());
-            // log like "action: Unable to resolve host"
-            Timber.e("%s: %s", action, e.getMessage());
-        }
+        storeAccount(null);
     }
 
     /**
      * Creates and returns a new instance for this hexagon service or null if not signed in.
      */
     @Nullable
-    public static synchronized Account buildAccountService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context, true);
+    public synchronized Account buildAccountService() {
+        GoogleAccountCredential credential = getAccountCredential(true);
         if (credential.getSelectedAccount() == null) {
             return null;
         }
         Account.Builder builder = new Account.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential
         );
-        return CloudEndpointUtils.updateBuilder(context, builder).build();
+        return CloudEndpointUtils.updateBuilder(app, builder).build();
     }
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
      */
     @Nullable
-    public static synchronized Shows getShowsService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context, true);
+    public synchronized Shows getShowsService() {
+        GoogleAccountCredential credential = getAccountCredential(true);
         if (credential.getSelectedAccount() == null) {
             return null;
         }
-        if (sShowsService == null) {
+        if (showsService == null) {
             Shows.Builder builder = new Shows.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sShowsService = CloudEndpointUtils.updateBuilder(context, builder).build();
+            showsService = CloudEndpointUtils.updateBuilder(app, builder).build();
         }
-        return sShowsService;
+        return showsService;
     }
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
      */
     @Nullable
-    public static synchronized Episodes getEpisodesService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context, true);
+    public synchronized Episodes getEpisodesService() {
+        GoogleAccountCredential credential = getAccountCredential(true);
         if (credential.getSelectedAccount() == null) {
             return null;
         }
-        if (sEpisodesService == null) {
+        if (episodesService == null) {
             Episodes.Builder builder = new Episodes.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sEpisodesService = CloudEndpointUtils.updateBuilder(context, builder).build();
+            episodesService = CloudEndpointUtils.updateBuilder(app, builder).build();
         }
-        return sEpisodesService;
+        return episodesService;
     }
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
      */
     @Nullable
-    public static synchronized Movies getMoviesService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context, true);
+    public synchronized Movies getMoviesService() {
+        GoogleAccountCredential credential = getAccountCredential(true);
         if (credential.getSelectedAccount() == null) {
             return null;
         }
-        if (sMoviesService == null) {
+        if (moviesService == null) {
             Movies.Builder builder = new Movies.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sMoviesService = CloudEndpointUtils.updateBuilder(context, builder).build();
+            moviesService = CloudEndpointUtils.updateBuilder(app, builder).build();
         }
-        return sMoviesService;
+        return moviesService;
     }
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
      */
     @Nullable
-    public static synchronized Lists getListsService(Context context) {
-        GoogleAccountCredential credential = getAccountCredential(context, true);
+    public synchronized Lists getListsService() {
+        GoogleAccountCredential credential = getAccountCredential(true);
         if (credential.getSelectedAccount() == null) {
             return null;
         }
-        if (sListsService == null) {
+        if (listsService == null) {
             Lists.Builder builder = new Lists.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential
             );
-            sListsService = CloudEndpointUtils.updateBuilder(context, builder).build();
+            listsService = CloudEndpointUtils.updateBuilder(app, builder).build();
         }
-        return sListsService;
+        return listsService;
     }
 
     /**
@@ -208,15 +197,14 @@ public class HexagonTools {
      * the {@link HexagonSettings#KEY_SHOULD_VALIDATE_ACCOUNT} flag. If successful, clears the
      * flag.
      */
-    private synchronized static GoogleAccountCredential getAccountCredential(Context context,
-            boolean checkSignInState) {
+    private synchronized GoogleAccountCredential getAccountCredential(boolean checkSignInState) {
         if (credential == null) {
-            credential = GoogleAccountCredential.usingAudience(
-                    context.getApplicationContext(), HexagonSettings.AUDIENCE);
+            credential = GoogleAccountCredential.usingAudience(app.getApplicationContext(),
+                    HexagonSettings.AUDIENCE);
         }
         if (checkSignInState) {
             android.accounts.Account account = null;
-            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(app)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
                     .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();
@@ -244,11 +232,28 @@ public class HexagonTools {
                         connectionResult);
             }
             boolean shouldFixAccount = account == null;
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
+            PreferenceManager.getDefaultSharedPreferences(app).edit()
                     .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
                     .apply();
         }
         return credential;
+    }
+
+    /**
+     * Sets the account used for calls to Hexagon and saves the email address to display it in UI.
+     */
+    private void storeAccount(@Nullable GoogleSignInAccount account) {
+        // store or remove account name in settings
+        PreferenceManager.getDefaultSharedPreferences(app).edit()
+                .putString(HexagonSettings.KEY_ACCOUNT_NAME, account != null
+                        ? account.getEmail()
+                        : null)
+                .apply();
+
+        // try to set or remove account on credential
+        getAccountCredential(false).setSelectedAccount(account != null
+                ? account.getAccount()
+                : null);
     }
 
     @NonNull
@@ -262,23 +267,19 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    /**
-     * Sets the account used for calls to Hexagon and saves the email address to display it in UI.
-     */
-    public static void storeAccount(@NonNull Context context,
-            @Nullable GoogleSignInAccount account) {
-        // store or remove account name in settings
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putString(HexagonSettings.KEY_ACCOUNT_NAME, account != null
-                        ? account.getEmail()
-                        : null)
-                .apply();
-
-        // try to set or remove account on credential
-        getAccountCredential(context, false).setSelectedAccount(account != null
-                ? account.getAccount()
-                : null);
+    public static void trackFailedRequest(Context context, String action, IOException e) {
+        if (e instanceof HttpResponseException) {
+            HttpResponseException responseException = (HttpResponseException) e;
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
+                    responseException.getStatusCode() + " " + responseException.getStatusMessage());
+            // log like "action: 404 not found"
+            Timber.e("%s: %s %s", action, responseException.getStatusCode(),
+                    responseException.getStatusMessage());
+        } else {
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action, e.getMessage());
+            // log like "action: Unable to resolve host"
+            Timber.e("%s: %s", action, e.getMessage());
+        }
     }
 
     /**
@@ -315,9 +316,9 @@ public class HexagonTools {
                 && syncListsSuccessful;
     }
 
-    private static boolean syncEpisodes(Context context) {
+    private static boolean syncEpisodes(SgApp app) {
         // get shows that need episode merging
-        Cursor query = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
+        Cursor query = app.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
                 new String[] { SeriesGuideContract.Shows._ID },
                 SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE + "=0",
                 null, null);
@@ -329,25 +330,25 @@ public class HexagonTools {
         boolean mergeSuccessful = true;
         while (query.moveToNext()) {
             // abort if connection is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
+            if (!AndroidUtils.isNetworkConnected(app)) {
                 return false;
             }
 
             int showTvdbId = query.getInt(0);
 
-            boolean success = EpisodeTools.Download.flagsFromHexagon(context, showTvdbId);
+            boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {
                 // try again next time
                 mergeSuccessful = false;
                 continue;
             }
 
-            success = EpisodeTools.Upload.flagsToHexagon(context, showTvdbId);
+            success = EpisodeTools.Upload.flagsToHexagon(app, showTvdbId);
             if (success) {
                 // set merge as completed
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, true);
-                context.getContentResolver()
+                app.getContentResolver()
                         .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values,
                                 null, null);
             } else {
@@ -357,7 +358,7 @@ public class HexagonTools {
         query.close();
 
         // download changed episodes and update properties on existing episodes
-        boolean changedDownloadSuccessful = EpisodeTools.Download.flagsFromHexagon(context);
+        boolean changedDownloadSuccessful = EpisodeTools.Download.flagsFromHexagon(app);
 
         return mergeSuccessful && changedDownloadSuccessful;
     }
@@ -433,21 +434,21 @@ public class HexagonTools {
     }
 
     @SuppressLint("ApplySharedPref")
-    private static boolean syncLists(Context context) {
-        boolean hasMergedLists = HexagonSettings.hasMergedLists(context);
+    private static boolean syncLists(SgApp app) {
+        boolean hasMergedLists = HexagonSettings.hasMergedLists(app);
 
-        if (!ListsTools.downloadFromHexagon(context, hasMergedLists)) {
+        if (!ListsTools.downloadFromHexagon(app, hasMergedLists)) {
             return false;
         }
 
         if (hasMergedLists) {
             // on regular syncs, remove lists gone from hexagon
-            if (!ListsTools.removeListsRemovedOnHexagon(context)) {
+            if (!ListsTools.removeListsRemovedOnHexagon(app)) {
                 return false;
             }
         } else {
             // upload all lists on initial data merge
-            if (!ListsTools.uploadAllToHexagon(context)) {
+            if (!ListsTools.uploadAllToHexagon(app)) {
                 return false;
             }
         }
@@ -457,7 +458,7 @@ public class HexagonTools {
 
         if (!hasMergedLists) {
             // set lists as merged
-            PreferenceManager.getDefaultSharedPreferences(context)
+            PreferenceManager.getDefaultSharedPreferences(app)
                     .edit()
                     .putBoolean(HexagonSettings.KEY_MERGED_LISTS, true)
                     .commit();

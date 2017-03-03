@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.HttpClientModule;
@@ -72,6 +73,7 @@ public class SgApp extends Application {
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     private ServicesComponent servicesComponent;
+    private HexagonTools hexagonTools;
     private MovieTools movieTools;
     private ShowTools showTools;
     private TraktTools traktTools;
@@ -152,6 +154,13 @@ public class SgApp extends Application {
         return servicesComponent;
     }
 
+    public synchronized HexagonTools getHexagonTools() {
+        if (hexagonTools == null) {
+            hexagonTools = new HexagonTools(this);
+        }
+        return hexagonTools;
+    }
+
     public synchronized MovieTools getMovieTools() {
         if (movieTools == null) {
             movieTools = new MovieTools(this);
@@ -161,7 +170,7 @@ public class SgApp extends Application {
 
     public synchronized ShowTools getShowTools() {
         if (showTools == null) {
-            showTools = new ShowTools(getApplicationContext());
+            showTools = new ShowTools(this);
         }
         return showTools;
     }

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.backend;
 
 import android.accounts.Account;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -51,12 +51,12 @@ public class CloudSetupFragment extends Fragment {
     private ProgressBar progressBar;
     private Button buttonRemoveAccount;
     private TextView textViewWarning;
-
-    private HexagonSetupTask hexagonSetupTask;
-    private GoogleApiClient googleApiClient;
     private Snackbar snackbar;
 
+    private GoogleApiClient googleApiClient;
     @Nullable private GoogleSignInAccount signInAccount;
+    private HexagonTools hexagonTools;
+    private HexagonSetupTask hexagonSetupTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,7 @@ public class CloudSetupFragment extends Fragment {
                 .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                 .build();
+        hexagonTools = SgApp.from(getActivity()).getHexagonTools();
     }
 
     @Override
@@ -189,7 +190,7 @@ public class CloudSetupFragment extends Fragment {
             Timber.d("NOT signed in with Google: %s", GoogleSignInStatusCodes.getStatusCodeString(
                     result.getStatus().getStatusCode()));
             signInAccount = null;
-            HexagonTools.setDisabled(getContext());
+            hexagonTools.setDisabled();
         }
 
         setProgressVisible(false);
@@ -218,7 +219,7 @@ public class CloudSetupFragment extends Fragment {
                         if (status.isSuccess()) {
                             Timber.i("Signed out of Google.");
                             signInAccount = null;
-                            HexagonTools.setDisabled(getContext());
+                            hexagonTools.setDisabled();
                             updateViews();
                         } else {
                             Timber.e("Signing out of Google failed: %s", status);
@@ -302,7 +303,7 @@ public class CloudSetupFragment extends Fragment {
             signIn();
         } else if (!isHexagonSetupRunning()) {
             HexagonSettings.setSetupIncomplete(getContext());
-            hexagonSetupTask = new HexagonSetupTask(getContext(), signInAccount,
+            hexagonSetupTask = new HexagonSetupTask(hexagonTools, signInAccount,
                     onHexagonSetupFinishedListener);
             hexagonSetupTask.execute();
         }
@@ -324,7 +325,7 @@ public class CloudSetupFragment extends Fragment {
             void onSetupFinished(int resultCode);
         }
 
-        private final Context context;
+        private final HexagonTools hexagonTools;
         @NonNull private final GoogleSignInAccount signInAccount;
         private OnSetupFinishedListener onSetupFinishedListener;
 
@@ -333,9 +334,9 @@ public class CloudSetupFragment extends Fragment {
          * in the local database as well as on hexagon, will download and merge data first, then
          * upload.
          */
-        public HexagonSetupTask(Context context, @NonNull GoogleSignInAccount signInAccount,
-                OnSetupFinishedListener listener) {
-            this.context = context.getApplicationContext();
+        public HexagonSetupTask(HexagonTools hexagonTools,
+                @NonNull GoogleSignInAccount signInAccount, OnSetupFinishedListener listener) {
+            this.hexagonTools = hexagonTools;
             this.signInAccount = signInAccount;
             onSetupFinishedListener = listener;
         }
@@ -352,7 +353,7 @@ public class CloudSetupFragment extends Fragment {
             }
 
             // at last reset sync state, store the new credentials and enable hexagon integration
-            if (!HexagonTools.setEnabled(context, signInAccount)) {
+            if (!hexagonTools.setEnabled(signInAccount)) {
                 return FAILURE;
             }
 

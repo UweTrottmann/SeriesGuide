@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
@@ -34,7 +35,8 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.executeInOrder(new RemoveHexagonAccountTask(getActivity()));
+                        Utils.executeInOrder(
+                                new RemoveHexagonAccountTask(SgApp.from(getActivity())));
                     }
                 }
         );
@@ -60,28 +62,29 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
     public static class RemoveHexagonAccountTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final Context context;
+        private final SgApp app;
 
-        public RemoveHexagonAccountTask(Context context) {
-            this.context = context.getApplicationContext();
+        public RemoveHexagonAccountTask(SgApp app) {
+            this.app = app;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // remove account from hexagon
+            HexagonTools hexagonTools = app.getHexagonTools();
             try {
-                Account accountService = HexagonTools.buildAccountService(context);
+                Account accountService = hexagonTools.buildAccountService();
                 if (accountService == null) {
                     return false;
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "remove account", e);
+                HexagonTools.trackFailedRequest(app, "remove account", e);
                 return false;
             }
 
             // de-authorize app so other clients are signed out as well
-            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(app)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                     .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();
@@ -95,7 +98,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
             }
 
             // disable Hexagon integration, remove local account data
-            HexagonTools.setDisabled(context);
+            hexagonTools.setDisabled();
 
             return true;
         }

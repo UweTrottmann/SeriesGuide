@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.ListsTools;
 
@@ -91,7 +92,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 // remove list and items
-                ListsTools.removeList(getContext(), listId);
+                ListsTools.removeList(SgApp.from(getActivity()), listId);
 
                 dismiss();
             }
@@ -106,7 +107,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
 
                 // update title
                 String listName = editTextName.getText().toString();
-                ListsTools.renameList(getContext(), listId, listName);
+                ListsTools.renameList(SgApp.from(getActivity()), listId, listName);
 
                 dismiss();
             }

@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -60,38 +62,38 @@ public class ListsTools {
     private ListsTools() {
     }
 
-    public static void addList(@NonNull Context context, @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new AddListTask(context, listName));
+    public static void addList(@NonNull SgApp app, @NonNull String listName) {
+        AsyncTaskCompat.executeParallel(new AddListTask(app, listName));
     }
 
-    public static void renameList(@NonNull Context context, @NonNull String listId,
+    public static void renameList(@NonNull SgApp app, @NonNull String listId,
             @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new RenameListTask(context, listId, listName));
+        AsyncTaskCompat.executeParallel(new RenameListTask(app, listId, listName));
     }
 
-    public static void removeList(@NonNull Context context, @NonNull String listId) {
-        AsyncTaskCompat.executeParallel(new RemoveListTask(context, listId));
+    public static void removeList(@NonNull SgApp app, @NonNull String listId) {
+        AsyncTaskCompat.executeParallel(new RemoveListTask(app, listId));
     }
 
-    public static void reorderLists(@NonNull Context context,
+    public static void reorderLists(@NonNull SgApp app,
             @NonNull List<String> listIdsInOrder) {
-        AsyncTaskCompat.executeParallel(new ReorderListsTask(context, listIdsInOrder));
+        AsyncTaskCompat.executeParallel(new ReorderListsTask(app, listIdsInOrder));
     }
 
-    public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
+    public static void changeListsOfItem(@NonNull SgApp app, int itemTvdbId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
         AsyncTaskCompat.executeParallel(
-                new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
+                new ChangeListItemListsTask(app, itemTvdbId, itemType, addToTheseLists,
                         removeFromTheseLists));
     }
 
-    public static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
-        AsyncTaskCompat.executeParallel(new RemoveListItemTask(context, listItemId));
+    public static void removeListItem(@NonNull SgApp app, @NonNull String listItemId) {
+        AsyncTaskCompat.executeParallel(new RemoveListItemTask(app, listItemId));
     }
 
-    public static boolean removeListsRemovedOnHexagon(Context context) {
+    public static boolean removeListsRemovedOnHexagon(SgApp app) {
         Timber.d("removeListsRemovedOnHexagon");
-        HashSet<String> localListIds = getListIds(context);
+        HashSet<String> localListIds = getListIds(app);
         if (localListIds == null) {
             return false; // query failed
         }
@@ -104,7 +106,7 @@ public class ListsTools {
         String cursor = null;
         do {
             try {
-                Lists listsService = HexagonTools.getListsService(context);
+                Lists listsService = app.getHexagonTools().getListsService();
                 if (listsService == null) {
                     return false; // no longer signed in
                 }
@@ -128,7 +130,7 @@ public class ListsTools {
 
                 cursor = response.getCursor();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get list ids", e);
+                HexagonTools.trackFailedRequest(app, "get list ids", e);
                 return false;
             }
         } while (!TextUtils.isEmpty(cursor)); // fetch next batch
@@ -151,7 +153,7 @@ public class ListsTools {
                         .build());
             }
             try {
-                DBUtils.applyInSmallBatches(context, batch);
+                DBUtils.applyInSmallBatches(app, batch);
             } catch (OperationApplicationException e) {
                 Timber.e(e, "removeListsRemovedOnHexagon: deleting lists failed.");
                 return false;
@@ -161,14 +163,14 @@ public class ListsTools {
         return true;
     }
 
-    public static boolean uploadAllToHexagon(Context context) {
+    public static boolean uploadAllToHexagon(SgApp app) {
         Timber.d("uploadAllToHexagon");
 
         SgListList listsWrapper = new SgListList();
         List<SgList> lists = new ArrayList<>(LISTS_MAX_BATCH_SIZE);
         listsWrapper.setLists(lists);
 
-        Cursor listsQuery = context.getContentResolver()
+        Cursor listsQuery = app.getContentResolver()
                 .query(SeriesGuideContract.Lists.CONTENT_URI,
                         Query.PROJECTION_LIST, null, null, null);
         if (listsQuery == null) {
@@ -187,13 +189,13 @@ public class ListsTools {
                 list.setOrder(order);
             }
             // add list items
-            List<SgListItem> listItems = getListItems(context, listId);
+            List<SgListItem> listItems = getListItems(app, listId);
             if (listItems != null) {
                 list.setListItems(listItems);
             }
 
             if (lists.size() == LISTS_MAX_BATCH_SIZE || listsQuery.isLast()) {
-                if (!doUploadSomeLists(context, listsWrapper)) {
+                if (!doUploadSomeLists(app, listsWrapper)) {
                     return false; // part upload failed, next sync will try again
                 }
             }
@@ -234,23 +236,24 @@ public class ListsTools {
         return items;
     }
 
-    private static boolean doUploadSomeLists(Context context, SgListList listsWrapper) {
-        Lists listsService = HexagonTools.getListsService(context);
+    private static boolean doUploadSomeLists(SgApp app, SgListList listsWrapper) {
+        Lists listsService = app.getHexagonTools().getListsService();
         if (listsService == null) {
             return false; // no longer signed in
         }
         try {
             listsService.save(listsWrapper).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save lists", e);
+            HexagonTools.trackFailedRequest(app, "save lists", e);
             return false;
         }
         return true;
     }
 
-    public static boolean downloadFromHexagon(Context context, boolean hasMergedLists) {
+    @SuppressLint("ApplySharedPref")
+    public static boolean downloadFromHexagon(SgApp app, boolean hasMergedLists) {
         long currentTime = System.currentTimeMillis();
-        DateTime lastSyncTime = new DateTime(HexagonSettings.getLastListsSyncTime(context));
+        DateTime lastSyncTime = new DateTime(HexagonSettings.getLastListsSyncTime(app));
 
         if (hasMergedLists) {
             Timber.d("downloadFromHexagon: downloading lists changed since %s.", lastSyncTime);
@@ -258,12 +261,12 @@ public class ListsTools {
             Timber.d("downloadFromHexagon: downloading all lists.");
         }
 
-        HashSet<String> localListIds = getListIds(context);
+        HashSet<String> localListIds = getListIds(app);
         List<SgList> lists;
         String cursor = null;
         do {
             try {
-                Lists listsService = HexagonTools.getListsService(context);
+                Lists listsService = app.getHexagonTools().getListsService();
                 if (listsService == null) {
                     return false; // no longer signed in
                 }
@@ -285,7 +288,7 @@ public class ListsTools {
                 cursor = response.getCursor();
                 lists = response.getLists();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get lists", e);
+                HexagonTools.trackFailedRequest(app, "get lists", e);
                 return false;
             }
 
@@ -293,14 +296,14 @@ public class ListsTools {
                 break; // empty response, assume we are done
             }
 
-            if (!doListsDatabaseUpdate(context, lists, localListIds, hasMergedLists)) {
+            if (!doListsDatabaseUpdate(app, lists, localListIds, hasMergedLists)) {
                 return false; // database update failed, abort
             }
         } while (!TextUtils.isEmpty(cursor)); // fetch next batch
 
         // set new last sync time
         if (hasMergedLists) {
-            PreferenceManager.getDefaultSharedPreferences(context)
+            PreferenceManager.getDefaultSharedPreferences(app)
                     .edit()
                     .putLong(HexagonSettings.KEY_LAST_SYNC_LISTS, currentTime)
                     .commit();

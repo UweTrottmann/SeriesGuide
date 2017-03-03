@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -185,7 +186,7 @@ public class EpisodeTools {
         private static final int ERROR_TRAKT_API = -3;
         private static final int ERROR_HEXAGON_API = -4;
 
-        private final Context context;
+        private final SgApp app;
         @Inject Lazy<Sync> traktSync;
         private final EpisodeTaskTypes.FlagType flagType;
 
@@ -195,15 +196,15 @@ public class EpisodeTools {
         private boolean canSendToTrakt;
 
         public EpisodeFlagTask(SgApp app, EpisodeTaskTypes.FlagType type) {
-            this.context = app;
+            this.app = app;
             app.getServicesComponent().inject(this);
             flagType = type;
         }
 
         @Override
         protected void onPreExecute() {
-            shouldSendToHexagon = HexagonSettings.isEnabled(context);
-            shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
+            shouldSendToHexagon = HexagonSettings.isEnabled(app);
+            shouldSendToTrakt = TraktCredentials.get(app).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
 
             EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
@@ -214,11 +215,11 @@ public class EpisodeTools {
         protected Integer doInBackground(Void... params) {
             // upload to hexagon
             if (shouldSendToHexagon) {
-                if (!AndroidUtils.isNetworkConnected(context)) {
+                if (!AndroidUtils.isNetworkConnected(app)) {
                     return ERROR_NETWORK;
                 }
 
-                int result = uploadToHexagon(context, flagType.getShowTvdbId(),
+                int result = uploadToHexagon(app, flagType.getShowTvdbId(),
                         flagType.getEpisodesForHexagon());
                 if (result < 0) {
                     return result;
@@ -226,17 +227,17 @@ public class EpisodeTools {
             }
 
             // upload to trakt
-            /**
-             * Do net send skipped episodes, this is not supported by trakt.
-             * However, if the skipped flag is removed this will be handled identical
-             * to flagging as unwatched.
+            /*
+              Do net send skipped episodes, this is not supported by trakt.
+              However, if the skipped flag is removed this will be handled identical
+              to flagging as unwatched.
              */
             if (shouldSendToTrakt) {
                 // Do not send if show has no trakt id (was not on trakt last time we checked).
-                Integer traktId = ShowTools.getShowTraktId(context, flagType.getShowTvdbId());
+                Integer traktId = ShowTools.getShowTraktId(app, flagType.getShowTvdbId());
                 canSendToTrakt = traktId != null;
                 if (canSendToTrakt) {
-                    if (!AndroidUtils.isNetworkConnected(context)) {
+                    if (!AndroidUtils.isNetworkConnected(app)) {
                         return ERROR_NETWORK;
                     }
 
@@ -254,7 +255,7 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
-        private static int uploadToHexagon(Context context, int showTvdbId,
+        private static int uploadToHexagon(SgApp app, int showTvdbId,
                 @NonNull List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
             uploadWrapper.setShowTvdbId(showTvdbId);
@@ -277,7 +278,7 @@ public class EpisodeTools {
 
                 // upload
                 uploadWrapper.setEpisodes(smallBatch);
-                if (!Upload.flagsToHexagon(context, uploadWrapper)) {
+                if (!Upload.flagsToHexagon(app, uploadWrapper)) {
                     return ERROR_HEXAGON_API;
                 }
 
@@ -294,7 +295,7 @@ public class EpisodeTools {
                 return SUCCESS; // nothing to upload, done.
             }
 
-            if (!TraktCredentials.get(context).hasCredentials()) {
+            if (!TraktCredentials.get(app).hasCredentials()) {
                 return ERROR_TRAKT_AUTH;
             }
 
@@ -352,13 +353,13 @@ public class EpisodeTools {
                         return SUCCESS;
                     }
                 } else {
-                    if (SgTrakt.isUnauthorized(context, response)) {
+                    if (SgTrakt.isUnauthorized(app, response)) {
                         return ERROR_TRAKT_AUTH;
                     }
-                    SgTrakt.trackFailedRequest(context, action, response);
+                    SgTrakt.trackFailedRequest(app, action, response);
                 }
             } catch (IOException e) {
-                SgTrakt.trackFailedRequest(context, action, e);
+                SgTrakt.trackFailedRequest(app, action, e);
             }
             return ERROR_TRAKT_API;
         }
@@ -398,18 +399,18 @@ public class EpisodeTools {
             String error = null;
             switch (result) {
                 case ERROR_NETWORK:
-                    error = context.getString(R.string.offline);
+                    error = app.getString(R.string.offline);
                     break;
                 case ERROR_TRAKT_AUTH:
-                    error = context.getString(R.string.trakt_error_credentials);
+                    error = app.getString(R.string.trakt_error_credentials);
                     break;
                 case ERROR_TRAKT_API:
-                    error = context.getString(R.string.api_error_generic,
-                            context.getString(R.string.trakt));
+                    error = app.getString(R.string.api_error_generic,
+                            app.getString(R.string.trakt));
                     break;
                 case ERROR_HEXAGON_API:
-                    error = context.getString(R.string.api_error_generic,
-                            context.getString(R.string.hexagon));
+                    error = app.getString(R.string.api_error_generic,
+                            app.getString(R.string.hexagon));
                     break;
             }
             boolean isSuccessful = error == null;
@@ -419,7 +420,7 @@ public class EpisodeTools {
             boolean displaySuccess;
             if (isSuccessful && shouldSendToTrakt && !canSendToTrakt) {
                 // tell the user this change can not be sent to trakt for now
-                confirmationText = context.getString(R.string.trakt_notice_not_exists);
+                confirmationText = app.getString(R.string.trakt_notice_not_exists);
                 displaySuccess = false;
             } else {
                 confirmationText = isSuccessful ? flagType.getConfirmationText() : error;
@@ -432,7 +433,7 @@ public class EpisodeTools {
 
             if (isSuccessful) {
                 // update latest episode for the changed show
-                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
+                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(app),
                         flagType.getShowTvdbId());
             }
         }
@@ -444,19 +445,20 @@ public class EpisodeTools {
          * Downloads all episodes changed since the last time this was called and applies changes to
          * the database.
          */
-        public static boolean flagsFromHexagon(Context context) {
+        @SuppressLint("ApplySharedPref")
+        public static boolean flagsFromHexagon(SgApp app) {
             List<Episode> episodes;
             boolean hasMoreEpisodes = true;
             String cursor = null;
             long currentTime = System.currentTimeMillis();
-            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(app));
 
             Timber.d("flagsFromHexagon: downloading changed episode flags since %s", lastSyncTime);
 
             SparseArrayCompat<Long> showsLastWatchedMs = new SparseArrayCompat<>();
             while (hasMoreEpisodes) {
                 try {
-                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    Episodes episodesService = app.getHexagonTools().getEpisodesService();
                     if (episodesService == null) {
                         return false;
                     }
@@ -483,7 +485,7 @@ public class EpisodeTools {
                         hasMoreEpisodes = false;
                     }
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(context, "get updated episodes", e);
+                    HexagonTools.trackFailedRequest(app, "get updated episodes", e);
                     return false;
                 }
 
@@ -531,19 +533,19 @@ public class EpisodeTools {
 
                 // execute database update
                 try {
-                    DBUtils.applyInSmallBatches(context, batch);
+                    DBUtils.applyInSmallBatches(app, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e, "flagsFromHexagon: failed to apply changed episode flag updates");
                     return false;
                 }
             }
 
-            if (!updateLastWatchedTimeOfShows(context, showsLastWatchedMs)) {
+            if (!updateLastWatchedTimeOfShows(app, showsLastWatchedMs)) {
                 return false;
             }
 
             // store new last sync time
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
+            PreferenceManager.getDefaultSharedPreferences(app).edit()
                     .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
                     .commit();
 
@@ -583,7 +585,7 @@ public class EpisodeTools {
          *
          * @return Whether the download was successful and all changes were applied to the database.
          */
-        public static boolean flagsFromHexagon(Context context, int showTvdbId) {
+        public static boolean flagsFromHexagon(SgApp app, int showTvdbId) {
             Timber.d("flagsFromHexagon: downloading episode flags for show %s", showTvdbId);
             List<Episode> episodes;
             boolean hasMoreEpisodes = true;
@@ -593,13 +595,13 @@ public class EpisodeTools {
             Long lastWatchedMs = null;
             while (hasMoreEpisodes) {
                 // abort if connection is lost
-                if (!AndroidUtils.isNetworkConnected(context)) {
+                if (!AndroidUtils.isNetworkConnected(app)) {
                     Timber.e("flagsFromHexagon: no network connection");
                     return false;
                 }
 
                 try {
-                    Episodes episodesService = HexagonTools.getEpisodesService(context);
+                    Episodes episodesService = app.getHexagonTools().getEpisodesService();
                     if (episodesService == null) {
                         return false;
                     }
@@ -626,7 +628,7 @@ public class EpisodeTools {
                         hasMoreEpisodes = false;
                     }
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(context, "get episodes of show", e);
+                    HexagonTools.trackFailedRequest(app, "get episodes of show", e);
                     return false;
                 }
 
@@ -676,7 +678,7 @@ public class EpisodeTools {
 
                 // execute database update
                 try {
-                    DBUtils.applyInSmallBatches(context, batch);
+                    DBUtils.applyInSmallBatches(app, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e,
                             "flagsFromHexagon: failed to apply episode flag updates for show %s",
@@ -686,7 +688,7 @@ public class EpisodeTools {
             }
 
             //noinspection RedundantIfStatement
-            if (!updateLastWatchedTimeOfShow(context, showTvdbId, lastWatchedMs)) {
+            if (!updateLastWatchedTimeOfShow(app, showTvdbId, lastWatchedMs)) {
                 return false; // failed to update last watched time
             }
 
@@ -743,11 +745,11 @@ public class EpisodeTools {
          *
          * @return Whether the upload was successful.
          */
-        public static boolean flagsToHexagon(Context context, int showTvdbId) {
+        public static boolean flagsToHexagon(SgApp app, int showTvdbId) {
             Timber.d("flagsToHexagon: uploading episode flags for show %s", showTvdbId);
 
             // query for watched, skipped or collected episodes
-            Cursor query = context.getContentResolver()
+            Cursor query = app.getContentResolver()
                     .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
                             FlaggedEpisodesQuery.PROJECTION, FlaggedEpisodesQuery.SELECTION,
                             null, null
@@ -789,14 +791,14 @@ public class EpisodeTools {
                     episodeList.setShowTvdbId(showTvdbId);
 
                     try {
-                        Episodes episodesService = HexagonTools.getEpisodesService(context);
+                        Episodes episodesService = app.getHexagonTools().getEpisodesService();
                         if (episodesService == null) {
                             return false;
                         }
                         episodesService.save(episodeList).execute();
                     } catch (IOException e) {
                         // abort
-                        HexagonTools.trackFailedRequest(context, "save episodes of show", e);
+                        HexagonTools.trackFailedRequest(app, "save episodes of show", e);
                         query.close();
                         return false;
                     }
@@ -815,15 +817,15 @@ public class EpisodeTools {
          * Upload the given episodes to Hexagon. Assumes the given episode wrapper has valid
          * values.
          */
-        public static boolean flagsToHexagon(Context context, EpisodeList episodes) {
+        public static boolean flagsToHexagon(SgApp app, EpisodeList episodes) {
             try {
-                Episodes episodesService = HexagonTools.getEpisodesService(context);
+                Episodes episodesService = app.getHexagonTools().getEpisodesService();
                 if (episodesService == null) {
                     return false;
                 }
                 episodesService.save(episodes).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                HexagonTools.trackFailedRequest(app, "save episodes", e);
                 return false;
             }
 

@@ -54,7 +54,7 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
             movieList.setMovies(movies);
 
             try {
-                Movies moviesService = HexagonTools.getMoviesService(getContext());
+                Movies moviesService = getContext().getHexagonTools().getMoviesService();
                 if (moviesService == null) {
                     return ERROR_HEXAGON_API;
                 }
