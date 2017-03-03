@@ -189,8 +189,7 @@ public class CloudSetupFragment extends Fragment {
             Timber.d("NOT signed in with Google: %s", GoogleSignInStatusCodes.getStatusCodeString(
                     result.getStatus().getStatusCode()));
             signInAccount = null;
-            // remove any existing account
-            HexagonTools.storeAccount(getContext(), null);
+            HexagonTools.setDisabled(getContext());
         }
 
         setProgressVisible(false);
@@ -199,12 +198,12 @@ public class CloudSetupFragment extends Fragment {
         return signedIn;
     }
 
-    private void signInWithGoogle() {
+    private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, REQUEST_SIGN_IN);
     }
 
-    private void signOutAndDisableHexagon() {
+    private void signOut() {
         setProgressVisible(true);
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
@@ -215,8 +214,7 @@ public class CloudSetupFragment extends Fragment {
                         if (status.isSuccess()) {
                             Timber.i("Signed out of Google.");
                             signInAccount = null;
-                            // remove cached account to disable hexagon
-                            HexagonTools.storeAccount(getActivity(), null);
+                            HexagonTools.setDisabled(getContext());
                             updateViews();
                         } else {
                             Timber.e("Signing out of Google failed: %s", status);
@@ -230,8 +228,24 @@ public class CloudSetupFragment extends Fragment {
         textViewWarning.setVisibility(TraktCredentials.get(getActivity()).hasCredentials()
                 ? View.VISIBLE : View.GONE);
 
-        // hexagon not configured?
-        if (!HexagonTools.isConfigured(getActivity())) {
+        // hexagon enabled and account looks fine?
+        if (HexagonSettings.isEnabled(getContext())
+                && !HexagonSettings.shouldValidateAccount(getContext())) {
+            textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
+            textViewUsername.setVisibility(View.VISIBLE);
+            textViewDescription.setText(R.string.hexagon_signed_in);
+
+            // enable sign-out
+            buttonAction.setText(R.string.hexagon_signout);
+            buttonAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signOut();
+                }
+            });
+            // enable account removal
+            buttonRemoveAccount.setVisibility(View.VISIBLE);
+        } else {
             // did try to setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(getActivity())) {
                 // show error message
@@ -256,22 +270,6 @@ public class CloudSetupFragment extends Fragment {
             });
             // disable account removal
             buttonRemoveAccount.setVisibility(View.GONE);
-        } else {
-            // configured!
-            textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
-            textViewUsername.setVisibility(View.VISIBLE);
-            textViewDescription.setText(R.string.hexagon_signed_in);
-
-            // enable sign-out
-            buttonAction.setText(R.string.hexagon_signout);
-            buttonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOutAndDisableHexagon();
-                }
-            });
-            // enable account removal
-            buttonRemoveAccount.setVisibility(View.VISIBLE);
         }
     }
 
@@ -297,9 +295,10 @@ public class CloudSetupFragment extends Fragment {
         setProgressVisible(true);
 
         if (signInAccount == null) {
-            signInWithGoogle();
+            signIn();
         } else {
-            hexagonSetupTask = new HexagonSetupTask(getActivity(), signInAccount,
+            HexagonSettings.setSetupIncomplete(getContext());
+            hexagonSetupTask = new HexagonSetupTask(getContext(), signInAccount,
                     onHexagonSetupFinishedListener);
             hexagonSetupTask.execute();
         }
@@ -312,7 +311,7 @@ public class CloudSetupFragment extends Fragment {
 
     private static class HexagonSetupTask extends AsyncTask<String, Void, Integer> {
 
-        public static final int SYNC_REQUIRED = 1;
+        public static final int SUCCESS_SYNC_REQUIRED = 1;
         public static final int FAILURE = -1;
         public static final int FAILURE_AUTH = -2;
 
@@ -341,7 +340,6 @@ public class CloudSetupFragment extends Fragment {
         protected Integer doInBackground(String... params) {
             // set setup incomplete flag
             Timber.i("Setting up Hexagon...");
-            HexagonSettings.setSetupIncomplete(context);
 
             // validate account data
             Account account = signInAccount.getAccount();
@@ -349,17 +347,12 @@ public class CloudSetupFragment extends Fragment {
                 return FAILURE_AUTH;
             }
 
-            if (!HexagonSettings.resetSyncState(context)) {
+            // at last reset sync state, store the new credentials and enable hexagon integration
+            if (!HexagonTools.setEnabled(context, signInAccount)) {
                 return FAILURE;
             }
 
-            // at last store the new credentials (enables SG hexagon integration)
-            HexagonTools.storeAccount(context, signInAccount);
-            if (!HexagonTools.isConfigured(context)) {
-                return FAILURE_AUTH;
-            }
-
-            return SYNC_REQUIRED;
+            return SUCCESS_SYNC_REQUIRED;
         }
 
         @Override
@@ -375,9 +368,9 @@ public class CloudSetupFragment extends Fragment {
         @Override
         public void onSetupFinished(int resultCode) {
             switch (resultCode) {
-                case HexagonSetupTask.SYNC_REQUIRED: {
+                case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
                     // schedule full sync
-                    Timber.d("Setting up Hexagon...SYNC_REQUIRED");
+                    Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
                     SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
                             0, false);
                     HexagonSettings.setSetupCompleted(getActivity());

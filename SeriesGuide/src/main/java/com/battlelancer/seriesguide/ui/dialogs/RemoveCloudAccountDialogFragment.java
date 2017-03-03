@@ -77,8 +77,10 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 return false;
             }
 
-            // sign out in SeriesGuide
-            HexagonTools.storeAccount(mContext, null);
+            // TODO ut: deauthorize app
+
+            // disable Hexagon integration, remove local account data
+            HexagonTools.setDisabled(mContext);
 
             return true;
         }

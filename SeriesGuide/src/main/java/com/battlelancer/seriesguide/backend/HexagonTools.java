@@ -62,6 +62,38 @@ public class HexagonTools {
     private static Episodes sEpisodesService;
     private static Movies sMoviesService;
     private static Lists sListsService;
+    private static GoogleSignInOptions googleSignInOptions;
+
+    /**
+     * Enables Hexagon, resets sync state and saves account data.
+     *
+     * @return <code>false</code> if sync state could not be reset.
+     */
+    public static boolean setEnabled(@NonNull Context context,
+            @NonNull GoogleSignInAccount account) {
+        if (!HexagonSettings.resetSyncState(context)) {
+            return false;
+        }
+        if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(HexagonSettings.KEY_ENABLED, true)
+                .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
+                .commit()) {
+            return false;
+        }
+        storeAccount(context, account);
+        return true;
+    }
+
+    /**
+     * Disables Hexagon and removes any account data.
+     */
+    public static void setDisabled(@NonNull Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(HexagonSettings.KEY_ENABLED, false)
+                .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
+                .apply();
+        storeAccount(context, null);
+    }
 
     public static void trackFailedRequest(Context context, String action, IOException e) {
         if (e instanceof HttpResponseException) {
@@ -84,7 +116,7 @@ public class HexagonTools {
     @Nullable
     public static synchronized Account buildAccountService(Context context) {
         GoogleAccountCredential credential = getAccountCredential(context, true);
-        if (credential.getSelectedAccountName() == null) {
+        if (credential.getSelectedAccount() == null) {
             return null;
         }
         Account.Builder builder = new Account.Builder(
@@ -99,7 +131,7 @@ public class HexagonTools {
     @Nullable
     public static synchronized Shows getShowsService(Context context) {
         GoogleAccountCredential credential = getAccountCredential(context, true);
-        if (credential.getSelectedAccountName() == null) {
+        if (credential.getSelectedAccount() == null) {
             return null;
         }
         if (sShowsService == null) {
@@ -117,7 +149,7 @@ public class HexagonTools {
     @Nullable
     public static synchronized Episodes getEpisodesService(Context context) {
         GoogleAccountCredential credential = getAccountCredential(context, true);
-        if (credential.getSelectedAccountName() == null) {
+        if (credential.getSelectedAccount() == null) {
             return null;
         }
         if (sEpisodesService == null) {
@@ -135,7 +167,7 @@ public class HexagonTools {
     @Nullable
     public static synchronized Movies getMoviesService(Context context) {
         GoogleAccountCredential credential = getAccountCredential(context, true);
-        if (credential.getSelectedAccountName() == null) {
+        if (credential.getSelectedAccount() == null) {
             return null;
         }
         if (sMoviesService == null) {
@@ -153,7 +185,7 @@ public class HexagonTools {
     @Nullable
     public static synchronized Lists getListsService(Context context) {
         GoogleAccountCredential credential = getAccountCredential(context, true);
-        if (credential.getSelectedAccountName() == null) {
+        if (credential.getSelectedAccount() == null) {
             return null;
         }
         if (sListsService == null) {
@@ -166,26 +198,25 @@ public class HexagonTools {
     }
 
     /**
-     * Get the Google account credentials used for talking with Hexagon.
+     * Get the Google account credentials to talk with Hexagon.
      *
-     * <p>Make sure to check {@link GoogleAccountCredential#getSelectedAccount()} is not null (is
-     * null if e.g. do not have permission to access the account or the account was removed).
+     * <p>Make sure to check {@link GoogleAccountCredential#getSelectedAccount()} is not null (the
+     * account might have gotten signed out).
+     *
+     * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
+     * the {@link HexagonSettings#KEY_SHOULD_VALIDATE_ACCOUNT} flag. If successful, clears the
+     * flag.
      */
     private synchronized static GoogleAccountCredential getAccountCredential(Context context,
-            boolean autoSignIn) {
+            boolean checkSignInState) {
         if (credential == null) {
             credential = GoogleAccountCredential.usingAudience(
                     context.getApplicationContext(), HexagonSettings.AUDIENCE);
         }
-        // try to restore account if none is set
-        if (autoSignIn && credential.getSelectedAccount() == null) {
-            GoogleSignInOptions gso =
-                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestEmail()
-                            .build();
-
+        if (checkSignInState) {
+            android.accounts.Account account = null;
             GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
                     .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();
             if (connectionResult.isSuccess()) {
@@ -196,7 +227,7 @@ public class HexagonTools {
                     GoogleSignInAccount signInAccount = result.getSignInAccount();
                     if (signInAccount != null) {
                         Timber.i("Silent sign-in successful.");
-                        android.accounts.Account account = signInAccount.getAccount();
+                        account = signInAccount.getAccount();
                         credential.setSelectedAccount(account);
                     } else {
                         Timber.e("Silent sign-in failed: GoogleSignInAccount is null.");
@@ -211,12 +242,27 @@ public class HexagonTools {
                 Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
                         connectionResult);
             }
+            boolean shouldFixAccount = account == null;
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
+                    .apply();
         }
         return credential;
     }
 
+    @NonNull
+    private static GoogleSignInOptions getGoogleSignInOptions() {
+        if (googleSignInOptions == null) {
+            googleSignInOptions = new GoogleSignInOptions
+                    .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+        }
+        return googleSignInOptions;
+    }
+
     /**
-     * Sets the account name used for calls to Hexagon.
+     * Sets the account used for calls to Hexagon and saves the email address to display it in UI.
      */
     public static void storeAccount(@NonNull Context context,
             @Nullable GoogleSignInAccount account) {
@@ -232,15 +278,6 @@ public class HexagonTools {
         getAccountCredential(context, false).setSelectedAccount(account != null
                 ? account.getAccount()
                 : null);
-    }
-
-    /**
-     * Returns true if an account for Hexagon is set and the user is allowed to use Hexagon (has
-     * access to X).
-     */
-    public static boolean isConfigured(Context context) {
-        return Utils.hasAccessToX(context)
-                && getAccountCredential(context, false).getSelectedAccount() != null;
     }
 
     /**

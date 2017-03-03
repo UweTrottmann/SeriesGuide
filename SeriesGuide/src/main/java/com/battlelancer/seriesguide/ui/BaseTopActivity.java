@@ -163,28 +163,28 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    protected void onShowCloudPermissionWarning() {
+    protected void onShowCloudAccountWarning() {
         if (snackbar != null && snackbar.isShown()) {
             // do not replace an existing snackbar
             return;
         }
 
         Snackbar newSnackbar = Snackbar
-                .make(getSnackbarParentView(), R.string.hexagon_permission_missing,
+                .make(getSnackbarParentView(), R.string.hexagon_signed_out,
                         Snackbar.LENGTH_INDEFINITE);
         newSnackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
                         || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning
-                    // so remove stored account name so this warning is not displayed again
-                    HexagonTools.storeAccount(BaseTopActivity.this, null);
+                    // user has acknowledged warning, so disable Cloud
+                    HexagonTools.setDisabled(BaseTopActivity.this);
                 }
             }
-        }).setAction(R.string.preferences, new View.OnClickListener() {
+        }).setAction(R.string.hexagon_signin, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // forward to cloud setup which can help fix the account issue
                 startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
             }
         }).show();
