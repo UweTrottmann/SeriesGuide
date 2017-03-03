@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -188,7 +189,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
-        if (HexagonTools.isConfigured(app)) {
+        if (HexagonSettings.isEnabled(app)) {
             // ...from Hexagon
             boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {

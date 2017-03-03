@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
@@ -256,7 +255,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         switch (itemId) {
             case NAV_ITEM_ACCOUNT_ID: {
                 // SG Cloud connection overrides trakt
-                if (HexagonTools.isConfigured(this)) {
+                if (HexagonSettings.isEnabled(this)) {
                     launchIntent = new Intent(this, CloudSetupActivity.class);
                 } else {
                     launchIntent = new Intent(this, ConnectTraktActivity.class);

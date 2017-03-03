@@ -202,7 +202,7 @@ public class EpisodeTools {
 
         @Override
         protected void onPreExecute() {
-            shouldSendToHexagon = HexagonTools.isConfigured(context);
+            shouldSendToHexagon = HexagonSettings.isEnabled(context);
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(flagType.getFlagValue());
 

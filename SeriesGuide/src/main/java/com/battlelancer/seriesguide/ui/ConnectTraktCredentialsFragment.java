@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 
@@ -147,6 +147,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         textViewUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
         textViewUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
         textViewHexagonWarning.setVisibility(
-                visible && HexagonTools.isConfigured(getContext()) ? View.VISIBLE : View.GONE);
+                visible && HexagonSettings.isEnabled(getContext()) ? View.VISIBLE : View.GONE);
     }
 }

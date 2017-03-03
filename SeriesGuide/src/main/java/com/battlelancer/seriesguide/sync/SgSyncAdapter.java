@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -331,7 +332,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                if (HexagonTools.isConfigured(getContext())) {
+                if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
                     boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);

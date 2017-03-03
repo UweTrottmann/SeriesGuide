@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -141,7 +140,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // if not connected to Hexagon, get episodes from trakt
         HashMap<Integer, BaseShow> traktCollection = null;
         HashMap<Integer, BaseShow> traktWatched = null;
-        if (!HexagonTools.isConfigured(app) && TraktCredentials.get(app).hasCredentials()) {
+        if (!HexagonSettings.isEnabled(app) && TraktCredentials.get(app).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.");
             // get collection
             HashMap<Integer, BaseShow> traktShows = getTraktShows("get collection", true);
