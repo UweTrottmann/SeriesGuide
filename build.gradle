@@ -6,7 +6,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:2.3.0' // libraries, SeriesGuide
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3' // api
         classpath 'io.fabric.tools:gradle:1.22.1' // SeriesGuide
     }
