@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoader.Result> {
 
     private final int seasonTvdbId;
-    private final int seasonNumber;
     private final int episodeTvdbId;
 
     public static class Result {
@@ -31,11 +30,9 @@ public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoad
         }
     }
 
-    public SeasonEpisodesLoader(Context context, int seasonTvdbId, int seasonNumber,
-            int episodeTvdbId) {
+    public SeasonEpisodesLoader(Context context, int seasonTvdbId, int episodeTvdbId) {
         super(context);
         this.seasonTvdbId = seasonTvdbId;
-        this.seasonNumber = seasonNumber;
         this.episodeTvdbId = episodeTvdbId;
     }
 
@@ -45,7 +42,7 @@ public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoad
         Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(getContext());
         Cursor episodesOfSeason = getContext().getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(seasonTvdbId)), new String[] {
-                        Episodes._ID, Episodes.NUMBER
+                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
                 }, null, null, sortOrder.query()
         );
 
@@ -53,6 +50,7 @@ public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoad
         int requestedEpisodeIndex = 0;
         if (episodesOfSeason != null) {
             int i = 0;
+            Integer seasonNumber = null;
             while (episodesOfSeason.moveToNext()) {
                 int curEpisodeId = episodesOfSeason.getInt(0);
                 if (curEpisodeId == episodeTvdbId) {
@@ -61,6 +59,9 @@ public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoad
                 Episode episode = new Episode();
                 episode.episodeId = curEpisodeId;
                 episode.episodeNumber = episodesOfSeason.getInt(1);
+                if (seasonNumber == null) {
+                    seasonNumber = episodesOfSeason.getInt(2); // same for all
+                }
                 episode.seasonNumber = seasonNumber;
                 episodes.add(episode);
                 i++;
