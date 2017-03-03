@@ -176,9 +176,8 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         newSnackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
-                        || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning, so disable Cloud
+                if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
+                    // user has dismissed warning, so disable Cloud
                     HexagonTools.setDisabled(BaseTopActivity.this);
                 }
             }
