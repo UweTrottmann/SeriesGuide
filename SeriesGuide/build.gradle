@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-    dependencies {
-        classpath dep.androidPlugin
-        classpath 'io.fabric.tools:gradle:1.22.1'
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
