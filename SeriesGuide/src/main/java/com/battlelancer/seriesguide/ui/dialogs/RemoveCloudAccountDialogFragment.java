@@ -20,7 +20,8 @@ import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Confirms whether to obliterate a SeriesGuide cloud account.
+ * Confirms whether to obliterate a SeriesGuide cloud account. If removal is tried, posts result as
+ * {@link AccountRemovedEvent}. If dialog is canceled, posts a {@link CanceledEvent}.
  */
 public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
@@ -37,28 +38,27 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                     }
                 }
         );
-        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendCanceledEvent();
+            }
+        });
 
         return builder.create();
     }
 
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        sendCanceledEvent();
+    }
+
+    private void sendCanceledEvent() {
+        EventBus.getDefault().post(new CanceledEvent());
+    }
+
     public static class RemoveHexagonAccountTask extends AsyncTask<Void, Void, Boolean> {
-
-        public class HexagonAccountRemovedEvent {
-            public final boolean successful;
-
-            public HexagonAccountRemovedEvent(boolean successful) {
-                this.successful = successful;
-            }
-
-            /**
-             * Display status toasts depending on the result.
-             */
-            public void handle(Context context) {
-                Toast.makeText(context, successful ? R.string.hexagon_remove_account_success
-                        : R.string.hexagon_remove_account_failure, Toast.LENGTH_LONG).show();
-            }
-        }
 
         private final Context context;
 
@@ -102,7 +102,26 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            EventBus.getDefault().post(new HexagonAccountRemovedEvent(result));
+            EventBus.getDefault().post(new AccountRemovedEvent(result));
+        }
+    }
+
+    public static class CanceledEvent {
+    }
+
+    public static class AccountRemovedEvent {
+        public final boolean successful;
+
+        public AccountRemovedEvent(boolean successful) {
+            this.successful = successful;
+        }
+
+        /**
+         * Display status toasts depending on the result.
+         */
+        public void handle(Context context) {
+            Toast.makeText(context, successful ? R.string.hexagon_remove_account_success
+                    : R.string.hexagon_remove_account_failure, Toast.LENGTH_LONG).show();
         }
     }
 }

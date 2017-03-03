@@ -84,6 +84,7 @@ public class CloudSetupFragment extends Fragment {
         buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setProgressVisible(true);
                 DialogFragment f = new RemoveCloudAccountDialogFragment();
                 f.show(getFragmentManager(), "remove-cloud-account");
             }
@@ -168,9 +169,14 @@ public class CloudSetupFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(
-            RemoveCloudAccountDialogFragment.RemoveHexagonAccountTask.HexagonAccountRemovedEvent event) {
+    public void onEventMainThread(RemoveCloudAccountDialogFragment.CanceledEvent event) {
+        setProgressVisible(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(RemoveCloudAccountDialogFragment.AccountRemovedEvent event) {
         event.handle(getActivity());
+        setProgressVisible(false);
         updateViews();
     }
 
