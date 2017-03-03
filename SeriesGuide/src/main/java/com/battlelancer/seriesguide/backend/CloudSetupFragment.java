@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
@@ -100,13 +99,9 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        GoogleSignInOptions gso =
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build();
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                 .build();
     }
 
