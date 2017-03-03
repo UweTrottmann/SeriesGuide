@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import timber.log.Timber;
 
 /**
  * Activities at the top of the navigation hierarchy, display the nav drawer upon pressing the
@@ -104,7 +105,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     protected void onShowAutoBackupMissingFilesWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing backup files warning: existing snackbar.");
             return;
         }
 
@@ -120,7 +121,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     protected void onShowAutoBackupPermissionWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing backup permission warning: existing snackbar.");
             return;
         }
 
@@ -165,7 +166,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     protected void onShowCloudAccountWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing Cloud account warning: existing snackbar.");
             return;
         }
 
