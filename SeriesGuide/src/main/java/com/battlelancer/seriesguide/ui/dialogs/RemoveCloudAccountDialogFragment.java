@@ -12,9 +12,12 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.uwetrottmann.seriesguide.backend.account.Account;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Confirms whether to obliterate a SeriesGuide cloud account.
@@ -57,30 +60,42 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
             }
         }
 
-        private final Context mContext;
+        private final Context context;
 
         public RemoveHexagonAccountTask(Context context) {
-            mContext = context.getApplicationContext();
+            this.context = context.getApplicationContext();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // remove account from hexagon
             try {
-                Account accountService = HexagonTools.buildAccountService(mContext);
+                Account accountService = HexagonTools.buildAccountService(context);
                 if (accountService == null) {
                     return false;
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(mContext, "remove account", e);
+                HexagonTools.trackFailedRequest(context, "remove account", e);
                 return false;
             }
 
-            // TODO ut: deauthorize app
+            // de-authorize app so other clients are signed out as well
+            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
+                    .build();
+            ConnectionResult connectionResult = googleApiClient.blockingConnect();
+            if (!connectionResult.isSuccess()) {
+                return false;
+            }
+            com.google.android.gms.common.api.Status status = Auth.GoogleSignInApi
+                    .revokeAccess(googleApiClient).await();
+            if (!status.isSuccess()) {
+                return false;
+            }
 
             // disable Hexagon integration, remove local account data
-            HexagonTools.setDisabled(mContext);
+            HexagonTools.setDisabled(context);
 
             return true;
         }

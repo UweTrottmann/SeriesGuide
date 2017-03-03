@@ -252,7 +252,7 @@ public class HexagonTools {
     }
 
     @NonNull
-    private static GoogleSignInOptions getGoogleSignInOptions() {
+    public static GoogleSignInOptions getGoogleSignInOptions() {
         if (googleSignInOptions == null) {
             googleSignInOptions = new GoogleSignInOptions
                     .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
