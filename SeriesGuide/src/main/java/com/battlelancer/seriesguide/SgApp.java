@@ -61,6 +61,10 @@ public class SgApp extends Application {
      * Populate shows last watched field from activity table.
      */
     public static final int RELEASE_VERSION_34_BETA4 = 15223;
+    /**
+     * Switched to Google Sign-In: notify existing Cloud users to sign in again.
+     */
+    public static final int RELEASE_VERSION_36_BETA2 = 15241;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}

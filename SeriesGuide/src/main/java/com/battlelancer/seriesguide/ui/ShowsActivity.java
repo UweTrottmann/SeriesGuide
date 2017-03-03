@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,6 +24,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -424,7 +424,6 @@ public class ShowsActivity extends BaseTopActivity implements
     /**
      * Runs any upgrades necessary if coming from earlier versions.
      */
-    @SuppressLint("CommitPrefEdits")
     private void onUpgrade() {
         final int lastVersion = AppSettings.getLastVersionCode(this);
         final int currentVersion = BuildConfig.VERSION_CODE;
@@ -433,11 +432,8 @@ public class ShowsActivity extends BaseTopActivity implements
             // user feedback about update
             Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_LONG).show();
 
-            /**
-             * Run some required tasks after updating to certain versions.
-             *
-             * NOTE: see version codes for upgrade description.
-             */
+            // Run some required tasks after updating to certain versions.
+            // NOTE: see version codes for upgrade description.
             if (lastVersion < SgApp.RELEASE_VERSION_12_BETA5) {
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
@@ -463,9 +459,16 @@ public class ShowsActivity extends BaseTopActivity implements
             if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
                 ActivityTools.populateShowsLastWatchedTime(this);
             }
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
+                // used account name to determine sign-in state before switch to Google Sign-In
+                if (!TextUtils.isEmpty(HexagonSettings.getAccountName(this))) {
+                    // tell users to sign in again
+                    editor.putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, true);
+                }
+            }
 
             // set this as lastVersion
-            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             editor.putInt(AppSettings.KEY_VERSION, currentVersion);
             editor.apply();
         }
