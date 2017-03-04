@@ -83,7 +83,7 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
                 }
 
                 // add list
-                String listName = editTextName.getText().toString();
+                String listName = editTextName.getText().toString().trim();
                 ListsTools.addList(SgApp.from(getActivity()), listName);
 
                 dismiss();

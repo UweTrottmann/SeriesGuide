@@ -106,7 +106,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
                 }
 
                 // update title
-                String listName = editTextName.getText().toString();
+                String listName = editTextName.getText().toString().trim();
                 ListsTools.renameList(SgApp.from(getActivity()), listId, listName);
 
                 dismiss();
