@@ -34,7 +34,7 @@ public class AllApisAuthenticator implements Authenticator {
     public Request authenticate(Route route, Response response) throws IOException {
         String host = response.request().url().host();
         if (TheTvdb.API_HOST.equals(host)) {
-            Timber.d("TVDB auth failed.");
+            Timber.d("TheTVDB requires auth.");
             return TheTvdbAuthenticator.handleRequest(response, theTvdb.get());
         }
         if (TraktV2.API_HOST.equals(host)) {
@@ -44,7 +44,7 @@ public class AllApisAuthenticator implements Authenticator {
     }
 
     private Request handleTraktAuth(Response response) {
-        Timber.d("trakt auth failed.");
+        Timber.d("trakt requires auth.");
 
         if (responseCount(response) >= 2) {
             Timber.d("trakt auth failed 2 times, give up.");
