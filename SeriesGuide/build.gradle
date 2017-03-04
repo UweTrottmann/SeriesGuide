@@ -70,11 +70,12 @@ android {
             versionCode project.androidVersionCode
             versionName project.androidVersionName
         }
-        preview {
-            applicationId "com.uwetrottmann.seriesguide.preview"
-            versionCode project.androidVersionCode
-            versionName project.androidVersionName + "-preview"
-        }
+        // temporarily unused
+//        preview {
+//            applicationId "com.uwetrottmann.seriesguide.preview"
+//            versionCode project.androidVersionCode
+//            versionName project.androidVersionName + "-preview"
+//        }
     }
 
     signingConfigs {
@@ -101,12 +102,11 @@ android {
             }
         }
         debug {
-            // enable for shrinking to stay well below the 65k method limit
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            pseudoLocalesEnabled true
+            // disable shrinking to use incremental dex in builds
+            minifyEnabled false
+            // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
+            // keep disabled unless needed, slows down build
+            pseudoLocalesEnabled false
         }
     }
 }
