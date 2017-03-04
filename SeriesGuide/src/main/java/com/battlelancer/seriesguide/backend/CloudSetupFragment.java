@@ -196,8 +196,9 @@ public class CloudSetupFragment extends Fragment {
         setProgressVisible(false);
         updateViews();
 
-        if (signedIn && !HexagonSettings.isEnabled(getContext())) {
-            // auto-start setup if sign in succeeded and Cloud is not enabled, yet
+        if (signedIn && Utils.hasAccessToX(getContext())
+                && !HexagonSettings.isEnabled(getContext())) {
+            // auto-start setup if sign in succeeded and Cloud can be, but is not enabled, yet
             Timber.i("Auto-start Cloud setup.");
             startHexagonSetup();
         }
