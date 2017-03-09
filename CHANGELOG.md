@@ -9,6 +9,18 @@ Version 36
 ----------
 *(in development)*
 
+#### 36-beta2
+*(2017-03-09)*
+
+* NOTE Users are forced to sign-in again to SeriesGuide Cloud.
+* TWEAK Use Google Sign-In for SeriesGuide Cloud, does not require Contacts permission.
+* TWEAK Show Cloud and trakt account in navigation drawer.
+* TWEAK Show message if signed out of SeriesGuide Cloud.
+* TWEAK Reduce auto-sync trigger interval when opening app to 5 minutes.
+* FIX Sometimes selected season is wrong when returning to episode details view. Thanks @cbeyls!
+* FIX Do not allow multi-line list names.
+* NOTE Latest translations from crowdin.
+
 #### 36-beta1
 *(2017-02-18)*
 
