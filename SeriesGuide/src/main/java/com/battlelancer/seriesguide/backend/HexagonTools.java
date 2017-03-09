@@ -60,6 +60,7 @@ public class HexagonTools {
     private static GoogleSignInOptions googleSignInOptions;
 
     private final SgApp app;
+    private GoogleApiClient googleApiClient;
     private GoogleAccountCredential credential;
     private Shows showsService;
     private Episodes episodesService;
@@ -203,14 +204,19 @@ public class HexagonTools {
                     HexagonSettings.AUDIENCE);
         }
         if (checkSignInState) {
+            if (googleApiClient == null) {
+                googleApiClient = new GoogleApiClient.Builder(app)
+                        .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
+                        .build();
+            }
+
             android.accounts.Account account = null;
-            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(app)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
-                    .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();
+
             if (connectionResult.isSuccess()) {
                 OptionalPendingResult<GoogleSignInResult> pendingResult
                         = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+
                 GoogleSignInResult result = pendingResult.await();
                 if (result.isSuccess()) {
                     GoogleSignInAccount signInAccount = result.getSignInAccount();
@@ -226,15 +232,18 @@ public class HexagonTools {
                             GoogleSignInStatusCodes.getStatusCodeString(
                                     result.getStatus().getStatusCode()));
                 }
+
                 googleApiClient.disconnect();
             } else {
                 Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
                         connectionResult);
             }
+
             boolean shouldFixAccount = account == null;
             PreferenceManager.getDefaultSharedPreferences(app).edit()
                     .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
                     .apply();
+
         }
         return credential;
     }
