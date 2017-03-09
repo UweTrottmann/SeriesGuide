@@ -84,11 +84,11 @@
             android:text="@string/action_shows_add" />
 
         <Button
-            android:id="@+id/buttonFirstRunTrakt"
+            android:id="@+id/buttonFirstRunSignIn"
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/connect_trakt" />
+            android:text="@string/hexagon_signin" />
 
         <Button
             android:id="@+id/buttonFirstRunRestore"
