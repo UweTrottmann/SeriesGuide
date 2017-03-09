@@ -89,11 +89,13 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                     .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();
             if (!connectionResult.isSuccess()) {
+                hexagonTools.trackSignInFailure("remove account", connectionResult);
                 return false;
             }
             com.google.android.gms.common.api.Status status = Auth.GoogleSignInApi
                     .revokeAccess(googleApiClient).await();
             if (!status.isSuccess()) {
+                hexagonTools.trackSignInFailure("remove account", status);
                 return false;
             }
 

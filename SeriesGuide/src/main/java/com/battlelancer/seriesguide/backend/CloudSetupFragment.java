@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
@@ -44,6 +43,7 @@ import timber.log.Timber;
 public class CloudSetupFragment extends Fragment {
 
     private static final int REQUEST_SIGN_IN = 1;
+    private static final String ACTION_SIGN_IN = "sign-in";
 
     private Button buttonAction;
     private TextView textViewDescription;
@@ -99,11 +99,11 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        hexagonTools = SgApp.from(getActivity()).getHexagonTools();
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                 .build();
-        hexagonTools = SgApp.from(getActivity()).getHexagonTools();
     }
 
     @Override
@@ -187,8 +187,7 @@ public class CloudSetupFragment extends Fragment {
             signInAccount = result.getSignInAccount();
         } else {
             // not or no longer signed in
-            Timber.d("NOT signed in with Google: %s", GoogleSignInStatusCodes.getStatusCodeString(
-                    result.getStatus().getStatusCode()));
+            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, result.getStatus());
             signInAccount = null;
             hexagonTools.setDisabled();
         }
@@ -223,7 +222,7 @@ public class CloudSetupFragment extends Fragment {
                             hexagonTools.setDisabled();
                             updateViews();
                         } else {
-                            Timber.e("Signing out of Google failed: %s", status);
+                            hexagonTools.trackSignInFailure("sign-out", status);
                         }
                     }
                 });
@@ -411,7 +410,7 @@ public class CloudSetupFragment extends Fragment {
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
             // using auto managed connection so only called if unresolvable error
-            Timber.e("GoogleApiClient connect failed: %s", connectionResult);
+            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, connectionResult);
             if (getView() == null) {
                 return;
             }

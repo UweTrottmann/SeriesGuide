@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.Status;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -56,6 +57,8 @@ import timber.log.Timber;
 public class HexagonTools {
 
     private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
+    private static final String SIGN_IN_ERROR_CATEGORY = "Sign-in Error";
+    private static final String ACTION_SILENT_SIGN_IN = "silent sign-in";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
     private static final long SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
@@ -215,7 +218,7 @@ public class HexagonTools {
 
     private void checkSignInState() {
         if (credential.getSelectedAccount() != null && !isTimeForSignInStateCheck()) {
-            Timber.d("Did just check sign-in state, skip.");
+            Timber.d("%s: just checked state, skip", ACTION_SILENT_SIGN_IN);
         }
         lastSignInCheck = SystemClock.elapsedRealtime();
 
@@ -236,21 +239,19 @@ public class HexagonTools {
             if (result.isSuccess()) {
                 GoogleSignInAccount signInAccount = result.getSignInAccount();
                 if (signInAccount != null) {
-                    Timber.i("Silent sign-in successful.");
+                    Timber.i("%s: successful", ACTION_SILENT_SIGN_IN);
                     account = signInAccount.getAccount();
                     credential.setSelectedAccount(account);
                 } else {
-                    Timber.e("Silent sign-in failed: GoogleSignInAccount is null.");
+                    trackSignInFailure(ACTION_SILENT_SIGN_IN,  "GoogleSignInAccount is null");
                 }
             } else {
-                Timber.e("Silent sign-in failed: %s", GoogleSignInStatusCodes.getStatusCodeString(
-                        result.getStatus().getStatusCode()));
+                trackSignInFailure(ACTION_SILENT_SIGN_IN, result.getStatus());
             }
 
             googleApiClient.disconnect();
         } else {
-            Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
-                    connectionResult);
+            trackSignInFailure(ACTION_SILENT_SIGN_IN, connectionResult);
         }
 
         boolean shouldFixAccount = account == null;
@@ -304,6 +305,22 @@ public class HexagonTools {
             // log like "action: Unable to resolve host"
             Timber.e("%s: %s", action, e.getMessage());
         }
+    }
+
+    public void trackSignInFailure(String action, ConnectionResult connectionResult) {
+        String failureMessage = connectionResult.getErrorCode() + " "
+                + connectionResult.getErrorMessage();
+        trackSignInFailure(action, failureMessage);
+    }
+
+    public void trackSignInFailure(String action, Status status) {
+        String failureMessage = GoogleSignInStatusCodes.getStatusCodeString(status.getStatusCode());
+        trackSignInFailure(action, failureMessage);
+    }
+
+    private void trackSignInFailure(String action, String failureMessage) {
+        Utils.trackCustomEvent(app, SIGN_IN_ERROR_CATEGORY, action, failureMessage);
+        Timber.e("%s: %s", action, failureMessage);
     }
 
     /**
