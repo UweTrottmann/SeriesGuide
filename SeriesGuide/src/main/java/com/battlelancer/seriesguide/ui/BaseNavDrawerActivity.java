@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -79,10 +80,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         @Nullable public final String confirmationText;
         public boolean isSuccessful;
 
-        public ServiceCompletedEvent() {
-            confirmationText = null;
-        }
-
         public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful) {
             this.confirmationText = confirmationText;
             this.isSuccessful = isSuccessful;
@@ -91,14 +88,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
-    private static final int NAV_ITEM_ACCOUNT_ID = 0;
+    private static final int NAV_ITEM_ACCOUNT_CLOUD_ID = -1;
+    private static final int NAV_ITEM_ACCOUNT_TRAKT_ID = -2;
 
     private Handler handler;
     private Toolbar actionBarToolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private TextView textViewHeaderAccountType;
-    private TextView textViewHeaderUser;
+    private TextView textViewHeaderUserCloud;
+    private TextView textViewHeaderUserTrakt;
     private Snackbar snackbarProgress;
 
     @Override
@@ -130,19 +128,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             onShowCloudAccountWarning();
         }
 
-        // update account type and signed in user
+        // update signed-in accounts
         if (HexagonSettings.isEnabled(this)) {
-            // connected to SG Cloud
-            textViewHeaderAccountType.setText(R.string.hexagon);
-            textViewHeaderUser.setText(HexagonSettings.getAccountName(this));
-        } else if (TraktCredentials.get(this).hasCredentials()) {
-            // connected to trakt
-            textViewHeaderAccountType.setText(R.string.trakt);
-            textViewHeaderUser.setText(TraktCredentials.get(this).getUsername());
+            textViewHeaderUserCloud.setText(HexagonSettings.getAccountName(this));
         } else {
-            // connected to nothing
-            textViewHeaderAccountType.setText(R.string.trakt);
-            textViewHeaderUser.setText(R.string.connect_trakt);
+            textViewHeaderUserCloud.setText(R.string.hexagon_signin);
+        }
+        if (TraktCredentials.get(this).hasCredentials()) {
+            textViewHeaderUserTrakt.setText(TraktCredentials.get(this).getUsername());
+        } else {
+            textViewHeaderUserTrakt.setText(R.string.connect_trakt);
         }
 
         // if user is already a supporter, hide unlock action
@@ -172,16 +167,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         // setup nav drawer account header
         View headerView = navigationView.getHeaderView(0);
-        headerView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onNavItemClick(NAV_ITEM_ACCOUNT_ID);
-                    }
-                });
-        textViewHeaderAccountType = (TextView) headerView.findViewById(
-                R.id.textViewDrawerItemAccount);
-        textViewHeaderUser = (TextView) headerView.findViewById(R.id.textViewDrawerItemUsername);
+        ButterKnife.findById(headerView, R.id.containerDrawerAccountCloud).setOnClickListener(
+                accountClickListener);
+        ButterKnife.findById(headerView, R.id.containerDrawerAccountTrakt).setOnClickListener(
+                accountClickListener);
+        textViewHeaderUserCloud = ButterKnife.findById(headerView, R.id.textViewDrawerUserCloud);
+        textViewHeaderUserTrakt = ButterKnife.findById(headerView, R.id.textViewDrawerUserTrakt);
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
@@ -244,14 +235,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         Intent launchIntent = null;
 
         switch (itemId) {
-            case NAV_ITEM_ACCOUNT_ID: {
-                // SG Cloud connection overrides trakt
-                if (HexagonSettings.isEnabled(this)) {
-                    launchIntent = new Intent(this, CloudSetupActivity.class);
-                } else {
-                    launchIntent = new Intent(this, ConnectTraktActivity.class);
-                }
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Account");
+            case NAV_ITEM_ACCOUNT_CLOUD_ID: {
+                launchIntent = new Intent(this, CloudSetupActivity.class);
+                break;
+            }
+            case NAV_ITEM_ACCOUNT_TRAKT_ID: {
+                launchIntent = new Intent(this, ConnectTraktActivity.class);
                 break;
             }
             case R.id.navigation_item_shows:
@@ -422,4 +411,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             snackbarProgress.dismiss();
         }
     }
+
+    private View.OnClickListener accountClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.containerDrawerAccountCloud) {
+                onNavItemClick(NAV_ITEM_ACCOUNT_CLOUD_ID);
+            } else if (v.getId() == R.id.containerDrawerAccountTrakt) {
+                onNavItemClick(NAV_ITEM_ACCOUNT_TRAKT_ID);
+            }
+        }
+    };
 }

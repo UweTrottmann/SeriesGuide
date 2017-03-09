@@ -1,42 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="144dp"
-    android:background="?attr/colorPrimaryDark">
+    android:layout_height="172dp"
+    android:background="?attr/colorPrimaryDark"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/inline_padding">
 
-    <RelativeLayout
-        android:id="@+id/containerDrawerAccount"
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/containerDrawerAccountTrakt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
-        android:paddingTop="@dimen/large_padding"
+        android:paddingTop="@dimen/default_padding"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
-            android:id="@+id/textViewDrawerItemUsername"
+            android:id="@+id/textViewDrawerAccountTrakt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:ellipsize="end"
-            android:paddingBottom="@dimen/inline_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body"
-            tools:text="uwe" />
+            android:maxLines="1"
+            android:text="@string/trakt"
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
 
         <TextView
-            android:id="@+id/textViewDrawerItemAccount"
+            android:id="@+id/textViewDrawerUserTrakt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textViewDrawerItemUsername"
             android:ellipsize="end"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Bold"
-            tools:text="trakt" />
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body"
+            tools:text="@string/connect_trakt" />
 
-    </RelativeLayout>
-</FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerDrawerAccountCloud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/keyline"
+        android:paddingRight="@dimen/keyline"
+        android:paddingTop="@dimen/default_padding"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/textViewDrawerAccountCloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/hexagon"
+            android:textAppearance="@style/TextAppearance.Body.Bold" />
+
+        <TextView
+            android:id="@+id/textViewDrawerUserCloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body"
+            tools:text="@string/hexagon_signin" />
+
+    </LinearLayout>
+
+</LinearLayout>
