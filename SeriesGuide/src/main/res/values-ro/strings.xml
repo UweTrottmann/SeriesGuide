@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Nu se poate șterge contul.</string>
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
   <string name="hexagon_api_queued">Se trimite către SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Pentru a folosi SeriesGuide Cloud, apermite accesul la conturile tale.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trimite pe trakt.</string>

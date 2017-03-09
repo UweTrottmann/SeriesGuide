@@ -253,7 +253,7 @@
   <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다.</string>
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
   <string name="hexagon_api_queued">SeriesGuide 클라우드로 전송합니다.</string>
-  <string name="hexagon_permission_missing">SeriesGuide Cloud를 사용하기위해서 로그인 해주세요.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloud를 사용하기위해서 구글플레이에 로그인해주세요</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>

@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Pro použití SeriesGuide Cloudu povolte přístup k vašim účtům.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>

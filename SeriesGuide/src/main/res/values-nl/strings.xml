@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
   <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
-  <string name="hexagon_permission_missing">Voor het gebruik van Seriesguide Cloud is toegang tot uw account(s) noodzakelijk.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>

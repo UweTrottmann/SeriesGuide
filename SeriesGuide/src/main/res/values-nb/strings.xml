@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Klarte ikke fjerne kontoen.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">For å kunne bruke SeriesGuide Cloud må du gi tilgang til kontoene dine.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>

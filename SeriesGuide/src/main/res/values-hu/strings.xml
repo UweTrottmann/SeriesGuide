@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">A fiók eltávolítása sikertelen.</string>
   <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
   <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
-  <string name="hexagon_permission_missing">A SeriesGuide Cloud használatához engedélyezd a fiókodhoz való hozzáférést.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Elküldés a traktnak.</string>

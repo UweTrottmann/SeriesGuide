@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Не вдалося видалити обліковий запис.</string>
   <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
   <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
-  <string name="hexagon_permission_missing">Щоб використати Хмару SeriesGuide, дозвольте доступ до ваших аккаунтів.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Надсилання до trakt.</string>

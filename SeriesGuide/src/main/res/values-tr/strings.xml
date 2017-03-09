@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
-  <string name="hexagon_permission_missing">SeriesGuide Cloud\'u kullanabilmek için lütfen hesaplarınıza erişim için izin verin.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>

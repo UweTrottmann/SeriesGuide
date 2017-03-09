@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Impossibile rimuovere l\'account.</string>
   <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
   <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Per utilizzare SeriesGuide Cloud, autorizza l\'accesso agli account.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Per utilizzare SeriesGuide Clouds è necessario avere installato Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Invio a trakt.</string>

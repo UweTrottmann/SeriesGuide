@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Неможе да ја избрише корисничката сметка.</string>
   <string name="hexagon_remove_account_confirmation">Отстранување на вашиот профил ќе бидат избришани сите емисии и филмови од SeriesGuide Cloud. Бидете сигурни да го отстраните како и од другите поврзани уреди.</string>
   <string name="hexagon_api_queued">Испраќање во SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">За да користите SeriesGuide Cloud, дозволете пристап до вашата корисничка сметка.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">За да го користите SeriesGuide Cloud, Google Play Services е потребно.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Испраќање на trakt.</string>

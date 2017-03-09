@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
   <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
-  <string name="hexagon_permission_missing">Чтобы использовать облако SeriesGuide, разрешите доступ к вашим аккаунтам.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Отправка в trakt.</string>

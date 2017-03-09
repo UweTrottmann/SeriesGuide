@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Да би користили SeriesGuide Cloud, дозволите приступ вашим налозима.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Послато на тракт.</string>

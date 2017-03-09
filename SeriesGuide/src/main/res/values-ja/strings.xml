@@ -253,7 +253,7 @@
   <string name="hexagon_remove_account_failure">アカウントを削除できませんでした。</string>
   <string name="hexagon_remove_account_confirmation">アカウントを削除すると、SeriesGuide クラウドからすべての番組や映画が削除されます。他の接続されているデバイスも同様に削除することを確認してください。</string>
   <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
-  <string name="hexagon_permission_missing">SeriesGuide クラウドを使用するために、あなたのアカウントへのアクセスを許可してください。</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">SeriesGuide クラウドを使用するために、Google Play サービスが必要です。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt に送信しています。</string>

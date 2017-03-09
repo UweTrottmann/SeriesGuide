@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Účet sa nedá odstrániť.</string>
   <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
   <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Pre použitie SeriesGuide Cloud, povoľte prístup k účtom.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Pre použitie SeriesGuide Cloud sú potrebné Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>

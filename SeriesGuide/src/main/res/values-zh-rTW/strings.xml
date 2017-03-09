@@ -253,7 +253,7 @@
   <string name="hexagon_remove_account_failure">無法刪除帳戶。</string>
   <string name="hexagon_remove_account_confirmation">移除你的帳戶將會刪除SeriesGuide Cloud上所有節目與電影的紀錄。請確認其他裝置上的資料也一併刪除。</string>
   <string name="hexagon_api_queued">發送至SeriesGuide Cloud。</string>
-  <string name="hexagon_permission_missing">若要使用SeriesGuide Cloud，請允許存取您的帳戶。</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正發送至trakt。</string>

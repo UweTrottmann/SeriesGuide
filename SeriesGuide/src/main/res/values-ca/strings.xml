@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">No s\'ha pogut esborrar el compte.</string>
   <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
   <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>

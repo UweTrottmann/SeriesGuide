@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
   <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>

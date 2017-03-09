@@ -265,7 +265,7 @@
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
   <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">כדי להשתמש ב-SeriesGuide בענן, אפשר גישה לחשבונות שלך.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">שלח ל-Trakt.</string>

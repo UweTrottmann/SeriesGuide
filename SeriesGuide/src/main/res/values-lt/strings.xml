@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Nepavyko pašalinti paskyros.</string>
   <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
   <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Norint naudotis SeriesGuide Cloud, leiskite prieeiga prie savo paskyrų.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Siunčiama į trakt.</string>

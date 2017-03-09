@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">نمی‌توان حساب را برداشت.</string>
   <string name="hexagon_remove_account_confirmation">برداشتن حسابتان تمام نمایش‌ها و فیلم‌ها را از ابروارهٔ سریزگاید حذف می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز برمی‌دارید.</string>
   <string name="hexagon_api_queued">در حال ارسال به ابروارهٔ سریزگاید.</string>
-  <string name="hexagon_permission_missing">برای استفاده از ابروارهٔ سریزگاید، اجازهٔ دسترسی به حسابتان را بدهید.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">برای استفاده از ابروارهٔ سریزگاید، نیاز به خدمات گوگل پلی است.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">در حال فرستادن به ترکت.</string>
