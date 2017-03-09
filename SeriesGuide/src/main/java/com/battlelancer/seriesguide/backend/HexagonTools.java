@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -56,12 +58,14 @@ public class HexagonTools {
     private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
+    private static final long SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static GoogleSignInOptions googleSignInOptions;
 
     private final SgApp app;
     private GoogleApiClient googleApiClient;
     private GoogleAccountCredential credential;
+    private long lastSignInCheck;
     private Shows showsService;
     private Episodes episodesService;
     private Movies moviesService;
@@ -204,48 +208,59 @@ public class HexagonTools {
                     HexagonSettings.AUDIENCE);
         }
         if (checkSignInState) {
-            if (googleApiClient == null) {
-                googleApiClient = new GoogleApiClient.Builder(app)
-                        .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
-                        .build();
-            }
-
-            android.accounts.Account account = null;
-            ConnectionResult connectionResult = googleApiClient.blockingConnect();
-
-            if (connectionResult.isSuccess()) {
-                OptionalPendingResult<GoogleSignInResult> pendingResult
-                        = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-
-                GoogleSignInResult result = pendingResult.await();
-                if (result.isSuccess()) {
-                    GoogleSignInAccount signInAccount = result.getSignInAccount();
-                    if (signInAccount != null) {
-                        Timber.i("Silent sign-in successful.");
-                        account = signInAccount.getAccount();
-                        credential.setSelectedAccount(account);
-                    } else {
-                        Timber.e("Silent sign-in failed: GoogleSignInAccount is null.");
-                    }
-                } else {
-                    Timber.e("Silent sign-in failed: %s",
-                            GoogleSignInStatusCodes.getStatusCodeString(
-                                    result.getStatus().getStatusCode()));
-                }
-
-                googleApiClient.disconnect();
-            } else {
-                Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
-                        connectionResult);
-            }
-
-            boolean shouldFixAccount = account == null;
-            PreferenceManager.getDefaultSharedPreferences(app).edit()
-                    .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
-                    .apply();
-
+            checkSignInState();
         }
         return credential;
+    }
+
+    private void checkSignInState() {
+        if (credential.getSelectedAccount() != null && !isTimeForSignInStateCheck()) {
+            Timber.d("Did just check sign-in state, skip.");
+        }
+        lastSignInCheck = SystemClock.elapsedRealtime();
+
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(app)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
+                    .build();
+        }
+
+        android.accounts.Account account = null;
+        ConnectionResult connectionResult = googleApiClient.blockingConnect();
+
+        if (connectionResult.isSuccess()) {
+            OptionalPendingResult<GoogleSignInResult> pendingResult
+                    = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+
+            GoogleSignInResult result = pendingResult.await();
+            if (result.isSuccess()) {
+                GoogleSignInAccount signInAccount = result.getSignInAccount();
+                if (signInAccount != null) {
+                    Timber.i("Silent sign-in successful.");
+                    account = signInAccount.getAccount();
+                    credential.setSelectedAccount(account);
+                } else {
+                    Timber.e("Silent sign-in failed: GoogleSignInAccount is null.");
+                }
+            } else {
+                Timber.e("Silent sign-in failed: %s", GoogleSignInStatusCodes.getStatusCodeString(
+                        result.getStatus().getStatusCode()));
+            }
+
+            googleApiClient.disconnect();
+        } else {
+            Timber.e("Silent sign-in failed: no GoogleApiClient connection %s",
+                    connectionResult);
+        }
+
+        boolean shouldFixAccount = account == null;
+        PreferenceManager.getDefaultSharedPreferences(app).edit()
+                .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
+                .apply();
+    }
+
+    private boolean isTimeForSignInStateCheck() {
+        return lastSignInCheck + SIGN_IN_CHECK_INTERVAL_MS < SystemClock.elapsedRealtime();
     }
 
     /**
