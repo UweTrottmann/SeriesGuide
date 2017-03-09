@@ -69,9 +69,9 @@
   <string name="refresh">רענון</string>
   <plurals name="replies_plural">
     <item quantity="one">%d תגובה</item>
-    <item quantity="two">%d replies</item>
+    <item quantity="two">%d תגובות</item>
     <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d תגובות</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">מתחילת הסדרה</string>
@@ -201,11 +201,11 @@
   <string name="action_lists_reorder">סדר מחדש רשימות</string>
   <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">גלו עוד</string>
+  <string name="title_popular">פופולרי</string>
+  <string name="title_digital_releases">שיחרור דיגיטלי</string>
+  <string name="title_disc_releases">שיחרור מדיסק</string>
+  <string name="movies_in_theatres">בבתי הקולנוע</string>
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
   <string name="watchlist_add">הוסף לרשימת מעקב</string>
@@ -233,16 +233,16 @@
   <string name="movies_on_watchlist">%s על רשימת המעקב</string>
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
-    <item quantity="one">%d יום</item>
-    <item quantity="two">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">יום %d</item>
+    <item quantity="two">%d ימים</item>
+    <item quantity="many">%d ימים</item>
+    <item quantity="other">%d ימים</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d שעה</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">שעה %d</item>
+    <item quantity="two">%d שעות</item>
+    <item quantity="many">%d שעות</item>
+    <item quantity="other">%d שעות</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d דקה</item>
@@ -497,6 +497,6 @@
   <string name="feedback_question_rate_google">דרג/י אותנו ב- Google Play?</string>
   <string name="feedback_question_rate_amazon">דרג אותו באמזון?</string>
   <string name="feedback_question_feedback">תגיד לי איך לשפר אותו?</string>
-  <string name="feedback_action_ok">כן, בוודאי</string>
+  <string name="feedback_action_ok">יאללה, בסדר</string>
   <string name="feedback_action_nothanks">לא, תודה</string>
 </resources>

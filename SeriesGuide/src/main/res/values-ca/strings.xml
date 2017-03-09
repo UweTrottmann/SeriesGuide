@@ -32,8 +32,8 @@
   <string name="action_display_all">Mostra-ho tot</string>
   <string name="web_search">Cerca web</string>
   <string name="add_to_homescreen">Drecera</string>
-  <string name="action_open">Open</string>
-  <string name="sync_manually">Sync manually</string>
+  <string name="action_open">Obre</string>
+  <string name="sync_manually">Sincronitza manualment</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->

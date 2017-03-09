@@ -198,11 +198,11 @@
   <string name="action_lists_reorder">เรียงรายการใหม่</string>
   <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">สำรวจ</string>
+  <string name="title_popular">ยอดนิยม</string>
+  <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
+  <string name="title_disc_releases">ออกเป็นแผ่น</string>
+  <string name="movies_in_theatres">ในโรง</string>
   <string name="movies_collection">คลังเก็บ</string>
   <string name="movies_watchlist">อยากดู</string>
   <string name="watchlist_add">เพิ่มในรายการที่อยากดู</string>

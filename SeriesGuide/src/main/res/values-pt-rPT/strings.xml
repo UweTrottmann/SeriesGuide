@@ -43,7 +43,7 @@
   <!-- Status messages -->
   <string name="updated">Atualizado para a última versão.</string>
   <string name="norating">n/a</string>
-  <string name="unknown">desconhecido</string>
+  <string name="unknown">Desconhecido</string>
   <string name="offline">Liga-te a uma rede e tenta novamente.</string>
   <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
   <string name="people_empty">Ninguém aqui?! Toca no ecrã para atualizar.</string>
@@ -100,7 +100,7 @@
   <!-- Flagging -->
   <string name="mark_all">Assisti a todos</string>
   <string name="unmark_all">Não assisti a nenhum</string>
-  <string name="mark_untilhere">Assisti a todos os episódios exibidos até hoje</string>
+  <string name="mark_untilhere">Assisti a todos os episódios já exibidos</string>
   <string name="collect_all">Todos adquiridos</string>
   <string name="uncollect_all">Nenhum adquirido</string>
   <string name="action_skip">Avançar</string>
@@ -171,7 +171,7 @@
   <string name="otherepisodes">outros episódios</string>
   <string name="remaining">%s por ver</string>
   <!-- Add show -->
-  <string name="checkin_searchhint">Introduz o título de uma série</string>
+  <string name="checkin_searchhint">Título da série</string>
   <string name="add_empty">Não existe nenhuma série.</string>
   <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
   <string name="action_try_any_language">Tentar em qualquer idioma</string>
@@ -210,7 +210,7 @@
   <string name="watchlist_remove">Remover dos que desejo ver</string>
   <string name="watchlist_added">Adicionado aos que desejo ver</string>
   <string name="watchlist_removed">Removido dos que desejo ver</string>
-  <string name="movies_search_hint">Introduz o título de um filme</string>
+  <string name="movies_search_hint">Título do filme</string>
   <string name="movies_collection_empty">Não adicionaste filmes à tua coleção.</string>
   <string name="movies_watchlist_empty">Não adicionaste filmes à lista dos que desejas ver.</string>
   <string name="trailer">Trailer</string>
@@ -427,7 +427,7 @@
   <string name="pref_vibratesummary">Também vibrará quando surgir uma notificação</string>
   <string name="pref_notifications_treshold">Quando notificar</string>
   <!-- Notification thresholds -->
-  <string name="notification_release_exact">Em directo</string>
+  <string name="notification_release_exact">A transmitir</string>
   <string name="notification_release_earlier_five">5 min. antes</string>
   <string name="notification_release_earlier_ten">10 min. antes</string>
   <string name="notification_release_earlier_hour">1 hora antes</string>
