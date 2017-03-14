@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -36,45 +35,49 @@ import timber.log.Timber;
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     public static class OnShowAddedEvent {
+
         public final boolean successful;
         /** Is -1 if add task was aborted. */
         public final int showTvdbId;
         private final String message;
 
-        public OnShowAddedEvent(int showTvdbId, String message, boolean successful) {
+        private OnShowAddedEvent(int showTvdbId, String message, boolean successful) {
             this.showTvdbId = showTvdbId;
             this.message = message;
             this.successful = successful;
-        }
-
-        /**
-         * Sets the message to null and successful to true to indicate a single show was added.
-         */
-        public OnShowAddedEvent(int showTvdbId) {
-            this(showTvdbId, null, true);
-        }
-
-        /**
-         * Sets successful to false and TVDB id to -1 to indicate the task was aborted.
-         */
-        public OnShowAddedEvent(int showTvdbId, String message) {
-            this(-1, message, false);
-        }
-
-        /**
-         * In case of failure, can just pass the show name and service that failed.
-         */
-        public OnShowAddedEvent(Context context, int showTvdbId, String showName, @StringRes int serviceNameRes) {
-            this(showTvdbId, String.format("%s %s",
-                    context.getString(R.string.add_error, showName),
-                    context.getString(R.string.api_error_generic, context.getString(serviceNameRes))
-            ));
         }
 
         public void handle(Context context) {
             if (message != null) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             }
+        }
+
+        public static OnShowAddedEvent successful(int showTvdbId) {
+            return new OnShowAddedEvent(showTvdbId, null, true);
+        }
+
+        public static OnShowAddedEvent exists(Context context, int showTvdbId, String showTitle) {
+            return new OnShowAddedEvent(showTvdbId,
+                    context.getString(R.string.add_already_exists, showTitle), true);
+        }
+
+        public static OnShowAddedEvent failed(Context context, int showTvdbId, String showTitle) {
+            return new OnShowAddedEvent(showTvdbId,
+                    context.getString(R.string.add_error, showTitle),
+                    false);
+        }
+
+        public static OnShowAddedEvent failedDetails(Context context, int showTvdbId,
+                String showTitle, String details) {
+            return new OnShowAddedEvent(showTvdbId,
+                    String.format("%s %s", context.getString(R.string.add_error, showTitle),
+                            details),
+                    false);
+        }
+
+        public static OnShowAddedEvent aborted(String message) {
+            return new OnShowAddedEvent(-1, message, false);
         }
     }
 
@@ -261,43 +264,40 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         switch (values[0]) {
             case PROGRESS_SUCCESS:
                 // do nothing, user will see show added to show list
-                event = new OnShowAddedEvent(currentShowTvdbId);
+                event = OnShowAddedEvent.successful(currentShowTvdbId);
                 break;
             case PROGRESS_EXISTS:
-                event = new OnShowAddedEvent(currentShowTvdbId,
-                        app.getString(R.string.add_already_exists, currentShowName), true);
+                event = OnShowAddedEvent.exists(app, currentShowTvdbId, currentShowName);
                 break;
             case PROGRESS_ERROR:
-                event = new OnShowAddedEvent(currentShowTvdbId,
-                        app.getString(R.string.add_error, currentShowName), false);
+                event = OnShowAddedEvent.failed(app, currentShowTvdbId,
+                        app.getString(R.string.add_error, currentShowName));
                 break;
             case PROGRESS_ERROR_TVDB:
-                event = new OnShowAddedEvent(app, currentShowName, R.string.tvdb);
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.api_error_generic, app.getString(R.string.tvdb)));
                 break;
             case PROGRESS_ERROR_TVDB_NOT_EXISTS:
-                event = new OnShowAddedEvent(
-                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
-                                app.getString(R.string.tvdb_error_does_not_exist)
-                        ));
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.tvdb_error_does_not_exist));
                 break;
             case PROGRESS_ERROR_HEXAGON:
-                event = new OnShowAddedEvent(app, currentShowName, R.string.hexagon);
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.api_error_generic, app.getString(R.string.hexagon)));
                 break;
             case PROGRESS_ERROR_DATA:
-                event = new OnShowAddedEvent(
-                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
-                                app.getString(R.string.database_error)
-                        ));
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.database_error));
                 break;
             case RESULT_OFFLINE:
-                event = new OnShowAddedEvent(app.getString(R.string.offline));
+                event = OnShowAddedEvent.aborted(app.getString(R.string.offline));
                 break;
             case RESULT_TRAKT_API_ERROR:
-                event = new OnShowAddedEvent(
-                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
+                event = OnShowAddedEvent.aborted(app.getString(R.string.api_error_generic,
+                        app.getString(R.string.trakt)));
                 break;
             case RESULT_TRAKT_AUTH_ERROR:
-                event = new OnShowAddedEvent(app.getString(R.string.trakt_error_credentials));
+                event = OnShowAddedEvent.aborted(app.getString(R.string.trakt_error_credentials));
                 break;
         }
 
