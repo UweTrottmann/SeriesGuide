@@ -37,6 +37,11 @@ Version 35
 * Tap a tab to scroll to the top in most places.
 * Improved status messages during trakt or Cloud actions.
 
+#### 35.1
+*(2017-03-14)*
+
+* TWEAK Show details why a show can not be added.
+
 #### 35
 *(2017-02-03)*
 

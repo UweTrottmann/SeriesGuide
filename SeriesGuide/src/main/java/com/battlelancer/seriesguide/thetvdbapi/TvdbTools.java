@@ -208,11 +208,11 @@ public class TvdbTools {
             TraktTools traktTools = app.getTraktTools();
             if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
-                throw new TvdbException("addShow: storing trakt watched episodes failed.");
+                throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
             }
             if (!traktTools.storeEpisodeFlags(traktCollection, showTvdbId,
                     TraktTools.Flag.COLLECTED)) {
-                throw new TvdbException("addShow: storing trakt collected episodes failed.");
+                throw new TvdbDataException("addShow: storing trakt collected episodes failed.");
             }
         }
 
@@ -349,7 +349,7 @@ public class TvdbTools {
         try {
             url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new TvdbException("searchShow: " + e.getMessage(), e);
+            throw new TvdbDataException("searchShow: " + e.getMessage(), e);
         }
         // ...and set language filter
         if (language == null) {
@@ -422,7 +422,7 @@ public class TvdbTools {
         try {
             DBUtils.applyInSmallBatches(app, batch);
         } catch (OperationApplicationException e) {
-            throw new TvdbException("getEpisodesAndUpdateDatabase: " + e.getMessage(), e);
+            throw new TvdbDataException("getEpisodesAndUpdateDatabase: " + e.getMessage(), e);
         }
 
         // insert all new episodes in bulk
@@ -442,7 +442,7 @@ public class TvdbTools {
             hexagonShow = ShowTools.Download.showFromHexagon(app, showTvdbId);
         } catch (IOException e) {
             HexagonTools.trackFailedRequest(app, "get show details", e);
-            throw new TvdbException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+            throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
         }
 
         // if no language is given, try to get the language stored on hexagon
@@ -879,7 +879,7 @@ public class TvdbTools {
                 }
             }
         } catch (SAXException | IOException | AssertionError e) {
-            throw new TvdbException(logTag + e.getMessage(), e);
+            throw new TvdbDataException(logTag + e.getMessage(), e);
         }
     }
 
@@ -889,7 +889,8 @@ public class TvdbTools {
             // special case: item does not exist (any longer)
             throw new TvdbException(
                     logTag + response.code() + " " + response.message(),
-                    true, null);
+                    true
+            );
         } else if (!response.isSuccessful()) {
             // other non-2xx response
             throw new TvdbException(

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -34,7 +35,7 @@ import timber.log.Timber;
  */
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
-    public class OnShowAddedEvent {
+    public static class OnShowAddedEvent {
         public final boolean successful;
         /** Is -1 if add task was aborted. */
         public final int showTvdbId;
@@ -56,8 +57,18 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         /**
          * Sets successful to false and TVDB id to -1 to indicate the task was aborted.
          */
-        public OnShowAddedEvent(String message) {
+        public OnShowAddedEvent(int showTvdbId, String message) {
             this(-1, message, false);
+        }
+
+        /**
+         * In case of failure, can just pass the show name and service that failed.
+         */
+        public OnShowAddedEvent(Context context, int showTvdbId, String showName, @StringRes int serviceNameRes) {
+            this(showTvdbId, String.format("%s %s",
+                    context.getString(R.string.add_error, showName),
+                    context.getString(R.string.api_error_generic, context.getString(serviceNameRes))
+            ));
         }
 
         public void handle(Context context) {
@@ -70,9 +81,13 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private static final int PROGRESS_EXISTS = 0;
     private static final int PROGRESS_SUCCESS = 1;
     private static final int PROGRESS_ERROR = 2;
-    private static final int RESULT_OFFLINE = 3;
-    private static final int RESULT_TRAKT_API_ERROR = 4;
-    private static final int RESULT_TRAKT_AUTH_ERROR = 5;
+    private static final int PROGRESS_ERROR_TVDB = 3;
+    private static final int PROGRESS_ERROR_TVDB_NOT_EXISTS = 4;
+    private static final int PROGRESS_ERROR_HEXAGON = 5;
+    private static final int PROGRESS_ERROR_DATA = 6;
+    private static final int RESULT_OFFLINE = 7;
+    private static final int RESULT_TRAKT_API_ERROR = 8;
+    private static final int RESULT_TRAKT_AUTH_ERROR = 9;
 
     private final SgApp app;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
@@ -189,10 +204,22 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             } catch (TvdbException e) {
                 // prevent a hexagon merge from failing if a show can not be added
                 // because it does not exist (any longer)
-                if (!(isMergingShows && e.getItemDoesNotExist())) {
+                if (!(isMergingShows && e.itemDoesNotExist())) {
                     failedMergingShows = true;
                 }
-                result = PROGRESS_ERROR;
+                if (e.service() == TvdbException.Service.TVDB) {
+                    if (e.itemDoesNotExist()) {
+                        result = PROGRESS_ERROR_TVDB_NOT_EXISTS;
+                    } else {
+                        result = PROGRESS_ERROR_TVDB;
+                    }
+                } else if (e.service() == TvdbException.Service.HEXAGON) {
+                    result = PROGRESS_ERROR_HEXAGON;
+                } else if (e.service() == TvdbException.Service.DATA) {
+                    result = PROGRESS_ERROR_DATA;
+                } else {
+                    result = PROGRESS_ERROR;
+                }
                 Timber.e(e, "Adding show failed");
             }
 
@@ -243,6 +270,24 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             case PROGRESS_ERROR:
                 event = new OnShowAddedEvent(currentShowTvdbId,
                         app.getString(R.string.add_error, currentShowName), false);
+                break;
+            case PROGRESS_ERROR_TVDB:
+                event = new OnShowAddedEvent(app, currentShowName, R.string.tvdb);
+                break;
+            case PROGRESS_ERROR_TVDB_NOT_EXISTS:
+                event = new OnShowAddedEvent(
+                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
+                                app.getString(R.string.tvdb_error_does_not_exist)
+                        ));
+                break;
+            case PROGRESS_ERROR_HEXAGON:
+                event = new OnShowAddedEvent(app, currentShowName, R.string.hexagon);
+                break;
+            case PROGRESS_ERROR_DATA:
+                event = new OnShowAddedEvent(
+                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
+                                app.getString(R.string.database_error)
+                        ));
                 break;
             case RESULT_OFFLINE:
                 event = new OnShowAddedEvent(app.getString(R.string.offline));

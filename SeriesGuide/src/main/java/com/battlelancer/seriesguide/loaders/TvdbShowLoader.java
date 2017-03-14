@@ -47,7 +47,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");
             result.show = null;
-            if (e.getItemDoesNotExist()) {
+            if (e.itemDoesNotExist()) {
                 result.doesNotExist = true;
             }
         }
