@@ -9,6 +9,11 @@ Version 36
 ----------
 *(in development)*
 
+#### 36-beta3
+*(2017-03-14)*
+
+* TWEAK Show details why a show can not be added.
+
 #### 36-beta2
 *(2017-03-09)*
 
