@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -156,7 +156,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     String posterPath = upcomingEpisodes.getString(
-                            CalendarAdapter.Query.SHOW_POSTER);
+                            CalendarAdapter.Query.SHOW_POSTER_PATH);
                     maybeSetPoster(item, posterPath);
 
                     views.addView(R.id.LinearLayoutWidget, item);
@@ -188,7 +188,7 @@ public class AppWidget extends AppWidgetProvider {
         private void maybeSetPoster(RemoteViews item, String posterPath) {
             try {
                 Bitmap poster = ServiceUtils.loadWithPicasso(this,
-                        TvdbTools.buildPosterUrl(posterPath))
+                        TvdbImageTools.smallSizeUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                         .get();

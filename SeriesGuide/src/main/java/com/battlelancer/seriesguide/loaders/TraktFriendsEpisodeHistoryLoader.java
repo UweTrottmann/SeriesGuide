@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -95,16 +95,14 @@ public class TraktFriendsEpisodeHistoryLoader
             }
 
             // look for a TVDB poster
+            String posterUrl;
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
-            String poster = null;
             if (showTvdbId != null && localShows != null) {
-                // prefer poster of already added show
-                poster = localShows.get(showTvdbId);
-                if (TextUtils.isEmpty(poster)) {
-                    // fall back to first uploaded poster
-                    poster = TvdbTools.buildFallbackPosterPath(showTvdbId);
-                }
-                poster = TvdbTools.buildPosterUrl(poster);
+                // prefer poster of already added show, fall back to first uploaded poster
+                posterUrl = TvdbImageTools.smallSizeOrFirstUrl(localShows.get(showTvdbId),
+                        showTvdbId);
+            } else {
+                posterUrl = null;
             }
 
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
@@ -124,7 +122,7 @@ public class TraktFriendsEpisodeHistoryLoader
                             entry.watched_at.getMillis(),
                             entry.show.title,
                             episodeString,
-                            poster
+                            posterUrl
                     )
                     .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb, showTvdbId)
                     .friend(friend.user.username, avatar, entry.action);

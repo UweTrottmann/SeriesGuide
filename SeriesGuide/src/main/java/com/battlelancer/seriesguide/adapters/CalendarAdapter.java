@@ -19,11 +19,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -134,8 +134,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
 
         // set poster
-        Utils.loadSmallTvdbShowPoster(context, viewHolder.poster,
-                cursor.getString(Query.SHOW_POSTER));
+        TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,
+                TvdbImageTools.smallSizeUrl(cursor.getString(Query.SHOW_POSTER_PATH)));
     }
 
     @Override
@@ -306,7 +306,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         int SHOW_ID = 7;
         int SHOW_TITLE = 8;
         int SHOW_NETWORK = 9;
-        int SHOW_POSTER = 10;
+        int SHOW_POSTER_PATH = 10;
     }
 
     static class ViewHolder {

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +24,11 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.AddIndicator;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -306,15 +306,10 @@ public abstract class AddFragment extends Fragment {
 
             // only local shows will have a poster path set
             // try to fall back to the first uploaded TVDB poster for all others
-            if (item.poster == null) {
-                // only load posters from caching server that are not from local shows
-                // because those are still loaded from TVDB directly
-                // and we do not want to cache them on device twice
-                Utils.loadTvdbShowPosterFromCache(getContext(), holder.poster,
-                        TvdbTools.buildFallbackPosterPath(item.tvdbid));
-            } else {
-                Utils.loadTvdbShowPoster(getContext(), holder.poster, item.poster);
+            if (TextUtils.isEmpty(item.posterPath)) {
+                item.posterPath = TvdbImageTools.firstPosterPath(item.tvdbid);
             }
+            TvdbImageTools.loadShowPosterResizeCrop(getContext(), holder.poster, item.posterPath);
 
             return convertView;
         }

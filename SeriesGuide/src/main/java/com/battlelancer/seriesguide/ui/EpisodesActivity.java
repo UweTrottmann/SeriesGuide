@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
@@ -199,7 +200,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (isDualPane) {
             // set the pager background
             //noinspection ConstantConditions
-            Utils.loadPosterBackground(this, backgroundImageView, show.poster);
+            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.poster);
 
             // pager setup
             episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),

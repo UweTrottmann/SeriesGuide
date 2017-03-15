@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -332,7 +333,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
         // poster
-        Utils.loadAndFitTvdbShowPoster(getActivity(), poster, show.poster);
+        TvdbImageTools.loadShowPosterFitCrop(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);

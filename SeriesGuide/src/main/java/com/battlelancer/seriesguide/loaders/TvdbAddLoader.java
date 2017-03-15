@@ -18,7 +18,6 @@ import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
 import dagger.Lazy;
@@ -138,19 +137,20 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
     }
 
     private void markLocalShows(@Nullable List<SearchResult> results) {
-        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
-        if (localShows == null || results == null) {
+        SparseArrayCompat<String> existingPosterPaths = ShowTools.getShowTvdbIdsAndPosters(
+                getContext());
+        if (existingPosterPaths == null || results == null) {
             return;
         }
 
         for (SearchResult result : results) {
             result.overview = String.format("(%s) %s", result.language, result.overview);
 
-            if (localShows.indexOfKey(result.tvdbid) >= 0) {
+            if (existingPosterPaths.indexOfKey(result.tvdbid) >= 0) {
                 // is already in local database
                 result.state = SearchResult.STATE_ADDED;
                 // use the poster we fetched for it (or null if there is none)
-                result.poster = localShows.get(result.tvdbid);
+                result.posterPath = existingPosterPaths.get(result.tvdbid);
             }
         }
     }

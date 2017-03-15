@@ -2,14 +2,13 @@ package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
@@ -63,16 +62,12 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
 
             // add items
             if (episodeQuery.moveToFirst()) {
-                String poster = episodeQuery.getString(7);
-                if (!TextUtils.isEmpty(poster)) {
-                    poster = TvdbTools.buildPosterUrl(poster);
-                }
                 NowAdapter.NowItem item = new NowAdapter.NowItem().displayData(
                         timestamp,
                         episodeQuery.getString(6),
                         TextTools.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
                                 episodeQuery.getInt(2), episodeQuery.getString(1)),
-                        poster
+                        TvdbImageTools.smallSizeUrl(episodeQuery.getString(7))
                 ).tvdbIds(episodeTvdbId, episodeQuery.getInt(5)).recentlyWatchedLocal();
                 items.add(item);
             }
