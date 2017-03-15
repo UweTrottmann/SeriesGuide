@@ -21,7 +21,7 @@ public class SearchResult implements Parcelable {
 
     public String overview;
 
-    public String poster;
+    public String posterPath;
 
     public int state;
 
@@ -44,7 +44,7 @@ public class SearchResult implements Parcelable {
         language = in.readString();
         title = in.readString();
         overview = in.readString();
-        poster = in.readString();
+        posterPath = in.readString();
         state = in.readInt();
     }
 
@@ -54,7 +54,7 @@ public class SearchResult implements Parcelable {
         copy.language = this.language;
         copy.title = this.title;
         copy.overview = this.overview;
-        copy.poster = this.poster;
+        copy.posterPath = this.posterPath;
         copy.state = this.state;
         return copy;
     }
@@ -70,7 +70,7 @@ public class SearchResult implements Parcelable {
         dest.writeString(language);
         dest.writeString(title);
         dest.writeString(overview);
-        dest.writeString(poster);
+        dest.writeString(posterPath);
         dest.writeInt(state);
     }
 }

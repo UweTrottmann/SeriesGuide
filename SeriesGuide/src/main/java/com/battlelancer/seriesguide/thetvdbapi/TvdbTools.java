@@ -75,10 +75,6 @@ import timber.log.Timber;
  */
 public class TvdbTools {
 
-    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
-
-    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
-
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
     private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
@@ -111,31 +107,6 @@ public class TvdbTools {
     public TvdbTools(SgApp app) {
         this.app = app;
         app.getServicesComponent().inject(this);
-    }
-
-    /**
-     * Builds a full url for a TVDb show poster using the given image path.
-     */
-    public static String buildPosterUrl(String imagePath) {
-        return TVDB_MIRROR_BANNERS_CACHE + imagePath;
-    }
-
-    /**
-     * Builds a fall-back path for a TVDb show poster using the TVDB id, equals the first image
-     * uploaded.
-     */
-    public static String buildFallbackPosterPath(int showTvdbId) {
-        return "posters/" + showTvdbId + "-1.jpg";
-    }
-
-    /**
-     * Builds a full url for a TVDb screenshot (episode still) using the given image path.
-     *
-     * <p> May also be used with posters, but a much larger version than {@link
-     * #buildPosterUrl(String)} will be downloaded as a result.
-     */
-    public static String buildScreenshotUrl(String imagePath) {
-        return TVDB_MIRROR_BANNERS + imagePath;
     }
 
     /**

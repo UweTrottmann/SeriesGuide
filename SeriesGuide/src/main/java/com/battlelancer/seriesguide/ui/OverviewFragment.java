@@ -51,7 +51,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -870,7 +870,7 @@ public class OverviewFragment extends Fragment implements
             imageEpisode.setImageResource(R.drawable.ic_image_missing);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(imageEpisode,
                             new Callback() {
@@ -936,7 +936,7 @@ public class OverviewFragment extends Fragment implements
         favorited.setTag(isFavorited);
 
         // poster background
-        Utils.loadPosterBackground(getActivity(), imageBackground,
+        TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
                 show.getString(ShowQuery.SHOW_POSTER));
 
         // next release day and time

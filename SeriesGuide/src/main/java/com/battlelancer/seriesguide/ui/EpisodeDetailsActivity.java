@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.loaders.SeasonEpisodesLoader;
 import com.battlelancer.seriesguide.loaders.SeasonsLoader;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -207,7 +208,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         showTitle = basicInfo.showTitle;
 
         // set show poster as background
-        Utils.loadPosterBackground(this, imageViewBackground, basicInfo.showPoster);
+        TvdbImageTools.loadShowPosterAlpha(this, imageViewBackground, basicInfo.showPoster);
 
         // set up season switcher
         spinnerAdapter = new SeasonSpinnerAdapter(this, basicInfo.seasonsOfShow);

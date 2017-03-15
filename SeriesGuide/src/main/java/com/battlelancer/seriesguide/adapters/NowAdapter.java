@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -159,7 +160,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public String title;
         public String description;
         public String network;
-        public String poster;
+        public String tvdbPosterUrl;
         public String username;
         public String avatar;
         public String action;
@@ -202,11 +203,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public NowItem displayData(long timestamp, String title, String description,
-                String poster) {
+                String tvdbPosterUrl) {
             this.timestamp = timestamp;
             this.title = title;
             this.description = description;
-            this.poster = poster;
+            this.tvdbPosterUrl = tvdbPosterUrl;
             return this;
         }
 
@@ -297,7 +298,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.info.setText(releaseInfo);
 
             // is a TVDb or no poster
-            Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, item.poster);
+            TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
 
             // set unique transition names
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -312,7 +313,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.avatar.setVisibility(View.GONE);
 
                 // a TVDb or no poster
-                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
             } else {
                 // friend history entry
                 holder.username.setVisibility(View.VISIBLE);
@@ -321,7 +322,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.username.setText(item.username);
 
                 // a TVDb or no poster
-                Utils.loadSmallPoster(getContext(), holder.poster, item.poster);
+                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
                 // trakt avatar
                 ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
             }

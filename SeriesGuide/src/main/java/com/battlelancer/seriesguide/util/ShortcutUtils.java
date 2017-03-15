@@ -12,7 +12,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -53,19 +53,21 @@ public final class ShortcutUtils {
             @Override
             protected Intent doInBackground(Void... unused) {
                 // Try to get the show poster
-                Bitmap posterBitmap;
+                Bitmap posterBitmap = null;
 
                 try {
-                    final String posterUrl = TvdbTools.buildPosterUrl(posterPath);
-                    posterBitmap = Picasso.with(context)
-                            .load(posterUrl)
-                            .centerCrop()
-                            .memoryPolicy(MemoryPolicy.NO_STORE)
-                            .networkPolicy(NetworkPolicy.NO_STORE)
-                            .resizeDimen(R.dimen.show_poster_width_default,
-                                    R.dimen.show_poster_height_default)
-                            .transform(new RoundedCornerTransformation(posterUrl, 10f))
-                            .get();
+                    final String posterUrl = TvdbImageTools.smallSizeUrl(posterPath);
+                    if (posterUrl != null) {
+                        posterBitmap = Picasso.with(context)
+                                .load(posterUrl)
+                                .centerCrop()
+                                .memoryPolicy(MemoryPolicy.NO_STORE)
+                                .networkPolicy(NetworkPolicy.NO_STORE)
+                                .resizeDimen(R.dimen.show_poster_width_default,
+                                        R.dimen.show_poster_height_default)
+                                .transform(new RoundedCornerTransformation(posterUrl, 10f))
+                                .get();
+                    }
                 } catch (IOException e) {
                     Timber.e(e, "Could not load show poster for shortcut %s", posterPath);
                     posterBitmap = null;

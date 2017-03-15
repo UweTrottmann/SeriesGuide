@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -118,7 +118,7 @@ public class ShowFragment extends Fragment {
     private Cursor showCursor;
     private TraktRatingsTask traktTask;
     private String showTitle;
-    private String showPoster;
+    private String posterPath;
     private int selectedLanguageIndex;
 
     @Override
@@ -303,7 +303,7 @@ public class ShowFragment extends Fragment {
 
         // title
         showTitle = showCursor.getString(ShowQuery.TITLE);
-        showPoster = showCursor.getString(ShowQuery.POSTER);
+        posterPath = showCursor.getString(ShowQuery.POSTER);
 
         // status
         ShowTools.setStatusAndColor(mTextViewStatus, showCursor.getInt(ShowQuery.STATUS));
@@ -436,28 +436,28 @@ public class ShowFragment extends Fragment {
         });
 
         // poster, full screen poster button
-        if (TextUtils.isEmpty(showPoster)) {
+        if (TextUtils.isEmpty(posterPath)) {
             // have no poster
             posterContainer.setClickable(false);
             posterContainer.setFocusable(false);
         } else {
             // poster and fullscreen button
-            Utils.loadPoster(getActivity(), posterView, showPoster);
+            TvdbImageTools.loadShowPoster(getActivity(), posterView, posterPath);
             posterContainer.setFocusable(true);
             posterContainer.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
                     intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                            TvdbTools.buildPosterUrl(showPoster));
+                            TvdbImageTools.smallSizeUrl(posterPath));
                     intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                            TvdbTools.buildScreenshotUrl(showPoster));
+                            TvdbImageTools.fullSizeUrl(posterPath));
                     Utils.startActivityWithAnimation(getActivity(), intent, v);
                 }
             });
 
             // poster background
-            Utils.loadPosterBackground(getActivity(), posterBackgroundView, showPoster);
+            TvdbImageTools.loadShowPosterAlpha(getActivity(), posterBackgroundView, posterPath);
         }
 
         loadTraktRatings();
@@ -568,7 +568,7 @@ public class ShowFragment extends Fragment {
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getContext(), showTitle, showPoster, getShowTvdbId());
+        ShortcutUtils.createShortcut(getContext(), showTitle, posterPath, getShowTvdbId());
 
         // drop to home screen
         startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(

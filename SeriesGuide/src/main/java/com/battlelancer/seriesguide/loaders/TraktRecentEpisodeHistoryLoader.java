@@ -5,13 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.util.SparseArrayCompat;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -120,16 +119,14 @@ public class TraktRecentEpisodeHistoryLoader
             }
 
             // look for a TVDB poster
+            String posterUrl;
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
-            String poster = null;
             if (showTvdbId != null && localShows != null) {
-                // prefer poster of already added show
-                poster = localShows.get(showTvdbId);
-                if (TextUtils.isEmpty(poster)) {
-                    // fall back to first uploaded poster
-                    poster = TvdbTools.buildFallbackPosterPath(showTvdbId);
-                }
-                poster = TvdbTools.buildPosterUrl(poster);
+                // prefer poster of already added show, fall back to first uploaded poster
+                posterUrl = TvdbImageTools.smallSizeOrFirstUrl(localShows.get(showTvdbId),
+                        showTvdbId);
+            } else {
+                posterUrl = null;
             }
 
             String description = (entry.episode.season == null || entry.episode.number == null)
@@ -141,7 +138,7 @@ public class TraktRecentEpisodeHistoryLoader
                             entry.watched_at.getMillis(),
                             entry.show.title,
                             description,
-                            poster
+                            posterUrl
                     )
                     .tvdbIds(entry.episode.ids.tvdb, showTvdbId)
                     .recentlyWatchedTrakt(entry.action);

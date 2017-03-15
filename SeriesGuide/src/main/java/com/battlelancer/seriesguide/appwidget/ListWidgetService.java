@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -219,7 +219,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show poster
             String posterPath = dataCursor.getString(isShowQuery
-                    ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER);
+                    ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER_PATH);
             maybeSetPoster(rv, posterPath);
 
             // Return the remote views object.
@@ -230,7 +230,7 @@ public class ListWidgetService extends RemoteViewsService {
             Bitmap poster;
             try {
                 poster = ServiceUtils.loadWithPicasso(context,
-                        TvdbTools.buildPosterUrl(posterPath))
+                        TvdbImageTools.smallSizeUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
                         .get();
