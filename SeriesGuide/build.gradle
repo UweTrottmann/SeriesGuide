@@ -161,6 +161,12 @@ dependencies {
         exclude group: 'org.json', module: 'json'
         exclude group: 'joda-time', module: 'joda-time'
     }
+    // https://github.com/palaima/DebugDrawer
+    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
     // http://greenrobot.org/eventbus/changelog/
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'

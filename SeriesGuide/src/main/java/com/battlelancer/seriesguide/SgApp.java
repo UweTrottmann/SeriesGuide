@@ -26,6 +26,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import io.fabric.sdk.android.Fabric;
+import io.palaima.debugdrawer.timber.data.LumberYard;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
@@ -108,6 +109,10 @@ public class SgApp extends Application {
 
     private void initializeLogging() {
         if (BuildConfig.DEBUG) {
+            // debug drawer logging
+            LumberYard lumberYard = LumberYard.getInstance(this);
+            lumberYard.cleanUp();
+            Timber.plant(lumberYard.tree());
             // detailed logcat logging
             Timber.plant(new Timber.DebugTree());
         } else {

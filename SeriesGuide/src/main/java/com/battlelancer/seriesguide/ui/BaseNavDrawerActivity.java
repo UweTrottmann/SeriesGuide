@@ -32,6 +32,11 @@ import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.util.Utils;
+import io.palaima.debugdrawer.actions.ActionsModule;
+import io.palaima.debugdrawer.actions.ButtonAction;
+import io.palaima.debugdrawer.commons.DeviceModule;
+import io.palaima.debugdrawer.timber.TimberModule;
+import io.palaima.debugdrawer.view.DebugView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -193,32 +198,49 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         if (BuildConfig.DEBUG) {
             // add debug drawer
-            View debugViews = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
+            View debugLayout = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
                     true);
-            debugViews.findViewById(R.id.debug_buttonClearTraktRefreshToken).setOnClickListener(
-                    new View.OnClickListener() {
+            DebugView debugView = ButterKnife.findById(debugLayout, R.id.debugView);
+
+            ButtonAction buttonClearTraktRefreshToken = new ButtonAction(
+                    "Clear trakt refresh token",
+                    new ButtonAction.Listener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick() {
                             TraktOAuthSettings.storeRefreshData(getApplicationContext(),
                                     "", 3600 /* 1 hour */);
                         }
                     });
-            debugViews.findViewById(R.id.debug_buttonInvalidateTraktAccessToken).setOnClickListener(
-                    new View.OnClickListener() {
+
+            ButtonAction buttonInvalidateTraktAccessToken = new ButtonAction(
+                    "Invalidate trakt access token",
+                    new ButtonAction.Listener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick() {
                             TraktCredentials.get(getApplicationContext())
                                     .storeAccessToken("invalid-token");
                         }
                     });
-            debugViews.findViewById(R.id.debug_buttoInvalidateTraktRefreshToken).setOnClickListener(
-                    new View.OnClickListener() {
+
+            ButtonAction buttonInvalidateTraktRefreshToken = new ButtonAction(
+                    "Invalidate trakt refresh token",
+                    new ButtonAction.Listener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick() {
                             TraktOAuthSettings.storeRefreshData(getApplicationContext(),
                                     "invalid-token", 3600 /* 1 hour */);
                         }
                     });
+
+            debugView.modules(
+                    new ActionsModule(
+                            buttonClearTraktRefreshToken,
+                            buttonInvalidateTraktAccessToken,
+                            buttonInvalidateTraktRefreshToken
+                    ),
+                    new TimberModule(),
+                    new DeviceModule(this)
+            );
         }
     }
 
