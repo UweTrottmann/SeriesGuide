@@ -699,6 +699,10 @@ public class SeriesGuideContract {
             return CONTENT_URI.buildUpon().appendPath(PATH_OFSEASON).appendPath(seasonId).build();
         }
 
+        public static Uri buildEpisodesOfSeasonUri(int seasonTvdbId) {
+            return buildEpisodesOfSeasonUri(String.valueOf(seasonTvdbId));
+        }
+
         public static Uri buildEpisodesOfSeasonWithShowUri(String seasonId) {
             return CONTENT_URI.buildUpon().appendPath(PATH_OFSEASON).appendPath(PATH_WITHSHOW)
                     .appendPath(seasonId).build();
