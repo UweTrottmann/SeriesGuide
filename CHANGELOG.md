@@ -9,22 +9,28 @@ Version 36
 ----------
 *(in development)*
 
+#### 36-beta4
+*(2017-03-17)*
+
+* 🔧 Load all show and episode images via the SeriesGuide image cache server to reduce load on TheTVDB.
+* 📝 Latest translations from crowdin.️️ Season episode count strings need to be re-translated.
+
 #### 36-beta3
 *(2017-03-14)*
 
-* TWEAK Show details why a show can not be added.
+* 🔧 TWEAK Show details why a show can not be added.
 
 #### 36-beta2
 *(2017-03-09)*
 
-* NOTE Users are forced to sign-in again to SeriesGuide Cloud.
-* TWEAK Use Google Sign-In for SeriesGuide Cloud, does not require Contacts permission.
-* TWEAK Show Cloud and trakt account in navigation drawer.
-* TWEAK Show message if signed out of SeriesGuide Cloud.
-* TWEAK Reduce auto-sync trigger interval when opening app to 5 minutes.
-* FIX Sometimes selected season is wrong when returning to episode details view. Thanks @cbeyls!
-* FIX Do not allow multi-line list names.
-* NOTE Latest translations from crowdin.
+* 📝 NOTE Users are forced to sign-in again to SeriesGuide Cloud.
+* 🔧 TWEAK Use Google Sign-In for SeriesGuide Cloud, does not require Contacts permission.
+* 🔧 TWEAK Show Cloud and trakt account in navigation drawer.
+* 🔧 TWEAK Show message if signed out of SeriesGuide Cloud.
+* 🔧 TWEAK Reduce auto-sync trigger interval when opening app to 5 minutes.
+* 🔨 FIX Sometimes selected season is wrong when returning to episode details view. Thanks @cbeyls!
+* 🔨 FIX Do not allow multi-line list names.
+* 📝 NOTE Latest translations from crowdin.
 
 #### 36-beta1
 *(2017-02-18)*
