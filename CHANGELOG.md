@@ -14,6 +14,7 @@ Version 36
 
 * 🔧 Load all show and episode images via the SeriesGuide image cache server to reduce load on TheTVDB.
 * 📝 Latest translations from crowdin.️️ Season episode count strings need to be re-translated.
+* 📝 Added Indonesian translation.
 
 #### 36-beta3
 *(2017-03-14)*
