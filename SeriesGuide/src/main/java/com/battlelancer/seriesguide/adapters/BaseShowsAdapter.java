@@ -57,9 +57,10 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
-    void setRemainingCount(Context context, TextView textView, int unwatched) {
+    void setRemainingCount(TextView textView, int unwatched) {
         if (unwatched > 0) {
-            textView.setText(context.getString(R.string.remaining, String.valueOf(unwatched)));
+            textView.setText(textView.getResources()
+                    .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));
         } else {
             textView.setText(null);
         }

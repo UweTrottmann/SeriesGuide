@@ -183,13 +183,23 @@
     <string name="update_inprogress">An update is in progress, try again later.</string>
 
     <!-- Seasons -->
-    <string name="season_watchcount">episodes not watched</string>
     <string name="season_allwatched">All episodes watched</string>
-    <string name="season_onenotwatched">episode not watched</string>
-    <string name="season_unaired">unaired</string>
-    <string name="oneotherepisode">other episode</string>
-    <string name="otherepisodes">other episodes</string>
-    <string name="remaining">%s remaining</string>
+    <plurals name="not_watched_episodes_plural">
+        <item quantity="one">%d episode not watched</item>
+        <item quantity="other">%d episodes not watched</item>
+    </plurals>
+    <plurals name="other_episodes_plural">
+        <item quantity="one">%d other episode</item>
+        <item quantity="other">%d other episodes</item>
+    </plurals>
+    <plurals name="not_released_episodes_plural">
+        <item quantity="one">%d to be released</item>
+        <item quantity="other">%d to be released</item>
+    </plurals>
+    <plurals name="remaining_episodes_plural">
+        <item quantity="one">%d remaining</item>
+        <item quantity="other">%d remaining</item>
+    </plurals>
 
     <!-- Add show -->
     <string name="checkin_searchhint">Type a show name</string>
