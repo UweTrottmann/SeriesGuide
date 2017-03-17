@@ -162,13 +162,19 @@
   <string name="update_no_connection">更新するために、インターネットに接続してください。</string>
   <string name="update_inprogress">更新を実行中です。後でもう一度やり直してください。</string>
   <!-- Seasons -->
-  <string name="season_watchcount">エピソードを未視聴</string>
   <string name="season_allwatched">すべてのエピソードを視聴済</string>
-  <string name="season_onenotwatched">エピソードを未視聴</string>
-  <string name="season_unaired">未放映</string>
-  <string name="oneotherepisode">他のエピソード</string>
-  <string name="otherepisodes">他のエピソード</string>
-  <string name="remaining">残り %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">番組名を入力</string>
   <string name="add_empty">番組はありません。</string>

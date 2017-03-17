@@ -163,13 +163,23 @@
   <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">Επεισόδια που δεν έχουν παρακολουθηθεί</string>
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
-  <string name="season_onenotwatched">Επεισόδιο που δεν έχει παρακολουθηθεί</string>
-  <string name="season_unaired">Δεν έχει προβληθεί</string>
-  <string name="oneotherepisode">άλλο επεισόδιο</string>
-  <string name="otherepisodes">άλλα επεισόδια</string>
-  <string name="remaining">%s απομένει</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>

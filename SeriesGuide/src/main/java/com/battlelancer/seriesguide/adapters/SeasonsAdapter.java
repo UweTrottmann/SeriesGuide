@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
 import android.support.v4.widget.CursorAdapter;
@@ -53,11 +54,11 @@ public class SeasonsAdapter extends CursorAdapter {
                 SeasonTools.getSeasonString(mContext, seasonNumber));
 
         // progress
-        final int count = mCursor.getInt(SeasonsQuery.WATCHCOUNT);
-        final int unairedCount = mCursor.getInt(SeasonsQuery.UNAIREDCOUNT);
-        final int noairdateCount = mCursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
+        final int watchable = mCursor.getInt(SeasonsQuery.WATCHCOUNT);
+        final int notReleased = mCursor.getInt(SeasonsQuery.UNAIREDCOUNT);
+        final int noReleaseDate = mCursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
         final int max = mCursor.getInt(SeasonsQuery.TOTALCOUNT);
-        final int progress = max - count - unairedCount - noairdateCount;
+        final int progress = max - watchable - notReleased - noReleaseDate;
         viewHolder.seasonProgressBar.setMax(max);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             viewHolder.seasonProgressBar.setProgress(progress, true);
@@ -71,41 +72,35 @@ public class SeasonsAdapter extends CursorAdapter {
                 .setVisibility(SeasonTools.hasSkippedTag(mCursor.getString(SeasonsQuery.TAGS))
                         ? View.VISIBLE : View.GONE);
 
-        // episodes text
-        String episodeCount = "";
-        // add strings for unwatched episodes
-        if (count == 0) {
-            // make sure there are no unchecked episodes that happen
-            // to have no airdate
-            if (noairdateCount == 0) {
-                episodeCount += mContext.getString(R.string.season_allwatched);
-            } else {
-                episodeCount += noairdateCount + " ";
-                if (noairdateCount == 1) {
-                    episodeCount += mContext.getString(R.string.oneotherepisode);
-                } else {
-                    episodeCount += mContext.getString(R.string.otherepisodes);
-                }
-            }
-
+        // season episodes text
+        StringBuilder countText = new StringBuilder();
+        Resources res = mContext.getResources();
+        if (watchable > 0) {
+            // some released episodes left to watch
+            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
+                    R.style.TextAppearance_Caption_Narrow);
+            countText.append(res.getQuantityString(R.plurals.not_watched_episodes_plural, watchable,
+                    watchable));
+        } else {
             TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
                     R.style.TextAppearance_Caption_Narrow_Dim);
-        } else if (count == 1) {
-            episodeCount += count + " " + mContext.getString(R.string.season_onenotwatched);
-            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
-                    R.style.TextAppearance_Caption_Narrow);
-        } else {
-            episodeCount += count + " " + mContext.getString(R.string.season_watchcount);
-            TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
-                    R.style.TextAppearance_Caption_Narrow);
+            if (noReleaseDate > 0) {
+                // there are watchable episodes that have no release date
+                countText.append(res.getQuantityString(R.plurals.other_episodes_plural,
+                        noReleaseDate, noReleaseDate));
+            } else {
+                // all watched
+                countText.append(mContext.getString(R.string.season_allwatched));
+            }
         }
-
-        // add strings for unaired episodes
-        if (unairedCount > 0) {
-            episodeCount += " (+" + unairedCount + " "
-                    + mContext.getString(R.string.season_unaired) + ")";
+        if (notReleased > 0) {
+            // there are not yet released episodes
+            countText.append(" (+");
+            countText.append(res.getQuantityString(R.plurals.not_released_episodes_plural,
+                    notReleased, notReleased));
+            countText.append(")");
         }
-        viewHolder.seasonWatchCount.setText(episodeCount);
+        viewHolder.seasonWatchCount.setText(countText);
 
         // context menu
         final int seasonTvdbId = mCursor.getInt(SeasonsQuery._ID);

@@ -76,7 +76,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 }
 
                 // remaining count
-                setRemainingCount(context, viewHolder.remainingCount,
+                setRemainingCount(viewHolder.remainingCount,
                         cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
                 break;
             case 2:

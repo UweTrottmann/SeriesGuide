@@ -165,13 +165,31 @@
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">פרקים שלא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
-  <string name="season_onenotwatched">פרק שטרם נצפה</string>
-  <string name="season_unaired">טרם שודרו</string>
-  <string name="oneotherepisode">פרק אחר</string>
-  <string name="otherepisodes">פרקים אחרים</string>
-  <string name="remaining">נותרו %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="two">%d episodes not watched</item>
+    <item quantity="many">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="two">%d other episodes</item>
+    <item quantity="many">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="two">%d to be released</item>
+    <item quantity="many">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="two">%d remaining</item>
+    <item quantity="many">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="add_empty">אין סדרות כאן.</string>

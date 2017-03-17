@@ -164,13 +164,27 @@
   <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episoade nevizionate</string>
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
-  <string name="season_onenotwatched">episod nevizionat</string>
-  <string name="season_unaired">nedifuzat</string>
-  <string name="oneotherepisode">alt episod</string>
-  <string name="otherepisodes">alte episoade</string>
-  <string name="remaining">%s rămase</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>

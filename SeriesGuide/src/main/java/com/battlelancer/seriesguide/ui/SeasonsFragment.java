@@ -465,13 +465,13 @@ public class SeasonsFragment extends ListFragment implements
             protected void onPostExecute(int[] result) {
                 if (isAdded()) {
                     if (mTextViewRemaining != null) {
-                        if (result[0] == -1) {
-                            mTextViewRemaining.setText(getString(R.string.remaining,
-                                    getString(R.string.norating)));
-                        } else if (result[0] == 0) {
+                        if (result[0] <= 0) {
                             mTextViewRemaining.setText(null);
                         } else {
-                            mTextViewRemaining.setText(getString(R.string.remaining, result[0]));
+                            int unwatched = result[0];
+                            mTextViewRemaining.setText(mTextViewRemaining.getResources()
+                                    .getQuantityString(R.plurals.remaining_episodes_plural,
+                                            unwatched, unwatched));
                         }
                     }
                     if (mButtonWatchedAll != null) {

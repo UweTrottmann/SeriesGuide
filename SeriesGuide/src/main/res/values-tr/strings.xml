@@ -163,13 +163,23 @@
   <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
-  <string name="season_onenotwatched">bölüm izlenmedi</string>
-  <string name="season_unaired">yayınlanmadı</string>
-  <string name="oneotherepisode">diğer bölüm</string>
-  <string name="otherepisodes">diğer bölümler</string>
-  <string name="remaining">Kalan: %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="add_empty">Burada dizi yok.</string>

@@ -46,7 +46,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
             viewHolder.episodeTime.setText(fieldValue);
         }
 
-        setRemainingCount(context, viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
+        setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
 
         // network, day and time
         viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,

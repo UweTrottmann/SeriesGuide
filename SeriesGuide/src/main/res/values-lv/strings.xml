@@ -164,13 +164,27 @@
   <string name="update_no_connection">Lai atjaunināt, pieslēdzieties internetam.</string>
   <string name="update_inprogress">Notiek atjaunināšana, mēģiniet vēlreiz vēlāk.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">Nenoskatītās epizodes</string>
   <string name="season_allwatched">Visas epizodes noskatītas</string>
-  <string name="season_onenotwatched">Epizode nav noskatīta</string>
-  <string name="season_unaired">Nav raidīta</string>
-  <string name="oneotherepisode">cita epizode</string>
-  <string name="otherepisodes">citas epizodes</string>
-  <string name="remaining">palicis %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="zero">%d episodes not watched</item>
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="zero">%d other episodes</item>
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="zero">%d to be released</item>
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="zero">%d remaining</item>
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ierakstiet seriāla nosaukumu</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
