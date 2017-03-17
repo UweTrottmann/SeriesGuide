@@ -162,13 +162,19 @@
   <string name="update_no_connection">ในการอัปเดต เชื่อมต่ออินเทอร์เน็ต</string>
   <string name="update_inprogress">การอัปเดตอยู่ระหว่างดำเนินการ ลองอีกครั้งภายหลัง</string>
   <!-- Seasons -->
-  <string name="season_watchcount">ตอนยังไม่ได้ดู</string>
   <string name="season_allwatched">ดูครบทุกตอนแล้ว</string>
-  <string name="season_onenotwatched">ตอนยังไม่ได้ดู</string>
-  <string name="season_unaired">ยังไม่ออกอากาศ</string>
-  <string name="oneotherepisode">ตอนอื่นๆ</string>
-  <string name="otherepisodes">ตอนอื่นๆ</string>
-  <string name="remaining">เหลืออีก %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
   <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>

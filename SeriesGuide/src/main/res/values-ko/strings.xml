@@ -162,13 +162,19 @@
   <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">시청하지 않았음</string>
   <string name="season_allwatched">모든 에피소드 시청완료</string>
-  <string name="season_onenotwatched">시청하지 않음</string>
-  <string name="season_unaired">방영예정</string>
-  <string name="oneotherepisode">다른 에피소드</string>
-  <string name="otherepisodes">다른 에피소드</string>
-  <string name="remaining">%s회 남음</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>

@@ -163,13 +163,23 @@
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés van folyamatban, próbáld meg később.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
-  <string name="season_onenotwatched">nem látott epizód</string>
-  <string name="season_unaired">nem vetített</string>
-  <string name="oneotherepisode">egyéb epizód</string>
-  <string name="otherepisodes">egyéb epizód</string>
-  <string name="remaining">%s maradt</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Írj be egy sorozat címet</string>
   <string name="add_empty">Nincsenek sorozatok.</string>

@@ -162,13 +162,19 @@
   <string name="update_no_connection">如需更新，請連接網路</string>
   <string name="update_inprogress">更新正在進行中，請稍後再試</string>
   <!-- Seasons -->
-  <string name="season_watchcount">尚未觀看集數</string>
   <string name="season_allwatched">已觀看所有集數</string>
-  <string name="season_onenotwatched">尚未觀看集數</string>
-  <string name="season_unaired">尚未播出</string>
-  <string name="oneotherepisode">其餘集數</string>
-  <string name="otherepisodes">其餘集數</string>
-  <string name="remaining">剩餘%s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">輸入節目名稱</string>
   <string name="add_empty">無此節目</string>

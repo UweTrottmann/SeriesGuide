@@ -163,13 +163,23 @@
   <string name="update_no_connection">За да ажурираш конектирај се на интернет.</string>
   <string name="update_inprogress">Ажурирањето е во прогрес, пробајте подоцна.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">негледани епизоди</string>
   <string name="season_allwatched">Сите епизоди гледани</string>
-  <string name="season_onenotwatched">епизода негледана</string>
-  <string name="season_unaired">неемитована</string>
-  <string name="oneotherepisode">друга епизода</string>
-  <string name="otherepisodes">друга епизода</string>
-  <string name="remaining">%s преостанато</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Внеси име серија</string>
   <string name="add_empty">Овде нема серија.</string>

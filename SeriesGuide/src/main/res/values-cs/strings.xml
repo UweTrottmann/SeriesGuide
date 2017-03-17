@@ -164,13 +164,27 @@
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">epizod ke zhlédnutí</string>
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
-  <string name="season_onenotwatched">epizoda ke zhlédnutí</string>
-  <string name="season_unaired">Neodvysíláno</string>
-  <string name="oneotherepisode">jiná epizoda</string>
-  <string name="otherepisodes">jiné epizody</string>
-  <string name="remaining">Zbývá %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napište název seriálu</string>
   <string name="add_empty">Nejsou zde žádné seriály.</string>

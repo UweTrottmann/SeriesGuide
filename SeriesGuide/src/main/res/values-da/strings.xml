@@ -163,13 +163,23 @@
   <string name="update_no_connection">Forbind til internettet for at opdatere.</string>
   <string name="update_inprogress">En opdatering er allerede i gang. Prøv igen senere.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">ikke sete episoder</string>
   <string name="season_allwatched">Alle episoder set</string>
-  <string name="season_onenotwatched">episode ikke set</string>
-  <string name="season_unaired">ikke sendte</string>
-  <string name="oneotherepisode">anden episode</string>
-  <string name="otherepisodes">andre episoder</string>
-  <string name="remaining">%s tilbage</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Angiv et serienavn</string>
   <string name="add_empty">Der er ingen serier her.</string>

@@ -163,13 +163,23 @@
   <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">Niet bekeken afleveringen</string>
   <string name="season_allwatched">Alle afleveringen bekeken</string>
-  <string name="season_onenotwatched">Onbekeken aflevering</string>
-  <string name="season_unaired">Niet uitgezonden</string>
-  <string name="oneotherepisode">andere aflevering</string>
-  <string name="otherepisodes">andere afleveringen</string>
-  <string name="remaining">%s resterende</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="add_empty">Er zijn geen series hier.</string>

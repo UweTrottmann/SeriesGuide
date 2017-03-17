@@ -163,13 +163,23 @@
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">Folgen nicht angesehen</string>
   <string name="season_allwatched">Alle Folgen angesehen</string>
-  <string name="season_onenotwatched">Folge nicht angesehen</string>
-  <string name="season_unaired">zukünftige</string>
-  <string name="oneotherepisode">andere Folge</string>
-  <string name="otherepisodes">andere Folgen</string>
-  <string name="remaining">%s verbleibend</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d Folge nicht angesehen</item>
+    <item quantity="other">%d Folgen nicht angesehen</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d andere Folge</item>
+    <item quantity="other">%d andere Folgen</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d zukünftige</item>
+    <item quantity="other">%d zukünftige</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d verbleibend</item>
+    <item quantity="other">%d verbleibend</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="add_empty">Keine Serien hier.</string>

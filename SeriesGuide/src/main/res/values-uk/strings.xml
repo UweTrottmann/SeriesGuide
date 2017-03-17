@@ -164,13 +164,27 @@
   <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
-  <string name="season_onenotwatched">серія не переглянута</string>
-  <string name="season_unaired">не транслювалось</string>
-  <string name="oneotherepisode">інша серія</string>
-  <string name="otherepisodes">інші серії</string>
-  <string name="remaining">%s залишилось</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>

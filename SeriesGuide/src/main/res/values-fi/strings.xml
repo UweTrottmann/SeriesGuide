@@ -163,13 +163,23 @@
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">katsomatonta jaksoa</string>
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
-  <string name="season_onenotwatched">katsomaton jakso</string>
-  <string name="season_unaired">esittämätöntä</string>
-  <string name="oneotherepisode">muu jakso</string>
-  <string name="otherepisodes">muuta jaksoa</string>
-  <string name="remaining">%s jäljellä</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>

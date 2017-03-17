@@ -163,13 +163,23 @@
   <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
   <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
   <!-- Seasons -->
-  <string name="season_watchcount">episodis no vistos</string>
   <string name="season_allwatched">Tots els episodis vistos</string>
-  <string name="season_onenotwatched">episodis no vistos</string>
-  <string name="season_unaired">sense estrenar</string>
-  <string name="oneotherepisode">un altre episodi</string>
-  <string name="otherepisodes">uns altres episodis</string>
-  <string name="remaining">%s restants</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>

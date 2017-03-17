@@ -164,13 +164,27 @@
   <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">nieobejrzanych</string>
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
-  <string name="season_onenotwatched">odcinek nie obejrzany</string>
-  <string name="season_unaired">niewyemitowanych</string>
-  <string name="oneotherepisode">inny odcinek</string>
-  <string name="otherepisodes">innych odcinków</string>
-  <string name="remaining">Pozostało: %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="add_empty">Brak seriali.</string>

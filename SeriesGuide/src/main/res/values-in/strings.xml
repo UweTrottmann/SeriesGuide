@@ -162,13 +162,19 @@
   <string name="update_no_connection">Untuk memperbarui sambungkan ke internet.</string>
   <string name="update_inprogress">Sebuah perbaruan sedang berlangsung, coba lagi nanti.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episode belum ditonton</string>
   <string name="season_allwatched">Semua episode ditonton</string>
-  <string name="season_onenotwatched">episode belum ditonton</string>
-  <string name="season_unaired">belum disiarkan</string>
-  <string name="oneotherepisode">episeode lainnya</string>
-  <string name="otherepisodes">episeode lainnya</string>
-  <string name="remaining">%s tersisa</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ketik nama acara</string>
   <string name="add_empty">Tidak ada acara disini.</string>

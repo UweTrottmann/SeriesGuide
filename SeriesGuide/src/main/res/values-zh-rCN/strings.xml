@@ -162,13 +162,19 @@
   <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
   <!-- Seasons -->
-  <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
-  <string name="season_onenotwatched">剧集尚未观看</string>
-  <string name="season_unaired">未播出</string>
-  <string name="oneotherepisode">其它剧集</string>
-  <string name="otherepisodes">其它剧集</string>
-  <string name="remaining">%s 剩余</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">输入电视节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>

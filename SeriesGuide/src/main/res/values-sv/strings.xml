@@ -164,13 +164,23 @@
   <string name="update_no_connection">För att uppdatera anslut till internet.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">avsnitt ej sedda</string>
   <string name="season_allwatched">Alla avsnitt sedda</string>
-  <string name="season_onenotwatched">avsnitt ej sett</string>
-  <string name="season_unaired">osända</string>
-  <string name="oneotherepisode">annat avsnitt</string>
-  <string name="otherepisodes">andra avsnitt</string>
-  <string name="remaining">%s återstår</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="add_empty">Det finns inga serier här.</string>
