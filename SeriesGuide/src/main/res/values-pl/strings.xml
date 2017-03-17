@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">Usuwanie konta nie powiodło się.</string>
   <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
   <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Wylogowano z SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Aby użyć chmury SeriesGuide Cloud wymagane jest Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Wysyłanie do trakt.</string>

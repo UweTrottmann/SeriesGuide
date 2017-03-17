@@ -242,7 +242,7 @@
   <string name="hexagon_warning">การทดลอง!</string>
   <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
   <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
-  <string name="hexagon_warning_trakt">ขณะที่เชื่อมต่อ SeriesGuide Cloud อยู่, ดารซิงค์กับ trakt จะถูกปิดใช้งาน</string>
+  <string name="hexagon_warning_trakt">ขณะที่เชื่อมต่อ SeriesGuide Cloud อยู่, การซิงค์กับ trakt จะถูกปิดใช้งาน</string>
   <string name="hexagon_signin">เข้าสู่ระบบ</string>
   <string name="hexagon_signed_in">คุณเชื่อมต่อกับ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_signout">ออกจากระบบ</string>
@@ -253,7 +253,7 @@
   <string name="hexagon_remove_account_failure">ไม่สามารถลบบัญชี</string>
   <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
   <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>

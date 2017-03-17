@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando ao trakt.</string>
@@ -326,7 +326,7 @@
   <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_exactdates">Mostrar datas exatas</string>
-  <string name="pref_exactdates_summary">\"12 de Outubro\" em vez de \"em 3 dias\"</string>
+  <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"em 3 dias\"</string>
   <string name="pref_nospoilers">Evitar spoilers</string>
   <string name="pref_nospoilers_summary">Oculte detalhes até que o episódio seja assistido</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>

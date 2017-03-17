@@ -246,10 +246,10 @@
   <string name="hexagon_warning">Experimental</string>
   <string name="hexagon_description">Conecta-te ao servidor para criar uma cópia de segurança e sincronizar as tuas séries e filmes.</string>
   <string name="hexagon_warning_lists">As listas não estão incluídas.</string>
-  <string name="hexagon_warning_trakt">Enquanto estiver conectado ao SeriesGuide Cloud, a sincronização do trakt estará desactivada.</string>
-  <string name="hexagon_signin">Entrar</string>
-  <string name="hexagon_signed_in">Estás ligado à SeriesGuide Cloud.</string>
-  <string name="hexagon_signout">Sair</string>
+  <string name="hexagon_warning_trakt">Enquanto estiveres conectado ao SeriesGuide Cloud, a sincronização do trakt estará desativada.</string>
+  <string name="hexagon_signin">Conectar</string>
+  <string name="hexagon_signed_in">Estás conectado à SeriesGuide Cloud.</string>
+  <string name="hexagon_signout">Desconectar</string>
   <string name="hexagon_setup_incomplete">A configuração do SeriesGuide Cloud não foi concluída.</string>
   <string name="hexagon_setup_fail_auth">Falha na verificação da conta do Google.</string>
   <string name="hexagon_remove_account">Remover conta</string>
@@ -257,8 +257,8 @@
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Ao remover a tua conta todas as séries e filmes serão removidos do servidor SeriesGuide Cloud. Certifica-te que removes a tua conta também noutros dispositivos.</string>
   <string name="hexagon_api_queued">A enviar para o SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-  <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário ter a app Serviços do Google Play instalada.</string>
+  <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
+  <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário ter a aplicação Serviços do Google Play instalada.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">A submeter ao trakt.</string>
   <string name="trakt_seen">%s visto.</string>
@@ -275,7 +275,7 @@
   <string name="trakt_error_not_exists">Não está (ainda) disponível no trakt. Tenta mais tarde.</string>
   <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o trakt.</string>
   <!-- Connect trakt -->
-  <string name="trakt_account">conta trakt</string>
+  <string name="trakt_account">Conta trakt</string>
   <string name="trakt_connect_instructions">No próximo ecrã faz login no trakt ou cria uma nova conta. Depois dá permissões de acesso à tua conta trakt.</string>
   <string name="connect_trakt">Conectar ao trakt</string>
   <string name="trakt_reconnect">Conectar SeriesGuide ao trakt</string>
@@ -335,9 +335,9 @@
   <string name="pref_updatewifionly">Atualizar imagens apenas por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Não utilizar dados móveis ou quaisquer serviços de tráfego limitado, de forma a reduzir qualquer custo com as operadoras</string>
   <!-- About screen -->
-  <string name="licence_tvdb">Esta app faz uso de informação e imagens do TheTVDB licenciado sob a CC BY-NC 4.0.</string>
+  <string name="licence_tvdb">Esta aplicação faz uso de informação e imagens do TheTVDB licenciado sob a CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não foi aprovado ou certificado pelo TMDb.</string>
-  <string name="licence_trakt">Esta app utiliza informação e imagens do trakt.</string>
+  <string name="licence_trakt">Esta aplicação utiliza informação e imagens do trakt.</string>
   <string name="about_open_source">O SeriesGuide foi desenvolvido em software open source.</string>
   <string name="licences_and_credits">Licenças e créditos</string>
   <!-- Sort -->
@@ -471,13 +471,13 @@
   <string name="action_extensions_search">Obter mais extensões</string>
   <string name="action_extension_remove">Remover</string>
   <string name="extension_amazon">Pesquisa na Amazon</string>
-  <string name="description_extension_amazon">Pesquisa na Amazon do seu país</string>
+  <string name="description_extension_amazon">Pesquisa na Amazon do teu país</string>
   <string name="pref_amazon_domain">Site da Amazon</string>
   <string name="extension_google_play">Pesquisa na Google Play</string>
   <string name="description_extension_google_play">Pesquisa na Google Play Store</string>
   <string name="extension_youtube">Pesquisa no YouTube</string>
   <string name="description_extension_youtube">Pesquisa no YouTube por alguns vídeos</string>
-  <string name="description_extension_web_search">Pesquisa por websites e imagens</string>
+  <string name="description_extension_web_search">Pesquisa por sites e imagens</string>
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->

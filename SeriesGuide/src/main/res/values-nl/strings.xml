@@ -9,7 +9,7 @@
   <string name="search">Zoeken</string>
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
-  <string name="help_and_feedback">Hulp &amp; Terugkoppeling</string>
+  <string name="help_and_feedback">Help &amp; Feedback</string>
   <string name="drawer_open">Navigatie menu openen</string>
   <!-- Media items -->
   <string name="show">Serie</string>
@@ -66,7 +66,7 @@
   <string name="action_post">Verzenden</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
-  <string name="refresh">Ververs</string>
+  <string name="refresh">Vernieuwen</string>
   <plurals name="replies_plural">
     <item quantity="one">%d reactie</item>
     <item quantity="other">%d reacties</item>
@@ -144,7 +144,7 @@
   <string name="now_tab">Nu</string>
   <string name="recently_watched">Laatst gekeken</string>
   <string name="released_today">Vandaag uitgebracht</string>
-  <string name="friends_recently">Je Trakt contacten</string>
+  <string name="friends_recently">Uw Trakt-vrienden</string>
   <string name="now_empty">Nog niets, kijk eerst wat series!</string>
   <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
   <!-- History -->
@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
   <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
   <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Afgemeld van SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
@@ -471,17 +471,17 @@
   <string name="action_extensions_search">Vind meer extensies</string>
   <string name="action_extension_remove">Verwijderen</string>
   <string name="extension_amazon">Zoeken op Amazon</string>
-  <string name="description_extension_amazon">Zoek uw lokale Amazon site</string>
-  <string name="pref_amazon_domain">Amazon site</string>
+  <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>
+  <string name="pref_amazon_domain">Amazon-site</string>
   <string name="extension_google_play">Zoek op Google Play</string>
   <string name="description_extension_google_play">Zoek op de Google Play Store</string>
-  <string name="extension_youtube">Zoek op YouTube</string>
-  <string name="description_extension_youtube">Zoek op YouTube voor video\'s</string>
+  <string name="extension_youtube">Zoeken op YouTube</string>
+  <string name="description_extension_youtube">Zoek op YouTube naar video\'s</string>
   <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
   <!-- People -->
   <string name="person_biography">Biografie</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Bevalt SeriesGuide?</string>
+  <string name="feedback_question_enjoy">Bevalt SeriesGuide u?</string>
   <string name="feedback_action_yes">Ja!</string>
   <string name="feedback_action_notreally">Niet echt</string>
   <string name="feedback_question_rate_google">Beoordeel op Google Play?</string>

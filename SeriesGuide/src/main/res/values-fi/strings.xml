@@ -257,7 +257,7 @@
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Kirjauduttu ulos seriesGuide Cloudista.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
