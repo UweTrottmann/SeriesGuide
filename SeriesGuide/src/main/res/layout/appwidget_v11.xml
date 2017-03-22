@@ -29,6 +29,7 @@
             android:paddingTop="@dimen/widget_padding_inline"
             tools:listitem="@layout/appwidget_row" />
 
+        <!-- Explicitly set text color as API 25 defaults to black?! -->
         <TextView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
@@ -36,6 +37,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/no_nextepisode"
+            android:textColor="@color/white"
             tools:ignore="UnusedAttribute" />
     </LinearLayout>
 
