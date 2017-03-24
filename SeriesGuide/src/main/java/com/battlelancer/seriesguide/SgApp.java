@@ -141,8 +141,8 @@ public class SgApp extends Application {
     }
 
     private void initializePicasso() {
-        Picasso picasso = new Picasso.Builder(getApplicationContext())
-                .downloader(new OkHttp3Downloader(getApplicationContext()))
+        Picasso picasso = new Picasso.Builder(this)
+                .downloader(new OkHttp3Downloader(this))
                 .build();
         try {
             Picasso.setSingletonInstance(picasso);
