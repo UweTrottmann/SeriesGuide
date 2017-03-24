@@ -163,9 +163,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                        currentLanguageIndex);
-                dialog.show(getFragmentManager(), "dialog-language");
+                // guard against onClick called after fragment is up navigated (multi-touch)
+                // onSaveInstanceState might already be called
+                if (isResumed()) {
+                    DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                            currentLanguageIndex);
+                    dialog.show(getFragmentManager(), "dialog-language");
+                }
             }
         });
 
@@ -339,8 +343,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private void populateMovieViews() {
-        /**
-         * Get everything from TMDb. Also get additional rating from trakt.
+        /*
+          Get everything from TMDb. Also get additional rating from trakt.
          */
         final Ratings traktRatings = movieDetails.traktRatings();
         final Movie tmdbMovie = movieDetails.tmdbMovie();
