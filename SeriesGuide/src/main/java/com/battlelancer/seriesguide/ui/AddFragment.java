@@ -158,8 +158,12 @@ public abstract class AddFragment extends Fragment {
                     startActivity(new Intent(getContext(), OverviewActivity.class).putExtra(
                             OverviewActivity.EXTRA_INT_SHOW_TVDBID, show.tvdbid));
                 } else {
-                    // display more details in a dialog
-                    AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+                    // guard against onClick called after fragment is paged away (multi-touch)
+                    // onSaveInstanceState might already be called
+                    if (isResumed()) {
+                        // display more details in a dialog
+                        AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+                    }
                 }
             }
         }
