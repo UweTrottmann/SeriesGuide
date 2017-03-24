@@ -164,16 +164,16 @@
   <!-- Seasons -->
   <string name="season_allwatched">すべてのエピソードを視聴済</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d のエピソードを見ていません</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d の他のエピソード</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d リリースされます</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">%d 残り</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">番組名を入力</string>

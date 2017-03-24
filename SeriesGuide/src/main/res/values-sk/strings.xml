@@ -166,24 +166,24 @@
   <!-- Seasons -->
   <string name="season_allwatched">Všetky epizódy videné</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d nevidená epizóda</item>
+    <item quantity="few">%d nevidené epizódy</item>
+    <item quantity="other">%d nevidených epizód</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d ďalšia epizóda</item>
+    <item quantity="few">%d ďalšie epizódy</item>
+    <item quantity="other">%d ďalších epizód</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d neodvysielaná</item>
+    <item quantity="few">%d neodvysielané</item>
+    <item quantity="other">%d neodvysielaných</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">Zostáva %d</item>
+    <item quantity="few">Zostávajú %d</item>
+    <item quantity="other">Zostáva %d</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napíšte názov seriálu</string>

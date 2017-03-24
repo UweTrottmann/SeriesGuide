@@ -209,11 +209,11 @@
   <string name="action_lists_reorder">Omarrangér lister</string>
   <string name="error_name_already_exists">En liste med dette navn findes allerede</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Opdag</string>
+  <string name="title_popular">Populær</string>
+  <string name="title_digital_releases">Digitale udgivelser</string>
+  <string name="title_disc_releases">Disk udgivelser</string>
+  <string name="movies_in_theatres">I biograferne</string>
   <string name="movies_collection">Samling</string>
   <string name="movies_watchlist">Overvågningsliste</string>
   <string name="watchlist_add">Føj til overvågningsliste</string>
@@ -267,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Kunne ikke fjerne konto.</string>
   <string name="hexagon_remove_account_confirmation">Hvis du sletter din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Google Play-tjenester kræves for at benytte SeriesGuide Cloud.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>

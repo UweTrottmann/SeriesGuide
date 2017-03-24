@@ -164,16 +164,16 @@
   <!-- Seasons -->
   <string name="season_allwatched">已观看全部剧集</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d 集未观看</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d 集其他剧集</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d 集待播出</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">剩余 %d 集</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">输入电视节目名称</string>

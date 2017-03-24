@@ -169,9 +169,9 @@
   <!-- Seasons -->
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="zero">%d episodes not watched</item>
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="two">%d episodes not watched</item>
+    <item quantity="zero">%d حلقة واحدة غير مشاهدة</item>
+    <item quantity="one">%d حلقتين غير مشاهدة</item>
+    <item quantity="two">%d حلقات غير مشاهدة</item>
     <item quantity="few">%d episodes not watched</item>
     <item quantity="many">%d episodes not watched</item>
     <item quantity="other">%d episodes not watched</item>

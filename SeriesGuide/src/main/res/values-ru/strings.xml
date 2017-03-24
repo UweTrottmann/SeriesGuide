@@ -168,12 +168,12 @@
   <plurals name="not_watched_episodes_plural">
     <item quantity="one">%d episode not watched</item>
     <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d серий не просмотрено</item>
   </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d других серий</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d to be released</item>
@@ -275,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
   <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Отправка в trakt.</string>

@@ -165,20 +165,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d jakso katsottavana</item>
+    <item quantity="other">%d jaksoa katsottavana</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d muuta jaksoa</item>
+    <item quantity="other">%d muuta jaksoa</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d lähetettävänä</item>
+    <item quantity="other">%d lähetettävänä</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d jäljellä</item>
+    <item quantity="other">%d jäljellä</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ohjelman nimi</string>

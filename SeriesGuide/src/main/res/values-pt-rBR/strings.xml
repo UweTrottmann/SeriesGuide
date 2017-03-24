@@ -165,20 +165,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Todos os episódios assistidos</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d episódio não assistido</item>
+    <item quantity="other">%d episódios não assistidos</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d outro episódio</item>
+    <item quantity="other">%d outros episódios</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d a ser lançado</item>
+    <item quantity="other">%d a serem lançados</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d restante</item>
+    <item quantity="other">%d restantes</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Digite o nome da série</string>
