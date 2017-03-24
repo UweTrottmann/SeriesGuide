@@ -9,6 +9,14 @@ Version 36
 ----------
 *(in development)*
 
+#### 36-beta5
+*(2017-03-24)*
+
+* 🔨 Changing widget settings not applied right away for some Google launchers.
+* 🔨 Widget empty text has wrong font color on Android 7.0 devices.
+* 🔨 Some rare crashes due to multi-touch use.
+* 📝 Latest translations from crowdin.️️
+
 #### 36-beta4
 *(2017-03-17)*
 
