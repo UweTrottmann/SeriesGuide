@@ -18,6 +18,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
 
+        multiDexEnabled true
+
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -54,8 +56,12 @@ android {
         exclude 'LICENSE.txt'
     }
 
+    flavorDimensions "minSdk", "version"
+
     productFlavors {
         free {
+            dimension "version"
+
             applicationId "com.battlelancer.seriesguide"
             versionCode project.androidVersionCode
             versionName project.androidVersionName
@@ -66,6 +72,8 @@ android {
             ]
         }
         amazon {
+            dimension "version"
+
             applicationId "com.uwetrottmann.seriesguide.amzn"
             versionCode project.androidVersionCode
             versionName project.androidVersionName
@@ -76,6 +84,24 @@ android {
 //            versionCode project.androidVersionCode
 //            versionName project.androidVersionName + "-preview"
 //        }
+        // use a minSdk 21 flavor dimension so we can disable ProGuard for debug builds
+        min15 {
+            dimension "minSdk"
+            minSdkVersion 15
+        }
+        min21 {
+            dimension "minSdk"
+            minSdkVersion 21
+        }
+    }
+
+    // ignore min21 flavor dimension for release builds, debug only
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+
+        if (names.contains("min21") && variant.buildType.name == "release") {
+            variant.ignore = true
+        }
     }
 
     signingConfigs {
