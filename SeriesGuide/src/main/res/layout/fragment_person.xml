@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.percent.PercentFrameLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/containerPersonHeadshot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -38,15 +38,20 @@
                 <!--suppress AndroidDomInspection -->
                 <ImageView
                     android:id="@+id/imageViewPersonHeadshot"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     android:src="@color/protection_dark"
                     android:transitionName="@string/transitionNamePersonImage"
-                    app:layout_aspectRatio="100%"
-                    app:layout_widthPercent="100%"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:targetApi="lollipop" />
 
-            </android.support.percent.PercentFrameLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textViewPersonName"
