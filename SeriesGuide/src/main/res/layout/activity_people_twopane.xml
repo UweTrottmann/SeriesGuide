@@ -9,7 +9,7 @@
         layout="@layout/toolbar" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guidelinePeople"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -25,7 +25,7 @@
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/guideline"
+        app:layout_constraintRight_toLeftOf="@+id/guidelinePeople"
         app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
     <FrameLayout
@@ -37,7 +37,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelinePeople"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
@@ -46,7 +46,7 @@
         android:layout_width="4dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelinePeople"
         app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
 </android.support.constraint.ConstraintLayout>
