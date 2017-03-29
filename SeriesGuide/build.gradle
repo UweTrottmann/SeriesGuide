@@ -18,7 +18,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
 
-        multiDexEnabled true
+        // only enable if debug builds exceed 64K method limit
+        multiDexEnabled false
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
