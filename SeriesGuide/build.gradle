@@ -184,6 +184,7 @@ dependencies {
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:percent:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
