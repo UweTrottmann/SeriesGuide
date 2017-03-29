@@ -393,9 +393,5 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
 
     private void setUriOrPlaceholder(TextView textView, Uri uri) {
         textView.setText(uri == null ? getString(R.string.no_file_selected) : uri.toString());
-        //noinspection deprecation
-        textView.setTextAppearance(textView.getContext(),
-                uri == null ? R.style.TextAppearance_Body_Highlight_Red
-                        : R.style.TextAppearance_Body_Dim);
     }
 }
