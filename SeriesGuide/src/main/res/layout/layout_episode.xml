@@ -34,7 +34,7 @@
         android:textIsSelectable="true"
         tools:text="OCT 15, 2013 (TUE) ABSOLUTE 52" />
 
-    <android.support.percent.PercentFrameLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/containerEpisodeImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,15 +46,19 @@
         android:foreground="?attr/selectableItemBackground"
         tools:ignore="Overdraw">
 
-        <!--suppress AndroidDomInspection -->
         <ImageView
             android:id="@+id/imageViewEpisode"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:contentDescription="@string/description_image"
             android:scaleType="centerCrop"
-            app:layout_aspectRatio="178%"
-            app:layout_widthPercent="100%" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.percent.PercentFrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <include layout="@layout/buttons_episode" />
 

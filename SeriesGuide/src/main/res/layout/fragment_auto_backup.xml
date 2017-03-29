@@ -70,6 +70,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@+id/textViewAutoBackupShows"
                         android:layout_toLeftOf="@id/buttonAutoBackupShowsExportFile"
+                        android:textAppearance="@style/TextAppearance.Body.Dim"
                         tools:text="content://some.path.on.storage/sg-shows-export.json" />
 
                     <TextView
@@ -94,9 +95,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-
                         android:layout_below="@id/textViewAutoBackupLists"
                         android:layout_toLeftOf="@id/buttonAutoBackupListsExportFile"
+                        android:textAppearance="@style/TextAppearance.Body.Dim"
                         tools:text="content://some.path.on.storage/sg-lists-export.json" />
 
                     <TextView
@@ -123,6 +124,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/textViewAutoBackupMovies"
                         android:layout_toLeftOf="@id/buttonAutoBackupMoviesExportFile"
+                        android:textAppearance="@style/TextAppearance.Body.Dim"
                         tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
                 </RelativeLayout>

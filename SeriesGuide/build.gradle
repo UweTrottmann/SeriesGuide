@@ -18,6 +18,9 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
 
+        // only enable if debug builds exceed 64K method limit
+        multiDexEnabled false
+
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -182,8 +185,8 @@ dependencies {
     compile "com.android.support:customtabs:$supportVersion"
     compile "com.android.support:design:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
-    compile "com.android.support:percent:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases

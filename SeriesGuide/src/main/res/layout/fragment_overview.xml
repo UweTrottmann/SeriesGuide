@@ -117,20 +117,24 @@
                         app:cardPreventCornerOverlap="false">
 
                         <!-- Fake card fade: ensure that bottom of image and text box match -->
-                        <android.support.percent.PercentFrameLayout
+                        <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp">
 
-                            <!--suppress AndroidDomInspection -->
                             <ImageView
                                 android:id="@+id/imageViewOverviewEpisode"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
                                 android:contentDescription="@null"
                                 android:scaleType="centerCrop"
-                                app:layout_aspectRatio="178%"
-                                app:layout_widthPercent="100%" />
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="w,16:9"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        </android.support.percent.PercentFrameLayout>
+                        </android.support.constraint.ConstraintLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
