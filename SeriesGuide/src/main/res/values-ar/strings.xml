@@ -177,7 +177,7 @@
     <item quantity="other">%d episodes not watched</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="zero">%d other episodes</item>
+    <item quantity="zero">%d الحلقات الأخرى</item>
     <item quantity="one">%d other episode</item>
     <item quantity="two">%d other episodes</item>
     <item quantity="few">%d other episodes</item>
