@@ -129,7 +129,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleServiceActiveEvent(event);
 
-        if (HexagonSettings.shouldValidateAccount(this)) {
+        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning();
         }
 

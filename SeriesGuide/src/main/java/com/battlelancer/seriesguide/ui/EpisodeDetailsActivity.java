@@ -104,7 +104,11 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (episodePagerAdapter != null) {
-            episodeTvdbId = episodePagerAdapter.getItemEpisodeTvdbId(viewPager.getCurrentItem());
+            Integer displayedEpisodeTvdbId = episodePagerAdapter.getItemEpisodeTvdbId(
+                    viewPager.getCurrentItem());
+            if (displayedEpisodeTvdbId != null) {
+                episodeTvdbId = displayedEpisodeTvdbId;
+            }
         }
         outState.putInt(STATE_EPISODE_TVDB_ID, episodeTvdbId);
     }
@@ -349,28 +353,31 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
 
-        private ArrayList<Episode> mEpisodes;
-
-        private Context mContext;
-
-        private final boolean mIsMultiPane;
+        @NonNull private final ArrayList<Episode> episodesList;
+        private final Context context;
+        private final boolean isMultiPane;
 
         public EpisodePagerAdapter(Context context, FragmentManager fm,
-                ArrayList<Episode> episodes, boolean isMultiPane) {
+                @NonNull ArrayList<Episode> episodes, boolean isMultiPane) {
             super(fm);
-            mEpisodes = episodes;
-            mContext = context;
-            mIsMultiPane = isMultiPane;
+            episodesList = episodes;
+            this.context = context;
+            this.isMultiPane = isMultiPane;
         }
 
-        public int getItemEpisodeTvdbId(int position) {
-            return mEpisodes.get(position).episodeId;
+        @Nullable
+        public Integer getItemEpisodeTvdbId(int position) {
+            if (position < episodesList.size()) {
+                return episodesList.get(position).episodeId;
+            } else {
+                return null;
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId,
-                    mIsMultiPane);
+            return EpisodeDetailsFragment.newInstance(episodesList.get(position).episodeId,
+                    isMultiPane);
         }
 
         @Override
@@ -393,25 +400,20 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
         @Override
         public int getCount() {
-            if (mEpisodes != null) {
-                return mEpisodes.size();
-            } else {
-                return 0;
-            }
+            return episodesList.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Episode episode = mEpisodes.get(position);
-            return TextTools.getEpisodeNumber(mContext, episode.seasonNumber,
+            Episode episode = episodesList.get(position);
+            return TextTools.getEpisodeNumber(context, episode.seasonNumber,
                     episode.episodeNumber);
         }
 
-        public void updateEpisodeList(ArrayList<Episode> list) {
-            if (list != null) {
-                mEpisodes = list;
-                notifyDataSetChanged();
-            }
+        public void updateEpisodeList(@NonNull ArrayList<Episode> list) {
+            episodesList.clear();
+            episodesList.addAll(list);
+            notifyDataSetChanged();
         }
     }
 }

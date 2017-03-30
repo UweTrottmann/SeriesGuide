@@ -110,6 +110,8 @@ public class HexagonTools {
 
     /**
      * Creates and returns a new instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
     public synchronized Account buildAccountService() {
@@ -125,6 +127,8 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
     public synchronized Shows getShowsService() {
@@ -143,6 +147,8 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
     public synchronized Episodes getEpisodesService() {
@@ -161,6 +167,8 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
     public synchronized Movies getMoviesService() {
@@ -243,7 +251,7 @@ public class HexagonTools {
                     account = signInAccount.getAccount();
                     credential.setSelectedAccount(account);
                 } else {
-                    trackSignInFailure(ACTION_SILENT_SIGN_IN,  "GoogleSignInAccount is null");
+                    trackSignInFailure(ACTION_SILENT_SIGN_IN, "GoogleSignInAccount is null");
                 }
             } else {
                 trackSignInFailure(ACTION_SILENT_SIGN_IN, result.getStatus());

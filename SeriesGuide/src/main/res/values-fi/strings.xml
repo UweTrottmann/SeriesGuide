@@ -169,7 +169,7 @@
     <item quantity="other">%d jaksoa katsottavana</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d muuta jaksoa</item>
+    <item quantity="one">%d muu jakso</item>
     <item quantity="other">%d muuta jaksoa</item>
   </plurals>
   <plurals name="not_released_episodes_plural">

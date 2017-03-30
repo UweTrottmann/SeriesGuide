@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -151,7 +152,8 @@ public class TvdbTools {
         }
 
         // get show and determine the language to use
-        Show show = getShowDetailsWithHexagon(showTvdbId, language);
+        boolean hexagonEnabled = HexagonSettings.isEnabled(app);
+        Show show = getShowDetailsWithHexagon(showTvdbId, language, hexagonEnabled);
         language = show.language;
 
         // get episodes and store everything to the database
@@ -160,7 +162,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
-        if (HexagonSettings.isEnabled(app)) {
+        if (hexagonEnabled) {
             // ...from Hexagon
             boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {
@@ -405,15 +407,22 @@ public class TvdbTools {
      * stored on Hexagon.
      */
     @NonNull
-    private Show getShowDetailsWithHexagon(int showTvdbId, @Nullable String language)
+    private Show getShowDetailsWithHexagon(int showTvdbId, @Nullable String language,
+            boolean hexagonEnabled)
             throws TvdbException {
         // check for show on hexagon
-        com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
-        try {
-            hexagonShow = ShowTools.Download.showFromHexagon(app, showTvdbId);
-        } catch (IOException e) {
-            HexagonTools.trackFailedRequest(app, "get show details", e);
-            throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+        com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow = null;
+        if (hexagonEnabled) {
+            try {
+                com.uwetrottmann.seriesguide.backend.shows.Shows showsService =
+                        app.getHexagonTools().getShowsService();
+                if (showsService != null) {
+                    hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
+                }
+            } catch (IOException e) {
+                HexagonTools.trackFailedRequest(app, "get show details", e);
+                throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+            }
         }
 
         // if no language is given, try to get the language stored on hexagon
@@ -659,8 +668,8 @@ public class TvdbTools {
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
                 show.tvdb_id);
-        final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(
-                localEpisodeIds); // just copy episodes list, then remove valid ones
+        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
+                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
         final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdb_id);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();

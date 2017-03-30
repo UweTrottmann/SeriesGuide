@@ -173,8 +173,8 @@
     <item quantity="other">%d outros episódios</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d a ser lançado</item>
-    <item quantity="other">%d a serem lançados</item>
+    <item quantity="one">%d a ser exibido</item>
+    <item quantity="other">%d a serem exibidos</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d restante</item>

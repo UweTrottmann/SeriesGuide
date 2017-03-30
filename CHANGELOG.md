@@ -7,7 +7,19 @@ All dates are in the European Central timezone.
 
 Version 36
 ----------
-*(in development)*
+*(2017-03-30)*
+
+* SeriesGuide Cloud switched to Google Sign-In, no longer requires the Contacts permission.
+  But you will have to sign in again.
+* Display progress when adding a show, tapping it once added opens the show directly.
+* Show always both Cloud and trakt account in navigation drawer.
+
+#### 36
+*(2017-03-30)*
+
+* 🔨 Cloud signed out warning displayed after adding show, but was never signed in to Cloud.
+* 🔨 Can not swipe away Cloud signed out warning on Android 4.4 (KitKat) and below.
+* 📝 Latest translations from crowdin.️️
 
 #### 36-beta5
 *(2017-03-24)*
