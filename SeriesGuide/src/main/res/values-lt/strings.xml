@@ -164,13 +164,27 @@
   <string name="update_no_connection">Norėdami atnaujinti prisijungti prie interneto.</string>
   <string name="update_inprogress">Vyksta atnaujinimas, pabandykite dar kartą vėliau.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">serijos nepažiūrėtos</string>
   <string name="season_allwatched">Visos serijos pažiūrėtos</string>
-  <string name="season_onenotwatched">serija nepažiūrėta</string>
-  <string name="season_unaired">neparodyta</string>
-  <string name="oneotherepisode">Kita serija</string>
-  <string name="otherepisodes">Kitos serijos</string>
-  <string name="remaining">liko %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Įveskite pavadinimą</string>
   <string name="add_empty">Nėra serialų.</string>
@@ -261,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Nepavyko pašalinti paskyros.</string>
   <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
   <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Norint naudotis SeriesGuide Cloud, leiskite prieeiga prie savo paskyrų.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Siunčiama į trakt.</string>

@@ -73,7 +73,7 @@ public class ShowSearchFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent i = new Intent(getActivity(), OverviewActivity.class);
-        i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
+        i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
 
         ActivityCompat.startActivity(getActivity(), i,
                 ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Adapter for show search result items.
@@ -39,7 +39,7 @@ public class ShowResultsAdapter extends BaseShowsAdapter {
                 cursor.getString(Query.NETWORK)));
 
         // poster
-        Utils.loadTvdbShowPoster(context, viewHolder.poster, cursor.getString(Query.POSTER));
+        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster, cursor.getString(Query.POSTER));
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));

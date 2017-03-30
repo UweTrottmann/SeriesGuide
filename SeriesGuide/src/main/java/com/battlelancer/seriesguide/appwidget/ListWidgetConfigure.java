@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -78,11 +79,19 @@ public class ListWidgetConfigure extends AppCompatActivity {
     }
 
     private void onUpdateWidget() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = ListWidgetProvider
                 .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
         appWidgetManager.updateAppWidget(mAppWidgetId, views);
-        appWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetId, R.id.list_view);
+        // note: broken for API 25 Google stock launcher, work around by delaying notify.
+        // https://code.google.com/p/android/issues/detail?id=228575
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                appWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetId, R.id.list_view);
+            }
+        };
+        new Handler().postDelayed(runnable, 300);
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

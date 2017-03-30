@@ -8,8 +8,8 @@
   <string name="statistics">آمار</string>
   <string name="search">جستجو</string>
   <string name="preferences">تنظیمات</string>
-  <string name="help">راهنما</string>
-  <string name="help_and_feedback">راهنما و بازخورد</string>
+  <string name="help">راه‌نما</string>
+  <string name="help_and_feedback">راه‌نما و بازخورد</string>
   <string name="drawer_open">باز کردن کشو ی ناوبری</string>
   <!-- Media items -->
   <string name="show">نمایش</string>
@@ -31,38 +31,38 @@
   <string name="save_selection">ذخیرهٔ گزینش</string>
   <string name="action_display_all">نمایش همه</string>
   <string name="web_search">جست‌وجوی وب</string>
-  <string name="add_to_homescreen">میانبر</string>
-  <string name="action_open">باز کردن</string>
-  <string name="sync_manually">همگام سازی دستی</string>
-  <string name="sync_and_update">همگام سازی &amp; و بروزرسانی</string>
-  <string name="sync_and_download_all">همگام سازی &amp; و دانلود همه</string>
+  <string name="add_to_homescreen">میان‌بر</string>
+  <string name="action_open">گشودن</string>
+  <string name="sync_manually">هم‌گام سازی دستی</string>
+  <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
+  <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
   <string name="any_language">هر زبانی</string>
   <!-- Status messages -->
   <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-  <string name="norating">وجود ندارد</string>
+  <string name="norating">ناموجود</string>
   <string name="unknown">نامعلوم</string>
   <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
-  <string name="app_not_available">هیچ برنامه ای برای این کار موجود نیست.</string>
+  <string name="app_not_available">هیچ کاره‌ای برای این کار موجود نیست.</string>
   <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
-  <string name="reinstall_info">برای پشتیبان گیری دوباره تلاش کنید. مجدد نصب کنید.</string>
+  <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
   <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
   <!-- Sharing -->
-  <string name="share">اشتراک گذاری</string>
-  <string name="share_show">نمایش اشتراک گذاری </string>
+  <string name="share">هم‌رسانی</string>
+  <string name="share_show">هم‌رسانی نمایش</string>
   <string name="share_episode">هم‌رسانی قسمت</string>
   <string name="share_movie">هم‌رسانی فیلم</string>
   <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
-  <string name="links">لینک ها</string>
+  <string name="links">پیوندها</string>
   <!-- Comments -->
   <string name="comments">نظرها</string>
   <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
-  <string name="shout_invalid">نظر شما مطابق قوانین نیست!</string>
+  <string name="shout_invalid">نظرتان تابع قوانین نیست!</string>
   <string name="action_post">ارسال</string>
   <string name="isspoiler">هشدار لو رفتن!</string>
   <string name="no_shouts">نخستین کسی باشید که نظر می‌دهد!</string>
@@ -90,7 +90,7 @@
   <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
-  <string name="no_spoilers">بعضی از جزئیات برای جلوگیری از بازی پنهان شده است. برای رفتن به تنظیمات این خاموش کردن.</string>
+  <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
   <!-- Date and Time -->
   <string name="today">امروز</string>
   <string name="now">اکنون</string>
@@ -109,8 +109,8 @@
   <string name="action_collection_remove">برداشتن از مجموعه</string>
   <string name="action_collection_added">به مجموعه افزوده شد</string>
   <string name="action_collection_removed">از مجموعه برداشته شد</string>
-  <string name="action_watched">تنظیم بعنوان تماشاشده</string>
-  <string name="action_unwatched">تنظیم بعنوان تماشانشده</string>
+  <string name="action_watched">تنظیم به تماشا شده</string>
+  <string name="action_unwatched">تنظیم به تماشا نشده</string>
   <!-- Shows -->
   <string name="confirm_delete">واقعاً می‌خواهید %s را بردارید؟</string>
   <string name="delete_error">نمی‌تواند نمایش را برداشت. بعداً دوباره تلاش کنید.</string>
@@ -123,7 +123,7 @@
   <string name="context_hide">نهفتن</string>
   <string name="context_unhide">پنهان نکردن</string>
   <string name="hidden">به نهفته جابه‌جا شد</string>
-  <string name="unhidden">نمایش دوباره قابل مشاهده است</string>
+  <string name="unhidden">نمایش دوباره آشکار است</string>
   <string name="action_shows_add">افزودن نمایش</string>
   <string name="action_shows_filter">پالودن نمایش‌ها</string>
   <string name="empty_filter">برداشتن تمام پالایه‌ها</string>
@@ -134,9 +134,9 @@
   <string name="action_shows_sort">چینش نمایش‌ها</string>
   <string name="action_shows_sort_title">عنوان</string>
   <string name="action_shows_sort_latest_episode">آخرین قسمت</string>
-  <string name="action_shows_sort_oldest_episode">قدیمی ترین قسمت</string>
+  <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
   <string name="action_shows_sort_last_watched">آخرین تماشا</string>
-  <string name="action_shows_sort_remaining">قسمت های باقی مانده</string>
+  <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
   <string name="context_updateshow">به‌روز رسانی</string>
   <string name="context_marknext">قسمت بعدی تماشا شده</string>
@@ -144,7 +144,7 @@
   <string name="now_tab">اکنون</string>
   <string name="recently_watched">به‌تازگی تماشا شده</string>
   <string name="released_today">امروز منتشر شد</string>
-  <string name="friends_recently">دوستان ترکت</string>
+  <string name="friends_recently">دوستان ترکتتان</string>
   <string name="now_empty">هیچ خبری نیست. چند نمایش تماشا کنید!</string>
   <string name="now_movies_empty">هیچ خبری نیست. چند فیلم تماشا کنید!</string>
   <!-- History -->
@@ -159,20 +159,30 @@
   <string name="only_favorites">تنها نمایش‌های برگزیده</string>
   <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
   <!-- Updating -->
-  <string name="update_scheduled">بروزرسانی&#8230;</string>
-  <string name="update_no_connection">برای روز رسانی به اینترنت وصل شوید.</string>
-  <string name="update_inprogress">به روز رسانی در حال اجرا است ,دوباره  سعی کنید.</string>
+  <string name="update_scheduled">به‌روز رسانی&#8230;</string>
+  <string name="update_no_connection">برای به‌روز رسانی، به اینترنت وصل شوید.</string>
+  <string name="update_inprogress">به‌روز رسانی در حال اجرا است، بعداً دوباره تلاش کنید.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">قسمت تماشا نشده است</string>
   <string name="season_allwatched">تمامی قسمت‌ها تماشا شده‌اند</string>
-  <string name="season_onenotwatched">قسمت تماشا نشده است</string>
-  <string name="season_unaired">پخش نشده</string>
-  <string name="oneotherepisode">قسمت دیگر</string>
-  <string name="otherepisodes">قسمت‌های دیگر</string>
-  <string name="remaining">%s باقی مانده</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">نام نمایشی را بنویسید</string>
-  <string name="add_empty">هیچ سریالی در اینجا موجود نمیباشد.</string>
+  <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
   <string name="action_try_any_language">هر زبانی را امتحان کنید</string>
   <string name="action_try_again">تلاش دوباره</string>
@@ -199,11 +209,11 @@
   <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
   <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">کشف</string>
+  <string name="title_popular">محبوب</string>
+  <string name="title_digital_releases">ارائهٔ دیجیتال</string>
+  <string name="title_disc_releases">ارائه روی دیسک</string>
+  <string name="movies_in_theatres">در سینماها</string>
   <string name="movies_collection">مجموعه</string>
   <string name="movies_watchlist">فهرست تماشا</string>
   <string name="watchlist_add">افزودن به فهرست تماشا</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">نمی‌توان حساب را برداشت.</string>
   <string name="hexagon_remove_account_confirmation">برداشتن حسابتان تمام نمایش‌ها و فیلم‌ها را از ابروارهٔ سریزگاید حذف می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز برمی‌دارید.</string>
   <string name="hexagon_api_queued">در حال ارسال به ابروارهٔ سریزگاید.</string>
-  <string name="hexagon_permission_missing">برای استفاده از ابروارهٔ سریزگاید، اجازهٔ دسترسی به حسابتان را بدهید.</string>
+  <string name="hexagon_signed_out">از SeriesGuide Cloud خارج شدید.</string>
   <string name="hexagon_google_play_missing">برای استفاده از ابروارهٔ سریزگاید، نیاز به خدمات گوگل پلی است.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">در حال فرستادن به ترکت.</string>
@@ -327,7 +337,7 @@
   <string name="pref_onlyseasonepssummary">قسمت‌های ویژه از همه‌جا جز فهرست فصل‌ها ناپدید شوند</string>
   <string name="pref_exactdates">نمایش تاریخ‌های دقیق</string>
   <string name="pref_exactdates_summary">«۳۱ اکتبر» به‌جای «در ۳ روز»</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
+  <string name="pref_nospoilers">جلوگیری از لو رفتن</string>
   <string name="pref_nospoilers_summary">مخفی نگه داشتن جزئیات تا زمانی که قسمت تماشا شود</string>
   <string name="pref_seasonsorting">چینش فصل‌ها بر اساس&#8230;</string>
   <string name="pref_episodesorting">چینش قسمت‌ها بر اساس&#8230;</string>

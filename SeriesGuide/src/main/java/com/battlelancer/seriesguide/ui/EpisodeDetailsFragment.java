@@ -32,7 +32,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
-import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
@@ -45,7 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -468,7 +468,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
                 intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                        TvdbTools.buildScreenshotUrl(imagePath));
+                        TvdbImageTools.fullSizeUrl(imagePath));
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
             }
         });
@@ -492,7 +492,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
-        boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+        boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(getActivity());
         buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
         dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
@@ -622,7 +622,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             // try loading image
             mImageContainer.setVisibility(View.VISIBLE);
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(mEpisodeImage,
                             new Callback() {

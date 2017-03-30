@@ -212,7 +212,8 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             AsyncTaskCompat.executeParallel(task);
         }
 
-        dismiss();
+        // guard against onClick being called after onSaveInstanceState by allowing state loss
+        dismissAllowingStateLoss();
     }
 
     @Override

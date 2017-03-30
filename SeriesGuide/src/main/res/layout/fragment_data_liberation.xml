@@ -131,12 +131,14 @@
                     android:id="@+id/textViewDataLibShowsImportFile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
                     tools:text="content://some.path.on.storage/sg-shows-export.json" />
 
                 <Button
                     android:id="@+id/buttonDataLibShowsImportFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
                     android:text="@string/action_select_file" />
 
                 <CheckBox
@@ -151,12 +153,14 @@
                     android:id="@+id/textViewDataLibListsImportFile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
                     tools:text="content://some.path.on.storage/sg-lists-export.json" />
 
                 <Button
                     android:id="@+id/buttonDataLibListsImportFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
                     android:text="@string/action_select_file" />
 
                 <CheckBox
@@ -171,12 +175,14 @@
                     android:id="@+id/textViewDataLibMoviesImportFile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
                     tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
                 <Button
                     android:id="@+id/buttonDataLibMoviesImportFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
                     android:text="@string/action_select_file" />
 
             </LinearLayout>
@@ -188,7 +194,7 @@
                 android:layout_below="@+id/containerDataLibImportFiles"
                 android:layout_marginTop="@dimen/default_padding"
                 android:text="@string/import_warning"
-                android:textAppearance="@style/TextAppearance.Body.Bold"/>
+                android:textAppearance="@style/TextAppearance.Body.Bold" />
 
             <Button
                 android:id="@+id/buttonDataLibImport"

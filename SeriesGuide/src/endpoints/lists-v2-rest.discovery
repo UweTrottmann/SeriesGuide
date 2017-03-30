@@ -1,0 +1,236 @@
+{
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "basePath": "/_ah/api/lists/v2/",
+ "baseUrl": "https://optical-hexagon-364.appspot.com/_ah/api/lists/v2/",
+ "batchPath": "batch",
+ "description": "Store and retrieve a users lists.",
+ "discoveryVersion": "v1",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "id": "lists:v2",
+ "kind": "discovery#restDescription",
+ "methods": {
+  "get": {
+   "httpMethod": "GET",
+   "id": "lists.get",
+   "parameters": {
+    "updatedSince": {
+     "format": "date-time",
+     "location": "query",
+     "type": "string"
+    },
+    "cursor": {
+     "location": "query",
+     "type": "string"
+    },
+    "limit": {
+     "format": "int32",
+     "location": "query",
+     "type": "integer"
+    }
+   },
+   "path": "get",
+   "response": {
+    "$ref": "SgListList"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "getIds": {
+   "httpMethod": "GET",
+   "id": "lists.getIds",
+   "parameters": {
+    "cursor": {
+     "location": "query",
+     "type": "string"
+    },
+    "limit": {
+     "format": "int32",
+     "location": "query",
+     "type": "integer"
+    }
+   },
+   "path": "getIds",
+   "response": {
+    "$ref": "SgListIds"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "remove": {
+   "httpMethod": "DELETE",
+   "id": "lists.remove",
+   "parameters": {
+    "listId": {
+     "location": "query",
+     "required": true,
+     "type": "string"
+    }
+   },
+   "path": "remove",
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "removeItems": {
+   "httpMethod": "PUT",
+   "id": "lists.removeItems",
+   "path": "removeItems",
+   "request": {
+    "$ref": "SgListList",
+    "parameterName": "resource"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "save": {
+   "httpMethod": "PUT",
+   "id": "lists.save",
+   "path": "save",
+   "request": {
+    "$ref": "SgListList",
+    "parameterName": "resource"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ },
+ "name": "lists",
+ "ownerDomain": "uwetrottmann.com",
+ "ownerName": "uwetrottmann.com",
+ "packagePath": "seriesguide/backend",
+ "parameters": {
+  "alt": {
+   "default": "json",
+   "description": "Data format for the response.",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query",
+   "type": "string"
+  },
+  "fields": {
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query",
+   "type": "string"
+  },
+  "key": {
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query",
+   "type": "string"
+  },
+  "oauth_token": {
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query",
+   "type": "string"
+  },
+  "prettyPrint": {
+   "default": "true",
+   "description": "Returns response with indentations and line breaks.",
+   "location": "query",
+   "type": "boolean"
+  },
+  "quotaUser": {
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query",
+   "type": "string"
+  },
+  "userIp": {
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query",
+   "type": "string"
+  }
+ },
+ "protocol": "rest",
+ "rootUrl": "https://optical-hexagon-364.appspot.com/_ah/api/",
+ "schemas": {
+  "SgList": {
+   "id": "SgList",
+   "properties": {
+    "createdAt": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "listId": {
+     "type": "string"
+    },
+    "listItems": {
+     "items": {
+      "$ref": "SgListItem"
+     },
+     "type": "array"
+    },
+    "name": {
+     "type": "string"
+    },
+    "order": {
+     "format": "int32",
+     "type": "integer"
+    },
+    "updatedAt": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SgListIds": {
+   "id": "SgListIds",
+   "properties": {
+    "cursor": {
+     "type": "string"
+    },
+    "listIds": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SgListItem": {
+   "id": "SgListItem",
+   "properties": {
+    "listItemId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SgListList": {
+   "id": "SgListList",
+   "properties": {
+    "cursor": {
+     "type": "string"
+    },
+    "lists": {
+     "items": {
+      "$ref": "SgList"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  }
+ },
+ "servicePath": "lists/v2/",
+ "version": "v2"
+}

@@ -11,12 +11,10 @@
     <!-- Notification service -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- App Engine + Sync adapter -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- Sync adapter -->
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.READ_SYNC_STATS" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -230,6 +228,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name="com.battlelancer.seriesguide.ui.PeopleActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
+
+        <!-- Unwatched counter update service -->
+        <service android:name="com.battlelancer.seriesguide.service.UnwatchedUpdaterService" />
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" />

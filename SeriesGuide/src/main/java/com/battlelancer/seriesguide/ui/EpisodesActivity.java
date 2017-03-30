@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
@@ -199,7 +200,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (isDualPane) {
             // set the pager background
             //noinspection ConstantConditions
-            Utils.loadPosterBackground(this, backgroundImageView, show.poster);
+            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.poster);
 
             // pager setup
             episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
@@ -211,6 +212,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             //noinspection ConstantConditions
             episodeDetailsTabs.setCustomTabView(R.layout.tabstrip_item_transparent,
                     R.id.textViewTabStripItem);
+            //noinspection ResourceType
             episodeDetailsTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
                     SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
                             ? R.color.white
@@ -286,7 +288,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (itemId == android.R.id.home) {
             Intent upIntent;
             upIntent = new Intent(this, OverviewActivity.class);
-            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+            upIntent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             return true;

@@ -167,13 +167,39 @@
   <string name="update_no_connection">ليتم التحديث إتصل بالإنترنت.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">الحلقات التي لم تشاهد</string>
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
-  <string name="season_onenotwatched">الحلقة التي لم تشاهد</string>
-  <string name="season_unaired">لم تعرض</string>
-  <string name="oneotherepisode">حلقة أخرى</string>
-  <string name="otherepisodes">حلقات أخرى</string>
-  <string name="remaining">%s المتبقية</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="zero">%d حلقة واحدة غير مشاهدة</item>
+    <item quantity="one">%d حلقتين غير مشاهدة</item>
+    <item quantity="two">%d حلقات غير مشاهدة</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="many">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="zero">%d الحلقات الأخرى</item>
+    <item quantity="one">%d other episode</item>
+    <item quantity="two">%d other episodes</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="many">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="zero">%d to be released</item>
+    <item quantity="one">%d to be released</item>
+    <item quantity="two">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="many">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="zero">%d remaining</item>
+    <item quantity="one">%d remaining</item>
+    <item quantity="two">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="many">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
@@ -273,7 +299,7 @@
   <string name="hexagon_remove_account_failure">لم نستطع إزالة حسابك</string>
   <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
   <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
-  <string name="hexagon_permission_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، إسمح بالوصول إلى حسابك.</string>
+  <string name="hexagon_signed_out">تسجيل الخروج من SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، لابد من توفر خدمات قوقل بلاي.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">تقديم إلى تراكت.</string>

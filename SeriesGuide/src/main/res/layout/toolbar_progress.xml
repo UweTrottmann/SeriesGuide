@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- The scroll flags are only useful on the L+ coordinator layouts and are otherwise ignored. -->
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
@@ -9,7 +7,6 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:theme="?attr/actionBarTheme"
-    app:layout_scrollFlags="scroll|enterAlways|snap"
     app:popupTheme="?attr/actionBarPopupTheme">
 
     <!-- Inline progress bar used as a sync indicator. -->

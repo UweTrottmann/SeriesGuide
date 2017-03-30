@@ -4,11 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -37,37 +35,62 @@ import timber.log.Timber;
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     public static class OnShowAddedEvent {
+
+        public final boolean successful;
+        /** Is -1 if add task was aborted. */
+        public final int showTvdbId;
         private final String message;
 
-        public OnShowAddedEvent(String message) {
+        private OnShowAddedEvent(int showTvdbId, String message, boolean successful) {
+            this.showTvdbId = showTvdbId;
             this.message = message;
-        }
-
-        /**
-         * In case of failure, can just pass the show name and service that failed.
-         */
-        public OnShowAddedEvent(Context context, String showName, @StringRes int serviceNameRes) {
-            this.message = String.format("%s %s",
-                    context.getString(R.string.add_error, showName),
-                    context.getString(R.string.api_error_generic, context.getString(serviceNameRes))
-            );
+            this.successful = successful;
         }
 
         public void handle(Context context) {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            if (message != null) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        public static OnShowAddedEvent successful(int showTvdbId) {
+            return new OnShowAddedEvent(showTvdbId, null, true);
+        }
+
+        public static OnShowAddedEvent exists(Context context, int showTvdbId, String showTitle) {
+            return new OnShowAddedEvent(showTvdbId,
+                    context.getString(R.string.add_already_exists, showTitle), true);
+        }
+
+        public static OnShowAddedEvent failed(Context context, int showTvdbId, String showTitle) {
+            return new OnShowAddedEvent(showTvdbId,
+                    context.getString(R.string.add_error, showTitle),
+                    false);
+        }
+
+        public static OnShowAddedEvent failedDetails(Context context, int showTvdbId,
+                String showTitle, String details) {
+            return new OnShowAddedEvent(showTvdbId,
+                    String.format("%s %s", context.getString(R.string.add_error, showTitle),
+                            details),
+                    false);
+        }
+
+        public static OnShowAddedEvent aborted(String message) {
+            return new OnShowAddedEvent(-1, message, false);
         }
     }
 
-    private static final int ADD_ALREADYEXISTS = 0;
-    private static final int ADD_SUCCESS = 1;
-    private static final int ADD_ERROR = 2;
-    private static final int ADD_ERROR_TVDB = 3;
-    private static final int ADD_ERROR_TVDB_NOT_EXISTS = 4;
-    private static final int ADD_ERROR_HEXAGON = 5;
-    private static final int ADD_ERROR_DATA = 6;
-    private static final int ADD_OFFLINE = 7;
-    private static final int ADD_TRAKT_API_ERROR = 8;
-    private static final int ADD_TRAKT_AUTH_ERROR = 9;
+    private static final int PROGRESS_EXISTS = 0;
+    private static final int PROGRESS_SUCCESS = 1;
+    private static final int PROGRESS_ERROR = 2;
+    private static final int PROGRESS_ERROR_TVDB = 3;
+    private static final int PROGRESS_ERROR_TVDB_NOT_EXISTS = 4;
+    private static final int PROGRESS_ERROR_HEXAGON = 5;
+    private static final int PROGRESS_ERROR_DATA = 6;
+    private static final int RESULT_OFFLINE = 7;
+    private static final int RESULT_TRAKT_API_ERROR = 8;
+    private static final int RESULT_TRAKT_AUTH_ERROR = 9;
 
     private final SgApp app;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
@@ -77,6 +100,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private boolean isSilentMode;
     private boolean isMergingShows;
     private String currentShowName;
+    private int currentShowTvdbId;
 
     public AddShowTask(SgApp app, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
@@ -115,9 +139,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             return null;
         }
 
+        // set values required for progress update
+        SearchResult nextShow = addQueue.peek();
+        currentShowName = nextShow.title;
+        currentShowTvdbId = nextShow.tvdbid;
+
         if (!AndroidUtils.isNetworkConnected(app)) {
             Timber.d("Finished. No internet connection.");
-            publishProgress(ADD_OFFLINE);
+            publishProgress(RESULT_OFFLINE);
             return null;
         }
 
@@ -129,7 +158,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // if not connected to Hexagon, get episodes from trakt
         HashMap<Integer, BaseShow> traktCollection = null;
         HashMap<Integer, BaseShow> traktWatched = null;
-        if (!HexagonTools.isSignedIn(app) && TraktCredentials.get(app).hasCredentials()) {
+        if (!HexagonSettings.isEnabled(app) && TraktCredentials.get(app).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.");
             // get collection
             HashMap<Integer, BaseShow> traktShows = getTraktShows("get collection", true);
@@ -157,19 +186,22 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return null;
             }
 
+            nextShow = addQueue.removeFirst();
+            // set values required for progress update
+            currentShowName = nextShow.title;
+            currentShowTvdbId = nextShow.tvdbid;
+
             if (!AndroidUtils.isNetworkConnected(app)) {
                 Timber.d("Finished. No connection.");
-                publishProgress(ADD_OFFLINE);
+                publishProgress(RESULT_OFFLINE);
                 failedMergingShows = true;
                 break;
             }
 
-            SearchResult nextShow = addQueue.removeFirst();
-
             try {
                 boolean addedShow = TvdbTools.getInstance(app)
                         .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched);
-                result = addedShow ? ADD_SUCCESS : ADD_ALREADYEXISTS;
+                result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
             } catch (TvdbException e) {
@@ -180,21 +212,20 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 }
                 if (e.service() == TvdbException.Service.TVDB) {
                     if (e.itemDoesNotExist()) {
-                        result = ADD_ERROR_TVDB_NOT_EXISTS;
+                        result = PROGRESS_ERROR_TVDB_NOT_EXISTS;
                     } else {
-                        result = ADD_ERROR_TVDB;
+                        result = PROGRESS_ERROR_TVDB;
                     }
                 } else if (e.service() == TvdbException.Service.HEXAGON) {
-                    result = ADD_ERROR_HEXAGON;
+                    result = PROGRESS_ERROR_HEXAGON;
                 } else if (e.service() == TvdbException.Service.DATA) {
-                    result = ADD_ERROR_DATA;
+                    result = PROGRESS_ERROR_DATA;
                 } else {
-                    result = ADD_ERROR;
+                    result = PROGRESS_ERROR;
                 }
                 Timber.e(e, "Adding show failed");
             }
 
-            currentShowName = nextShow.title;
             publishProgress(result);
             Timber.d("Finished adding show. (Result code: %s)", result);
         }
@@ -211,7 +242,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             PreferenceManager.getDefaultSharedPreferences(app).edit()
                     .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
                     .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
-                    .commit();
+                    .apply();
 
             // renew FTS3 table
             Timber.d("Renewing search table.");
@@ -231,43 +262,42 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         OnShowAddedEvent event = null;
         switch (values[0]) {
-            case ADD_SUCCESS:
+            case PROGRESS_SUCCESS:
                 // do nothing, user will see show added to show list
-                return;
-            case ADD_ALREADYEXISTS:
-                event = new OnShowAddedEvent(
-                        app.getString(R.string.add_already_exists, currentShowName));
+                event = OnShowAddedEvent.successful(currentShowTvdbId);
                 break;
-            case ADD_ERROR:
-                event = new OnShowAddedEvent(app.getString(R.string.add_error, currentShowName));
+            case PROGRESS_EXISTS:
+                event = OnShowAddedEvent.exists(app, currentShowTvdbId, currentShowName);
                 break;
-            case ADD_ERROR_TVDB:
-                event = new OnShowAddedEvent(app, currentShowName, R.string.tvdb);
+            case PROGRESS_ERROR:
+                event = OnShowAddedEvent.failed(app, currentShowTvdbId,
+                        app.getString(R.string.add_error, currentShowName));
                 break;
-            case ADD_ERROR_TVDB_NOT_EXISTS:
-                event = new OnShowAddedEvent(
-                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
-                                app.getString(R.string.tvdb_error_does_not_exist)
-                        ));
+            case PROGRESS_ERROR_TVDB:
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.api_error_generic, app.getString(R.string.tvdb)));
                 break;
-            case ADD_ERROR_HEXAGON:
-                event = new OnShowAddedEvent(app, currentShowName, R.string.hexagon);
+            case PROGRESS_ERROR_TVDB_NOT_EXISTS:
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.tvdb_error_does_not_exist));
                 break;
-            case ADD_ERROR_DATA:
-                event = new OnShowAddedEvent(
-                        String.format("%s %s", app.getString(R.string.add_error, currentShowName),
-                                app.getString(R.string.database_error)
-                        ));
+            case PROGRESS_ERROR_HEXAGON:
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.api_error_generic, app.getString(R.string.hexagon)));
                 break;
-            case ADD_OFFLINE:
-                event = new OnShowAddedEvent(app.getString(R.string.offline));
+            case PROGRESS_ERROR_DATA:
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.database_error));
                 break;
-            case ADD_TRAKT_API_ERROR:
-                event = new OnShowAddedEvent(
-                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
+            case RESULT_OFFLINE:
+                event = OnShowAddedEvent.aborted(app.getString(R.string.offline));
                 break;
-            case ADD_TRAKT_AUTH_ERROR:
-                event = new OnShowAddedEvent(app.getString(R.string.trakt_error_credentials));
+            case RESULT_TRAKT_API_ERROR:
+                event = OnShowAddedEvent.aborted(app.getString(R.string.api_error_generic,
+                        app.getString(R.string.trakt)));
+                break;
+            case RESULT_TRAKT_AUTH_ERROR:
+                event = OnShowAddedEvent.aborted(app.getString(R.string.trakt_error_credentials));
                 break;
         }
 
@@ -290,7 +320,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return TraktTools.buildTraktShowsMap(response.body());
             } else {
                 if (SgTrakt.isUnauthorized(app, response)) {
-                    publishProgress(ADD_TRAKT_AUTH_ERROR);
+                    publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
                 SgTrakt.trackFailedRequest(app, action, response);
@@ -298,7 +328,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(app, action, e);
         }
-        publishProgress(ADD_TRAKT_API_ERROR);
+        publishProgress(RESULT_TRAKT_API_ERROR);
         return null;
     }
 }

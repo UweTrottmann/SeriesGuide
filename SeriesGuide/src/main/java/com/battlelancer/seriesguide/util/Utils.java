@@ -33,7 +33,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Base64;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,14 +51,10 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -67,8 +62,6 @@ import timber.log.Timber;
  * Various generic helper methods that do not fit other tool categories.
  */
 public class Utils {
-
-    private static Mac sha256_hmac;
 
     private Utils() {
         // prevent instantiation
@@ -89,8 +82,13 @@ public class Utils {
      * Return a version string like "v42 (Database v42)".
      */
     public static String getVersionString(Context context) {
-        return "v" + getVersion(context)
-                + " (Database v" + SeriesGuideDatabase.DATABASE_VERSION + ")";
+        if (BuildConfig.DEBUG) {
+            return context.getString(R.string.format_version_debug, getVersion(context),
+                    SeriesGuideDatabase.DATABASE_VERSION, BuildConfig.VERSION_CODE);
+        } else {
+            return context.getString(R.string.format_version, getVersion(context),
+                    SeriesGuideDatabase.DATABASE_VERSION);
+        }
     }
 
     /**
@@ -327,143 +325,6 @@ public class Utils {
                 file.delete();
             }
         }
-    }
-
-    /**
-     * Tries to load the given TVDb show poster into the given {@link android.widget.ImageView}
-     * without any resizing or cropping.
-     *
-     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
-     * be used.
-     */
-    public static void loadPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.loadWithPicasso(context, TvdbTools.buildPosterUrl(posterPath))
-                .noFade()
-                .into(imageView);
-    }
-
-    /**
-     * Tries to load the given TVDb show poster into the given {@link ImageView} without any
-     * resizing or cropping. In addition sets alpha on the view.
-     *
-     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
-     * be used.
-     */
-    public static void loadPosterBackground(Context context, @NonNull ImageView imageView,
-            String posterPath) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            imageView.setImageAlpha(30);
-        } else {
-            //noinspection deprecation
-            imageView.setAlpha(30);
-        }
-
-        loadPoster(context, imageView, posterPath);
-    }
-
-    /**
-     * Builds a TheTVDB poster url, then tries to load a resized, center cropped version of the show
-     * poster into the given {@link android.widget.ImageView}. On failure displays an error drawable
-     * (ensure image view is set to center inside).
-     *
-     * <p>The resize dimensions are those used for posters in the show list and change depending on
-     * screen size.
-     *
-     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
-     * be used.
-     */
-    public static void loadTvdbShowPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.loadWithPicasso(context,
-                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
-                .centerCrop()
-                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-                .error(R.drawable.ic_image_missing)
-                .into(imageView);
-    }
-
-    /**
-     * Loads the TheTVDB poster via our image proxy + caching server to reduce load on TheTVDB's
-     * image server.
-     */
-    public static void loadTvdbShowPosterFromCache(Context context, ImageView imageView,
-            String posterPath) {
-        String posterUrl;
-        if (TextUtils.isEmpty(posterPath)) {
-            posterUrl = null;
-        } else {
-            posterUrl = TvdbTools.buildPosterUrl(posterPath);
-            String mac = encode(BuildConfig.IMAGE_CACHE_SECRET, posterUrl);
-            if (mac != null) {
-                posterUrl = String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrl);
-            } else {
-                posterUrl = null;
-            }
-        }
-
-        ServiceUtils.loadWithPicasso(context, posterUrl)
-                .centerCrop()
-                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-                .error(R.drawable.ic_image_missing)
-                .into(imageView);
-    }
-
-    @Nullable
-    public static synchronized String encode(String key, String data) {
-        try {
-            if (sha256_hmac == null) {
-                sha256_hmac = Mac.getInstance("HmacSHA256");
-                SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-                sha256_hmac.init(secret_key);
-            }
-
-            return Base64.encodeToString(sha256_hmac.doFinal(data.getBytes()),
-                    Base64.NO_WRAP | Base64.URL_SAFE);
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            Timber.e(e, "Signing image URL failed.");
-            return null;
-        }
-    }
-
-    /**
-     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
-     * be used.
-     */
-    public static void loadAndFitTvdbShowPoster(Context context, ImageView imageView,
-            String posterPath) {
-        ServiceUtils.loadWithPicasso(context,
-                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath))
-                .fit()
-                .centerCrop()
-                .error(R.drawable.ic_image_missing)
-                .into(imageView);
-    }
-
-    /**
-     * Tries to load a resized, center cropped version of the show/movie poster at the given URL
-     * into the given {@link android.widget.ImageView}. On failure displays an error drawable
-     * (ensure image view is set to center inside).
-     *
-     * <p>The resize dimensions are fixed for all screen sizes. E.g. for items using the show list
-     * layout, use {@link #loadTvdbShowPoster(Context, ImageView, String)}.
-     *
-     * @param context {@link Context#getApplicationContext() context.getApplicationContext()} will
-     * be used.
-     */
-    public static void loadSmallPoster(Context context, ImageView imageView, String posterUrl) {
-        ServiceUtils.loadWithPicasso(context, posterUrl)
-                .centerCrop()
-                .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
-                .error(R.drawable.ic_image_missing)
-                .into(imageView);
-    }
-
-    /**
-     * Builds a TheTVDB poster url, then calls {@link #loadSmallPoster}.
-     */
-    public static void loadSmallTvdbShowPoster(Context context, ImageView imageView,
-            String posterPath) {
-        loadSmallPoster(context, imageView,
-                TextUtils.isEmpty(posterPath) ? null : TvdbTools.buildPosterUrl(posterPath));
     }
 
     /**

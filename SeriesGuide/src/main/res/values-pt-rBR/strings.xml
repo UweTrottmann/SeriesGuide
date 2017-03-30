@@ -163,13 +163,23 @@
   <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episódios não assistidos</string>
   <string name="season_allwatched">Todos os episódios assistidos</string>
-  <string name="season_onenotwatched">episódio não assistido</string>
-  <string name="season_unaired">não exibido</string>
-  <string name="oneotherepisode">outro episódio</string>
-  <string name="otherepisodes">outros episódios</string>
-  <string name="remaining">%s restantes</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episódio não assistido</item>
+    <item quantity="other">%d episódios não assistidos</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d outro episódio</item>
+    <item quantity="other">%d outros episódios</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d a ser exibido</item>
+    <item quantity="other">%d a serem exibidos</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d restante</item>
+    <item quantity="other">%d restantes</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="add_empty">Nenhuma série aqui.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
   <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Para usar o SeriesGuide Cloud, permita o acesso às suas contas.</string>
+  <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando ao trakt.</string>

@@ -430,9 +430,9 @@ public class ShowsFragment extends Fragment implements
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
                 break;
             }
-            case FirstRunView.ButtonType.CONNECT_TRAKT: {
-                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Connect trakt");
+            case FirstRunView.ButtonType.SIGN_IN: {
+                ((BaseNavDrawerActivity)getActivity()).openNavDrawer();
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Sign in");
                 break;
             }
             case FirstRunView.ButtonType.RESTORE_BACKUP: {
@@ -467,7 +467,7 @@ public class ShowsFragment extends Fragment implements
         // display overview for this show
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
-        i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
+        i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
 
         ActivityCompat.startActivity(getActivity(), i,
                 ActivityOptionsCompat

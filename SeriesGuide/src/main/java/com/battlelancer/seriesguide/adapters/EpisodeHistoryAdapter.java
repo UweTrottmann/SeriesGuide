@@ -3,17 +3,15 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.SparseArrayCompat;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.List;
 
@@ -74,19 +72,17 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         // show title
         holder.title.setText(item.show == null ? null : item.show.title);
         // show poster, use a TVDB one
-        String poster = null;
+        String posterUrl;
         Integer showTvdbId = (item.show == null || item.show.ids == null)
-                ? null
-                : item.show.ids.tvdb;
+                ? null : item.show.ids.tvdb;
         if (localShowPosters != null && showTvdbId != null) {
-            // prefer the TVDB poster of an already added show
-            poster = localShowPosters.get(showTvdbId);
-            if (TextUtils.isEmpty(poster)) {
-                // fall back to the first uploaded TVDB poster
-                poster = TvdbTools.buildFallbackPosterPath(showTvdbId);
-            }
+            // prefer poster of already added show, fall back to first uploaded poster
+            posterUrl = TvdbImageTools.smallSizeOrFirstUrl(localShowPosters.get(showTvdbId),
+                    showTvdbId);
+        } else {
+            posterUrl = null;
         }
-        Utils.loadSmallTvdbShowPoster(getContext(), holder.poster, poster);
+        TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, posterUrl);
 
         // timestamp
         if (item.watched_at != null) {

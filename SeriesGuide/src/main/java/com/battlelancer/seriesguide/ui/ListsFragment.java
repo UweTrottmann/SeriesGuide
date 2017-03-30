@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -117,7 +117,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             case 1: {
                 // display show overview
                 intent = new Intent(getActivity(), OverviewActivity.class);
-                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID,
+                intent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID,
                         Integer.valueOf(itemRefId));
                 break;
             }
@@ -183,7 +183,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.lists_popup_menu);
             popupMenu.setOnMenuItemClickListener(
-                    new PopupMenuItemClickListener(view.getContext(), getFragmentManager(),
+                    new PopupMenuItemClickListener(SgApp.from(getActivity()), getFragmentManager(),
                             viewHolder.itemId, viewHolder.itemTvdbId, viewHolder.itemType));
             popupMenu.show();
         }
@@ -191,15 +191,15 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
     private static class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final Context context;
+        private final SgApp app;
         private final FragmentManager fragmentManager;
         private final String itemId;
         private final int itemTvdbId;
         private final int itemType;
 
-        public PopupMenuItemClickListener(Context context, FragmentManager fm, String itemId,
+        public PopupMenuItemClickListener(SgApp app, FragmentManager fm, String itemId,
                 int itemTvdbId, int itemType) {
-            this.context = context;
+            this.app = app;
             this.fragmentManager = fm;
             this.itemId = itemId;
             this.itemTvdbId = itemTvdbId;
@@ -212,12 +212,12 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                 case R.id.menu_action_lists_manage: {
                     ManageListsDialogFragment.showListsDialog(itemTvdbId, itemType,
                             fragmentManager);
-                    Utils.trackContextMenu(context, TAG, "Manage lists");
+                    Utils.trackContextMenu(app, TAG, "Manage lists");
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
-                    ListsTools.removeListItem(context, itemId);
-                    Utils.trackContextMenu(context, TAG, "Remove from list");
+                    ListsTools.removeListItem(app, itemId);
+                    Utils.trackContextMenu(app, TAG, "Remove from list");
                     return true;
                 }
             }

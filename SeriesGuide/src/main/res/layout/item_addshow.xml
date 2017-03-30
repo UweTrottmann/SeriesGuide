@@ -27,6 +27,10 @@
                 android:scaleType="centerInside"
                 tools:src="#F50057" />
 
+            <!-- With maxLines ellipsis text is cut off or ellipsis character is not shown.
+            Fixed in later versions of Android, but there maxLines cuts off text
+            on the word level. We want the maximum amount of chars shown instead
+            (which is what singleLine is doing). -->
             <TextView
                 android:id="@+id/textViewAddTitle"
                 android:layout_width="wrap_content"
@@ -37,6 +41,7 @@
                 android:paddingTop="@dimen/default_padding"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Subhead"
+                tools:ignore="Deprecated"
                 tools:text="Cosmos: A Spacetime Odyssey" />
 
             <TextView
@@ -64,23 +69,10 @@
             android:scaleType="centerInside"
             android:src="?attr/drawableDropdown" />
 
-        <ImageView
-            android:id="@+id/viewAddButton"
+        <com.battlelancer.seriesguide.widgets.AddIndicator
+            android:id="@+id/addIndicatorAddShow"
             android:layout_width="48dp"
-            android:layout_height="@dimen/show_poster_height_small"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/action_shows_add"
-            android:scaleType="centerInside"
-            android:src="?attr/drawableAddIcon" />
-
-        <!-- Content description is set in code. -->
-        <ImageView
-            android:id="@+id/imageViewAddedIndicator"
-            android:layout_width="48dp"
-            android:layout_height="@dimen/show_poster_height_small"
-            android:contentDescription="@null"
-            android:scaleType="centerInside"
-            android:src="?attr/drawableWatched" />
+            android:layout_height="@dimen/show_poster_height_small" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

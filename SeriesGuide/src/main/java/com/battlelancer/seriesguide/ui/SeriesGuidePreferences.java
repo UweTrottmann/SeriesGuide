@@ -32,7 +32,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -105,20 +104,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
@@ -231,7 +216,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // SeriesGuide Cloud link
             Preference cloud = findPreference("com.battlelancer.seriesguide.cloud");
-            if (hasAccessToX && HexagonTools.isSignedIn(getActivity())) {
+            if (hasAccessToX && HexagonSettings.isEnabled(getActivity())) {
                 cloud.setSummary(HexagonSettings.getAccountName(getActivity()));
             } else {
                 cloud.setSummary(R.string.hexagon_description);

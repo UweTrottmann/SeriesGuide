@@ -31,9 +31,9 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.OverviewFragment;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -249,7 +249,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getActivity(), OverviewActivity.class).putExtra(
-                            OverviewFragment.InitBundle.SHOW_TVDBID, displayedShow.tvdbid));
+                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, displayedShow.tvdbid));
                     dismiss();
                 }
             });
@@ -259,8 +259,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             buttonPositive.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    displayedShow.isAdded = true;
-                    EventBus.getDefault().post(new AddFragment.AddShowEvent());
+                    EventBus.getDefault()
+                            .post(new AddFragment.OnAddingShowEvent(displayedShow.tvdbid));
 
                     addShowListener.onAddShow(displayedShow);
                     dismiss();
@@ -333,7 +333,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
         // poster
-        Utils.loadAndFitTvdbShowPoster(getActivity(), poster, show.poster);
+        TvdbImageTools.loadShowPosterFitCrop(getActivity(), poster, show.poster);
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);

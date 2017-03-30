@@ -163,13 +163,23 @@
   <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
   <string name="update_inprogress">Egy frissítés van folyamatban, próbáld meg később.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">nem látott epizód</string>
   <string name="season_allwatched">Minden epizód megnézve</string>
-  <string name="season_onenotwatched">nem látott epizód</string>
-  <string name="season_unaired">nem vetített</string>
-  <string name="oneotherepisode">egyéb epizód</string>
-  <string name="otherepisodes">egyéb epizód</string>
-  <string name="remaining">%s maradt</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d nem látott epizód</item>
+    <item quantity="other">%d nem látott epizód</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d egyéb epizód</item>
+    <item quantity="other">%d egyéb epizód</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d még nem vetített</item>
+    <item quantity="other">%d még nem vetített</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d fennmaradó</item>
+    <item quantity="other">%d fennmaradó</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Írj be egy sorozat címet</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">A fiók eltávolítása sikertelen.</string>
   <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
   <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
-  <string name="hexagon_permission_missing">A SeriesGuide Cloud használatához engedélyezd a fiókodhoz való hozzáférést.</string>
+  <string name="hexagon_signed_out">Kijelentkezett a SeriesGuide felhő tárhelyről.</string>
   <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Elküldés a traktnak.</string>

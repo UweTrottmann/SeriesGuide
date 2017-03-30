@@ -163,13 +163,23 @@
   <string name="update_no_connection">Para actualizar conéctese a internet.</string>
   <string name="update_inprogress">Una actualización está en curso, intente de nuevo más tarde.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episodios no vistos</string>
   <string name="season_allwatched">Todos los episodios vistos</string>
-  <string name="season_onenotwatched">episodio no visto</string>
-  <string name="season_unaired">sin estrenar</string>
-  <string name="oneotherepisode">otro episodio</string>
-  <string name="otherepisodes">otros episodios</string>
-  <string name="remaining">%s restantes</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
   <string name="add_empty">No hay series.</string>
@@ -258,7 +268,7 @@
   <string name="hexagon_remove_account_confirmation">Quitar tu cuenta borrará todas las series y películas de SeriesGuides Cloud. 
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Para usar SeriesGuide Cloud, permite acceder a tus cuentas.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud, se requiere Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando a trakt.</string>

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.EpisodeSearchFragment.SearchQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -22,50 +24,31 @@ import com.battlelancer.seriesguide.util.Utils;
  */
 public class SearchResultsAdapter extends CursorAdapter {
 
-    private static final int LAYOUT = R.layout.item_search_result;
-
-    private LayoutInflater mLayoutInflater;
-
     public SearchResultsAdapter(Context context) {
         super(context, null, 0);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (!mDataValid) {
-            throw new IllegalStateException("this should only be called when the cursor is valid");
-        }
-        if (!mCursor.moveToPosition(position)) {
-            throw new IllegalStateException("couldn't move cursor to position " + position);
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_search_result, parent, false);
 
-        final ViewHolder viewHolder;
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-            convertView = newView(mContext, mCursor, parent);
+        return view;
+    }
 
-            viewHolder = new ViewHolder();
-            viewHolder.showTitle = (TextView) convertView.findViewById(R.id.textViewShowTitle);
-            viewHolder.episodeTitle = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeTitle);
-            viewHolder.searchSnippet = (TextView) convertView
-                    .findViewById(R.id.textViewSearchSnippet);
-            viewHolder.watchedStatus = (ImageView) convertView
-                    .findViewById(R.id.imageViewWatchedStatus);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
         //noinspection ResourceType
         viewHolder.watchedStatus.setImageResource(
                 EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
                         ? Utils.resolveAttributeToResourceId(mContext.getTheme(),
-                                R.attr.drawableWatched)
+                        R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(mContext.getTheme(),
                                 R.attr.drawableWatch));
 
@@ -79,27 +62,17 @@ public class SearchResultsAdapter extends CursorAdapter {
         String title = mCursor.getString(SearchQuery.TITLE);
         viewHolder.episodeTitle
                 .setText(TextTools.getNextEpisodeString(mContext, season, number, title));
-
-        return convertView;
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-    }
-
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mLayoutInflater.inflate(LAYOUT, parent, false);
     }
 
     static class ViewHolder {
 
-        TextView showTitle;
+        @BindView(R.id.textViewShowTitle) TextView showTitle;
+        @BindView(R.id.textViewEpisodeTitle) TextView episodeTitle;
+        @BindView(R.id.textViewSearchSnippet) TextView searchSnippet;
+        @BindView(R.id.imageViewWatchedStatus) ImageView watchedStatus;
 
-        TextView episodeTitle;
-
-        TextView searchSnippet;
-
-        ImageView watchedStatus;
+        public ViewHolder(View itemView) {
+            ButterKnife.bind(this, itemView);
+        }
     }
 }

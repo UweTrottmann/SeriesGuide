@@ -163,13 +163,23 @@
   <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">Επεισόδια που δεν έχουν παρακολουθηθεί</string>
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
-  <string name="season_onenotwatched">Επεισόδιο που δεν έχει παρακολουθηθεί</string>
-  <string name="season_unaired">Δεν έχει προβληθεί</string>
-  <string name="oneotherepisode">άλλο επεισόδιο</string>
-  <string name="otherepisodes">άλλα επεισόδια</string>
-  <string name="remaining">%s απομένει</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
   <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">To use SeriesGuide Cloud, allow access to your accounts.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>

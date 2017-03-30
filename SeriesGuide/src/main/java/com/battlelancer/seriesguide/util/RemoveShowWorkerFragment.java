@@ -44,10 +44,12 @@ public class RemoveShowWorkerFragment extends Fragment {
      * Posted if show was just removed (or failure).
      */
     public static class OnShowRemovedEvent {
+        public final int showTvdbId;
         /** One of {@link com.battlelancer.seriesguide.enums.NetworkResult}. */
         public final int resultCode;
 
-        public OnShowRemovedEvent(int resultCode) {
+        public OnShowRemovedEvent(int showTvdbId, int resultCode) {
+            this.showTvdbId = showTvdbId;
             this.resultCode = resultCode;
         }
     }
@@ -105,7 +107,7 @@ public class RemoveShowWorkerFragment extends Fragment {
                 Toast.makeText(app, R.string.delete_error, Toast.LENGTH_LONG).show();
             }
 
-            EventBus.getDefault().post(new OnShowRemovedEvent(result));
+            EventBus.getDefault().post(new OnShowRemovedEvent(showTvdbId, result));
         }
     }
 }

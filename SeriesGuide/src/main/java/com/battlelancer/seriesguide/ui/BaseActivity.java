@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,7 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (!onAutoBackup()) {
             SgSyncAdapter.requestSyncIfTime(this);
         }
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
         registerEventBus();
     }
 
@@ -87,7 +85,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mHandler.removeCallbacks(mUpdateShowRunnable);
         }
 
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
         unregisterEventBus();
     }
 

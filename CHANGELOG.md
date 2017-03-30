@@ -5,6 +5,62 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 36
+----------
+*(2017-03-30)*
+
+* SeriesGuide Cloud switched to Google Sign-In, no longer requires the Contacts permission.
+  But you will have to sign in again.
+* Display progress when adding a show, tapping it once added opens the show directly.
+* Show always both Cloud and trakt account in navigation drawer.
+
+#### 36
+*(2017-03-30)*
+
+* 🔨 Cloud signed out warning displayed after adding show, but was never signed in to Cloud.
+* 🔨 Can not swipe away Cloud signed out warning on Android 4.4 (KitKat) and below.
+* 📝 Latest translations from crowdin.️️
+
+#### 36-beta5
+*(2017-03-24)*
+
+* 🔨 Changing widget settings not applied right away for some Google launchers.
+* 🔨 Widget empty text has wrong font color on Android 7.0 devices.
+* 🔨 Some rare crashes due to multi-touch use.
+* 📝 Latest translations from crowdin.️️
+
+#### 36-beta4
+*(2017-03-17)*
+
+* 🔧 Load all show and episode images via the SeriesGuide image cache server to reduce load on TheTVDB.
+* 📝 Latest translations from crowdin.️️ Season episode count strings need to be re-translated.
+* 📝 Added Indonesian translation.
+
+#### 36-beta3
+*(2017-03-14)*
+
+* 🔧 TWEAK Show details why a show can not be added.
+
+#### 36-beta2
+*(2017-03-09)*
+
+* 📝 NOTE Users are forced to sign-in again to SeriesGuide Cloud.
+* 🔧 TWEAK Use Google Sign-In for SeriesGuide Cloud, does not require Contacts permission.
+* 🔧 TWEAK Show Cloud and trakt account in navigation drawer.
+* 🔧 TWEAK Show message if signed out of SeriesGuide Cloud.
+* 🔧 TWEAK Reduce auto-sync trigger interval when opening app to 5 minutes.
+* 🔨 FIX Sometimes selected season is wrong when returning to episode details view. Thanks @cbeyls!
+* 🔨 FIX Do not allow multi-line list names.
+* 📝 NOTE Latest translations from crowdin.
+
+#### 36-beta1
+*(2017-02-18)*
+
+* TWEAK Open show from search result directly if it is added.
+* TWEAK Show progress while adding a show.
+* TWEAK Show progress while loading popular/digital/disc movies.
+* NOTE Latest translations from crowdin.
+
 Version 35
 ----------
 *(2017-02-03)*

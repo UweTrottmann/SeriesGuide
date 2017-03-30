@@ -162,13 +162,19 @@
   <string name="update_no_connection">ในการอัปเดต เชื่อมต่ออินเทอร์เน็ต</string>
   <string name="update_inprogress">การอัปเดตอยู่ระหว่างดำเนินการ ลองอีกครั้งภายหลัง</string>
   <!-- Seasons -->
-  <string name="season_watchcount">ตอนยังไม่ได้ดู</string>
   <string name="season_allwatched">ดูครบทุกตอนแล้ว</string>
-  <string name="season_onenotwatched">ตอนยังไม่ได้ดู</string>
-  <string name="season_unaired">ยังไม่ออกอากาศ</string>
-  <string name="oneotherepisode">ตอนอื่นๆ</string>
-  <string name="otherepisodes">ตอนอื่นๆ</string>
-  <string name="remaining">เหลืออีก %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
   <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>
@@ -198,11 +204,11 @@
   <string name="action_lists_reorder">เรียงรายการใหม่</string>
   <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">สำรวจ</string>
+  <string name="title_popular">ยอดนิยม</string>
+  <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
+  <string name="title_disc_releases">ออกเป็นแผ่น</string>
+  <string name="movies_in_theatres">ในโรง</string>
   <string name="movies_collection">คลังเก็บ</string>
   <string name="movies_watchlist">อยากดู</string>
   <string name="watchlist_add">เพิ่มในรายการที่อยากดู</string>
@@ -242,7 +248,7 @@
   <string name="hexagon_warning">การทดลอง!</string>
   <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
   <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
-  <string name="hexagon_warning_trakt">ขณะที่เชื่อมต่อ SeriesGuide Cloud อยู่, ดารซิงค์กับ trakt จะถูกปิดใช้งาน</string>
+  <string name="hexagon_warning_trakt">ขณะที่เชื่อมต่อ SeriesGuide Cloud อยู่, การซิงค์กับ trakt จะถูกปิดใช้งาน</string>
   <string name="hexagon_signin">เข้าสู่ระบบ</string>
   <string name="hexagon_signed_in">คุณเชื่อมต่อกับ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_signout">ออกจากระบบ</string>
@@ -253,7 +259,7 @@
   <string name="hexagon_remove_account_failure">ไม่สามารถลบบัญชี</string>
   <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
   <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
-  <string name="hexagon_permission_missing">ในการใช้ SeriesGuide Cloud, อนุญาตให้เราเข้าถึงบัญชีของคุณ</string>
+  <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>

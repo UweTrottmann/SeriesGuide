@@ -25,10 +25,11 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Collections;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -127,8 +128,8 @@ public class TvdbAddFragment extends AddFragment {
 
         // create adapter, add trakt watchlist menu if connected to trakt
         adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(),
-                TraktCredentials.get(getActivity()).hasCredentials() ? showMenuClickListener
-                        : null, true);
+                itemClickListener,
+                TraktCredentials.get(getActivity()).hasCredentials(), true);
 
         // load data
         Bundle args = new Bundle();
@@ -140,10 +141,17 @@ public class TvdbAddFragment extends AddFragment {
         setHasOptionsMenu(true);
     }
 
-    private AddAdapter.OnContextMenuClickListener showMenuClickListener
-            = new AddAdapter.OnContextMenuClickListener() {
+    private AddAdapter.OnItemClickListener itemClickListener
+            = new AddAdapter.OnItemClickListener() {
+
         @Override
-        public void onClick(View view, int showTvdbId) {
+        public void onAddClick(SearchResult item) {
+            EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
+            TaskManager.getInstance(getContext()).performAddTask(SgApp.from(getActivity()), item);
+        }
+
+        @Override
+        public void onMenuWatchlistClick(View view, int showTvdbId) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 

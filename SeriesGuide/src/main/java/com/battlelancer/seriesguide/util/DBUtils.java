@@ -138,9 +138,9 @@ public class DBUtils {
      * Looks up the episodes of a given season and stores the count of all, unwatched and skipped
      * ones in the seasons watch counters.
      */
-    public static void updateUnwatchedCount(Context context, String seasonid) {
+    public static void updateUnwatchedCount(Context context, int seasonTvdbId) {
         final ContentResolver resolver = context.getContentResolver();
-        final Uri uri = Episodes.buildEpisodesOfSeasonUri(seasonid);
+        final Uri uri = Episodes.buildEpisodesOfSeasonUri(seasonTvdbId);
 
         // all a seasons episodes
         final int totalCount = getCountOf(resolver, uri, null, null, -1);
@@ -183,7 +183,7 @@ public class DBUtils {
         update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
         update.put(Seasons.TAGS, skippedCount > 0 ? SeasonTags.SKIPPED : SeasonTags.NONE);
         update.put(Seasons.TOTALCOUNT, totalCount);
-        resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
+        resolver.update(Seasons.buildSeasonUri(seasonTvdbId), update, null, null);
     }
 
     /**

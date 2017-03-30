@@ -38,7 +38,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
-import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
@@ -51,7 +51,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -83,6 +83,7 @@ import timber.log.Timber;
 public class OverviewFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
 
+    public static final String ARG_INT_SHOW_TVDBID = "show_tvdbid";
     private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
@@ -138,20 +139,12 @@ public class OverviewFragment extends Fragment implements
 
     private boolean hasSetEpisodeWatched;
 
-    /**
-     * All values have to be integer.
-     */
-    public interface InitBundle {
-
-        String SHOW_TVDBID = "show_tvdbid";
-    }
-
     public static OverviewFragment newInstance(int showTvdbId) {
         OverviewFragment f = new OverviewFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putInt(InitBundle.SHOW_TVDBID, showTvdbId);
+        args.putInt(ARG_INT_SHOW_TVDBID, showTvdbId);
         f.setArguments(args);
 
         return f;
@@ -161,7 +154,7 @@ public class OverviewFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showTvdbId = getArguments().getInt(InitBundle.SHOW_TVDBID);
+        showTvdbId = getArguments().getInt(ARG_INT_SHOW_TVDBID);
     }
 
     @Override
@@ -674,7 +667,8 @@ public class OverviewFragment extends Fragment implements
 
             // hide check-in if not connected to trakt or hexagon is enabled
             boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
-            boolean displayCheckIn = isConnectedToTrakt && !HexagonTools.isSignedIn(getActivity());
+            boolean displayCheckIn = isConnectedToTrakt
+                    && !HexagonSettings.isEnabled(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
@@ -876,7 +870,7 @@ public class OverviewFragment extends Fragment implements
             imageEpisode.setImageResource(R.drawable.ic_image_missing);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbTools.buildScreenshotUrl(imagePath))
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(imageEpisode,
                             new Callback() {
@@ -942,7 +936,7 @@ public class OverviewFragment extends Fragment implements
         favorited.setTag(isFavorited);
 
         // poster background
-        Utils.loadPosterBackground(getActivity(), imageBackground,
+        TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
                 show.getString(ShowQuery.SHOW_POSTER));
 
         // next release day and time

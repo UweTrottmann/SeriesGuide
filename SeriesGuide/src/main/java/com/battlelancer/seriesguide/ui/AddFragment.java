@@ -1,11 +1,13 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,14 +20,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.util.AddShowTask;
+import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.AddIndicator;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
@@ -38,7 +42,20 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class AddFragment extends Fragment {
 
-    public static class AddShowEvent {
+    public static class OnAddingShowEvent {
+        /** Is -1 if adding all shows of a tab. Not updating other tabs then. */
+        public final int showTvdbId;
+
+        public OnAddingShowEvent(int showTvdbId) {
+            this.showTvdbId = showTvdbId;
+        }
+
+        /**
+         * Sets TVDB id to -1 to indicate all shows of a tab are added.
+         */
+        public OnAddingShowEvent() {
+            this(-1);
+        }
     }
 
     @BindView(R.id.containerAddContent) View contentContainer;
@@ -134,19 +151,61 @@ public abstract class AddFragment extends Fragment {
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // display more details in a dialog
             SearchResult show = adapter.getItem(position);
-            AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+            if (show != null && show.state != SearchResult.STATE_ADDING) {
+                if (show.state == SearchResult.STATE_ADDED) {
+                    // already in library, open it
+                    startActivity(new Intent(getContext(), OverviewActivity.class).putExtra(
+                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, show.tvdbid));
+                } else {
+                    // guard against onClick called after fragment is paged away (multi-touch)
+                    // onSaveInstanceState might already be called
+                    if (isResumed()) {
+                        // display more details in a dialog
+                        AddShowDialogFragment.showAddDialog(show, getFragmentManager());
+                    }
+                }
+            }
         }
     };
 
     /**
-     * Called if the user adds a new show through the dialog.
+     * Called if the user triggers adding a single new show through the add dialog. The show is not
+     * actually added, yet.
+     *
+     * @see #onEvent(AddShowTask.OnShowAddedEvent)
      */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe
-    public void onEvent(AddShowEvent event) {
-        adapter.notifyDataSetChanged();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(OnAddingShowEvent event) {
+        if (event.showTvdbId > 0) {
+            adapter.setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(AddShowTask.OnShowAddedEvent event) {
+        if (event.successful) {
+            setShowAdded(event.showTvdbId);
+        } else if (event.showTvdbId > 0) {
+            setShowNotAdded(event.showTvdbId);
+        } else {
+            adapter.setAllPendingNotAdded();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+        if (event.resultCode == NetworkResult.SUCCESS) {
+            setShowNotAdded(event.showTvdbId);
+        }
+    }
+
+    private void setShowAdded(int showTvdbId) {
+        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADDED);
+    }
+
+    private void setShowNotAdded(int showTvdbId) {
+        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD);
     }
 
     /**
@@ -164,23 +223,54 @@ public abstract class AddFragment extends Fragment {
 
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
-        public interface OnContextMenuClickListener {
-            void onClick(View view, int showTvdbId);
+        public interface OnItemClickListener {
+            void onAddClick(SearchResult item);
+
+            void onMenuWatchlistClick(View view, int showTvdbId);
         }
 
-        private final SgApp app;
-        private final OnContextMenuClickListener menuClickListener;
-        private final boolean hideContextMenuIfAdded;
-        private final LayoutInflater inflater;
+        private final OnItemClickListener menuClickListener;
+        private final boolean showMenuWatchlist;
+        private final boolean hideMenuWatchlistIfAdded;
 
         public AddAdapter(Activity activity, List<SearchResult> objects,
-                OnContextMenuClickListener menuClickListener,
-                boolean hideContextMenuIfAdded) {
+                OnItemClickListener menuClickListener, boolean showMenuWatchlist,
+                boolean hideMenuWatchlistIfAdded) {
             super(activity, 0, objects);
-            this.app = SgApp.from(activity);
             this.menuClickListener = menuClickListener;
-            this.hideContextMenuIfAdded = hideContextMenuIfAdded;
-            this.inflater = LayoutInflater.from(activity);
+            this.showMenuWatchlist = showMenuWatchlist;
+            this.hideMenuWatchlistIfAdded = hideMenuWatchlistIfAdded;
+        }
+
+        @Nullable
+        private SearchResult getItemForShowTvdbId(int showTvdbId) {
+            int count = getCount();
+            for (int i = 0; i < count; i++) {
+                SearchResult item = getItem(i);
+                if (item != null && item.tvdbid == showTvdbId) {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public void setStateForTvdbId(int showTvdbId, int state) {
+            SearchResult item = getItemForShowTvdbId(showTvdbId);
+            if (item != null) {
+                item.state = state;
+                notifyDataSetChanged();
+            }
+        }
+
+        public void setAllPendingNotAdded() {
+            int count = getCount();
+            for (int i = 0; i < count; i++) {
+                SearchResult item = getItem(i);
+                if (item != null && item.state == SearchResult.STATE_ADDING) {
+                    item.state = SearchResult.STATE_ADD;
+                }
+            }
+            notifyDataSetChanged();
         }
 
         @NonNull
@@ -189,7 +279,8 @@ public abstract class AddFragment extends Fragment {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_addshow, parent, false);
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_addshow, parent, false);
                 holder = new ViewHolder(convertView, menuClickListener);
                 convertView.setTag(holder);
             } else {
@@ -200,26 +291,18 @@ public abstract class AddFragment extends Fragment {
             if (item == null) {
                 return convertView; // all bets are off!
             }
-            holder.showTvdbId = item.tvdbid;
+            holder.item = item;
 
-            // hide context menu if not useful
-            holder.buttonContextMenu.setVisibility(menuClickListener == null ||
-                    (hideContextMenuIfAdded && item.isAdded) ? View.GONE : View.VISIBLE);
+            // hide watchlist menu if not useful
+            boolean showMenuWatchlistActual = showMenuWatchlist
+                    && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED);
+            holder.buttonContextMenu.setVisibility(showMenuWatchlistActual
+                    ? View.VISIBLE : View.GONE);
             // display added indicator instead of add button if already added that show
-            holder.addbutton.setVisibility(item.isAdded ? View.GONE : View.VISIBLE);
-            holder.addedIndicator.setVisibility(item.isAdded ? View.VISIBLE : View.GONE);
+            holder.addIndicator.setState(item.state);
             String showTitle = item.title;
-            holder.addedIndicator.setContentDescription(
+            holder.addIndicator.setContentDescriptionAdded(
                     getContext().getString(R.string.add_already_exists, showTitle));
-            holder.addbutton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    item.isAdded = true;
-                    EventBus.getDefault().post(new AddShowEvent());
-
-                    TaskManager.getInstance(getContext()).performAddTask(app, item);
-                }
-            });
 
             // set text properties immediately
             holder.title.setText(showTitle);
@@ -227,43 +310,40 @@ public abstract class AddFragment extends Fragment {
 
             // only local shows will have a poster path set
             // try to fall back to the first uploaded TVDB poster for all others
-            if (item.poster == null) {
-                // only load posters from caching server that are not from local shows
-                // because those are still loaded from TVDB directly
-                // and we do not want to cache them on device twice
-                Utils.loadTvdbShowPosterFromCache(getContext(), holder.poster,
-                        TvdbTools.buildFallbackPosterPath(item.tvdbid));
-            } else {
-                Utils.loadTvdbShowPoster(getContext(), holder.poster, item.poster);
+            if (TextUtils.isEmpty(item.posterPath)) {
+                item.posterPath = TvdbImageTools.firstPosterPath(item.tvdbid);
             }
+            TvdbImageTools.loadShowPosterResizeCrop(getContext(), holder.poster, item.posterPath);
 
             return convertView;
         }
 
         static class ViewHolder {
 
-            public int showTvdbId;
+            public SearchResult item;
 
-            public TextView title;
-            public TextView description;
-            public ImageView poster;
-            public View addbutton;
-            public View addedIndicator;
-            public ImageView buttonContextMenu;
+            @BindView(R.id.textViewAddTitle) public TextView title;
+            @BindView(R.id.textViewAddDescription) public TextView description;
+            @BindView(R.id.imageViewAddPoster) public ImageView poster;
+            @BindView(R.id.addIndicatorAddShow) public AddIndicator addIndicator;
+            @BindView(R.id.buttonItemAddMore) public ImageView buttonContextMenu;
 
             public ViewHolder(View view,
-                    final OnContextMenuClickListener contextMenuClickListener) {
-                title = (TextView) view.findViewById(R.id.textViewAddTitle);
-                description = (TextView) view.findViewById(R.id.textViewAddDescription);
-                poster = (ImageView) view.findViewById(R.id.imageViewAddPoster);
-                addbutton = view.findViewById(R.id.viewAddButton);
-                addedIndicator = view.findViewById(R.id.imageViewAddedIndicator);
-                buttonContextMenu = (ImageView) view.findViewById(R.id.buttonItemAddMore);
+                    final OnItemClickListener onItemClickListener) {
+                ButterKnife.bind(this, view);
+                addIndicator.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onAddClick(item);
+                        }
+                    }
+                });
                 buttonContextMenu.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (contextMenuClickListener != null) {
-                            contextMenuClickListener.onClick(v, showTvdbId);
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onMenuWatchlistClick(v, item.tvdbid);
                         }
                     }
                 });

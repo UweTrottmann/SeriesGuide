@@ -50,6 +50,10 @@
 # Gson specific classes
 -dontwarn sun.misc.Unsafe
 
+# Google API client
+# warnings due to removed old Guava version used in test classes
+-dontwarn com.google.api.client.googleapis.testing.**
+
 # OkHttp 3
 -dontwarn okhttp3.**
 

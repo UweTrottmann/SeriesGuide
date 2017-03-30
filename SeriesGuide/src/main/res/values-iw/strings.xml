@@ -69,9 +69,9 @@
   <string name="refresh">רענון</string>
   <plurals name="replies_plural">
     <item quantity="one">%d תגובה</item>
-    <item quantity="two">%d replies</item>
+    <item quantity="two">%d תגובות</item>
     <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d תגובות</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">מתחילת הסדרה</string>
@@ -165,13 +165,31 @@
   <string name="update_no_connection">התחבר לאינטרנט כדי לעדכן.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">פרקים שלא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
-  <string name="season_onenotwatched">פרק שטרם נצפה</string>
-  <string name="season_unaired">טרם שודרו</string>
-  <string name="oneotherepisode">פרק אחר</string>
-  <string name="otherepisodes">פרקים אחרים</string>
-  <string name="remaining">נותרו %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="two">%d episodes not watched</item>
+    <item quantity="many">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="two">%d other episodes</item>
+    <item quantity="many">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="two">%d to be released</item>
+    <item quantity="many">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="two">%d remaining</item>
+    <item quantity="many">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="add_empty">אין סדרות כאן.</string>
@@ -201,11 +219,11 @@
   <string name="action_lists_reorder">סדר מחדש רשימות</string>
   <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">גלו עוד</string>
+  <string name="title_popular">פופולרי</string>
+  <string name="title_digital_releases">שיחרור דיגיטלי</string>
+  <string name="title_disc_releases">שיחרור מדיסק</string>
+  <string name="movies_in_theatres">בבתי הקולנוע</string>
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
   <string name="watchlist_add">הוסף לרשימת מעקב</string>
@@ -233,16 +251,16 @@
   <string name="movies_on_watchlist">%s על רשימת המעקב</string>
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
-    <item quantity="one">%d יום</item>
-    <item quantity="two">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">יום %d</item>
+    <item quantity="two">%d ימים</item>
+    <item quantity="many">%d ימים</item>
+    <item quantity="other">%d ימים</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d שעה</item>
-    <item quantity="two">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">שעה %d</item>
+    <item quantity="two">%d שעות</item>
+    <item quantity="many">%d שעות</item>
+    <item quantity="other">%d שעות</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d דקה</item>
@@ -265,7 +283,7 @@
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
   <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">כדי להשתמש ב-SeriesGuide בענן, אפשר גישה לחשבונות שלך.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">שלח ל-Trakt.</string>
@@ -497,6 +515,6 @@
   <string name="feedback_question_rate_google">דרג/י אותנו ב- Google Play?</string>
   <string name="feedback_question_rate_amazon">דרג אותו באמזון?</string>
   <string name="feedback_question_feedback">תגיד לי איך לשפר אותו?</string>
-  <string name="feedback_action_ok">כן, בוודאי</string>
+  <string name="feedback_action_ok">יאללה, בסדר</string>
   <string name="feedback_action_nothanks">לא, תודה</string>
 </resources>

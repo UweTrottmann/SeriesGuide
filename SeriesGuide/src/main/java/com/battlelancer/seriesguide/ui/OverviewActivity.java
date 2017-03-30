@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -42,6 +41,8 @@ import org.greenrobot.eventbus.ThreadMode;
  * Hosts an {@link OverviewFragment}.
  */
 public class OverviewActivity extends BaseNavDrawerActivity {
+
+    public static final String EXTRA_INT_SHOW_TVDBID = OverviewFragment.ARG_INT_SHOW_TVDBID;
 
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
@@ -66,8 +67,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         setupActionBar();
         setupNavDrawer();
 
-        showTvdbId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
-        if (showTvdbId < 0) {
+        showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
+        if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {
             finish();
             return;
         }

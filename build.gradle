@@ -1,19 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0' // libraries, SeriesGuide
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.0-beta3' // SeriesGuide
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3' // api
+        classpath 'io.fabric.tools:gradle:1.22.1' // SeriesGuide
+    }
+}
+
 plugins {
-    id "com.github.ben-manes.versions" version "0.13.0"
+    id "com.github.ben-manes.versions" version "0.14.0"
 }
 
 subprojects {
-    buildscript {
-        repositories {
-            mavenCentral()
-            jcenter()
-        }
-    }
-
     repositories {
-        mavenCentral()
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -26,12 +33,8 @@ ext {
     androidBuildToolsVersion = '25.0.1'
 
     // API level 15+ -> version 15xxx
-    androidVersionCode = 15235
-    androidVersionName = '35.1'
+    androidVersionCode = 15245
+    androidVersionName = '36'
 
-    supportVersion = '25.1.0'
-
-    dep = [
-            androidPlugin: 'com.android.tools.build:gradle:2.2.3'
-    ]
+    supportVersion = '25.3.0'
 }

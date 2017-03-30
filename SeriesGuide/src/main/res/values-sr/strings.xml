@@ -164,13 +164,27 @@
   <string name="update_no_connection">Да би сте освежили повежите се на интернет.</string>
   <string name="update_inprogress">Ажурирање је у току, покушајте поново касније.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">неодгледаних епизода</string>
   <string name="season_allwatched">Све епизоде одгледане</string>
-  <string name="season_onenotwatched">епизода неодгледана</string>
-  <string name="season_unaired">неемитована</string>
-  <string name="oneotherepisode">друге епизоде</string>
-  <string name="otherepisodes">друге епизоде</string>
-  <string name="remaining">%s преостало</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Унеси име серије</string>
   <string name="add_empty">Овде нема серија.</string>
@@ -261,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Да би користили SeriesGuide Cloud, дозволите приступ вашим налозима.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Послато на тракт.</string>

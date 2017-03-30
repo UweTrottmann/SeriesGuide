@@ -11,11 +11,11 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
 import java.util.Date;
 
 /**
@@ -76,7 +76,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 }
 
                 // remaining count
-                setRemainingCount(context, viewHolder.remainingCount,
+                setRemainingCount(viewHolder.remainingCount,
                         cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
                 break;
             case 2:
@@ -108,7 +108,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         }
 
         // poster
-        Utils.loadTvdbShowPoster(context, viewHolder.poster,
+        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
                 cursor.getString(Query.SHOW_POSTER));
 
         // context menu

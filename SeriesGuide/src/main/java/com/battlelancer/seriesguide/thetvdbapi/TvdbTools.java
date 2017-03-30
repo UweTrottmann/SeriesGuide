@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,6 +19,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -74,10 +76,6 @@ import timber.log.Timber;
  */
 public class TvdbTools {
 
-    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners/";
-
-    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
-
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
     private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
@@ -110,31 +108,6 @@ public class TvdbTools {
     public TvdbTools(SgApp app) {
         this.app = app;
         app.getServicesComponent().inject(this);
-    }
-
-    /**
-     * Builds a full url for a TVDb show poster using the given image path.
-     */
-    public static String buildPosterUrl(String imagePath) {
-        return TVDB_MIRROR_BANNERS_CACHE + imagePath;
-    }
-
-    /**
-     * Builds a fall-back path for a TVDb show poster using the TVDB id, equals the first image
-     * uploaded.
-     */
-    public static String buildFallbackPosterPath(int showTvdbId) {
-        return "posters/" + showTvdbId + "-1.jpg";
-    }
-
-    /**
-     * Builds a full url for a TVDb screenshot (episode still) using the given image path.
-     *
-     * <p> May also be used with posters, but a much larger version than {@link
-     * #buildPosterUrl(String)} will be downloaded as a result.
-     */
-    public static String buildScreenshotUrl(String imagePath) {
-        return TVDB_MIRROR_BANNERS + imagePath;
     }
 
     /**
@@ -179,7 +152,8 @@ public class TvdbTools {
         }
 
         // get show and determine the language to use
-        Show show = getShowDetailsWithHexagon(showTvdbId, language);
+        boolean hexagonEnabled = HexagonSettings.isEnabled(app);
+        Show show = getShowDetailsWithHexagon(showTvdbId, language, hexagonEnabled);
         language = show.language;
 
         // get episodes and store everything to the database
@@ -188,7 +162,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
-        if (HexagonTools.isSignedIn(app)) {
+        if (hexagonEnabled) {
             // ...from Hexagon
             boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
             if (!success) {
@@ -433,15 +407,22 @@ public class TvdbTools {
      * stored on Hexagon.
      */
     @NonNull
-    private Show getShowDetailsWithHexagon(int showTvdbId, @Nullable String language)
+    private Show getShowDetailsWithHexagon(int showTvdbId, @Nullable String language,
+            boolean hexagonEnabled)
             throws TvdbException {
         // check for show on hexagon
-        com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow;
-        try {
-            hexagonShow = ShowTools.Download.showFromHexagon(app, showTvdbId);
-        } catch (IOException e) {
-            HexagonTools.trackFailedRequest(app, "get show details", e);
-            throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+        com.uwetrottmann.seriesguide.backend.shows.model.Show hexagonShow = null;
+        if (hexagonEnabled) {
+            try {
+                com.uwetrottmann.seriesguide.backend.shows.Shows showsService =
+                        app.getHexagonTools().getShowsService();
+                if (showsService != null) {
+                    hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
+                }
+            } catch (IOException e) {
+                HexagonTools.trackFailedRequest(app, "get show details", e);
+                throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+            }
         }
 
         // if no language is given, try to get the language stored on hexagon
@@ -687,8 +668,8 @@ public class TvdbTools {
 
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
                 show.tvdb_id);
-        final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(
-                localEpisodeIds); // just copy episodes list, then remove valid ones
+        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
+                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
         final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdb_id);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();

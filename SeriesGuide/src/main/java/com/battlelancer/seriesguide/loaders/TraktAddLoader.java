@@ -155,7 +155,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        SparseArrayCompat<String> existingShows = ShowTools.getShowTvdbIdsAndPosters(context);
+        SparseArrayCompat<String> existingPosterPaths = ShowTools.getShowTvdbIdsAndPosters(context);
         for (Show show : traktShows) {
             if (show.ids == null || show.ids.tvdb == null) {
                 // has no TheTVDB id
@@ -167,11 +167,11 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             // search results return an overview, while trending and other lists do not
             result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
                     : show.year != null ? String.valueOf(show.year) : "";
-            if (existingShows != null && existingShows.indexOfKey(show.ids.tvdb) >= 0) {
+            if (existingPosterPaths != null && existingPosterPaths.indexOfKey(show.ids.tvdb) >= 0) {
                 // is already in local database
-                result.isAdded = true;
+                result.state = SearchResult.STATE_ADDED;
                 // use the poster we fetched for it (or null if there is none)
-                result.poster = existingShows.get(show.ids.tvdb);
+                result.posterPath = existingPosterPaths.get(show.ids.tvdb);
             }
             if (overrideLanguage != null) {
                 result.language = overrideLanguage;

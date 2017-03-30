@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 
 /**
  * Tells about trakt and how it integrates with SeriesGuide, allows to proceed to entering
@@ -57,7 +57,7 @@ public class ConnectTraktFragment extends Fragment {
 
         // show hexagon + trakt conflict warning
         textViewHexagonWarning.setVisibility(
-                HexagonTools.isSignedIn(getActivity()) ? View.VISIBLE : View.GONE);
+                HexagonSettings.isEnabled(getActivity()) ? View.VISIBLE : View.GONE);
 
         return v;
     }

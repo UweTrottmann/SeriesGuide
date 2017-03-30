@@ -162,13 +162,19 @@
   <string name="update_no_connection">更新するために、インターネットに接続してください。</string>
   <string name="update_inprogress">更新を実行中です。後でもう一度やり直してください。</string>
   <!-- Seasons -->
-  <string name="season_watchcount">エピソードを未視聴</string>
   <string name="season_allwatched">すべてのエピソードを視聴済</string>
-  <string name="season_onenotwatched">エピソードを未視聴</string>
-  <string name="season_unaired">未放映</string>
-  <string name="oneotherepisode">他のエピソード</string>
-  <string name="otherepisodes">他のエピソード</string>
-  <string name="remaining">残り %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="other">%d のエピソードを見ていません</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="other">%d の他のエピソード</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="other">%d リリースされます</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="other">%d 残り</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">番組名を入力</string>
   <string name="add_empty">番組はありません。</string>
@@ -253,7 +259,7 @@
   <string name="hexagon_remove_account_failure">アカウントを削除できませんでした。</string>
   <string name="hexagon_remove_account_confirmation">アカウントを削除すると、SeriesGuide クラウドからすべての番組や映画が削除されます。他の接続されているデバイスも同様に削除することを確認してください。</string>
   <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
-  <string name="hexagon_permission_missing">SeriesGuide クラウドを使用するために、あなたのアカウントへのアクセスを許可してください。</string>
+  <string name="hexagon_signed_out">SeriesGuide クラウドからサインアウトします。</string>
   <string name="hexagon_google_play_missing">SeriesGuide クラウドを使用するために、Google Play サービスが必要です。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt に送信しています。</string>

@@ -164,13 +164,27 @@
   <string name="update_no_connection">Pre aktualizáciu sa pripojte k internetu.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">nevidených epizód</string>
   <string name="season_allwatched">Všetky epizódy videné</string>
-  <string name="season_onenotwatched">epizóda nevidená</string>
-  <string name="season_unaired">neodvysielané</string>
-  <string name="oneotherepisode">iná epizóda</string>
-  <string name="otherepisodes">iné epizódy</string>
-  <string name="remaining">%s do konca</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d nevidená epizóda</item>
+    <item quantity="few">%d nevidené epizódy</item>
+    <item quantity="other">%d nevidených epizód</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d ďalšia epizóda</item>
+    <item quantity="few">%d ďalšie epizódy</item>
+    <item quantity="other">%d ďalších epizód</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d neodvysielaná</item>
+    <item quantity="few">%d neodvysielané</item>
+    <item quantity="other">%d neodvysielaných</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">Zostáva %d</item>
+    <item quantity="few">Zostávajú %d</item>
+    <item quantity="other">Zostáva %d</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="add_empty">Nie sú tu žiadne seriály.</string>
@@ -261,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Účet sa nedá odstrániť.</string>
   <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
   <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Pre použitie SeriesGuide Cloud, povoľte prístup k účtom.</string>
+  <string name="hexagon_signed_out">Ste odhlásený zo SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Pre použitie SeriesGuide Cloud sú potrebné Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>

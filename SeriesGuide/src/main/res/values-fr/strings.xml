@@ -163,13 +163,23 @@
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez ultérieurement.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">épisodes non vus</string>
   <string name="season_allwatched">Tous les épisodes vus</string>
-  <string name="season_onenotwatched">épisode non vu</string>
-  <string name="season_unaired">non diffusé</string>
-  <string name="oneotherepisode">autre épisode</string>
-  <string name="otherepisodes">autres épisodes</string>
-  <string name="remaining">%s à voir</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d épisode non vus</item>
+    <item quantity="other">%d épisodes non vus</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d autre épisode</item>
+    <item quantity="other">%d autres épisodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d à venir</item>
+    <item quantity="other">%d à venir</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d restants</item>
+    <item quantity="other">%d restants</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="add_empty">Il n\'y a aucune série ici.</string>
@@ -199,11 +209,11 @@
   <string name="action_lists_reorder">Réorganiser les listes</string>
   <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">A découvrir</string>
+  <string name="title_popular">Populaire</string>
+  <string name="title_digital_releases">Versions numériques</string>
+  <string name="title_disc_releases">Sorties DVD</string>
+  <string name="movies_in_theatres">Dans les salles</string>
   <string name="movies_collection">Collection</string>
   <string name="movies_watchlist">Liste à voir</string>
   <string name="watchlist_add">Ajouter dans la liste à voir</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Problème lors de la suppression du compte.</string>
   <string name="hexagon_remove_account_confirmation">Retirer votre compte supprimera tous les films et séries se trouvant sur le cloud SeriesGuide. Assurez-vous de le retirer également sur vos autres appareils connectés.</string>
   <string name="hexagon_api_queued">Envoi vers SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">Pour utiliser SeriesGuide Cloud, autoriser l’accès à vos comptes.</string>
+  <string name="hexagon_signed_out">Déconnecté du cloud SeriesGuide.</string>
   <string name="hexagon_google_play_missing">Pour utiliser SeriesGuide Cloud les Services Google Play sont nécessaires.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Envoi vers trakt.</string>

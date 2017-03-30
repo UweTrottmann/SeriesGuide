@@ -1,4 +1,3 @@
-
 package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -53,15 +53,14 @@ import retrofit2.Response;
 import timber.log.Timber;
 
 /**
- * {@link AbstractThreadedSyncAdapter} which updates the show library.
+ * {@link AbstractThreadedSyncAdapter} which syncs show and movie data using TVDB, trakt, TMDB and
+ * Cloud.
  */
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    private final SgApp app;
-    @Inject Lazy<ConfigurationService> tmdbConfigService;
+    private static final int SYNC_INTERVAL_MINIMUM_MINUTES = 5;
 
     public enum SyncType {
-
         DELTA(0),
         SINGLE(1),
         FULL(2);
@@ -75,6 +74,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         public static SyncType from(int id) {
             return values()[id];
         }
+    }
+
+    public enum UpdateResult {
+        SUCCESS, INCOMPLETE
     }
 
     public interface SyncInitBundle {
@@ -95,8 +98,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
     }
 
-    private static final int DEFAULT_SYNC_INTERVAL_MINUTES = 20;
-
     /**
      * Calls {@link ContentResolver} {@code .requestSyncIfConnected()} if there is no pending sync
      * already.
@@ -114,6 +115,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         SgSyncAdapter.requestSyncIfConnected(context, SyncType.DELTA, 0);
+    }
+
+    private static boolean isTimeForSync(Context context, long currentTime) {
+        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
+        return (currentTime - previousUpdateTime) >
+                SYNC_INTERVAL_MINIMUM_MINUTES * DateUtils.MINUTE_IN_MILLIS;
     }
 
     /**
@@ -231,15 +238,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return isSyncActive;
     }
 
+    private final SgApp app;
+    @Inject Lazy<ConfigurationService> tmdbConfigService;
+
     public SgSyncAdapter(SgApp app, boolean autoInitialize) {
         super(app, autoInitialize);
         this.app = app;
         app.getServicesComponent().inject(this);
         Timber.d("Creating sync adapter");
-    }
-
-    public enum UpdateResult {
-        SUCCESS, INCOMPLETE
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -321,11 +327,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // sync with Hexagon or trakt
             final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
+            @SuppressLint("UseSparseArrays")
             final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                if (HexagonTools.isSignedIn(getContext())) {
+                if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
                     boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);
@@ -379,7 +386,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 long fakeLastUpdateTime;
                 if (failed < 4) {
                     fakeLastUpdateTime = currentTime
-                            - ((DEFAULT_SYNC_INTERVAL_MINUTES - (int) Math.pow(2, failed + 2))
+                            - ((SYNC_INTERVAL_MINIMUM_MINUTES - (int) Math.pow(2, failed + 2))
                             * DateUtils.MINUTE_IN_MILLIS);
                 } else {
                     fakeLastUpdateTime = currentTime;
@@ -571,11 +578,5 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         editor.commit();
 
         return UpdateResult.SUCCESS;
-    }
-
-    private static boolean isTimeForSync(Context context, long currentTime) {
-        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
-        return (currentTime - previousUpdateTime) >
-                DEFAULT_SYNC_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
     }
 }

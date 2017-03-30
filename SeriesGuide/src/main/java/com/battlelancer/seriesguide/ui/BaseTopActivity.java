@@ -15,10 +15,10 @@ import android.view.animation.AnimationUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import timber.log.Timber;
 
 /**
  * Activities at the top of the navigation hierarchy, display the nav drawer upon pressing the
@@ -104,7 +104,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     protected void onShowAutoBackupMissingFilesWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing backup files warning: existing snackbar.");
             return;
         }
 
@@ -120,7 +120,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     @Override
     protected void onShowAutoBackupPermissionWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing backup permission warning: existing snackbar.");
             return;
         }
 
@@ -163,28 +163,27 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
-    protected void onShowCloudPermissionWarning() {
+    protected void onShowCloudAccountWarning() {
         if (snackbar != null && snackbar.isShown()) {
-            // do not replace an existing snackbar
+            Timber.d("NOT showing Cloud account warning: existing snackbar.");
             return;
         }
 
         Snackbar newSnackbar = Snackbar
-                .make(getSnackbarParentView(), R.string.hexagon_permission_missing,
+                .make(getSnackbarParentView(), R.string.hexagon_signed_out,
                         Snackbar.LENGTH_INDEFINITE);
         newSnackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_ACTION
-                        || event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning
-                    // so remove stored account name so this warning is not displayed again
-                    HexagonTools.storeAccountName(BaseTopActivity.this, null);
+                if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
+                    // user has dismissed warning, so disable Cloud
+                    SgApp.from(BaseTopActivity.this).getHexagonTools().setDisabled();
                 }
             }
-        }).setAction(R.string.preferences, new View.OnClickListener() {
+        }).setAction(R.string.hexagon_signin, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // forward to cloud setup which can help fix the account issue
                 startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
             }
         }).show();

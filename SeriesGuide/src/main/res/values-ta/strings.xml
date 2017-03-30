@@ -163,13 +163,23 @@
   <string name="update_no_connection">செய்ய புதுப்பித்தல் இணையத்திற்கு இணைக்கவும்.</string>
   <string name="update_inprogress">ஒரு புதுப்பித்தல் இயங்கிக் கொண்டிருக்கிறது, பிறகு மீண்டும் முயற்சிக்கவும்.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episodes இல்லை பார்த்த</string>
   <string name="season_allwatched">அனைத்து episodes பார்த்த</string>
-  <string name="season_onenotwatched">இல்லை பார்த்த சம்பவம்</string>
-  <string name="season_unaired">unaired</string>
-  <string name="oneotherepisode">மற்ற சம்பவம்</string>
-  <string name="otherepisodes">மற்ற episodes</string>
-  <string name="remaining">மீதமுள்ள %s</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">ஒரு காட்சி பெயர் தட்டச்சு செய்யவும்</string>
   <string name="add_empty">எந்த காட்சிகள் இங்கே உள்ளன.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">கணக்கை அகற்ற முடியவில்லை.</string>
   <string name="hexagon_remove_account_confirmation">உங்கள் கணக்கு அகற்றுவது இருக்கும் அனைத்து காட்சிகள் மற்றும் திரைப்படங்கள் இருந்து நீக்க SeriesGuide மேகம். மற்ற இணைக்கப்பட்ட சாதனங்கள் நன்றாக அதை அகற்ற உறுதி.</string>
   <string name="hexagon_api_queued">SeriesGuide மேகம் அனுப்புகிறது.</string>
-  <string name="hexagon_permission_missing">SeriesGuide மேகம் பயன்படுத்த, உங்கள் கணக்குகளை பெற அனுமதி.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">SeriesGuide மேகம் பயன்படுத்த, விளையாட சேவைகளை Google தேவைப்படுகின்றது.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>

@@ -163,13 +163,23 @@
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">katsomatonta jaksoa</string>
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
-  <string name="season_onenotwatched">katsomaton jakso</string>
-  <string name="season_unaired">esittämätöntä</string>
-  <string name="oneotherepisode">muu jakso</string>
-  <string name="otherepisodes">muuta jaksoa</string>
-  <string name="remaining">%s jäljellä</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d jakso katsottavana</item>
+    <item quantity="other">%d jaksoa katsottavana</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d muu jakso</item>
+    <item quantity="other">%d muuta jaksoa</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d lähetettävänä</item>
+    <item quantity="other">%d lähetettävänä</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d jäljellä</item>
+    <item quantity="other">%d jäljellä</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
-  <string name="hexagon_permission_missing">Salli pääsy tiliisi käyttääksesi SeriesGuide Cloudia.</string>
+  <string name="hexagon_signed_out">Kirjauduttu ulos seriesGuide Cloudista.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>

@@ -163,13 +163,23 @@
   <string name="update_no_connection">Koble til internett for å oppdatere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
-  <string name="season_onenotwatched">episode ikke sett</string>
-  <string name="season_unaired">ikke sendt</string>
-  <string name="oneotherepisode">annen episode</string>
-  <string name="otherepisodes">andre episoder</string>
-  <string name="remaining">%s gjenstår</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="other">%d episodes not watched</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="other">%d other episodes</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="add_empty">Det er ingen serier her.</string>
@@ -257,7 +267,7 @@
   <string name="hexagon_remove_account_failure">Klarte ikke fjerne kontoen.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_permission_missing">For å kunne bruke SeriesGuide Cloud må du gi tilgang til kontoene dine.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>

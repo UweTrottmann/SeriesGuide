@@ -26,13 +26,13 @@ public class FirstRunView extends CardView {
 
     @IntDef({ ButtonType.DISMISS,
             ButtonType.ADD_SHOW,
-            ButtonType.CONNECT_TRAKT,
+            ButtonType.SIGN_IN,
             ButtonType.RESTORE_BACKUP })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ButtonType {
         int DISMISS = 0;
         int ADD_SHOW = 1;
-        int CONNECT_TRAKT = 2;
+        int SIGN_IN = 2;
         int RESTORE_BACKUP = 3;
     }
 
@@ -68,10 +68,10 @@ public class FirstRunView extends CardView {
         RelativeLayout noSpoilerView = ButterKnife.findById(this, R.id.containerFirstRunNoSpoilers);
         final CheckBox noSpoilerCheckBox = ButterKnife.findById(noSpoilerView,
                 R.id.checkboxFirstRunNoSpoilers);
-        Button addShowButton = ButterKnife.findById(this, R.id.buttonFirstRunAddShow);
-        Button connectTraktButton = ButterKnife.findById(this, R.id.buttonFirstRunTrakt);
-        Button restoreBackupButton = ButterKnife.findById(this, R.id.buttonFirstRunRestore);
-        ImageButton dismissButton = ButterKnife.findById(this, R.id.buttonFirstRunDismiss);
+        Button buttonAddShow = ButterKnife.findById(this, R.id.buttonFirstRunAddShow);
+        Button buttonSignIn = ButterKnife.findById(this, R.id.buttonFirstRunSignIn);
+        Button buttonRestoreBackup = ButterKnife.findById(this, R.id.buttonFirstRunRestore);
+        ImageButton buttonDismiss = ButterKnife.findById(this, R.id.buttonFirstRunDismiss);
 
         noSpoilerView.setOnClickListener(new OnClickListener() {
             @Override
@@ -89,27 +89,27 @@ public class FirstRunView extends CardView {
             }
         });
         noSpoilerCheckBox.setChecked(DisplaySettings.preventSpoilers(getContext()));
-        addShowButton.setOnClickListener(new OnClickListener() {
+        buttonAddShow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.ADD_SHOW));
             }
         });
-        connectTraktButton.setOnClickListener(new OnClickListener() {
+        buttonSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault()
-                        .post(new ButtonEvent(FirstRunView.this, ButtonType.CONNECT_TRAKT));
+                        .post(new ButtonEvent(FirstRunView.this, ButtonType.SIGN_IN));
             }
         });
-        restoreBackupButton.setOnClickListener(new OnClickListener() {
+        buttonRestoreBackup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault()
                         .post(new ButtonEvent(FirstRunView.this, ButtonType.RESTORE_BACKUP));
             }
         });
-        dismissButton.setOnClickListener(new OnClickListener() {
+        buttonDismiss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 setFirstRunDismissed();

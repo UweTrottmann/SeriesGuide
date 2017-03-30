@@ -66,7 +66,6 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
 
     private LocalizationAdapter adapter;
     int type;
-    boolean listVisible;
 
     @Nullable
     @Override

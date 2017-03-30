@@ -16,9 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Set inputType as it does not default to (single-line) text like EditText. -->
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:hint="@string/list_title_hint" />
 
         </android.support.design.widget.TextInputLayout>

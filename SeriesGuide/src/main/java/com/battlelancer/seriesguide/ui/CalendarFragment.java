@@ -134,10 +134,10 @@ public class CalendarFragment extends Fragment implements
         super.onResume();
 
         // prevent stale upcoming/recent episodes, also:
-        /**
-         * Workaround for loader issues on config changes. For some reason the
-         * CursorLoader holds on to a cursor with old data. See
-         * https://github.com/UweTrottmann/SeriesGuide/issues/257.
+        /*
+          Workaround for loader issues on config changes. For some reason the
+          CursorLoader holds on to a cursor with old data. See
+          https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
         boolean isLoaderExists = getLoaderManager().getLoader(getLoaderId()) != null;
         getLoaderManager().initLoader(getLoaderId(), null, this);
@@ -249,6 +249,12 @@ public class CalendarFragment extends Fragment implements
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
             final long id) {
+        if (!isResumed()) {
+            // guard against being called after fragment is paged away (multi-touch)
+            // adapter cursor might no longer have data
+            return false;
+        }
+
         PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
         Menu menu = popupMenu.getMenu();
 
@@ -389,7 +395,7 @@ public class CalendarFragment extends Fragment implements
     @SuppressLint("CommitPrefEdits")
     private void toggleFilterSetting(MenuItem item, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putBoolean(key, !item.isChecked()).commit();
+        prefs.edit().putBoolean(key, !item.isChecked()).apply();
 
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();

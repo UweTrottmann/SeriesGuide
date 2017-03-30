@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -72,7 +73,7 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
                                 query.getLong(Query.FIRSTAIREDMS),
                                 query.getString(Query.SHOW_TITLE),
                                 episodeString,
-                                query.getString(Query.POSTER)
+                                TvdbImageTools.smallSizeUrl(query.getString(Query.POSTER_PATH))
                         )
                         .tvdbIds(query.getInt(Query.EPISODE_TVDBID),
                                 query.getInt(Query.SHOW_TVDBID))
@@ -120,6 +121,6 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
         int SHOW_TVDBID = 6;
         int SHOW_TITLE = 7;
         int NETWORK = 8;
-        int POSTER = 9;
+        int POSTER_PATH = 9;
     }
 }

@@ -19,7 +19,7 @@
   <string name="season">Сезон</string>
   <string name="season_number">Сезон %s</string>
   <string name="seasons">Сезоны</string>
-  <string name="specialseason">Особые эпизоды</string>
+  <string name="specialseason">Особые выпуски</string>
   <!-- Descriptions -->
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
@@ -35,7 +35,7 @@
   <string name="action_open">Открыть</string>
   <string name="sync_manually">Синхронизировать вручную</string>
   <string name="sync_and_update">Синхронизировать и обновить</string>
-  <string name="sync_and_download_all">Синхронизировать и загрузить все</string>
+  <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -164,13 +164,27 @@
   <string name="update_no_connection">Для обновления подключитесь к Интернет.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <!-- Seasons -->
-  <string name="season_watchcount">не просмотрено</string>
   <string name="season_allwatched">Все эпизоды просмотрены</string>
-  <string name="season_onenotwatched">эпизод не просмотрен</string>
-  <string name="season_unaired">не транслировались</string>
-  <string name="oneotherepisode">другой эпизод</string>
-  <string name="otherepisodes">другие эпизоды</string>
-  <string name="remaining">%s осталось</string>
+  <plurals name="not_watched_episodes_plural">
+    <item quantity="one">%d episode not watched</item>
+    <item quantity="few">%d episodes not watched</item>
+    <item quantity="other">%d серий не просмотрено</item>
+  </plurals>
+  <plurals name="other_episodes_plural">
+    <item quantity="one">%d other episode</item>
+    <item quantity="few">%d other episodes</item>
+    <item quantity="other">%d других серий</item>
+  </plurals>
+  <plurals name="not_released_episodes_plural">
+    <item quantity="one">%d to be released</item>
+    <item quantity="few">%d to be released</item>
+    <item quantity="other">%d to be released</item>
+  </plurals>
+  <plurals name="remaining_episodes_plural">
+    <item quantity="one">%d remaining</item>
+    <item quantity="few">%d remaining</item>
+    <item quantity="other">%d remaining</item>
+  </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="add_empty">Здесь нет сериалов.</string>
@@ -200,11 +214,11 @@
   <string name="action_lists_reorder">Сортировка списков</string>
   <string name="error_name_already_exists">Список с таким именем уже существует</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Подборка</string>
+  <string name="title_popular">Популярные</string>
+  <string name="title_digital_releases">Цифровые версии</string>
+  <string name="title_disc_releases">Диски</string>
+  <string name="movies_in_theatres">Смотрите в кинотеатрах</string>
   <string name="movies_collection">Коллекция</string>
   <string name="movies_watchlist">Список просмотра</string>
   <string name="watchlist_add">Добавить в список просмотра</string>
@@ -238,12 +252,12 @@
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d час</item>
+    <item quantity="few">%d часа</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минута</item>
+    <item quantity="few">%d минуты</item>
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Hexagon -->
@@ -261,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
   <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
   <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
-  <string name="hexagon_permission_missing">Чтобы использовать облако SeriesGuide, разрешите доступ к вашим аккаунтам.</string>
+  <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Отправка в trakt.</string>
@@ -309,7 +323,7 @@
   <string name="rating9">Превосходно</string>
   <plurals name="votes">
     <item quantity="one">%d голос</item>
-    <item quantity="few">%d голос</item>
+    <item quantity="few">%d голоса</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
@@ -327,7 +341,7 @@
   <string name="prefs_category_advanced">Дополнительно</string>
   <string name="prefs_category_about">О программе</string>
   <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
-  <string name="pref_onlyfuturesummary">Не показывать транслируемые эпизоды</string>
+  <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>
   <string name="pref_onlyseasoneps">Скрывать особые эпизоды</string>
   <string name="pref_onlyseasonepssummary">Особые эпизоды исчезают везде кроме списка сезона</string>
   <string name="pref_exactdates">Отображать точные даты</string>

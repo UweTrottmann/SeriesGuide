@@ -7,11 +7,17 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class HexagonSettings {
 
     public static final String AUDIENCE
             = "server:client_id:137959300653-9pg0ulu5d3d6jhm4fotn2onk789vsob7.apps.googleusercontent.com";
+
+    public static final String KEY_ENABLED = "com.battlelancer.seriesguide.hexagon.v2.enabled";
+
+    public static final String KEY_SHOULD_VALIDATE_ACCOUNT
+            = "com.battlelancer.seriesguide.hexagon.v2.shouldFixAccount";
 
     public static final String KEY_ACCOUNT_NAME
             = "com.battlelancer.seriesguide.hexagon.v2.accountname";
@@ -41,6 +47,23 @@ public class HexagonSettings {
             = "com.battlelancer.seriesguide.hexagon.v2.lastsync.lists";
 
     /**
+     * If Cloud is enabled and Cloud specific actions should be performed or UI be shown.
+     */
+    public static boolean isEnabled(Context context) {
+        return Utils.hasAccessToX(context) && PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_ENABLED, false);
+    }
+
+    /**
+     * Returns true if there is an issue with the current account and the user should be sent to the
+     * setup screen.
+     */
+    public static boolean shouldValidateAccount(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SHOULD_VALIDATE_ACCOUNT, false);
+    }
+
+    /**
      * Returns the account name used for authenticating against Hexagon, or null if not signed in.
      */
     @Nullable
@@ -66,8 +89,9 @@ public class HexagonSettings {
     }
 
     private static void setSetupState(Context context, boolean complete) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit().putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, complete).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(HexagonSettings.KEY_SETUP_COMPLETED, complete)
+                .apply();
     }
 
     /**
@@ -129,7 +153,7 @@ public class HexagonSettings {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putBoolean(KEY_MERGED_SHOWS, hasMergedShows)
-                .commit();
+                .apply();
     }
 
     public static long getLastEpisodesSyncTime(Context context) {
@@ -148,14 +172,13 @@ public class HexagonSettings {
         return getLastSyncTime(context, KEY_LAST_SYNC_LISTS);
     }
 
-    @SuppressLint("CommitPrefEdits")
     private static long getLastSyncTime(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         long lastSync = prefs.getLong(key, 0);
         if (lastSync == 0) {
             lastSync = System.currentTimeMillis(); // not synced yet, then last time is now!
-            prefs.edit().putLong(key, lastSync).commit();
+            prefs.edit().putLong(key, lastSync).apply();
         }
 
         return lastSync;

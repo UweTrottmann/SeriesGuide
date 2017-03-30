@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.ListsTools;
 import java.util.HashSet;
@@ -82,8 +83,8 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
                 }
 
                 // add list
-                String listName = editTextName.getText().toString();
-                ListsTools.addList(getContext(), listName);
+                String listName = editTextName.getText().toString().trim();
+                ListsTools.addList(SgApp.from(getActivity()), listName);
 
                 dismiss();
             }

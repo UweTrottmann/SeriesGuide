@@ -1,18 +1,14 @@
 package com.battlelancer.seriesguide.backend;
 
-import android.Manifest;
-import android.accounts.AccountManager;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.accounts.Account;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +18,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -39,9 +42,8 @@ import timber.log.Timber;
  */
 public class CloudSetupFragment extends Fragment {
 
-    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
-    private static final int REQUEST_CODE_SIGN_IN = 1;
-    private static final int REQUEST_ACCOUNT_PICKER = 2;
+    private static final int REQUEST_SIGN_IN = 1;
+    private static final String ACTION_SIGN_IN = "sign-in";
 
     private Button buttonAction;
     private TextView textViewDescription;
@@ -49,13 +51,12 @@ public class CloudSetupFragment extends Fragment {
     private ProgressBar progressBar;
     private Button buttonRemoveAccount;
     private TextView textViewWarning;
-
-    private HexagonSetupTask hexagonSetupTask;
-
-    private boolean isProgressLocked;
-
-    private boolean isGooglePlayMissingLocked;
     private Snackbar snackbar;
+
+    private GoogleApiClient googleApiClient;
+    @Nullable private GoogleSignInAccount signInAccount;
+    private HexagonTools hexagonTools;
+    private HexagonSetupTask hexagonSetupTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,10 +83,14 @@ public class CloudSetupFragment extends Fragment {
         buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setProgressVisible(true);
                 DialogFragment f = new RemoveCloudAccountDialogFragment();
                 f.show(getFragmentManager(), "remove-cloud-account");
             }
         });
+
+        updateViews();
+        setProgressVisible(true);
 
         return v;
     }
@@ -94,24 +99,158 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        updateViewStates();
+        hexagonTools = SgApp.from(getActivity()).getHexagonTools();
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
+                .build();
+    }
 
-        // lock down UI if task is still running
-        if (hexagonSetupTask != null
-                && hexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
-            setProgressLock(true); // prevent duplicate tasks
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (!isHexagonSetupRunning()) {
+            // check if the user is still signed in
+            OptionalPendingResult<GoogleSignInResult> pendingResult = Auth.GoogleSignInApi
+                    .silentSignIn(googleApiClient);
+            if (pendingResult.isDone()) {
+                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+                // and the GoogleSignInResult will be available instantly.
+                Timber.d("Got cached sign-in");
+                handleSignInResult(pendingResult.get());
+            } else {
+                // If the user has not previously signed in on this device or the sign-in has expired,
+                // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+                // single sign-on will occur in this branch.
+                Timber.d("Trying async sign-in");
+                pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        handleSignInResult(googleSignInResult);
+                    }
+                });
+            }
         }
     }
 
-    private void updateViewStates() {
-        // setup not in progress
-        progressBar.setVisibility(View.GONE);
-        // warn about changes in behavior with trakt
-        textViewWarning.setVisibility(
-                TraktCredentials.get(getActivity()).hasCredentials() ? View.VISIBLE : View.GONE);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
 
-        // not signed in?
-        if (!HexagonTools.isSignedIn(getActivity())) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (isHexagonSetupRunning()) {
+            hexagonSetupTask.cancel(true);
+        }
+        hexagonSetupTask = null;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(RemoveCloudAccountDialogFragment.CanceledEvent event) {
+        setProgressVisible(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(RemoveCloudAccountDialogFragment.AccountRemovedEvent event) {
+        event.handle(getActivity());
+        setProgressVisible(false);
+        updateViews();
+    }
+
+    /**
+     * On sign-in success, saves the signed in Google account and auto-starts setup if Cloud is not
+     * enabled, yet. On sign-in failure disables Cloud.
+     */
+    private void handleSignInResult(GoogleSignInResult result) {
+        boolean signedIn = result.isSuccess();
+        if (signedIn) {
+            Timber.i("Signed in with Google.");
+            signInAccount = result.getSignInAccount();
+        } else {
+            // not or no longer signed in
+            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, result.getStatus());
+            signInAccount = null;
+            hexagonTools.setDisabled();
+        }
+
+        setProgressVisible(false);
+        updateViews();
+
+        if (signedIn && Utils.hasAccessToX(getContext())
+                && !HexagonSettings.isEnabled(getContext())) {
+            // auto-start setup if sign in succeeded and Cloud can be, but is not enabled, yet
+            Timber.i("Auto-start Cloud setup.");
+            startHexagonSetup();
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(signInIntent, REQUEST_SIGN_IN);
+    }
+
+    private void signOut() {
+        setProgressVisible(true);
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        setProgressVisible(false);
+
+                        if (status.isSuccess()) {
+                            Timber.i("Signed out of Google.");
+                            signInAccount = null;
+                            hexagonTools.setDisabled();
+                            updateViews();
+                        } else {
+                            hexagonTools.trackSignInFailure("sign-out", status);
+                        }
+                    }
+                });
+    }
+
+    private void updateViews() {
+        // warn about changes in behavior with trakt
+        textViewWarning.setVisibility(TraktCredentials.get(getActivity()).hasCredentials()
+                ? View.VISIBLE : View.GONE);
+
+        // hexagon enabled and account looks fine?
+        if (HexagonSettings.isEnabled(getContext())
+                && !HexagonSettings.shouldValidateAccount(getContext())) {
+            textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
+            textViewUsername.setVisibility(View.VISIBLE);
+            textViewDescription.setText(R.string.hexagon_signed_in);
+
+            // enable sign-out
+            buttonAction.setText(R.string.hexagon_signout);
+            buttonAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signOut();
+                }
+            });
+            // enable account removal
+            buttonRemoveAccount.setVisibility(View.VISIBLE);
+        } else {
             // did try to setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(getActivity())) {
                 // show error message
@@ -120,6 +259,7 @@ public class CloudSetupFragment extends Fragment {
                 textViewDescription.setText(R.string.hexagon_description);
             }
             textViewUsername.setVisibility(View.GONE);
+
             // enable sign-in
             buttonAction.setText(R.string.hexagon_signin);
             buttonAction.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +267,7 @@ public class CloudSetupFragment extends Fragment {
                 public void onClick(View v) {
                     // restrict access to supporters
                     if (Utils.hasAccessToX(getActivity())) {
-                        trySignIn();
+                        startHexagonSetup();
                     } else {
                         Utils.advertiseSubscription(getActivity());
                     }
@@ -135,202 +275,49 @@ public class CloudSetupFragment extends Fragment {
             });
             // disable account removal
             buttonRemoveAccount.setVisibility(View.GONE);
-            return;
         }
-
-        // signed in!
-        textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
-        textViewUsername.setVisibility(View.VISIBLE);
-
-        // enable sign-out
-        textViewDescription.setText(R.string.hexagon_signed_in);
-        buttonAction.setText(R.string.hexagon_signout);
-        buttonAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-        // enable account removal
-        buttonRemoveAccount.setVisibility(View.VISIBLE);
     }
 
     /**
-     * Disables the action button and shows a progress bar.
+     * Disables buttons and shows a progress bar.
      */
-    private void setProgressLock(boolean isLocked) {
-        isProgressLocked = isLocked;
-        progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+    private void setProgressVisible(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
 
-        // always disable if no Google Play services available
-        if (isGooglePlayMissingLocked) {
-            buttonAction.setEnabled(false);
-            return;
-        }
-        buttonAction.setEnabled(!isLocked);
-        buttonRemoveAccount.setEnabled(!isLocked);
+        buttonAction.setEnabled(!isVisible);
+        buttonRemoveAccount.setEnabled(!isVisible);
     }
 
     /**
-     * Disables the action button.
+     * Disables all buttons (use if signing in with Google seems not possible).
      */
-    private void setLock(boolean isLocked) {
-        isGooglePlayMissingLocked = isLocked;
-
-        // always disable if ongoing progress
-        if (isProgressLocked) {
-            buttonAction.setEnabled(false);
-            buttonRemoveAccount.setEnabled(false);
-            return;
-        }
-        buttonAction.setEnabled(!isLocked);
-        buttonRemoveAccount.setEnabled(!isLocked);
+    private void setDisabled() {
+        buttonAction.setEnabled(false);
+        buttonRemoveAccount.setEnabled(false);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_ACCOUNT_PICKER: {
-                if (data != null && data.getExtras() != null) {
-                    String accountName = data.getExtras().getString(
-                            AccountManager.KEY_ACCOUNT_NAME);
-                    if (!TextUtils.isEmpty(accountName)) {
-                        setupHexagon(accountName);
-                    }
-                }
-                break;
-            }
+    private void startHexagonSetup() {
+        setProgressVisible(true);
+
+        if (signInAccount == null) {
+            signIn();
+        } else if (!isHexagonSetupRunning()) {
+            HexagonSettings.setSetupIncomplete(getContext());
+            hexagonSetupTask = new HexagonSetupTask(hexagonTools, signInAccount,
+                    onHexagonSetupFinishedListener);
+            hexagonSetupTask.execute();
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // disable UI if no Google Play services available
-        checkGooglePlayServicesAvailable();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        if (hexagonSetupTask != null
-                && hexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED) {
-            hexagonSetupTask.cancel(true);
-        }
-        hexagonSetupTask = null;
-
-        super.onDestroy();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(
-            RemoveCloudAccountDialogFragment.RemoveHexagonAccountTask.HexagonAccountRemovedEvent event) {
-        event.handle(getActivity());
-        updateViewStates();
-    }
-
-    /**
-     * Ensure Google Play Services is up to date, if not help the user update it.
-     */
-    private void checkGooglePlayServicesAvailable() {
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
-        int connectionStatusCode = googleApiAvailability
-                .isGooglePlayServicesAvailable(getActivity());
-        if (googleApiAvailability.isUserResolvableError(connectionStatusCode)) {
-            setLock(true);
-            googleApiAvailability.getErrorDialog(getActivity(), connectionStatusCode,
-                    REQUEST_GOOGLE_PLAY_SERVICES, new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            showGooglePlayServicesWarning();
-                        }
-                    }).show();
-        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            setLock(true);
-            showGooglePlayServicesWarning();
-            Timber.i("This device is not supported. Code %s", connectionStatusCode);
-        } else {
-            setLock(false);
-        }
-    }
-
-    private void showGooglePlayServicesWarning() {
-        if (getView() == null) {
-            return;
-        }
-        if (snackbar != null) {
-            snackbar.dismiss();
-        }
-        snackbar = Snackbar.make(getView(), R.string.hexagon_google_play_missing,
-                Snackbar.LENGTH_INDEFINITE);
-        snackbar.show();
-    }
-
-    private void trySignIn() {
-        // make sure we have the required permissions
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-            // don't have it? request it, do task if granted
-            requestPermissions(new String[] { Manifest.permission.GET_ACCOUNTS },
-                    REQUEST_CODE_SIGN_IN);
-            return;
-        }
-
-        doSignIn();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_SIGN_IN) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doSignIn();
-            } else {
-                if (getView() != null) {
-                    Snackbar.make(getView(), R.string.hexagon_permission_missing,
-                            Snackbar.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    private void doSignIn() {
-        // launch account picker
-        startActivityForResult(
-                HexagonTools.getAccountCredential(getActivity()).newChooseAccountIntent(),
-                REQUEST_ACCOUNT_PICKER);
-    }
-
-    private void signOut() {
-        // remove account name from settings
-        HexagonTools.storeAccountName(getActivity(), null);
-
-        updateViewStates();
-    }
-
-    private void setupHexagon(String accountName) {
-        setProgressLock(true);  // prevent duplicate tasks
-
-        hexagonSetupTask = new HexagonSetupTask(getActivity(), mSetupFinishedListener);
-        hexagonSetupTask.execute(accountName);
+    private boolean isHexagonSetupRunning() {
+        return hexagonSetupTask != null
+                && hexagonSetupTask.getStatus() != AsyncTask.Status.FINISHED;
     }
 
     private static class HexagonSetupTask extends AsyncTask<String, Void, Integer> {
 
-        public static final int SYNC_REQUIRED = 1;
-
+        public static final int SUCCESS_SYNC_REQUIRED = 1;
         public static final int FAILURE = -1;
-
         public static final int FAILURE_AUTH = -2;
 
         public interface OnSetupFinishedListener {
@@ -338,62 +325,57 @@ public class CloudSetupFragment extends Fragment {
             void onSetupFinished(int resultCode);
         }
 
-        private final Context mContext;
-
-        private OnSetupFinishedListener mOnSetupFinishedListener;
+        private final HexagonTools hexagonTools;
+        @NonNull private final GoogleSignInAccount signInAccount;
+        private OnSetupFinishedListener onSetupFinishedListener;
 
         /**
          * Checks for local and remote shows and uploads shows accordingly. If there are some shows
          * in the local database as well as on hexagon, will download and merge data first, then
          * upload.
          */
-        public HexagonSetupTask(Context context, OnSetupFinishedListener listener) {
-            mContext = context.getApplicationContext();
-            mOnSetupFinishedListener = listener;
+        public HexagonSetupTask(HexagonTools hexagonTools,
+                @NonNull GoogleSignInAccount signInAccount, OnSetupFinishedListener listener) {
+            this.hexagonTools = hexagonTools;
+            this.signInAccount = signInAccount;
+            onSetupFinishedListener = listener;
         }
 
         @Override
         protected Integer doInBackground(String... params) {
             // set setup incomplete flag
             Timber.i("Setting up Hexagon...");
-            HexagonSettings.setSetupIncomplete(mContext);
 
-            // validate auth data
-            String accountName = params[0];
-            if (TextUtils.isEmpty(accountName)
-                    || !HexagonTools.validateAccount(mContext, accountName)) {
+            // validate account data
+            Account account = signInAccount.getAccount();
+            if (TextUtils.isEmpty(signInAccount.getEmail()) || account == null) {
                 return FAILURE_AUTH;
             }
 
-            if (!HexagonSettings.resetSyncState(mContext)) {
+            // at last reset sync state, store the new credentials and enable hexagon integration
+            if (!hexagonTools.setEnabled(signInAccount)) {
                 return FAILURE;
             }
 
-            // at last store the new credentials (enables SG hexagon integration)
-            HexagonTools.storeAccountName(mContext, accountName);
-            if (!HexagonTools.isSignedIn(mContext)) {
-                return FAILURE_AUTH;
-            }
-
-            return SYNC_REQUIRED;
+            return SUCCESS_SYNC_REQUIRED;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
-            if (mOnSetupFinishedListener != null) {
-                mOnSetupFinishedListener.onSetupFinished(result);
+            if (onSetupFinishedListener != null) {
+                onSetupFinishedListener.onSetupFinished(result);
             }
         }
     }
 
-    private HexagonSetupTask.OnSetupFinishedListener mSetupFinishedListener
+    private HexagonSetupTask.OnSetupFinishedListener onHexagonSetupFinishedListener
             = new HexagonSetupTask.OnSetupFinishedListener() {
         @Override
         public void onSetupFinished(int resultCode) {
             switch (resultCode) {
-                case HexagonSetupTask.SYNC_REQUIRED: {
+                case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
                     // schedule full sync
-                    Timber.d("Setting up Hexagon...SYNC_REQUIRED");
+                    Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
                     SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
                             0, false);
                     HexagonSettings.setSetupCompleted(getActivity());
@@ -415,8 +397,31 @@ public class CloudSetupFragment extends Fragment {
                 }
             }
 
-            updateViewStates();
-            setProgressLock(false); // allow new task
+            if (getView() == null) {
+                return;
+            }
+            setProgressVisible(false); // allow new task
+            updateViews();
+        }
+    };
+
+    private GoogleApiClient.OnConnectionFailedListener onGoogleConnectionFailedListener
+            = new GoogleApiClient.OnConnectionFailedListener() {
+        @Override
+        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+            // using auto managed connection so only called if unresolvable error
+            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, connectionResult);
+            if (getView() == null) {
+                return;
+            }
+            setProgressVisible(false);
+            setDisabled();
+            if (snackbar != null) {
+                snackbar.dismiss();
+            }
+            snackbar = Snackbar.make(getView(), R.string.hexagon_google_play_missing,
+                    Snackbar.LENGTH_INDEFINITE);
+            snackbar.show();
         }
     };
 }
