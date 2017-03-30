@@ -9,6 +9,11 @@ Version 36
 ----------
 *(2017-03-30)*
 
+* SeriesGuide Cloud switched to Google Sign-In, no longer requires the Contacts permission.
+  But you will have to sign in again.
+* Display progress when adding a show, tapping it once added opens the show directly.
+* Show always both Cloud and trakt account in navigation drawer.
+
 #### 36
 *(2017-03-30)*
 
