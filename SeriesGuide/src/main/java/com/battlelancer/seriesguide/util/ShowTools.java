@@ -546,21 +546,6 @@ public class ShowTools {
                 values.put(SeriesGuideContract.Shows.LANGUAGE, show.getLanguage());
             }
         }
-
-        /**
-         * If signed in to Hexagon, tries to download the given show.
-         */
-        @Nullable
-        public static Show showFromHexagon(SgApp app, int showTvdbId) throws IOException {
-            Shows showsService = app.getHexagonTools().getShowsService();
-            if (showsService == null) {
-                return null;
-            }
-            return showsService
-                    .getShow()
-                    .setShowTvdbId(showTvdbId)
-                    .execute();
-        }
     }
 
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,
