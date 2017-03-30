@@ -39,6 +39,7 @@ import dagger.Lazy;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -46,7 +47,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -104,14 +104,14 @@ public class TraktTools {
      * Downloads trakt movie watched flags and mirrors them in the local database. Does NOT upload
      * any flags (e.g. trakt is considered the truth).
      */
-    public UpdateResult downloadWatchedMovies(DateTime watchedAt) {
+    public UpdateResult downloadWatchedMovies(Date watchedAt) {
         if (watchedAt == null) {
             Timber.e("downloadWatchedMovies: null watched_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastWatchedAt = TraktSettings.getLastMoviesWatchedAt(context);
-        if (!watchedAt.isAfter(lastWatchedAt)) {
+        if (!TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             // not initial sync, no watched flags have changed
             Timber.d("downloadWatchedMovies: no changes since %tF %tT", lastWatchedAt,
                     lastWatchedAt);
@@ -200,13 +200,14 @@ public class TraktTools {
         }
 
         // save last watched instant
+        long watchedAtTime = watchedAt.getTime();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, watchedAt.getMillis())
-                .commit();
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, watchedAtTime)
+                .apply();
 
-        Timber.d("downloadWatchedMovies: success, last watched_at %tF %tT", watchedAt.getMillis(),
-                watchedAt.getMillis());
+        Timber.d("downloadWatchedMovies: success, last watched_at %tF %tT", watchedAtTime,
+                watchedAtTime);
         return UpdateResult.SUCCESS;
     }
 
@@ -215,14 +216,14 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_MOVIES_RATED_AT} to 0.
      */
-    public UpdateResult downloadMovieRatings(DateTime ratedAt) {
+    public UpdateResult downloadMovieRatings(Date ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadMovieRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastRatedAt = TraktSettings.getLastMoviesRatedAt(context);
-        if (!ratedAt.isAfter(lastRatedAt)) {
+        if (!TimeTools.isAfterMillis(ratedAt, lastRatedAt)) {
             // not initial sync, no ratings have changed
             Timber.d("downloadMovieRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
@@ -272,7 +273,8 @@ public class TraktTools {
                 // skip, can't handle
                 continue;
             }
-            if (movie.rated_at != null && movie.rated_at.isBefore(ratedAtThreshold)) {
+            if (movie.rated_at != null &&
+                    TimeTools.isBeforeMillis(movie.rated_at, ratedAtThreshold)) {
                 // no need to apply older ratings again
                 break;
             }
@@ -294,13 +296,13 @@ public class TraktTools {
         }
 
         // save last rated instant
+        long ratedAtTime = ratedAt.getTime();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, ratedAt.getMillis())
-                .commit();
+                .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, ratedAtTime)
+                .apply();
 
-        Timber.d("downloadMovieRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
-                ratedAt.getMillis());
+        Timber.d("downloadMovieRatings: success, last rated_at %tF %tT", ratedAtTime, ratedAtTime);
         return UpdateResult.SUCCESS;
     }
 
@@ -309,14 +311,14 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_SHOWS_RATED_AT} to 0.
      */
-    public UpdateResult downloadShowRatings(@Nullable DateTime ratedAt) {
+    public UpdateResult downloadShowRatings(@Nullable Date ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadShowRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastRatedAt = TraktSettings.getLastShowsRatedAt(context);
-        if (!ratedAt.isAfter(lastRatedAt)) {
+        if (!TimeTools.isAfterMillis(ratedAt, lastRatedAt)) {
             // not initial sync, no ratings have changed
             Timber.d("downloadShowRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
@@ -366,7 +368,8 @@ public class TraktTools {
                 // skip, can't handle
                 continue;
             }
-            if (show.rated_at != null && show.rated_at.isBefore(ratedAtThreshold)) {
+            if (show.rated_at != null
+                    && TimeTools.isBeforeMillis(show.rated_at, ratedAtThreshold)) {
                 // no need to apply older ratings again
                 break;
             }
@@ -388,13 +391,14 @@ public class TraktTools {
         }
 
         // save last rated instant
+        long ratedAtTime = ratedAt.getTime();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, ratedAt.getMillis())
-                .commit();
+                .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, ratedAtTime)
+                .apply();
 
-        Timber.d("downloadShowRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
-                ratedAt.getMillis());
+        Timber.d("downloadShowRatings: success, last rated_at %tF %tT", ratedAtTime,
+                ratedAtTime);
         return UpdateResult.SUCCESS;
     }
 
@@ -403,14 +407,14 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_EPISODES_RATED_AT} to 0.
      */
-    public UpdateResult downloadEpisodeRatings(@Nullable DateTime ratedAt) {
+    public UpdateResult downloadEpisodeRatings(@Nullable Date ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadEpisodeRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
         }
 
         long lastRatedAt = TraktSettings.getLastEpisodesRatedAt(context);
-        if (!ratedAt.isAfter(lastRatedAt)) {
+        if (!TimeTools.isAfterMillis(ratedAt, lastRatedAt)) {
             // not initial sync, no ratings have changed
             Timber.d("downloadEpisodeRatings: no changes since %tF %tT", lastRatedAt, lastRatedAt);
             return UpdateResult.SUCCESS;
@@ -459,7 +463,8 @@ public class TraktTools {
                 // skip, can't handle
                 continue;
             }
-            if (episode.rated_at != null && episode.rated_at.isBefore(ratedAtThreshold)) {
+            if (episode.rated_at != null
+                    && TimeTools.isBeforeMillis(episode.rated_at, ratedAtThreshold)) {
                 // no need to apply older ratings again
                 break;
             }
@@ -481,13 +486,14 @@ public class TraktTools {
         }
 
         // save last rated instant
+        long ratedAtTime = ratedAt.getTime();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, ratedAt.getMillis())
-                .commit();
+                .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, ratedAtTime)
+                .apply();
 
-        Timber.d("downloadEpisodeRatings: success, last rated_at %tF %tT", ratedAt.getMillis(),
-                ratedAt.getMillis());
+        Timber.d("downloadEpisodeRatings: success, last rated_at %tF %tT", ratedAtTime,
+                ratedAtTime);
         return UpdateResult.SUCCESS;
     }
 
@@ -518,7 +524,7 @@ public class TraktTools {
     }
 
     private int syncWatchedEpisodes(@NonNull HashSet<Integer> localShows,
-            @Nullable DateTime watchedAt,
+            @Nullable Date watchedAt,
             boolean isInitialSync) {
         if (watchedAt == null) {
             Timber.e("syncWatchedEpisodes: null watched_at");
@@ -526,7 +532,7 @@ public class TraktTools {
         }
 
         long lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context);
-        if (isInitialSync || watchedAt.isAfter(lastWatchedAt)) {
+        if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             List<BaseShow> watchedShowsTrakt = null;
             try {
                 // get watched episodes from trakt
@@ -562,7 +568,7 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT, watchedAt.getMillis())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT, watchedAt.getTime())
                     .apply();
 
             Timber.d("syncWatchedEpisodes: success");
@@ -574,14 +580,14 @@ public class TraktTools {
     }
 
     private int syncCollectedEpisodes(@NonNull HashSet<Integer> localShows,
-            @Nullable DateTime collectedAt, boolean isInitialSync) {
+            @Nullable Date collectedAt, boolean isInitialSync) {
         if (collectedAt == null) {
             Timber.e("syncCollectedEpisodes: null collected_at");
             return FAILED;
         }
 
         long lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context);
-        if (isInitialSync || collectedAt.isAfter(lastCollectedAt)) {
+        if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
             List<BaseShow> collectedShowsTrakt = null;
             try {
                 // get collected episodes from trakt
@@ -617,7 +623,7 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT, collectedAt.getMillis())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT, collectedAt.getTime())
                     .apply();
 
             Timber.d("syncCollectedEpisodes: success");
@@ -708,7 +714,7 @@ public class TraktTools {
         }
 
         ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
-                traktShow.last_watched_at.getMillis());
+                traktShow.last_watched_at.getTime());
     }
 
     /**

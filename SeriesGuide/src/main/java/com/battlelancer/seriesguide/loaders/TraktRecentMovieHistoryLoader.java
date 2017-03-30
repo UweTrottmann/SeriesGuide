@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.HistoryType;
@@ -35,14 +36,14 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
             // only include movies watched in the last 72 hours
             // however, include at least one older one if there are none
-            if (entry.watched_at.isBefore(threeDaysAgo) && items.size() > 1) {
+            if (TimeTools.isBeforeMillis(entry.watched_at, threeDaysAgo) && items.size() > 1) {
                 break;
             }
 
             // trakt has removed image support: currently displaying no image
             items.add(new NowAdapter.NowItem()
                     .displayData(
-                            entry.watched_at.getMillis(),
+                            entry.watched_at.getTime(),
                             entry.movie.title,
                             null,
                             null

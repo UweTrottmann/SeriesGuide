@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -113,7 +114,7 @@ public class TraktRecentEpisodeHistoryLoader
 
             // only include episodes watched in the last 24 hours
             // however, include at least one older episode if there are none, yet
-            if (entry.watched_at.isBefore(timeDayAgo) && items.size() > 1) {
+            if (TimeTools.isBeforeMillis(entry.watched_at, timeDayAgo) && items.size() > 1) {
                 break;
             }
 
@@ -134,7 +135,7 @@ public class TraktRecentEpisodeHistoryLoader
                             entry.episode.number, entry.episode.title);
             NowAdapter.NowItem item = new NowAdapter.NowItem()
                     .displayData(
-                            entry.watched_at.getMillis(),
+                            entry.watched_at.getTime(),
                             entry.show.title,
                             description,
                             posterUrl

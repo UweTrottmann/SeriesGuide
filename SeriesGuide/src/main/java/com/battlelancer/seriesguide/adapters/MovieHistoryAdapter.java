@@ -61,7 +61,7 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         // timestamp
         if (item.watched_at != null) {
             CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
-                    item.watched_at.getMillis(), System.currentTimeMillis(),
+                    item.watched_at.getTime(), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
             holder.timestamp.setText(timestamp);
         } else {

@@ -50,6 +50,14 @@ public class TimeTools {
 
     private static final DateTimeFormatter TVDB_DATE_FORMATTER = ISODateTimeFormat.date();
 
+    public static boolean isBeforeMillis(Date date, long millis) {
+        return date.before(new Date(millis));
+    }
+
+    public static boolean isAfterMillis(Date date, long millis) {
+        return date.after(new Date(millis));
+    }
+
     /**
      * Returns the appropriate time zone for the given tzdata zone identifier.
      *
@@ -122,8 +130,8 @@ public class TimeTools {
     /**
      * Parses a {@link DateTime} to its ISO datetime string representation (in UTC).
      */
-    public static String parseShowFirstRelease(@Nullable DateTime dateTime) {
-        return dateTime == null ? "" : DATE_TIME_FORMATTER_UTC.print(dateTime);
+    public static String parseShowFirstRelease(@Nullable Date date) {
+        return date == null ? "" : DATE_TIME_FORMATTER_UTC.print(new DateTime(date.getTime()));
     }
 
     /**

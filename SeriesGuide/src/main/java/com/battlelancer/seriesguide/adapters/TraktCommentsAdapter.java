@@ -86,7 +86,7 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(
-                comment.created_at.getMillis(), System.currentTimeMillis(),
+                comment.created_at.getTime(), System.currentTimeMillis(),
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
         holder.timestamp.setText(timestamp);
 
