@@ -61,7 +61,6 @@
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
-    <string name="share_checkout">Check out %s</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
     <string name="links">Links</string>
