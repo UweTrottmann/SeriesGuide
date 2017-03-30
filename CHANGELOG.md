@@ -7,7 +7,14 @@ All dates are in the European Central timezone.
 
 Version 36
 ----------
-*(in development)*
+*(2017-03-30)*
+
+#### 36
+*(2017-03-30)*
+
+* 🔨 Cloud signed out warning displayed after adding show, but was never signed in to Cloud.
+* 🔨 Can not swipe away Cloud signed out warning on Android 4.4 (KitKat) and below.
+* 📝 Latest translations from crowdin.️️
 
 #### 36-beta5
 *(2017-03-24)*
