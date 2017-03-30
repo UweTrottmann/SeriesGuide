@@ -368,12 +368,18 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         // try to match TVDB URLs
         // match season and episode pages first
-        Pattern tvdbSeriesIdPattern = Pattern.compile(".*?thetvdb\\.com.*?seriesid=([0-9]*)");
+        Pattern tvdbSeriesIdPattern = Pattern.compile("thetvdb\\.com.*?seriesid=([0-9]*)");
         int showTvdbId = matchShowTvdbId(tvdbSeriesIdPattern, sharedText);
         if (showTvdbId <= 0) {
             // match show pages
-            Pattern tvdbIdPattern = Pattern.compile(".*?thetvdb\\.com.*?id=([0-9]*)");
+            Pattern tvdbIdPattern = Pattern.compile("thetvdb\\.com.*?id=([0-9]*)");
             showTvdbId = matchShowTvdbId(tvdbIdPattern, sharedText);
+        }
+        if (showTvdbId <= 0) {
+            // try to match trakt search URLs (the ones shared by this app)
+            Pattern traktShowIdPattern =
+                    Pattern.compile("trakt\\.tv\\/search\\/tvdb\\/([0-9]*)\\?id_type=show");
+            showTvdbId = matchShowTvdbId(traktShowIdPattern, sharedText);
         }
 
         if (showTvdbId > 0) {
