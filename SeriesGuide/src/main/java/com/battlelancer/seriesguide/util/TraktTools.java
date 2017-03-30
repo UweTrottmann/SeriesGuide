@@ -33,7 +33,6 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
@@ -127,7 +126,7 @@ public class TraktTools {
         List<BaseMovie> watchedMovies;
         try {
             Response<List<BaseMovie>> response = traktSync.get()
-                    .watchedMovies(Extended.DEFAULT_MIN)
+                    .watchedMovies(null)
                     .execute();
             if (response.isSuccessful()) {
                 watchedMovies = response.body();
@@ -237,7 +236,7 @@ public class TraktTools {
         List<RatedMovie> ratedMovies;
         try {
             Response<List<RatedMovie>> response = traktSync.get()
-                    .ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .ratingsMovies(RatingsFilter.ALL, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedMovies = response.body();
@@ -331,7 +330,7 @@ public class TraktTools {
         List<RatedShow> ratedShows;
         try {
             Response<List<RatedShow>> response = traktSync.get()
-                    .ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .ratingsShows(RatingsFilter.ALL, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedShows = response.body();
@@ -425,7 +424,7 @@ public class TraktTools {
         List<RatedEpisode> ratedEpisodes;
         try {
             Response<List<RatedEpisode>> response = traktSync.get()
-                    .ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN)
+                    .ratingsEpisodes(RatingsFilter.ALL, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedEpisodes = response.body();
@@ -532,7 +531,7 @@ public class TraktTools {
             try {
                 // get watched episodes from trakt
                 Response<List<BaseShow>> response = traktSync.get()
-                        .watchedShows(Extended.DEFAULT_MIN)
+                        .watchedShows(null)
                         .execute();
                 if (response.isSuccessful()) {
                     watchedShowsTrakt = response.body();
@@ -587,7 +586,7 @@ public class TraktTools {
             try {
                 // get collected episodes from trakt
                 Response<List<BaseShow>> response = traktSync.get()
-                        .collectionShows(Extended.DEFAULT_MIN)
+                        .collectionShows(null)
                         .execute();
                 if (response.isSuccessful()) {
                     collectedShowsTrakt = response.body();

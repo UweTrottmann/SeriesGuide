@@ -84,7 +84,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     response = traktSync.get().watchedShows(Extended.NOSEASONS).execute();
                 } else if (type == TraktAddFragment.TYPE_COLLECTION) {
                     action = "load show collection";
-                    response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
+                    response = traktSync.get().collectionShows(null).execute();
                 } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
                     action = "load show watchlist";
                     response = traktSync.get().watchlistShows(Extended.FULL).execute();
