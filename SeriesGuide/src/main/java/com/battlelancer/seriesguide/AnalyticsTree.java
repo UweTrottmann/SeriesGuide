@@ -2,13 +2,11 @@ package com.battlelancer.seriesguide;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import timber.log.Timber;
 
 /**
@@ -26,7 +24,7 @@ public class AnalyticsTree extends Timber.DebugTree {
     }
 
     @Override
-    protected void log(int priority, String tag, String message, Throwable t) {
+    protected void log(int priority, String tag, @Nullable String message, Throwable t) {
         if (priority == Log.ERROR) {
             // remove any stack trace attached by Timber
             if (message != null) {
@@ -41,32 +39,6 @@ public class AnalyticsTree extends Timber.DebugTree {
                 TvdbException e = (TvdbException) t;
                 Utils.trackCustomEvent(context,
                         CATEGORY_THETVDB_ERROR,
-                        tag + ": " + message,
-                        e.getMessage());
-                return;
-            } else if (t instanceof OAuthProblemException) {
-                // log trakt OAuth failures
-                OAuthProblemException e = (OAuthProblemException) t;
-                StringBuilder exceptionMessage = new StringBuilder();
-                if (!TextUtils.isEmpty(e.getError())) {
-                    exceptionMessage.append(e.getError());
-                }
-                if (!TextUtils.isEmpty(e.getDescription())) {
-                    exceptionMessage.append(", ").append(e.getDescription());
-                }
-                if (!TextUtils.isEmpty(e.getUri())) {
-                    exceptionMessage.append(", ").append(e.getUri());
-                }
-                Utils.trackCustomEvent(context,
-                        "OAuth Error",
-                        tag + ": " + message,
-                        exceptionMessage.toString());
-                return;
-            } else if (t instanceof OAuthSystemException) {
-                // log trakt OAuth failures
-                OAuthSystemException e = (OAuthSystemException) t;
-                Utils.trackCustomEvent(context,
-                        "OAuth Error",
                         tag + ": " + message,
                         e.getMessage());
                 return;
