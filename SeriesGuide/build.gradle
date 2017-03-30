@@ -4,6 +4,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenLocal()
 }
 
 def loadStringPropertyOrPlaceholder(String name) {
@@ -160,10 +161,7 @@ dependencies {
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann.tmdb2:tmdb-java:1.6.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.5.1') {
-        exclude group: 'org.json', module: 'json'
-        exclude group: 'joda-time', module: 'joda-time'
-    }
+    compile 'com.uwetrottmann.trakt5:trakt-java:5.6.0-SNAPSHOT'
     // https://github.com/palaima/DebugDrawer
     debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
