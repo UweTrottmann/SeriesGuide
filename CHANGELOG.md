@@ -5,6 +5,20 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 37
+----------
+*(2017-03-31)*
+
+#### 37-beta1
+*(2017-03-31)*
+
+* 🔨 Crash when signing in with Cloud on some devices.
+* 🔧 Display language in native language for shows and movies. Like "German" instead of "Deutsch".
+* 🔧 Dim titles of episodes that are not released.
+* 🔧 Recognize the URL created when sharing a show, when sharing it back to SeriesGuide: offer to add the show.
+* 🔧 Drop the stupid "Check out" from share messages, you are intelligent enough to write your own message.
+* 🔧 Layout improvements in backup tools.
+
 Version 36
 ----------
 *(2017-03-30)*
