@@ -13,6 +13,7 @@ Version 37
 *(2017-03-31)*
 
 * 🔨 Crash when signing in with Cloud on some devices.
+* 🔧 Move show search language selector to toolbar.
 * 🔧 Display language in native language for shows and movies. Like "German" instead of "Deutsch".
 * 🔧 Dim titles of episodes that are not released.
 * 🔧 Recognize the URL created when sharing a show, when sharing it back to SeriesGuide: offer to add the show.
