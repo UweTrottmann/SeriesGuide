@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.UserSlug;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
 import java.util.List;
@@ -36,14 +36,14 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
             // only include movies watched in the last 72 hours
             // however, include at least one older one if there are none
-            if (entry.watched_at.isBefore(threeDaysAgo) && items.size() > 1) {
+            if (TimeTools.isBeforeMillis(entry.watched_at, threeDaysAgo) && items.size() > 1) {
                 break;
             }
 
             // trakt has removed image support: currently displaying no image
             items.add(new NowAdapter.NowItem()
                     .displayData(
-                            entry.watched_at.getMillis(),
+                            entry.watched_at.getTime(),
                             entry.movie.title,
                             null,
                             null
@@ -67,7 +67,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
     public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Users traktUsers) {
         return traktUsers
-                .history(UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, Extended.DEFAULT_MIN,
+                .history(UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, null,
                         null, null);
     }
 }

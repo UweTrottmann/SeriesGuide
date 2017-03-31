@@ -42,7 +42,6 @@ import com.uwetrottmann.trakt5.entities.SearchResult;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Movies;
@@ -607,7 +606,7 @@ public class MovieTools {
         Set<Integer> collection;
         try {
             Response<List<BaseMovie>> response = traktSync.get()
-                    .collectionMovies(Extended.DEFAULT_MIN)
+                    .collectionMovies(null)
                     .execute();
             if (response.isSuccessful()) {
                 collection = buildTmdbIdSet(response.body());
@@ -630,7 +629,7 @@ public class MovieTools {
         Set<Integer> watchlist;
         try {
             Response<List<BaseMovie>> response = traktSync.get()
-                    .watchlistMovies(Extended.DEFAULT_MIN)
+                    .watchlistMovies(null)
                     .execute();
             if (response.isSuccessful()) {
                 watchlist = buildTmdbIdSet(response.body());

@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
@@ -312,9 +311,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         try {
             Response<List<BaseShow>> response;
             if (isCollectionNotWatched) {
-                response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().collectionShows(null).execute();
             } else {
-                response = traktSync.get().watchedShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().watchedShows(null).execute();
             }
             if (response.isSuccessful()) {
                 return TraktTools.buildTraktShowsMap(response.body());
