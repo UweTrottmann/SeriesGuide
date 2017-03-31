@@ -326,7 +326,7 @@ public class HexagonTools {
         trackSignInFailure(action, failureMessage);
     }
 
-    private void trackSignInFailure(String action, String failureMessage) {
+    public void trackSignInFailure(String action, String failureMessage) {
         Utils.trackCustomEvent(app, SIGN_IN_ERROR_CATEGORY, action, failureMessage);
         Timber.e("%s: %s", action, failureMessage);
     }
