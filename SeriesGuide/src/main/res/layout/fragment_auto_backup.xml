@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,144 +29,161 @@
                 android:text="@string/pref_autobackupsummary"
                 android:textAppearance="@style/TextAppearance.Body.Secondary" />
 
-            <RelativeLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/containerAutoBackupSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/large_padding">
+                android:layout_marginTop="@dimen/large_padding"
+                android:animateLayoutChanges="true">
 
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupDefaultFiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/backup_use_default_files" />
+                    android:text="@string/backup_use_default_files"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <RelativeLayout
-                    android:id="@+id/containerAutoBackupExportFiles"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textViewAutoBackupShows"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/checkBoxAutoBackupDefaultFiles"
-                    android:animateLayoutChanges="true"
-                    android:paddingTop="@dimen/default_padding">
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="@string/shows"
+                    android:textAppearance="@style/TextAppearance.Body.Bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/checkBoxAutoBackupDefaultFiles" />
 
-                    <TextView
-                        android:id="@+id/textViewAutoBackupShows"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shows"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+                <Button
+                    android:id="@+id/buttonAutoBackupShowsExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/action_select_file"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupShows" />
 
-                    <Button
-                        android:id="@+id/buttonAutoBackupShowsExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@id/textViewAutoBackupShows"
-                        android:text="@string/action_select_file" />
+                <TextView
+                    android:id="@+id/textViewAutoBackupShowsExportFile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="32dp"
+                    android:textAppearance="@style/TextAppearance.Body.Secondary"
+                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupShowsExportFile"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupShowsExportFile"
+                    tools:text="content://some.path.on.storage/sg-shows-export.json" />
 
-                    <TextView
-                        android:id="@+id/textViewAutoBackupShowsExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@+id/textViewAutoBackupShows"
-                        android:layout_toLeftOf="@id/buttonAutoBackupShowsExportFile"
-                        android:textAppearance="@style/TextAppearance.Body.Secondary"
-                        tools:text="content://some.path.on.storage/sg-shows-export.json" />
+                <TextView
+                    android:id="@+id/textViewAutoBackupLists"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:text="@string/lists"
+                    android:textAppearance="@style/TextAppearance.Body.Bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupShowsExportFile" />
 
-                    <TextView
-                        android:id="@+id/textViewAutoBackupLists"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewAutoBackupShowsExportFile"
-                        android:layout_marginTop="@dimen/large_padding"
-                        android:text="@string/lists"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+                <Button
+                    android:id="@+id/buttonAutoBackupListsExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/action_select_file"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLists" />
 
-                    <Button
-                        android:id="@+id/buttonAutoBackupListsExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@id/textViewAutoBackupLists"
-                        android:text="@string/action_select_file" />
+                <TextView
+                    android:id="@+id/textViewAutoBackupListsExportFile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="32dp"
+                    android:textAppearance="@style/TextAppearance.Body.Secondary"
+                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupListsExportFile"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupListsExportFile"
+                    tools:text="content://sg-lists-export.json" />
 
-                    <TextView
-                        android:id="@+id/textViewAutoBackupListsExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@id/textViewAutoBackupLists"
-                        android:layout_toLeftOf="@id/buttonAutoBackupListsExportFile"
-                        android:textAppearance="@style/TextAppearance.Body.Secondary"
-                        tools:text="content://some.path.on.storage/sg-lists-export.json" />
+                <TextView
+                    android:id="@+id/textViewAutoBackupMovies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:text="@string/movies"
+                    android:textAppearance="@style/TextAppearance.Body.Bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupListsExportFile" />
 
-                    <TextView
-                        android:id="@+id/textViewAutoBackupMovies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewAutoBackupListsExportFile"
-                        android:layout_marginTop="@dimen/large_padding"
-                        android:text="@string/movies"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+                <Button
+                    android:id="@+id/buttonAutoBackupMoviesExportFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/action_select_file"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMovies" />
 
-                    <Button
-                        android:id="@+id/buttonAutoBackupMoviesExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@id/textViewAutoBackupMovies"
-                        android:text="@string/action_select_file" />
-
-                    <TextView
-                        android:id="@+id/textViewAutoBackupMoviesExportFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@id/textViewAutoBackupMovies"
-                        android:layout_toLeftOf="@id/buttonAutoBackupMoviesExportFile"
-                        android:textAppearance="@style/TextAppearance.Body.Secondary"
-                        tools:text="content://some.path.on.storage/sg-movies-export.json" />
-
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/textViewAutoBackupMoviesExportFile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextAppearance.Body.Secondary"
+                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupMoviesExportFile"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupMoviesExportFile"
+                    tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupLabelImport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/containerAutoBackupExportFiles"
                     android:layout_marginTop="32dp"
                     android:text="@string/restore_auto_backup"
-                    android:textAppearance="@style/TextAppearance.Body.Bold.Accent" />
-
+                    android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMoviesExportFile" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupLastTime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewAutoBackupLabelImport"
                     android:layout_marginTop="@dimen/default_padding"
-                    android:text="@string/last_auto_backup" />
+                    android:text="@string/last_auto_backup"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLabelImport" />
 
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupImportWarning"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewAutoBackupLastTime"
                     android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/import_warning"
-                    android:textAppearance="@style/TextAppearance.Body.Bold" />
+                    android:textAppearance="@style/TextAppearance.Body.Bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime" />
 
                 <Button
                     android:id="@+id/buttonAutoBackupImport"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/checkBoxAutoBackupImportWarning"
                     android:enabled="false"
-                    android:text="@string/restore_auto_backup" />
+                    android:text="@string/restore_auto_backup"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/checkBoxAutoBackupImportWarning" />
 
-            </RelativeLayout>
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
