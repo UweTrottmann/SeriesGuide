@@ -102,7 +102,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
                         for (String languageCode : languageCodes) {
                             // example: "en-US"
                             String languageDisplayName = new Locale(languageCode.substring(0, 2),
-                                    languageCode.substring(3)).getDisplayName();
+                                    "").getDisplayName();
                             items.add(new LocalizationAdapter.LocalizationItem(languageCode,
                                     languageDisplayName));
                         }
@@ -212,8 +212,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     private void updateButtonText() {
         // example: "en-US"
         String languageCode = DisplaySettings.getMoviesLanguage(getContext());
-        String languageDisplayName = new Locale(languageCode.substring(0, 2),
-                languageCode.substring(3)).getDisplayName();
+        String languageDisplayName = new Locale(languageCode.substring(0, 2), "").getDisplayName();
         buttonLanguage.setText(languageDisplayName);
         String regionCode = DisplaySettings.getMoviesRegion(getContext());
         buttonRegion.setText(new Locale("", regionCode).getDisplayCountry());

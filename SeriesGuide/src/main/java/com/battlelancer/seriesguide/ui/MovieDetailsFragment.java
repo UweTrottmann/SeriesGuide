@@ -139,7 +139,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
-    private int currentLanguageIndex;
+    @Nullable private String languageCode;
     private Handler handler = new Handler();
     private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
@@ -164,13 +164,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // guard against onClick called after fragment is up navigated (multi-touch)
-                // onSaveInstanceState might already be called
-                if (isResumed()) {
-                    DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                            currentLanguageIndex);
-                    dialog.show(getFragmentManager(), "dialog-language");
-                }
+                displayLanguageSettings();
             }
         });
 
@@ -396,11 +390,12 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(buttonMovieWatched,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0, isWatched
-                    ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                    R.attr.drawableWatched)
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatch), 0, 0);
+            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0,
+                    isWatched
+                            ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatched)
+                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableWatch), 0, 0);
             buttonMovieWatched.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -470,7 +465,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // language button
         LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(getContext());
         if (languageData != null) {
-            currentLanguageIndex = languageData.languageIndex;
+            languageCode = languageData.languageCode;
             buttonMovieLanguage.setText(languageData.languageString);
         } else {
             buttonMovieLanguage.setText(null);
@@ -626,6 +621,16 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieWatchlisted.setEnabled(enabled);
     }
 
+    private void displayLanguageSettings() {
+        // guard against onClick called after fragment is up navigated (multi-touch)
+        // onSaveInstanceState might already be called
+        if (isResumed()) {
+            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                    R.array.languageCodesMovies, languageCode);
+            dialog.show(getFragmentManager(), "dialog-language");
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleLanguageEvent(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
         if (!AndroidUtils.isNetworkConnected(getContext())) {
@@ -633,10 +638,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
 
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
                 .apply();
 
         progressBar.setVisibility(View.VISIBLE);
