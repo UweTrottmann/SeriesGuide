@@ -36,7 +36,7 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/large_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Subhead.Dim"
+        android:textAppearance="@style/TextAppearance.Subhead.Secondary"
         tools:text="3/24" />
 
     <ProgressBar

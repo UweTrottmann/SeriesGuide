@@ -296,7 +296,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 statusText.setSpan(new TextAppearanceSpan(getActivity(),
                                 encodedStatus == ShowTools.Status.CONTINUING
                                         ? R.style.TextAppearance_Body_Green
-                                        : R.style.TextAppearance_Body_Dim),
+                                        : R.style.TextAppearance_Body_Secondary),
                         currentTextLength, statusText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }

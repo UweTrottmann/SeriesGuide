@@ -13,6 +13,7 @@
     android:orientation="vertical"
     tools:showIn="@layout/fragment_episode">
 
+    <!-- Text appearance set in code. -->
     <TextView
         android:id="@+id/textViewEpisodeTitle"
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:textIsSelectable="true"
         tools:text="Episode Title Of Episode" />
 
+    <!-- Text appearance set in code. -->
     <TextView
         android:id="@+id/textViewEpisodeReleaseTime"
         style="@style/Block"

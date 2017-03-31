@@ -59,6 +59,14 @@ public class TimeTools {
     }
 
     /**
+     * Returns whether the given date is within the next 48 hours.
+     */
+    public static boolean isReleased(Date actualRelease) {
+        return actualRelease.before(new Date(System.currentTimeMillis()
+                + 2 * DateUtils.DAY_IN_MILLIS));
+    }
+
+    /**
      * Returns the appropriate time zone for the given tzdata zone identifier.
      *
      * <p> Falls back to "America/New_York" if timezone string is empty or unknown.

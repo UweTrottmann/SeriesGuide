@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.os.AsyncTaskCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -383,9 +384,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
 
         // release date, also build release time and day
+        boolean isReleased;
         SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
         if (mEpisodeReleaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(getContext(), mEpisodeReleaseTime);
+            isReleased = TimeTools.isReleased(actualRelease);
             mReleaseDate.setText(TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
 
             String dateTime;
@@ -402,6 +405,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             timeAndNumbersText.append("  ");
         } else {
             mReleaseDate.setText(R.string.unknown);
+            isReleased = false;
         }
         // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
         int numberStartIndex = timeAndNumbersText.length();
@@ -418,6 +422,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             );
         }
         mReleaseTime.setText(timeAndNumbersText);
+
+        // dim text color for title if not released
+        TextViewCompat.setTextAppearance(mTitle, isReleased
+                ? R.style.TextAppearance_Title : R.style.TextAppearance_Title_Dim);
+        if (!isReleased) { // overrides text appearance span from above
+            TextViewCompat.setTextAppearance(mReleaseTime, R.style.TextAppearance_Caption_Dim);
+        }
 
         // guest stars
         ViewTools.setLabelValueOrHide(mLabelGuestStars, mGuestStars,

@@ -19,6 +19,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp" />
 
+        <!-- Text appearance set in code. -->
         <TextView
             android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
@@ -39,9 +40,10 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:paddingRight="@dimen/large_padding"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.Subhead.Dim"
+            android:textAppearance="@style/TextAppearance.Subhead.Secondary"
             tools:text="23" />
 
+        <!-- Text appearance set in code. -->
         <TextView
             android:id="@+id/textViewEpisodeAirdate"
             android:layout_width="wrap_content"
@@ -51,7 +53,7 @@
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="in 2 days" />
 
         <TextView

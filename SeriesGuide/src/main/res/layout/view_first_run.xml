@@ -60,7 +60,7 @@
             android:layout_below="@id/textViewFirstRunNoSpoilerText"
             android:paddingBottom="@dimen/inline_padding"
             android:text="@string/pref_nospoilers_summary"
-            android:textAppearance="@style/TextAppearance.Body.Dim" />
+            android:textAppearance="@style/TextAppearance.Body.Secondary" />
 
     </RelativeLayout>
 

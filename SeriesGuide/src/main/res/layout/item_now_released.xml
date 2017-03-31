@@ -50,7 +50,7 @@
             android:paddingRight="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="Somewhere in the middle of the park" />
 
         <TextView
