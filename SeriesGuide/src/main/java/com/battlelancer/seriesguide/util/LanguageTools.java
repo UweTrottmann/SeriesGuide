@@ -26,7 +26,8 @@ public class LanguageTools {
             languageCode = DisplaySettings.getContentLanguage(context);
         }
 
-        return getLanguageStringFor(context, languageCode, R.array.languageCodesShows, R.array.languagesShows);
+        return getLanguageStringFor(context, languageCode, R.array.languageCodesShows,
+                R.array.languagesShows);
     }
 
     /**
@@ -59,12 +60,10 @@ public class LanguageTools {
     }
 
     public static class LanguageData {
-        public final int languageIndex;
         public final String languageCode;
         public final String languageString;
 
-        public LanguageData(int languageIndex, String languageCode, String languageString) {
-            this.languageIndex = languageIndex;
+        public LanguageData(String languageCode, String languageString) {
             this.languageCode = languageCode;
             this.languageString = languageString;
         }
@@ -84,7 +83,15 @@ public class LanguageTools {
             languageCode = DisplaySettings.getContentLanguage(context);
         }
 
-        return getLanguageDataFor(context, languageCode, R.array.languageCodesShows, R.array.languagesShows);
+        String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesShows);
+        for (int i = 0; i < languageCodes.length; i++) {
+            if (languageCodes[i].equals(languageCode)) {
+                String[] languages = context.getResources().getStringArray(R.array.languagesShows);
+                return new LanguageData(languageCode, languages[i]);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -101,21 +108,7 @@ public class LanguageTools {
             if (languageCode.equals(languageCodeCurrent)) {
                 String languageDisplayName = new Locale(languageCode.substring(0, 2),
                         languageCode.substring(3)).getDisplayName();
-                return new LanguageData(i, languageCode, languageDisplayName);
-            }
-        }
-
-        return null;
-    }
-
-    @Nullable
-    private static LanguageData getLanguageDataFor(Context context, @Nullable String languageCode,
-            @ArrayRes int languageCodesRes, @ArrayRes int languagesRes) {
-        String[] languageCodes = context.getResources().getStringArray(languageCodesRes);
-        for (int i = 0; i < languageCodes.length; i++) {
-            if (languageCodes[i].equals(languageCode)) {
-                String[] languages = context.getResources().getStringArray(languagesRes);
-                return new LanguageData(i, languageCode, languages[i]);
+                return new LanguageData(languageCode, languageDisplayName);
             }
         }
 

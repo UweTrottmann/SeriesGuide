@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -120,7 +122,7 @@ public class ShowFragment extends Fragment {
     private TraktRatingsTask traktTask;
     private String showTitle;
     private String posterPath;
-    private int selectedLanguageIndex;
+    @Nullable private String languageCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -372,7 +374,7 @@ public class ShowFragment extends Fragment {
         LanguageTools.LanguageData languageData = LanguageTools.getShowLanguageDataFor(
                 getContext(), showCursor.getString(ShowQuery.LANGUAGE));
         if (languageData != null) {
-            selectedLanguageIndex = languageData.languageIndex;
+            languageCode = languageData.languageCode;
             buttonLanguage.setText(languageData.languageString);
         }
 
@@ -536,15 +538,17 @@ public class ShowFragment extends Fragment {
     }
 
     private void displayLanguageSettings() {
-        DialogFragment dialog
-                = LanguageChoiceDialogFragment.newInstance(getShowTvdbId(), selectedLanguageIndex);
-        dialog.show(getFragmentManager(), "dialog-language");
+        // guard against onClick called after fragment is up navigated (multi-touch)
+        // onSaveInstanceState might already be called
+        if (isResumed()) {
+            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                    R.array.languageCodesShows, languageCode);
+            dialog.show(getFragmentManager(), "dialog-language");
+        }
     }
 
-    private void changeShowLanguage(int languageCodeIndex) {
-        selectedLanguageIndex = languageCodeIndex;
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesShows)[languageCodeIndex];
+    private void changeShowLanguage(@NonNull String languageCode) {
+        this.languageCode = languageCode;
 
         Timber.d("Changing show language to %s", languageCode);
         SgApp.from(getActivity()).getShowTools().storeLanguage(getShowTvdbId(), languageCode);
@@ -552,10 +556,7 @@ public class ShowFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        if (event.showTvdbId != getShowTvdbId()) {
-            return;
-        }
-        changeShowLanguage(event.selectedLanguageIndex);
+        changeShowLanguage(event.selectedLanguageCode);
     }
 
     private void createShortcut() {
