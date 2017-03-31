@@ -58,6 +58,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -164,7 +165,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mEpisodeContainer.setVisibility(View.GONE);
 
         // comments button
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), mCommentsButton,
+        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), mCommentsButton,
                 R.attr.drawableComments);
 
         // web search button unused, is available as extension
@@ -419,16 +420,16 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mReleaseTime.setText(timeAndNumbersText);
 
         // guest stars
-        Utils.setLabelValueOrHide(mLabelGuestStars, mGuestStars,
+        ViewTools.setLabelValueOrHide(mLabelGuestStars, mGuestStars,
                 TextTools.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
         );
         // DVD episode number
-        Utils.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
+        ViewTools.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
         // directors
-        Utils.setValueOrPlaceholder(mDirectors, TextTools.splitAndKitTVDBStrings(cursor
+        ViewTools.setValueOrPlaceholder(mDirectors, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.DIRECTORS)));
         // writers
-        Utils.setValueOrPlaceholder(mWriters, TextTools.splitAndKitTVDBStrings(cursor
+        ViewTools.setValueOrPlaceholder(mWriters, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.WRITERS)));
 
         // last TVDb edit date
@@ -498,7 +499,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // watched button
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonWatch, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonWatch, 0,
                 isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -516,7 +517,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // collected button
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
                 mCollected ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                 R.attr.drawableCollect), 0, 0);
@@ -539,7 +540,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             buttonSkip.setVisibility(View.INVISIBLE);
         } else {
             buttonSkip.setVisibility(View.VISIBLE);
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonSkip, 0,
+            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonSkip, 0,
                     isSkipped
                             ? R.drawable.ic_skipped
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),

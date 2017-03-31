@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -114,7 +115,7 @@ public class MoviesNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new MoviesNowAdapter(getContext(), itemClickListener);

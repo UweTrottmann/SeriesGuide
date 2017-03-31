@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
 import com.battlelancer.seriesguide.widgets.HeaderGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -259,15 +260,15 @@ public class ShowsFragment extends Fragment implements
         MenuItem remainingItem = menu.findItem(R.id.menu_action_shows_sort_remaining);
         remainingItem.setTitle(R.string.action_shows_sort_remaining);
         if (sortOrderId == ShowsSortOrder.TITLE_ID) {
-            Utils.setMenuItemActiveString(sortTitleItem);
+            ViewTools.setMenuItemActiveString(sortTitleItem);
         } else if (sortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortLatestItem);
+            ViewTools.setMenuItemActiveString(sortLatestItem);
         } else if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortOldestItem);
+            ViewTools.setMenuItemActiveString(sortOldestItem);
         } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
-            Utils.setMenuItemActiveString(lastWatchedItem);
+            ViewTools.setMenuItemActiveString(lastWatchedItem);
         } else if (sortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
-            Utils.setMenuItemActiveString(remainingItem);
+            ViewTools.setMenuItemActiveString(remainingItem);
         }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(isSortFavoritesFirst);

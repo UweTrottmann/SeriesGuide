@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -74,7 +74,7 @@ public abstract class StreamFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), contentContainer);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), contentContainer);
 
         if (adapter == null) {
             adapter = getListAdapter();

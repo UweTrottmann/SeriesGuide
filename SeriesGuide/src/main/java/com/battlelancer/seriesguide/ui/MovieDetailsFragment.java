@@ -63,6 +63,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -157,7 +158,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieLanguage,
+        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieLanguage,
                 R.attr.drawableLanguage);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
@@ -175,7 +176,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieComments,
+        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieComments,
                 R.attr.drawableComments);
 
         // cast and crew
@@ -395,7 +396,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(buttonMovieWatched,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0, isWatched
+            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0, isWatched
                     ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                     R.attr.drawableWatched)
                     : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -418,7 +419,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         // collected button
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
                 inCollection
                         ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -441,7 +442,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
 
         // watchlist button
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
                 inWatchlist
                         ? R.drawable.ic_listed
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -510,7 +511,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // genres
         textViewMovieGenresLabel.setVisibility(View.VISIBLE);
-        Utils.setValueOrPlaceholder(textViewMovieGenres,
+        ViewTools.setValueOrPlaceholder(textViewMovieGenres,
                 TmdbTools.buildGenresString(tmdbMovie.genres));
 
         // trakt comments link

@@ -66,6 +66,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -211,7 +212,7 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
+        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
                 R.attr.drawableComments);
 
         // hide web search button
@@ -656,7 +657,7 @@ public class OverviewFragment extends Fragment implements
 
             // collected button
             boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
+            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
                     isCollected ? R.drawable.ic_collected
                             : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                                     R.attr.drawableCollect), 0, 0);
@@ -754,10 +755,10 @@ public class OverviewFragment extends Fragment implements
         populateEpisodeDescription();
 
         // dvd number
-        boolean isShowingMeta = Utils.setLabelValueOrHide(labelDvdNumber, textDvdNumber,
+        boolean isShowingMeta = ViewTools.setLabelValueOrHide(labelDvdNumber, textDvdNumber,
                 episode.getDouble(EpisodeQuery.DVD_NUMBER));
         // guest stars
-        isShowingMeta |= Utils.setLabelValueOrHide(labelGuestStars, textGuestStars,
+        isShowingMeta |= ViewTools.setLabelValueOrHide(labelGuestStars, textGuestStars,
                 TextTools.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
         // hide divider if no meta is visible
         dividerEpisodeMeta.setVisibility(isShowingMeta ? View.VISIBLE : View.GONE);

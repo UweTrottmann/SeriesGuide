@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -241,11 +242,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
             if (mayShowKeyboard &&
                     (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
-                Utils.showSoftKeyboardOnSearchView(this, searchView);
+                ViewTools.showSoftKeyboardOnSearchView(this, searchView);
             }
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
-            Utils.showSoftKeyboardOnSearchView(this, searchView);
+            ViewTools.showSoftKeyboardOnSearchView(this, searchView);
         }
     }
 

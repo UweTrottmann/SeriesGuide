@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import java.util.Date;
@@ -147,7 +148,7 @@ public class ShowFragment extends Fragment {
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        Utils.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
+        ViewTools.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,8 +167,8 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         // search and comments button
-        Utils.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
-        Utils.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
+        ViewTools.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
+        ViewTools.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -336,7 +337,7 @@ public class ShowFragment extends Fragment {
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
         mButtonFavorite.setEnabled(true);
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
                 0, 0);
@@ -381,14 +382,14 @@ public class ShowFragment extends Fragment {
 
         // original release
         String firstRelease = showCursor.getString(ShowQuery.FIRST_RELEASE);
-        Utils.setValueOrPlaceholder(mTextViewFirstRelease,
+        ViewTools.setValueOrPlaceholder(mTextViewFirstRelease,
                 TimeTools.getShowReleaseYear(firstRelease));
 
         // content rating
-        Utils.setValueOrPlaceholder(mTextViewContentRating,
+        ViewTools.setValueOrPlaceholder(mTextViewContentRating,
                 showCursor.getString(ShowQuery.CONTENT_RATING));
         // genres
-        Utils.setValueOrPlaceholder(mTextViewGenres,
+        ViewTools.setValueOrPlaceholder(mTextViewGenres,
                 TextTools.splitAndKitTVDBStrings(showCursor.getString(ShowQuery.GENRES)));
 
         // trakt rating
