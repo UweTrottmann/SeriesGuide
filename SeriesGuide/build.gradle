@@ -171,7 +171,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    def jodaTimeVersion = '2.9.7'
+    def jodaTimeVersion = '2.9.9'
     compile "net.danlew:android.joda:$jodaTimeVersion"
 
     // Android support libraries
