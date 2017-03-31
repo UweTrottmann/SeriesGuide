@@ -402,15 +402,16 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             // append day: "in 15 mins (Fri)"
             timeAndNumbersText.append(getString(R.string.release_date_and_day, dateTime,
                     TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault()));
-            timeAndNumbersText.append("  ");
         } else {
             mReleaseDate.setText(R.string.unknown);
+            timeAndNumbersText.append(getString(R.string.episode_firstaired_unknown));
             isReleased = false;
         }
         // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
-        int numberStartIndex = timeAndNumbersText.length();
         int absoluteNumber = cursor.getInt(DetailsQuery.NUMBER_ABSOLUTE);
         if (absoluteNumber > 0) {
+            timeAndNumbersText.append("  ");
+            int numberStartIndex = timeAndNumbersText.length();
             timeAndNumbersText
                     .append(getString(R.string.episode_number_absolute))
                     .append(" ")
