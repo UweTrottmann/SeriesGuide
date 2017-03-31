@@ -55,7 +55,6 @@
   <string name="share_show">番組を共有</string>
   <string name="share_episode">エピソードを共有</string>
   <string name="share_movie">映画を共有</string>
-  <string name="share_checkout">%s をチェックしてください</string>
   <string name="addtocalendar">カレンダーに追加</string>
   <string name="addtocalendar_failed">カレンダー イベントを作成できません。</string>
   <string name="links">リンク</string>

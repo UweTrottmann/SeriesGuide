@@ -55,7 +55,6 @@
   <string name="share_show">Jaa ohjelma</string>
   <string name="share_episode">Jaa jakso</string>
   <string name="share_movie">Jaa elokuva</string>
-  <string name="share_checkout">Tsekkaa %s</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
   <string name="links">Linkit</string>

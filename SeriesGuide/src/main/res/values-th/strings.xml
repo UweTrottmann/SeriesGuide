@@ -55,7 +55,6 @@
   <string name="share_show">แบ่งปันซีรีส์</string>
   <string name="share_episode">แบ่งปันตอน</string>
   <string name="share_movie">แบ่งปันภาพยนตร์</string>
-  <string name="share_checkout">ลองดู %s</string>
   <string name="addtocalendar">เพิ่มในปฏิทิน</string>
   <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
   <string name="links">ลิงก์</string>

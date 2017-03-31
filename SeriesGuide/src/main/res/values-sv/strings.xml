@@ -56,7 +56,6 @@
   <string name="share_show">Dela serie</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_movie">Dela film</string>
-  <string name="share_checkout">Kolla in %s</string>
   <string name="addtocalendar">Lägg till i kalendern</string>
   <string name="addtocalendar_failed">Kan inte lägga till i kalendern. </string>
   <string name="links">Länkar</string>

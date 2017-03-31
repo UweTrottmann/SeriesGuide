@@ -55,7 +55,6 @@
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
-  <string name="share_checkout">Uitchecken %s</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
   <string name="links">Links</string>

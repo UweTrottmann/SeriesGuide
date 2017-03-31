@@ -55,7 +55,6 @@
   <string name="share_show">مشاركة المسلسل</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
-  <string name="share_checkout">تتحق من %s</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
   <string name="links">الروابط</string>

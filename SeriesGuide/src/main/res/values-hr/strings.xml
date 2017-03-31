@@ -55,7 +55,6 @@
   <string name="share_show">Podijeli seriju</string>
   <string name="share_episode">Podijeli epizodu</string>
   <string name="share_movie">Podijelite film</string>
-  <string name="share_checkout">Odjava %s</string>
   <string name="addtocalendar">Dodaj u kalendar</string>
   <string name="addtocalendar_failed">Ne mogu stvoriti događaj u kalendaru.</string>
   <string name="links">Links</string>

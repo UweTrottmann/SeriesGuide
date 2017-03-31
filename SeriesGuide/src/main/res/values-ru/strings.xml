@@ -55,7 +55,6 @@
   <string name="share_show">Поделиться сериалом</string>
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_movie">Поделиться фильмом</string>
-  <string name="share_checkout">Проверить %s</string>
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
   <string name="links">Ссылки</string>

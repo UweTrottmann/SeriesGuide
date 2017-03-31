@@ -55,7 +55,6 @@
   <string name="share_show">Műsor megosztása</string>
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_movie">Film megosztása</string>
-  <string name="share_checkout">Nézd meg: %s</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
   <string name="links">Linkek</string>

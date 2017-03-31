@@ -55,7 +55,6 @@
   <string name="share_show">Diziyi paylaş</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_movie">Filmi paylaş</string>
-  <string name="share_checkout">Şuna gözatın: %s</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
   <string name="links">Bağlantılar</string>

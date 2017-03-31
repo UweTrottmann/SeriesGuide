@@ -55,7 +55,6 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
-  <string name="share_checkout">Tjek %s ud</string>
   <string name="addtocalendar">Føj til kalender</string>
   <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
   <string name="links">Links</string>

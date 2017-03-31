@@ -55,7 +55,6 @@
   <string name="share_show">Partilhar série</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_movie">Partilhar filme</string>
-  <string name="share_checkout">Tens de ver %s</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
   <string name="links">Endereços</string>

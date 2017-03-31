@@ -55,7 +55,6 @@
   <string name="share_show">هم‌رسانی نمایش</string>
   <string name="share_episode">هم‌رسانی قسمت</string>
   <string name="share_movie">هم‌رسانی فیلم</string>
-  <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
   <string name="links">پیوندها</string>

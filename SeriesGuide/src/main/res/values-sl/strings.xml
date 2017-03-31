@@ -55,7 +55,6 @@
   <string name="share_show">Deli oddajo</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_movie">Deli film</string>
-  <string name="share_checkout">Oglejte si %s</string>
   <string name="addtocalendar">Dodaj v koledar</string>
   <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
   <string name="links">Povezave</string>

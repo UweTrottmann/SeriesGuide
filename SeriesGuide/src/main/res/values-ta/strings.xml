@@ -55,7 +55,6 @@
   <string name="share_show">பங்கு காண்பி</string>
   <string name="share_episode">பங்குச் சந்தை சம்பவம்</string>
   <string name="share_movie">பங்கு திரைப்படம்</string>
-  <string name="share_checkout">%s வெளியெடு</string>
   <string name="addtocalendar">நாட்காட்டியில் சேர்</string>
   <string name="addtocalendar_failed">ஒரு காலண்டர் நிகழ்வு உருவாக்க முடியும்.</string>
   <string name="links">இணைப்புகள்</string>

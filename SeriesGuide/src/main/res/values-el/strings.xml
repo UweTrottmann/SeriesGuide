@@ -55,7 +55,6 @@
   <string name="share_show">Κοινοποίηση σειράς</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_movie">Κοινοποίηση ταινίας</string>
-  <string name="share_checkout">Κάντε Check out για το %s</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
   <string name="links">Links</string>

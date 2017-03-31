@@ -55,7 +55,6 @@
   <string name="share_show">Bagikan acara</string>
   <string name="share_episode">Bagikan Episode</string>
   <string name="share_movie">Bagikan film</string>
-  <string name="share_checkout">Coba cek %s</string>
   <string name="addtocalendar">Tambah ke kalender</string>
   <string name="addtocalendar_failed">Tidak dapat membuat acara kalender.</string>
   <string name="links">Tautan</string>

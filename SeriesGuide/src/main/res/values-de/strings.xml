@@ -55,7 +55,6 @@
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
   <string name="share_movie">Film teilen</string>
-  <string name="share_checkout">Empfehle %s</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
   <string name="links">Links</string>

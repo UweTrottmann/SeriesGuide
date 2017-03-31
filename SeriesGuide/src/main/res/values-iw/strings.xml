@@ -55,7 +55,6 @@
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_movie">שתף סרט</string>
-  <string name="share_checkout">בדוק את %s</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
   <string name="links">קישורים</string>

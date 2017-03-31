@@ -55,7 +55,6 @@
   <string name="share_show">Distribuie emisiunea</string>
   <string name="share_episode">Distribuie episod</string>
   <string name="share_movie">Distribuie film</string>
-  <string name="share_checkout">Verifica %s</string>
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
   <string name="links">Links</string>

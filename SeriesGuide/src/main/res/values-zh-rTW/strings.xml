@@ -55,7 +55,6 @@
   <string name="share_show">分享節目</string>
   <string name="share_episode">分享此集</string>
   <string name="share_movie">分享電影</string>
-  <string name="share_checkout">查看%s</string>
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
   <string name="links">連結</string>
