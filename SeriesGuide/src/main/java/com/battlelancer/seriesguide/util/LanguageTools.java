@@ -26,8 +26,7 @@ public class LanguageTools {
             languageCode = DisplaySettings.getContentLanguage(context);
         }
 
-        return getLanguageStringFor(context, languageCode, R.array.languageCodesShows,
-                R.array.languagesShows);
+        return getLanguageStringFor(context, languageCode, R.array.languageCodesShows);
     }
 
     /**
@@ -42,17 +41,15 @@ public class LanguageTools {
             languageCode = DisplaySettings.getMoviesLanguage(context);
         }
 
-        return getLanguageStringFor(context, languageCode, R.array.languageCodesMovies,
-                R.array.languagesMovies);
+        return getLanguageStringFor(context, languageCode, R.array.languageCodesMovies);
     }
 
     private static String getLanguageStringFor(Context context, @Nullable String languageCode,
-            @ArrayRes int languageCodesRes, @ArrayRes int languagesRes) {
+            @ArrayRes int languageCodesRes) {
         String[] languageCodes = context.getResources().getStringArray(languageCodesRes);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
-                String[] languages = context.getResources().getStringArray(languagesRes);
-                return languages[i];
+                return new Locale(languageCode.substring(0, 2), "").getDisplayName();
             }
         }
 
@@ -86,8 +83,8 @@ public class LanguageTools {
         String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesShows);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
-                String[] languages = context.getResources().getStringArray(R.array.languagesShows);
-                return new LanguageData(languageCode, languages[i]);
+                String languageName = new Locale(languageCode, "").getDisplayName();
+                return new LanguageData(languageCode, languageName);
             }
         }
 
@@ -106,8 +103,8 @@ public class LanguageTools {
         for (int i = 0; i < languageCodes.length; i++) {
             String languageCode = languageCodes[i];
             if (languageCode.equals(languageCodeCurrent)) {
-                String languageDisplayName = new Locale(languageCode.substring(0, 2),
-                        languageCode.substring(3)).getDisplayName();
+                String languageDisplayName = new Locale(languageCode.substring(0, 2), "")
+                        .getDisplayName();
                 return new LanguageData(languageCode, languageDisplayName);
             }
         }
