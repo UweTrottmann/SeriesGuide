@@ -14,7 +14,8 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.time.DateTime;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.ZoneId;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -33,7 +34,8 @@ public class ReleasedTodayLoader extends GenericSimpleLoader<List<NowAdapter.Now
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
         // go to start of current day
-        long timeAtStartOfDay = new DateTime().withTimeAtStartOfDay().getMillis();
+        long timeAtStartOfDay = LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault())
+                .toInstant().toEpochMilli();
         // modify time to meet any user offset on episode release instants
         timeAtStartOfDay = TimeTools.applyUserOffsetInverted(getContext(), timeAtStartOfDay);
 
