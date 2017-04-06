@@ -21,6 +21,7 @@ import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.ZonedDateTime;
@@ -51,8 +52,16 @@ public class TimeTools {
         return date.before(new Date(millis));
     }
 
+    public static boolean isBeforeMillis(OffsetDateTime dateTime, long millis) {
+        return dateTime.toInstant().isBefore(Instant.ofEpochMilli(millis));
+    }
+
     public static boolean isAfterMillis(Date date, long millis) {
         return date.after(new Date(millis));
+    }
+
+    public static boolean isAfterMillis(OffsetDateTime dateTime, long millis) {
+        return dateTime.toInstant().isAfter(Instant.ofEpochMilli(millis));
     }
 
     /**
@@ -133,11 +142,11 @@ public class TimeTools {
     }
 
     /**
-     * Converts a {@link Date} to an {@link Instant} and outputs its ISO-8601 representation, such
-     * as '2013-08-20T15:16:26.355Z'.
+     * Converts a {@link OffsetDateTime} to an {@link Instant} and outputs its ISO-8601
+     * representation, such as '2013-08-20T15:16:26.355Z'.
      */
-    public static String parseShowFirstRelease(@Nullable Date date) {
-        return date == null ? "" : Instant.ofEpochMilli(date.getTime()).toString();
+    public static String parseShowFirstRelease(@Nullable OffsetDateTime date) {
+        return date == null ? "" : date.toInstant().toString();
     }
 
     /**

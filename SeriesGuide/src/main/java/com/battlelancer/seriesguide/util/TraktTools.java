@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -39,7 +40,6 @@ import dagger.Lazy;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.inject.Inject;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -104,7 +105,7 @@ public class TraktTools {
      * Downloads trakt movie watched flags and mirrors them in the local database. Does NOT upload
      * any flags (e.g. trakt is considered the truth).
      */
-    public UpdateResult downloadWatchedMovies(Date watchedAt) {
+    public UpdateResult downloadWatchedMovies(OffsetDateTime watchedAt) {
         if (watchedAt == null) {
             Timber.e("downloadWatchedMovies: null watched_at");
             return UpdateResult.INCOMPLETE;
@@ -200,7 +201,7 @@ public class TraktTools {
         }
 
         // save last watched instant
-        long watchedAtTime = watchedAt.getTime();
+        long watchedAtTime = watchedAt.toInstant().toEpochMilli();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, watchedAtTime)
@@ -216,7 +217,7 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_MOVIES_RATED_AT} to 0.
      */
-    public UpdateResult downloadMovieRatings(Date ratedAt) {
+    public UpdateResult downloadMovieRatings(OffsetDateTime ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadMovieRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
@@ -296,7 +297,7 @@ public class TraktTools {
         }
 
         // save last rated instant
-        long ratedAtTime = ratedAt.getTime();
+        long ratedAtTime = ratedAt.toInstant().toEpochMilli();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, ratedAtTime)
@@ -311,7 +312,7 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_SHOWS_RATED_AT} to 0.
      */
-    public UpdateResult downloadShowRatings(@Nullable Date ratedAt) {
+    public UpdateResult downloadShowRatings(@Nullable OffsetDateTime ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadShowRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
@@ -391,7 +392,7 @@ public class TraktTools {
         }
 
         // save last rated instant
-        long ratedAtTime = ratedAt.getTime();
+        long ratedAtTime = ratedAt.toInstant().toEpochMilli();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, ratedAtTime)
@@ -407,7 +408,7 @@ public class TraktTools {
      *
      * <p> To apply all ratings, set {@link TraktSettings#KEY_LAST_EPISODES_RATED_AT} to 0.
      */
-    public UpdateResult downloadEpisodeRatings(@Nullable Date ratedAt) {
+    public UpdateResult downloadEpisodeRatings(@Nullable OffsetDateTime ratedAt) {
         if (ratedAt == null) {
             Timber.e("downloadEpisodeRatings: null rated_at");
             return UpdateResult.INCOMPLETE;
@@ -486,7 +487,7 @@ public class TraktTools {
         }
 
         // save last rated instant
-        long ratedAtTime = ratedAt.getTime();
+        long ratedAtTime = ratedAt.toInstant().toEpochMilli();
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, ratedAtTime)
@@ -524,7 +525,7 @@ public class TraktTools {
     }
 
     private int syncWatchedEpisodes(@NonNull HashSet<Integer> localShows,
-            @Nullable Date watchedAt,
+            @Nullable OffsetDateTime watchedAt,
             boolean isInitialSync) {
         if (watchedAt == null) {
             Timber.e("syncWatchedEpisodes: null watched_at");
@@ -568,7 +569,8 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT, watchedAt.getTime())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_WATCHED_AT,
+                            watchedAt.toInstant().toEpochMilli())
                     .apply();
 
             Timber.d("syncWatchedEpisodes: success");
@@ -580,7 +582,7 @@ public class TraktTools {
     }
 
     private int syncCollectedEpisodes(@NonNull HashSet<Integer> localShows,
-            @Nullable Date collectedAt, boolean isInitialSync) {
+            @Nullable OffsetDateTime collectedAt, boolean isInitialSync) {
         if (collectedAt == null) {
             Timber.e("syncCollectedEpisodes: null collected_at");
             return FAILED;
@@ -623,7 +625,8 @@ public class TraktTools {
             // store new last activity time
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
-                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT, collectedAt.getTime())
+                    .putLong(TraktSettings.KEY_LAST_EPISODES_COLLECTED_AT,
+                            collectedAt.toInstant().toEpochMilli())
                     .apply();
 
             Timber.d("syncCollectedEpisodes: success");
@@ -714,7 +717,7 @@ public class TraktTools {
         }
 
         ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
-                traktShow.last_watched_at.getTime());
+                traktShow.last_watched_at.toInstant().toEpochMilli());
     }
 
     /**
@@ -873,6 +876,7 @@ public class TraktTools {
 
     @NonNull
     public static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
+        @SuppressLint("UseSparseArrays")
         HashMap<Integer, BaseShow> traktShowsMap = new HashMap<>(traktShows.size());
         for (BaseShow traktShow : traktShows) {
             if (traktShow.show == null
@@ -889,6 +893,7 @@ public class TraktTools {
 
     @NonNull
     private static HashMap<Integer, BaseSeason> buildTraktSeasonsMap(List<BaseSeason> seasons) {
+        @SuppressLint("UseSparseArrays")
         HashMap<Integer, BaseSeason> traktSeasonsMap = new HashMap<>(seasons.size());
         for (BaseSeason season : seasons) {
             if (season.number == null

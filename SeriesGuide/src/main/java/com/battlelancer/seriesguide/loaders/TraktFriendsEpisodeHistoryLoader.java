@@ -119,7 +119,7 @@ public class TraktFriendsEpisodeHistoryLoader
             }
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
-                            entry.watched_at.getTime(),
+                            entry.watched_at.toInstant().toEpochMilli(),
                             entry.show.title,
                             episodeString,
                             posterUrl

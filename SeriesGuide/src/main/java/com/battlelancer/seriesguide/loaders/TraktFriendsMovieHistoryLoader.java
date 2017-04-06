@@ -89,7 +89,7 @@ public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<Now
             // trakt has removed image support: currently displaying no image
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
-                            entry.watched_at.getTime(),
+                            entry.watched_at.toInstant().toEpochMilli(),
                             entry.movie.title,
                             null,
                             null
