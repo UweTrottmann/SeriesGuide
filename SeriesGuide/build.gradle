@@ -172,9 +172,6 @@ dependencies {
     // http://greenrobot.org/eventbus/changelog/
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
-    // https://github.com/dlew/joda-time-android/blob/master/CHANGELOG.md
-    def jodaTimeVersion = '2.9.9'
-    compile "net.danlew:android.joda:$jodaTimeVersion"
 
     // Android support libraries
     compile "com.android.support:support-v4:$supportVersion"
@@ -216,7 +213,5 @@ dependencies {
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     // include regular threetenbp to have access to the tz database without init call
     testCompile 'org.threeten:threetenbp:1.3.3'
-    // include regular joda-time to have access to the tz database without init call
-    testCompile "joda-time:joda-time:$jodaTimeVersion"
 
 }

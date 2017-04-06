@@ -28,7 +28,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.squareup.picasso.Picasso;
 import io.fabric.sdk.android.Fabric;
 import io.palaima.debugdrawer.timber.data.LumberYard;
-import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
@@ -92,7 +91,6 @@ public class SgApp extends Application {
         initializeLogging();
 
         AndroidThreeTen.init(this);
-        JodaTimeAndroid.init(this);
         initializeEventBus();
         initializePicasso();
 
