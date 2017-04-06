@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.test.instrumented;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalTime;
 import org.junit.Test;
+import org.threeten.bp.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,19 +17,28 @@ public class TimeToolsTest {
     public static final String UNITED_STATES = "us";
 
     @Test
+    public void test_getShowReleaseYear() {
+        // new ISO 8601 format
+        String year1 = TimeTools.getShowReleaseYear("2017-01-31T15:16:26.355Z");
+        // legacy TVDB ISO date format
+        String year2 = TimeTools.getShowReleaseYear("2017-01-31");
+        assertThat(year1).isEqualToIgnoringCase("2017");
+        assertThat(year1).isEqualToIgnoringCase(year2);
+    }
+
+    @Test
     public void test_parseEpisodeReleaseTime() {
         // ensure a US show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in America/New_York
         // so this test will likely not break if DST rules change)
         DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
-        String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
-                new LocalTime(20, 0), // 20:00
+                LocalTime.of(20, 0), // 20:00
                 UNITED_STATES,
                 null,
-                deviceTimeZone);
+                AMERICA_LOS_ANGELES);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370055600000L);
@@ -41,14 +50,13 @@ public class TimeToolsTest {
         // (we can be sure that in May there is always DST in effect in Europe/Berlin
         // so this test will likely not break if DST rules change)
         DateTimeZone showTimeZone = DateTimeZone.forID(EUROPE_BERLIN);
-        String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
-                new LocalTime(20, 0), // 20:00
+                LocalTime.of(20, 0), // 20:00
                 GERMANY,
                 null,
-                deviceTimeZone);
+                AMERICA_LOS_ANGELES);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370023200000L);
@@ -60,14 +68,13 @@ public class TimeToolsTest {
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
         DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
-        String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
-                new LocalTime(0, 35), // 00:35
+                LocalTime.of(0, 35), // 00:35
                 UNITED_STATES,
                 null,
-                deviceTimeZone);
+                AMERICA_LOS_ANGELES);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
@@ -78,14 +85,13 @@ public class TimeToolsTest {
         // ensure episodes releasing in the hour past midnight are NOT moved to the next day
         // if it is a Netflix show
         DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
-        String deviceTimeZone = AMERICA_LOS_ANGELES;
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-06-01", // +one day here
-                new LocalTime(0, 35), // 00:35
+                LocalTime.of(0, 35), // 00:35
                 UNITED_STATES,
                 "Netflix",
-                deviceTimeZone);
+                AMERICA_LOS_ANGELES);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370072100000L);

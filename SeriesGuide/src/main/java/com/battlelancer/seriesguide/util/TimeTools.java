@@ -17,13 +17,15 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.format.DateTimeParseException;
 import timber.log.Timber;
 
 /**
@@ -45,10 +47,8 @@ public class TimeTools {
 
     private static final String NETWORK_NETFLIX = "Netflix";
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER_UTC
-            = ISODateTimeFormat.dateTime().withZoneUTC();
-
-    private static final DateTimeFormatter TVDB_DATE_FORMATTER = ISODateTimeFormat.date();
+    private static final org.joda.time.format.DateTimeFormatter TVDB_DATE_FORMATTER
+            = ISODateTimeFormat.date();
 
     public static boolean isBeforeMillis(Date date, long millis) {
         return date.before(new Date(millis));
@@ -102,7 +102,7 @@ public class TimeTools {
     }
 
     /**
-     * Converts US week day string to {@link org.joda.time.DateTimeConstants} day.
+     * Converts US week day string to {@link DayOfWeek#getValue()} day.
      *
      * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
      */
@@ -114,19 +114,19 @@ public class TimeTools {
         // catch Monday through Sunday
         switch (day) {
             case "Monday":
-                return DateTimeConstants.MONDAY;
+                return DayOfWeek.MONDAY.getValue();
             case "Tuesday":
-                return DateTimeConstants.TUESDAY;
+                return DayOfWeek.TUESDAY.getValue();
             case "Wednesday":
-                return DateTimeConstants.WEDNESDAY;
+                return DayOfWeek.WEDNESDAY.getValue();
             case "Thursday":
-                return DateTimeConstants.THURSDAY;
+                return DayOfWeek.THURSDAY.getValue();
             case "Friday":
-                return DateTimeConstants.FRIDAY;
+                return DayOfWeek.FRIDAY.getValue();
             case "Saturday":
-                return DateTimeConstants.SATURDAY;
+                return DayOfWeek.SATURDAY.getValue();
             case "Sunday":
-                return DateTimeConstants.SUNDAY;
+                return DayOfWeek.SUNDAY.getValue();
             case "Daily":
                 return 0;
         }
@@ -136,10 +136,11 @@ public class TimeTools {
     }
 
     /**
-     * Parses a {@link DateTime} to its ISO datetime string representation (in UTC).
+     * Converts a {@link Date} to an {@link Instant} and outputs its ISO-8601 representation, such
+     * as '2013-08-20T15:16:26.355Z'.
      */
     public static String parseShowFirstRelease(@Nullable Date date) {
-        return date == null ? "" : DATE_TIME_FORMATTER_UTC.print(new DateTime(date.getTime()));
+        return date == null ? "" : Instant.ofEpochMilli(date.getTime()).toString();
     }
 
     /**
@@ -159,7 +160,7 @@ public class TimeTools {
         }
 
         // get date
-        LocalDate localDate;
+        org.joda.time.LocalDate localDate;
         try {
             localDate = TVDB_DATE_FORMATTER.parseLocalDate(releaseDate);
         } catch (IllegalArgumentException e) {
@@ -173,7 +174,9 @@ public class TimeTools {
         }
 
         // set time
-        LocalDateTime localDateTime = localDate.toLocalDateTime(showReleaseTime);
+        org.joda.time.LocalTime jodaShowReleaseTime = new org.joda.time.LocalTime(
+                showReleaseTime.getHour(), showReleaseTime.getMinute());
+        LocalDateTime localDateTime = localDate.toLocalDateTime(jodaShowReleaseTime);
 
         localDateTime = handleHourPastMidnight(showCountry, showNetwork, localDateTime);
         localDateTime = handleDstGap(showTimeZone, localDateTime);
@@ -201,12 +204,12 @@ public class TimeTools {
             int hour = showReleaseTime / 100;
             int minute = showReleaseTime - (hour * 100);
             if (minute <= 59) {
-                return new LocalTime(hour, minute);
+                return LocalTime.of(hour, minute);
             }
         }
 
         // if no time is available, use a sensible default
-        return new LocalTime(7, 0);
+        return LocalTime.of(7, 0);
     }
 
     /**
@@ -224,7 +227,10 @@ public class TimeTools {
         DateTimeZone showTimeZone = getDateTimeZone(timeZone);
 
         // create current date in show time zone, set local show release time
-        LocalDateTime localDateTime = new LocalDate(showTimeZone).toLocalDateTime(time);
+        org.joda.time.LocalTime jodaTime = new org.joda.time.LocalTime(time.getHour(),
+                time.getMinute());
+        LocalDateTime localDateTime = new org.joda.time.LocalDate(showTimeZone).toLocalDateTime(
+                jodaTime);
 
         // adjust day of week so datetime is today or within the next week
         // for daily shows (weekDay == 0) just use the current day
@@ -275,8 +281,9 @@ public class TimeTools {
     }
 
     /**
-     * Calculate the year string of a show's first release in the user's default locale from an ISO
-     * date time string.
+     * Parses the ISO-8601, such as '2013-08-20T15:16:26.355Z', or TVDB date format representation
+     * of a show first release date and outputs the year string in the user's default
+     * locale.
      *
      * @return Returns {@code null} if the given date time is empty.
      */
@@ -285,21 +292,22 @@ public class TimeTools {
             return null;
         }
 
-        DateTime dateTime;
+        Instant instant;
 
         try {
-            dateTime = DATE_TIME_FORMATTER_UTC.parseDateTime(releaseDateTime);
-        } catch (IllegalArgumentException ignored) {
+            instant = Instant.parse(releaseDateTime);
+        } catch (DateTimeParseException ignored) {
             // legacy format, or otherwise invalid
             try {
                 // try legacy date only parser
-                dateTime = TVDB_DATE_FORMATTER.parseDateTime(releaseDateTime);
+                instant = LocalDate.parse(releaseDateTime).atStartOfDay().toInstant(ZoneOffset.UTC);
             } catch (IllegalArgumentException e) {
                 return null;
             }
         }
 
-        return new SimpleDateFormat("yyyy", Locale.getDefault()).format(dateTime.toDate());
+        return new SimpleDateFormat("yyyy", Locale.getDefault())
+                .format(new Date(instant.toEpochMilli()));
     }
 
     private static DateTime applyUnitedStatesCorrections(@Nullable String country,

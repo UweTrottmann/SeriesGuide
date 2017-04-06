@@ -26,7 +26,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalTime;
+import org.threeten.bp.LocalTime;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
