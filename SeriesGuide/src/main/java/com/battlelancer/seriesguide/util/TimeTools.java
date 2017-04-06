@@ -4,6 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.threeten.bp.Clock;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
@@ -229,8 +231,21 @@ public class TimeTools {
         // determine show time zone (falls back to America/New_York)
         ZoneId showTimeZone = getDateTimeZone(timeZone);
 
+        ZonedDateTime dateTime = getShowReleaseDateTime(time, weekDay,
+                showTimeZone, country, network, Clock.system(showTimeZone));
+
+        dateTime = applyUserOffset(context, dateTime);
+
+        return new Date(dateTime.toInstant().toEpochMilli());
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @NonNull
+    public static ZonedDateTime getShowReleaseDateTime(@NonNull LocalTime time, int weekDay,
+            @NonNull ZoneId timeZone, @Nullable String country, @Nullable String network,
+            @NonNull Clock clock) {
         // create current date in show time zone, set local show release time
-        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.now(showTimeZone), time);
+        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.now(clock), time);
 
         // adjust day of week so datetime is today or within the next week
         // for daily shows (weekDay == 0) just use the current day
@@ -246,7 +261,7 @@ public class TimeTools {
         localDateTime = handleHourPastMidnight(country, network, localDateTime);
 
         // get a valid datetime in the show time zone, this auto-forwards time if inside DST gap
-        ZonedDateTime dateTime = localDateTime.atZone(showTimeZone);
+        ZonedDateTime dateTime = localDateTime.atZone(timeZone);
 
         // handle time zone effects on release time for US shows (only if device is set to US zone)
         String localTimeZone = TimeZone.getDefault().getID();
@@ -254,9 +269,7 @@ public class TimeTools {
             dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime);
         }
 
-        dateTime = applyUserOffset(context, dateTime);
-
-        return new Date(dateTime.toInstant().toEpochMilli());
+        return dateTime;
     }
 
     /**

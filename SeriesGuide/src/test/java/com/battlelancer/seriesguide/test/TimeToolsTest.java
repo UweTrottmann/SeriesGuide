@@ -3,11 +3,19 @@ package com.battlelancer.seriesguide.test;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
 import org.junit.Test;
+import org.threeten.bp.Clock;
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Note: this test has a mirrored instrumentation test!
+ */
 public class TimeToolsTest {
 
     public static final String AMERICA_NEW_YORK = "America/New_York";
@@ -95,5 +103,24 @@ public class TimeToolsTest {
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));
         assertThat(episodeReleaseTime).isEqualTo(1370072100000L);
+    }
+
+    @Test
+    public void test_getShowReleaseDateTime_dstGap() {
+        // using begin of daylight saving time in Europe/Berlin on 2017-03-26
+        // clock moves forward at 2:00 by 1 hour
+        ZoneId zoneIdBerlin = ZoneId.of(EUROPE_BERLIN);
+        Instant instantDayOfDstStart = ZonedDateTime.of(LocalDateTime.of(2017, 3, 26, 1, 0),
+                zoneIdBerlin).toInstant();
+        Clock fixedClock = Clock.fixed(instantDayOfDstStart, zoneIdBerlin);
+
+        // put show release exactly inside daylight saving gap (02:00-03:00)
+        ZonedDateTime dateTime = TimeTools.getShowReleaseDateTime(
+                LocalTime.of(2, 30), DayOfWeek.SUNDAY.getValue(),
+                zoneIdBerlin, GERMANY, "Some Network",
+                fixedClock);
+
+        // time should be "fixed" by moving an hour forward
+        assertThat(dateTime.toLocalTime()).isEqualTo(LocalTime.of(3, 30));
     }
 }
