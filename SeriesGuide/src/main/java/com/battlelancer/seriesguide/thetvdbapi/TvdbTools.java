@@ -64,8 +64,8 @@ import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.joda.time.DateTimeZone;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import timber.log.Timber;
@@ -657,7 +657,7 @@ public class TvdbTools {
             final Show show, String url) throws TvdbException {
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
-        final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
+        final ZoneId showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
         final LocalTime showReleaseTime = TimeTools.getShowReleaseTime(show.release_time);
         final String deviceTimeZone = TimeZone.getDefault().getID();
 

@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.test.instrumented;
 
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
-import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ public class TimeToolsTest {
         // ensure a US show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in America/New_York
         // so this test will likely not break if DST rules change)
-        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
+        ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
@@ -49,7 +49,7 @@ public class TimeToolsTest {
         // ensure a German show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in Europe/Berlin
         // so this test will likely not break if DST rules change)
-        DateTimeZone showTimeZone = DateTimeZone.forID(EUROPE_BERLIN);
+        ZoneId showTimeZone = ZoneId.of(EUROPE_BERLIN);
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
@@ -67,7 +67,7 @@ public class TimeToolsTest {
         // ensure episodes releasing in the hour past midnight are moved to the next day
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
-        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
+        ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-05-31",
@@ -84,7 +84,7 @@ public class TimeToolsTest {
     public void test_parseEpisodeReleaseTime_NoHourPastMidnight() {
         // ensure episodes releasing in the hour past midnight are NOT moved to the next day
         // if it is a Netflix show
-        DateTimeZone showTimeZone = DateTimeZone.forID(AMERICA_NEW_YORK);
+        ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
                 showTimeZone,
                 "2013-06-01", // +one day here

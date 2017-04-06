@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
-import org.joda.time.DateTimeZone;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
@@ -999,7 +999,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.beginTransaction();
             try {
                 ContentValues values = new ContentValues();
-                DateTimeZone defaultShowTimeZone = TimeTools.getDateTimeZone(null);
+                ZoneId defaultShowTimeZone = TimeTools.getDateTimeZone(null);
                 LocalTime defaultShowReleaseTime = TimeTools.getShowReleaseTime(-1);
                 String deviceTimeZone = TimeZone.getDefault().getID();
                 while (episodes.moveToNext()) {

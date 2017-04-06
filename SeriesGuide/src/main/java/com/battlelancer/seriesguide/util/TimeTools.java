@@ -16,16 +16,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.ISODateTimeFormat;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeParseException;
+import org.threeten.bp.temporal.ChronoField;
 import timber.log.Timber;
 
 /**
@@ -46,9 +46,6 @@ public class TimeTools {
     private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
     private static final String NETWORK_NETFLIX = "Netflix";
-
-    private static final org.joda.time.format.DateTimeFormatter TVDB_DATE_FORMATTER
-            = ISODateTimeFormat.date();
 
     public static boolean isBeforeMillis(Date date, long millis) {
         return date.before(new Date(millis));
@@ -71,15 +68,15 @@ public class TimeTools {
      *
      * <p> Falls back to "America/New_York" if timezone string is empty or unknown.
      */
-    public static DateTimeZone getDateTimeZone(@Nullable String timezone) {
+    public static ZoneId getDateTimeZone(@Nullable String timezone) {
         if (timezone != null && timezone.length() != 0) {
             try {
-                return DateTimeZone.forID(timezone);
+                return ZoneId.of(timezone);
             } catch (IllegalArgumentException ignored) {
             }
         }
 
-        return DateTimeZone.forID(TIMEZONE_ID_US_EASTERN);
+        return ZoneId.of(TIMEZONE_ID_US_EASTERN);
     }
 
     /**
@@ -152,7 +149,7 @@ public class TimeTools {
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
     public static long parseEpisodeReleaseDate(@Nullable Context context,
-            @NonNull DateTimeZone showTimeZone, @Nullable String releaseDate,
+            @NonNull ZoneId showTimeZone, @Nullable String releaseDate,
             @NonNull LocalTime showReleaseTime, @Nullable String showCountry,
             @Nullable String showNetwork, @NonNull String deviceTimeZone) {
         if (releaseDate == null || releaseDate.length() == 0) {
@@ -160,9 +157,9 @@ public class TimeTools {
         }
 
         // get date
-        org.joda.time.LocalDate localDate;
+        LocalDate localDate;
         try {
-            localDate = TVDB_DATE_FORMATTER.parseLocalDate(releaseDate);
+            localDate = LocalDate.parse(releaseDate);
         } catch (IllegalArgumentException e) {
             // date string could not be parsed
             if (context != null) {
@@ -174,22 +171,19 @@ public class TimeTools {
         }
 
         // set time
-        org.joda.time.LocalTime jodaShowReleaseTime = new org.joda.time.LocalTime(
-                showReleaseTime.getHour(), showReleaseTime.getMinute());
-        LocalDateTime localDateTime = localDate.toLocalDateTime(jodaShowReleaseTime);
+        LocalDateTime localDateTime = localDate.atTime(showReleaseTime);
 
         localDateTime = handleHourPastMidnight(showCountry, showNetwork, localDateTime);
-        localDateTime = handleDstGap(showTimeZone, localDateTime);
 
-        // finally get a valid datetime in the show time zone
-        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
+        // get a valid datetime in the show time zone, this auto-forwards time if inside DST gap
+        ZonedDateTime dateTime = localDateTime.atZone(showTimeZone);
 
         // handle time zone effects on release time for US shows (only if device is set to US zone)
         if (deviceTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
             dateTime = applyUnitedStatesCorrections(showCountry, deviceTimeZone, dateTime);
         }
 
-        return dateTime.getMillis();
+        return dateTime.toInstant().toEpochMilli();
     }
 
     /**
@@ -224,29 +218,26 @@ public class TimeTools {
             int weekDay, @Nullable String timeZone, @Nullable String country,
             @Nullable String network) {
         // determine show time zone (falls back to America/New_York)
-        DateTimeZone showTimeZone = getDateTimeZone(timeZone);
+        ZoneId showTimeZone = getDateTimeZone(timeZone);
 
         // create current date in show time zone, set local show release time
-        org.joda.time.LocalTime jodaTime = new org.joda.time.LocalTime(time.getHour(),
-                time.getMinute());
-        LocalDateTime localDateTime = new org.joda.time.LocalDate(showTimeZone).toLocalDateTime(
-                jodaTime);
+        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.now(showTimeZone), time);
 
         // adjust day of week so datetime is today or within the next week
         // for daily shows (weekDay == 0) just use the current day
         if (weekDay >= 1 && weekDay <= 7) {
             // joda tries to preserve week
             // so if we want a week day earlier in the week, advance by 7 days first
-            if (weekDay < localDateTime.getDayOfWeek()) {
+            if (weekDay < localDateTime.getDayOfWeek().getValue()) {
                 localDateTime = localDateTime.plusWeeks(1);
             }
-            localDateTime = localDateTime.withDayOfWeek(weekDay);
+            localDateTime = localDateTime.with(ChronoField.DAY_OF_WEEK, weekDay);
         }
 
         localDateTime = handleHourPastMidnight(country, network, localDateTime);
-        localDateTime = handleDstGap(showTimeZone, localDateTime);
 
-        DateTime dateTime = localDateTime.toDateTime(showTimeZone);
+        // get a valid datetime in the show time zone, this auto-forwards time if inside DST gap
+        ZonedDateTime dateTime = localDateTime.atZone(showTimeZone);
 
         // handle time zone effects on release time for US shows (only if device is set to US zone)
         String localTimeZone = TimeZone.getDefault().getID();
@@ -256,7 +247,7 @@ public class TimeTools {
 
         dateTime = applyUserOffset(context, dateTime);
 
-        return dateTime.toDate();
+        return new Date(dateTime.toInstant().toEpochMilli());
     }
 
     /**
@@ -274,7 +265,7 @@ public class TimeTools {
             @Nullable String network, LocalDateTime localDateTime) {
         if (ISO3166_1_UNITED_STATES.equals(country)
                 && !NETWORK_NETFLIX.equals(network)
-                && localDateTime.getHourOfDay() == 0) {
+                && localDateTime.getHour() == 0) {
             return localDateTime.plusDays(1);
         }
         return localDateTime;
@@ -310,8 +301,8 @@ public class TimeTools {
                 .format(new Date(instant.toEpochMilli()));
     }
 
-    private static DateTime applyUnitedStatesCorrections(@Nullable String country,
-            @NonNull String localTimeZone, @NonNull DateTime dateTime) {
+    private static ZonedDateTime applyUnitedStatesCorrections(@Nullable String country,
+            @NonNull String localTimeZone, @NonNull ZonedDateTime dateTime) {
         // assumed base time zone for US shows by trakt is America/New_York
         // EST UTC−5:00, EDT UTC−4:00
 
@@ -336,12 +327,12 @@ public class TimeTools {
             offset += 1;
         } else if (localTimeZone.equals(TIMEZONE_ID_US_ARIZONA)) {
             // is always UTC-07:00, so like Mountain, but no DST
-            boolean noDstInEastern = DateTimeZone.forID(TIMEZONE_ID_US_EASTERN)
-                    .isStandardOffset(dateTime.getMillis());
-            if (noDstInEastern) {
-                offset += 1;
-            } else {
+            boolean dstInEastern = ZoneId.of(TIMEZONE_ID_US_EASTERN).getRules()
+                    .isDaylightSavings(dateTime.toInstant());
+            if (dstInEastern) {
                 offset += 2;
+            } else {
+                offset += 1;
             }
         } else if (localTimeZone.equals(TIMEZONE_ID_US_PACIFIC)) {
             // PST UTC−8:00 or PDT UTC−7:00
@@ -351,19 +342,6 @@ public class TimeTools {
         dateTime = dateTime.plusHours(offset);
 
         return dateTime;
-    }
-
-    /**
-     * Handles DST gap (typically a missing clock hour when DST is getting enabled) by moving the
-     * time forward in hour increments until the local date time is outside the gap.
-     */
-    private static LocalDateTime handleDstGap(DateTimeZone showTimeZone,
-            LocalDateTime localDateTime) {
-        while (showTimeZone.isLocalDateTimeGap(localDateTime)) {
-            // move time forward in 1 hour increments, until outside of the gap
-            localDateTime = localDateTime.plusHours(1);
-        }
-        return localDateTime;
     }
 
     /**
@@ -518,7 +496,7 @@ public class TimeTools {
     /**
      * Returns a date time equal to the given date time plus the user-defined offset.
      */
-    private static DateTime applyUserOffset(Context context, DateTime dateTime) {
+    private static ZonedDateTime applyUserOffset(Context context, ZonedDateTime dateTime) {
         int offset = getUserOffset(context);
         if (offset != 0) {
             dateTime = dateTime.plusHours(offset);
