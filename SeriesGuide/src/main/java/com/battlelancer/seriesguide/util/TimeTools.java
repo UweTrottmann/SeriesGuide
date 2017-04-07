@@ -40,13 +40,13 @@ public class TimeTools {
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
 
-    private static final String ISO3166_1_UNITED_STATES = "us";
-    private static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
-    private static final Object TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
-    private static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
-    private static final String TIMEZONE_ID_US_MOUNTAIN = "America/Denver";
-    private static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
-    private static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
+    public static final String ISO3166_1_UNITED_STATES = "us";
+    public static final String TIMEZONE_ID_US_EASTERN = "America/New_York";
+    public static final String TIMEZONE_ID_US_EASTERN_DETROIT = "America/Detroit";
+    public static final String TIMEZONE_ID_US_CENTRAL = "America/Chicago";
+    public static final String TIMEZONE_ID_US_MOUNTAIN = "America/Denver";
+    public static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
+    public static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
     private static final String NETWORK_NETFLIX = "Netflix";
 
@@ -323,7 +323,8 @@ public class TimeTools {
                 .format(new Date(instant.toEpochMilli()));
     }
 
-    private static ZonedDateTime applyUnitedStatesCorrections(@Nullable String country,
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public static ZonedDateTime applyUnitedStatesCorrections(@Nullable String country,
             @NonNull String localTimeZone, @NonNull ZonedDateTime dateTime) {
         // assumed base time zone for US shows by trakt is America/New_York
         // EST UTC−5:00, EDT UTC−4:00
