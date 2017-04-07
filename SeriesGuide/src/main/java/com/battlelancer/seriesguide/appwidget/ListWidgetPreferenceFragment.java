@@ -1,11 +1,10 @@
 package com.battlelancer.seriesguide.appwidget;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
@@ -111,13 +110,21 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), backgroundPref);
         bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), themePref);
 
-        // disable type and background pref for non-supporters
         if (!Utils.hasAccessToX(getActivity())) {
-            typePref.setEnabled(false);
+            // disable saving prefs not available for non-supporters
+            Preference.OnPreferenceChangeListener onDisablePreferenceChangeListener
+                    = new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Utils.advertiseSubscription(getActivity());
+                    return false;
+                }
+            };
+            typePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             typePref.setSummary(R.string.onlyx);
-            themePref.setEnabled(false);
+            themePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             themePref.setSummary(R.string.onlyx);
-            backgroundPref.setEnabled(false);
+            backgroundPref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             backgroundPref.setSummary(R.string.onlyx);
         }
 
