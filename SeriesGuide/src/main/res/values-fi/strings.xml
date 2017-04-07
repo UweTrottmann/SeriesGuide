@@ -343,6 +343,18 @@
   <string name="pref_language">Ensisijainen sisällön kieli</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta se ei ole TMDb:n hyväksymä tai sertifioima.</string>

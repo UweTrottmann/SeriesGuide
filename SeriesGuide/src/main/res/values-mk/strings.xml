@@ -343,6 +343,18 @@
   <string name="pref_language">Предпрoчитaн јaзик нa сoдржинaтa</string>
   <string name="pref_updatewifionly">Слики од Wi-Fi само</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Оваа апликација користи податоци и слики од TheTVDB лиценцирана од CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Овој продукт користи TMDb API но не е одобрена или лиценцирана од TMDb.</string>

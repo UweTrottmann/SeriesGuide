@@ -343,6 +343,18 @@
   <string name="pref_language">Foretrukket indholdssprog</string>
   <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Download ikke billeder via mobil- eller forbrugsgebyrbelagte netværk for at reducere gebyrer</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt, eller certificeret, af TMDb.</string>

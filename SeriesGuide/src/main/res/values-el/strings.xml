@@ -343,6 +343,18 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί πληροφορίες και εικόνες από το TheTVDB με άδεια CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>

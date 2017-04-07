@@ -334,6 +334,15 @@
   <string name="pref_language">선호하는 컨텐츠 언어</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
   <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">이 앱은 CC BY NC 4.0에 의거한 TheTVDB 사용자의 데이터와 이미지를 활용합니다.</string>
   <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증된 프로그램이 아닙니다. (비공식 앱 입니다)</string>

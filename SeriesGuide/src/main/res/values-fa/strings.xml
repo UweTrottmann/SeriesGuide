@@ -343,6 +343,18 @@
   <string name="pref_language">زبان محتوای ترجیحی</string>
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">این کاره از داده‌ها و تصویرهای TheTVDB با پروانهٔ CC BY-NC 4.0 استفاده می‌کند.</string>
   <string name="licence_themoviedb">این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند، ولی توسّط TMDb توصیه یا تصدیق نشده است.</string>

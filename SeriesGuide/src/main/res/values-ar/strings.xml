@@ -379,6 +379,30 @@
   <string name="pref_language">اللغة المفضلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
+  <plurals name="days_before_plural">
+    <item quantity="zero">%d days before</item>
+    <item quantity="one">%d day before</item>
+    <item quantity="two">%d days before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="many">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="zero">%d hours before</item>
+    <item quantity="one">%d hour before</item>
+    <item quantity="two">%d hours before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="many">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="zero">%d minutes before</item>
+    <item quantity="one">%d minute before</item>
+    <item quantity="two">%d minutes before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="many">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>

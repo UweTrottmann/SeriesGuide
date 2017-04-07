@@ -334,6 +334,15 @@
   <string name="pref_language">内容首选的语言</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
   <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口但没有被 TMDb 官方认证。</string>

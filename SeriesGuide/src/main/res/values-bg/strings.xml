@@ -343,6 +343,18 @@
   <string name="pref_language">Предпочитан език на съдържанието</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Това приложение ползва данни и изображения от TheTVDB лицензиран под  CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>

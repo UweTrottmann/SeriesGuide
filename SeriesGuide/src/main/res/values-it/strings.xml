@@ -343,6 +343,18 @@
   <string name="pref_language">Lingua preferita per i contenuti</string>
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Per ridurre il consumo di dati, non scaricare le copertine attraverso connessione dati</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Questa applicazione utilizza informazioni e immagini di TheTVDB sotto licenza CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Questo prodotto utilizza l\'API di TMDb ma non è approvato o certificato da TMDb.</string>

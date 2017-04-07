@@ -334,6 +334,15 @@
   <string name="pref_language">偏好的語言</string>
   <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
   <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">此應用程式使用的資料及圖片為按照CC BY-NC 4.0的TVDB所授權。</string>
   <string name="licence_themoviedb">此產品使用TMDb的API但並非尤其支持。</string>

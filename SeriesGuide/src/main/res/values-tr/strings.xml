@@ -343,6 +343,18 @@
   <string name="pref_language">Tercih edilen içerik dili</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Bu uygulama, theTVDB verilerini ve görsellerini, CC BY-NC 4.0 lisansı altında kullanmaktadır.</string>
   <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>

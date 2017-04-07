@@ -334,6 +334,15 @@
   <string name="pref_language">Bahasa konten yang diutamakan</string>
   <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>
   <string name="pref_updatewifionlysummary">Untuk mengurangi biaya operator, jangan unduh melalui jaringan seluler</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Aplikasi ini menggunakan data dan gambar dari TheTVDB yang terlisensi atas nama CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>

@@ -343,6 +343,18 @@
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">இந்த பயன்பாட்டு பயன்படுத்தும் தரவு மற்றும் படிமங்கள் மூலம் TheTVDB உரிமம் கீழ் நகல் மூலம்-NC 4.0.</string>
   <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>

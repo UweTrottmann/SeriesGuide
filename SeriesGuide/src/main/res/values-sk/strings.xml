@@ -352,6 +352,21 @@
   <string name="pref_language">Preferovaný jazyk obsahu</string>
   <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Táto aplikácia využíva dáta a obrázky z TheTVDB licencované pod CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tento produkt používa TMDb API, ale nie je uznaný či certifikovaný TMDb.</string>

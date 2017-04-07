@@ -343,6 +343,18 @@
   <string name="pref_language">Idioma preferido para o conteúdo</string>
   <string name="pref_updatewifionly">Atualizar imagens apenas por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Não utilizar dados móveis ou quaisquer serviços de tráfego limitado, de forma a reduzir qualquer custo com as operadoras</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Esta aplicação faz uso de informação e imagens do TheTVDB licenciado sob a CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não foi aprovado ou certificado pelo TMDb.</string>

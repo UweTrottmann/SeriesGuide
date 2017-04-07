@@ -344,6 +344,18 @@
   <string name="pref_language">Innehållsspråk som föredras</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Den här appen använder data och bilder från TheTVDB under licensen CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte godkänd eller certifierad av TMDb.</string>

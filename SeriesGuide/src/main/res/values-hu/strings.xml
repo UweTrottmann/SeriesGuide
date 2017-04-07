@@ -343,6 +343,18 @@
   <string name="pref_language">Tartalom preferált nyelve</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, CC BY-NC 4.0 licenc alatt álló adatait és képeit használja.</string>
   <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>

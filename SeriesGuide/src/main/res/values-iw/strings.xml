@@ -361,6 +361,24 @@
   <string name="pref_language">שפת תוכן מועדפת</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
   <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="two">%d days before</item>
+    <item quantity="many">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="two">%d hours before</item>
+    <item quantity="many">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="two">%d minutes before</item>
+    <item quantity="many">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות על ידי TheTVDB תחת רישיון CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">מוצר זה עושה שימוש ב-API TMDb אך אינו נתמך או מאושר על ידי TMDb.</string>
