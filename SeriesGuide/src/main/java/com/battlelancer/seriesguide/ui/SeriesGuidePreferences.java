@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -314,7 +315,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ringtonePref.setEnabled(false);
             }
 
-            setListPreferenceSummary((ListPreference) thresholdPref);
+            thresholdPref.setSummary(
+                    NotificationSettings.getLatestToIncludeTresholdValue(getActivity()));
         }
 
         private void setupBasicSettings() {
@@ -417,6 +419,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ((SeriesGuidePreferences) getActivity()).switchToSettings(key);
                 return true;
             }
+            if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
+                new NotificationThresholdDialogFragment().show(
+                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
+                        "notification-threshold");
+                return true;
+            }
             if (NotificationSettings.KEY_RINGTONE.equals(key)) {
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
@@ -476,9 +484,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // update pref summary text
             if (DisplaySettings.KEY_LANGUAGE.equals(key)
                     || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
-                    || DisplaySettings.KEY_THEME.equals(key)
-                    || NotificationSettings.KEY_THRESHOLD.equals(key)
-                    ) {
+                    || DisplaySettings.KEY_THEME.equals(key)) {
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
                 }
@@ -489,6 +495,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     // Set summary to be the user-description for the selected value
                     listPref.setSummary(
                             getString(R.string.pref_offsetsummary, listPref.getEntry()));
+                }
+            }
+            if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
+                if (pref != null) {
+                    pref.setSummary(NotificationSettings.getLatestToIncludeTresholdValue(
+                            pref.getContext()));
                 }
             }
 
