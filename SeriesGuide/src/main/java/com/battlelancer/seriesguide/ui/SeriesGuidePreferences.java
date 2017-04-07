@@ -66,13 +66,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
-    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
+//    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     private static final String KEY_ABOUT = "aboutPref";
 
-    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+//    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
 
     public static @StyleRes int THEME = R.style.Theme_SeriesGuide;
 
