@@ -162,10 +162,9 @@ public class TvdbAddFragment extends AddFragment {
 
     private void changeLanguage(String languageCode) {
         if (getString(R.string.language_code_any).equals(languageCode)) {
-            this.languageCode = "";
-        } else {
-            this.languageCode = languageCode;
+            languageCode = "";
         }
+        this.languageCode = languageCode;
 
         // save selected search language
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
