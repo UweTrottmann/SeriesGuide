@@ -2,11 +2,10 @@
 
 <resources>
 
-    <!-- On Lollipop and up, use CoordinatorLayouts and scrolling app bars. -->
+    <!-- On Lollipop and up use scrolling app bars. -->
+    <item name="toolbar" type="layout">@layout/toolbar_v21</item>
     <item name="toolbar_progress" type="layout">@layout/toolbar_progress_v21</item>
-    <item name="activity_search" type="layout">@layout/activity_search_v21</item>
-    <item name="activity_overview" type="layout">@layout/activity_overview_v21</item>
-    <item name="activity_tabs_drawer" type="layout">@layout/activity_tabs_drawer_v21</item>
+    <item name="toolbar_search" type="layout">@layout/toolbar_search_v21</item>
     <item name="fragment_episode" type="layout">@layout/fragment_episode_v21</item>
 
 </resources>
