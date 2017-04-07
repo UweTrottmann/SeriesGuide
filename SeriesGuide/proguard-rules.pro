@@ -64,12 +64,6 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
-# Oltu has some stuff not available on Android (javax.servlet), we don't use (slf4j)
-# and not included because it is available on Android (json).
--dontwarn javax.servlet.http.**
--dontwarn org.slf4j.**
--dontwarn org.json.**
-
 # Picasso
 # Using with OkHttp 3 downloader, but has references to OkHttp2
 -dontwarn com.squareup.picasso.OkHttpDownloader
@@ -99,6 +93,3 @@
 -dontwarn org.assertj.core.**
 -dontwarn org.junit.**
 -dontwarn java.beans.**
-
-# joda time
--dontwarn org.joda.time.**
