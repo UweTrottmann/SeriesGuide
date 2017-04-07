@@ -12,6 +12,7 @@ Version 37
 #### 37-beta2
 *(2017-04-07)*
 
+* 🌟 Within limits, select any number of minutes, hours or days to notify before episodes are released.
 * 🔨 Time stamps in trakt history are wrong.
 * 🔨 Show add dialog displays "unknown" language.
 * 🔧 Let non-supporters see available list widget options.
