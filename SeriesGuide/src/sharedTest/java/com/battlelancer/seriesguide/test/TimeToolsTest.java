@@ -13,9 +13,6 @@ import org.threeten.bp.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Note: this test has a mirrored instrumentation test!
- */
 public class TimeToolsTest {
 
     public static final String AMERICA_NEW_YORK = "America/New_York";

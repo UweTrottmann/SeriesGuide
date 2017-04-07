@@ -9,7 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TraktToolsTest {
 
     /**
-     * Also available as an instrumented test as Android uses a different formatter.
+     * Also available as an instrumented unit test as Android uses a different formatter than the
+     * local JVM.
      */
     @Test
     public void ratingString() {
@@ -17,5 +18,4 @@ public class TraktToolsTest {
         assertThat(TraktTools.buildRatingString(1.5, Locale.GERMAN)).isEqualToIgnoringCase("1,5");
         assertThat(TraktTools.buildRatingString(1.05, Locale.GERMAN)).isEqualToIgnoringCase("1,1");
     }
-
 }
