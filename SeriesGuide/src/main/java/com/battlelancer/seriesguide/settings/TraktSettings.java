@@ -4,7 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Settings related to trakt.tv integration.
@@ -130,8 +130,8 @@ public class TraktSettings {
     /**
      * If either collection or watchlist have changes newer than last stored.
      */
-    public static boolean isMovieListsChanged(Context context, Date collectedAt,
-            Date watchlistedAt) {
+    public static boolean isMovieListsChanged(Context context, OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt) {
         return TimeTools.isAfterMillis(collectedAt, TraktSettings.getLastMoviesCollectedAt(context))
                 || TimeTools.isAfterMillis(watchlistedAt,
                 TraktSettings.getLastMoviesWatchlistedAt(context));
@@ -140,12 +140,14 @@ public class TraktSettings {
     /**
      * Store last collected and watchlisted timestamps.
      */
-    public static void storeLastMoviesChangedAt(Context context, Date collectedAt,
-            Date watchlistedAt) {
+    public static void storeLastMoviesChangedAt(Context context, OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_MOVIES_COLLECTED_AT, collectedAt.getTime())
-                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHLISTED_AT, watchlistedAt.getTime())
+                .putLong(TraktSettings.KEY_LAST_MOVIES_COLLECTED_AT,
+                        collectedAt.toInstant().toEpochMilli())
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHLISTED_AT,
+                        watchlistedAt.toInstant().toEpochMilli())
                 .apply();
     }
 

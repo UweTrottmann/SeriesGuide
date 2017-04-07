@@ -9,9 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
+import org.threeten.bp.Instant;
 
 /**
  * Very primitive timestamp based search history backed by {@link android.content.SharedPreferences}.
@@ -23,8 +21,6 @@ public class SearchHistory {
     private static final int MAX_HISTORY_SIZE = 10;
     private static final int ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH = 20;
     private static final int DATETIME_PREFIX_LENGTH = ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH + 1;
-    private static final DateTimeFormatter ISO_DATETIME_FORMATTER
-            = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC();
     private static final Comparator<String> NATURAL_ORDER_REVERSE = new Comparator<String>() {
         @Override
         public int compare(String lhs, String rhs) {
@@ -86,7 +82,7 @@ public class SearchHistory {
         }
 
         // add new entry
-        String now = new DateTime().toString(ISO_DATETIME_FORMATTER);
+        String now = Instant.now().toString();
         String newHistoryEntry = now + " " + query;
         searchHistory.put(now + " " + query, query);
         queryMap.put(query, newHistoryEntry);

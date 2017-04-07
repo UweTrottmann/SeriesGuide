@@ -135,7 +135,7 @@ public class TraktRecentEpisodeHistoryLoader
                             entry.episode.number, entry.episode.title);
             NowAdapter.NowItem item = new NowAdapter.NowItem()
                     .displayData(
-                            entry.watched_at.getTime(),
+                            entry.watched_at.toInstant().toEpochMilli(),
                             entry.show.title,
                             description,
                             posterUrl
