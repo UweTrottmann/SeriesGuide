@@ -165,24 +165,24 @@
   <!-- Seasons -->
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d odcinek nieobejrzany</item>
+    <item quantity="few">%d odcinki nieobejrzane</item>
+    <item quantity="other">%d odcinków nieobejrzanych</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d inny odcinek</item>
+    <item quantity="few">%d inne odcinki</item>
+    <item quantity="other">%d innych odcinków</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d niewyemitowany</item>
+    <item quantity="few">%d niewyemitowane</item>
+    <item quantity="other">%d niewyemitowanych</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d pozostały</item>
+    <item quantity="few">%d pozostałe</item>
+    <item quantity="other">%d pozostałych</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>

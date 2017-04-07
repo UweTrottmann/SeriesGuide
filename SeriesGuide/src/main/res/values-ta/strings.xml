@@ -33,7 +33,7 @@
   <string name="web_search">வலை தேடல்</string>
   <string name="add_to_homescreen">எளியவழி</string>
   <string name="action_open">திற</string>
-  <string name="sync_manually">Sync manually</string>
+  <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
@@ -209,7 +209,7 @@
   <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
   <!-- Movies -->
   <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
+  <string name="title_popular">பிரபலமானவை</string>
   <string name="title_digital_releases">Digital releases</string>
   <string name="title_disc_releases">Disc releases</string>
   <string name="movies_in_theatres">In theaters</string>
