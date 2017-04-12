@@ -420,7 +420,7 @@
   <string name="backup_summary">גבה או שחזר את סדרותיך</string>
   <string name="pref_number">תבנית מספרים</string>
   <string name="pref_offset">סטיית שעה ידנית</string>
-  <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
+  <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
   <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>

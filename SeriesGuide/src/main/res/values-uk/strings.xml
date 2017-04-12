@@ -408,7 +408,7 @@
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
   <string name="pref_number">Формат цифр</string>
   <string name="pref_offset">Зсув часу вручну</string>
-  <string name="pref_offsetsummary">Зсув ефірного часу на %s годин</string>
+  <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
   <string name="clear_cache">Очистити кеш зображень</string>
   <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

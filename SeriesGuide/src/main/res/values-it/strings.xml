@@ -344,16 +344,16 @@
   <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Per ridurre il consumo di dati, non scaricare le copertine attraverso connessione dati</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d giorno prima</item>
+    <item quantity="other">%d giorni prima</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d ora prima</item>
+    <item quantity="other">%d ore prima</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minuto prima</item>
+    <item quantity="other">%d minuti prima</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Questa applicazione utilizza informazioni e immagini di TheTVDB sotto licenza CC BY-NC 4.0.</string>
@@ -396,7 +396,7 @@
   <string name="backup_summary">Esegui il backup o ripristina le tue serie</string>
   <string name="pref_number">Formato numerico</string>
   <string name="pref_offset">Fuso orario manuale</string>
-  <string name="pref_offsetsummary">Compensazione della messa onda di %s ore</string>
+  <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
   <string name="clear_cache">Rimuovi le immagini nella cache</string>
   <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
   <string name="pref_ganalyticssummary">Invia statistiche anonime sull\'utilizzo a un servizio Google</string>

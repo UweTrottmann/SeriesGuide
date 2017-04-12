@@ -163,16 +163,16 @@
   <!-- Seasons -->
   <string name="season_allwatched">Semua episode ditonton</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d episode belum di tonton</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d episode lainnya</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d akan dirilis</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">%d tersisa</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Ketik nama acara</string>
@@ -335,13 +335,13 @@
   <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>
   <string name="pref_updatewifionlysummary">Untuk mengurangi biaya operator, jangan unduh melalui jaringan seluler</string>
   <plurals name="days_before_plural">
-    <item quantity="other">%d days before</item>
+    <item quantity="other">%d hari sebelum</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="other">%d hours before</item>
+    <item quantity="other">%d jam sebelum</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="other">%d minutes before</item>
+    <item quantity="other">%d menit sebelum</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Aplikasi ini menggunakan data dan gambar dari TheTVDB yang terlisensi atas nama CC BY-NC 4.0.</string>
@@ -384,7 +384,7 @@
   <string name="backup_summary">Cadangkan atau pulihkan acara anda</string>
   <string name="pref_number">Format nomor</string>
   <string name="pref_offset">Seimbangkan waktu secara manual</string>
-  <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %s jam</string>
+  <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
   <string name="clear_cache">Bersihkan caches gambar</string>
   <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
   <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>

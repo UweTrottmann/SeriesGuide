@@ -397,7 +397,7 @@
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_number">Nummerformat</string>
   <string name="pref_offset">Manuell tidsskillnad</string>
-  <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
+  <string name="pref_offsetsummary">Förskjut sändningstiden med %d timmar</string>
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
   <string name="pref_ganalyticssummary">Skicka anonym användardata till Googles tjänster</string>

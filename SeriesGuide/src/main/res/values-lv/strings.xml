@@ -408,7 +408,7 @@
   <string name="backup_summary">Dublēt vai atjaunot jūsu seriālus</string>
   <string name="pref_number">Epizožu formāts</string>
   <string name="pref_offset">Manuāla laika nobīde</string>
-  <string name="pref_offsetsummary">Nobīdīt raidlaikus %s stundas</string>
+  <string name="pref_offsetsummary">Nobīdīt raidlaikus %d stundas</string>
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

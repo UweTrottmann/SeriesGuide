@@ -164,20 +164,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Todos los episodios vistos</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d episodio no visto</item>
+    <item quantity="other">%d episodios no vistos</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d otro episodio</item>
+    <item quantity="other">%d otros episodios</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d no publicado</item>
+    <item quantity="other">%d no publicados</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d restante</item>
+    <item quantity="other">%d restantes</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
@@ -267,7 +267,7 @@
   <string name="hexagon_remove_account_confirmation">Quitar tu cuenta borrará todas las series y películas de SeriesGuides Cloud. 
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud, se requiere Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando a trakt.</string>
@@ -345,16 +345,16 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d día antes</item>
+    <item quantity="other">%d días antes</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d hora antes</item>
+    <item quantity="other">%d horas antes</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minuto antes</item>
+    <item quantity="other">%d minutos antes</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">La aplicación utiliza datos e imágenes de TheTVDB licenciadas bajo la CC BY-NC 4.0.</string>
@@ -397,7 +397,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
   <string name="pref_number">Formato numérico</string>
   <string name="pref_offset">Ajuste de hora manual</string>
-  <string name="pref_offsetsummary">Ajustar %s horas los tiempos de emisión</string>
+  <string name="pref_offsetsummary">Ajustar %d horas los tiempos de emisión</string>
   <string name="clear_cache">Limpiar el caché de imágenes</string>
   <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estadísticas de uso anónimas a un servicio de Google</string>

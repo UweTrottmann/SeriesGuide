@@ -164,20 +164,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">تمامی قسمت‌ها تماشا شده‌اند</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">قسمت %d تماشا نشده است</item>
+    <item quantity="other">%d قسمت تماشا نشده اند</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d قسمت دیگر</item>
+    <item quantity="other">%d قسمت دیگر</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d منتشر خواهد شد</item>
+    <item quantity="other">%d منتشر خواهند شد</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d باقی مانده</item>
+    <item quantity="other">%d باقی مانده</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">نام نمایشی را بنویسید</string>
@@ -344,16 +344,16 @@
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d روز قبل</item>
+    <item quantity="other">%d روز قبل</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d ساعت قبل</item>
+    <item quantity="other">%d ساعت قبل</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d دقیقه قبل</item>
+    <item quantity="other">%d دقیقه قبل</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">این کاره از داده‌ها و تصویرهای TheTVDB با پروانهٔ CC BY-NC 4.0 استفاده می‌کند.</string>
@@ -396,7 +396,7 @@
   <string name="backup_summary">پشتیبان گیری یا بازگردانی نمایش‌هایتان</string>
   <string name="pref_number">قالب شماره</string>
   <string name="pref_offset">جابه‌جایی زمان دستی</string>
-  <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %s ساعت</string>
+  <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %d ساعت</string>
   <string name="clear_cache">پاک سازی انباره‌های تصویر</string>
   <string name="clear_cache_summary">برداشتن تمام تصویرهای انبار شده از افزاره‌تان</string>
   <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>

@@ -408,7 +408,7 @@
   <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
   <string name="pref_number">Format broja</string>
   <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
-  <string name="pref_offsetsummary">Razlika u emitiranju %s sati</string>
+  <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
   <string name="clear_cache">Očisti predmemoriju slika</string>
   <string name="clear_cache_summary">Ukloni sve slike iz predmemorije tvog uređaja</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

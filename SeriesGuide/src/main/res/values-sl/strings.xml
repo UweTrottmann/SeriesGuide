@@ -420,7 +420,7 @@
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
-  <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
+  <string name="pref_offsetsummary">Zamakni čas predvajanja za %d ur</string>
   <string name="clear_cache">Izbriši predp. slik</string>
   <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

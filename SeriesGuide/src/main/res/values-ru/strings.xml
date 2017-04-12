@@ -408,7 +408,7 @@
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_number">Числовой формат серий</string>
   <string name="pref_offset">Ручное смещение времени</string>
-  <string name="pref_offsetsummary">Смещение времени эфира на %s часов</string>
+  <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
   <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>

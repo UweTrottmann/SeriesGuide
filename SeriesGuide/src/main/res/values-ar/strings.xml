@@ -168,36 +168,36 @@
   <!-- Seasons -->
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="zero">%d حلقة واحدة غير مشاهدة</item>
-    <item quantity="one">%d حلقتين غير مشاهدة</item>
-    <item quantity="two">%d حلقات غير مشاهدة</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="many">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="zero">الحلقات %d لم يشاهد</item>
+    <item quantity="one">الحلقات %d لم يشاهد</item>
+    <item quantity="two">الحلقات %d لم يشاهد</item>
+    <item quantity="few">الحلقات %d لم يشاهد</item>
+    <item quantity="many">الحلقات %d لم يشاهد</item>
+    <item quantity="other">الحلقات %d لم يشاهد</item>
   </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="zero">%d الحلقات الأخرى</item>
-    <item quantity="one">%d other episode</item>
-    <item quantity="two">%d other episodes</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="many">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d الحلقات الأخرى</item>
+    <item quantity="two">%d الحلقات الأخرى</item>
+    <item quantity="few">%d الحلقات الأخرى</item>
+    <item quantity="many">%d الحلقات الأخرى</item>
+    <item quantity="other">%d الحلقات الأخرى</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="zero">%d to be released</item>
-    <item quantity="one">%d to be released</item>
-    <item quantity="two">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="many">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="zero">%d يمكن اطلاقها</item>
+    <item quantity="one">%d يمكن اطلاقها</item>
+    <item quantity="two">%d يمكن اطلاقها</item>
+    <item quantity="few">%d يمكن اطلاقها</item>
+    <item quantity="many">%d يمكن اطلاقها</item>
+    <item quantity="other">%d يمكن اطلاقها</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="zero">%d remaining</item>
-    <item quantity="one">%d remaining</item>
-    <item quantity="two">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="many">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="zero">%d المتبقية</item>
+    <item quantity="one">%d المتبقية</item>
+    <item quantity="two">%d المتبقية</item>
+    <item quantity="few">%d المتبقية</item>
+    <item quantity="many">%d المتبقية</item>
+    <item quantity="other">%d المتبقية</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
@@ -380,28 +380,28 @@
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
   <plurals name="days_before_plural">
-    <item quantity="zero">%d days before</item>
-    <item quantity="one">%d day before</item>
-    <item quantity="two">%d days before</item>
-    <item quantity="few">%d days before</item>
-    <item quantity="many">%d days before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="zero">قبل يوم من %d</item>
+    <item quantity="one">قبل يوم من %d</item>
+    <item quantity="two">قبل يوم من %d</item>
+    <item quantity="few">قبل يوم من %d</item>
+    <item quantity="many">قبل يوم من %d</item>
+    <item quantity="other">قبل يوم من %d</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="zero">%d hours before</item>
-    <item quantity="one">%d hour before</item>
-    <item quantity="two">%d hours before</item>
-    <item quantity="few">%d hours before</item>
-    <item quantity="many">%d hours before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="zero">قبل يوم من %d</item>
+    <item quantity="one">قبل يوم من %d</item>
+    <item quantity="two">قبل يوم من %d</item>
+    <item quantity="few">قبل يوم من %d</item>
+    <item quantity="many">قبل يوم من %d</item>
+    <item quantity="other">قبل يوم من %d</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="zero">%d minutes before</item>
-    <item quantity="one">%d minute before</item>
-    <item quantity="two">%d minutes before</item>
-    <item quantity="few">%d minutes before</item>
-    <item quantity="many">%d minutes before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="zero">قبل دقائق من %d</item>
+    <item quantity="one">قبل دقائق من %d</item>
+    <item quantity="two">قبل دقائق من %d</item>
+    <item quantity="few">قبل دقائق من %d</item>
+    <item quantity="many">قبل دقائق من %d</item>
+    <item quantity="other">قبل دقائق من %d</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل CC BY-NC 4.0.</string>
@@ -444,7 +444,7 @@
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
-  <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
+  <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
   <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
   <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>

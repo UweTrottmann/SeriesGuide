@@ -396,7 +396,7 @@
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
-  <string name="pref_offsetsummary">Ausstrahlungszeit um %s Stunden verschieben</string>
+  <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalyticssummary">Anonyme Nutzungs-Statistiken an einen Google-Dienst senden</string>

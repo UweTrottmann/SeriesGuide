@@ -396,7 +396,7 @@
   <string name="backup_summary">Sikkerhetskopier eller gjenopprett dine serier</string>
   <string name="pref_number">Nummerering</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
-  <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
+  <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
   <string name="clear_cache">Tøm hurtiglageret</string>
   <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
   <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>

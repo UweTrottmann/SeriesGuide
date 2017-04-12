@@ -384,7 +384,7 @@
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_number">에피소드 표시 형식</string>
   <string name="pref_offset">시차 수동 설정</string>
-  <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
+  <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
   <string name="clear_cache">이미지 캐쉬 삭제</string>
   <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

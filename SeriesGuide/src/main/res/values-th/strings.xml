@@ -384,7 +384,7 @@
   <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
   <string name="pref_number">รูปแบบตัวเลข</string>
   <string name="pref_offset">ชดเชยเวลาด้วยตนเอง</string>
-  <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %s ชั่วโมง</string>
+  <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
   <string name="clear_cache">ลบแคชรูปภาพ</string>
   <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
   <string name="pref_ganalyticssummary">ส่งสถิติการใช้งานแบบไม่ระบุชื่อกับบริการของ Google</string>

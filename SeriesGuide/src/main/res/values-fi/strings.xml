@@ -344,16 +344,16 @@
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d päivää ennen</item>
+    <item quantity="other">%d päivää ennen</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d tuntia ennen</item>
+    <item quantity="other">%d tuntia ennen</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minuuttia ennen</item>
+    <item quantity="other">%d minuuttia ennen</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
@@ -396,7 +396,7 @@
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
-  <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
+  <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>

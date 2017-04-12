@@ -335,13 +335,13 @@
   <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
   <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
   <plurals name="days_before_plural">
-    <item quantity="other">%d days before</item>
+    <item quantity="other">%d 日前</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="other">%d hours before</item>
+    <item quantity="other">%d 時間前</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="other">%d minutes before</item>
+    <item quantity="other">%d 分前</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">このアプリは、TheTVDB により CC BY-NC 4.0 の下でライセンスされるデータと画像を使用します。</string>
@@ -384,7 +384,7 @@
   <string name="backup_summary">番組をバックアップまたは復元します</string>
   <string name="pref_number">表示形式</string>
   <string name="pref_offset">手動の時間オフセット</string>
-  <string name="pref_offsetsummary">放映時間を %s 時間オフセットします</string>
+  <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
   <string name="clear_cache">画像キャッシュをクリア</string>
   <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
   <string name="pref_ganalyticssummary">匿名の使用状況に関する統計情報をGoogle サービスに送信します</string>

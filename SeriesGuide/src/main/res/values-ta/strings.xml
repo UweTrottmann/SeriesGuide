@@ -396,7 +396,7 @@
   <string name="backup_summary">மறுபிரதி எடு அல்லது மீட்டெடு உங்கள் காட்சிகள்</string>
   <string name="pref_number">எண் வடிவமைப்பு</string>
   <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
-  <string name="pref_offsetsummary">%s மணிநேரத்தில் ஏர் முறை சரியீடு</string>
+  <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
   <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
   <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
   <string name="pref_ganalyticssummary">Google சேவைக்கு பெயரிலா பயன்பாட்டு புள்ளிவிவரம் அனுப்பு</string>

@@ -408,7 +408,7 @@
   <string name="backup_summary">Padaryti atsarginę kopiją arba atkurti serialus</string>
   <string name="pref_number">Skaičių formatas</string>
   <string name="pref_offset">Rankinis laiko postūmis</string>
-  <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val</string>
+  <string name="pref_offsetsummary">Rodymo laikas pastumtas %d val</string>
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

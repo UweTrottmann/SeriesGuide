@@ -335,13 +335,13 @@
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
   <plurals name="days_before_plural">
-    <item quantity="other">%d days before</item>
+    <item quantity="other">%d 天前</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="other">%d hours before</item>
+    <item quantity="other">%d 小时前</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="other">%d minutes before</item>
+    <item quantity="other">%d 分钟前</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
@@ -384,7 +384,7 @@
   <string name="backup_summary">备份或还原节目单</string>
   <string name="pref_number">序号格式</string>
   <string name="pref_offset">手动偏移播出时间</string>
-  <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
+  <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除缓存图片</string>
   <string name="pref_ganalyticssummary">向Google服务发送匿名使用情况统计信息</string>

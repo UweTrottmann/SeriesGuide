@@ -408,7 +408,7 @@
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_number">Format numeracji</string>
   <string name="pref_offset">Ręczne przesunięcie czasu</string>
-  <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
+  <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
   <string name="clear_cache">Usuń bufor obrazów</string>
   <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
   <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>

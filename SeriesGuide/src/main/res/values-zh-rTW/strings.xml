@@ -384,7 +384,7 @@
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_number">數字格式</string>
   <string name="pref_offset">手動時間換算</string>
-  <string name="pref_offsetsummary">%s 小時的時差</string>
+  <string name="pref_offsetsummary">%d 小時的時差</string>
   <string name="clear_cache">清除圖片暫存檔</string>
   <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>

@@ -396,7 +396,7 @@
   <string name="backup_summary">Backup или обновување на вашиите серии</string>
   <string name="pref_number">Формат бројки</string>
   <string name="pref_offset">Рачен временски опсег</string>
-  <string name="pref_offsetsummary">Опсег на временски %s саати</string>
+  <string name="pref_offsetsummary">Опсег на временски %d саати</string>
   <string name="clear_cache">Избриши кеширани слики</string>
   <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
   <string name="pref_ganalyticssummary">Пратете анонимни статистики за користење на Google service</string>

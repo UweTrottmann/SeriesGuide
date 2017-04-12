@@ -396,7 +396,7 @@
   <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
   <string name="pref_number">Format de número</string>
   <string name="pref_offset">Compensació horària manual</string>
-  <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>
+  <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
   <string name="clear_cache">Buida la memòria cau d\'imatges</string>
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>

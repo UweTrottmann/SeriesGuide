@@ -344,16 +344,16 @@
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d gün önce</item>
+    <item quantity="other">%d gün önce</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d saat önce</item>
+    <item quantity="other">%d saat önce</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d dakika önce</item>
+    <item quantity="other">%d dakika önce</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Bu uygulama, theTVDB verilerini ve görsellerini, CC BY-NC 4.0 lisansı altında kullanmaktadır.</string>
@@ -396,7 +396,7 @@
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_number">Sayı biçimi</string>
   <string name="pref_offset">El ile saat farkı</string>
-  <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
+  <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
   <string name="clear_cache">Resim önbelleğini temizle</string>
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
   <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
