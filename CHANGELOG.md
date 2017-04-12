@@ -9,6 +9,16 @@ Version 37
 ----------
 *(2017-03-31)*
 
+#### 37-beta3
+*(2017-04-12)*
+
+* 🔧 Show release times can now be moved between -/+24 hours with Settings > Basics > Manual time
+     offset. It also displays an example.
+* 🔨 Search history entries contain strange characters. Use Clear search history action to delete them. 
+* 🔨 Crash due to episode time parsing failing due to invalid date.
+* 🔨 Crash due to missing character encoding class on Android 4.x.
+* 📝 Latest translations from crowdin.
+
 #### 37-beta2
 *(2017-04-07)*
 
