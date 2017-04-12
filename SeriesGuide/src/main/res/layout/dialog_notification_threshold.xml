@@ -25,7 +25,7 @@
             android:id="@+id/radioGroupThreshold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:checkedButton="@+id/radioButtonThresholdMinutes">
 
             <RadioButton
