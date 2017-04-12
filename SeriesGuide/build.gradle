@@ -173,7 +173,7 @@ dependencies {
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     compile 'com.uwetrottmann.tmdb2:tmdb-java:1.6.0'
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    compile ('com.uwetrottmann.trakt5:trakt-java:5.7.0') {
+    compile ('com.uwetrottmann.trakt5:trakt-java:5.7.1') {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
     // https://github.com/palaima/DebugDrawer
