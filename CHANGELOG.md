@@ -16,7 +16,7 @@ Version 37
 * 🔨 Time stamps in trakt history are wrong.
 * 🔨 Show add dialog displays "unknown" language.
 * 🔧 Let non-supporters see available list widget options.
-* 📝 Latest translations from crowdin.️️
+* 📝 Latest translations from crowdin.
 
 #### 37-beta1
 *(2017-03-31)*
