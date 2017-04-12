@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 import org.threeten.bp.Instant;
+import org.threeten.bp.temporal.ChronoField;
 
 /**
  * Very primitive timestamp based search history backed by {@link android.content.SharedPreferences}.
@@ -82,7 +83,7 @@ public class SearchHistory {
         }
 
         // add new entry
-        String now = Instant.now().toString();
+        String now = Instant.now().with(ChronoField.NANO_OF_SECOND, 0).toString();
         String newHistoryEntry = now + " " + query;
         searchHistory.put(now + " " + query, query);
         queryMap.put(query, newHistoryEntry);
