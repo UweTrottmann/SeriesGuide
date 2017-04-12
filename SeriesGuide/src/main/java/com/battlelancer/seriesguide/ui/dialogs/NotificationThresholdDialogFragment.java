@@ -94,7 +94,7 @@ public class NotificationThresholdDialogFragment extends AppCompatDialogFragment
         }
 
         editTextValue.setText(String.valueOf(value));
-        updateRadioButtons(value);
+        // radio buttons are updated by text watcher
     }
 
     private void parseAndUpdateValue(Editable s) {
