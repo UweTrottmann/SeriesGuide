@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import org.threeten.bp.Clock;
+import org.threeten.bp.DateTimeException;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
@@ -82,7 +83,7 @@ public class TimeTools {
         if (timezone != null && timezone.length() != 0) {
             try {
                 return ZoneId.of(timezone);
-            } catch (IllegalArgumentException ignored) {
+            } catch (DateTimeException ignored) {
             }
         }
 
@@ -170,7 +171,7 @@ public class TimeTools {
         LocalDate localDate;
         try {
             localDate = LocalDate.parse(releaseDate);
-        } catch (IllegalArgumentException e) {
+        } catch (DateTimeParseException e) {
             // date string could not be parsed
             if (context != null) {
                 Utils.trackCustomEvent(context, AnalyticsTree.CATEGORY_THETVDB_ERROR,
@@ -313,7 +314,7 @@ public class TimeTools {
             try {
                 // try legacy date only parser
                 instant = LocalDate.parse(releaseDateTime).atStartOfDay().toInstant(ZoneOffset.UTC);
-            } catch (IllegalArgumentException e) {
+            } catch (DateTimeParseException e) {
                 return null;
             }
         }
