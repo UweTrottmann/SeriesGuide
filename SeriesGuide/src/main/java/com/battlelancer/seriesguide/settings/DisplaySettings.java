@@ -33,6 +33,8 @@ public class DisplaySettings {
 
     public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
 
+    public static final String KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset";
+
     public static final String KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes";
 
     public static final String KEY_NO_WATCHED_EPISODES
@@ -136,6 +138,19 @@ public class DisplaySettings {
     public static String getNumberFormat(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_NUMBERFORMAT, NUMBERFORMAT_DEFAULT);
+    }
+
+    /**
+     * @return A positive or negative number of hours to offset show release times by. Defaults to
+     * 0.
+     */
+    public static int getShowsTimeOffset(Context context) {
+        try {
+            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString(KEY_SHOWS_TIME_OFFSET, "0"));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     public static Constants.EpisodeSorting getEpisodeSortOrder(Context context) {

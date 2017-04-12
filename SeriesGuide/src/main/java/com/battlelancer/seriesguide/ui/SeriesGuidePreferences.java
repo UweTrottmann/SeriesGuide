@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -62,8 +63,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
-
-    public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
@@ -315,8 +314,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ringtonePref.setEnabled(false);
             }
 
-            thresholdPref.setSummary(
-                    NotificationSettings.getLatestToIncludeTresholdValue(getActivity()));
+            updateThresholdSummary(thresholdPref);
         }
 
         private void setupBasicSettings() {
@@ -344,11 +342,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         }
                     });
 
-            // show currently set values for list prefs
+            // show currently set values for some prefs
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
-            ListPreference offsetListPref = (ListPreference) findPreference(KEY_OFFSET);
-            offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
-                    offsetListPref.getEntry()));
+            updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
         }
 
         private void setupAdvancedSettings() {
@@ -448,6 +444,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
                 return true;
             }
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
+                new TimeOffsetDialogFragment().show(
+                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
+                        "time-offset");
+                return true;
+            }
             if (KEY_ABOUT.equals(key)) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.containerSettings, new AboutSettingsFragment());
@@ -489,29 +491,25 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     setListPreferenceSummary((ListPreference) pref);
                 }
             }
-            if (KEY_OFFSET.equals(key)) {
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
                 if (pref != null) {
-                    ListPreference listPref = (ListPreference) pref;
-                    // Set summary to be the user-description for the selected value
-                    listPref.setSummary(
-                            getString(R.string.pref_offsetsummary, listPref.getEntry()));
+                    updateTimeOffsetSummary(pref);
                 }
             }
             if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
                 if (pref != null) {
-                    pref.setSummary(NotificationSettings.getLatestToIncludeTresholdValue(
-                            pref.getContext()));
+                    updateThresholdSummary(pref);
                 }
             }
 
             // pref changes that require the notification service to be reset
-            if (KEY_OFFSET.equals(key)
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)
                     || NotificationSettings.KEY_THRESHOLD.equals(key)) {
                 resetAndRunNotificationsService(getActivity());
             }
 
             // pref changes that require the widgets to be updated
-            if (KEY_OFFSET.equals(key)
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)
                     || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
                     || DisplaySettings.KEY_DISPLAY_EXACT_DATE.equals(key)
                     || DisplaySettings.KEY_PREVENT_SPOILERS.equals(key)) {
@@ -539,6 +537,17 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     SgSyncAdapter.setSyncAutomatically(getActivity(), autoUpdatePref.isChecked());
                 }
             }
+        }
+
+        private void updateThresholdSummary(Preference thresholdPref) {
+            thresholdPref.setSummary(NotificationSettings.getLatestToIncludeTresholdValue(
+                    thresholdPref.getContext()));
+        }
+
+        private void updateTimeOffsetSummary(Preference offsetListPref) {
+            offsetListPref.setSummary(getString(R.string.pref_offsetsummary,
+                    DisplaySettings.getShowsTimeOffset(getActivity()))
+            );
         }
     }
 }

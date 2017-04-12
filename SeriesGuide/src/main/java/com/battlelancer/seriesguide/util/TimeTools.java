@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -11,7 +10,7 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.AnalyticsTree;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -520,7 +519,7 @@ public class TimeTools {
      * Returns a date time equal to the given date time plus the user-defined offset.
      */
     private static ZonedDateTime applyUserOffset(Context context, ZonedDateTime dateTime) {
-        int offset = getUserOffset(context);
+        int offset = DisplaySettings.getShowsTimeOffset(context);
         if (offset != 0) {
             dateTime = dateTime.plusHours(offset);
         }
@@ -538,7 +537,7 @@ public class TimeTools {
         Calendar dateTime = Calendar.getInstance();
         dateTime.setTimeInMillis(releaseInstant);
 
-        int offset = getUserOffset(context);
+        int offset = DisplaySettings.getShowsTimeOffset(context);
         if (offset != 0) {
             dateTime.add(Calendar.HOUR_OF_DAY, offset);
         }
@@ -546,7 +545,7 @@ public class TimeTools {
     }
 
     private static void applyUserOffsetInverted(Context context, Calendar calendar) {
-        int offset = getUserOffset(context);
+        int offset = DisplaySettings.getShowsTimeOffset(context);
 
         // invert
         offset = -offset;
@@ -567,14 +566,5 @@ public class TimeTools {
         applyUserOffsetInverted(context, dateTime);
 
         return dateTime.getTimeInMillis();
-    }
-
-    private static int getUserOffset(Context context) {
-        try {
-            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 }
