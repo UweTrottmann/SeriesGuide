@@ -59,14 +59,6 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
         textViewRange.setText(getString(R.string.format_time_offset_range, -24, 24));
 
         editTextValue.addTextChangedListener(textWatcher);
-        editTextValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!editTextValue.hasSelection()) {
-                    editTextValue.selectAll();
-                }
-            }
-        });
 
         bindViews();
 
