@@ -48,6 +48,7 @@ public class TimeTools {
     public static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
     public static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
+    private static final String NETWORK_AMAZON = "Amazon";
     private static final String NETWORK_NETFLIX = "Netflix";
 
     public static boolean isBeforeMillis(Date date, long millis) {
@@ -274,7 +275,7 @@ public class TimeTools {
 
     /**
      * If the release time is within the hour past midnight (0:00 until 0:59) moves the date one day
-     * into the future (currently US shows only, excluding Netflix shows).
+     * into the future (currently US shows only, excluding Amazon and Netflix shows).
      *
      * <p> This is based on late night shows being commonly listed as releasing the day before if
      * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
@@ -286,7 +287,7 @@ public class TimeTools {
     private static LocalDateTime handleHourPastMidnight(@Nullable String country,
             @Nullable String network, LocalDateTime localDateTime) {
         if (ISO3166_1_UNITED_STATES.equals(country)
-                && !NETWORK_NETFLIX.equals(network)
+                && !NETWORK_AMAZON.equals(network) && !NETWORK_NETFLIX.equals(network)
                 && localDateTime.getHour() == 0) {
             return localDateTime.plusDays(1);
         }
