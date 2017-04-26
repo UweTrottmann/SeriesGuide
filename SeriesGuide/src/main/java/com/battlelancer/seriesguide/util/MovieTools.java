@@ -49,6 +49,7 @@ import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -98,6 +99,14 @@ public class MovieTools {
     public MovieTools(SgApp app) {
         context = app.getApplicationContext();
         app.getServicesComponent().inject(this);
+    }
+
+    /**
+     * Date format using only numbers.
+     */
+    public static DateFormat getMovieShortDateFormat() {
+        // use SHORT as in some languages (Portuguese) the MEDIUM string is longer than expected
+        return DateFormat.getDateInstance(DateFormat.SHORT);
     }
 
     /**

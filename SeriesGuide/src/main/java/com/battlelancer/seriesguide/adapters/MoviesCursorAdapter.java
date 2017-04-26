@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class MoviesCursorAdapter extends CursorAdapter {
     private final int uniqueId;
     private final String tmdbImageBaseUrl;
 
-    private DateFormat dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
+    private DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
 
     private PopupMenuClickListener popupMenuClickListener;
 
