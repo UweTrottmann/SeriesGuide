@@ -447,11 +447,6 @@
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
   <string name="pref_notifications_treshold">Quand notifier</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">lors de la diffusion</string>
-  <string name="notification_release_earlier_five">5 minutes avant</string>
-  <string name="notification_release_earlier_ten">10 minutes avant</string>
-  <string name="notification_release_earlier_hour">1 heure avant</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
   <!-- List Widget -->

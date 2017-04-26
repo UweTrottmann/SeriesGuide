@@ -447,11 +447,6 @@
   <string name="pref_vibrate">لرزش</string>
   <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
   <string name="pref_notifications_treshold">زمان آگاهی</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">شروع پخش</string>
-  <string name="notification_release_earlier_five">۵ دقیقه زودتر</string>
-  <string name="notification_release_earlier_ten">۱۰ دقیقه زودتر</string>
-  <string name="notification_release_earlier_hour">۱ ساعت قبل</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">سریزگاید (کوچک)</string>
   <!-- List Widget -->

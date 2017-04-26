@@ -447,11 +447,6 @@
   <string name="pref_vibrate">Vibrér</string>
   <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>
   <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">sendetidspunkt</string>
-  <string name="notification_release_earlier_five">5 min. i forvejen</string>
-  <string name="notification_release_earlier_ten">10 min. i forvejen</string>
-  <string name="notification_release_earlier_hour">1 time i forvejen</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (lille)</string>
   <!-- List Widget -->

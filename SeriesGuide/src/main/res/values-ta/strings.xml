@@ -447,11 +447,6 @@
   <string name="pref_vibrate">அதிர்வு</string>
   <string name="pref_vibratesummary">மேலும் vibrate அறிவிக்கை காண்பிப்பதில் உள்ள</string>
   <string name="pref_notifications_treshold">எப்போது அறிவிக்க</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">காற்று உள்ள</string>
-  <string name="notification_release_earlier_five">5 நிமிடம் உள்நாட்டு</string>
-  <string name="notification_release_earlier_ten">10 நிமிடம் உள்நாட்டு</string>
-  <string name="notification_release_earlier_hour">1 மணி நேரம் உள்நாட்டு</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (சிறிய)</string>
   <!-- List Widget -->

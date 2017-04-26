@@ -611,20 +611,6 @@
         <item>2</item>
     </string-array>
 
-    <!-- Notification thresholds -->
-    <string-array name="notificationThreshold">
-        <item>@string/notification_release_exact</item>
-        <item>@string/notification_release_earlier_five</item>
-        <item>@string/notification_release_earlier_ten</item>
-        <item>@string/notification_release_earlier_hour</item>
-    </string-array>
-    <string-array name="notificationThresholdData">
-        <item>0</item>
-        <item>5</item>
-        <item>10</item>
-        <item>60</item>
-    </string-array>
-
     <!-- Widget background options -->
     <string-array name="widgetOpacity">
         <item>@string/widget_background_transparent</item>

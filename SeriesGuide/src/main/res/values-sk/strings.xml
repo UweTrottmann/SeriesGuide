@@ -459,11 +459,6 @@
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
   <string name="pref_notifications_treshold">Čas upozornenia</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">vysiela sa</string>
-  <string name="notification_release_earlier_five">5 minút vopred</string>
-  <string name="notification_release_earlier_ten">10 minút vopred</string>
-  <string name="notification_release_earlier_hour">1 hodinu vopred</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->

@@ -447,11 +447,6 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">esitettäessä</string>
-  <string name="notification_release_earlier_five">5 min etukäteen</string>
-  <string name="notification_release_earlier_ten">10 min etukäteen</string>
-  <string name="notification_release_earlier_hour">1 tunti etukäteen</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <!-- List Widget -->

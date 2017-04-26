@@ -471,11 +471,6 @@
   <string name="pref_vibrate">Vibriranje</string>
   <string name="pref_vibratesummary">Vibriranje tudi ob prikazu obvestila</string>
   <string name="pref_notifications_treshold">Čas obveščanja</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">se predvaja</string>
-  <string name="notification_release_earlier_five">5 min prej</string>
-  <string name="notification_release_earlier_ten">10 min prej</string>
-  <string name="notification_release_earlier_hour">eno uro prej</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <!-- List Widget -->

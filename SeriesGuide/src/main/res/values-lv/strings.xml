@@ -459,11 +459,6 @@
   <string name="pref_vibrate">Vibrēt</string>
   <string name="pref_vibratesummary">Vibrēt arī paziņojuma uzrādīšanas laikā</string>
   <string name="pref_notifications_treshold">Kad paziņot</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">ekranizācijas laikā</string>
-  <string name="notification_release_earlier_five">5 minūtes pirms</string>
-  <string name="notification_release_earlier_ten">10 minūtes pirms</string>
-  <string name="notification_release_earlier_hour">1 stundu pirms</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (neliels)</string>
   <!-- List Widget -->

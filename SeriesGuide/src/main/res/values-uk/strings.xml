@@ -459,11 +459,6 @@
   <string name="pref_vibrate">Вібрація</string>
   <string name="pref_vibratesummary">Вібрувати при відображенні сповіщення</string>
   <string name="pref_notifications_treshold">Коли слід сповіщати</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">в ефірі</string>
-  <string name="notification_release_earlier_five">5 хв до початку</string>
-  <string name="notification_release_earlier_ten">10 хв до початку</string>
-  <string name="notification_release_earlier_hour">одна година до початку</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малий)</string>
   <!-- List Widget -->

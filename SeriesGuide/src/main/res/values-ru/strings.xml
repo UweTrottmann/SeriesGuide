@@ -459,11 +459,6 @@
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Вибрация при уведомлении</string>
   <string name="pref_notifications_treshold">Когда уведомлять</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">в эфире</string>
-  <string name="notification_release_earlier_five">5 минут до начала</string>
-  <string name="notification_release_earlier_ten">10 минут до начала</string>
-  <string name="notification_release_earlier_hour">один час до начала</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малый)</string>
   <!-- List Widget -->

@@ -435,11 +435,6 @@
   <string name="pref_vibrate">สั่น</string>
   <string name="pref_vibratesummary">สั่นเมื่อแสดงการแจ้งเตือนด้วย</string>
   <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">เวลาออกอากาศ</string>
-  <string name="notification_release_earlier_five">ล่วงหน้า 5 นาที</string>
-  <string name="notification_release_earlier_ten">ล่วงหน้า 10 นาที</string>
-  <string name="notification_release_earlier_hour">ล่วงหน้า 1 ชั่วโมง</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
   <!-- List Widget -->
