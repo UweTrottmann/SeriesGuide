@@ -49,7 +49,7 @@
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
   <string name="database_error">Не вдалося змінити дані.</string>
   <string name="reinstall_info">Спробуйте зберегти копію в Налаштування, повторна інсталяція та відновлення.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
   <!-- Sharing -->
   <string name="share">Поділитись</string>
   <string name="share_show">Поділитись серіалом</string>

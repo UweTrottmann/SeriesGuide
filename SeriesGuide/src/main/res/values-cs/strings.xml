@@ -165,24 +165,24 @@
   <!-- Seasons -->
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
+    <item quantity="one">%d epizoda ke shlédnutí</item>
     <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d epizod ke shlédnutí</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
+    <item quantity="one">%d další epizoda</item>
     <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d další epizody</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
+    <item quantity="one">%d neodvysílaná</item>
     <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d neodvysílaná</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
+    <item quantity="one">%d zbývá</item>
     <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">%d zbývá</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napište název seriálu</string>
@@ -274,7 +274,7 @@
   <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
   <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>
@@ -353,19 +353,19 @@
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
+    <item quantity="one">%d den předem</item>
     <item quantity="few">%d days before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="other">%d dní předem</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
+    <item quantity="one">%d hodina předem</item>
     <item quantity="few">%d hours before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="other">%d hodin předem</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
+    <item quantity="one">%d minuta předem</item>
     <item quantity="few">%d minutes before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="other">%d minut předem</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Tato aplikace využívá údaje a obrázky z TheTVDB podle licence CC BY-NC 4.0.</string>
@@ -484,7 +484,7 @@
   <string name="onlyx">Pouze pro dárce</string>
   <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
-  <string name="billing_action_pass">Získejte Rozšířenou verzi</string>
+  <string name="billing_action_pass">Získejte X Pass</string>
   <string name="billing_price_subscribe">%s/rok, vyzkoušejte zdarma</string>
   <string name="billing_price_pass">jednorázový nákup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>

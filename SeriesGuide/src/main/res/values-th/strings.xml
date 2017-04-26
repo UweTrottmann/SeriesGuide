@@ -163,16 +163,16 @@
   <!-- Seasons -->
   <string name="season_allwatched">ดูครบทุกตอนแล้ว</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d ตอนยังไม่ได้ดู</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d ตอนเพิ่มเติม</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d ตอนยังไม่ออก</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">เหลืออีก %d</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
@@ -335,13 +335,13 @@
   <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
   <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
   <plurals name="days_before_plural">
-    <item quantity="other">%d days before</item>
+    <item quantity="other">%d วันก่อนหน้า</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="other">%d hours before</item>
+    <item quantity="other">%d ชั่วโมงก่อนหน้า</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="other">%d minutes before</item>
+    <item quantity="other">%d นาทีก่อนหน้า</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้ CC BY-NC 4.0</string>

@@ -164,20 +164,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Alle afleveringen bekeken</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d aflevering niet bekeken</item>
+    <item quantity="other">%d afleveringen niet bekeken</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d andere aflevering</item>
+    <item quantity="other">%d andere afleveringen</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d nog vrij te geven</item>
+    <item quantity="other">%d nog vrij te geven</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d resterend</item>
+    <item quantity="other">%d resterend</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
@@ -344,16 +344,16 @@
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d dag voordien</item>
+    <item quantity="other">%d dagen voordien</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d uur voordien</item>
+    <item quantity="other">%d uren voordien</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minuut voordien</item>
+    <item quantity="other">%d minuten voordien</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>

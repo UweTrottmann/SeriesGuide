@@ -71,7 +71,7 @@
     <item quantity="other">%d yorum</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">TOPLAM BÖLÜM SAYISI</string>
+  <string name="episode_number_absolute">BAŞTAN BÖLÜM NO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Yayın tarihi</string>
   <string name="episode_firstaired_unknown">Yayın tarihi bilinmiyor</string>
@@ -86,7 +86,7 @@
   <string name="episode_writers">Yazarlar</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
-  <string name="lastEdit">Son Düzenleme // TVDb</string>
+  <string name="lastEdit">Son Düzenleme // TheTVDB</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
   <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
@@ -108,8 +108,8 @@
   <string name="action_collection_remove">Koleksiyondan kaldır</string>
   <string name="action_collection_added">Koleksiyona eklendi</string>
   <string name="action_collection_removed">Koleksiyondan kaldırıldı</string>
-  <string name="action_watched">İzlendi</string>
-  <string name="action_unwatched">İzlenmemiş</string>
+  <string name="action_watched">İzlendi yap</string>
+  <string name="action_unwatched">İzlenmedi yap</string>
   <!-- Shows -->
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
@@ -172,8 +172,8 @@
     <item quantity="other">%d diğer bölümler</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d daha yayınlanmamış</item>
+    <item quantity="one">%d yayınlanacak</item>
+    <item quantity="other">%d yayınlanacak</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d bölüm kaldı</item>
