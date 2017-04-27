@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 
 /**
  * Access settings related to the notification service.
@@ -38,6 +39,11 @@ public class NotificationSettings {
                 .getBoolean(KEY_ENABLED, true);
     }
 
+    /**
+     * @deprecated Notifications are enabled on a per-show basis since {@link
+     * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
+     */
+    @Deprecated
     public static boolean isNotifyAboutFavoritesOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FAVONLY, false);

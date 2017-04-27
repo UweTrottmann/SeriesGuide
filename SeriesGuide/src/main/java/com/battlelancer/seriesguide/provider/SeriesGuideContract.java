@@ -160,6 +160,17 @@ public class SeriesGuideContract {
         String HIDDEN = "series_hidden";
 
         /**
+         * Whether notifications for new episodes of this show should be shown. Added with {@link
+         * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
+         *
+         * <pre>
+         * Range: 0-1
+         * Default: 1
+         * </pre>
+         */
+        String NOTIFY = "series_notify";
+
+        /**
          * Whether this show was merged with data on Hexagon after signing in the last time.
          *
          * <pre>
@@ -615,6 +626,8 @@ public class SeriesGuideContract {
                 + Shows.SORT_STATUS;
 
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
+
+        public static final String SELECTION_NOT_FAVORITES = Shows.FAVORITE + "=0";
 
         public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
