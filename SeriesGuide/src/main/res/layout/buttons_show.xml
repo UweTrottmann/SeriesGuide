@@ -23,17 +23,17 @@
         tools:text="Remove from favorites" />
 
     <Button
-        android:id="@+id/buttonShowShare"
+        android:id="@+id/buttonShowNotify"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:contentDescription="@string/share"
-        android:drawableTop="?attr/drawableShare"
+        android:contentDescription="@string/action_episode_notifications_off"
+        android:drawableTop="?attr/drawableNotificationsOn"
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="8dp"
-        android:text="@string/share" />
+        android:text="@string/episode_notifications" />
 
     <Button
         android:id="@+id/buttonShowShortcut"

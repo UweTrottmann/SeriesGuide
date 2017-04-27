@@ -134,6 +134,9 @@
     <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
+    <string name="episode_notifications">Episode notifications</string>
+    <string name="action_episode_notifications_on">Turn on episode notifications</string>
+    <string name="action_episode_notifications_off">Turn off episode notifications</string>
     <string name="context_hide">Hide</string>
     <string name="context_unhide">Do not hide</string>
     <string name="hidden">Moved to hidden</string>

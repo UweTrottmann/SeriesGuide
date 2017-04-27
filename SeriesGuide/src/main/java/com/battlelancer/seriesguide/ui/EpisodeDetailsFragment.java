@@ -166,7 +166,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mEpisodeContainer.setVisibility(View.GONE);
 
         // comments button
-        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), mCommentsButton,
+        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), mCommentsButton,
                 R.attr.drawableComments);
 
         // web search button unused, is available as extension

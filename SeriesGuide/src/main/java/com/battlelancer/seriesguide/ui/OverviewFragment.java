@@ -212,7 +212,7 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
-        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
+        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonComments,
                 R.attr.drawableComments);
 
         // hide web search button

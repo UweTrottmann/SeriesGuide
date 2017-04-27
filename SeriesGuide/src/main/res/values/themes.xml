@@ -86,6 +86,8 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
+        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_white_24dp</item>
+        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_white_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -174,6 +176,8 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
+        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_white_24dp</item>
+        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_white_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_action_share</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -273,6 +277,8 @@
         <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
+        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_black_24dp</item>
+        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_black_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_black_24dp</item>
         <item name="drawableShare">@drawable/ic_action_share_inverse</item>
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>

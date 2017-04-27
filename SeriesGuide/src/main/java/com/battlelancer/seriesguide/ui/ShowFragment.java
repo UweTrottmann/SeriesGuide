@@ -102,7 +102,7 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
     @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
-    @BindView(R.id.buttonShowShare) Button mButtonShare;
+    @BindView(R.id.buttonShowNotify) Button buttonNotify;
     @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
@@ -130,14 +130,7 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        // share button
-        mButtonShare.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareShow();
-            }
-        });
-        CheatSheet.setup(mButtonShare);
+        CheatSheet.setup(buttonNotify);
 
         // shortcut button
         mButtonShortcut.setOnClickListener(new OnClickListener() {
@@ -150,7 +143,7 @@ public class ShowFragment extends Fragment {
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
+        ViewTools.setVectorCompoundDrawableLeft(theme, buttonLanguage, R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,8 +162,8 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         // search and comments button
-        ViewTools.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
-        ViewTools.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
+        ViewTools.setVectorCompoundDrawableLeft(theme, mButtonWebSearch, R.attr.drawableSearch);
+        ViewTools.setVectorCompoundDrawableLeft(theme, mButtonComments, R.attr.drawableComments);
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -250,7 +243,8 @@ public class ShowFragment extends Fragment {
                 Shows.RATING_VOTES,
                 Shows.RATING_USER,
                 Shows.LASTEDIT,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.NOTIFY
         };
 
         int TITLE = 1;
@@ -273,6 +267,7 @@ public class ShowFragment extends Fragment {
         int RATING_USER = 18;
         int LAST_EDIT_MS = 19;
         int LANGUAGE = 20;
+        int NOTIFY = 21;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -357,6 +352,15 @@ public class ShowFragment extends Fragment {
                         .storeIsFavorite(getShowTvdbId(), !isFavorite);
             }
         });
+
+        boolean notificationsEnabled = showCursor.getInt(ShowQuery.NOTIFY) == 1;
+        buttonNotify.setContentDescription(getString(notificationsEnabled
+                ? R.string.action_episode_notifications_off
+                : R.string.action_episode_notifications_on));
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonNotify,
+                notificationsEnabled
+                        ? R.attr.drawableNotificationsOn
+                        : R.attr.drawableNotificationsOff);
 
         // overview
         String overview = showCursor.getString(ShowQuery.OVERVIEW);
