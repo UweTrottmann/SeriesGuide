@@ -74,9 +74,10 @@ public class NotificationService extends IntentService {
             + Shows.SORT_TITLE + ","
             + Episodes.NUMBER + " ASC";
 
-    // only within time frame, unwatched episodes
-    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND "
-            + Episodes.SELECTION_UNWATCHED;
+    // only if notifications are on: unwatched episodes released on or after arg
+    private static final String SELECTION = Shows.SELECTION_NOTIFY + " AND "
+            + Episodes.SELECTION_UNWATCHED + " AND "
+            + Episodes.FIRSTAIREDMS + ">=?";
 
     interface NotificationQuery {
 
@@ -263,18 +264,13 @@ public class NotificationService extends IntentService {
      * settings.
      */
     private Cursor queryUpcomingEpisodes(long customCurrentTime) {
-
         StringBuilder selection = new StringBuilder(SELECTION);
-        boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
-        if (isFavsOnly) {
-            selection.append(" AND ").append(Shows.SELECTION_FAVORITES);
-        }
+
         boolean isNoSpecials = DisplaySettings.isHidingSpecials(this);
+        Timber.d("Settings: specials: %s", isNoSpecials ? "YES" : "NO");
         if (isNoSpecials) {
             selection.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
         }
-        Timber.d("Settings: favorites-only: %s, specials: %s",
-                isFavsOnly ? "YES" : "NO", isNoSpecials ? "YES" : "NO");
         // always exclude hidden shows
         selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
 
