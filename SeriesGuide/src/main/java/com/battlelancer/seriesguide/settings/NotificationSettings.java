@@ -90,8 +90,7 @@ public class NotificationSettings {
     }
 
     /**
-     * Get the air time of the episode the user cleared last (or for below HC the last episode we
-     * notified about).
+     * Get the air time of the episode the user cleared last.
      */
     public static long getLastCleared(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -101,7 +100,7 @@ public class NotificationSettings {
     /**
      * Get the air time of the episode we last notified about.
      */
-    public static long getLastNotified(Context context) {
+    public static long getLastNotifiedAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_NOTIFIED, 0);
     }
