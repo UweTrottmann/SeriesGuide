@@ -104,33 +104,24 @@ public class NotificationService extends IntentService {
         setIntentRedelivery(true);
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
         Timber.d("Waking up...");
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        /*
-         * Handle a possible delete intent.
-         */
         if (handleDeleteIntent(this, intent)) {
             return;
         }
 
-        /*
-         * Unschedule notification service wake-ups for disabled notifications
-         * and non-supporters.
-         */
+        // remove notification service wake-up alarm if notifications are disabled or not unlocked
         if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
             Timber.d("Notification service disabled, removing wakup-up alarm");
-            // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
             am.cancel(pi);
 
             resetLastEpisodeAirtime(prefs);
-
             return;
         }
 
@@ -196,10 +187,10 @@ public class NotificationService extends IntentService {
                             NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (releaseTime < nextEpisodeReleaseTime) {
                         if (releaseTime > latestTimeNotified) {
-                            /**
-                             * This will not get new episodes which would have
-                             * aired the same time as the last one we notified
-                             * about. Sad, but the best we can do right now.
+                            /*
+                              This will not get new episodes which would have
+                              aired the same time as the last one we notified
+                              about. Sad, but the best we can do right now.
                              */
                             newEpisodesAvailable = 1;
                             break;
@@ -258,12 +249,12 @@ public class NotificationService extends IntentService {
                         Timber.d("Delete intent NOT supported, setting last cleared to: %d",
                                 latestAirtime);
                         prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED,
-                                latestAirtime).commit();
+                                latestAirtime).apply();
                     }
                     Timber.d("Found %d new episodes, setting last notified to: %d",
                             notifyPositions.size(), latestAirtime);
                     prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
-                            .commit();
+                            .apply();
 
                     onNotify(upcomingEpisodes, notifyPositions, latestAirtime);
                 }
@@ -280,7 +271,7 @@ public class NotificationService extends IntentService {
                         // store next episode we plan to notify about
                         Timber.d("Storing next episode time to notify about: %d", releaseTime);
                         prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, releaseTime)
-                                .commit();
+                                .apply();
 
                         // calc actual wake up time
                         wakeUpTime = TimeTools.applyUserOffset(this, releaseTime).getTime()
@@ -328,7 +319,7 @@ public class NotificationService extends IntentService {
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
                     .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
-                    .commit();
+                    .apply();
             return true;
         }
         return false;
@@ -338,13 +329,12 @@ public class NotificationService extends IntentService {
      * Resets the air time of the last notified about episode. Afterwards notifications for episodes
      * may appear, which were already notified about.
      */
-    @SuppressLint("CommitPrefEdits")
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
         Timber.d("Resetting last cleared and last notified");
         prefs.edit()
                 .putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
                 .putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0)
-                .commit();
+                .apply();
     }
 
     private void onNotify(final Cursor upcomingEpisodes, List<Integer> notifyPositions,
