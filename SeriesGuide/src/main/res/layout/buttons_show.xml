@@ -33,7 +33,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="8dp"
-        android:text="@string/episode_notifications" />
+        android:text="@string/pref_notifications" />
 
     <Button
         android:id="@+id/buttonShowShortcut"

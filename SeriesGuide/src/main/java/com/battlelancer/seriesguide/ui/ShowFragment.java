@@ -101,7 +101,7 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
+    @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
     @BindView(R.id.buttonShowNotify) Button buttonNotify;
     @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
@@ -333,16 +333,16 @@ public class ShowFragment extends Fragment {
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
-        mButtonFavorite.setEnabled(true);
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonFavorite, 0,
                 Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                         isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
                 0, 0);
-        mButtonFavorite.setText(
+        buttonFavorite.setText(
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        CheatSheet.setup(mButtonFavorite,
+        CheatSheet.setup(buttonFavorite,
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        mButtonFavorite.setOnClickListener(new OnClickListener() {
+        buttonFavorite.setEnabled(true);
+        buttonFavorite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable until action is complete
@@ -353,14 +353,29 @@ public class ShowFragment extends Fragment {
             }
         });
 
-        boolean notificationsEnabled = showCursor.getInt(ShowQuery.NOTIFY) == 1;
-        buttonNotify.setContentDescription(getString(notificationsEnabled
+        // notifications button
+        final boolean notify = showCursor.getInt(ShowQuery.NOTIFY) == 1;
+        buttonNotify.setContentDescription(getString(notify
                 ? R.string.action_episode_notifications_off
                 : R.string.action_episode_notifications_on));
-        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonNotify,
-                notificationsEnabled
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonNotify, notify
                         ? R.attr.drawableNotificationsOn
                         : R.attr.drawableNotificationsOff);
+        buttonNotify.setEnabled(true);
+        buttonNotify.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Utils.hasAccessToX(getActivity())) {
+                    Utils.advertiseSubscription(getActivity());
+                    return;
+                }
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity())
+                        .getShowTools()
+                        .storeNotify(getShowTvdbId(), !notify);
+            }
+        });
 
         // overview
         String overview = showCursor.getString(ShowQuery.OVERVIEW);

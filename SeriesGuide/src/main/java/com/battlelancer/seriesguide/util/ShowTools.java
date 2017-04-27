@@ -274,6 +274,32 @@ public class ShowTools {
     }
 
     /**
+     * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
+     */
+    public void storeNotify(int showTvdbId, boolean notify) {
+        // TODO ut: send to Cloud
+//        if (HexagonSettings.isEnabled(app)) {
+//            if (Utils.isNotConnected(app, true)) {
+//                return;
+//            }
+//            // send to cloud
+//            Show show = new Show();
+//            show.setTvdbId(showTvdbId);
+//            show.setIsFavorite(isFavorite);
+//            uploadShowAsync(show);
+//        }
+
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Shows.NOTIFY, notify);
+        app.getContentResolver().update(
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        // new notify setting may determine eligibility for notifications
+        Utils.runNotificationService(app);
+    }
+
+    /**
      * Add a show to the users trakt watchlist.
      */
     public static void addToWatchlist(SgApp app, int showTvdbId) {
