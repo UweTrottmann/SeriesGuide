@@ -564,18 +564,34 @@ public class SeriesGuideContract {
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
+        /**
+         * Shows table.
+         * See {@link SeriesGuideProvider#SHOWS} and {@link SeriesGuideProvider#SHOWS_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_SHOWS)
                 .build();
 
+        /**
+         * Shows joined with episodes table.
+         * See {@link SeriesGuideProvider#SHOWS_WITH_NEXT_EPISODE}.
+         */
         public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_NEXT_EPISODE)
                 .build();
 
+        /**
+         * Shows joined with episodes table.
+         * See {@link SeriesGuideProvider#SHOWS_WITH_LAST_EPISODE}.
+         */
         public static final Uri CONTENT_URI_WITH_LAST_EPISODE = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_LAST_EPISODE)
                 .build();
 
+        /**
+         * Shows table with a LIKE %filter% where statement.
+         * See {@link SeriesGuideProvider#SHOWS_FILTERED}.
+         */
         public static final Uri CONTENT_URI_FILTER = CONTENT_URI.buildUpon()
                 .appendPath(PATH_FILTER)
                 .build();
@@ -620,9 +636,18 @@ public class SeriesGuideContract {
 
     public static class Episodes implements EpisodesColumns, BaseColumns {
 
+        /**
+         * Episodes table.
+         * See {@link SeriesGuideProvider#EPISODES} and {@link SeriesGuideProvider#EPISODES_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_EPISODES).build();
 
+        /**
+         * Episodes joined with shows table.
+         * See {@link SeriesGuideProvider#EPISODES_WITHSHOW}
+         * and {@link SeriesGuideProvider#EPISODES_ID_WITHSHOW}.
+         */
         public static final Uri CONTENT_URI_WITHSHOW = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITHSHOW).build();
 
@@ -727,6 +752,10 @@ public class SeriesGuideContract {
 
     public static class Seasons implements SeasonsColumns, BaseColumns {
 
+        /**
+         * Seasons table.
+         * See {@link SeriesGuideProvider#SEASONS} and {@link SeriesGuideProvider#SEASONS_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SEASONS)
                 .build();
 
@@ -764,12 +793,24 @@ public class SeriesGuideContract {
 
     public static class EpisodeSearch implements EpisodeSearchColumns {
 
+        /**
+         * Search table.
+         * See {@link SeriesGuideProvider#EPISODESEARCH_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_EPISODESEARCH).build();
 
+        /**
+         * Search table joined with series and episodes table.
+         * See {@link SeriesGuideProvider#EPISODESEARCH}.
+         */
         public static final Uri CONTENT_URI_SEARCH = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_EPISODESEARCH).appendPath(PATH_SEARCH).build();
 
+        /**
+         * If "queried" rebuilds the search table.
+         * See {@link SeriesGuideProvider#RENEW_FTSTABLE}.
+         */
         public static final Uri CONTENT_URI_RENEWFTSTABLE = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_RENEWFTSTABLE).build();
 
@@ -784,9 +825,18 @@ public class SeriesGuideContract {
 
     public static class Lists implements ListsColumns, BaseColumns {
 
+        /**
+         * Lists table.
+         * See {@link SeriesGuideProvider#LISTS}
+         * and {@link SeriesGuideProvider#LISTS_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LISTS)
                 .build();
 
+        /**
+         * Lists table joined with list items table (to get in which lists an item is in or not).
+         * See {@link SeriesGuideProvider#LISTS_WITH_LIST_ITEM_ID}.
+         */
         public static final Uri CONTENT_WITH_LIST_ITEM_URI = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_LIST_ITEM_ID)
                 .build();
@@ -825,10 +875,19 @@ public class SeriesGuideContract {
 
     public static class ListItems implements ListItemsColumns, BaseColumns {
 
+        /**
+         * List items table.
+         * See {@link SeriesGuideProvider#LIST_ITEMS}
+         * and {@link SeriesGuideProvider#LIST_ITEMS_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_LIST_ITEMS)
                 .build();
 
+        /**
+         * List items table joined with shows, seasons and episodes table (depending on list item
+         * type). See {@link SeriesGuideProvider#LIST_ITEMS_WITH_DETAILS}.
+         */
         public static final Uri CONTENT_WITH_DETAILS_URI = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_DETAILS)
                 .build();
@@ -894,6 +953,11 @@ public class SeriesGuideContract {
 
     public static class Movies implements MoviesColumns, BaseColumns {
 
+        /**
+         * Movies table.
+         * See {@link SeriesGuideProvider#MOVIES}
+         * and {@link SeriesGuideProvider#MOVIES_ID}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_MOVIES)
                 .build();
@@ -952,6 +1016,10 @@ public class SeriesGuideContract {
 
     public static class Activity implements ActivityColumns, BaseColumns {
 
+        /**
+         * Activity table.
+         * See {@link SeriesGuideProvider#ACTIVITY}.
+         */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_ACTIVITY)
                 .build();
