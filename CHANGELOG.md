@@ -7,7 +7,18 @@ All dates are in the European Central timezone.
 
 Version 37
 ----------
-*(2017-03-31)*
+*(in development)*
+
+#### 37-beta4
+*(2017-04-28)*
+
+* 🌟 Turn on and off notifications for each show individually.
+* 🔨 Exclude Amazon shows from hour-past midnight correction.
+* 🔧 Replace show tab share and shortcut button with notifications and hide button.
+* 🔧 Add show share and shortcut buttons to bottom buttons.
+* 🔨 Do not auto-select text in time offset dialog. Gboard does not play nice if it is.
+* 🔧 Display numbers-only date on movie cards as in some languages the date text was too long.
+* 📝 Latest translations from crowdin.
 
 #### 37-beta3
 *(2017-04-12)*
