@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootViewSelection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="@dimen/dialog_min_width"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewSelectionEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="56dp"
+        android:text="@string/add_empty"
+        android:textAppearance="@style/TextAppearance.Body.Secondary" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_notification_selection" />
+
+</LinearLayout>

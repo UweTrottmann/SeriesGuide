@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -43,12 +44,17 @@ import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit from {@link
@@ -56,6 +62,8 @@ import com.google.android.gms.analytics.GoogleAnalytics;
  * while adjusting settings.
  */
 public class SeriesGuidePreferences extends AppCompatActivity {
+
+    public static class UpdateSummariesEvent {}
 
     private static final String EXTRA_SETTINGS_SCREEN = "settingsScreen";
 
@@ -267,7 +275,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         private void setupNotificationSettings() {
             Preference enabledPref = findPreference(NotificationSettings.KEY_ENABLED);
             final Preference thresholdPref = findPreference(NotificationSettings.KEY_THRESHOLD);
-            final Preference favOnlyPref = findPreference(NotificationSettings.KEY_FAVONLY);
+            final Preference selectionPref = findPreference(NotificationSettings.KEY_SELECTION);
             final Preference vibratePref = findPreference(NotificationSettings.KEY_VIBRATE);
             final Preference ringtonePref = findPreference(NotificationSettings.KEY_RINGTONE);
 
@@ -281,7 +289,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                                 isChecked ? "Enable" : "Disable");
 
                         thresholdPref.setEnabled(isChecked);
-                        favOnlyPref.setEnabled(isChecked);
+                        selectionPref.setEnabled(isChecked);
                         vibratePref.setEnabled(isChecked);
                         ringtonePref.setEnabled(isChecked);
 
@@ -289,19 +297,11 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         return true;
                     }
                 });
-                favOnlyPref.setOnPreferenceClickListener(
-                        new OnPreferenceClickListener() {
-                            @Override
-                            public boolean onPreferenceClick(Preference preference) {
-                                resetAndRunNotificationsService(getActivity());
-                                return true;
-                            }
-                        });
                 // disable advanced notification settings if notifications are disabled
                 boolean isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(
                         getActivity());
                 thresholdPref.setEnabled(isNotificationsEnabled);
-                favOnlyPref.setEnabled(isNotificationsEnabled);
+                selectionPref.setEnabled(isNotificationsEnabled);
                 vibratePref.setEnabled(isNotificationsEnabled);
                 ringtonePref.setEnabled(isNotificationsEnabled);
             } else {
@@ -309,12 +309,17 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ((SwitchPreference) enabledPref).setChecked(false);
                 enabledPref.setSummary(R.string.onlyx);
                 thresholdPref.setEnabled(false);
-                favOnlyPref.setEnabled(false);
+                selectionPref.setEnabled(false);
                 vibratePref.setEnabled(false);
                 ringtonePref.setEnabled(false);
             }
 
             updateThresholdSummary(thresholdPref);
+            updateNotificationSettings();
+        }
+
+        private void updateNotificationSettings() {
+            updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION));
         }
 
         private void setupBasicSettings() {
@@ -387,7 +392,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public void onStart() {
             super.onStart();
 
-            // update some summary values on the root page
+            // update summary values not handled by onSharedPreferenceChanged
             String settings = getArguments() == null ? null
                     : getArguments().getString(EXTRA_SETTINGS_SCREEN);
             if (settings == null) {
@@ -397,14 +402,17 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             prefs.registerOnSharedPreferenceChangeListener(this);
+            EventBus.getDefault().register(this);
         }
 
         @Override
         public void onStop() {
             super.onStop();
+
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             prefs.unregisterOnSharedPreferenceChangeListener(this);
+            EventBus.getDefault().unregister(this);
         }
 
         @Override
@@ -419,6 +427,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 new NotificationThresholdDialogFragment().show(
                         ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
                         "notification-threshold");
+                return true;
+            }
+            if (NotificationSettings.KEY_SELECTION.equals(key)) {
+                new NotificationSelectionDialogFragment().show(
+                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
+                        "notification-selection");
                 return true;
             }
             if (NotificationSettings.KEY_RINGTONE.equals(key)) {
@@ -539,9 +553,30 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
         }
 
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEvent(UpdateSummariesEvent event) {
+            if (!isResumed()) {
+                return;
+            }
+            // update summary values not handled by onSharedPreferenceChanged
+            String settings = getArguments() == null ? null
+                    : getArguments().getString(EXTRA_SETTINGS_SCREEN);
+            if (settings != null && settings.equals(KEY_SCREEN_NOTIFICATIONS)) {
+                updateNotificationSettings();
+            }
+        }
+
         private void updateThresholdSummary(Preference thresholdPref) {
             thresholdPref.setSummary(NotificationSettings.getLatestToIncludeTresholdValue(
                     thresholdPref.getContext()));
+        }
+
+        private void updateSelectionSummary(Preference selectionPref) {
+            int countOfShowsNotifyOn = DBUtils.getCountOf(getActivity().getContentResolver(),
+                    SeriesGuideContract.Shows.CONTENT_URI,
+                    SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0);
+            selectionPref.setSummary(getString(R.string.pref_notifications_select_shows_summary,
+                    countOfShowsNotifyOn));
         }
 
         private void updateTimeOffsetSummary(Preference offsetListPref) {

@@ -19,6 +19,10 @@ public class NotificationSettings {
     public static final String KEY_THRESHOLD
             = "com.battlelancer.seriesguide.notifications.threshold";
 
+    /** Just a link to a screen to select shows to notify about. */
+    public static final String KEY_SELECTION
+            = "com.battlelancer.seriesguide.notifications.shows";
+
     public static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
 
