@@ -173,8 +173,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         if (isAutoBackupMode) {
             // store current time = last backup time
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            prefs.edit().putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
-                    .commit();
+            prefs.edit()
+                    .putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
+                    .apply();
         }
 
         return SUCCESS;
