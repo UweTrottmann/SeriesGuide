@@ -118,6 +118,8 @@
   <string name="context_unfavorite">Hapus dari favorit</string>
   <string name="favorited">Ditambahkan ke favorit</string>
   <string name="unfavorited">Dihapus dari favorit</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Sembunyikan</string>
   <string name="context_unhide">Jangan sembunyikan</string>
   <string name="hidden">Dipindahkan ke tersembunyi</string>
@@ -429,12 +431,12 @@
   <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
   <string name="pref_notifications">Notifikasi</string>
   <string name="pref_notificationssummary">Beritahu tentang episode baru</string>
-  <string name="pref_notifyfavonly">Hanya favorit</string>
-  <string name="pref_notifyfavonlysummary">Hanya terima pemberitahuan untuk acara favorit</string>
   <string name="pref_ringtone">Suara</string>
   <string name="pref_vibrate">Getar</string>
   <string name="pref_vibratesummary">Juga bergetar saat menampilkan pemberitahuan</string>
   <string name="pref_notifications_treshold">Kapan harus memberitahu</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kecil)</string>
   <!-- List Widget -->

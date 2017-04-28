@@ -118,6 +118,8 @@
   <string name="context_unfavorite">ลบออกจากรายการโปรด</string>
   <string name="favorited">เพิ่มในรายการโปรดแล้ว</string>
   <string name="unfavorited">ลบออกจากรายการโปรดแล้ว</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">ซ่อน</string>
   <string name="context_unhide">ไม่ต้องซ่อน</string>
   <string name="hidden">ย้ายไปซ่อนแล้ว</string>
@@ -429,12 +431,12 @@
   <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>
   <string name="pref_notifications">การแจ้งเตือน</string>
   <string name="pref_notificationssummary">แจ้งเตือนเกี่ยวกับตอนใหม่</string>
-  <string name="pref_notifyfavonly">เฉพาะรายการโปรด</string>
-  <string name="pref_notifyfavonlysummary">รับการแจ้งเตือนเฉพาะซีรีส์เรื่องโปรด</string>
   <string name="pref_ringtone">เสียง</string>
   <string name="pref_vibrate">สั่น</string>
   <string name="pref_vibratesummary">สั่นเมื่อแสดงการแจ้งเตือนด้วย</string>
   <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
   <!-- List Widget -->

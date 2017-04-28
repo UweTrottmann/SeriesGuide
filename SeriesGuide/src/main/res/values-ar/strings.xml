@@ -123,6 +123,8 @@
   <string name="context_unfavorite">إزالة من المفضلة</string>
   <string name="favorited">إضافة إلى المفضلة</string>
   <string name="unfavorited">إزالة من المفضلة</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">إخفاء</string>
   <string name="context_unhide">إظهار</string>
   <string name="hidden">تم إخفاء المسلسل</string>
@@ -489,12 +491,12 @@
   <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
   <string name="pref_notifications">التنبيهات</string>
   <string name="pref_notificationssummary">التنبيه عن الحلقات الجديدة</string>
-  <string name="pref_notifyfavonly">العروض المفضلة فقط</string>
-  <string name="pref_notifyfavonlysummary">التنبيه عن المسلسلات المفضلة فقط</string>
   <string name="pref_ringtone">نغمة التنبيه</string>
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">دليل المسلسلات (صغير)</string>
   <!-- List Widget -->

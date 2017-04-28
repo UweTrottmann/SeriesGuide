@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Remove from favorites</string>
   <string name="favorited">Dodano u favorite</string>
   <string name="unfavorited">Uklonjeno iz favorita</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Sakrij</string>
   <string name="context_unhide">Otkrij</string>
   <string name="hidden">Sakrivena serija</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Odaberite za prikaz nadolazećih emisija</string>
   <string name="pref_notifications">Obavijesti</string>
   <string name="pref_notificationssummary">Obavijesti o novim epizodama</string>
-  <string name="pref_notifyfavonly">Samo omiljene serije</string>
-  <string name="pref_notifyfavonlysummary">Primaj samo obavijesti o omiljenim serijama</string>
   <string name="pref_ringtone">Zvuk obavijesti</string>
   <string name="pref_vibrate">Vibriraj</string>
   <string name="pref_vibratesummary">Također vibriraj pri prikazu obavijesti</string>
   <string name="pref_notifications_treshold">Kada obavijestiti</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mali)</string>
   <!-- List Widget -->

@@ -118,6 +118,8 @@
   <string name="context_unfavorite">즐겨찾기가 없음</string>
   <string name="favorited">즐겨찾기에 추가</string>
   <string name="unfavorited">즐겨찾기에서 제거</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">숨기기</string>
   <string name="context_unhide">보이기</string>
   <string name="hidden">숨겨진 쇼</string>
@@ -429,12 +431,12 @@
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>
   <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
-  <string name="pref_notifyfavonly">즐겨찾기한 쇼만 알림</string>
-  <string name="pref_notifyfavonlysummary">즐겨찾기 목록에 추가한 쇼만 알려줍니다.</string>
   <string name="pref_ringtone">벨소리</string>
   <string name="pref_vibrate">진동</string>
   <string name="pref_vibratesummary">알림 시 진동</string>
   <string name="pref_notifications_treshold">알람시기</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">시리즈가이드 (소형)</string>
   <!-- List Widget -->

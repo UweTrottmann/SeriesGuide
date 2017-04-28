@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Ștergeți din favorite</string>
   <string name="favorited">Adăugat la favorite</string>
   <string name="unfavorited">Șters din favorite</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Ascunde</string>
   <string name="context_unhide">Arată</string>
   <string name="hidden">Emisiune ascunsă</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
   <string name="pref_notifications">Notificări</string>
   <string name="pref_notificationssummary">Anunță-mă despre episoadele noi</string>
-  <string name="pref_notifyfavonly">Doar Favorite</string>
-  <string name="pref_notifyfavonlysummary">Primiți notificări doar pentru emisiunile favorite</string>
   <string name="pref_ringtone">Sunet</string>
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">Vibrează și la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">Când să fiți notificat</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mic)</string>
   <!-- List Widget -->

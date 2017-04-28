@@ -119,6 +119,8 @@
   <string name="context_unfavorite">No preferit</string>
   <string name="favorited">S\'ha afegit a preferits</string>
   <string name="unfavorited">S\'ha esborrat de preferits</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Oculta</string>
   <string name="context_unhide">Mostra</string>
   <string name="hidden">Sèrie oculta</string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
   <string name="pref_notifications">Notificacions</string>
   <string name="pref_notificationssummary">Notifica\'m de tots els episodis nous</string>
-  <string name="pref_notifyfavonly">Només preferits</string>
-  <string name="pref_notifyfavonlysummary">Només mostra notificacions per a les sèries preferides</string>
   <string name="pref_ringtone">To de notificació</string>
   <string name="pref_vibrate">Vibració</string>
   <string name="pref_vibratesummary">Vibra quan mostris una notificació</string>
   <string name="pref_notifications_treshold">Moment per notificar</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
   <!-- List Widget -->

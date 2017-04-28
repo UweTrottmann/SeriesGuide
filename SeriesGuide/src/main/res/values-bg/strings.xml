@@ -119,6 +119,8 @@
   <string name="context_unfavorite">Премахни от Любими</string>
   <string name="favorited">Добавено в Любими</string>
   <string name="unfavorited">Премахнато от Любими</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Скрий</string>
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито ТВ предаване</string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">Изберете да се показват предстоящи сериали</string>
   <string name="pref_notifications">Известия</string>
   <string name="pref_notificationssummary">Известяване за нови епизоди</string>
-  <string name="pref_notifyfavonly">Само любими</string>
-  <string name="pref_notifyfavonlysummary">Получавай известия само за любими сериали</string>
   <string name="pref_ringtone">Мелодия</string>
   <string name="pref_vibrate">Вибрация</string>
   <string name="pref_vibratesummary">Също вибриране за показване на известие</string>
   <string name="pref_notifications_treshold">Кога да извести</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малка)</string>
   <!-- List Widget -->

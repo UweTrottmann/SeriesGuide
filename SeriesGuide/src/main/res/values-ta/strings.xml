@@ -119,6 +119,8 @@
   <string name="context_unfavorite">பிடித்தவையில் இருந்து அகற்று</string>
   <string name="favorited">விருப்பங்களின் சேர்க்க</string>
   <string name="unfavorited">பிடித்தவையில் இருந்து நீக்கப்பட்டது</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">மறை</string>
   <string name="context_unhide">மறைக்க வேண்டாம்</string>
   <string name="hidden">நகர்த்த மறைந்த</string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
   <string name="pref_notifications">அறிவிப்புகள்</string>
   <string name="pref_notificationssummary">புதிய episodes பற்றி</string>
-  <string name="pref_notifyfavonly">பிடித்தவை மட்டும்</string>
-  <string name="pref_notifyfavonlysummary">Favorited காட்சிகள் அறிவிப்புகள் மட்டுமே பெற</string>
   <string name="pref_ringtone">ஒலி</string>
   <string name="pref_vibrate">அதிர்வு</string>
   <string name="pref_vibratesummary">மேலும் vibrate அறிவிக்கை காண்பிப்பதில் உள்ள</string>
   <string name="pref_notifications_treshold">எப்போது அறிவிக்க</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (சிறிய)</string>
   <!-- List Widget -->

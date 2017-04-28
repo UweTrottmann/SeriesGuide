@@ -121,6 +121,8 @@
   <string name="context_unfavorite">הסר מהמועדפים</string>
   <string name="favorited">הוסף למעודפים</string>
   <string name="unfavorited">הוסר מהמעודפים</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">הסתר</string>
   <string name="context_unhide">בטל הסתרה</string>
   <string name="hidden">סדרה מוסתרת</string>
@@ -465,12 +467,12 @@
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
   <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
-  <string name="pref_notifyfavonly">מועדפים בלבד</string>
-  <string name="pref_notifyfavonlysummary">קבל התראות לגבי סדרות מעודפות בלבד</string>
   <string name="pref_ringtone">רינגטון</string>
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
   <string name="pref_notifications_treshold">מתי להתריע</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <!-- List Widget -->

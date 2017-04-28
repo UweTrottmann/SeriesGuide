@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Ta bort från favoriter</string>
   <string name="favorited">Lade till som favorit</string>
   <string name="unfavorited">Tog bort som favorit</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Dölj</string>
   <string name="context_unhide">Visa</string>
   <string name="hidden">Dold serie</string>
@@ -442,12 +444,12 @@
   <string name="upcoming_display">Välj för att visa kommande serier</string>
   <string name="pref_notifications">Aviseringar</string>
   <string name="pref_notificationssummary">Meddela om nya avsnitt</string>
-  <string name="pref_notifyfavonly">Endast favoriter</string>
-  <string name="pref_notifyfavonlysummary">Ta endast emot aviseringar för favoritserier</string>
   <string name="pref_ringtone">Ringsignal</string>
   <string name="pref_vibrate">Vibrera</string>
   <string name="pref_vibratesummary">Vibrerar även när aviseringar visas</string>
   <string name="pref_notifications_treshold">När aviseringar ska visas</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (liten)</string>
   <!-- List Widget -->

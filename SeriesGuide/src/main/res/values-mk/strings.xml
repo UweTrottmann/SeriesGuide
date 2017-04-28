@@ -119,6 +119,8 @@
   <string name="context_unfavorite">Избриши од омилени</string>
   <string name="favorited">Додадено во омилени</string>
   <string name="unfavorited">Избришано од омилени</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Сокриј</string>
   <string name="context_unhide">Не сокривај</string>
   <string name="hidden">Премести во скриени</string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">Селектирај за да се прикажат сериите што следат</string>
   <string name="pref_notifications">Нотификација</string>
   <string name="pref_notificationssummary">Покажи нотификација за нови епизоди</string>
-  <string name="pref_notifyfavonly">Само омилени</string>
-  <string name="pref_notifyfavonlysummary">Само прими нотификација за омилените серии</string>
   <string name="pref_ringtone">Звук</string>
   <string name="pref_vibrate">Вибрирање</string>
   <string name="pref_vibratesummary">Исто вибрирај на нотификација на дисплејот</string>
   <string name="pref_notifications_treshold">Кога да потсети</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (мало)</string>
   <!-- List Widget -->

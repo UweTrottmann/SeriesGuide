@@ -119,6 +119,8 @@
   <string name="context_unfavorite">Αφαίρεση από τα αγαπημένα</string>
   <string name="favorited">Προστέθηκε στα αγαπημένα</string>
   <string name="unfavorited">Αφαιρέθηκε από τα αγαπημένα</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Απόκρυψη</string>
   <string name="context_unhide">Εμφάνιση</string>
   <string name="hidden">Κρυφή σειρα </string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
   <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
-  <string name="pref_notifyfavonly">Μόνο τα Αγαπημένα</string>
-  <string name="pref_notifyfavonlysummary">Λήψη ειδοποιήσεων μόνο για τις αγαπημένες σειρές</string>
   <string name="pref_ringtone">Ήχος κλήσης</string>
   <string name="pref_vibrate">Δόνηση</string>
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (μικρό)</string>
   <!-- List Widget -->

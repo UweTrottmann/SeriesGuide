@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Šalinti iš mėgstamų</string>
   <string name="favorited">Pridėta prie mėgstamiausių</string>
   <string name="unfavorited">Pašalinta iš mėgstamiausių</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Slėpti</string>
   <string name="context_unhide">Nebeslėpti</string>
   <string name="hidden">Perkeltas į paslėptus</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
   <string name="pref_notificationssummary">Pranešti apie naujas serijas</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Melodija</string>
   <string name="pref_vibrate">Vibravimas</string>
   <string name="pref_vibratesummary">Vibruoti, kai rodomas pranešimas</string>
   <string name="pref_notifications_treshold">Kada išsiųsti notifikaciją</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (small)</string>
   <!-- List Widget -->

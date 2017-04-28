@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Odstrániť z obľúbených</string>
   <string name="favorited">Pridané k obľúbeným</string>
   <string name="unfavorited">Odstránené z obľúbených</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Skryť</string>
   <string name="context_unhide">Obnoviť</string>
   <string name="hidden">Skrytý seriál</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Upozornenia</string>
   <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
-  <string name="pref_notifyfavonly">Iba obľúbené</string>
-  <string name="pref_notifyfavonlysummary">Upozorňovať iba na obľúbené seriály</string>
   <string name="pref_ringtone">Tón upozornenia</string>
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
   <string name="pref_notifications_treshold">Čas upozornenia</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->

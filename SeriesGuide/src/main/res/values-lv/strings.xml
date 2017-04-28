@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Noņemt no favorītiem</string>
   <string name="favorited">Pievienota(-s) pie favorītiem</string>
   <string name="unfavorited">Noņemta(-s) no favorītiem</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Slēpt</string>
   <string name="context_unhide">Atslēpt</string>
   <string name="hidden">Noslēpts šovs</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Izvēlies lai tiktu uzrādītu turpmākos šovus</string>
   <string name="pref_notifications">Paziņojumi</string>
   <string name="pref_notificationssummary">Paziņot par jaunām epizodēm</string>
-  <string name="pref_notifyfavonly">Tikai favorīti</string>
-  <string name="pref_notifyfavonlysummary">Saņemt paziņojumus tikai par mīļākajiem šoviem</string>
   <string name="pref_ringtone">Melodija</string>
   <string name="pref_vibrate">Vibrēt</string>
   <string name="pref_vibratesummary">Vibrēt arī paziņojuma uzrādīšanas laikā</string>
   <string name="pref_notifications_treshold">Kad paziņot</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (neliels)</string>
   <!-- List Widget -->

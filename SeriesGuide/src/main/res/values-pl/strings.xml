@@ -120,6 +120,8 @@
   <string name="context_unfavorite">Nieulubione</string>
   <string name="favorited">Dodano do ulubionych</string>
   <string name="unfavorited">Usunięto z ulubionych</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Ukryj</string>
   <string name="context_unhide">Odkryj</string>
   <string name="hidden">Serial został ukryty</string>
@@ -453,12 +455,12 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
-  <string name="pref_notifyfavonly">Tylko ulubione</string>
-  <string name="pref_notifyfavonlysummary">Pokazuj powiadomienia tylko dla ulubionych seriali</string>
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_notifications_treshold">Powiadamiaj</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mały)</string>
   <!-- List Widget -->

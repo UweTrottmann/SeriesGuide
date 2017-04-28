@@ -119,6 +119,8 @@
   <string name="context_unfavorite">حذف از برگزیده‌ها</string>
   <string name="favorited">به برگزیده‌ها افزوده شد</string>
   <string name="unfavorited">از برگزیده‌ها حذف شد</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">پنهان کردن</string>
   <string name="context_unhide">پنهان نکردن</string>
   <string name="hidden">به پنهان منتقل شد</string>
@@ -441,12 +443,12 @@
   <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
   <string name="pref_notifications">آگاهی‌ها</string>
   <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
-  <string name="pref_notifyfavonly">فقط برگزیده‌ها</string>
-  <string name="pref_notifyfavonlysummary">دریافت آگاهی، فقط برای نمایش‌های برگزیده</string>
   <string name="pref_ringtone">صدا</string>
   <string name="pref_vibrate">لرزش</string>
   <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
   <string name="pref_notifications_treshold">زمان آگاهی</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">سریزگاید (کوچک)</string>
   <!-- List Widget -->
