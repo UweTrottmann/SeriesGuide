@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/large_padding"
     android:paddingTop="@dimen/default_padding">
 
-    <include layout="@layout/buttons_more" />
+    <include layout="@layout/buttons_episode_more" />
 
     <View
         android:layout_width="match_parent"

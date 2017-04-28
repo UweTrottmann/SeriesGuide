@@ -173,8 +173,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         if (isAutoBackupMode) {
             // store current time = last backup time
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            prefs.edit().putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
-                    .commit();
+            prefs.edit()
+                    .putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
+                    .apply();
         }
 
         return SUCCESS;
@@ -365,6 +366,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.tvdb_id = shows.getInt(ShowsQuery.ID);
             show.title = shows.getString(ShowsQuery.TITLE);
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
+            show.notify = shows.getInt(ShowsQuery.NOTIFY) == 1;
             show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
             show.language = shows.getString(ShowsQuery.LANGUAGE);
             show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
@@ -576,6 +578,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows._ID,
                 Shows.TITLE,
                 Shows.FAVORITE,
+                Shows.NOTIFY,
                 Shows.HIDDEN,
                 Shows.RELEASE_TIME,
                 Shows.RELEASE_WEEKDAY,
@@ -598,6 +601,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows._ID,
                 Shows.TITLE,
                 Shows.FAVORITE,
+                Shows.NOTIFY,
                 Shows.HIDDEN,
                 Shows.RELEASE_TIME,
                 Shows.RELEASE_WEEKDAY,
@@ -626,30 +630,31 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int ID = 0;
         int TITLE = 1;
         int FAVORITE = 2;
-        int HIDDEN = 3;
-        int RELEASE_TIME = 4;
-        int RELEASE_WEEKDAY = 5;
-        int RELEASE_TIMEZONE = 6;
-        int RELEASE_COUNTRY = 7;
-        int LASTWATCHEDID = 8;
-        int LASTWATCHED_MS = 9;
-        int POSTER = 10;
-        int CONTENTRATING = 11;
-        int STATUS = 12;
-        int RUNTIME = 13;
-        int NETWORK = 14;
-        int IMDBID = 15;
-        int TRAKT_ID = 16;
-        int FIRSTAIRED = 17;
-        int RATING_USER = 18;
-        int LANGUAGE = 19;
+        int NOTIFY = 3;
+        int HIDDEN = 4;
+        int RELEASE_TIME = 5;
+        int RELEASE_WEEKDAY = 6;
+        int RELEASE_TIMEZONE = 7;
+        int RELEASE_COUNTRY = 8;
+        int LASTWATCHEDID = 9;
+        int LASTWATCHED_MS = 10;
+        int POSTER = 11;
+        int CONTENTRATING = 12;
+        int STATUS = 13;
+        int RUNTIME = 14;
+        int NETWORK = 15;
+        int IMDBID = 16;
+        int TRAKT_ID = 17;
+        int FIRSTAIRED = 18;
+        int RATING_USER = 19;
+        int LANGUAGE = 20;
         // Full dump only
-        int OVERVIEW = 20;
-        int RATING_GLOBAL = 21;
-        int RATING_VOTES = 22;
-        int GENRES = 23;
-        int LAST_UPDATED = 24;
-        int LAST_EDITED = 25;
+        int OVERVIEW = 21;
+        int RATING_GLOBAL = 22;
+        int RATING_VOTES = 23;
+        int GENRES = 24;
+        int LAST_UPDATED = 25;
+        int LAST_EDITED = 26;
     }
 
     public interface EpisodesQuery {

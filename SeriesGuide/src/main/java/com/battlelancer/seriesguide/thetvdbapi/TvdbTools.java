@@ -442,6 +442,9 @@ public class TvdbTools {
             if (hexagonShow.getIsFavorite() != null) {
                 show.favorite = hexagonShow.getIsFavorite();
             }
+            if (hexagonShow.getNotify() != null) {
+                show.notify = hexagonShow.getNotify();
+            }
             if (hexagonShow.getIsHidden() != null) {
                 show.hidden = hexagonShow.getIsHidden();
             }

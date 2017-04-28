@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 
 /**
  * Access settings related to the notification service.
@@ -17,6 +18,10 @@ public class NotificationSettings {
 
     public static final String KEY_THRESHOLD
             = "com.battlelancer.seriesguide.notifications.threshold";
+
+    /** Just a link to a screen to select shows to notify about. */
+    public static final String KEY_SELECTION
+            = "com.battlelancer.seriesguide.notifications.shows";
 
     public static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
@@ -38,6 +43,11 @@ public class NotificationSettings {
                 .getBoolean(KEY_ENABLED, true);
     }
 
+    /**
+     * @deprecated Notifications are enabled on a per-show basis since {@link
+     * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
+     */
+    @Deprecated
     public static boolean isNotifyAboutFavoritesOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FAVONLY, false);
@@ -90,8 +100,7 @@ public class NotificationSettings {
     }
 
     /**
-     * Get the air time of the episode the user cleared last (or for below HC the last episode we
-     * notified about).
+     * Get the air time of the episode the user cleared last.
      */
     public static long getLastCleared(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -101,7 +110,7 @@ public class NotificationSettings {
     /**
      * Get the air time of the episode we last notified about.
      */
-    public static long getLastNotified(Context context) {
+    public static long getLastNotifiedAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_NOTIFIED, 0);
     }

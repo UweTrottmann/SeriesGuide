@@ -152,6 +152,9 @@
     "language": {
      "type": "string"
     },
+    "notify": {
+     "type": "boolean"
+    },
     "tvdbId": {
      "format": "int32",
      "type": "integer"

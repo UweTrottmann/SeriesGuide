@@ -119,11 +119,10 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView textUserRating;
 
-    @BindView(R.id.buttonShowInfoIMDB) View buttonImdb;
-    @BindView(R.id.buttonTVDB) View buttonTvdb;
-    @BindView(R.id.buttonTrakt) View buttonTrakt;
-    @BindView(R.id.buttonWebSearch) Button buttonWebSearch;
-    @BindView(R.id.buttonShouts) Button buttonComments;
+    @BindView(R.id.buttonEpisodeImdb) View buttonImdb;
+    @BindView(R.id.buttonEpisodeTvdb) View buttonTvdb;
+    @BindView(R.id.buttonEpisodeTrakt) View buttonTrakt;
+    @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     private Handler handler = new Handler();
     private TraktRatingsTask traktRatingsTask;
@@ -212,11 +211,8 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
-        ViewTools.setVectorCompoundDrawable(getActivity().getTheme(), buttonComments,
+        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonComments,
                 R.attr.drawableComments);
-
-        // hide web search button
-        buttonWebSearch.setVisibility(View.GONE);
 
         return v;
     }

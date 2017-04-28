@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -138,7 +139,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_39_SHOW_LAST_WATCHED = 39;
 
-    public static final int DATABASE_VERSION = DBVER_39_SHOW_LAST_WATCHED;
+    /**
+     * Add {@link Shows#NOTIFY} flag to shows table.
+     */
+    private static final int DBVER_40_NOTIFY_PER_SHOW = 40;
+
+    public static final int DATABASE_VERSION = DBVER_40_NOTIFY_PER_SHOW;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -359,6 +365,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
 
             + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+            + ","
+
+            + ShowsColumns.NOTIFY + " INTEGER DEFAULT 1"
 
             + ");";
 
@@ -544,8 +553,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
+    private final Context context;
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -630,7 +642,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToThirtyEight(db);
             case DBVER_38_SHOW_TRAKT_ID:
                 upgradeToThirtyNine(db);
-                version = DBVER_39_SHOW_LAST_WATCHED;
+            case DBVER_39_SHOW_LAST_WATCHED:
+                upgradeToFourty(db, context);
+                version = DBVER_40_NOTIFY_PER_SHOW;
         }
 
         // drop all tables if version is not right
@@ -656,6 +670,26 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_40_NOTIFY_PER_SHOW}.
+     */
+    private static void upgradeToFourty(SQLiteDatabase db, Context context) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.NOTIFY)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.NOTIFY + " INTEGER DEFAULT 1;");
+
+            // check if notifications should be enabled only for favorite shows
+            // noinspection deprecation
+            boolean favoritesOnly = NotificationSettings.isNotifyAboutFavoritesOnly(context);
+            if (favoritesOnly) {
+                // disable notifications for all but favorite shows
+                ContentValues values = new ContentValues();
+                values.put(Shows.NOTIFY, false);
+                db.update(Tables.SHOWS, values, Shows.SELECTION_NOT_FAVORITES, null);
+            }
+        }
     }
 
     /**
@@ -1195,7 +1229,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             DBUtils.postDatabaseError(e);
         }
     }
-
 
     private static boolean recreateFtsTable(SQLiteDatabase db) {
         try {

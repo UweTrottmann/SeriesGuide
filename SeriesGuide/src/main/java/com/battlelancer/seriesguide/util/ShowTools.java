@@ -274,6 +274,31 @@ public class ShowTools {
     }
 
     /**
+     * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
+     */
+    public void storeNotify(int showTvdbId, boolean notify) {
+        if (HexagonSettings.isEnabled(app)) {
+            if (Utils.isNotConnected(app, true)) {
+                return;
+            }
+            // send to cloud
+            Show show = new Show();
+            show.setTvdbId(showTvdbId);
+            show.setNotify(notify);
+            uploadShowAsync(show);
+        }
+
+        // save to local database
+        ContentValues values = new ContentValues();
+        values.put(SeriesGuideContract.Shows.NOTIFY, notify);
+        app.getContentResolver().update(
+                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
+
+        // new notify setting may determine eligibility for notifications
+        Utils.runNotificationService(app);
+    }
+
+    /**
      * Add a show to the users trakt watchlist.
      */
     public static void addToWatchlist(SgApp app, int showTvdbId) {
@@ -366,9 +391,10 @@ public class ShowTools {
             Cursor query = context.getContentResolver()
                     .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
                             SeriesGuideContract.Shows._ID, // 0
-                            SeriesGuideContract.Shows.FAVORITE,
-                            SeriesGuideContract.Shows.HIDDEN, // 2
-                            SeriesGuideContract.Shows.LANGUAGE
+                            SeriesGuideContract.Shows.FAVORITE, // 1
+                            SeriesGuideContract.Shows.NOTIFY, // 2
+                            SeriesGuideContract.Shows.HIDDEN, // 3
+                            SeriesGuideContract.Shows.LANGUAGE // 4
                     }, null, null, null);
             if (query == null) {
                 return null;
@@ -378,8 +404,9 @@ public class ShowTools {
                 Show show = new Show();
                 show.setTvdbId(query.getInt(0));
                 show.setIsFavorite(query.getInt(1) == 1);
-                show.setIsHidden(query.getInt(2) == 1);
-                show.setLanguage(query.getString(3));
+                show.setNotify(query.getInt(2) == 1);
+                show.setIsHidden(query.getInt(3) == 1);
+                show.setLanguage(query.getString(4));
                 shows.add(show);
             }
 
@@ -533,6 +560,12 @@ public class ShowTools {
                 // when merging, favorite shows, but never unfavorite them
                 if (!mergeValues || show.getIsFavorite()) {
                     values.put(SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
+                }
+            }
+            if (show.getNotify() != null) {
+                // when merging, enable notifications, but never disable them
+                if (!mergeValues || show.getNotify()) {
+                    values.put(SeriesGuideContract.Shows.NOTIFY, show.getNotify());
                 }
             }
             if (show.getIsHidden() != null) {

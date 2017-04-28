@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Button
+        android:id="@+id/buttonEpisodeImdb"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawableLeft="?attr/drawableLink"
+        android:text="@string/imdb" />
+
+    <Button
+        android:id="@+id/buttonEpisodeTvdb"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawableLeft="?attr/drawableLink"
+        android:text="@string/tvdb" />
+
+    <Button
+        android:id="@+id/buttonEpisodeTrakt"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawableLeft="?attr/drawableLink"
+        android:text="@string/trakt" />
+
+    <Button
+        android:id="@+id/buttonEpisodeComments"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/comments"
+        tools:drawableLeft="?attr/drawableComments" />
+
+</merge>

@@ -45,12 +45,27 @@ public class ViewTools {
                 bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
     }
 
-    public static void setVectorCompoundDrawable(Resources.Theme theme, Button button,
+    public static void setVectorCompoundDrawableLeft(Resources.Theme theme, Button button,
             @AttrRes int vectorAttr) {
-        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
-        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
-                vectorResId, theme);
+        VectorDrawableCompat drawable = createVectorDrawableCompat(theme, button, vectorAttr);
         setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
+    }
+
+    public static void setVectorCompoundDrawableTop(Resources.Theme theme, Button button,
+            @DrawableRes int vectorRes) {
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorRes, theme);
+        if (drawable != null) {
+            drawable.setTint(ContextCompat.getColor(button.getContext(),
+                    Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
+            setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
+        }
+    }
+
+    private static VectorDrawableCompat createVectorDrawableCompat(Resources.Theme theme,
+            Button button, @AttrRes int vectorAttr) {
+        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
+        return VectorDrawableCompat.create(button.getResources(), vectorResId, theme);
     }
 
     /**

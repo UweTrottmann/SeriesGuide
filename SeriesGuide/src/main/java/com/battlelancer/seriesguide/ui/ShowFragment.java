@@ -101,16 +101,18 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
-    @BindView(R.id.buttonShowShare) Button mButtonShare;
-    @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
+    @BindView(R.id.buttonShowNotify) Button buttonNotify;
+    @BindView(R.id.buttonShowHidden) Button buttonHidden;
+    @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
-    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
-    @BindView(R.id.buttonTVDB) View mButtonTvdb;
-    @BindView(R.id.buttonTrakt) View mButtonTrakt;
-    @BindView(R.id.buttonWebSearch) Button mButtonWebSearch;
-    @BindView(R.id.buttonShouts) Button mButtonComments;
+    @BindView(R.id.buttonShowImdb) View mButtonImdb;
+    @BindView(R.id.buttonShowTvdb) View mButtonTvdb;
+    @BindView(R.id.buttonShowTrakt) View mButtonTrakt;
+    @BindView(R.id.buttonShowWebSearch) Button mButtonWebSearch;
+    @BindView(R.id.buttonShowComments) Button mButtonComments;
+    @BindView(R.id.buttonShowShare) Button buttonShare;
 
     @BindView(R.id.labelCast) TextView castLabel;
     @BindView(R.id.containerCast) LinearLayout castContainer;
@@ -130,27 +132,14 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        // share button
-        mButtonShare.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareShow();
-            }
-        });
-        CheatSheet.setup(mButtonShare);
-
-        // shortcut button
-        mButtonShortcut.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createShortcut();
-            }
-        });
-        CheatSheet.setup(mButtonShortcut);
+        // favorite + notifications + visibility button
+        CheatSheet.setup(buttonFavorite);
+        CheatSheet.setup(buttonNotify);
+        CheatSheet.setup(buttonHidden);
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
+        ViewTools.setVectorCompoundDrawableLeft(theme, buttonLanguage, R.attr.drawableLanguage);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,8 +158,25 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         // search and comments button
-        ViewTools.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
-        ViewTools.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
+        ViewTools.setVectorCompoundDrawableLeft(theme, mButtonWebSearch, R.attr.drawableSearch);
+        ViewTools.setVectorCompoundDrawableLeft(theme, mButtonComments, R.attr.drawableComments);
+
+        // share button
+        ViewTools.setVectorCompoundDrawableLeft(theme, buttonShare, R.attr.drawableShare);
+        buttonShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareShow();
+            }
+        });
+
+        // shortcut button
+        buttonShortcut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createShortcut();
+            }
+        });
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -250,7 +256,9 @@ public class ShowFragment extends Fragment {
                 Shows.RATING_VOTES,
                 Shows.RATING_USER,
                 Shows.LASTEDIT,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.NOTIFY,
+                Shows.HIDDEN
         };
 
         int TITLE = 1;
@@ -273,6 +281,8 @@ public class ShowFragment extends Fragment {
         int RATING_USER = 18;
         int LAST_EDIT_MS = 19;
         int LANGUAGE = 20;
+        int NOTIFY = 21;
+        int HIDDEN = 22;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -338,16 +348,15 @@ public class ShowFragment extends Fragment {
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
-        mButtonFavorite.setEnabled(true);
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
-                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
-                0, 0);
-        mButtonFavorite.setText(
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonFavorite, isFavorite
+                ? R.drawable.ic_star_black_24dp
+                : R.drawable.ic_star_border_black_24dp);
+        String labelFavorite = getString(
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        CheatSheet.setup(mButtonFavorite,
-                isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        mButtonFavorite.setOnClickListener(new OnClickListener() {
+        buttonFavorite.setText(labelFavorite);
+        buttonFavorite.setContentDescription(labelFavorite);
+        buttonFavorite.setEnabled(true);
+        buttonFavorite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable until action is complete
@@ -355,6 +364,49 @@ public class ShowFragment extends Fragment {
                 SgApp.from(getActivity())
                         .getShowTools()
                         .storeIsFavorite(getShowTvdbId(), !isFavorite);
+            }
+        });
+
+        // notifications button
+        final boolean notify = showCursor.getInt(ShowQuery.NOTIFY) == 1;
+        buttonNotify.setContentDescription(getString(notify
+                ? R.string.action_episode_notifications_off
+                : R.string.action_episode_notifications_on));
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonNotify, notify
+                ? R.drawable.ic_notifications_active_black_24dp
+                : R.drawable.ic_notifications_off_black_24dp);
+        buttonNotify.setEnabled(true);
+        buttonNotify.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Utils.hasAccessToX(getActivity())) {
+                    Utils.advertiseSubscription(getActivity());
+                    return;
+                }
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity())
+                        .getShowTools()
+                        .storeNotify(getShowTvdbId(), !notify);
+            }
+        });
+
+        // hidden button
+        final boolean isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1;
+        String label = getString(isHidden ? R.string.context_unhide : R.string.context_hide);
+        buttonHidden.setContentDescription(label);
+        buttonHidden.setText(label);
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonHidden,
+                isHidden
+                        ? R.drawable.ic_visibility_off_black_24dp
+                        : R.drawable.ic_visibility_black_24dp);
+        buttonHidden.setEnabled(true);
+        buttonHidden.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity()).getShowTools().storeIsHidden(getShowTvdbId(), !isHidden);
             }
         });
 
