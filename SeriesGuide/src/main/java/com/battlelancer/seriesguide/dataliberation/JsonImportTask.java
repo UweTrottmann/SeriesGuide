@@ -334,6 +334,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
+        showValues.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
         showValues.put(Shows.HIDDEN, show.hidden);
         // only add the language, if we support it
         for (int i = 0, size = languageCodes.length; i < size; i++) {

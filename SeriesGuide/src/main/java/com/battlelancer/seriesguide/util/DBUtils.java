@@ -464,6 +464,7 @@ public class DBUtils {
             values.put(Shows.LANGUAGE, show.language);
             // set user values
             values.put(Shows.FAVORITE, show.favorite);
+            values.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
             values.put(Shows.HIDDEN, show.hidden);
             // set default values
             values.put(Shows.RATING_VOTES, 0);
