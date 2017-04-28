@@ -9,7 +9,7 @@
   <string name="search">Αναζήτηση</string>
   <string name="preferences">Ρυθμίσεις</string>
   <string name="help">Βοήθεια</string>
-  <string name="help_and_feedback">Help &amp; Feedback</string>
+  <string name="help_and_feedback">Βοήθεια &amp; Σχόλια</string>
   <string name="drawer_open">Συρτάρι ανοιχτό</string>
   <!-- Media items -->
   <string name="show">Σειρά</string>
@@ -24,7 +24,7 @@
   <string name="description_overview">Επισκόπηση</string>
   <string name="description_poster">Εμφάνιση αφίσας</string>
   <string name="description_image">Εικόνα επεισοδίου</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Περισσότερες επιλογές</string>
   <!-- Actions -->
   <string name="clear">Καθαρισμός</string>
   <string name="discard">Απόρριψη</string>
@@ -32,14 +32,14 @@
   <string name="action_display_all">Εμφάνιση όλων</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
   <string name="add_to_homescreen">Συντόμευση</string>
-  <string name="action_open">Open</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_open">Άνοιγμα</string>
+  <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
+  <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
+  <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Οποιαδήποτε γλώσσα</string>
   <!-- Status messages -->
   <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
   <string name="norating">n/a</string>
@@ -48,8 +48,8 @@
   <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί.</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
+  <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
@@ -57,18 +57,18 @@
   <string name="share_movie">Κοινοποίηση ταινίας</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
-  <string name="links">Links</string>
+  <string name="links">Σύνδεσμοι</string>
   <!-- Comments -->
   <string name="comments">Σχόλια</string>
   <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
   <string name="shout_invalid">Το σχόλιο σας δεν πληροί της προϋποθέσεις!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Ανάρτηση</string>
   <string name="isspoiler">Προειδοποίηση spoiler!</string>
   <string name="no_shouts">Be the first to shout!</string>
   <string name="refresh">Ανανέωση</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d απάντηση</item>
+    <item quantity="other">%d απαντήσεις</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ΑΠΟΛΥΤΗ</string>
@@ -87,9 +87,9 @@
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="lastEdit">Τελευταία επεξεργασία // TVDb</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
+  <string name="no_translation_title">Χωρίς μετάφραση</string>
+  <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
   <!-- Date and Time -->
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
@@ -132,10 +132,10 @@
   <string name="action_shows_filter_hidden">Κρυφά</string>
   <string name="action_shows_sort">Ταξινόμηση σειρών</string>
   <string name="action_shows_sort_title">Τίτλος</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Νεότερο επεισόδιο</string>
+  <string name="action_shows_sort_oldest_episode">Παλαιότερο επεισόδιο</string>
+  <string name="action_shows_sort_last_watched">Είδατε πρόσφατα</string>
+  <string name="action_shows_sort_remaining">Επεισόδια που απομένουν</string>
   <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -164,35 +164,35 @@
   <!-- Seasons -->
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d επεισόδιο που δεν έχετε παρακολουθήσει</item>
+    <item quantity="other">%d επεισόδια που δεν έχετε παρακολουθήσει</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d επιπλέον επεισόδιο</item>
+    <item quantity="other">%d επιπλέον επεισόδια</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d που δεν έχει προβληθεί</item>
+    <item quantity="other">%d που δεν έχουν προβληθεί</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d απομένει</item>
+    <item quantity="other">%d απομένουν</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="action_try_any_language">Δοκιμάστε οποιαδήποτε γλώσσα</string>
+  <string name="action_try_again">Δοκιμάσετε πάλι</string>
+  <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
   <string name="add_all">Προσθήκη όλων</string>
   <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
   <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
   <string name="recommended">Προτεινόμενα</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Είδατε</string>
   <string name="shows_collection">Συλλογή</string>
   <string name="watchlist">Λίστα προς παρακολούθηση</string>
   <!-- Lists -->
@@ -206,13 +206,13 @@
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
   <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
   <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Ανακαλύψτε</string>
+  <string name="title_popular">Δημοφιλείς</string>
+  <string name="title_digital_releases">Ψηφιακές κυκλοφορίες</string>
+  <string name="title_disc_releases">Κυκλοφορίες δίσκων</string>
+  <string name="movies_in_theatres">Στους κινηματογράφους</string>
   <string name="movies_collection">Συλλογή</string>
   <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
   <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>
@@ -229,7 +229,7 @@
   <string name="action_movies_sort_title">Τίτλος</string>
   <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Δε μπορέσαμε να υπολογίσουμε στατιστικά.</string>
   <string name="statistics_shows">Σειρές</string>
   <string name="statistics_episodes">Επεισόδια</string>
   <string name="statistics_movies">Ταινίες</string>
@@ -240,22 +240,22 @@
   <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
   <string name="runtime_movies_watchlist">Συνολικός χρόνος όλων των επεισοδίων που παρακολούθησες</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d ημέρα</item>
+    <item quantity="other">%d ημέρες</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d ώρα</item>
+    <item quantity="other">%d ώρες</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d λεπτό</item>
+    <item quantity="other">%d λεπτά</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
   <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
   <string name="hexagon_warning_lists">Δεν συμπεριλαμβάνονται λίστες.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_warning_trakt">Όσο το SeriesGuide Cloud είναι συνδεδεμένο, ο συγχρονισμός trakt θα είναι απενεργοποιημένος.</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signed_in">Είστε συνδεδεμένος στο σύννεφο του SeriesGuide.</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
@@ -266,8 +266,8 @@
   <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
   <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
   <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
+  <string name="hexagon_google_play_missing">Για να χρησιμοποιήσετε το SeriesGuide Cloud, απαιτούνται οι Υπηρεσίες Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
   <string name="trakt_seen">%s έχουν παρακολουθηθεί.</string>
@@ -281,8 +281,8 @@
   <string name="traktcheckin_wait">Θα περιμένω</string>
   <string name="trakt_success">Στάλθηκε στο trakt.</string>
   <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
+  <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">λογαριασμός trakt</string>
   <string name="trakt_connect_instructions">Στην επόμενη οθόνη συνδεθείτε στο Trakt ή δημιουργήστε καινούργιο λογαριασμό. Μετά δώστε πρόσβαση στο SeriesGuide στον λογαριασμό Trakt.</string>
@@ -293,7 +293,7 @@
   <string name="waitplease">Μια στιγμή, παρακαλώ&#8230;</string>
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
   <string name="connect_trakt_done">Συνδεδεμένο με το trakt!</string>
   <string name="connect_trakt_done_explanation">Το SeriesGuide θα συγχρονίσει τώρα τις σειρές και τις ταινίες σε αυτή την συσκευή μέσω του trackt. Αυτό μπορεί να διαρκέσει λίγο χρόνο.</string>
   <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>
@@ -313,15 +313,15 @@
   <string name="rating8">Πολύ καλό</string>
   <string name="rating9">Εξαιρετικό</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d ψήφος</item>
+    <item quantity="other">%d ψήφοι</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Check in</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_title">Επικόλληση τίτλου</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Γρήγορο check in</string>
+  <string name="pref_quick_checkin_summary">Να μη ζητείται check in</string>
   <!-- Help -->
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
@@ -334,10 +334,10 @@
   <string name="pref_onlyfuturesummary">Να μην εμφανίζονται ποτέ τα επεισόδια που έχουν ήδη προβληθεί</string>
   <string name="pref_onlyseasoneps">Απόκρυψη ειδικών επεισοδίων</string>
   <string name="pref_onlyseasonepssummary">Τα ειδικά επεισόδια να μην εμφανίζονται πουθενά εκτός από τη λίστα με τις σεζόν</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_exactdates">Να εμφανίζονται οι ακριβείς ημερομηνίες</string>
+  <string name="pref_exactdates_summary">\"31 Οκτωβρίου\" αντί για \"σε 3 ημέρες\"</string>
+  <string name="pref_nospoilers">Να μην αποκαλύπτεται η υπόθεση των επεισοδίων</string>
+  <string name="pref_nospoilers_summary">Απόκρυψη πληροφοριών μέχρι να παρακολουθήσετε το επεισόδιο</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά&#8230;</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά&#8230;</string>
   <string name="pref_language">Preferred content language</string>
@@ -356,8 +356,8 @@
     <item quantity="other">%d minutes before</item>
   </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί πληροφορίες και εικόνες από το TheTVDB με άδεια CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
+  <string name="licence_tvdb">Η εφαρμογή αυτή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με εξουσιοδότηση βάσει CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
   <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
   <string name="about_open_source">SeriesGuide is built using open source software.</string>
   <string name="licences_and_credits">Licences and credits</string>
