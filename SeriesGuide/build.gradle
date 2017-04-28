@@ -123,6 +123,10 @@ android {
             pseudoLocalesEnabled false
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 endpointsClient {
@@ -215,6 +219,9 @@ dependencies {
     amazonCompile files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
     // Instrumented unit tests
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
