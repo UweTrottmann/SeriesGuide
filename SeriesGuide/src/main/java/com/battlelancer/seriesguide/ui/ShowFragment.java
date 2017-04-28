@@ -132,7 +132,8 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        // notify + visibility button
+        // favorite + notifications + visibility button
+        CheatSheet.setup(buttonFavorite);
         CheatSheet.setup(buttonNotify);
         CheatSheet.setup(buttonHidden);
 
@@ -347,14 +348,13 @@ public class ShowFragment extends Fragment {
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonFavorite, 0,
-                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
-                0, 0);
-        buttonFavorite.setText(
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonFavorite, isFavorite
+                ? R.drawable.ic_star_black_24dp
+                : R.drawable.ic_star_border_black_24dp);
+        String labelFavorite = getString(
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        CheatSheet.setup(buttonFavorite,
-                isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
+        buttonFavorite.setText(labelFavorite);
+        buttonFavorite.setContentDescription(labelFavorite);
         buttonFavorite.setEnabled(true);
         buttonFavorite.setOnClickListener(new OnClickListener() {
             @Override
