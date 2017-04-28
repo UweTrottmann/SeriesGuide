@@ -59,7 +59,7 @@ public class NotificationService extends IntentService {
     private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
     private static final int REQUEST_CODE_ACTION_SET_WATCHED = 4;
 
-    private static final long[] VIBRATION_PATTERN = new long[] {
+    public static final long[] VIBRATION_PATTERN = new long[] {
             0, 100, 200, 100, 100, 100
     };
 

@@ -11,6 +11,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -63,7 +64,8 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class SeriesGuidePreferences extends AppCompatActivity {
 
-    public static class UpdateSummariesEvent {}
+    public static class UpdateSummariesEvent {
+    }
 
     private static final String EXTRA_SETTINGS_SCREEN = "settingsScreen";
 
@@ -495,24 +497,25 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             Preference pref = findPreference(key);
             if (pref != null) {
                 new BackupManager(pref.getContext()).dataChanged();
-            }
 
-            // update pref summary text
-            if (DisplaySettings.KEY_LANGUAGE.equals(key)
-                    || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
-                    || DisplaySettings.KEY_THEME.equals(key)) {
-                if (pref != null) {
-                    setListPreferenceSummary((ListPreference) pref);
+                // update pref summary text
+                if (DisplaySettings.KEY_LANGUAGE.equals(key)
+                        || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
+                        || DisplaySettings.KEY_THEME.equals(key)) {
+                        setListPreferenceSummary((ListPreference) pref);
                 }
-            }
-            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
-                if (pref != null) {
+                if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
                     updateTimeOffsetSummary(pref);
                 }
-            }
-            if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
-                if (pref != null) {
+                if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
                     updateThresholdSummary(pref);
+                }
+                if (NotificationSettings.KEY_VIBRATE.equals(key)
+                        && NotificationSettings.isNotificationVibrating(pref.getContext())) {
+                    // demonstrate vibration pattern used by SeriesGuide
+                    Vibrator vibrator = (Vibrator) getActivity().getSystemService(
+                            Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(NotificationService.VIBRATION_PATTERN, -1);
                 }
             }
 
