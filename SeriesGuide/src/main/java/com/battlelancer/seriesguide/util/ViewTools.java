@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 
@@ -47,7 +48,9 @@ public class ViewTools {
 
     public static void setVectorCompoundDrawableLeft(Resources.Theme theme, Button button,
             @AttrRes int vectorAttr) {
-        VectorDrawableCompat drawable = createVectorDrawableCompat(theme, button, vectorAttr);
+        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorResId, theme);
         setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
     }
 
@@ -62,10 +65,15 @@ public class ViewTools {
         }
     }
 
-    private static VectorDrawableCompat createVectorDrawableCompat(Resources.Theme theme,
-            Button button, @AttrRes int vectorAttr) {
-        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
-        return VectorDrawableCompat.create(button.getResources(), vectorResId, theme);
+    public static void setVectorDrawable(Resources.Theme theme, ImageButton button,
+            @DrawableRes int vectorRes) {
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorRes, theme);
+        if (drawable != null) {
+            drawable.setTint(ContextCompat.getColor(button.getContext(),
+                    Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
+            button.setImageDrawable(drawable);
+        }
     }
 
     /**

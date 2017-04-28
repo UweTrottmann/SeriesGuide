@@ -91,6 +91,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerOverviewShow) View containerShow;
     @Nullable @BindView(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
     @Nullable @BindView(R.id.feedbackViewOverview) FeedbackView feedbackView;
+    @BindView(R.id.imageButtonFavorite) ImageButton buttonFavorite;
     @BindView(R.id.containerOverviewEpisode) View containerEpisode;
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
     @BindView(R.id.background) ImageView imageBackground;
@@ -163,7 +164,7 @@ public class OverviewFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        v.findViewById(R.id.imageButtonFavorite).setOnClickListener(new OnClickListener() {
+        buttonFavorite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleShowFavorited(v);
@@ -917,20 +918,14 @@ public class OverviewFragment extends Fragment implements
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
-        final ImageButton favorited = ButterKnife.findById(getView(), R.id.imageButtonFavorite);
-        boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
-        if (isFavorited) {
-            favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                    R.attr.drawableStar));
-        } else {
-            favorited.setImageResource(Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                    R.attr.drawableStar0));
-        }
-        favorited.setContentDescription(getString(isFavorited ? R.string.context_unfavorite
+        boolean isFavorite = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
+        ViewTools.setVectorDrawable(getActivity().getTheme(), buttonFavorite, isFavorite
+                ? R.drawable.ic_star_black_24dp
+                : R.drawable.ic_star_border_black_24dp);
+        buttonFavorite.setContentDescription(getString(isFavorite ? R.string.context_unfavorite
                 : R.string.context_favorite));
-        CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
-                : R.string.context_favorite);
-        favorited.setTag(isFavorited);
+        CheatSheet.setup(buttonFavorite);
+        buttonFavorite.setTag(isFavorite);
 
         // poster background
         TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
