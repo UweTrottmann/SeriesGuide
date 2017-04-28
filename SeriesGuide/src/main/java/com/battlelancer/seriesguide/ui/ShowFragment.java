@@ -103,6 +103,7 @@ public class ShowFragment extends Fragment {
 
     @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
     @BindView(R.id.buttonShowNotify) Button buttonNotify;
+    @BindView(R.id.buttonShowHidden) Button buttonHidden;
     @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
@@ -131,16 +132,9 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+        // notify + visibility button
         CheatSheet.setup(buttonNotify);
-
-        // shortcut button
-        buttonShortcut.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createShortcut();
-            }
-        });
-        CheatSheet.setup(buttonShortcut);
+        CheatSheet.setup(buttonHidden);
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
@@ -172,6 +166,14 @@ public class ShowFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shareShow();
+            }
+        });
+
+        // shortcut button
+        buttonShortcut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createShortcut();
             }
         });
 
@@ -254,7 +256,8 @@ public class ShowFragment extends Fragment {
                 Shows.RATING_USER,
                 Shows.LASTEDIT,
                 Shows.LANGUAGE,
-                Shows.NOTIFY
+                Shows.NOTIFY,
+                Shows.HIDDEN
         };
 
         int TITLE = 1;
@@ -278,6 +281,7 @@ public class ShowFragment extends Fragment {
         int LAST_EDIT_MS = 19;
         int LANGUAGE = 20;
         int NOTIFY = 21;
+        int HIDDEN = 22;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -369,8 +373,8 @@ public class ShowFragment extends Fragment {
                 ? R.string.action_episode_notifications_off
                 : R.string.action_episode_notifications_on));
         ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonNotify, notify
-                        ? R.attr.drawableNotificationsOn
-                        : R.attr.drawableNotificationsOff);
+                ? R.drawable.ic_notifications_active_black_24dp
+                : R.drawable.ic_notifications_off_black_24dp);
         buttonNotify.setEnabled(true);
         buttonNotify.setOnClickListener(new OnClickListener() {
             @Override
@@ -384,6 +388,25 @@ public class ShowFragment extends Fragment {
                 SgApp.from(getActivity())
                         .getShowTools()
                         .storeNotify(getShowTvdbId(), !notify);
+            }
+        });
+
+        // hidden button
+        final boolean isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1;
+        String label = getString(isHidden ? R.string.context_unhide : R.string.context_hide);
+        buttonHidden.setContentDescription(label);
+        buttonHidden.setText(label);
+        ViewTools.setVectorCompoundDrawableTop(getActivity().getTheme(), buttonHidden,
+                isHidden
+                        ? R.drawable.ic_visibility_off_black_24dp
+                        : R.drawable.ic_visibility_black_24dp);
+        buttonHidden.setEnabled(true);
+        buttonHidden.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity()).getShowTools().storeIsHidden(getShowTvdbId(), !isHidden);
             }
         });
 

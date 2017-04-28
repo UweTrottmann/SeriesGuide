@@ -44,6 +44,14 @@
         tools:drawableLeft="?attr/drawableShare" />
 
     <Button
+        android:id="@+id/buttonShowShortcut"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawableLeft="?attr/drawableLink"
+        android:text="@string/add_to_homescreen" />
+
+    <Button
         android:id="@+id/buttonShowComments"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"

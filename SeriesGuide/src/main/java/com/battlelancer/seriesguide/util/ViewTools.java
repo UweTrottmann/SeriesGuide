@@ -52,9 +52,14 @@ public class ViewTools {
     }
 
     public static void setVectorCompoundDrawableTop(Resources.Theme theme, Button button,
-            @AttrRes int vectorAttr) {
-        VectorDrawableCompat drawable = createVectorDrawableCompat(theme, button, vectorAttr);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
+            @DrawableRes int vectorRes) {
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorRes, theme);
+        if (drawable != null) {
+            drawable.setTint(ContextCompat.getColor(button.getContext(),
+                    Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
+            setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
+        }
     }
 
     private static VectorDrawableCompat createVectorDrawableCompat(Resources.Theme theme,

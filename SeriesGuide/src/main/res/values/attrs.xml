@@ -12,6 +12,7 @@
     <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
+    <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
@@ -39,8 +40,6 @@
     <attr name="drawableLanguage" format="reference" />
     <attr name="drawableLink" format="reference" />
     <attr name="drawableList" format="reference" />
-    <attr name="drawableNotificationsOff" format="reference" />
-    <attr name="drawableNotificationsOn" format="reference" />
     <attr name="drawableSearch" format="reference" />
     <attr name="drawableShare" format="reference" />
     <attr name="drawableSkip" format="reference" />

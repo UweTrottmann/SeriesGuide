@@ -59,6 +59,7 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorIcon">@color/white</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -86,8 +87,6 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_white_24dp</item>
-        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_white_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -148,6 +147,7 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorIcon">@color/white</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -176,8 +176,6 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_white_24dp</item>
-        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_white_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -250,6 +248,7 @@
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="sgColorIcon">@color/black_54</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
@@ -277,8 +276,6 @@
         <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
-        <item name="drawableNotificationsOff">@drawable/ic_notifications_off_black_24dp</item>
-        <item name="drawableNotificationsOn">@drawable/ic_notifications_active_black_24dp</item>
         <item name="drawableSearch">@drawable/ic_search_black_24dp</item>
         <item name="drawableShare">@drawable/ic_share_black_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>

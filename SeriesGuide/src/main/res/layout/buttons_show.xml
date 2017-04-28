@@ -29,23 +29,25 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/action_episode_notifications_off"
-        android:drawableTop="?attr/drawableNotificationsOn"
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="8dp"
-        android:text="@string/pref_notifications" />
+        android:text="@string/pref_notifications"
+        tools:drawableTint="?attr/sgColorIcon"
+        tools:drawableTop="@drawable/ic_notifications_active_black_24dp" />
 
     <Button
-        android:id="@+id/buttonShowShortcut"
+        android:id="@+id/buttonShowHidden"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/add_to_homescreen"
-        android:drawableTop="?attr/drawableLink"
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="8dp"
-        android:text="@string/add_to_homescreen" />
+        android:text="@string/context_hide"
+        tools:drawableTint="?attr/sgColorIcon"
+        tools:drawableTop="@drawable/ic_visibility_black_24dp" />
 
 </LinearLayout>
