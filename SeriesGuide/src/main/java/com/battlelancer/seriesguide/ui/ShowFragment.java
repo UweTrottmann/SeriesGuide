@@ -103,14 +103,15 @@ public class ShowFragment extends Fragment {
 
     @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
     @BindView(R.id.buttonShowNotify) Button buttonNotify;
-    @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
-    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
-    @BindView(R.id.buttonTVDB) View mButtonTvdb;
-    @BindView(R.id.buttonTrakt) View mButtonTrakt;
-    @BindView(R.id.buttonWebSearch) Button mButtonWebSearch;
-    @BindView(R.id.buttonShouts) Button mButtonComments;
+    @BindView(R.id.buttonShowImdb) View mButtonImdb;
+    @BindView(R.id.buttonShowTvdb) View mButtonTvdb;
+    @BindView(R.id.buttonShowTrakt) View mButtonTrakt;
+    @BindView(R.id.buttonShowWebSearch) Button mButtonWebSearch;
+    @BindView(R.id.buttonShowComments) Button mButtonComments;
+    @BindView(R.id.buttonShowShare) Button buttonShare;
 
     @BindView(R.id.labelCast) TextView castLabel;
     @BindView(R.id.containerCast) LinearLayout castContainer;
@@ -133,13 +134,13 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(buttonNotify);
 
         // shortcut button
-        mButtonShortcut.setOnClickListener(new OnClickListener() {
+        buttonShortcut.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 createShortcut();
             }
         });
-        CheatSheet.setup(mButtonShortcut);
+        CheatSheet.setup(buttonShortcut);
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
@@ -164,6 +165,15 @@ public class ShowFragment extends Fragment {
         // search and comments button
         ViewTools.setVectorCompoundDrawableLeft(theme, mButtonWebSearch, R.attr.drawableSearch);
         ViewTools.setVectorCompoundDrawableLeft(theme, mButtonComments, R.attr.drawableComments);
+
+        // share button
+        ViewTools.setVectorCompoundDrawableLeft(theme, buttonShare, R.attr.drawableShare);
+        buttonShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareShow();
+            }
+        });
 
         setCastVisibility(false);
         setCrewVisibility(false);

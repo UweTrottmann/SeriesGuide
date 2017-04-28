@@ -138,7 +138,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:orientation="vertical">
 
-            <include layout="@layout/buttons_more" />
+            <include layout="@layout/buttons_show_bottom" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

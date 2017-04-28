@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <Button
-        android:id="@+id/buttonShowInfoIMDB"
+        android:id="@+id/buttonShowImdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -12,7 +12,7 @@
         android:text="@string/imdb" />
 
     <Button
-        android:id="@+id/buttonTVDB"
+        android:id="@+id/buttonShowTvdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -20,7 +20,7 @@
         android:text="@string/tvdb" />
 
     <Button
-        android:id="@+id/buttonTrakt"
+        android:id="@+id/buttonShowTrakt"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -28,7 +28,7 @@
         android:text="@string/trakt" />
 
     <Button
-        android:id="@+id/buttonWebSearch"
+        android:id="@+id/buttonShowWebSearch"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -36,7 +36,15 @@
         tools:drawableLeft="?attr/drawableSearch" />
 
     <Button
-        android:id="@+id/buttonShouts"
+        android:id="@+id/buttonShowShare"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/share_show"
+        tools:drawableLeft="?attr/drawableShare" />
+
+    <Button
+        android:id="@+id/buttonShowComments"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"

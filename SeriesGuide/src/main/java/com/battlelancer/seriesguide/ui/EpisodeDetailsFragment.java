@@ -121,11 +121,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
 
-    @BindView(R.id.buttonShowInfoIMDB) View mImdbButton;
-    @BindView(R.id.buttonTVDB) View mTvdbButton;
-    @BindView(R.id.buttonTrakt) View mTraktButton;
-    @BindView(R.id.buttonWebSearch) View mWebSearchButton;
-    @BindView(R.id.buttonShouts) Button mCommentsButton;
+    @BindView(R.id.buttonEpisodeImdb) View mImdbButton;
+    @BindView(R.id.buttonEpisodeTvdb) View mTvdbButton;
+    @BindView(R.id.buttonEpisodeTrakt) View mTraktButton;
+    @BindView(R.id.buttonEpisodeComments) Button mCommentsButton;
 
     private Unbinder unbinder;
 
@@ -168,9 +167,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // comments button
         ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), mCommentsButton,
                 R.attr.drawableComments);
-
-        // web search button unused, is available as extension
-        mWebSearchButton.setVisibility(View.GONE);
 
         return v;
     }
