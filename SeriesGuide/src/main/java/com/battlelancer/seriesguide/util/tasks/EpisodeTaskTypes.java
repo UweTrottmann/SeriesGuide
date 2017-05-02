@@ -716,12 +716,12 @@ public class EpisodeTaskTypes {
 
     public static class EpisodeWatchedPreviousType extends FlagType {
 
-        private long episodeFirstAired;
+        private long episodeAbsoluteNumber;
 
-        public EpisodeWatchedPreviousType(Context context, int showTvdbId, long episodeFirstAired) {
+        public EpisodeWatchedPreviousType(Context context, int showTvdbId, int episodeAbsoluteNumber) {
             super(context, showTvdbId, EpisodeFlags.WATCHED,
                     Action.EPISODE_WATCHED_PREVIOUS);
-            this.episodeFirstAired = episodeFirstAired;
+            this.episodeAbsoluteNumber = episodeAbsoluteNumber;
         }
 
         @Override
@@ -736,7 +736,7 @@ public class EpisodeTaskTypes {
             // - be released before current episode,
             // - have a release date,
             // - be unwatched or skipped
-            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + episodeFirstAired
+            return SeriesGuideContract.Episodes.ABSOLUTE_NUMBER + "<" + episodeAbsoluteNumber
                     + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                     + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
         }

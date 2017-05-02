@@ -190,7 +190,7 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onPopupMenuClick(View v, final int episodeTvdbId, final int episodeNumber,
-            final long releaseTimeMs, final int watchedFlag, final boolean isCollected) {
+            final int absoluteNumber, final int watchedFlag, final boolean isCollected) {
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         popupMenu.inflate(R.menu.episodes_popup_menu);
 
@@ -239,7 +239,7 @@ public class EpisodesFragment extends ListFragment
                         return true;
                     }
                     case R.id.menu_action_episodes_watched_previous: {
-                        onMarkUntilHere(releaseTimeMs);
+                        onMarkUntilHere(absoluteNumber);
                         Utils.trackContextMenu(getActivity(), TAG, "Flag previously aired");
                         return true;
                     }
@@ -275,9 +275,9 @@ public class EpisodesFragment extends ListFragment
                 getSeasonNumber(), episode, isCollected);
     }
 
-    private void onMarkUntilHere(long episodeFirstReleaseMs) {
+    private void onMarkUntilHere(int episodeAbsoluteNumber) {
         EpisodeTools.episodeWatchedPrevious(SgApp.from(getActivity()), getShowId(),
-                episodeFirstReleaseMs);
+                episodeAbsoluteNumber);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks
