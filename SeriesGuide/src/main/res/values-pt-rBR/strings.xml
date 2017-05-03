@@ -119,8 +119,8 @@
   <string name="context_unfavorite">Não favorito</string>
   <string name="favorited">Adicionado aos favoritos</string>
   <string name="unfavorited">Removido dos favoritos</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Ativar notificações do episódio</string>
+  <string name="action_episode_notifications_off">Desativar notificações do episódio</string>
   <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Exibir</string>
   <string name="hidden">Série oculta</string>
@@ -447,8 +447,8 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar ao exibir uma notificação</string>
   <string name="pref_notifications_treshold">Quando notificar</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Selecionar séries</string>
+  <string name="pref_notifications_select_shows_summary">Séries que possuem notificações ativadas (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <!-- List Widget -->

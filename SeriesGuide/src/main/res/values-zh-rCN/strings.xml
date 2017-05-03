@@ -10,7 +10,7 @@
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
   <string name="help_and_feedback">帮助 &amp; 反馈</string>
-  <string name="drawer_open">显示导航栏</string>
+  <string name="drawer_open">打开导航栏</string>
   <!-- Media items -->
   <string name="show">节目</string>
   <string name="episode">剧集</string>
@@ -118,8 +118,8 @@
   <string name="context_unfavorite">不喜欢</string>
   <string name="favorited">已标记为喜爱的节目。</string>
   <string name="unfavorited">已移除节目的喜爱标记。</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">开启剧集通知</string>
+  <string name="action_episode_notifications_off">关闭剧集通知</string>
   <string name="context_hide">隐藏</string>
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">已隐藏选中的节目</string>
@@ -177,7 +177,7 @@
     <item quantity="other">剩余 %d 集</item>
   </plurals>
   <!-- Add show -->
-  <string name="checkin_searchhint">输入电视节目名称</string>
+  <string name="checkin_searchhint">输入节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
@@ -227,7 +227,7 @@
   <string name="action_movies_sort_release">首播日期</string>
   <!-- Statistics -->
   <string name="statistics_failed">数据无法计算。</string>
-  <string name="statistics_shows">电视节目总数</string>
+  <string name="statistics_shows">节目总数</string>
   <string name="statistics_episodes">剧集总数</string>
   <string name="statistics_movies">电影总数</string>
   <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
@@ -346,9 +346,9 @@
     <item quantity="other">%d 分钟前</item>
   </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
-  <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口但没有被 TMDb 官方认证。</string>
-  <string name="licence_trakt">此应用程序还使用了来自 trakt 的用户数据和剧集图片。</string>
+  <string name="licence_tvdb">此应用程序使用 TheTVDB 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守 CC BY-NC 4.0。</string>
+  <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
+  <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
   <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
   <string name="licences_and_credits">许可证与信用</string>
   <!-- Sort -->
@@ -435,8 +435,8 @@
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
   <string name="pref_notifications_treshold">通知显示时刻</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">选择节目</string>
+  <string name="pref_notifications_select_shows_summary">已启用通知的节目（%d）</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide 最小尺寸</string>
   <!-- List Widget -->

@@ -120,8 +120,8 @@
   <string name="context_unfavorite">Удалить из избранного </string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Включить уведомления эпизода</string>
+  <string name="action_episode_notifications_off">Выключить уведомления эпизода</string>
   <string name="context_hide">Скрыть</string>
   <string name="context_unhide">Не скрывать</string>
   <string name="hidden">Перемещено в скрытые </string>
@@ -168,7 +168,7 @@
   <string name="season_allwatched">Все эпизоды просмотрены</string>
   <plurals name="not_watched_episodes_plural">
     <item quantity="one">%d эпизод не просмотрен</item>
-    <item quantity="few">%d episodes not watched</item>
+    <item quantity="few">%d эпизодов не просмотрено</item>
     <item quantity="other">%d эпизодов не просмотрено</item>
   </plurals>
   <plurals name="other_episodes_plural">
@@ -356,18 +356,18 @@
   <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
   <plurals name="days_before_plural">
     <item quantity="one">за %d дн. до</item>
-    <item quantity="few">%d days before</item>
+    <item quantity="few">за %d дн. до</item>
     <item quantity="other">%d дней до</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d ч. до</item>
-    <item quantity="few">%d hours before</item>
-    <item quantity="other">%d ч. до</item>
+    <item quantity="one">за %d ч. до</item>
+    <item quantity="few">за %d ч. до</item>
+    <item quantity="other">за %d ч. до</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="few">%d minutes before</item>
-    <item quantity="other">%d мин. до</item>
+    <item quantity="one">за %d мин. до</item>
+    <item quantity="few">за %d мин. до</item>
+    <item quantity="other">за %d мин. до</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
@@ -459,8 +459,8 @@
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Вибрация при уведомлении</string>
   <string name="pref_notifications_treshold">Когда уведомлять</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Выбрать сериалы</string>
+  <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малый)</string>
   <!-- List Widget -->

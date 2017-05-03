@@ -119,8 +119,8 @@
   <string name="context_unfavorite">Ei suosikki</string>
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Ota jaksoilmoitukset käyttöön</string>
+  <string name="action_episode_notifications_off">Poista jaksoilmoitukset käytöstä</string>
   <string name="context_hide">Piilota</string>
   <string name="context_unhide">Paljasta</string>
   <string name="hidden">Piilotettu ohjelma</string>
@@ -447,8 +447,8 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
+  <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <!-- List Widget -->
