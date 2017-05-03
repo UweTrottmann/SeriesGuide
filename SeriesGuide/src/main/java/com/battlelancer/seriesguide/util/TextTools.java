@@ -3,6 +3,8 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.util.List;
 
@@ -50,13 +52,22 @@ public class TextTools {
     }
 
     /**
+     * Returns the title or if its empty a string like "Episode 2".
+     */
+    @NonNull
+    public static String getEpisodeTitle(Context context, @Nullable String title, int episode) {
+        return TextUtils.isEmpty(title)
+                ? context.getString(R.string.episode_number, episode)
+                : title;
+    }
+
+    /**
      * Returns a string like "1x01 Title". The number format may change based on user preference.
      */
     public static String getNextEpisodeString(Context context, int season, int episode,
             String title) {
-        String result = getEpisodeNumber(context, season, episode);
-        result += " " + title;
-        return result;
+        return getEpisodeNumber(context, season, episode) + " "
+                + getEpisodeTitle(context, title, episode);
     }
 
     /**

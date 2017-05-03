@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Acara</string>
   <string name="episode">Episode</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Episode %d</string>
   <string name="episodes">Episode</string>
   <string name="season">Musim</string>
-  <string name="season_number">Musim %s</string>
+  <string name="season_number">Musim %d</string>
   <string name="seasons">Musim</string>
   <string name="specialseason">Episode Khusus</string>
   <!-- Descriptions -->

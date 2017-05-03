@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">نمایش</string>
   <string name="episode">قسمت</string>
-  <string name="episode_number">قسمت %s</string>
+  <string name="episode_number">قسمت %d</string>
   <string name="episodes">قسمت‌ها</string>
   <string name="season">فصل</string>
-  <string name="season_number">فصل %s</string>
+  <string name="season_number">فصل %d</string>
   <string name="seasons">فصل‌ها</string>
   <string name="specialseason">قسمت‌های ویژه</string>
   <!-- Descriptions -->

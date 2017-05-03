@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">表示</string>
   <string name="episode">エピソード</string>
-  <string name="episode_number">エピソード %s</string>
+  <string name="episode_number">エピソード %d</string>
   <string name="episodes">エピソード</string>
   <string name="season">シーズン</string>
-  <string name="season_number">シーズン %s</string>
+  <string name="season_number">シーズン %d</string>
   <string name="seasons">シーズン</string>
   <string name="specialseason">特別編</string>
   <!-- Descriptions -->

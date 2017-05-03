@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serialas</string>
   <string name="episode">Serija</string>
-  <string name="episode_number">Serija %s</string>
+  <string name="episode_number">Serija %d</string>
   <string name="episodes">Serijos</string>
   <string name="season">Sezonas</string>
-  <string name="season_number">Sezonas %s</string>
+  <string name="season_number">Sezonas %d</string>
   <string name="seasons">Sezonai</string>
   <string name="specialseason">Ypatingos serijos</string>
   <!-- Descriptions -->

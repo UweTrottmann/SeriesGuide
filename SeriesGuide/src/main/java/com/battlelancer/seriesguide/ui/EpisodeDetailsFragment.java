@@ -352,7 +352,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // title and description
         mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
-        mEpisodeTitle = cursor.getString(DetailsQuery.TITLE);
+        mEpisodeTitle = TextTools.getEpisodeTitle(getContext(),
+                cursor.getString(DetailsQuery.TITLE), mEpisodeNumber);
         boolean hideDetails = EpisodeTools.isUnwatched(mEpisodeFlag)
                 && DisplaySettings.preventSpoilers(getContext());
         if (hideDetails) {

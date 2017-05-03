@@ -387,16 +387,18 @@ public class NotificationService extends IntentService {
                 maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
                 if (!DisplaySettings.preventSpoilers(context)) {
-                    final String episodeTitle = upcomingEpisodes
-                            .getString(NotificationQuery.TITLE);
+                    final String episodeTitle = TextTools.getEpisodeTitle(context,
+                            upcomingEpisodes.getString(NotificationQuery.TITLE),
+                            upcomingEpisodes.getInt(NotificationQuery.NUMBER));
                     final String episodeSummary = upcomingEpisodes
                             .getString(NotificationQuery.OVERVIEW);
 
                     final SpannableStringBuilder bigText = new SpannableStringBuilder();
-                    bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
+                    bigText.append(episodeTitle);
                     bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
-                    bigText.append("\n");
-                    bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
+                    if (!TextUtils.isEmpty(episodeSummary)) {
+                        bigText.append("\n").append(episodeSummary);
+                    }
 
                     nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                             .setSummaryText(contentText));

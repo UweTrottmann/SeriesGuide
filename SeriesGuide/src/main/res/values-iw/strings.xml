@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">סדרה</string>
   <string name="episode">פרק</string>
-  <string name="episode_number">פרק %s</string>
+  <string name="episode_number">פרק %d</string>
   <string name="episodes">פרקים</string>
   <string name="season">עונה</string>
-  <string name="season_number">עונה %s</string>
+  <string name="season_number">עונה %d</string>
   <string name="seasons">עונות</string>
   <string name="specialseason">פרקים מיוחדים</string>
   <!-- Descriptions -->

@@ -603,17 +603,20 @@ public class OverviewFragment extends Fragment implements
             // title
             int season = episode.getInt(EpisodeQuery.SEASON);
             int number = episode.getInt(EpisodeQuery.NUMBER);
+            String title;
             if (DisplaySettings.preventSpoilers(getContext())) {
-                textEpisodeTitle.setText(TextTools.getEpisodeNumber(getContext(), season, number));
+                title = TextTools.getEpisodeNumber(getContext(), season, number);
             } else {
-                textEpisodeTitle.setText(episode.getString(EpisodeQuery.TITLE));
+                title = TextTools.getEpisodeTitle(getContext(),
+                        episode.getString(EpisodeQuery.TITLE), number);
             }
+            textEpisodeTitle.setText(title);
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, String.valueOf(season)));
+            infoText.append(getString(R.string.season_number, season));
             infoText.append(" ");
-            infoText.append(getString(R.string.episode_number, String.valueOf(number)));
+            infoText.append(getString(R.string.episode_number, number));
             int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
@@ -671,7 +674,7 @@ public class OverviewFragment extends Fragment implements
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
             // load all other info
-            populateEpisodeDetails(episode);
+            populateEpisodeDetails(episode, title);
 
             // episode image
             loadEpisodeImage(episode.getString(EpisodeQuery.IMAGE));
@@ -747,7 +750,7 @@ public class OverviewFragment extends Fragment implements
         AppSettings.setAskedForFeedback(getContext());
     }
 
-    private void populateEpisodeDetails(Cursor episode) {
+    private void populateEpisodeDetails(Cursor episode, final String title) {
         // description
         populateEpisodeDescription();
 
@@ -787,13 +790,12 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpTraktEpisodeButton(buttonTrakt, currentEpisodeTvdbId, TAG);
 
         // trakt shouts button
-        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
         buttonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (currentEpisodeCursor != null && currentEpisodeCursor.moveToFirst()) {
                     Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
+                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(title,
                             currentEpisodeTvdbId
                     ));
                     Utils.startActivityWithAnimation(getActivity(), i, v);

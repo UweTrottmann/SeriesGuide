@@ -712,7 +712,7 @@ public class TvdbTools {
                         episode.firstAired, showReleaseTime, show.country, show.network,
                         deviceTimeZone);
                 values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
-                values.put(Episodes.TITLE, episode.episodeName);
+                values.put(Episodes.TITLE, episode.episodeName == null ? "" : episode.episodeName);
                 values.put(Episodes.OVERVIEW, episode.overview);
                 values.put(Episodes.LAST_EDITED, episode.lastUpdated);
 
