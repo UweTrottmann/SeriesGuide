@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -460,26 +459,27 @@ public class TvdbTools {
      * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
      * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
      * supplied, TVDb falls back to English.
+     *
+     * @throws TvdbException If a request fails or a response appears to be corrupted.
      */
     @NonNull
     public Show getShowDetails(int showTvdbId, @NonNull String language) throws TvdbException {
-        // try to get some details from trakt
-        com.uwetrottmann.trakt5.entities.Show traktShow = null;
-        // always look up the trakt id based on the TVDb id
-        // e.g. a TVDb id might be linked against the wrong trakt entry, then get fixed
+        // always look up the trakt id
+        // a TVDb id might be linked against the wrong trakt entry, then get fixed
         Integer showTraktId = lookupShowTraktId(showTvdbId);
+
+        // get show from TVDb
+        final Show show = downloadAndParseShow(showTvdbId, language);
+
         if (showTraktId != null) {
-            traktShow = SgTrakt.executeCall(app,
+            // get some more details from trakt
+            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(app,
                     traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
-        }
-
-        // get full show details from TVDb
-        final Show show = downloadAndParseShow(showTvdbId, language);
-
-        // fill in data from trakt
-        if (traktShow != null) {
+            if (traktShow == null) {
+                throw new TvdbTraktException("getShowDetails: failed to get trakt show details.");
+            }
             if (traktShow.ids != null && traktShow.ids.trakt != null) {
                 show.trakt_id = traktShow.ids.trakt;
             }
@@ -492,10 +492,9 @@ public class TvdbTools {
             show.first_aired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
             show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
         } else {
-            // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
-            Timber.w("getShowDetails: failed to get trakt show details.");
-            show.trakt_id = ShowTools.getShowTraktId(app, showTvdbId);
-            // set default values
+            // no trakt id (show not on trakt): set default values
+            Timber.w("getShowDetails: no trakt id found, using default values.");
+            show.trakt_id = null;
             show.release_time = -1;
             show.release_weekday = -1;
             show.first_aired = "";
@@ -507,9 +506,11 @@ public class TvdbTools {
 
     /**
      * Look up a show's trakt id, may return {@code null} if not found.
+     *
+     * @throws TvdbException If the request failed or the response appears to be corrupted.
      */
     @Nullable
-    private Integer lookupShowTraktId(int showTvdbId) {
+    private Integer lookupShowTraktId(int showTvdbId) throws TvdbException {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
                 app,
                 traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
@@ -517,15 +518,19 @@ public class TvdbTools {
                 "show trakt id lookup"
         );
 
-        if (searchResults == null || searchResults.size() != 1) {
-            return null;
+        if (searchResults == null) {
+            throw new TvdbTraktException("lookupShowTraktId: failed.");
+        }
+
+        if (searchResults.size() != 1) {
+            return null; // no results
         }
 
         com.uwetrottmann.trakt5.entities.SearchResult result = searchResults.get(0);
         if (result.show != null && result.show.ids != null) {
             return result.show.ids.trakt;
         } else {
-            return null;
+            throw new TvdbTraktException("lookupShowTraktId: response corrupted.");
         }
     }
 
