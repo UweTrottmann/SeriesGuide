@@ -5,6 +5,7 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,12 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
 
             Episode episode = null;
             if (query.moveToFirst()) {
+                int number = query.getInt(Query.NUMBER);
                 episode = new Episode.Builder()
                         .tvdbId(episodeTvdbId)
-                        .title(query.getString(Query.TITLE))
-                        .number(query.getInt(Query.NUMBER))
+                        .title(TextTools.getEpisodeTitle(getContext(), query.getString(Query.TITLE),
+                                number))
+                        .number(number)
                         .numberAbsolute(query.getInt(Query.NUMBER_ABSOLUTE))
                         .season(query.getInt(Query.SEASON))
                         .imdbId(query.getString(Query.IMDB_ID))
