@@ -101,7 +101,7 @@ public class TaskManager {
     public synchronized void tryBackupTask() {
         if (!isAddTaskRunning()
                 && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mBackupTask = new JsonExportTask(mContext, null, null, false, true);
+            mBackupTask = new JsonExportTask(mContext, null, false, true);
             AsyncTaskCompat.executeParallel(mBackupTask);
         }
     }

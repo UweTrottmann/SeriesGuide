@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,7 +10,6 @@ import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
@@ -19,8 +17,6 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
-import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -43,6 +39,7 @@ import java.io.OutputStreamWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
@@ -52,6 +49,10 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  * like descriptions, ratings, actors, etc. will not be included.
  */
 public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
+
+    public interface OnTaskProgressListener {
+        void onProgressUpdate(Integer... values);
+    }
 
     public static final String EXPORT_FOLDER = "SeriesGuide";
     public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
@@ -93,10 +94,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     private Context context;
     private OnTaskProgressListener progressListener;
-    private OnTaskFinishedListener finishedListener;
     private boolean isFullDump;
     private boolean isAutoBackupMode;
     private boolean isUseDefaultFolders;
+    @Nullable private String errorCause;
 
     public static File getExportPath(boolean isAutoBackupMode) {
         return new File(
@@ -112,11 +113,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
-            OnTaskFinishedListener listener, boolean isFullDump,
-            boolean isAutoBackupMode) {
+            boolean isFullDump, boolean isAutoBackupMode) {
         this.context = context.getApplicationContext();
         this.progressListener = progressListener;
-        finishedListener = listener;
         this.isFullDump = isFullDump;
         this.isAutoBackupMode = isAutoBackupMode;
         // use Storage Access Framework on KitKat and up to select custom backup files,
@@ -126,7 +125,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 || (isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context));
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(Void... params) {
         File exportPath = null;
@@ -192,22 +190,26 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer result) {
         if (!isAutoBackupMode) {
             int messageId;
+            boolean showIndefinite;
             switch (result) {
                 case SUCCESS:
                     messageId = R.string.backup_success;
+                    showIndefinite = false;
                     break;
                 case ERROR_FILE_ACCESS:
                     messageId = R.string.backup_failed_file_access;
+                    showIndefinite = true;
                     break;
                 default:
                     messageId = R.string.backup_failed;
+                    showIndefinite = true;
                     break;
             }
-            Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
-        }
-
-        if (finishedListener != null) {
-            finishedListener.onTaskFinished();
+            EventBus.getDefault()
+                    .post(new DataLiberationFragment.LiberationResultEvent(
+                            context.getString(messageId), errorCause, showIndefinite));
+        } else {
+            EventBus.getDefault().post(new DataLiberationFragment.LiberationResultEvent());
         }
     }
 
@@ -276,13 +278,16 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         } catch (FileNotFoundException e) {
             Timber.e(e, "Backup file not found.");
             removeBackupFileUri(type);
+            errorCause = e.getMessage();
             return ERROR_FILE_ACCESS;
         } catch (IOException | SecurityException e) {
             Timber.e(e, "Could not access backup file.");
             removeBackupFileUri(type);
+            errorCause = e.getMessage();
             return ERROR_FILE_ACCESS;
         } catch (JsonParseException e) {
             Timber.e(e, "JSON export failed.");
+            errorCause = e.getMessage();
             return ERROR;
         } finally {
             data.close();

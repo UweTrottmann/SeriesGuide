@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -28,18 +29,49 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
-import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
  * One button export or import of the show database using a JSON file on external storage.
  */
-public class DataLiberationFragment extends Fragment implements OnTaskFinishedListener,
-        OnTaskProgressListener {
+public class DataLiberationFragment extends Fragment implements
+        JsonExportTask.OnTaskProgressListener {
+
+    public static class LiberationResultEvent {
+
+        private final String message;
+        private final boolean showIndefinite;
+
+        public LiberationResultEvent() {
+            this.message = null;
+            this.showIndefinite = false;
+        }
+
+        public LiberationResultEvent(String message, String errorCause, boolean showIndefinite) {
+            if (errorCause != null) {
+                message += " (" + errorCause + ")";
+            }
+            this.message = message;
+            this.showIndefinite = showIndefinite;
+        }
+
+        public void handle(@Nullable View view) {
+            if (view != null && message != null) {
+                Snackbar snackbar = Snackbar.make(view, message,
+                        showIndefinite ? Snackbar.LENGTH_INDEFINITE : Snackbar.LENGTH_SHORT);
+                TextView textView = ButterKnife.findById(snackbar.getView(),
+                        android.support.design.R.id.snackbar_text);
+                textView.setMaxLines(5);
+                snackbar.show();
+            }
+        }
+    }
 
     private static final int REQUEST_CODE_EXPORT = 1;
     private static final int REQUEST_CODE_IMPORT = 2;
@@ -215,6 +247,20 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -241,8 +287,9 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
         progressBar.setProgress(values[1]);
     }
 
-    @Override
-    public void onTaskFinished() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LiberationResultEvent event) {
+        event.handle(getView());
         if (!isAdded()) {
             // don't touch views if fragment is not added to activity any longer
             return;
@@ -308,12 +355,12 @@ public class DataLiberationFragment extends Fragment implements OnTaskFinishedLi
             setProgressLock(true);
 
             dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
-                    DataLiberationFragment.this, checkBoxFullDump.isChecked(), false);
+                    checkBoxFullDump.isChecked(), false);
             AsyncTaskCompat.executeParallel(dataLibTask);
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonImportTask(getContext(), DataLiberationFragment.this,
+            dataLibTask = new JsonImportTask(getContext(),
                     checkBoxShows.isChecked(), checkBoxLists.isChecked(),
                     checkBoxMovies.isChecked());
             Utils.executeInOrder(dataLibTask);

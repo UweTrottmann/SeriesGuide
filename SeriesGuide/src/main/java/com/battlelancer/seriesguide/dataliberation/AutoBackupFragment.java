@@ -30,19 +30,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
-import com.battlelancer.seriesguide.interfaces.OnTaskProgressListener;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
  * Configuration of auto backup, the backup files and restoring the last auto backup.
  */
-public class AutoBackupFragment extends Fragment implements OnTaskFinishedListener,
-        OnTaskProgressListener {
+public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTaskProgressListener {
 
     private static final int REQUEST_CODE_ENABLE_AUTO_BACKUP = 1;
     private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 2;
@@ -137,7 +137,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
                     PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
                             .edit()
                             .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
-                            .commit();
+                            .apply();
                     updateFileViews();
                 }
             });
@@ -184,6 +184,20 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -210,8 +224,9 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
         progressBar.setProgress(values[1]);
     }
 
-    @Override
-    public void onTaskFinished() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(DataLiberationFragment.LiberationResultEvent event) {
+        event.handle(getView());
         if (!isAdded()) {
             // don't touch views if fragment is not added to activity any longer
             return;
@@ -300,7 +315,7 @@ public class AutoBackupFragment extends Fragment implements OnTaskFinishedListen
     private void doDataLiberationAction() {
         setProgressLock(true);
 
-        importTask = new JsonImportTask(getContext(), AutoBackupFragment.this);
+        importTask = new JsonImportTask(getContext());
         Utils.executeInOrder(importTask);
     }
 
