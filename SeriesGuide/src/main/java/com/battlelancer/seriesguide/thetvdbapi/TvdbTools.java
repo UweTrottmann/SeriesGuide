@@ -207,7 +207,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, show.language);
     }
 
-    private static String getShowLanguage(Context context, int showTvdbId) {
+    public static String getShowLanguage(Context context, int showTvdbId) {
         Cursor languageQuery = context.getContentResolver()
                 .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
         if (languageQuery == null) {

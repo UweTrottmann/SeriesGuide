@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -81,7 +82,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler mHandler = new Handler();
-    private TraktRatingsTask mTraktTask;
+    private TvdbEpisodeDetailsTask detailsTask;
+    private TraktRatingsTask ratingsTask;
 
     protected int mEpisodeFlag;
     protected boolean mCollected;
@@ -213,15 +215,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // fragment is destroyed.
         Picasso.with(getContext()).cancelRequest(mEpisodeImage);
         unbinder.unbind();
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mTraktTask != null) {
-            mTraktTask.cancel(true);
-            mTraktTask = null;
-        }
-        super.onDestroy();
     }
 
     @Override
@@ -469,8 +462,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mTextUserRating.setText(TraktTools.buildUserRatingString(getActivity(),
                 cursor.getInt(DetailsQuery.RATING_USER)));
 
-        loadTraktRatings();
-
         // episode image
         final String imagePath = cursor.getString(DetailsQuery.IMAGE);
         mImageContainer.setOnClickListener(new OnClickListener() {
@@ -593,13 +584,24 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         });
 
         mEpisodeContainer.setVisibility(View.VISIBLE);
+
+        loadDetails(cursor);
     }
 
-    private void loadTraktRatings() {
-        if (mTraktTask == null || mTraktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mTraktTask = new TraktRatingsTask(SgApp.from(getActivity()), mShowTvdbId,
+    private void loadDetails(Cursor cursor) {
+        // get full info if episode was edited on TVDb
+        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
+            long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
+            long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
+                    mShowTvdbId, getEpisodeTvdbId(), lastEdited, lastUpdated);
+        }
+
+        // update trakt ratings
+        if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
+            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), mShowTvdbId,
                     getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
-            AsyncTaskCompat.executeParallel(mTraktTask);
+            AsyncTaskCompat.executeParallel(ratingsTask);
         }
     }
 
@@ -723,6 +725,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Episodes.WATCHED,
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
+                Episodes.LAST_UPDATED,
                 Shows.REF_SHOW_ID,
                 Shows.IMDBID,
                 Shows.TITLE,
@@ -750,10 +753,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int WATCHED = 17;
         int COLLECTED = 18;
         int LAST_EDITED = 19;
-        int SHOW_ID = 20;
-        int SHOW_IMDBID = 21;
-        int SHOW_TITLE = 22;
-        int SHOW_RUNTIME = 23;
-        int SHOW_LANGUAGE = 24;
+        int LAST_UPDATED = 20;
+        int SHOW_ID = 21;
+        int SHOW_IMDBID = 22;
+        int SHOW_TITLE = 23;
+        int SHOW_RUNTIME = 24;
+        int SHOW_LANGUAGE = 25;
     }
 }

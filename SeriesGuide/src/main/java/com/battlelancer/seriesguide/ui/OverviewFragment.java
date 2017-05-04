@@ -1,11 +1,9 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -51,6 +49,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
@@ -126,7 +125,8 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     private Handler handler = new Handler();
-    private TraktRatingsTask traktRatingsTask;
+    private TvdbEpisodeDetailsTask detailsTask;
+    private TraktRatingsTask ratingsTask;
     private Unbinder unbinder;
 
     private boolean isEpisodeDataAvailable;
@@ -214,6 +214,7 @@ public class OverviewFragment extends Fragment implements
         // comments button
         ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonComments,
                 R.attr.drawableComments);
+        buttonComments.setOnClickListener(commentsClickListener);
 
         return v;
     }
@@ -271,10 +272,6 @@ public class OverviewFragment extends Fragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (traktRatingsTask != null) {
-            traktRatingsTask.cancel(true);
-            traktRatingsTask = null;
-        }
         if (handler != null) {
             handler.removeCallbacks(episodeActionsRunnable);
         }
@@ -463,7 +460,9 @@ public class OverviewFragment extends Fragment implements
                 Episodes.RATING_USER,
                 Episodes.WATCHED,
                 Episodes.COLLECTED,
-                Episodes.IMAGE
+                Episodes.IMAGE,
+                Episodes.LAST_EDITED,
+                Episodes.LAST_UPDATED
         };
 
         int _ID = 0;
@@ -483,6 +482,8 @@ public class OverviewFragment extends Fragment implements
         int WATCHED = 14;
         int COLLECTED = 15;
         int IMAGE = 16;
+        int LAST_EDITED = 17;
+        int LAST_UPDATED = 18;
     }
 
     interface ShowQuery {
@@ -538,7 +539,8 @@ public class OverviewFragment extends Fragment implements
             case OverviewActivity.OVERVIEW_EPISODE_LOADER_ID:
                 isEpisodeDataAvailable = data != null && data.moveToFirst();
                 currentEpisodeCursor = data;
-                populateEpisodeViews(data);
+                maybeAddFeedbackView();
+                setupEpisodeViews(data);
                 break;
             case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                 isShowDataAvailable = data != null && data.moveToFirst();
@@ -593,78 +595,14 @@ public class OverviewFragment extends Fragment implements
         buttonCheckin.setEnabled(enabled);
     }
 
-    private void populateEpisodeViews(Cursor episode) {
-        maybeAddFeedbackView();
-
+    private void setupEpisodeViews(Cursor episode) {
         if (isEpisodeDataAvailable) {
             // some episode properties
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
 
-            // title
-            int season = episode.getInt(EpisodeQuery.SEASON);
-            int number = episode.getInt(EpisodeQuery.NUMBER);
-            String title;
-            if (DisplaySettings.preventSpoilers(getContext())) {
-                title = TextTools.getEpisodeNumber(getContext(), season, number);
-            } else {
-                title = TextTools.getEpisodeTitle(getContext(),
-                        episode.getString(EpisodeQuery.TITLE), number);
-            }
-            textEpisodeTitle.setText(title);
-
-            // number
-            StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season_number, season));
-            infoText.append(" ");
-            infoText.append(getString(R.string.episode_number, number));
-            int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
-                infoText.append(" (").append(episodeAbsoluteNumber).append(")");
-            }
-            textEpisodeNumbers.setText(infoText);
-
-            // air date
-            long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
-            if (releaseTime != -1) {
-                Date actualRelease = TimeTools.applyUserOffset(getContext(), releaseTime);
-                // "Oct 31 (Fri)" or "in 14 mins (Fri)"
-                String dateTime;
-                if (DisplaySettings.isDisplayExactDate(getContext())) {
-                    dateTime = TimeTools.formatToLocalDateShort(getContext(), actualRelease);
-                } else {
-                    dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
-                }
-                textEpisodeTime.setText(getString(R.string.release_date_and_day, dateTime,
-                        TimeTools.formatToLocalDay(actualRelease)));
-            } else {
-                textEpisodeTime.setText(null);
-            }
-
             // make title and image clickable
-            containerEpisodePrimary.setOnClickListener(new OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onClick(View view) {
-                    // display episode details
-                    Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
-                            currentEpisodeTvdbId);
-
-                    Utils.startActivityWithAnimation(getActivity(), intent, view);
-                }
-            });
+            containerEpisodePrimary.setOnClickListener(episodeClickListener);
             containerEpisodePrimary.setFocusable(true);
-
-            // collected button
-            boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
-                    isCollected ? R.drawable.ic_collected
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableCollect), 0, 0);
-            buttonCollect.setText(isCollected ? R.string.action_collection_remove
-                    : R.string.action_collection_add);
-            CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
-                    : R.string.action_collection_add);
 
             // hide check-in if not connected to trakt or hexagon is enabled
             boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
@@ -673,19 +611,19 @@ public class OverviewFragment extends Fragment implements
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
-            // load all other info
-            populateEpisodeDetails(episode, title);
+            // populate episode details
+            populateEpisodeViews(episode);
+            populateEpisodeDescription();
 
-            // episode image
+            // load full info and ratings, image, actions
+            loadEpisodeDetails();
             loadEpisodeImage(episode.getString(EpisodeQuery.IMAGE));
-
-            // episode actions
             loadEpisodeActionsDelayed();
 
             containerEpisodeMeta.setVisibility(View.VISIBLE);
         } else {
-            // no next episode: display single line info text, remove other
-            // views
+            // no next episode: display single line info text, remove other views
+            currentEpisodeTvdbId = 0;
             textEpisodeTitle.setText(R.string.no_nextepisode);
             textEpisodeTime.setText(null);
             textEpisodeNumbers.setText(null);
@@ -710,49 +648,57 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    private void maybeAddFeedbackView() {
-        if (feedbackView != null || feedbackViewStub == null
-                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
-            return; // can or should not add feedback view
+    private void populateEpisodeViews(Cursor episode) {
+        // title
+        int season = episode.getInt(EpisodeQuery.SEASON);
+        int number = episode.getInt(EpisodeQuery.NUMBER);
+        final String title;
+        if (DisplaySettings.preventSpoilers(getContext())) {
+            title = TextTools.getEpisodeNumber(getContext(), season, number);
+        } else {
+            title = TextTools.getEpisodeTitle(getContext(),
+                    episode.getString(EpisodeQuery.TITLE), number);
         }
-        feedbackView = (FeedbackView) feedbackViewStub.inflate();
-        feedbackViewStub = null;
-        if (feedbackView != null) {
-            feedbackView.setCallback(new FeedbackView.Callback() {
-                @Override
-                public void onRate() {
-                    if (Utils.launchWebsite(getContext(), getString(R.string.url_store_page))) {
-                        removeFeedbackView();
-                    }
-                }
+        textEpisodeTitle.setText(title);
 
-                @Override
-                public void onFeedback() {
-                    if (Utils.tryStartActivity(getContext(),
-                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
-                        removeFeedbackView();
-                    }
-                }
-
-                @Override
-                public void onDismiss() {
-                    removeFeedbackView();
-                }
-            });
+        // number
+        StringBuilder infoText = new StringBuilder();
+        infoText.append(getString(R.string.season_number, season));
+        infoText.append(" ");
+        infoText.append(getString(R.string.episode_number, number));
+        int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
+        if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
+            infoText.append(" (").append(episodeAbsoluteNumber).append(")");
         }
-    }
+        textEpisodeNumbers.setText(infoText);
 
-    private void removeFeedbackView() {
-        if (feedbackView == null) {
-            return;
+        // air date
+        long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
+        if (releaseTime != -1) {
+            Date actualRelease = TimeTools.applyUserOffset(getContext(), releaseTime);
+            // "Oct 31 (Fri)" or "in 14 mins (Fri)"
+            String dateTime;
+            if (DisplaySettings.isDisplayExactDate(getContext())) {
+                dateTime = TimeTools.formatToLocalDateShort(getContext(), actualRelease);
+            } else {
+                dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
+            }
+            textEpisodeTime.setText(getString(R.string.release_date_and_day, dateTime,
+                    TimeTools.formatToLocalDay(actualRelease)));
+        } else {
+            textEpisodeTime.setText(null);
         }
-        feedbackView.setVisibility(View.GONE);
-        AppSettings.setAskedForFeedback(getContext());
-    }
 
-    private void populateEpisodeDetails(Cursor episode, final String title) {
-        // description
-        populateEpisodeDescription();
+        // collected button
+        boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
+                isCollected ? R.drawable.ic_collected
+                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                R.attr.drawableCollect), 0, 0);
+        buttonCollect.setText(isCollected ? R.string.action_collection_remove
+                : R.string.action_collection_add);
+        CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
+                : R.string.action_collection_add);
 
         // dvd number
         boolean isShowingMeta = ViewTools.setLabelValueOrHide(labelDvdNumber, textDvdNumber,
@@ -788,24 +734,6 @@ public class OverviewFragment extends Fragment implements
 
         // trakt button
         ServiceUtils.setUpTraktEpisodeButton(buttonTrakt, currentEpisodeTvdbId, TAG);
-
-        // trakt shouts button
-        buttonComments.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentEpisodeCursor != null && currentEpisodeCursor.moveToFirst()) {
-                    Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                    i.putExtras(TraktCommentsActivity.createInitBundleEpisode(title,
-                            currentEpisodeTvdbId
-                    ));
-                    Utils.startActivityWithAnimation(getActivity(), i, v);
-                    Utils.trackAction(v.getContext(), TAG, "Comments");
-                }
-            }
-        });
-
-        // trakt ratings
-        loadTraktRatings();
     }
 
     /**
@@ -888,18 +816,25 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    private void loadTraktRatings() {
-        if (!isEpisodeDataAvailable
-                || (traktRatingsTask != null
-                && traktRatingsTask.getStatus() != AsyncTask.Status.FINISHED)) {
+    private void loadEpisodeDetails() {
+        if (!isEpisodeDataAvailable) {
             return;
         }
-        int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
-        int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        traktRatingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
-                episodeTvdbId, seasonNumber, episodeNumber);
-        AsyncTaskCompat.executeParallel(traktRatingsTask);
+
+        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
+            long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
+            long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
+                    showTvdbId, currentEpisodeTvdbId, lastEdited, lastUpdated);
+        }
+
+        if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
+            int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
+                    currentEpisodeTvdbId, seasonNumber, episodeNumber);
+            AsyncTaskCompat.executeParallel(ratingsTask);
+        }
     }
 
     private void populateShowViews(@NonNull Cursor show) {
@@ -963,6 +898,46 @@ public class OverviewFragment extends Fragment implements
         populateEpisodeDescription();
     }
 
+    private void maybeAddFeedbackView() {
+        if (feedbackView != null || feedbackViewStub == null
+                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
+            return; // can or should not add feedback view
+        }
+        feedbackView = (FeedbackView) feedbackViewStub.inflate();
+        feedbackViewStub = null;
+        if (feedbackView != null) {
+            feedbackView.setCallback(new FeedbackView.Callback() {
+                @Override
+                public void onRate() {
+                    if (Utils.launchWebsite(getContext(), getString(R.string.url_store_page))) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onFeedback() {
+                    if (Utils.tryStartActivity(getContext(),
+                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
+                        removeFeedbackView();
+                    }
+                }
+
+                @Override
+                public void onDismiss() {
+                    removeFeedbackView();
+                }
+            });
+        }
+    }
+
+    private void removeFeedbackView() {
+        if (feedbackView == null) {
+            return;
+        }
+        feedbackView.setVisibility(View.GONE);
+        AppSettings.setAskedForFeedback(getContext());
+    }
+
     private LoaderManager.LoaderCallbacks<List<Action>> episodeActionsLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<List<Action>>() {
                 @Override
@@ -991,4 +966,32 @@ public class OverviewFragment extends Fragment implements
                             getActivity().getTheme(), containerActions, null, TAG);
                 }
             };
+
+    private OnClickListener episodeClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (isEpisodeDataAvailable) {
+                // display episode details
+                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+                        currentEpisodeTvdbId);
+                Utils.startActivityWithAnimation(getActivity(), intent, view);
+            }
+        }
+    };
+
+    private OnClickListener commentsClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (isEpisodeDataAvailable) {
+                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+                i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
+                        currentEpisodeCursor.getString(EpisodeQuery.TITLE),
+                        currentEpisodeTvdbId
+                ));
+                Utils.startActivityWithAnimation(getActivity(), i, v);
+                Utils.trackAction(v.getContext(), TAG, "Comments");
+            }
+        }
+    };
 }

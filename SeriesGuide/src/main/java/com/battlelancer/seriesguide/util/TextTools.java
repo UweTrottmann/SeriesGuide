@@ -112,8 +112,8 @@ public class TextTools {
         if (strings == null || strings.size() == 0) {
             return "";
         }
-        // pre-size builder based on average length of genre string, determined by science (tm) :)
-        StringBuilder result = new StringBuilder(strings.size() * 9);
+        // pre-size builder based on reasonable average length of a string
+        StringBuilder result = new StringBuilder(strings.size() * 10);
         for (String string : strings) {
             if (result.length() > 0) {
                 result.append("|");
