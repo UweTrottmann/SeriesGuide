@@ -258,7 +258,7 @@ public class CalendarFragment extends Fragment implements
         PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
         Menu menu = popupMenu.getMenu();
 
-        Cursor episode = (Cursor) adapter.getItem(position);
+        Cursor episode = adapter.getItem(position);
         if (episode == null) {
             return false;
         }

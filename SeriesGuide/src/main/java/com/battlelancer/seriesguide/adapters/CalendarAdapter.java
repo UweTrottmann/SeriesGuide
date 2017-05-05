@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
@@ -60,6 +61,19 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
      */
     public void setIsShowingHeaders(boolean isShowingHeaders) {
         mIsShowingHeaders = isShowingHeaders;
+    }
+
+    /**
+     * Overrides base method and does proper position check before returning a Cursor.
+     */
+    @Override
+    @Nullable
+    public Cursor getItem(int position) {
+        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
+            return mCursor;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -149,14 +163,12 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     }
 
     private long getHeaderId(int position) {
-        Object obj = getItem(position);
-        if (obj != null) {
+        Cursor item = getItem(position);
+        if (item != null) {
             /*
              * Map all episodes releasing the same day to the same id (which
              * equals the time midnight of their release day).
              */
-            @SuppressWarnings("resource")
-            Cursor item = (Cursor) obj;
             return getHeaderTime(item);
         }
         return 0;
@@ -198,8 +210,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         // get header position for item position
         position = mHeaders.get(position).getRefPosition();
 
-        Object obj = getItem(position);
-        if (obj == null) {
+        Cursor item = getItem(position);
+        if (item == null) {
             return null;
         }
 
@@ -215,8 +227,6 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             holder = (HeaderViewHolder) convertView.getTag();
         }
 
-        @SuppressWarnings("resource")
-        Cursor item = (Cursor) obj;
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
         holder.day.setText(
