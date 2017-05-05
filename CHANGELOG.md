@@ -9,6 +9,17 @@ Version 37
 ----------
 *(in development)*
 
+#### 37-beta5
+*(2017-05-05)*
+
+* 🔧 Use TheTVDB API v2 to fetch episode information: if no translation for title or description
+  exists, will no longer fall back to English. Image, directors, writers and guest stars are only
+  fetched when viewing an episode.
+* 🔧 Display generic episode title, such as 'Episode 2', if actual title is not available.
+* 🔧 If available, show internal details why backing up or restoring failed.
+* 🔨 Do not remove release time when updating a show and talking to trakt fails.
+* 📝 Latest translations from crowdin.
+
 #### 37-beta4
 *(2017-04-28)*
 
