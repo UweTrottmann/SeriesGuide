@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
-  <string name="episode_number">Jakso %s</string>
+  <string name="episode_number">Jakso %d</string>
   <string name="episodes">Jaksot</string>
   <string name="season">Kausi</string>
-  <string name="season_number">Kausi %s</string>
+  <string name="season_number">Kausi %d</string>
   <string name="seasons">Kaudet</string>
   <string name="specialseason">Erikoisjaksot</string>
   <!-- Descriptions -->

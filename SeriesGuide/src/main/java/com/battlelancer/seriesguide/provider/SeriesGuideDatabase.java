@@ -144,7 +144,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_40_NOTIFY_PER_SHOW = 40;
 
-    public static final int DATABASE_VERSION = DBVER_40_NOTIFY_PER_SHOW;
+    /**
+     * Add {@link Episodes#LAST_UPDATED} flag to episodes table.
+     */
+    private static final int DBVER_41_EPISODE_LAST_UPDATED = 41;
+
+    public static final int DATABASE_VERSION = DBVER_41_EPISODE_LAST_UPDATED;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -435,7 +440,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.LAST_EDITED + " INTEGER DEFAULT 0,"
 
-            + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER"
+            + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER,"
+
+            + EpisodesColumns.LAST_UPDATED + " INTEGER DEFAULT 0"
 
             + ");";
 
@@ -643,8 +650,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case DBVER_38_SHOW_TRAKT_ID:
                 upgradeToThirtyNine(db);
             case DBVER_39_SHOW_LAST_WATCHED:
-                upgradeToFourty(db, context);
-                version = DBVER_40_NOTIFY_PER_SHOW;
+                upgradeToForty(db, context);
+            case DBVER_40_NOTIFY_PER_SHOW:
+                upgradeToFortyOne(db);
+                version = DBVER_41_EPISODE_LAST_UPDATED;
         }
 
         // drop all tables if version is not right
@@ -673,9 +682,19 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * See {@link #DBVER_41_EPISODE_LAST_UPDATED}.
+     */
+    private static void upgradeToFortyOne(SQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.EPISODES, Episodes.LAST_UPDATED)) {
+            db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                    + Episodes.LAST_UPDATED + " INTEGER DEFAULT 0;");
+        }
+    }
+
+    /**
      * See {@link #DBVER_40_NOTIFY_PER_SHOW}.
      */
-    private static void upgradeToFourty(SQLiteDatabase db, Context context) {
+    private static void upgradeToForty(SQLiteDatabase db, Context context) {
         if (isTableColumnMissing(db, Tables.SHOWS, Shows.NOTIFY)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
                     + Shows.NOTIFY + " INTEGER DEFAULT 1;");

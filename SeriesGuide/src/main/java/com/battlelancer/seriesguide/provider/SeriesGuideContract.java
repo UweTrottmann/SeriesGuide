@@ -393,9 +393,25 @@ public class SeriesGuideContract {
 
         /**
          * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
-         * Added in db version 27.
+         * Added in {@link SeriesGuideDatabase#DBVER_IMDBIDSLASTEDIT}.
+         *
+         * <pre>
+         * Range:   long (unix time)
+         * Default: 0
+         * </pre>
          */
         String LAST_EDITED = "episode_lastedit";
+
+        /**
+         * Stores the last edited time after fetching full episode data from TVDB.
+         * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.
+         *
+         * <pre>
+         * Range:   long (unix time)
+         * Default: 0
+         * </pre>
+         */
+        String LAST_UPDATED = "episode_lastupdate";
     }
 
     interface EpisodeSearchColumns {

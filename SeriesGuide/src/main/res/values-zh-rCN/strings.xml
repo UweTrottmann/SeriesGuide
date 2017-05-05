@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">节目</string>
   <string name="episode">剧集</string>
-  <string name="episode_number">第 %s 集</string>
+  <string name="episode_number">第 %d 集</string>
   <string name="episodes">剧集</string>
   <string name="season">季</string>
-  <string name="season_number">第 %s 季</string>
+  <string name="season_number">第 %d 季</string>
   <string name="seasons">季</string>
   <string name="specialseason">特别篇</string>
   <!-- Descriptions -->

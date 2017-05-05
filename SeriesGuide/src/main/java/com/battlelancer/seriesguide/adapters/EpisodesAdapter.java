@@ -88,7 +88,9 @@ public class EpisodesAdapter extends CursorAdapter {
             viewHolder.episodeTitle.setText(
                     TextTools.getEpisodeNumber(mContext, season, episodeNumber));
         } else {
-            viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
+            viewHolder.episodeTitle.setText(
+                    TextTools.getEpisodeTitle(mContext, mCursor.getString(EpisodesQuery.TITLE),
+                            episodeNumber));
         }
 
         // number

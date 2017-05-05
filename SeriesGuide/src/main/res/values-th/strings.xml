@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">ซีรีส์</string>
   <string name="episode">ตอน</string>
-  <string name="episode_number">ตอน %s</string>
+  <string name="episode_number">ตอน %d</string>
   <string name="episodes">ตอน</string>
   <string name="season">ซีซั่น</string>
-  <string name="season_number">ซีซั่น %s</string>
+  <string name="season_number">ซีซั่น %d</string>
   <string name="seasons">ซีซั่น</string>
   <string name="specialseason">ตอนพิเศษ</string>
   <!-- Descriptions -->

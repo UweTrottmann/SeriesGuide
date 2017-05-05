@@ -15,10 +15,10 @@
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Avsnitt</string>
-  <string name="episode_number">Avsnitt %s</string>
+  <string name="episode_number">Avsnitt %d</string>
   <string name="episodes">Avsnitt</string>
   <string name="season">Säsong</string>
-  <string name="season_number">Säsong %s</string>
+  <string name="season_number">Säsong %d</string>
   <string name="seasons">Säsonger</string>
   <string name="specialseason">Specialavsnitt</string>
   <!-- Descriptions -->

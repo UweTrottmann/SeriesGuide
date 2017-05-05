@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">காண்பி</string>
   <string name="episode">அத்தியாயத்தில்</string>
-  <string name="episode_number">அத்தியாயத்தில் %s</string>
+  <string name="episode_number">அத்தியாயத்தில் %d</string>
   <string name="episodes">அத்தியாயங்களில்</string>
   <string name="season">பருவம்</string>
-  <string name="season_number">பருவம் %s</string>
+  <string name="season_number">பருவம் %d</string>
   <string name="seasons">பருவங்கள்</string>
   <string name="specialseason">சிறப்பு Episodes</string>
   <!-- Descriptions -->

@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Emisiune</string>
   <string name="episode">Episod</string>
-  <string name="episode_number">Episod %s</string>
+  <string name="episode_number">Episod %d</string>
   <string name="episodes">Episoade</string>
   <string name="season">Sezon</string>
-  <string name="season_number">Sezonul %s</string>
+  <string name="season_number">Sezonul %d</string>
   <string name="seasons">Sezoane</string>
   <string name="specialseason">Episoade speciale</string>
   <!-- Descriptions -->

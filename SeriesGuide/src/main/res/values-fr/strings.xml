@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Série</string>
   <string name="episode">Épisode</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Épisode %d</string>
   <string name="episodes">Épisodes</string>
   <string name="season">Saison</string>
-  <string name="season_number">Saison %s</string>
+  <string name="season_number">Saison %d</string>
   <string name="seasons">Saisons</string>
   <string name="specialseason">Épisodes Spéciaux</string>
   <!-- Descriptions -->

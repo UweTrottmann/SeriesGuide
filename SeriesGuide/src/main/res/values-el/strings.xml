@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Σειρά</string>
   <string name="episode">Επεισόδιο</string>
-  <string name="episode_number">Επεισόδιο %s</string>
+  <string name="episode_number">Επεισόδιο %d</string>
   <string name="episodes">Επεισόδια</string>
   <string name="season">Σεζόν</string>
-  <string name="season_number">Κύκλος %s</string>
+  <string name="season_number">Κύκλος %d</string>
   <string name="seasons">Σεζόν</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
   <!-- Descriptions -->

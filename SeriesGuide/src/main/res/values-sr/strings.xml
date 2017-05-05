@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Серија</string>
   <string name="episode">Епизода</string>
-  <string name="episode_number">Епизода %s</string>
+  <string name="episode_number">Епизода %d</string>
   <string name="episodes">Епизоде</string>
   <string name="season">Сезона</string>
-  <string name="season_number">Сезона %s</string>
+  <string name="season_number">Сезона %d</string>
   <string name="seasons">Сезоне</string>
   <string name="specialseason">Специјалне епизоде</string>
   <!-- Descriptions -->

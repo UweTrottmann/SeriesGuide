@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Műsor</string>
   <string name="episode">Epizód</string>
-  <string name="episode_number">Epizód %s</string>
+  <string name="episode_number">Epizód %d</string>
   <string name="episodes">Epizódok</string>
   <string name="season">Évad</string>
-  <string name="season_number">Évad %s</string>
+  <string name="season_number">Évad %d</string>
   <string name="seasons">Évadok</string>
   <string name="specialseason">Extra epizódok</string>
   <!-- Descriptions -->

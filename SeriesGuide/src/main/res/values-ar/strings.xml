@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">العرض</string>
   <string name="episode">الحلقة</string>
-  <string name="episode_number">الحلقة %s</string>
+  <string name="episode_number">الحلقة %d</string>
   <string name="episodes">الحلقات</string>
   <string name="season">الموسم</string>
-  <string name="season_number">الموسم %s</string>
+  <string name="season_number">الموسم %d</string>
   <string name="seasons">المواسم</string>
   <string name="specialseason">حلقات خاصة</string>
   <!-- Descriptions -->
