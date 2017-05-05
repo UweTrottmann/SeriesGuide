@@ -54,25 +54,35 @@ public class ViewTools {
         setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
     }
 
-    public static void setVectorCompoundDrawableTop(Resources.Theme theme, Button button,
+    public static void setVectorDrawableLeft(Resources.Theme theme, Button button,
             @DrawableRes int vectorRes) {
         VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
                 vectorRes, theme);
-        if (drawable != null) {
-            drawable.setTint(ContextCompat.getColor(button.getContext(),
-                    Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
-            setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
-        }
+        tintVectorDrawable(button.getContext(), theme, drawable);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
+    }
+
+    public static void setVectorDrawableTop(Resources.Theme theme, Button button,
+            @DrawableRes int vectorRes) {
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
+                vectorRes, theme);
+        tintVectorDrawable(button.getContext(), theme, drawable);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
     }
 
     public static void setVectorDrawable(Resources.Theme theme, ImageButton button,
             @DrawableRes int vectorRes) {
         VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
                 vectorRes, theme);
+        tintVectorDrawable(button.getContext(), theme, drawable);
+        button.setImageDrawable(drawable);
+    }
+
+    private static void tintVectorDrawable(Context colorContext, Resources.Theme theme,
+            VectorDrawableCompat drawable) {
         if (drawable != null) {
-            drawable.setTint(ContextCompat.getColor(button.getContext(),
+            drawable.setTint(ContextCompat.getColor(colorContext,
                     Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
-            button.setImageDrawable(drawable);
         }
     }
 

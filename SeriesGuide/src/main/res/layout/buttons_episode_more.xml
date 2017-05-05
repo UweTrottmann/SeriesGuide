@@ -33,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/comments"
-        tools:drawableLeft="?attr/drawableComments" />
+        tools:drawableLeft="@drawable/ic_forum_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
 </merge>

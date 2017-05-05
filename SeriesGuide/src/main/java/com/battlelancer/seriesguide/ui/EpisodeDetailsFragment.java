@@ -167,8 +167,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mEpisodeContainer.setVisibility(View.GONE);
 
         // comments button
-        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), mCommentsButton,
-                R.attr.drawableComments);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), mCommentsButton,
+                R.drawable.ic_forum_black_24dp);
 
         return v;
     }

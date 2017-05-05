@@ -212,8 +212,8 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
-        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonComments,
-                R.attr.drawableComments);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonComments,
+                R.drawable.ic_forum_black_24dp);
         buttonComments.setOnClickListener(commentsClickListener);
 
         return v;

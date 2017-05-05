@@ -170,8 +170,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonMovieComments,
-                R.attr.drawableComments);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieComments,
+                R.drawable.ic_forum_black_24dp);
 
         // cast and crew
         setCastVisibility(false);

@@ -80,7 +80,6 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
-        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
@@ -169,7 +168,6 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
-        <item name="drawableComments">@drawable/ic_forum_white_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
@@ -269,7 +267,6 @@
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
         <item name="drawableCollect">@drawable/ic_action_collect_inverse</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all_inverse</item>
-        <item name="drawableComments">@drawable/ic_forum_black_24dp</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableExtension">@drawable/ic_extension_black_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
