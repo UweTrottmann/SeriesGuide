@@ -85,7 +85,6 @@
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline</item>
@@ -171,7 +170,6 @@
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline</item>
@@ -268,7 +266,6 @@
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
-        <item name="drawableShare">@drawable/ic_share_black_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>
         <item name="drawableStar">@drawable/ic_action_star_inverse</item>
         <item name="drawableStar0">@drawable/ic_action_star_outline_inverse</item>

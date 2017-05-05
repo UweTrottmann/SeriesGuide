@@ -42,7 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/share_show"
-        tools:drawableLeft="?attr/drawableShare" />
+        tools:drawableLeft="@drawable/ic_search_white_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowShortcut"

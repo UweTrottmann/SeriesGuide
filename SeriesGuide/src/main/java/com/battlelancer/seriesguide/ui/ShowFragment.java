@@ -162,7 +162,7 @@ public class ShowFragment extends Fragment {
         ViewTools.setVectorDrawableLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
 
         // share button
-        ViewTools.setVectorCompoundDrawableLeft(theme, buttonShare, R.attr.drawableShare);
+        ViewTools.setVectorDrawableLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
         buttonShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
