@@ -139,7 +139,7 @@ public class ShowFragment extends Fragment {
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorCompoundDrawableLeft(theme, buttonLanguage, R.attr.drawableLanguage);
+        ViewTools.setVectorDrawableLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

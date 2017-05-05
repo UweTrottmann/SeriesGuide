@@ -158,8 +158,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        ViewTools.setVectorCompoundDrawableLeft(getActivity().getTheme(), buttonMovieLanguage,
-                R.attr.drawableLanguage);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieLanguage,
+                R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
             @Override

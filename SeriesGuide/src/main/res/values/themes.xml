@@ -83,7 +83,6 @@
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
-        <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
@@ -170,7 +169,6 @@
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
         <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
-        <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
@@ -268,7 +266,6 @@
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
         <item name="drawableExtension">@drawable/ic_extension_black_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
-        <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
         <item name="drawableShare">@drawable/ic_share_black_24dp</item>
