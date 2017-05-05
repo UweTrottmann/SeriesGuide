@@ -86,7 +86,6 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
@@ -174,7 +173,6 @@
         <item name="drawableLanguage">@drawable/ic_language_white_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link</item>
         <item name="drawableList">@drawable/ic_action_list</item>
-        <item name="drawableSearch">@drawable/ic_search_white_24dp</item>
         <item name="drawableShare">@drawable/ic_share_white_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableStar">@drawable/ic_action_star</item>
@@ -273,7 +271,6 @@
         <item name="drawableLanguage">@drawable/ic_language_black_24dp</item>
         <item name="drawableLink">@drawable/ic_action_link_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
-        <item name="drawableSearch">@drawable/ic_search_black_24dp</item>
         <item name="drawableShare">@drawable/ic_share_black_24dp</item>
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>
         <item name="drawableStar">@drawable/ic_action_star_inverse</item>

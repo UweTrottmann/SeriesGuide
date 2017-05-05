@@ -158,7 +158,7 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
         // search and comments button
-        ViewTools.setVectorCompoundDrawableLeft(theme, mButtonWebSearch, R.attr.drawableSearch);
+        ViewTools.setVectorDrawableLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
         ViewTools.setVectorDrawableLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
 
         // share button

@@ -33,7 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/web_search"
-        tools:drawableLeft="?attr/drawableSearch" />
+        tools:drawableLeft="@drawable/ic_search_white_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowShare"
