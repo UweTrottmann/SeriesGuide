@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -44,14 +43,6 @@ public class ViewTools {
                 top != 0 ? ContextCompat.getDrawable(context, top) : null,
                 right != 0 ? ContextCompat.getDrawable(context, right) : null,
                 bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
-    }
-
-    public static void setVectorCompoundDrawableLeft(Resources.Theme theme, Button button,
-            @AttrRes int vectorAttr) {
-        int vectorResId = Utils.resolveAttributeToResourceId(theme, vectorAttr);
-        VectorDrawableCompat drawable = VectorDrawableCompat.create(button.getResources(),
-                vectorResId, theme);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
     }
 
     public static void setVectorDrawableLeft(Resources.Theme theme, Button button,
