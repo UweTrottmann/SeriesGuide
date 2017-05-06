@@ -4,7 +4,6 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
-    mavenLocal()
 }
 
 def loadStringPropertyOrPlaceholder(String name) {
