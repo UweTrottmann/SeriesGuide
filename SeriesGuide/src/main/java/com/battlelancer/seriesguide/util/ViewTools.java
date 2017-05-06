@@ -72,6 +72,7 @@ public class ViewTools {
     private static void tintVectorDrawable(Context colorContext, Resources.Theme theme,
             VectorDrawableCompat drawable) {
         if (drawable != null) {
+            drawable.mutate();
             drawable.setTint(ContextCompat.getColor(colorContext,
                     Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon)));
         }
