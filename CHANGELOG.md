@@ -9,6 +9,13 @@ Version 37
 ----------
 *(in development)*
 
+#### 37-beta6
+*(2017-05-05)*
+
+* 🔨 Crash: Correctly parse episode DVD numbers when adding or updating a show.
+* 🔨 Some action bar icons are wrongly colored.
+* 📝 Latest translations from crowdin.
+
 #### 37-beta5
 *(2017-05-05)*
 
