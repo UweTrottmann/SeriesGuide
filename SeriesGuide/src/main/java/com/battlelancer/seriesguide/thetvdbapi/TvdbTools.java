@@ -686,7 +686,7 @@ public class TvdbTools {
                      * a month (ensures show air time changes get stored).
                      */
                     Long lastEditEpoch = localEpisodeIds.get(episodeId);
-                    Integer lastEditEpochNew = episode.lastUpdated;
+                    Long lastEditEpochNew = episode.lastUpdated;
                     if (lastEditEpoch != null && lastEditEpochNew != null
                             && (lastEditEpoch < lastEditEpochNew
                             || dateLastMonthEpoch < lastEditEpoch)) {
