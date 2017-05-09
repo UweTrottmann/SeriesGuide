@@ -169,6 +169,14 @@ public class MoviesNowFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
+        // when switching tabs while still showing refresh animation, old content remains stuck
+        // so force clear the drawing cache and animation: http://stackoverflow.com/a/27073879
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.destroyDrawingCache();
+            swipeRefreshLayout.clearAnimation();
+        }
+
         unbinder.unbind();
     }
 
