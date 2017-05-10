@@ -175,7 +175,9 @@
     <string name="recent">Recent</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
+    <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">Only favorite shows</string>
+    <string name="calendar_only_collected">Only collected episodes</string>
     <string name="pref_infinite_scrolling">Infinite calendar</string>
 
     <!-- Updating -->

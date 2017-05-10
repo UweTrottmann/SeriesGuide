@@ -37,9 +37,6 @@ public class DisplaySettings {
 
     public static final String KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes";
 
-    public static final String KEY_NO_WATCHED_EPISODES
-            = "com.battlelancer.seriesguide.activity.nowatched";
-
     public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
 
     public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
@@ -168,11 +165,6 @@ public class DisplaySettings {
     public static boolean isNoReleasedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_NO_RELEASED_EPISODES, false);
-    }
-
-    public static boolean isNoWatchedEpisodes(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_NO_WATCHED_EPISODES, false);
     }
 
     /**

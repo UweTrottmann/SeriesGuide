@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -249,10 +250,10 @@ public class DBUtils {
      *
      * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
-    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyFavorites,
-            boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, isOnlyFavorites,
-                isOnlyUnwatched, -1);
+    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyCollected,
+            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, isOnlyCollected,
+                isOnlyFavorites, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -265,10 +266,10 @@ public class DBUtils {
      *
      * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
-    public static Cursor getRecentEpisodes(Context context, boolean isOnlyFavorites,
-            boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.RECENT, isOnlyFavorites,
-                isOnlyUnwatched, -1);
+    public static Cursor getRecentEpisodes(Context context, boolean isOnlyCollected,
+            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, CalendarType.RECENT, isOnlyCollected,
+                isOnlyFavorites, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -284,15 +285,17 @@ public class DBUtils {
      */
     public static String[][] buildActivityQuery(Context context, String type,
             int numberOfDaysToInclude) {
+        boolean isOnlyCollected = CalendarSettings.isOnlyCollected(context);
         boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
-        boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
+        boolean isOnlyUnwatched = CalendarSettings.isHidingWatchedEpisodes(context);
 
-        return buildActivityQuery(context, type, isOnlyFavorites, isNoWatched,
+        return buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites, isOnlyUnwatched,
                 numberOfDaysToInclude);
     }
 
     private static String[][] buildActivityQuery(Context context, String type,
-            boolean isOnlyFavorites, boolean isOnlyUnwatched, int numberOfDaysToInclude) {
+            boolean isOnlyCollected, boolean isOnlyFavorites, boolean isOnlyUnwatched,
+            int numberOfDaysToInclude) {
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
 
@@ -342,6 +345,11 @@ public class DBUtils {
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
             query.append(" AND ").append(Episodes.SELECTION_UNWATCHED);
+        }
+
+        // only show collected episodes
+        if (isOnlyCollected) {
+            query.append(" AND ").append(Episodes.SELECTION_COLLECTED);
         }
 
         // build result array
@@ -495,7 +503,7 @@ public class DBUtils {
                         Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null
         );
-        HashMap<Integer, Long> episodeMap = new HashMap<>();
+        @SuppressLint("UseSparseArrays") HashMap<Integer, Long> episodeMap = new HashMap<>();
         if (episodes != null) {
             while (episodes.moveToNext()) {
                 episodeMap.put(episodes.getInt(0), episodes.getLong(1));
